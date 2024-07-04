@@ -1,0 +1,42 @@
+{
+  "extends": [
+    "next",
+    "airbnb-base",
+    "next/core-web-vitals", // Needed to avoid warning in next.js build: 'The Next.js plugin was not detected in your ESLint configuration'
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "class-methods-use-this": ["off"],
+    "comma-dangle": 0,
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": true,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+        "allowSeparatedGroups": false
+      }
+    ],
+    "no-param-reassign": "warn",
+    "no-console": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
+    "prefer-destructuring": "off",
+    "no-continue": "off",
+    "no-multi-assign": "off",
+    "no-unused-vars": "warn",
+    "no-unused-locals": "warn",
+    "no-nested-ternary": "warn",
+    "no-unreachable": "warn",
+    "import/extensions": "never",
+    "prettier/prettier": [
+      "warn",
+      {
+        "singleQuote": false,
+        "endOfLine": "auto",
+        "trailingComma": "es5"
+      }
+    ]
+  }
+}

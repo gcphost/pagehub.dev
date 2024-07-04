@@ -1,0 +1,52 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#25D2DB",
+    "activityBar.activeBorder": "#000000",
+    "activityBar.background": "#25D2DB",
+    "activityBar.foreground": "#000000",
+    "activityBar.inactiveForeground": "#c6c6c6",
+    "activityBarBadge.background": "#25D2DB",
+    "activityBarBadge.foreground": "#000000",
+    "sash.hoverBorder": "#000000",
+    "statusBar.background": "#25D2DB",
+    "statusBar.foreground": "#000000",
+    "statusBarItem.hoverBackground": "#25D2DB",
+    "statusBarItem.remoteBackground": "#25D2DB",
+    "statusBarItem.remoteForeground": "#000000",
+    "titleBar.activeBackground": "#25D2DB",
+    "titleBar.activeForeground": "#000000",
+    "titleBar.inactiveBackground": "#25D2DB",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "search.exclude": {
+    "package-lock.json": true
+  },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.fixAll.eslint",
+    "source.organizeImports"
+  ],
+  "jest.autoRun": {
+    "watch": true, // Start the jest with the watch flag
+    "onStartup": ["all-tests"] // Run all tests upon project launch
+  },
+  "jest.showCoverageOnLoad": true, // Show code coverage when the project is launched
+  "jest.showTerminalOnLaunch": false, // Don't automatically open test explorer terminal on launch
+  // Multiple language settings for json and jsonc files
+  "[json][jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[postcss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+
+  "typescript.suggest.paths": {}
+}

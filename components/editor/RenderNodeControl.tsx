@@ -1,0 +1,209 @@
+import { useNode } from "@craftjs/core";
+import { useFindScrollingParent } from "components/selectors/lib";
+import { motion } from "framer-motion";
+import { useCallback, useEffect, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { getRect } from "./Viewport/useRect";
+
+export const RenderNodeControl = ({
+  position,
+  children = null,
+  className = "",
+  align,
+  placement = "start",
+  hPlacement = "start",
+  alt = {
+    position: "",
+    placement: "",
+    align: "",
+  },
+  animate = {},
+  ...props
+}) => {
+  const localRef = useRef(null);
+  const ref = useRef(null);
+  const { id } = useNode();
+
+  const setPosition = useCallback(() => {
+    if (!localRef.current) return;
+
+    const originalDisplay = localRef.current.style.display;
+
+    localRef.current.style.display = "flex";
+    const rect = getRect(localRef.current);
+    localRef.current.style.display = originalDisplay;
+
+    const viewportRect = document
+      .getElementById("viewport")
+      .getBoundingClientRect();
+
+    delete ref.current.style.top;
+    delete ref.current.style.bottom;
+
+    delete ref.current.style.left;
+    delete ref.current.style.right;
+
+    let right = 0;
+    const gap = 50;
+
+    if (hPlacement === "middle") right = rect.width / 2;
+    if (hPlacement === "end") right = rect.width;
+
+    if (["top", "bottom"].includes(position)) {
+      ref.current.style.left = `-${right - gap}px`;
+      ref.current.style.right = "";
+
+      if (align === "middle") {
+        ref.current.style.left = `calc(50% - ${rect.width / 2}px)`;
+      }
+
+      if (align === "end") {
+        ref.current.style.left = "auto";
+        ref.current.style.right = `-${right}px`;
+      }
+
+      let top = 0;
+      if (placement === "middle") top = rect.height / 2;
+      if (placement === "start") top = rect.height;
+
+      ref.current.style.top = `-${top}px`;
+
+      if (position === "bottom") {
+        let top = rect.height;
+        if (placement === "middle") top = rect.height / 2;
+        if (placement === "start") top = 0;
+        ref.current.style.top = "auto";
+        ref.current.style.bottom = `-${top}px`;
+      }
+    } else if (["left", "right"].includes(position)) {
+      // aliugn middle
+      ref.current.style.top = `calc(50% - ${rect.height / 2}px)`;
+      ref.current.style.bottom = "auto";
+
+      // place left
+      ref.current.style.left = `-${rect.width}px`;
+      //console.log("a", ref.current.style.top, ref.current.style.left, rect);
+      localRef.current.style.display = "flex";
+      return;
+    }
+
+    const newRect = getRect(ref.current);
+
+    const outOfViewport =
+      newRect.bottom > viewportRect.bottom || newRect.top < viewportRect.top; // ||
+    //  newRect.right >= viewportRect.right ||
+    // newRect.left <= viewportRect.left;
+
+    // return (localRef.current.style.display = "flex");
+
+    if (outOfViewport) {
+      //  console.log(alt);
+      if (!alt.position) return;
+      if (alt.position) {
+        position = alt.position;
+      }
+      if (alt.placement) {
+        placement = alt.placement;
+      }
+      if (alt.align) {
+        align = alt.align;
+      }
+
+      if (alt.position === "none") {
+        return (localRef.current.style.display = "none");
+      }
+
+      // Element is not within the viewport, position it on the opposite side
+      if (position === "top") {
+        ref.current.style.top = `auto`;
+        ref.current.style.bottom = `-${rect.height}px`;
+      } else if (position === "bottom") {
+        // ref.current.style.top = `-${rect.height}px`;
+        //  ref.current.style.bottom = `auto`;
+
+        let top = rect.height;
+        if (placement === "middle") top = rect.height / 2;
+        if (placement === "start") top = 0;
+        ref.current.style.bottom = "auto";
+        ref.current.style.top = `-${top}px`;
+
+        // ref.current.style.left = "auto";
+        // ref.current.style.right = `-${0}px`;
+      } else if (position === "left") {
+        ref.current.style.left = `${viewportRect.width}px`;
+        ref.current.style.right = `auto`;
+      } else if (position === "right") {
+        ref.current.style.left = `-${rect.width}px`;
+        ref.current.style.right = `${viewportRect.width}px`;
+      }
+    }
+
+    const newsRect = getRect(ref.current);
+
+    const stillOutOfView =
+      newsRect.bottom > viewportRect.bottom || newsRect.top < viewportRect.top;
+    //console.log(stillOutOfView, newsRect);
+
+    if (stillOutOfView) {
+      ref.current.style.bottom = "10px";
+    }
+
+    localRef.current.style.display = "flex";
+  }, [localRef]);
+
+  useEffect(() => {
+    setPosition();
+  }, [ref, localRef.current]);
+
+  const scrollingParent = useFindScrollingParent(id);
+  const originalElementRef = useRef(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    let animationFrameId;
+
+    if (!scrollingParent) return;
+
+    const handleScroll = () => {
+      window.cancelAnimationFrame(animationFrameId);
+
+      animationFrameId = window.requestAnimationFrame(() => {
+        setPosition();
+      });
+    };
+
+    scrollingParent.addEventListener("scroll", handleScroll);
+
+    return () => {
+      scrollingParent.removeEventListener("scroll", handleScroll);
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [originalElementRef, scrollingParent, ref]);
+
+  let display = "none";
+
+  return (
+    <motion.div
+      data-type="nodeControlBase"
+      {...animate}
+      className={`${className} absolute z-30`}
+      style={{}}
+      ref={ref}
+      {...props}
+      key={uuidv4()}
+    >
+      <div
+        style={{
+          display,
+        }}
+        data-type="nodeControl"
+        ref={localRef}
+      >
+        {children}
+      </div>
+    </motion.div>
+  );
+};
+
+export default RenderNodeControl;
