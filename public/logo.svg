@@ -1,1 +1,20 @@
-<svg width="" height="" viewBox="" class="css-1j8o68f"><defs id="SvgjsDefs1187"></defs><g id="SvgjsG1188" featurekey="symbolGroupContainer" transform="matrix(1.08,0,0,1.08,0,0)" fill="#ffffff"><path xmlns="http://www.w3.org/2000/svg" d="M0 0h100v100H0z"></path></g><g id="SvgjsG1189" featurekey="Z2iLy3-0" transform="matrix(4.19672198333792,0,0,4.19672198333792,24.3689177556541,1.279029245490083)" fill="#6730ec"><path d="M1.1035 17.3242 l1.5137 0 l0 -9.4434 l-1.5137 0 l0 -2.7051 l7.2168 0.019531 q1.005859375 0 1.840820313 0.3564453125 t1.4404 0.9668 t0.94238 1.4258 t0.33691 1.7334 q0 1.07421875 -0.3759765625 1.77734375 t-1.0693 1.1328 q0.732421875 0.46875 1.157226563 1.157226563 t0.4248 1.6748 q0 1.005859375 -0.3466796875 1.845703125 t-0.94727 1.4502 t-1.4209 0.94727 t-1.7676 0.33691 l-7.4316 0 l0 -2.6758 z M5.8594 13.876999999999999 l0 3.4473 l2.4609 0 q0.283203125 0 0.5322265625 -0.146484375 t0.42969 -0.38574 t0.28809 -0.55664 t0.10742 -0.65918 q0 -0.361328125 -0.107421875 -0.6689453125 t-0.29297 -0.53711 t-0.43457 -0.36133 t-0.52246 -0.13184 l-2.4609 0 z M5.8594 7.881 l0 3.3203 l2.3242 0 q0.2734375 0 0.517578125 -0.13671875 t0.4248 -0.36621 t0.28809 -0.51758 t0.10742 -0.60059 q0 -0.302734375 -0.107421875 -0.60546875 t-0.28809 -0.54688 t-0.4248 -0.39551 t-0.51758 -0.15137 l-2.3242 0 z"></path></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="640" height="640" viewBox="0 0 640 640" xml:space="preserve">
+<desc>Created with Fabric.js 3.6.6</desc>
+<defs>
+</defs>
+<g transform="matrix(1 0 0 1 168.5 117)"  >
+<line style="stroke: rgb(0,0,0); stroke-width: 2; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"  x1="0" y1="0" x2="0" y2="0" />
+</g>
+<g transform="matrix(4.81 0 0 4.81 308 313)"  >
+<linearGradient id="SVGID_186" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 1 -50 -50)"  x1="0" y1="50" x2="100" y2="50">
+<stop offset="0%" style="stop-color:rgba(0, 0, 0, 1);"/>
+<stop offset="0%" style="stop-color:rgba(138, 95, 170, 1);"/>
+</linearGradient>
+<polygon style="stroke: rgb(0,0,0); stroke-width: 5; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: url(#SVGID_186); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke"  points="-50,-50 -50,50 50,50 50,-50 " />
+</g>
+<g transform="matrix(1 0 0 1 317 318.48)" style=""  >
+		<text xml:space="preserve" font-family="'Open Sans', sans-serif" font-size="18" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-220.5" y="98.95" style="stroke-width: 1; font-family: 'Open Sans', sans-serif; font-size: 315px; font-style: normal; font-weight: normal; fill: rgb(255,254,254); ">PH</tspan></text>
+</g>
+</svg>
