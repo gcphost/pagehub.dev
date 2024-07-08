@@ -78,7 +78,7 @@ const EditableName = ({ but, ikey, enabled }) => {
 export const OnlyButtons = ({ children, ...props }) => {
   const {
     connectors: { connect },
-  } = useNode();
+  }: any = useNode();
   return (
     <div title="only-buttons" ref={connect} className="" {...props}>
       {children}
@@ -213,7 +213,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   ];
   return (
     <div
-      ref={(r) => connect(drag(r))}
+      ref={(r: any) => connect(drag(r))}
       node-id={id}
       className={[
         ...ClassGenerator({ ...props }, view, enabled, [], baseProps).split(

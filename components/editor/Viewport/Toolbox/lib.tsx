@@ -1,5 +1,5 @@
 import { Element, ROOT_NODE, useEditor } from "@craftjs/core";
-var generate = require("project-name-generator");
+var generate = require("boring-name-generator");
 
 import { motion } from "framer-motion";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
@@ -115,7 +115,7 @@ export const RenderToolComponent = ({
       }}
       whileTap={{ scale: 0.9 }}
       className={`cursor-move w-full pointer-events-auto`}
-      ref={(ref) => create(ref, tool)}
+      ref={(ref: any) => create(ref, tool)}
       onDragEnterCapture={() => {
         //  console.log("a");
         //  setMenu({enabled:false})

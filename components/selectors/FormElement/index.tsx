@@ -42,7 +42,7 @@ export const OnlyFormElement = ({ children, ...props }) => {
   const {
     connectors: { connect, drag },
     id,
-  } = useNode();
+  }: any = useNode();
   return (
     <div
       title="only-FormElement"

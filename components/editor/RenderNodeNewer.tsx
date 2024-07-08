@@ -22,6 +22,10 @@ export const RenderNodeNewer = ({ render }) => {
 
   if (!enabled) return render;
 
+  if (typeof window === "undefined") {
+    return render;
+  }
+
   return (
     <>
       {render}

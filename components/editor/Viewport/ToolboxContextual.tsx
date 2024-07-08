@@ -1,5 +1,5 @@
 import { NodeTree, useEditor } from "@craftjs/core";
-var generate = require("project-name-generator");
+var generate = require("boring-name-generator");
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -24,8 +24,8 @@ import { useRecoilState } from "recoil";
 import { removeComponentFromStorage } from "utils/craft";
 import { ComponentsAtom } from "utils/lib";
 import { ToolboxMenu } from "../RenderNode";
-import { addHandler, buildClonedTree } from "./lib";
 import { AddElement, Tools } from "./Toolbox/lib";
+import { addHandler, buildClonedTree } from "./lib";
 
 export const ulVariants = {
   open: {

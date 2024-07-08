@@ -8,7 +8,7 @@ import { getServerSession } from "next-auth";
 import Page from "../../models/page";
 import dbConnect from "../../utils/dbConnect";
 import { addDomain, deploy, getDomain, removeDomain } from "./domain";
-var generate = require("project-name-generator");
+var generate = require("boring-name-generator");
 
 export async function uniqueNanoId(query = null) {
   const nanoId = nanoid();

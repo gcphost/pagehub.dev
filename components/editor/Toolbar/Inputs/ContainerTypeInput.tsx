@@ -1,5 +1,6 @@
 import { useEditor } from "@craftjs/core";
-import { AddElement, Tools } from "components/editor/Viewport/Toolbox/lib";
+import { AddElement } from "components/editor/Viewport/Toolbox/lib";
+import { Container } from "components/selectors/Container";
 import { ToolbarItem } from "../ToolbarItem";
 import { getTypeProp, typeProps } from "../Tools/lib";
 
@@ -39,7 +40,22 @@ export const ContainerTypeInput = () => {
             className="h-fill w-full btn btn-text"
             onClick={() => {
               AddElement({
-                element: Tools.rowContainer,
+                element: (
+                  <Container
+                    mobile={{
+                      display: "flex",
+                      justifyContent: "justify-center",
+                      flexDirection: "flex-col",
+                      width: "w-full",
+                      gap: "gap-8",
+                      height: "h-auto",
+                      py: "py-6",
+                      px: "px-3",
+                    }}
+                    desktop={{}}
+                    custom={{ displayName: "Column" }}
+                  />
+                ),
                 actions,
                 query,
               });

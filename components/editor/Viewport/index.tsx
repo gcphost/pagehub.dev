@@ -661,7 +661,9 @@ export const Viewport: React.FC<any> = ({ children }) => {
           data-isolated={isolated ? true : false}
           tabIndex={0}
           className={activeClass[1]}
-          ref={(ref) => connectors.select(connectors.hover(ref, null), null)}
+          ref={(ref: any) =>
+            connectors.select(connectors.hover(ref, null), null)
+          }
         >
           {children}
         </div>

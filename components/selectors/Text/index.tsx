@@ -41,7 +41,7 @@ const defaultProps: TextProps = {
 export const OnlyText = ({ children, ...props }) => {
   const {
     connectors: { connect },
-  } = useNode();
+  }: any = useNode();
   return (
     <div title="only-buttons" ref={connect} className="w-full mt-5" {...props}>
       {children}
@@ -82,7 +82,7 @@ export const Text = (props: Partial<TextProps>) => {
 
   let { text, tagName } = props;
 
-  if (text) {
+  if (text && typeof window !== "undefined") {
     var doc = new DOMParser().parseFromString(text, "text/html");
     const a = doc.getElementsByTagName("p");
 

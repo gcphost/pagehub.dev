@@ -168,6 +168,10 @@ export const fontFAmilies = () => {
 };
 
 export const getStyleSheets = () => {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
   var links = document.getElementsByTagName("link") || [],
     filtered = [],
     i = links.length;
@@ -395,6 +399,10 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
   const filtered = getStyleSheets();
 
   if (filtered.includes(href)) {
+    return;
+  }
+
+  if (typeof window === "undefined") {
     return;
   }
 

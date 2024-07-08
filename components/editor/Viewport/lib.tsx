@@ -1,6 +1,6 @@
 import { getRandomId, ROOT_NODE } from "@craftjs/utils";
 import lz from "lzutf8";
-var generate = require("project-name-generator");
+var generate = require("boring-name-generator");
 
 export const GetHtmlToComponent = async (html) => {
   try {

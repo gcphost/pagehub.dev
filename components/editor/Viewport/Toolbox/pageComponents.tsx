@@ -1,7 +1,7 @@
 import { TbBox } from "react-icons/tb";
 import { Container } from "../../../selectors/Container";
 import { RenderToolComponent } from "./lib";
-var generate = require("project-name-generator");
+var generate = require("boring-name-generator");
 
 export const RenderPageComponent = ({ text }) => (
   <RenderToolComponent

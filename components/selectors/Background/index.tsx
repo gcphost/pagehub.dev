@@ -151,7 +151,7 @@ export const Background = (props: Partial<ContainerProps>) => {
   function addElementsToHead(header, head) {
     const elements = [];
 
-    if (header) {
+    if (header && typeof window !== "undefined") {
       const parser = new DOMParser();
       const doc = parser.parseFromString(header, "text/html");
       const headElement = doc.head;
