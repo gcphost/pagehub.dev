@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export function useMousePosition(id, distance = 45, cref = null) {
   const dom = cref || document.querySelector(`[node-id="${id}"]`);
 
   const [isInTopOrLeft, setIsInTopOrLeft] = useState(false);
   const [isInBottomOrRight, setIsInBottomOrRight] = useState(false);
-  const [isInTopOrLeftOrBottomOrRight, setIsInTopOrLeftOrBottomOrRight] = useState(false);
+  const [isInTopOrLeftOrBottomOrRight, setIsInTopOrLeftOrBottomOrRight] =
+    useState(false);
 
   useEffect(() => {
     if (!dom) return;
@@ -13,9 +14,7 @@ export function useMousePosition(id, distance = 45, cref = null) {
     const handleMouseMove = (event) => {
       const { clientX, clientY } = event;
 
-      const {
-        top, bottom, left, right
-      } = dom.getBoundingClientRect();
+      const { top, bottom, left, right } = dom.getBoundingClientRect();
 
       setIsInTopOrLeft(Math.abs(clientY - top) <= distance);
       setIsInBottomOrRight(Math.abs(clientY - bottom) <= distance);
@@ -24,10 +23,10 @@ export function useMousePosition(id, distance = 45, cref = null) {
       );
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [dom]);
 
@@ -41,7 +40,6 @@ export function useMousePosition(id, distance = 45, cref = null) {
 
 export function useIsMouseOver(id) {
   const dom = document.querySelector(`[node-id="${id}"]`);
-  if (!dom) false;
   const [isMouseOver, setIsMouseOver] = useState(false);
 
   useEffect(() => {
@@ -53,12 +51,12 @@ export function useIsMouseOver(id) {
       setIsMouseOver(false);
     };
 
-    dom.addEventListener('mouseover', handleMouseOver);
-    dom.addEventListener('mouseout', handleMouseOut);
+    dom.addEventListener("mouseover", handleMouseOver);
+    dom.addEventListener("mouseout", handleMouseOut);
 
     return () => {
-      dom.removeEventListener('mouseover', handleMouseOver);
-      dom.removeEventListener('mouseout', handleMouseOut);
+      dom.removeEventListener("mouseover", handleMouseOver);
+      dom.removeEventListener("mouseout", handleMouseOut);
     };
   }, [dom]);
 

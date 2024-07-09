@@ -1,5 +1,10 @@
 {
-  "extends": ["next", "airbnb-base", "next/core-web-vitals"],
+  "extends": [
+    "next",
+    "airbnb-base",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
+  ],
   "rules": {
     "class-methods-use-this": ["off"],
     "comma-dangle": 0,
