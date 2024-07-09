@@ -53,7 +53,7 @@ export const parseContent = (content, slug) => {
     }
   } else {
     const aPage = Object.keys(pageData).find(
-      (_) => pageData[_].slug === slug[0]
+      (_) => pageData[_].slug.slug === slug[0]
     );
 
     if (aPage) {
