@@ -80,11 +80,14 @@ export const parseContent = (content, slug) => {
     console.log('k', k)
 
     Object.keys(da).forEach((_) => {
+      console.log('check', da[_]?.props?.type, _, k)
       if (da[_]?.props?.type === "page" && _ !== k) {
         da[_].props.isHidden = true;
         da[_].hidden = true;
       }
     });
+
+    console.log("final", da)
 
     data = JSON.stringify(da);
     return { data: lz.encodeBase64(lz.compress(data)), seo };
