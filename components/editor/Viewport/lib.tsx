@@ -77,27 +77,6 @@ export const SaveSubmissions = async (
   }
 };
 
-export const PostForm = async ({ url, formData, method = "POST" }) => {
-  try {
-    const res = await fetch(`/api/submit`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        formData,
-        url,
-        method,
-      }),
-    });
-
-    return res.json();
-  } catch (e) {
-    console.error(e);
-  }
-};
-
 export const DeleteMedia = async (mediaId, settings) => {
   try {
     const res = await fetch(`/api/files`, {

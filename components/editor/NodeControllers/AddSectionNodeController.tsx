@@ -35,9 +35,6 @@ export const AddSectionNodeController = (props: { position; align }) => {
   if (propType === "page") type = "Section";
   if (propType === "background") type = "Page";
 
-  // null takes the ref away and fs our count..
-  let display = "none"; //!type ? "none" : "flex";
-
   const setMenu = useSetRecoilState(ToolboxMenu);
 
   const { isInTopOrLeft, isInBottomOrRight } = useMousePosition(
@@ -46,10 +43,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
     ref.current
   );
 
-  if (position === "top" && isInTopOrLeft) display = "flex";
-  if (position === "bottom" && isInBottomOrRight) display = "flex";
-  if (!type) display = "none";
-
+  
   return (
     <AnimatePresence>
       <RenderNodeControl
@@ -89,7 +83,6 @@ export const AddSectionNodeController = (props: { position; align }) => {
       >
         <motion.div
           ref={ref}
-          //style={{ display }}
           className={`border btn text-white rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base`}
           onClick={(e) => {
             e.preventDefault();
