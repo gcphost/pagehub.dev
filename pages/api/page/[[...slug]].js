@@ -53,8 +53,10 @@ export const parseContent = (content, slug) => {
     }
   } else {
     const aPage = Object.keys(pageData).find(
-      (_) => pageData[_].slug.slug === slug[0]
+      (_) => pageData[_].slug === slug[0]
     );
+
+    console.log('pd', pageData, slug[0])
 
     if (aPage) {
       onlyPage = aPage;
@@ -73,7 +75,9 @@ export const parseContent = (content, slug) => {
     seo.description =
       props.props.pageDescription || props.pageDescription || null;
 
-    console.log(da)
+
+
+    console.log('k', k)
 
     Object.keys(da).forEach((_) => {
       if (da[_]?.props?.type === "page" && _ !== k) {
