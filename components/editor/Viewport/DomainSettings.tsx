@@ -163,21 +163,21 @@ export const DomainSettings = () => {
           {status === "authenticated" ? (
             <div className="mx-auto  flex flex-row gap-3 items-center text-lg">
               <p className="text-center">Logged in as {session.user.email}</p>{" "}
-              <div
+              <button
                 className="cursor-pointer"
                 onClick={() => popupCenter("/google-signout", "Sign Out")}
               >
                 <TbLogout />
-              </div>
+              </button>
             </div>
           ) : (
-            <div
+            <button
               className="btn px-6 py-3 mx-auto cursor-pointer"
               onClick={() => popupCenter("/google-signin", "Sign In")}
             >
               Sign in with Google &nbsp;
               <TbLogin />
-            </div>
+            </button>
           )}
         </div>
         <div className="flex flex-row items-center gap-3 mx-auto">
@@ -235,6 +235,11 @@ export const DomainSettings = () => {
             onClick={() =>
               status === "authenticated" && setPublishType("local")
             }
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                status === "authenticated" && setPublishType("local");
+              }
+            }}
           >
             <input
               type="radio"
@@ -251,6 +256,11 @@ export const DomainSettings = () => {
             onClick={() =>
               status === "authenticated" && setPublishType("domain")
             }
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                status === "authenticated" && setPublishType("domain");
+              }
+            }}
           >
             <input
               type="radio"
@@ -265,6 +275,11 @@ export const DomainSettings = () => {
           <label
             className="cursor-pointer flex flex-row items-center gap-2"
             onClick={() => setPublishType("draft")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                status === "authenticated" && setPublishType("draft");
+              }
+            }}
           >
             <input
               type="radio"

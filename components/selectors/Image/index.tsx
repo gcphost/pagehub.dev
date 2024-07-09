@@ -21,7 +21,7 @@ export const ImageDefault = ({ tab, props }) => {
   // console.log("default image")
 
   return (
-    <div
+    <button
       onClick={() => {
         setActiveTab(tab);
         // setTimeout(() => document.getElementById("files")?.click(), 50);
@@ -30,7 +30,7 @@ export const ImageDefault = ({ tab, props }) => {
       {props.isLoading && <div>Loading...</div>}
       {!props.isLoading && !props.loaded && <TbPhoto />}
       {props.loaded && <TbCheck />}
-    </div>
+    </button>
   );
 };
 

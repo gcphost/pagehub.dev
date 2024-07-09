@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const AnimatedButton = ({ children, className = "", ...props }) => (
   <div className="h-8">
-    <motion.div
+    <motion.button
       onClick={props.onClick}
       key={uuidv4()}
       className={`${className} cursor-pointer origin-top`}
@@ -43,7 +43,7 @@ export const AnimatedButton = ({ children, className = "", ...props }) => (
       }}
     >
       {children}
-    </motion.div>
+    </motion.button>
   </div>
 );
 

@@ -70,7 +70,7 @@ export const PatternDialog = () => {
         });
 
         return (
-          <div
+          <button
             id={`pattern-${_.slug}`}
             className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${
               dialog.value?.slug === _.slug ? "bg-gray-100" : ""
@@ -89,7 +89,7 @@ export const PatternDialog = () => {
                 }}
               ></div>
             </div>
-          </div>
+          </button>
         );
       }}
     />

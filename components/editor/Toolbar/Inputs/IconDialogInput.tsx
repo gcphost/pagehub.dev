@@ -50,7 +50,7 @@ export const IconDialogInput = ({
         propType={propType}
         propKey={propKey}
       >
-        <div
+        <button
           title={value?.name}
           onClick={(e) => {
             setDialog({
@@ -67,7 +67,7 @@ export const IconDialogInput = ({
           <div className="pointer-events-none flex gap-3 items-center w-6 h-6 fill-white">
             <ClientIconLoader value={value} />
           </div>
-        </div>
+        </button>
       </Wrap>
     </div>
   );

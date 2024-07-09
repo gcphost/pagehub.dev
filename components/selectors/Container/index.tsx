@@ -293,8 +293,9 @@ Container.craft = {
             align: "start",
             placement: "start",
           }}
-          children={<ContainerSettingsNodeTool />}
-        />,
+        >
+          <ContainerSettingsNodeTool />
+        </ToolNodeController>,
       ];
 
       if (props.type === "page") {
@@ -321,18 +322,12 @@ Container.craft = {
           name="Height"
           icon={<CgArrowsV />}
         />,
-        <ToolNodeController
-          position="top"
-          align="middle"
-          placement="start"
-          children={<ContainerSettingsTopNodeTool />}
-        />,
-        <ToolNodeController
-          position="left"
-          align="middle"
-          placement="middle"
-          children={<ContainerSettingsTopNodeTool direction="vertical" />}
-        />,
+        <ToolNodeController position="top" align="middle" placement="start">
+          <ContainerSettingsTopNodeTool />
+        </ToolNodeController>,
+        <ToolNodeController position="left" align="middle" placement="middle">
+          <ContainerSettingsTopNodeTool direction="vertical" />
+        </ToolNodeController>,
       ];
     },
   },

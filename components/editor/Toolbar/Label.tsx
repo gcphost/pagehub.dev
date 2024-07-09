@@ -44,20 +44,23 @@ export const ToolbarLabel = ({
   if (!lab) return null;
 
   return (
-    <Tooltip content={`Remove ${lab} from ${viewValue}`} arrow={false}>
+    <Tooltip
+      content={`Remove ${lab} from ${viewValue}`}
+      arrow={false}
+      onClick={() => {
+        changeProp({
+          propKey,
+          value: "",
+          setProp,
+          propType,
+          view,
+          index,
+          propItemKey,
+        });
+      }}
+    >
       <div
         className={`truncate text-[10px] max-w-[100px] ${bg} rounded-md px-3 py-1 border border-gray-900 text-black cursor-pointer hover:opacity-80 inside-shadow-light overflow-ellipsis ...`}
-        onClick={() => {
-          changeProp({
-            propKey,
-            value: "",
-            setProp,
-            propType,
-            view,
-            index,
-            propItemKey,
-          });
-        }}
       >
         {prefix}
         {lab}

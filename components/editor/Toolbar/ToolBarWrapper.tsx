@@ -121,13 +121,9 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
         data-toolbar={true}
         className="bg-gray-700/90 w-full top-[138px] h-screen grow basis-full z-20 flex flex-col"
       >
-        <RenderChildren
-          props={props}
-          children={children}
-          query={query}
-          actions={actions}
-          id={id}
-        />
+        <RenderChildren props={props} query={query} actions={actions} id={id}>
+          {children}
+        </RenderChildren>
       </div>
 
       <div className="z-30 absolute bottom-0 left-0 right-0  w-full bg-gray-700 h-[64px] p-3 border-t border-t-gray-900 flex flex-row items-center justify-between text-xl">
@@ -152,7 +148,12 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
         )}
 
         {(props.type === "page" || isolate) && (
-          <Tooltip content={!isolate ? "Isolate Page" : "Show All Pages"}>
+          <Tooltip
+            content={!isolate ? "Isolate Page" : "Show All Pages"}
+            onClick={() =>
+              isolatePage(isolate, query, active, actions, setIsolate)
+            }
+          >
             <motion.div
               whileHover={{
                 scale: 1.3,
@@ -162,9 +163,6 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
               className={`cursor-pointer ${
                 isolate ? "text-white" : "text-gray-400"
               } hover:text-white  rounded-md p-3`}
-              onClick={() =>
-                isolatePage(isolate, query, active, actions, setIsolate)
-              }
             >
               {isolate ? <TbScaleOutlineOff /> : <TbScaleOutline />}
             </motion.div>
@@ -173,44 +171,53 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
 
         {deletable && (
           <>
-            <Tooltip content={props.canDelete ? "Delete" : "Unable to delete"}>
-              <motion.button
+            <Tooltip
+              content={props.canDelete ? "Delete" : "Unable to delete"}
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                if (props.canDelete)
+                  deleteNode(query, actions, active, settings);
+              }}
+            >
+              <motion.div
                 whileHover={{
                   scale: 1.3,
                   transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.9 }}
                 className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
-                onClick={(e: React.MouseEvent) => {
-                  e.stopPropagation();
-                  if (!props.canDelete) return;
-                  return deleteNode(query, actions, active, settings);
-                }}
               >
                 {props.canDelete ? <TbTrash /> : <TbTrashOff />}
-              </motion.button>
+              </motion.div>
             </Tooltip>
 
-            <Tooltip content="Clone">
-              <motion.button
+            <Tooltip
+              content="Clone"
+              onClick={(e: React.MouseEvent) => {
+                handleClone(e);
+              }}
+            >
+              <motion.div
                 whileHover={{
                   scale: 1.3,
                   transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.9 }}
                 className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
-                onClick={(e: React.MouseEvent) => {
-                  handleClone(e);
-                }}
               >
                 <TbCopy />
-              </motion.button>
+              </motion.div>
             </Tooltip>
 
             <Tooltip
               content={`${canMake ? "Create Component" : "Component Exists"}`}
+              onClick={(e: React.MouseEvent) => {
+                const comp = handleSaveTemplate("component");
+
+                setComponents([...components, comp]);
+              }}
             >
-              <motion.button
+              <motion.div
                 whileHover={{
                   scale: 1.3,
                   transition: { duration: 0.2 },
@@ -218,34 +225,31 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 whileTap={{ scale: 0.9 }}
                 ref={ref}
                 className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
-                onClick={(e: React.MouseEvent) => {
-                  const comp = handleSaveTemplate("component");
-
-                  setComponents([...components, comp]);
-                }}
               >
                 {canMake ? <TbComponents /> : <TbComponentsOff />}
-              </motion.button>
+              </motion.div>
             </Tooltip>
           </>
         )}
 
         {id !== ROOT_NODE && (
-          <Tooltip content="Close">
-            <motion.button
+          <Tooltip
+            content="Close"
+            onClick={() => {
+              actions.selectNode(null);
+              setSideBarOpen(false);
+            }}
+          >
+            <motion.div
               whileHover={{
                 scale: 1.3,
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
               className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
-              onClick={() => {
-                actions.selectNode(null);
-                setSideBarOpen(false);
-              }}
             >
               <TbX />
-            </motion.button>
+            </motion.div>
           </Tooltip>
         )}
 

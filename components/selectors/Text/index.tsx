@@ -185,17 +185,12 @@ Text.craft = {
           }}
         />,
 
-        <ToolNodeController
-          position="bottom"
-          align="start"
-          children={<TextSettingsNodeTool />}
-        />,
-        <ToolNodeController
-          position="top"
-          align="middle"
-          placement="start"
-          children={<TextSettingsTopNodeTool />}
-        />,
+        <ToolNodeController position="bottom" align="start">
+          <TextSettingsNodeTool />
+        </ToolNodeController>,
+        <ToolNodeController position="top" align="middle" placement="start">
+          <TextSettingsTopNodeTool />
+        </ToolNodeController>,
       ];
 
       return [...baseControls];

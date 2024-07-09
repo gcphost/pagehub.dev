@@ -22,7 +22,7 @@ export const ToolbarSection = ({
   return (
     <>
       {title && (
-        <h5 id={title} className={classNames} onClick={onClick}>
+        <button id={title} className={classNames} onClick={onClick}>
           {title}
 
           {propKey && <ToolbarLabel lab={propKey} propKey={propKey} />}
@@ -32,7 +32,7 @@ export const ToolbarSection = ({
               <TbQuestionMark />
             </span>
           )}
-        </h5>
+        </button>
       )}
 
       {help && (

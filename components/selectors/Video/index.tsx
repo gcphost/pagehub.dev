@@ -104,11 +104,9 @@ Video.craft = {
       const baseControls = [
         <NameNodeController position="top" align="end" placement="start" />,
 
-        <ToolNodeController
-          position="bottom"
-          align="start"
-          children={<TextSettingsNodeTool />}
-        />,
+        <ToolNodeController position="bottom" align="start">
+          <TextSettingsNodeTool />
+        </ToolNodeController>,
       ];
 
       return [...baseControls];

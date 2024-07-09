@@ -93,14 +93,14 @@ export const Card = ({
     return null;
   }
   return (
-    <div
+    <button
       onClick={onClick}
       className={`${bgColor} text-gray-800 hover:opacity-80 hover:text-gray-700 text-xs font-medium mr-2 px-2.5 py-1.5 rounded inline-flex cursor-pointer whitespace-nowrap`}
     >
       <Tooltip content={`Remove ${value}`} placement="bottom" arrow={false}>
         {value}
       </Tooltip>
-    </div>
+    </button>
   );
 };
 
@@ -109,14 +109,14 @@ export const CardLight = ({ value, onClick }) => {
     return null;
   }
   return (
-    <div
+    <button
       onClick={onClick}
       className="bg-white text-gray-800 text-xs font-medium mr-2 px-2.5 py-1.5 rounded inline-flex cursor-pointer"
     >
       <Tooltip content={`Add ${value}`} placement="top" arrow={false}>
         {value}
       </Tooltip>
-    </div>
+    </button>
   );
 };
 
@@ -134,12 +134,12 @@ export const Accord = ({
   return (
     <div className={className}>
       <div className="flex">
-        <h4
+        <button
           className="whitespace-nowrap font-2xl font-bold cursor-pointer truncate pr-3 w-full"
           onClick={() => setAccordion(active ? "" : prop)}
         >
           {title}
-        </h4>
+        </button>
         {buttons.map((_, k) => (
           <span key={k}>{_}</span>
         ))}

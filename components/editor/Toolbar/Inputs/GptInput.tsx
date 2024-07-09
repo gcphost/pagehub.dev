@@ -149,14 +149,14 @@ export const GptInput = ({ autoFocus = false }) => {
           <div>
             {searched && (
               <div className="mt-3 items-center input overflow-auto scrollbar max-h-64 gap-1.5 flex flex-row">
-                <div
+                <button
                   onClick={() => setSearched(false)}
                   className=" text-gray-400 cursor-pointer hover:text-white"
                 >
                   <Tooltip content="Close" arrow={false}>
                     <TbX />
                   </Tooltip>
-                </div>
+                </button>
 
                 {!classes?.length ? (
                   <div className="text-sm">No results</div>

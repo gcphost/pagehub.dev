@@ -67,9 +67,9 @@ export const EmptyState = ({ icon = null }) => {
   }
 
   return (
-    <div className="w-auto flex justify-center items-center">
+    <button className="w-auto flex justify-center items-center">
       {isActive || isHover ? (
-        <motion.div
+        <motion.button
           id={`empty${id}`}
           whileHover={{
             scale: 1.1,
@@ -83,12 +83,12 @@ export const EmptyState = ({ icon = null }) => {
           }}
         >
           <div className="cursor-pointer">{addIcon}</div>
-        </motion.div>
+        </motion.button>
       ) : null}
 
       {!isActive && !isHover && icon && (
         <div data-empty-state={true}>{icon}</div>
       )}
-    </div>
+    </button>
   );
 };

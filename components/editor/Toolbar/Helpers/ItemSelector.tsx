@@ -79,12 +79,12 @@ export const ItemAdvanceToggle = ({
 
   return (
     <>
-      <div
+      <button
         className="text-xs flex items-center  gap-1.5 cursor-pointer"
         onClick={() => setShowAdvance(!showAdvance)}
       >
         <MotionIcon>{title}</MotionIcon>
-      </div>
+      </button>
 
       {showAdvance ? children : null}
     </>

@@ -160,7 +160,7 @@ export const fontFAmilies = () => {
   TailwindStyles.fonts
     .reduce((acc, font) => {
       const family = font[0].replace(/ +/g, "+");
-      const weights = ([400] || []).join(",");
+      const weights = [400].join(",");
 
       return [...acc, family + (weights && `:${weights}`)];
     }, [])

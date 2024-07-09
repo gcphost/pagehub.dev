@@ -1,7 +1,7 @@
 import { ROOT_NODE, useEditor } from "@craftjs/core";
 import { Tooltip } from "components/layout/Tooltip";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { motion } from "framer-motion";
 import TbHidden from "icons/TbHidden";
@@ -76,7 +76,7 @@ export function useComponentVisible(initialIsVisible) {
 }
 
 const Item = ({ onClick, children, disabled = false, className = "" }) => (
-  <motion.div
+  <motion.button
     onClick={onClick}
     className={`cursor-pointer hover:bg-gray-600/20 hover:text-white py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-white ${
       disabled && "opacity-50"
@@ -88,7 +88,7 @@ const Item = ({ onClick, children, disabled = false, className = "" }) => (
     whileTap={{ scale: 0.9 }}
   >
     {children}
-  </motion.div>
+  </motion.button>
 );
 
 export const Header = () => {
@@ -340,7 +340,7 @@ export const Header = () => {
           ref={ref}
           className="pointer-events-auto drop-shadow-2xl    overflow-y-auto scrollbar bg-gray-700    gap-3 pt-3 flex flex-col z-20 text-white absolute w-full bottom-0 z-50 top-12"
         >
-          <div
+          <button
             onClick={() => setShowMenu(false)}
             className="absolute right-3  "
           >
@@ -349,7 +349,7 @@ export const Header = () => {
                 <TbX />
               </Tooltip>
             </div>
-          </div>
+          </button>
           <div className="p-1.5 w-full"></div>
 
           {showMenuType === "export" && <ExportModal />}
@@ -455,7 +455,7 @@ export const Header = () => {
               </Link>
 
               {settings?.submissions.length ? (
-                <div
+                <button
                   onClick={() => {
                     setShowMenu(true);
                     setShowMenuType("submissions");
@@ -466,10 +466,10 @@ export const Header = () => {
                     <TbForms />
                   </div>{" "}
                   Form Submissions
-                </div>
+                </button>
               ) : null}
 
-              <div
+              <button
                 onClick={() => {
                   setShowMenu(false);
                   actions.selectNode(ROOT_NODE);
@@ -480,9 +480,9 @@ export const Header = () => {
                   <TbBoxModel2 />
                 </div>{" "}
                 Background
-              </div>
+              </button>
 
-              <div
+              <button
                 onClick={() => {
                   setShowMenu(true);
                   setShowMenuType("pages");
@@ -493,7 +493,7 @@ export const Header = () => {
                   <TbListDetails />
                 </div>{" "}
                 Pages
-              </div>
+              </button>
 
               {settings?.name && (
                 <a
@@ -521,7 +521,7 @@ export const Header = () => {
               )}
 
               <hr className="border-b border-gray-500 " />
-              <div
+              <button
                 onClick={async () => {
                   //  return;
                   const dom = document.getElementById("viewport");
@@ -539,14 +539,14 @@ export const Header = () => {
 
                   // isetDialogOpen(htmlOutput);
                 }}
-                className="hidden flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
               >
                 <div className="text-2xl">
                   <TbCode />
                 </div>
                 <div className="">Copy As Html</div>
-              </div>
-              <div
+              </button>
+              <button
                 onClick={() => {
                   setShowMenuType("export");
                   setShowMenu(true);
@@ -557,8 +557,8 @@ export const Header = () => {
                   <TbDownload />
                 </div>
                 <div className="">Export</div>
-              </div>
-              <div
+              </button>
+              <button
                 onClick={() => {
                   setShowMenuType("import");
                   setShowMenu(true);
@@ -569,12 +569,12 @@ export const Header = () => {
                   <TbUpload />
                 </div>{" "}
                 Import
-              </div>
+              </button>
 
               <hr className="border-b border-gray-500 " />
 
               {settings && (
-                <div
+                <button
                   onClick={() => {
                     setShowMenuType("page");
                     setShowMenu(true);
@@ -585,11 +585,11 @@ export const Header = () => {
                     <TbBrandOpenai />
                   </div>{" "}
                   AI Settings
-                </div>
+                </button>
               )}
 
               {lsIds.length ? (
-                <div
+                <button
                   onClick={() => {
                     setShowMenu(true);
                     setShowMenuType("builds");
@@ -600,7 +600,7 @@ export const Header = () => {
                     <TbDevices2 />
                   </div>{" "}
                   Previous Builds
-                </div>
+                </button>
               ) : null}
 
               <hr className="border-b border-gray-500 " />
@@ -610,7 +610,7 @@ export const Header = () => {
                   <p className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3">
                     Signed in as {session.user.email}
                   </p>{" "}
-                  <div
+                  <button
                     onClick={() => popupCenter("/google-signout", "Sign Out")}
                     className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
                   >
@@ -618,10 +618,10 @@ export const Header = () => {
                       <TbLogout />
                     </div>{" "}
                     Sign out
-                  </div>
+                  </button>
                 </>
               ) : (
-                <div
+                <button
                   onClick={() => popupCenter("/google-signin", "Sign In")}
                   className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
                 >
@@ -629,10 +629,10 @@ export const Header = () => {
                     <TbLogin />
                   </div>{" "}
                   Sign in
-                </div>
+                </button>
               )}
 
-              <div
+              <button
                 onClick={() => setSideBarLeft(!sideBarLeft)}
                 className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
               >
@@ -640,7 +640,7 @@ export const Header = () => {
                   {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
                 </div>
                 {sideBarLeft ? "Right" : "Left"} Settings Panel
-              </div>
+              </button>
             </>
           )}
         </div>

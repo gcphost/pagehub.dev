@@ -240,11 +240,11 @@ export const ToolboxContexual = ({ userStyle = null }) => {
   }, [menu]);
 
   const Tool = ({ element, icon, title }) => (
-    <div onClick={() => click(element)}>
+    <button onClick={() => click(element)}>
       <Item>
         <div className="text-2xl w-12">{icon}</div> {title}
       </Item>
-    </div>
+    </button>
   );
 
   const containerTools = (
@@ -368,7 +368,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
                 const title = node.custom.displayName || node.displayName;
 
                 return (
-                  <div
+                  <button
                     key={k}
                     onClick={() => {
                       handleAdd(_);
@@ -384,7 +384,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
                           </div>
                           {title}
                         </div>
-                        <div
+                        <button
                           className="text-white hover:text-gray-200 text-sm"
                           onClick={(e) => {
                             e.preventDefault();
@@ -398,10 +398,10 @@ export const ToolboxContexual = ({ userStyle = null }) => {
                           }}
                         >
                           <TbTrash />
-                        </div>
+                        </button>
                       </div>
                     </Item>
-                  </div>
+                  </button>
                 );
               })}
             </motion.div>

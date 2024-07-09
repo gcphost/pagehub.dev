@@ -34,7 +34,7 @@ export const FontFamilyDialog = () => {
         ) > -1
       }
       callback={(_, k) => (
-        <div
+        <button
           id={`fontFamily-${_}`}
           className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${
             dialog.value === _ ? "bg-gray-100" : ""
@@ -44,7 +44,7 @@ export const FontFamilyDialog = () => {
           onClick={(e) => changed(_)}
         >
           {_.join(", ")}
-        </div>
+        </button>
       )}
     />
   );

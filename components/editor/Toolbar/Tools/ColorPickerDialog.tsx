@@ -90,7 +90,7 @@ const Item = ({
   onMouseOut = (e, value) => {},
   onMouseOver = (e, value) => {},
 }) => (
-  <motion.div
+  <motion.button
     whileHover={
       animate
         ? {
@@ -112,7 +112,7 @@ const Item = ({
     key="colorpicker"
   >
     {children}
-  </motion.div>
+  </motion.button>
 );
 
 const hexToRGBA = (hex, alpha) =>
@@ -206,7 +206,7 @@ export const ColorPickerDialog = () => {
             {
               <div className="w-full flex flex-row px-3 gap-3 items-center justify-between">
                 <div>
-                  <div
+                  <button
                     className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       setColorPicker({
@@ -217,30 +217,30 @@ export const ColorPickerDialog = () => {
                     }}
                   >
                     <TbX />
-                  </div>
+                  </button>
                 </div>
 
                 <div className="flex flex-row  gap-1.5 items-center">
                   <Tooltip content="Save to pallet">
-                    <div
+                    <button
                       className="hover:text-gray-500 cursor-pointer text-xl"
                       onClick={() => saveToPallet()}
                     >
                       <TbDeviceFloppy />
-                    </div>
+                    </button>
                   </Tooltip>
 
                   {isSupported() && (
                     <>
                       <Tooltip content="Color Picker" arrow={false}>
-                        <div
+                        <button
                           onClick={pickColor}
                           className={
                             "w-8 h-8 rounded-md cursor-pointer flex items-center justify-center"
                           }
                         >
                           <BsEyedropper />
-                        </div>
+                        </button>
                       </Tooltip>
                     </>
                   )}

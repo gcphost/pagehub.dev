@@ -151,11 +151,9 @@ FormElement.craft = {
           }}
         />,
 
-        <ToolNodeController
-          position="bottom"
-          align="start"
-          children={<TextSettingsNodeTool />}
-        />,
+        <ToolNodeController position="bottom" align="start">
+          <TextSettingsNodeTool />
+        </ToolNodeController>,
       ];
 
       return [...baseControls];

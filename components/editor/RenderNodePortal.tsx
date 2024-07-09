@@ -82,7 +82,6 @@ export function RenderNodePortal({ children }) {
 
   return (
     <div
-      node-box={id}
       ref={clonedElementRef}
       className="absolute pointer-events-none"
       style={{ zIndex: 50 }}

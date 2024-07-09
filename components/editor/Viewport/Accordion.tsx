@@ -11,13 +11,13 @@ function AccordionMenu(props) {
     <div className={`flex flex-col  w-full   ${props.classes?.body}`}>
       {props.items.map((item, index) => (
         <div key={index} className={" w-full"}>
-          <div
+          <button
             className={`flex px-3 py-6 flex-row justify-between cursor-pointer ${props.classes?.header}`}
             onClick={() => handleClick(index)}
           >
             <div className="">{item.title}</div>
             <div className="">{activeIndex === index ? "-" : "+"}</div>
-          </div>
+          </button>
           <div
             className={` ${activeIndex === index ? "block" : "hidden"} ${
               item?.classes?.content || props.classes?.content

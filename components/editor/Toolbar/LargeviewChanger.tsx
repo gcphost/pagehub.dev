@@ -14,7 +14,7 @@ export const LargeviewChanger = () => {
   // if (device) return null;
 
   return (
-    <div
+    <button
       className={`fixed bottom-4 w-auto ${
         sideBarLeft ? "left-[360px]" : "right-[360px]"
       } flex items-center justify-center z-10 cursor-pointer select-none`}
@@ -30,6 +30,6 @@ export const LargeviewChanger = () => {
       >
         Editing: <span className="font-bold">{view}</span>
       </div>
-    </div>
+    </button>
   );
 };

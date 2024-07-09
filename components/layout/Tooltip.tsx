@@ -9,7 +9,7 @@ export const Tooltip = ({
   placement = "top" as any,
   className = "",
   tipStyle = {},
-  onClick = () => {},
+  onClick = (e?: React.MouseEvent) => {},
   key = "" as any,
 }) => {
   const ref = useRef(null);
@@ -22,7 +22,7 @@ export const Tooltip = ({
 
   return (
     <>
-      <div
+      <button
         ref={ref}
         className={className}
         onClick={onClick}
@@ -32,7 +32,7 @@ export const Tooltip = ({
         data-tooltip-offset={10}
       >
         {children}
-      </div>
+      </button>
       <ReactTooltip id={id} classNameArrow="hidden" className="max-w-[220px]" />
     </>
   );

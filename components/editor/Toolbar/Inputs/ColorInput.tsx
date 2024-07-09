@@ -92,7 +92,7 @@ export const ColorInput = (__props: any) => {
         propKey={propKey}
         propItemKey={propItemKey}
       >
-        <div
+        <button
           className={`w-full h-12 rounded-md cursor-pointer border input-hover bg-${bg}`}
           onClick={(e) => {
             setDialog({
@@ -105,7 +105,7 @@ export const ColorInput = (__props: any) => {
               e: getRect(ref.current),
             });
           }}
-        ></div>
+        ></button>
       </Wrap>
     </div>
   );

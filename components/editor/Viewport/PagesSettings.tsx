@@ -39,7 +39,7 @@ export const PagesSettings = ({}) => {
         visible at the route defined.
       </p>
       <div className="flex flex-col  mx-3 overflow-hidden rounded-lg border border-gray-500">
-        <div
+        <button
           className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
             !isolate ? "bg-gray-500 hover:text-gray-700" : "hover:text-gray-500"
           }`}
@@ -51,10 +51,11 @@ export const PagesSettings = ({}) => {
             <TbArrowUpSquare />
           </div>
           <div className="w-full">All Pages</div>
-        </div>
+        </button>
 
         {pages.map((page, k) => (
-          <div
+          <button
+            key={k}
             className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
               isolate === page.id
                 ? "bg-gray-500 hover:text-gray-700"
@@ -78,7 +79,7 @@ export const PagesSettings = ({}) => {
             <div className="text-right w-full">
               /{sluggit(page?.custom?.displayName, "-")}
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>

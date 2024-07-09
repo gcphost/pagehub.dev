@@ -31,14 +31,15 @@ export const AnimationsInput = () => {
           )}
         </ToolbarItem>
 
-        {React.createElement(motionIt(props, "div"), {
-          ...applyAnimation({}, props),
-          children: (
-            <div className="hidden rounded-2xl bg-gray-500 w-24 h-24  mx-auto  mt-6 items-center justify-center">
-              Test
-            </div>
-          ),
-        })}
+        {React.createElement(
+          motionIt(props, "div"),
+          {
+            ...applyAnimation({}, props),
+          },
+          <div className="hidden rounded-2xl bg-gray-500 w-24 h-24  mx-auto  mt-6 items-center justify-center">
+            Test
+          </div>
+        )}
       </ToolbarSection>
     </>
   );

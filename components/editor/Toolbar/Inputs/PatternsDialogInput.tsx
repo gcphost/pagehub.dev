@@ -71,7 +71,7 @@ export const PatternsDialogInput = ({
         propType={propType}
         propKey={propKey}
       >
-        <div
+        <button
           title={value?.name}
           onClick={(e) => {
             setDialog({
@@ -96,7 +96,7 @@ export const PatternsDialogInput = ({
               ></div>
             )}
           </div>
-        </div>
+        </button>
       </Wrap>
     </div>
   );

@@ -40,7 +40,7 @@ export const IconDialogDialog = () => {
       items={_icons}
       className="text-2xl grid grid-cols-4"
       callback={(_, k) => (
-        <div
+        <button
           id={`iconPicker-${_}`}
           className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md justify-center gap-3 items-center ${
             dialog.value === _ ? "bg-gray-100" : ""
@@ -51,7 +51,7 @@ export const IconDialogDialog = () => {
           <div className="pointer-events-none flex  jusitfy-center items-center">
             <IconLoader icon={_} />
           </div>
-        </div>
+        </button>
       )}
     />
   );

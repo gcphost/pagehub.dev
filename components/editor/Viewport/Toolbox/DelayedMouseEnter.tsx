@@ -24,14 +24,14 @@ export const DelayedMouseEnter = ({
   };
 
   return (
-    <motion.div
+    <motion.button
       onMouseEnter={handleDelayedMouseEnter}
       onMouseLeave={handleDelayedMouseLeave}
       onClick={onClick}
       {...props}
     >
       {children}
-    </motion.div>
+    </motion.button>
   );
 };
 

@@ -73,7 +73,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
           whileTap: { scale: 0.9 },
         }}
       >
-        <motion.div
+        <motion.button
           ref={ref}
           className={
             "border btn text-white rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base"
@@ -92,7 +92,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
           }}
         >
           <TbPlus /> Add {type}
-        </motion.div>
+        </motion.button>
       </RenderNodeControl>
     </AnimatePresence>
   );

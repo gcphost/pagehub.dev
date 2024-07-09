@@ -6,8 +6,8 @@ export const setClonedProps = (props, query, exclude = []) => {
 
 export const ConvertToRegularComponent = ({ query, actions, id }) => (
   <p>
-    <strong
-      className="cursor-pointer underline"
+    <button
+      className="cursor-pointer underline font-bold"
       onClick={() => {
         const node = query.node(id).get();
         removeHasManyRelation(node, query, actions);
@@ -19,7 +19,7 @@ export const ConvertToRegularComponent = ({ query, actions, id }) => (
       }}
     >
       Convert to a regular component
-    </strong>{" "}
+    </button>{" "}
     to adjust all of the settings and remove the relation.
   </p>
 );
@@ -46,14 +46,14 @@ export const NoSettings = ({ actions, id, query }) => (
 
 export const ConvertToStyledComponent = ({ actions, id }) => (
   <p>
-    <strong
-      className="cursor-pointer underline"
+    <button
+      className="cursor-pointer underline font-bold"
       onClick={() =>
         actions.setProp(id, (prop) => (prop.relationType = "style"))
       }
     >
       Convert to a styled component
-    </strong>{" "}
+    </button>{" "}
     to adjust non style related settings.
   </p>
 );
@@ -66,12 +66,12 @@ export const RenderChildren = ({ props, children, query, actions, id }) => {
         <div className="p-3 flex flex-col gap-6">
           <p>
             Properties are defined in the{" "}
-            <strong
-              className="cursor-pointer underline"
+            <button
+              className="cursor-pointer underline font-bold"
               onClick={() => actions.selectNode(props.belongsTo)}
             >
               {parent.data.custom.displayName || parent.data.displayName}
-            </strong>{" "}
+            </button>{" "}
             component and can be adjusted there.
           </p>
 

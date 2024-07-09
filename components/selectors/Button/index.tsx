@@ -399,11 +399,9 @@ Button.craft = {
           }}
         />,
 
-        <ToolNodeController
-          position="bottom"
-          align="start"
-          children={<ButtonSettingsNodeTool />}
-        />,
+        <ToolNodeController position="bottom" align="start">
+          <ButtonSettingsNodeTool />
+        </ToolNodeController>,
       ];
 
       return [...baseControls];

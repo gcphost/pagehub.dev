@@ -138,12 +138,12 @@ export const Dialog = ({
                 />
 
                 {!searchValue && (
-                  <div
+                  <button
                     className="w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl"
                     onClick={(e) => changed(null)}
                   >
                     Default
-                  </div>
+                  </button>
                 )}
 
                 {!itemList.length && (
@@ -157,7 +157,7 @@ export const Dialog = ({
                     if (callback) return callback(_, k);
 
                     return (
-                      <div
+                      <button
                         id={`font-${_}`}
                         className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${
                           dialog.value === _ ? "bg-white" : ""
@@ -167,7 +167,7 @@ export const Dialog = ({
                         onClick={(e) => changed(_)}
                       >
                         {_.join(", ")}
-                      </div>
+                      </button>
                     );
                   })}
                 </div>

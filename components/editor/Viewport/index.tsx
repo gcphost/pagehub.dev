@@ -520,7 +520,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       {!enabled && !screenshot && (
         <div className="absolute right-12 top-12 z-50">
           <Tooltip content="Edit" placement="bottom" arrow={false}>
-            <div
+            <button
               className="p-4 btn text-2xl bg-violet-500/90 cursor-pointer select-none rounded-md text-white"
               onClick={() =>
                 setOptions((options) => {
@@ -536,7 +536,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
               }
             >
               <TbCode />
-            </div>
+            </button>
           </Tooltip>
         </div>
       )}
