@@ -70,7 +70,7 @@ function DragAdjust({
   };
 
   return (
-    <motion.div
+    <motion.button
       whileHover={{
         scale: 0.9,
         transition: { duration: 0.2 },
@@ -89,11 +89,9 @@ function DragAdjust({
       whileTap={{ scale: 1 }}
       className={`drag group flex flex-row gap-3 items-center p-1 rounded-sm border cursor-move ${className}`}
       onMouseDown={handleMouseDown}
-      role="button"
-      tabIndex={0}
     >
       {children}
-    </motion.div>
+    </motion.button>
   );
 }
 

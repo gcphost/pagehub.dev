@@ -224,8 +224,7 @@ export const DomainSettings = () => {
         <hr className="border-b border-gray-500 -mx-3" />
 
         <div className="flex flex-col gap-3">
-          <div
-            role="button"
+          <button
             tabIndex={0}
             className="cursor-pointer flex flex-row items-center gap-2"
             onClick={() =>
@@ -240,10 +239,9 @@ export const DomainSettings = () => {
             {publishType === "local" ? <FaCheck /> : <FaCircle size={6} />}{" "}
             Publish to pagehub.dev
             {status !== "authenticated" && <TbLogin />}
-          </div>
+          </button>
 
-          <div
-            role="button"
+          <button
             tabIndex={-1}
             className="cursor-pointer flex flex-row items-center gap-2"
             onClick={() =>
@@ -258,10 +256,9 @@ export const DomainSettings = () => {
             {publishType === "domain" ? <FaCheck /> : <FaCircle size={6} />}{" "}
             Publish to your own domain
             {status !== "authenticated" && <TbLogin />} <TbLock />
-          </div>
+          </button>
 
-          <div
-            role="button"
+          <button
             tabIndex={-2}
             className="cursor-pointer flex flex-row items-center gap-2"
             onClick={() => setPublishType("draft")}
@@ -273,7 +270,7 @@ export const DomainSettings = () => {
           >
             {publishType === "draft" ? <FaCheck /> : <FaCircle size={6} />} Save
             as draft
-          </div>
+          </button>
         </div>
 
         {publishType === "local" && (

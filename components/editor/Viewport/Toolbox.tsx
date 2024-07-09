@@ -221,7 +221,7 @@ export const Toolbox = ({ userStyle = null }) => {
           exit="hidden"
           className={`absolute z-40 ${pos} select-none flex flex-col md:flex-row h-screen items-center pointer-events-none`}
         >
-          <div
+          <button
             id="toolboxWrap"
             onMouseLeave={() => {
               setActiveMenu(null);
@@ -230,8 +230,6 @@ export const Toolbox = ({ userStyle = null }) => {
             className={
               "flex flex-col md:flex-row gap-6 justify-center items-center pointer-events-auto"
             }
-            role="button"
-            tabIndex={0}
           >
             <motion.div
               variants={iconVariants}
@@ -267,7 +265,7 @@ export const Toolbox = ({ userStyle = null }) => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </button>
         </motion.div>
       )}
     </AnimatePresence>

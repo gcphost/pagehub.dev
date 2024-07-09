@@ -66,12 +66,11 @@ const DragTable = () => {
   };
 
   return (
-    <div
+    <button
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       className="table border"
-      role="button"
       tabIndex={0}
     >
       {Array(numRows)
@@ -87,7 +86,7 @@ const DragTable = () => {
               ))}
           </div>
         ))}
-    </div>
+    </button>
   );
 };
 

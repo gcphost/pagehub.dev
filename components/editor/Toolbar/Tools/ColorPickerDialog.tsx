@@ -110,7 +110,6 @@ const Item = ({
     onMouseOver={(e) => onMouseOver(e, value)}
     onFocus={(e) => onMouseOver(e, value)}
     tabIndex={0}
-    role="button"
     onMouseLeave={(e) => onMouseOut(e, value)}
     key="colorpicker"
   >
@@ -195,12 +194,11 @@ export const ColorPickerDialog = () => {
     >
       <div className="bg-white rounded-lg flex flex-row">
         <div>
-          <div
+          <button
             className="flex flex-col gap-0 w-full max-w-[320px]"
             onMouseOver={() => setShow(false)}
             onFocus={() => setShow(false)}
             tabIndex={0}
-            role="button"
           >
             {
               <div className="w-full flex flex-row px-3 gap-3 items-center justify-between">
@@ -276,7 +274,7 @@ export const ColorPickerDialog = () => {
                 }, 20)}
               />
             </div>
-          </div>
+          </button>
         </div>
 
         <motion.div
@@ -319,17 +317,16 @@ export const ColorPickerDialog = () => {
         </motion.div>
 
         {!show && colorPicker.showPallet && (
-          <div
+          <button
             className="border w-3 flex bg-gray items-center bg-gradient-to-tr from-white/50 to-gray-200 cursor-pointer"
             onMouseOver={() => {
               setShow(true);
             }}
             onFocus={() => setShow(true)}
             tabIndex={0}
-            role="button"
           >
             {show ? null : <TbCaretRight />}
-          </div>
+          </button>
         )}
       </div>
     </Dialog>

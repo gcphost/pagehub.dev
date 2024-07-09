@@ -179,9 +179,8 @@ function Dialog({ children, target, state, opener }: any): any {
               zIndex: 50,
             }}
           >
-            <div
+            <button
               onMouseDown={handleMouseDown}
-              role="button"
               tabIndex={0}
               className="h-8 cursor-move"
             >
@@ -196,7 +195,7 @@ function Dialog({ children, target, state, opener }: any): any {
                   <MdClose />
                 </button>
               </div>
-            </div>
+            </button>
 
             <div
               ref={dialogContentRef}

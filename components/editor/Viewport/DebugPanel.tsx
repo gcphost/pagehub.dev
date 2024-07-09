@@ -38,7 +38,7 @@ export default function DebugPanel() {
   if (!active) return null;
 
   return (
-    <div
+    <button
       ref={divRef}
       className="flex flex-col gap-3 p-1.5 z-50 h-1/2 w-1/3 overflow-auto scrollbar absolute top-3 right-3 bg-white rounded-xl"
       style={{
@@ -50,12 +50,11 @@ export default function DebugPanel() {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      role="button"
       tabIndex={0}
     >
       <div>
         <ParseTree tree={theNode.data} />
       </div>
-    </div>
+    </button>
   );
 }

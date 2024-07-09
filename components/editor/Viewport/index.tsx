@@ -490,22 +490,6 @@ export const Viewport: React.FC<any> = ({ children }) => {
     };
   }, []);
 
-  const { active, related } = useEditor((state, query) => {
-    const currentlySelectedNodeId = query.getEvent("selected").first();
-
-    return {
-      active: currentlySelectedNodeId,
-      related:
-        currentlySelectedNodeId && state.nodes[currentlySelectedNodeId].related,
-    };
-  });
-
-  const setSideBarOpen = useSetRecoilState(SideBarOpen);
-
-  useEffect(() => {
-    // if (active) setSideBarOpen(true);
-  }, [active]);
-
   return (
     <div
       data-container={true}
