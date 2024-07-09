@@ -1,15 +1,13 @@
 // @ts-ignore
-import Page from '../../models/page';
-import dbConnect from '../../utils/dbConnect';
+import Page from "../../models/page";
+import dbConnect from "../../utils/dbConnect";
 
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 export default async function check(req, res) {
   await dbConnect();
 
-  const {
-    name, submission, mailTo, formName
-  } = req.body;
+  const { name, submission, mailTo, formName } = req.body;
 
   // sanitize user input for normal search shit, limit
   // maybe slugify
@@ -17,11 +15,7 @@ export default async function check(req, res) {
   // spamm control, throttles, etc..
 
   try {
-    const named = await Page.findOne(
-      { $or: [{ name }, { draftId: name }] },
-      //  { $push: { submissions: submission } },
-      //  { new: true }
-    );
+    const named = await Page.findOne({ $or: [{ name }, { draftId: name }] });
 
     if (named) {
       console.log(submission, named.submissions);
@@ -36,11 +30,11 @@ export default async function check(req, res) {
           secure: true, // true for 465, false for other ports
           auth: {
             user: process.env.MAIL_USER,
-            pass: process.env.MAIL_PASS
-          }
+            pass: process.env.MAIL_PASS,
+          },
         });
 
-        let emailContent = 'New submission:\n\n';
+        let emailContent = "New submission:\n\n";
 
         for (const key in submission) {
           emailContent += `${key}: ${submission[key]}\n`;
@@ -48,10 +42,10 @@ export default async function check(req, res) {
 
         // setup email data
         const mailOptions = {
-          from: 'Pagehub <no-reply@pagehub.dev>',
+          from: "Pagehub <no-reply@pagehub.dev>",
           to: mailTo,
           subject: `You have received a submission for ${named.domain || name || named.draftId}`,
-          text: emailContent
+          text: emailContent,
         };
 
         // send mail with defined transport object

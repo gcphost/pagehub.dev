@@ -1,6 +1,6 @@
-import Footer from 'components/footer';
-import Link from 'next/link';
-import { templates } from 'utils/templates';
+import Footer from "components/footer";
+import Link from "next/link";
+import { templates } from "utils/templates";
 
 const Card = ({ icon, title, description }) => (
   <div className="text-center flex gap-6 flex-col justify-center items-center w-1/2">
@@ -100,7 +100,7 @@ function Examples() {
             <p className="w-2/3 mx-auto leading-8  font-normal lg:text-xl sm:px-16 xl:px-48 text-gray-400"></p>
 
             <p className="text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-gray-400 hidden">
-              Start with one of our designs or a{' '}
+              Start with one of our designs or a{" "}
               <Link href="/builder" legacyBehavior>
                 <a className="text-white ">blank template</a>
               </Link>
@@ -111,32 +111,32 @@ function Examples() {
 
         <div className="pb-44 gap-6 mx-auto grid lg:grid-cols-2 xl:grid-cols-3">
           {templates.map((tpl, key) => (
-              <figure
-                key={key}
-                className="w-[300px] md:w-[400px] h-[290px] bg-center bg-cover flex flex-cl rounded-2xl border-violet-400/50 border-2 mb-3 group"
-                style={{ backgroundImage: `url(${tpl.image})` }}
-              >
-                <Link href={`/build/${tpl.href}`}></Link>
+            <figure
+              key={key}
+              className="w-[300px] md:w-[400px] h-[290px] bg-center bg-cover flex flex-cl rounded-2xl border-violet-400/50 border-2 mb-3 group"
+              style={{ backgroundImage: `url(${tpl.image})` }}
+            >
+              <Link href={`/build/${tpl.href}`}></Link>
 
-                <div className="w-full h-full bg-gray-500/50  hidden group-hover:flex transition p-3">
-                  <div className="flex gap-3 self-end justify-between w-full">
-                    <div className="w-full">
-                      <Link href={`/build/${tpl.href}`} target="_blank">
-                        <div className="bg-violet-500 px-3 py-3 rounded-lg w-full text-center border border-violet-700 hover:bg-violet-400/90">
-                          Build
-                        </div>
-                      </Link>
-                    </div>
-                    <div className="w-full">
-                      <Link href={`${tpl.demo}`} target="_blank">
-                        <div className="bg-gray-500 px-3 py-3 rounded-lg w-full text-center hover:bg-gray-400/90">
-                          Demo
-                        </div>
-                      </Link>
-                    </div>
+              <div className="w-full h-full bg-gray-500/50  hidden group-hover:flex transition p-3">
+                <div className="flex gap-3 self-end justify-between w-full">
+                  <div className="w-full">
+                    <Link href={`/build/${tpl.href}`} target="_blank">
+                      <div className="bg-violet-500 px-3 py-3 rounded-lg w-full text-center border border-violet-700 hover:bg-violet-400/90">
+                        Build
+                      </div>
+                    </Link>
+                  </div>
+                  <div className="w-full">
+                    <Link href={`${tpl.demo}`} target="_blank">
+                      <div className="bg-gray-500 px-3 py-3 rounded-lg w-full text-center hover:bg-gray-400/90">
+                        Demo
+                      </div>
+                    </Link>
                   </div>
                 </div>
-              </figure>
+              </div>
+            </figure>
           ))}
         </div>
 

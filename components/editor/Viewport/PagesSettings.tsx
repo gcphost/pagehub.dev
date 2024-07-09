@@ -1,11 +1,11 @@
-import { ROOT_NODE, useEditor } from '@craftjs/core';
-import { useEffect, useState } from 'react';
-import { TbArrowUpSquare, TbHash } from 'react-icons/tb';
-import { useRecoilState } from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
-import { IsolateAtom, isolatePageAlt } from 'utils/lib';
+import { ROOT_NODE, useEditor } from "@craftjs/core";
+import { useEffect, useState } from "react";
+import { TbArrowUpSquare, TbHash } from "react-icons/tb";
+import { useRecoilState } from "recoil";
+import { SettingsAtom } from "utils/atoms";
+import { IsolateAtom, isolatePageAlt } from "utils/lib";
 
-const sluggit = require('slug');
+const sluggit = require("slug");
 
 export const PagesSettings = ({}) => {
   const [settings, setSettings] = useRecoilState(SettingsAtom);
@@ -23,7 +23,7 @@ export const PagesSettings = ({}) => {
         .map((_) => {
           const _props = query.node(_).get();
 
-          return _props?.data?.props?.type === 'page'
+          return _props?.data?.props?.type === "page"
             ? { ..._props.data, id: _ }
             : null;
         })
@@ -41,7 +41,7 @@ export const PagesSettings = ({}) => {
       <div className="flex flex-col  mx-3 overflow-hidden rounded-lg border border-gray-500">
         <div
           className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
-            !isolate ? 'bg-gray-500 hover:text-gray-700' : 'hover:text-gray-500'
+            !isolate ? "bg-gray-500 hover:text-gray-700" : "hover:text-gray-500"
           }`}
           onClick={() => {
             isolatePageAlt(true, query, null, actions, setIsolate, false);
@@ -54,13 +54,14 @@ export const PagesSettings = ({}) => {
         </div>
 
         {pages.map((page, k) => (
-            <div
-              className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
-                isolate === page.id
-                  ? 'bg-gray-500 hover:text-gray-700'
-                  : 'hover:text-gray-500'
-              }`}
-              onClick={() => isolatePageAlt(
+          <div
+            className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
+              isolate === page.id
+                ? "bg-gray-500 hover:text-gray-700"
+                : "hover:text-gray-500"
+            }`}
+            onClick={() =>
+              isolatePageAlt(
                 isolate,
                 query,
                 page.id,
@@ -68,16 +69,16 @@ export const PagesSettings = ({}) => {
                 setIsolate,
                 false
               )
-              }
-            >
-              <div className="w-min">
-                <TbHash />
-              </div>
-              <div className="w-full">{page?.custom?.displayName}</div>
-              <div className="text-right w-full">
-                /{sluggit(page?.custom?.displayName, '-')}
-              </div>
+            }
+          >
+            <div className="w-min">
+              <TbHash />
             </div>
+            <div className="w-full">{page?.custom?.displayName}</div>
+            <div className="text-right w-full">
+              /{sluggit(page?.custom?.displayName, "-")}
+            </div>
+          </div>
         ))}
       </div>
     </div>

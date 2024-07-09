@@ -1,19 +1,19 @@
-import { atom, useRecoilState } from 'recoil';
-import { TailwindStyles } from 'utils/tailwind';
-import { ItemToggle, sizingItems } from '../Helpers/ItemSelector';
-import { ToolbarItem } from '../ToolbarItem';
+import { atom, useRecoilState } from "recoil";
+import { TailwindStyles } from "utils/tailwind";
+import { ItemToggle, sizingItems } from "../Helpers/ItemSelector";
+import { ToolbarItem } from "../ToolbarItem";
 
 export const HeightInput = ({
-  propKey = 'height',
-  propType = 'class',
-  propTag = 'h',
-  values = 'height',
-  sliderValues = 'height',
-  label = 'Height',
+  propKey = "height",
+  propType = "class",
+  propTag = "h",
+  values = "height",
+  sliderValues = "height",
+  label = "Height",
 }) => {
   const itemListState = atom({
     key: propKey,
-    default: 'slider',
+    default: "slider",
   });
 
   const [state, setState] = useRecoilState(itemListState);
@@ -22,9 +22,9 @@ export const HeightInput = ({
     <ItemToggle
       selected={state}
       onChange={(value) => setState(value)}
-      items={sizingItems.filter((_) => _.id !== 'select')}
+      items={sizingItems.filter((_) => _.id !== "select")}
     >
-      {state === 'slider' && (
+      {state === "slider" && (
         <ToolbarItem
           propKey={propKey}
           type="slider"
@@ -36,7 +36,7 @@ export const HeightInput = ({
         />
       )}
 
-      {state === 'px' && (
+      {state === "px" && (
         <ToolbarItem
           propKey={propKey}
           propType={propType}

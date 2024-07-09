@@ -1,5 +1,5 @@
-import { AnimatePresence } from 'framer-motion';
-import { getNode } from './Toolbar/Tools/lib';
+import { AnimatePresence } from "framer-motion";
+import { getNode } from "./Toolbar/Tools/lib";
 
 export const RenderNodeTools = () => {
   const node = getNode();

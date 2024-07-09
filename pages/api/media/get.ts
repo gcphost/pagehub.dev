@@ -2,7 +2,7 @@ export default async (req, res) => {
   const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ID}/images/v2/direct_upload`;
 
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
       Authorization: `Bearer ${process.env.CLOUDFLARE_TOKEN}`,
       //  "Content-Type": "application/json",

@@ -1,18 +1,18 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { HoverNodeController } from 'components/editor/NodeControllers/HoverNodeController';
-import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
+import { useEditor, useNode } from "@craftjs/core";
+import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
+import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import {
   getClonedState,
   setClonedProps,
-} from 'components/editor/Toolbar/Helpers/CloneHelper';
-import { PreviewAtom, TabAtom, ViewAtom } from 'components/editor/Viewport';
-import React, { useRef } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { motionIt, selectAfterAdding } from 'utils/lib';
-import { ClassGenerator, applyAnimation } from 'utils/tailwind';
-import { BaseSelectorProps } from '..';
-import { useScrollToSelected } from '../lib';
-import { DividerSettings } from './DividerSettings';
+} from "components/editor/Toolbar/Helpers/CloneHelper";
+import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import React, { useRef } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { motionIt, selectAfterAdding } from "utils/lib";
+import { ClassGenerator, applyAnimation } from "utils/tailwind";
+import { BaseSelectorProps } from "..";
+import { useScrollToSelected } from "../lib";
+import { DividerSettings } from "./DividerSettings";
 
 interface DividerProps extends BaseSelectorProps {
   url?: string;
@@ -38,7 +38,9 @@ export const Divider = (props: DividerProps) => {
     id,
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) => getClonedState(props, state));
+  const { actions, query, enabled } = useEditor((state) =>
+    getClonedState(props, state)
+  );
 
   useScrollToSelected(id, enabled);
   selectAfterAdding(
@@ -64,19 +66,19 @@ export const Divider = (props: DividerProps) => {
   };
 
   if (enabled) {
-    prop['data-bounding-box'] = enabled;
-    prop['data-empty-state'] = false;
-    prop['node-id'] = id;
+    prop["data-bounding-box"] = enabled;
+    prop["data-empty-state"] = false;
+    prop["node-id"] = id;
   }
 
   return React.createElement(
-    motionIt(props, 'hr'),
+    motionIt(props, "hr"),
     applyAnimation({ ...prop, key: id }, props)
   );
 };
 
 Divider.craft = {
-  displayName: 'Divider',
+  displayName: "Divider",
   rules: {
     canDrag: () => true,
     canMoveIn: () => false,
@@ -93,9 +95,9 @@ Divider.craft = {
           align="start"
           placement="end"
           alt={{
-            position: 'bottom',
-            align: 'start',
-            placement: 'start',
+            position: "bottom",
+            align: "start",
+            placement: "start",
           }}
         />,
       ];

@@ -1,8 +1,8 @@
-import { LoremIpsum } from 'lorem-ipsum';
-import { BsBodyText } from 'react-icons/bs';
-import { MdShortText } from 'react-icons/md';
-import { RenderToolComponent } from './lib';
-import { Text } from '../../../selectors/Text';
+import { LoremIpsum } from "lorem-ipsum";
+import { BsBodyText } from "react-icons/bs";
+import { MdShortText } from "react-icons/md";
+import { RenderToolComponent } from "./lib";
+import { Text } from "../../../selectors/Text";
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
@@ -26,7 +26,7 @@ export const RenderTextComponent = ({ mobile, desktop, display }) => {
       mobile={{ fontSize: mobile }}
       desktop={{ fontSize: desktop }}
       display={display}
-      custom={{ displayName: 'Title' }}
+      custom={{ displayName: "Title" }}
     />
   );
 };
@@ -43,7 +43,7 @@ export const RenderParagraphComponent = (props) => {
           <BsBodyText /> Paragraph
         </div>
       }
-      custom={{ displayName: 'Paragraph' }}
+      custom={{ displayName: "Paragraph" }}
     />
   );
 };
@@ -81,21 +81,21 @@ export const ParagraphComponents = [
   <RenderParagraphComponent
     key="2"
     element={Text}
-    mobile={{ lineHeight: 'leading-10' }}
+    mobile={{ lineHeight: "leading-10" }}
   />,
 ];
 
 export const TextToolbox = {
-  title: 'Text',
+  title: "Text",
   content: TextComponents,
 };
 
 export const ParagraphToolbox = {
-  title: 'Paragraphs',
+  title: "Paragraphs",
   content: ParagraphComponents,
 };
 
 export const textToolboxItems = {
-  title: 'Text',
+  title: "Text",
   items: [TextToolbox, ParagraphToolbox],
 };

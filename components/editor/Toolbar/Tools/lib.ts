@@ -1,11 +1,11 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { getRect } from 'components/editor/Viewport/useRect';
-import { useEffect } from 'react';
+import { useEditor, useNode } from "@craftjs/core";
+import { getRect } from "components/editor/Viewport/useRect";
+import { useEffect } from "react";
 
-import { ViewAtom } from 'components/editor/Viewport';
-import { getProp } from 'components/editor/Viewport/lib';
-import throttle from 'lodash.throttle';
-import { useRecoilValue } from 'recoil';
+import { ViewAtom } from "components/editor/Viewport";
+import { getProp } from "components/editor/Viewport/lib";
+import throttle from "lodash.throttle";
+import { useRecoilValue } from "recoil";
 
 export const typeProps = () => {
   const {
@@ -24,9 +24,10 @@ export const getTypeProp = (props = {}, nodeProps) => {
   return getProp(props, view, nodeProps);
 };
 
-export const useDialog = (dialog, setDialog, ref, propKey = '') => {
+export const useDialog = (dialog, setDialog, ref, propKey = "") => {
   const scroll = () => {
-    if (!dialog.enabled || !dialog.propKey || dialog.propKey !== propKey) return;
+    if (!dialog.enabled || !dialog.propKey || dialog.propKey !== propKey)
+      return;
 
     setDialog({ ...dialog, e: getRect(ref.current) });
   };
@@ -34,12 +35,12 @@ export const useDialog = (dialog, setDialog, ref, propKey = '') => {
   useEffect(() => {
     document
       .querySelector('[data-toolbar="true"]')
-      ?.addEventListener('scroll', throttle(scroll, 20));
+      ?.addEventListener("scroll", throttle(scroll, 20));
 
     return () => {
       document
         .querySelector('[data-toolbar="true"]')
-        ?.removeEventListener('scroll', scroll);
+        ?.removeEventListener("scroll", scroll);
     };
   }, [ref.current, dialog.enabled]);
 };

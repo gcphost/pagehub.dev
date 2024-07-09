@@ -1,22 +1,22 @@
-import { Button } from 'components/selectors/Button';
-import { RxButton } from 'react-icons/rx';
-import { RenderToolComponent } from './lib';
+import { Button } from "components/selectors/Button";
+import { RxButton } from "react-icons/rx";
+import { RenderToolComponent } from "./lib";
 
-export const RenderButtonComponent = ({ text = 'Button', ...props }) => {
+export const RenderButtonComponent = ({ text = "Button", ...props }) => {
   const root = {
     ...(props.root || {}),
   };
 
   const mobile = {
     ...(props.mobile || {}),
-    flexDirection: 'flex-col',
-    alignItems: 'text-center',
-    gap: 'gap-8',
-    px: 'px-12',
-    py: 'py-6',
-    width: 'w-auto',
-    display: 'flex',
-    cursor: 'cursor-pointer',
+    flexDirection: "flex-col",
+    alignItems: "text-center",
+    gap: "gap-8",
+    px: "px-12",
+    py: "py-6",
+    width: "w-auto",
+    display: "flex",
+    cursor: "cursor-pointer",
   };
 
   return (
@@ -26,7 +26,7 @@ export const RenderButtonComponent = ({ text = 'Button', ...props }) => {
           <RxButton /> {text}
         </div>
       }
-      iconPosition={props.iconPosition || 'left'}
+      iconPosition={props.iconPosition || "left"}
       buttons={[
         {
           text,
@@ -40,15 +40,15 @@ export const RenderButtonComponent = ({ text = 'Button', ...props }) => {
 };
 
 export const ButtonToolbox = {
-  title: 'Buttons',
+  title: "Buttons",
   content: [
     <RenderButtonComponent
       text="Button"
       key="1"
-      root={{ border: 'border', borderColor: 'border-gray-500' }}
+      root={{ border: "border", borderColor: "border-gray-500" }}
     />,
   ],
   classes: {
-    content: 'p-3  grid grid-cols-2 gap-3',
+    content: "p-3  grid grid-cols-2 gap-3",
   },
 };

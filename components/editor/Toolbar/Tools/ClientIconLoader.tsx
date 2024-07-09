@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
 export const ClientIconLoader = ({ value }) => {
   // TMP legacy
-  if (!value || value.startsWith('Fa')) {
+  if (!value || value.startsWith("Fa")) {
     return null;
   }
 
-  return React.createElement('svg', {
+  return React.createElement("svg", {
     dangerouslySetInnerHTML: { __html: value },
-    fill: 'currentColor',
+    fill: "currentColor",
   });
 };
 export default ClientIconLoader;

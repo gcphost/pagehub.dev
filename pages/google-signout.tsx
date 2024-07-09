@@ -1,5 +1,5 @@
-import { signOut, useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const SignInPage = () => {
   const { data: session, status } = useSession();
@@ -12,12 +12,12 @@ const SignInPage = () => {
   return (
     <div
       style={{
-        width: '100vw',
-        height: '100vh',
-        position: 'absolute',
+        width: "100vw",
+        height: "100vh",
+        position: "absolute",
         left: 0,
         top: 0,
-        background: 'white',
+        background: "white",
       }}
     >
       Logging out...

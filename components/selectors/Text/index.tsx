@@ -1,28 +1,28 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { AutoTextSize } from 'auto-text-size';
-import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
-import { ToolNodeController } from 'components/editor/NodeControllers/ToolNodeController';
-import TextSettingsNodeTool from 'components/editor/NodeControllers/Tools/TextSettingsNodeTool';
+import { useEditor, useNode } from "@craftjs/core";
+import { AutoTextSize } from "auto-text-size";
+import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
+import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
+import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
 import {
   getClonedState,
   setClonedProps,
-} from 'components/editor/Toolbar/Helpers/CloneHelper';
-import { PreviewAtom, TabAtom, ViewAtom } from 'components/editor/Viewport';
-import Link from 'next/link';
-import React from 'react';
-import { FaFont } from 'react-icons/fa';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { motionIt, selectAfterAdding } from 'utils/lib';
+} from "components/editor/Toolbar/Helpers/CloneHelper";
+import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import Link from "next/link";
+import React from "react";
+import { FaFont } from "react-icons/fa";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { motionIt, selectAfterAdding } from "utils/lib";
 
-import { applyAnimation, ClassGenerator } from 'utils/tailwind';
+import { applyAnimation, ClassGenerator } from "utils/tailwind";
 
-import { HoverNodeController } from 'components/editor/NodeControllers/HoverNodeController';
-import TextSettingsTopNodeTool from 'components/editor/NodeControllers/Tools/TextSettingsTopNodeTool';
-import { changeProp } from 'components/editor/Viewport/lib';
-import debounce from 'lodash.debounce';
-import { useScrollToSelected } from '../lib';
-import { BaseSelectorProps } from '..';
-import { TextSettings } from './TextSettings';
+import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
+import TextSettingsTopNodeTool from "components/editor/NodeControllers/Tools/TextSettingsTopNodeTool";
+import { changeProp } from "components/editor/Viewport/lib";
+import debounce from "lodash.debounce";
+import { useScrollToSelected } from "../lib";
+import { BaseSelectorProps } from "..";
+import { TextSettings } from "./TextSettings";
 
 export interface TextProps extends BaseSelectorProps {
   text?: string;
@@ -51,7 +51,7 @@ export const OnlyText = ({ children, ...props }) => {
 
 OnlyText.craft = {
   rules: {
-    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === 'Text'),
+    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === "Text"),
   },
 };
 
@@ -61,7 +61,9 @@ export const Text = (props: Partial<TextProps>) => {
     ...props,
   };
 
-  const { actions, query, enabled } = useEditor((state) => getClonedState(props, state));
+  const { actions, query, enabled } = useEditor((state) =>
+    getClonedState(props, state)
+  );
 
   const tab = useSetRecoilState(TabAtom);
   const view = useRecoilValue(ViewAtom);
@@ -80,9 +82,9 @@ export const Text = (props: Partial<TextProps>) => {
 
   let { text, tagName } = props;
 
-  if (text && typeof window !== 'undefined') {
-    const doc = new DOMParser().parseFromString(text, 'text/html');
-    const a = doc.getElementsByTagName('p');
+  if (text && typeof window !== "undefined") {
+    const doc = new DOMParser().parseFromString(text, "text/html");
+    const a = doc.getElementsByTagName("p");
 
     if (a.length) {
       const b = [];
@@ -92,13 +94,13 @@ export const Text = (props: Partial<TextProps>) => {
         b.push(res);
       }
 
-      const c = b.filter((_) => _).map((_) => (_ === '<br>' ? '' : _));
+      const c = b.filter((_) => _).map((_) => (_ === "<br>" ? "" : _));
 
       if (b.length) {
-        text = c.join('<br>');
+        text = c.join("<br>");
       }
 
-      if (text === '<br>') text = '';
+      if (text === "<br>") text = "";
     }
   }
   const prop = {
@@ -108,50 +110,50 @@ export const Text = (props: Partial<TextProps>) => {
 
   if (enabled) {
     if (!text) prop.children = <FaFont />;
-    prop['data-bounding-box'] = enabled;
-    prop['data-empty-state'] = !text;
-    prop['node-id'] = id;
+    prop["data-bounding-box"] = enabled;
+    prop["data-empty-state"] = !text;
+    prop["node-id"] = id;
     prop.contentEditable = true;
-    prop['data-gramm'] = false;
+    prop["data-gramm"] = false;
     prop.suppressContentEditableWarning = true;
     prop.onInput = debounce((e) => {
       changeProp({
         setProp,
-        propKey: 'text',
-        propType: 'component',
+        propKey: "text",
+        propType: "component",
         value: e.target.innerText,
       });
     }, 500);
-  } else if (props.url && typeof props.url === 'string') {
+  } else if (props.url && typeof props.url === "string") {
     tagName = Link as any;
-    prop.href = props.url || '#';
+    prop.href = props.url || "#";
     prop.target = props.urlTarget;
     prop.onClick = (e) => {
       if (enabled) e.preventDefault();
     };
   }
 
-  if (tagName === 'Textfit') {
-    tagName = 'div';
+  if (tagName === "Textfit") {
+    tagName = "div";
     const t = (
       <AutoTextSize
-        style={{ margin: '0 auto' }}
-        as={props.url ? Link : 'div'}
-        dangerouslySetInnerHTML={{ __html: text || '' }}
+        style={{ margin: "0 auto" }}
+        as={props.url ? Link : "div"}
+        dangerouslySetInnerHTML={{ __html: text || "" }}
       />
     ) as any;
     prop.children = t;
   } else if (text) {
-    prop.dangerouslySetInnerHTML = { __html: text || '' };
+    prop.dangerouslySetInnerHTML = { __html: text || "" };
   }
 
   const final = applyAnimation({ ...prop, key: id }, props);
 
-  return React.createElement(motionIt(props, tagName || 'div'), final);
+  return React.createElement(motionIt(props, tagName || "div"), final);
 };
 
 Text.craft = {
-  displayName: 'Text',
+  displayName: "Text",
   rules: {
     canDrag: () => true,
     canMoveIn: () => false,
@@ -167,9 +169,9 @@ Text.craft = {
           align="end"
           placement="start"
           alt={{
-            position: 'top',
-            align: 'end',
-            placement: 'start',
+            position: "top",
+            align: "end",
+            placement: "start",
           }}
         />,
         <HoverNodeController
@@ -177,9 +179,9 @@ Text.craft = {
           align="start"
           placement="end"
           alt={{
-            position: 'bottom',
-            align: 'start',
-            placement: 'start',
+            position: "bottom",
+            align: "start",
+            placement: "start",
           }}
         />,
 

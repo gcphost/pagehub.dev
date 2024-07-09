@@ -1,11 +1,7 @@
-import {
-  NodeTree, ROOT_NODE, useEditor, useNode
-} from '@craftjs/core';
-import { Tooltip } from 'components/layout/Tooltip';
-import { motion } from 'framer-motion';
-import React, {
-  useCallback, useEffect, useRef, useState
-} from 'react';
+import { NodeTree, ROOT_NODE, useEditor, useNode } from "@craftjs/core";
+import { Tooltip } from "components/layout/Tooltip";
+import { motion } from "framer-motion";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   TbCaretUp,
   TbComponents,
@@ -16,33 +12,31 @@ import {
   TbTrash,
   TbTrashOff,
   TbX,
-} from 'react-icons/tb';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
+} from "react-icons/tb";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { SettingsAtom } from "utils/atoms";
 import {
   ComponentsAtom,
   IsolateAtom,
   SideBarOpen,
   isolatePage,
-} from 'utils/lib';
-import { Header } from '../Viewport/Header';
+} from "utils/lib";
+import { Header } from "../Viewport/Header";
 import {
   addHandler,
   buildClonedTree,
   deleteNode,
   saveHandler,
-} from '../Viewport/lib';
-import { RenderChildren } from './Helpers/CloneHelper';
-import Tab from './Tab';
-import { ToolbarTitleEditor } from './ToolbarTitleEditor';
+} from "../Viewport/lib";
+import { RenderChildren } from "./Helpers/CloneHelper";
+import Tab from "./Tab";
+import { ToolbarTitleEditor } from "./ToolbarTitleEditor";
 
-export const ToolbarWrapper = ({ children = null, head, foot = '' }) => {
+export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   const { query, actions } = useEditor();
   const [components, setComponents] = useRecoilState(ComponentsAtom);
 
-  const {
-    parent, deletable, props, nodeData
-  } = useNode((node) => ({
+  const { parent, deletable, props, nodeData } = useNode((node) => ({
     deletable: query.node(node.id).isDeletable(),
     parent: node.data.parent,
     props: node.data.props,
@@ -68,7 +62,11 @@ export const ToolbarWrapper = ({ children = null, head, foot = '' }) => {
 
   const handleAdd = useCallback(() => {
     addHandler({
-      actions, query, getCloneTree, id, setProp
+      actions,
+      query,
+      getCloneTree,
+      id,
+      setProp,
     });
   }, [actions, getCloneTree, query]);
 
@@ -88,7 +86,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = '' }) => {
   const settings = useRecoilValue(SettingsAtom);
 
   useEffect(() => {
-    const iso = localStorage.getItem('isolated');
+    const iso = localStorage.getItem("isolated");
     if (iso) setIsolate(iso);
   }, []);
 
@@ -153,8 +151,8 @@ export const ToolbarWrapper = ({ children = null, head, foot = '' }) => {
           </Tooltip>
         )}
 
-        {(props.type === 'page' || isolate) && (
-          <Tooltip content={!isolate ? 'Isolate Page' : 'Show All Pages'}>
+        {(props.type === "page" || isolate) && (
+          <Tooltip content={!isolate ? "Isolate Page" : "Show All Pages"}>
             <motion.div
               whileHover={{
                 scale: 1.3,
@@ -162,9 +160,10 @@ export const ToolbarWrapper = ({ children = null, head, foot = '' }) => {
               }}
               whileTap={{ scale: 0.9 }}
               className={`cursor-pointer ${
-                isolate ? 'text-white' : 'text-gray-400'
+                isolate ? "text-white" : "text-gray-400"
               } hover:text-white  rounded-md p-3`}
-              onClick={() => isolatePage(isolate, query, active, actions, setIsolate)
+              onClick={() =>
+                isolatePage(isolate, query, active, actions, setIsolate)
               }
             >
               {isolate ? <TbScaleOutlineOff /> : <TbScaleOutline />}
@@ -174,7 +173,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = '' }) => {
 
         {deletable && (
           <>
-            <Tooltip content={props.canDelete ? 'Delete' : 'Unable to delete'}>
+            <Tooltip content={props.canDelete ? "Delete" : "Unable to delete"}>
               <motion.button
                 whileHover={{
                   scale: 1.3,
@@ -209,7 +208,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = '' }) => {
             </Tooltip>
 
             <Tooltip
-              content={`${canMake ? 'Create Component' : 'Component Exists'}`}
+              content={`${canMake ? "Create Component" : "Component Exists"}`}
             >
               <motion.button
                 whileHover={{
@@ -220,7 +219,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = '' }) => {
                 ref={ref}
                 className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
                 onClick={(e: React.MouseEvent) => {
-                  const comp = handleSaveTemplate('component');
+                  const comp = handleSaveTemplate("component");
 
                   setComponents([...components, comp]);
                 }}

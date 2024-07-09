@@ -1,7 +1,7 @@
 // @ts-ignore
-import Page from '../../models/page';
-import dbConnect from '../../utils/dbConnect';
-import { uniqueNanoId } from './save';
+import Page from "../../models/page";
+import dbConnect from "../../utils/dbConnect";
+import { uniqueNanoId } from "./save";
 
 export default async function media(req, res) {
   await dbConnect();
@@ -12,7 +12,7 @@ export default async function media(req, res) {
 
   if (!found) return res.status(404).json({});
 
-  if (req.method === 'DELETE') {
+  if (req.method === "DELETE") {
     // rando images deleted?
     return res.status(200).json({ _id: null, updated: false });
 
@@ -27,7 +27,7 @@ export default async function media(req, res) {
         await fetch(
           `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ID}/images/v1/${req.body.mediaId}`,
           {
-            method: 'DELETE',
+            method: "DELETE",
             headers: {
               Authorization: `Bearer ${process.env.CLOUDFLARE_TOKEN}`,
             },
@@ -43,7 +43,7 @@ export default async function media(req, res) {
     return res.status(404).json({});
   }
 
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     if (req.body.media) {
       const media = found.media || [];
 
@@ -54,8 +54,8 @@ export default async function media(req, res) {
       if (req.body.mediaId) {
         try {
           const updated = await Page.updateOne(
-            { 'media._id': req.body.mediaId },
-            { $set: { 'media.$.content': req.body.media } },
+            { "media._id": req.body.mediaId },
+            { $set: { "media.$.content": req.body.media } },
             { $upsert: true }
           );
 

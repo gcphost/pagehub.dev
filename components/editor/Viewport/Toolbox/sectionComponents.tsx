@@ -1,14 +1,10 @@
-import { Element } from '@craftjs/core';
-import { Tooltip } from 'components/layout/Tooltip';
-import { AiOutlineAlert, AiOutlineIdcard } from 'react-icons/ai';
-import { BsPostcard } from 'react-icons/bs';
-import {
-  TbLayoutColumns,
-  TbLayoutRows,
-  TbQuestionMark,
-} from 'react-icons/tb';
-import { Container } from '../../../selectors/Container';
-import { RenderToolComponent } from './lib';
+import { Element } from "@craftjs/core";
+import { Tooltip } from "components/layout/Tooltip";
+import { AiOutlineAlert, AiOutlineIdcard } from "react-icons/ai";
+import { BsPostcard } from "react-icons/bs";
+import { TbLayoutColumns, TbLayoutRows, TbQuestionMark } from "react-icons/tb";
+import { Container } from "../../../selectors/Container";
+import { RenderToolComponent } from "./lib";
 
 export const RenderSectionComponent = ({
   text = <></>,
@@ -22,45 +18,45 @@ export const RenderSectionComponent = ({
   />
 );
 
-const column = (displayName = '') => (
+const column = (displayName = "") => (
   <Element
     is={Container}
     canvas
-    custom={{ displayName: displayName || 'Column Container' }}
+    custom={{ displayName: displayName || "Column Container" }}
     canDelete={true}
     canEditName={true}
     root={{}}
     key={Date.toString()}
     mobile={{
-      display: 'flex',
-      justifyContent: 'justify-center',
-      flexDirection: 'flex-col',
-      width: 'w-full',
-      gap: 'gap-8',
-      py: 'py-6',
-      px: 'px-3',
+      display: "flex",
+      justifyContent: "justify-center",
+      flexDirection: "flex-col",
+      width: "w-full",
+      gap: "gap-8",
+      py: "py-6",
+      px: "px-3",
     }}
-    desktop={{ flexDirection: 'flex-col' }}
+    desktop={{ flexDirection: "flex-col" }}
   />
 );
 
-const row = (displayName = '') => (
+const row = (displayName = "") => (
   <Element
     is={Container}
     canvas
     key={Date.toString()}
-    custom={{ displayName: displayName || 'Row Container' }}
+    custom={{ displayName: displayName || "Row Container" }}
     canDelete={true}
     canEditName={true}
     root={{}}
     mobile={{
-      display: 'flex',
-      justifyContent: 'justify-center',
-      flexDirection: 'flex-row',
-      width: 'w-full',
-      gap: 'gap-8',
-      py: 'py-6',
-      px: 'px-3',
+      display: "flex",
+      justifyContent: "justify-center",
+      flexDirection: "flex-row",
+      width: "w-full",
+      gap: "gap-8",
+      py: "py-6",
+      px: "px-3",
     }}
   />
 );
@@ -71,7 +67,7 @@ export const sectionToolboxItems = [
   //  content: [],
   // },
   {
-    title: 'Layout',
+    title: "Layout",
     content: [
       <RenderSectionComponent
         key="row1"
@@ -89,17 +85,17 @@ export const sectionToolboxItems = [
           </div>
         }
         mobile={{
-          display: 'flex',
-          justifyContent: 'justify-center',
-          flexDirection: 'flex-row',
-          width: 'w-full',
-          gap: 'gap-8',
-          height: 'h-auto',
-          py: 'py-6',
-          px: 'px-3',
+          display: "flex",
+          justifyContent: "justify-center",
+          flexDirection: "flex-row",
+          width: "w-full",
+          gap: "gap-8",
+          height: "h-auto",
+          py: "py-6",
+          px: "px-3",
         }}
         desktop={{}}
-        custom={{ displayName: 'Row' }}
+        custom={{ displayName: "Row" }}
       />,
 
       <RenderSectionComponent
@@ -118,22 +114,22 @@ export const sectionToolboxItems = [
           </div>
         }
         mobile={{
-          display: 'flex',
-          justifyContent: 'justify-center',
-          flexDirection: 'flex-col',
-          width: 'w-full',
-          gap: 'gap-8',
-          height: 'h-auto',
-          py: 'py-6',
-          px: 'px-3',
+          display: "flex",
+          justifyContent: "justify-center",
+          flexDirection: "flex-col",
+          width: "w-full",
+          gap: "gap-8",
+          height: "h-auto",
+          py: "py-6",
+          px: "px-3",
         }}
         desktop={{}}
-        custom={{ displayName: 'Column' }}
+        custom={{ displayName: "Column" }}
       />,
     ],
   },
   {
-    title: 'Sections',
+    title: "Sections",
     content: [
       <RenderSectionComponent
         key="hero"
@@ -151,22 +147,22 @@ export const sectionToolboxItems = [
           </div>
         }
         mobile={{
-          display: 'flex',
-          minHeight: 'min-h-[120px]',
-          justifyContent: 'justify-center',
-          flexDirection: 'flex-col',
-          width: 'w-full',
-          gap: 'gap-8',
-          backgroundSize: 'bg-cover',
-          backgroundPosition: 'bg-center',
-          alignItems: 'items-center',
-          height: 'h-96',
-          py: 'py-6',
-          px: 'px-3',
+          display: "flex",
+          minHeight: "min-h-[120px]",
+          justifyContent: "justify-center",
+          flexDirection: "flex-col",
+          width: "w-full",
+          gap: "gap-8",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          alignItems: "items-center",
+          height: "h-96",
+          py: "py-6",
+          px: "px-3",
         }}
-        desktop={{ flexDirection: 'flex-row', height: 'h-full' }}
+        desktop={{ flexDirection: "flex-row", height: "h-full" }}
         type="heroContainer"
-        custom={{ displayName: 'Hero' }}
+        custom={{ displayName: "Hero" }}
       />,
       <RenderSectionComponent
         key="card"
@@ -184,22 +180,22 @@ export const sectionToolboxItems = [
           </div>
         }
         mobile={{
-          display: 'flex',
-          minHeight: 'min-h-[120px]',
-          justifyContent: 'justify-center',
-          flexDirection: 'flex-col',
-          width: 'w-full',
-          gap: 'gap-8',
-          backgroundSize: 'bg-cover',
-          backgroundPosition: 'bg-center',
-          alignItems: 'items-center',
-          height: 'h-96',
-          py: 'py-6',
-          px: 'px-3',
+          display: "flex",
+          minHeight: "min-h-[120px]",
+          justifyContent: "justify-center",
+          flexDirection: "flex-col",
+          width: "w-full",
+          gap: "gap-8",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          alignItems: "items-center",
+          height: "h-96",
+          py: "py-6",
+          px: "px-3",
         }}
-        desktop={{ flexDirection: 'flex-row', height: 'h-full' }}
+        desktop={{ flexDirection: "flex-row", height: "h-full" }}
         type="cardContainer"
-        custom={{ displayName: 'Card' }}
+        custom={{ displayName: "Card" }}
       />,
       <RenderSectionComponent
         key="cta"
@@ -217,22 +213,22 @@ export const sectionToolboxItems = [
           </div>
         }
         mobile={{
-          display: 'flex',
-          minHeight: 'min-h-[120px]',
-          justifyContent: 'justify-center',
-          flexDirection: 'flex-col',
-          width: 'w-full',
-          gap: 'gap-8',
-          backgroundSize: 'bg-cover',
-          backgroundPosition: 'bg-center',
-          alignItems: 'items-center',
-          height: 'h-96',
-          py: 'py-6',
-          px: 'px-3',
+          display: "flex",
+          minHeight: "min-h-[120px]",
+          justifyContent: "justify-center",
+          flexDirection: "flex-col",
+          width: "w-full",
+          gap: "gap-8",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          alignItems: "items-center",
+          height: "h-96",
+          py: "py-6",
+          px: "px-3",
         }}
-        desktop={{ flexDirection: 'flex-row', height: 'h-full' }}
+        desktop={{ flexDirection: "flex-row", height: "h-full" }}
         type="ctaContainer"
-        custom={{ displayName: 'Call to Attention' }}
+        custom={{ displayName: "Call to Attention" }}
       />,
     ],
   },

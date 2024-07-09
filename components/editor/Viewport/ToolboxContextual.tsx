@@ -1,11 +1,9 @@
-import { NodeTree, useEditor } from '@craftjs/core';
+import { NodeTree, useEditor } from "@craftjs/core";
 
-import { AnimatePresence, motion } from 'framer-motion';
-import {
-  useCallback, useEffect, useRef, useState
-} from 'react';
-import { BsInputCursorText } from 'react-icons/bs';
-import { FaFont } from 'react-icons/fa';
+import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { BsInputCursorText } from "react-icons/bs";
+import { FaFont } from "react-icons/fa";
 import {
   TbBrandYoutube,
   TbCode,
@@ -20,20 +18,20 @@ import {
   TbPhoto,
   TbRectangle,
   TbTrash,
-} from 'react-icons/tb';
-import { useRecoilState } from 'recoil';
-import { removeComponentFromStorage } from 'utils/craft';
-import { ComponentsAtom } from 'utils/lib';
-import { ToolboxMenu } from '../RenderNode';
-import { AddElement, Tools } from './Toolbox/lib';
-import { addHandler, buildClonedTree } from './lib';
+} from "react-icons/tb";
+import { useRecoilState } from "recoil";
+import { removeComponentFromStorage } from "utils/craft";
+import { ComponentsAtom } from "utils/lib";
+import { ToolboxMenu } from "../RenderNode";
+import { AddElement, Tools } from "./Toolbox/lib";
+import { addHandler, buildClonedTree } from "./lib";
 
-const generate = require('boring-name-generator');
+const generate = require("boring-name-generator");
 
 export const ulVariants = {
   open: {
     opacity: 1,
-    display: 'flex',
+    display: "flex",
     // visibility: "visible",
     transition: {
       staggerChildren: 0.17,
@@ -43,17 +41,17 @@ export const ulVariants = {
   },
   closed: {
     opacity: 0,
-    display: 'none',
+    display: "none",
     transition: {
       staggerChildren: 0.05,
       delayChildren: 0.1,
       staggerDirection: -1,
-      when: 'afterChildren',
+      when: "afterChildren",
     },
   },
-  transition: { type: 'linear', duration: 0.4 },
+  transition: { type: "linear", duration: 0.4 },
 
-  initial: { display: 'none', opacity: 0 },
+  initial: { display: "none", opacity: 0 },
 };
 
 export const uloVariants = {
@@ -83,7 +81,7 @@ export const liVariants = {
     },
   },
   closed: {
-    y: '-100%',
+    y: "-100%",
     opacity: 0,
     transition: {
       staggerDirection: -1,
@@ -95,7 +93,9 @@ export const liVariants = {
 const Item = ({ children }) => (
   <motion.a
     variants={liVariants}
-    className={'flex w-full items-center gap-y-6  p-2  hover:text-gray-300 inner-shadow  rounded-md hover:bg-violet-500  cursor-pointer'}
+    className={
+      "flex w-full items-center gap-y-6  p-2  hover:text-gray-300 inner-shadow  rounded-md hover:bg-violet-500  cursor-pointer"
+    }
   >
     {children}
   </motion.a>
@@ -111,7 +111,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
   const active = id;
   const ref = useRef(null);
   const props: any = menu.parent.props;
-  const name = menu?.parent?.name || '';
+  const name = menu?.parent?.name || "";
 
   const click = (ele, nodeTree = null) => {
     const nss = query.node(active).get();
@@ -139,21 +139,21 @@ export const ToolboxContexual = ({ userStyle = null }) => {
 
     let index = -1;
 
-    if (position === 'inside') {
+    if (position === "inside") {
       index = indexToAdd;
     }
 
-    if (position === 'after') {
+    if (position === "after") {
       index = indexToAdd + 1;
     }
 
-    if (position === 'before') {
+    if (position === "before") {
       index = indexToAdd;
     }
 
     const newElement = AddElement({
       element: ele,
-      addTo: position === 'inside' ? id : theNode.id,
+      addTo: position === "inside" ? id : theNode.id,
       index,
       actions,
       query,
@@ -171,7 +171,8 @@ export const ToolboxContexual = ({ userStyle = null }) => {
   };
 
   const getCloneTree = useCallback(
-    (tree: NodeTree) => buildClonedTree({ tree, query, setProp: actions.setProp }),
+    (tree: NodeTree) =>
+      buildClonedTree({ tree, query, setProp: actions.setProp }),
     [query]
   );
 
@@ -195,10 +196,10 @@ export const ToolboxContexual = ({ userStyle = null }) => {
       const node = nodes[Object.keys(nodes)[0]];
 
       if (
-        (menu?.parent?.displayName === 'Background'
-          && node.props?.type !== 'page')
-        || (menu?.parent?.displayName !== 'Background'
-          && node.props?.type === 'page')
+        (menu?.parent?.displayName === "Background" &&
+          node.props?.type !== "page") ||
+        (menu?.parent?.displayName !== "Background" &&
+          node.props?.type === "page")
       ) {
         return;
       }
@@ -208,13 +209,13 @@ export const ToolboxContexual = ({ userStyle = null }) => {
     .filter((_) => _);
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener("click", handleClickOutside, true);
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, [menu.enabled, ref]);
 
-  const height = name === 'Background' ? 100 : 300;
+  const height = name === "Background" ? 100 : 300;
   const width = comps.length ? 500 : 240;
 
   const [style, setStyle] = useState({} as any);
@@ -239,11 +240,11 @@ export const ToolboxContexual = ({ userStyle = null }) => {
   }, [menu]);
 
   const Tool = ({ element, icon, title }) => (
-      <div onClick={() => click(element)}>
-        <Item>
-          <div className="text-2xl w-12">{icon}</div> {title}
-        </Item>
-      </div>
+    <div onClick={() => click(element)}>
+      <Item>
+        <div className="text-2xl w-12">{icon}</div> {title}
+      </Item>
+    </div>
   );
 
   const containerTools = (
@@ -275,7 +276,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
     <AnimatePresence>
       {menu.enabled && (
         <motion.div
-          animate={menu.enabled ? 'open' : 'closed'}
+          animate={menu.enabled ? "open" : "closed"}
           variants={ulVariants}
           exit="closed"
           initial="closed"
@@ -290,16 +291,16 @@ export const ToolboxContexual = ({ userStyle = null }) => {
             className="overflow-auto scrollbar rounded-md  bg-gray-800/80 flex flex-col gap-1.5"
           >
             <div className="p-3 rounded-xl">
-              {name === 'Background' && (
+              {name === "Background" && (
                 <>
                   <Tool element={Tools.page} icon={<TbLayout />} title="Page" />
 
                   {containerTools}
                 </>
               )}
-              {!['Background'].includes(name) && (
+              {!["Background"].includes(name) && (
                 <>
-                  {name === 'FormDrop' && (
+                  {name === "FormDrop" && (
                     <>
                       <Tool
                         element={Tools.formElement}
@@ -353,7 +354,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
             </div>
           </motion.div>
 
-          {!['Form', 'FormDrop'].includes(name) && comps.length ? (
+          {!["Form", "FormDrop"].includes(name) && comps.length ? (
             <motion.div
               variants={uloVariants}
               className="overflow-auto scrollbar flex flex-col bg-gray-800/80  p-3 rounded-md"

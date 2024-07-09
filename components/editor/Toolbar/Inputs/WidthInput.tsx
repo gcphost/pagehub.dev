@@ -1,19 +1,19 @@
-import { atom, useRecoilState } from 'recoil';
-import { TailwindStyles } from 'utils/tailwind';
-import { ItemToggle, sizingItems } from '../Helpers/ItemSelector';
-import { ToolbarItem } from '../ToolbarItem';
+import { atom, useRecoilState } from "recoil";
+import { TailwindStyles } from "utils/tailwind";
+import { ItemToggle, sizingItems } from "../Helpers/ItemSelector";
+import { ToolbarItem } from "../ToolbarItem";
 
 export const WidthInput = ({
-  propType = 'class',
-  propKey = 'width',
-  propTag = 'w',
-  label = 'Width',
-  values = 'allWidths',
-  sliderValues = 'width',
+  propType = "class",
+  propKey = "width",
+  propTag = "w",
+  label = "Width",
+  values = "allWidths",
+  sliderValues = "width",
 }) => {
   const itemListState = atom({
     key: propKey,
-    default: 'slider',
+    default: "slider",
   });
 
   const [state, setState] = useRecoilState(itemListState);
@@ -24,7 +24,7 @@ export const WidthInput = ({
       onChange={(value) => setState(value)}
       items={sizingItems}
     >
-      {state === 'slider' && (
+      {state === "slider" && (
         <ToolbarItem
           propKey={propKey}
           propType={propType}
@@ -36,7 +36,7 @@ export const WidthInput = ({
         />
       )}
 
-      {state === 'select' && (
+      {state === "select" && (
         <ToolbarItem
           propKey={propKey}
           propType={propType}
@@ -50,7 +50,7 @@ export const WidthInput = ({
         </ToolbarItem>
       )}
 
-      {state === 'px' && (
+      {state === "px" && (
         <ToolbarItem
           propKey={propKey}
           propType={propType}

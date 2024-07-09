@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 function DragAdjust({
   targetElement,
-  direction = 'vertical',
-  unit = 'px',
+  direction = "vertical",
+  unit = "px",
   showButton = true,
-  className = '',
-  styleToUse = 'marginTop',
+  className = "",
+  styleToUse = "marginTop",
   children = null,
   onChange = (value) => {},
 }) {
@@ -19,11 +19,11 @@ function DragAdjust({
   const targetRef = useRef(null);
 
   useEffect(() => {
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
   });
 
@@ -33,23 +33,23 @@ function DragAdjust({
     setStartX(e.clientX);
     setStartY(e.clientY);
     const computedStyle = window.getComputedStyle(targetElement);
-    if (direction === 'vertical') {
+    if (direction === "vertical") {
       setInitialMarginTop(parseFloat(computedStyle[styleToUse]));
-    } else if (direction === 'horizontal') {
+    } else if (direction === "horizontal") {
       setInitialWidth(parseFloat(computedStyle.width));
     }
     targetRef.current = targetElement;
-    document.body.style.cursor = 'cursor-move';
+    document.body.style.cursor = "cursor-move";
   };
 
   const handleMouseUp = () => {
     setDragging(false);
-    document.body.style.cursor = 'auto';
+    document.body.style.cursor = "auto";
   };
 
   const handleMouseMove = (e) => {
     if (dragging && targetRef.current) {
-      if (direction === 'vertical') {
+      if (direction === "vertical") {
         const dragDistance = e.clientY - startY;
         const newMarginTop = initialMarginTop + dragDistance;
 
@@ -58,7 +58,7 @@ function DragAdjust({
         onChange(targetRef.current.style[styleToUse]);
 
         //  document.body.classList.add("cursor-move");
-      } else if (direction === 'horizontal') {
+      } else if (direction === "horizontal") {
         const dragDistance = e.clientX - startX;
         const newWidth = initialWidth + dragDistance;
         targetRef.current.style[styleToUse] = `${newWidth}${unit}`;

@@ -1,9 +1,7 @@
-import { Tooltip } from 'components/layout/Tooltip';
-import {
-  TbInputSearch, TbLock, TbSelect, TbTextCaption
-} from 'react-icons/tb';
-import { FormElement } from '../../../selectors/FormElement';
-import { RenderToolComponent } from './lib';
+import { Tooltip } from "components/layout/Tooltip";
+import { TbInputSearch, TbLock, TbSelect, TbTextCaption } from "react-icons/tb";
+import { FormElement } from "../../../selectors/FormElement";
+import { RenderToolComponent } from "./lib";
 
 export const RenderFormElementComponent = ({ text, ...props }) => (
   <RenderToolComponent
@@ -16,14 +14,14 @@ export const RenderFormElementComponent = ({ text, ...props }) => (
 );
 
 export const FormElementToolbox = {
-  title: 'Form Elements',
+  title: "Form Elements",
   content: [
     <RenderFormElementComponent
       key="1"
       type="text"
       placeholder="Placeholder"
       name="text"
-      root={{ color: 'text-black', background: 'bg-white' }}
+      root={{ color: "text-black", background: "bg-white" }}
       text={
         <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
           <div className="flex flex-row gap-3 items-center">
@@ -40,7 +38,7 @@ export const FormElementToolbox = {
       type="text"
       placeholder="Placeholder"
       name="text"
-      root={{ color: 'text-black', background: 'bg-white' }}
+      root={{ color: "text-black", background: "bg-white" }}
       text={
         <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
           <div className="flex flex-row gap-3 items-center">
@@ -57,7 +55,7 @@ export const FormElementToolbox = {
       type="text"
       placeholder="Placeholder"
       name="text"
-      root={{ color: 'text-black', background: 'bg-white' }}
+      root={{ color: "text-black", background: "bg-white" }}
       text={
         <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
           <div className="flex flex-row gap-3 items-center">

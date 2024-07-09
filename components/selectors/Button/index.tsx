@@ -1,37 +1,37 @@
-import { useEditor, useNode, UserComponent } from '@craftjs/core';
+import { useEditor, useNode, UserComponent } from "@craftjs/core";
 
-import { HoverNodeController } from 'components/editor/NodeControllers/HoverNodeController';
-import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
-import { ToolNodeController } from 'components/editor/NodeControllers/ToolNodeController';
-import ButtonSettingsNodeTool from 'components/editor/NodeControllers/Tools/ButtonSettingsNodeTool';
+import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
+import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
+import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
+import ButtonSettingsNodeTool from "components/editor/NodeControllers/Tools/ButtonSettingsNodeTool";
 import {
   getClonedState,
   setClonedProps,
-} from 'components/editor/Toolbar/Helpers/CloneHelper';
-import ClientIconLoader from 'components/editor/Toolbar/Tools/ClientIconLoader';
-import { PreviewAtom, TabAtom, ViewAtom } from 'components/editor/Viewport';
-import { changeProp, getProp } from 'components/editor/Viewport/lib';
-import debounce from 'lodash.debounce';
-import Link from 'next/link';
-import React from 'react';
-import { TbRectangle } from 'react-icons/tb';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
-import { applyBackgroundImage, motionIt, selectAfterAdding } from 'utils/lib';
+} from "components/editor/Toolbar/Helpers/CloneHelper";
+import ClientIconLoader from "components/editor/Toolbar/Tools/ClientIconLoader";
+import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { changeProp, getProp } from "components/editor/Viewport/lib";
+import debounce from "lodash.debounce";
+import Link from "next/link";
+import React from "react";
+import { TbRectangle } from "react-icons/tb";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { SettingsAtom } from "utils/atoms";
+import { applyBackgroundImage, motionIt, selectAfterAdding } from "utils/lib";
 import {
   applyAnimation,
   ClassGene,
   ClassGenerator,
   CSStoObj,
-} from 'utils/tailwind';
-import { ButtonSettings, SelectedButtonAtom } from './ButtonSettings';
-import { BaseSelectorProps, BaseStyleProps, RootStyleProps } from '..';
+} from "utils/tailwind";
+import { ButtonSettings, SelectedButtonAtom } from "./ButtonSettings";
+import { BaseSelectorProps, BaseStyleProps, RootStyleProps } from "..";
 import {
   hasInlay,
   RenderGradient,
   RenderPattern,
   useScrollToSelected,
-} from '../lib';
+} from "../lib";
 
 const EditableName = ({ but, ikey, enabled }) => {
   const {
@@ -44,7 +44,7 @@ const EditableName = ({ but, ikey, enabled }) => {
   const view = useRecoilValue(ViewAtom);
 
   const buttons = getProp(
-    { propKey: 'buttons', propType: 'component' },
+    { propKey: "buttons", propType: "component" },
     view,
     nodeProps
   );
@@ -63,8 +63,8 @@ const EditableName = ({ but, ikey, enabled }) => {
 
         changeProp({
           setProp,
-          propKey: 'buttons',
-          propType: 'component',
+          propKey: "buttons",
+          propType: "component",
           value: _buttons,
         });
       }, 500)}
@@ -87,7 +87,7 @@ export const OnlyButtons = ({ children, ...props }) => {
 
 OnlyButtons.craft = {
   rules: {
-    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === 'Button'),
+    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === "Button"),
   },
 };
 
@@ -141,7 +141,9 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
     id,
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) => getClonedState(props, state));
+  const { actions, query, enabled } = useEditor((state) =>
+    getClonedState(props, state)
+  );
 
   useScrollToSelected(id, enabled);
   selectAfterAdding(
@@ -154,7 +156,8 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
   const settings = useRecoilValue(SettingsAtom);
-  const [selectedButton, setSelectedButton] = useRecoilState(SelectedButtonAtom);
+  const [selectedButton, setSelectedButton] =
+    useRecoilState(SelectedButtonAtom);
 
   props = setClonedProps(props, query);
 
@@ -167,15 +170,15 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   if (enabled) {
     if (!props?.buttons?.length) defaultProp.children = <TbRectangle />;
     if (props?.root?.border || props.root?.borderColor || props.root?.radius) {
-      defaultProp['data-border'] = true;
+      defaultProp["data-border"] = true;
     }
-    defaultProp['data-bounding-box'] = enabled;
-    defaultProp['data-empty-state'] = !props?.buttons?.length;
+    defaultProp["data-bounding-box"] = enabled;
+    defaultProp["data-empty-state"] = !props?.buttons?.length;
   }
 
   if (!props?.buttons?.length) {
     return React.createElement(
-      motionIt(props, 'div'),
+      motionIt(props, "div"),
       applyAnimation(defaultProp, props)
     );
   }
@@ -183,29 +186,29 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   const inlayed = hasInlay(props);
 
   const inlayProps = [
-    'backgroundGradient',
-    'backgroundGradientTo',
-    'backgroundGradientFrom',
-    'px',
-    'py',
-    'alignItems',
-    'textAlign',
-    'backgroundRepeat',
-    'backgroundSize',
-    'backgroundAttachment',
-    'backgroundOrigin',
-    'backgroundPosition',
-    'background',
+    "backgroundGradient",
+    "backgroundGradientTo",
+    "backgroundGradientFrom",
+    "px",
+    "py",
+    "alignItems",
+    "textAlign",
+    "backgroundRepeat",
+    "backgroundSize",
+    "backgroundAttachment",
+    "backgroundOrigin",
+    "backgroundPosition",
+    "background",
   ];
 
-  const mainClasses = ['flex', 'w-'];
+  const mainClasses = ["flex", "w-"];
 
   const baseProps = [
-    'flexDirection',
-    'alignItems',
-    'justifyContent',
-    'gap',
-    'display',
+    "flexDirection",
+    "alignItems",
+    "justifyContent",
+    "gap",
+    "display",
   ];
   return (
     <div
@@ -213,12 +216,12 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       node-id={id}
       className={[
         ...ClassGenerator({ ...props }, view, enabled, [], baseProps).split(
-          ' '
+          " "
         ),
         ...mainClasses,
       ]
         .filter((_) => _)
-        .join(' ')}
+        .join(" ")}
     >
       {props?.buttons?.map((but, key) => {
         const include = [
@@ -227,19 +230,19 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
           props?.mobile?.width,
           props?.desktop?.width ? `md:${props.desktop.width}` : null,
           props.iconGap,
-          'overflow-hidden',
-          'flex',
-          'items-center',
+          "overflow-hidden",
+          "flex",
+          "items-center",
         ];
 
         const butClass = [
           props.iconSize
-            ? `${props.iconSize} h-${props.iconSize.split('w-')[1]}`
-            : 'w-6 h-6',
+            ? `${props.iconSize} h-${props.iconSize.split("w-")[1]}`
+            : "w-6 h-6",
           props.iconColor,
           props.iconShadow,
-          'flex',
-          'items-center',
+          "flex",
+          "items-center",
         ].filter((_) => (_ = _));
 
         const className = [
@@ -250,28 +253,28 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
             enabled,
             inlayed ? [...inlayProps, ...baseProps] : baseProps,
             []
-          ).split(' '),
+          ).split(" "),
           ...include,
         ]
           .filter((_) => _)
-          .join(' ');
+          .join(" ");
 
         let prop: any = {};
 
-        let ele = but.url && typeof but.url === 'string' ? Link : 'button';
+        let ele = but.url && typeof but.url === "string" ? Link : "button";
 
-        if (but.url && typeof but.url === 'string') {
+        if (but.url && typeof but.url === "string") {
           prop.href = but.url;
         }
 
-        if (enabled && ele === Link) ele = 'span';
+        if (enabled && ele === Link) ele = "span";
 
         const element: any = motionIt(props, ele);
 
         prop = {
           ...prop,
           key,
-          type: but.type || '',
+          type: but.type || "",
           onMouseEnter: () => {
             if (enabled) {
               return;
@@ -279,8 +282,8 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
             const element = document.getElementById(props.clickValue);
 
             if (!element) return;
-            if (props.clickType === 'hover' && props.clickValue) {
-              element.classList.remove('hidden');
+            if (props.clickType === "hover" && props.clickValue) {
+              element.classList.remove("hidden");
             }
           },
           onMouseLeave: () => {
@@ -290,8 +293,8 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
             const element = document.getElementById(props.clickValue);
 
             if (!element) return;
-            if (props.clickType === 'hover' && props.clickValue) {
-              element.classList.add('hidden');
+            if (props.clickType === "hover" && props.clickValue) {
+              element.classList.add("hidden");
             }
           },
 
@@ -302,26 +305,26 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
               return;
             }
 
-            if (props.clickType === 'click' && props.clickValue) {
+            if (props.clickType === "click" && props.clickValue) {
               // e.preventDefault();
               const element = document.getElementById(props.clickValue);
 
               if (!element) return;
 
-              if (props.clickDirection === 'show') {
-                element.classList.remove('hidden');
+              if (props.clickDirection === "show") {
+                element.classList.remove("hidden");
                 return;
               }
 
-              if (props.clickDirection === 'hide') {
-                element.classList.add('hidden');
+              if (props.clickDirection === "hide") {
+                element.classList.add("hidden");
                 return;
               }
 
-              if (element.classList.contains('hidden')) {
-                element.classList.remove('hidden');
+              if (element.classList.contains("hidden")) {
+                element.classList.remove("hidden");
               } else {
-                element.classList.add('hidden');
+                element.classList.add("hidden");
               }
             }
           },
@@ -344,16 +347,16 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
                 properties={inlayProps}
                 preview={preview}
               >
-                {but.icon && props.iconPosition === 'left' && (
-                  <span className={butClass.join(' ')}>
+                {but.icon && props.iconPosition === "left" && (
+                  <span className={butClass.join(" ")}>
                     <ClientIconLoader value={but.icon} />
                   </span>
                 )}
 
                 <EditableName but={but} ikey={key} enabled={enabled} />
 
-                {but.icon && props.iconPosition === 'right' && (
-                  <span className={butClass.join(' ')}>
+                {but.icon && props.iconPosition === "right" && (
+                  <span className={butClass.join(" ")}>
                     <ClientIconLoader value={but.icon} />
                   </span>
                 )}
@@ -373,7 +376,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
 };
 
 Button.craft = {
-  displayName: 'Button',
+  displayName: "Button",
   rules: {
     canDrag: () => true,
     canMoveIn: () => false,
@@ -390,9 +393,9 @@ Button.craft = {
           align="end"
           placement="end"
           alt={{
-            position: 'bottom',
-            align: 'start',
-            placement: 'start',
+            position: "bottom",
+            align: "start",
+            placement: "start",
           }}
         />,
 

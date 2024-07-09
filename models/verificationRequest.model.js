@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const VerificationRequestSchema = new mongoose.Schema(
   {
@@ -11,7 +11,8 @@ const VerificationRequestSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const VerificationRequest = mongoose.models.VerificationRequest
-  || mongoose.model('VerificationRequest', VerificationRequestSchema);
+const VerificationRequest =
+  mongoose.models.VerificationRequest ||
+  mongoose.model("VerificationRequest", VerificationRequestSchema);
 
 export default VerificationRequest;

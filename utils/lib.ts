@@ -1,16 +1,18 @@
-import { ROOT_NODE } from '@craftjs/core';
-import { BaseSelectorProps } from 'components/selectors';
-import { parse } from 'css-tree';
-import { motion } from 'framer-motion';
-import { useEffect } from 'react';
-import { atom } from 'recoil';
-import { TailwindStyles } from './tailwind';
+import { ROOT_NODE } from "@craftjs/core";
+import { BaseSelectorProps } from "components/selectors";
+import { parse } from "css-tree";
+import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { atom } from "recoil";
+import { TailwindStyles } from "./tailwind";
 
 export const enableContext = false;
 export const enableAnimations = false;
 
-export const siteTitle = 'Pagehub (beta) - Create a fast landing page in seconds - Free!';
-export const siteDescription = 'Create stunning single page applications and components with TailwindCSS and OpenAI. No code going strong!';
+export const siteTitle =
+  "Pagehub (beta) - Create a fast landing page in seconds - Free!";
+export const siteDescription =
+  "Create stunning single page applications and components with TailwindCSS and OpenAI. No code going strong!";
 
 function extractRGBA(rgbaString) {
   const regex = /rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),(\d*(?:\.\d+)?)\)/;
@@ -34,9 +36,7 @@ function hexToHSL(H) {
   const c = extractRGBA(H);
 
   if (!c) return;
-  let {
-    r, g, b, a
-  } = c;
+  let { r, g, b, a } = c;
 
   let l = 0;
   // Then to HSL
@@ -68,68 +68,69 @@ function hexToHSL(H) {
 }
 
 export const IsolateAtom = atom({
-  key: 'isolate',
-  default: '',
+  key: "isolate",
+  default: "",
 });
 
 export const ComponentsAtom = atom({
-  key: 'components',
+  key: "components",
   default: [],
 });
 
 export const OnlineAtom = atom({
-  key: 'online',
+  key: "online",
   default: true,
 });
 
 export const ScreenshotAtom = atom({
-  key: 'ss',
+  key: "ss",
   default: false,
 });
 
 export const SideBarAtom = atom({
-  key: 'sidebar',
+  key: "sidebar",
   default: true,
 });
 
 export const SideBarOpen = atom({
-  key: 'sidebaropen',
+  key: "sidebaropen",
   default: true,
 });
 
 export const PageCountAtom = atom({
-  key: 'pagecount',
+  key: "pagecount",
   default: 0,
 });
 
 export const LastctiveAtom = atom({
-  key: 'lastActive',
-  default: '',
+  key: "lastActive",
+  default: "",
 });
 
 export const ActiveAtom = atom({
-  key: 'active',
-  default: '',
+  key: "active",
+  default: "",
 });
 
 export const DialogOpen = atom({
-  key: 'dialoge',
-  default: '',
+  key: "dialoge",
+  default: "",
 });
 
 export const MenuState = atom({
-  key: 'menustate',
+  key: "menustate",
   default: false,
 });
 
 export const MenuItemState = atom({
-  key: 'menuitemstate',
-  default: '',
+  key: "menuitemstate",
+  default: "",
 });
 
 export const normalizePozition = (mouseX, mouseY, scope, contextMenu) => {
   // ? compute what is the mouse position relative to the container element (scope)
-  const { left: scopeOffsetX, top: scopeOffsetY } = scope.getBoundingClientRect();
+  const { left: scopeOffsetX, top: scopeOffsetY } =
+    scope.getBoundingClientRect();
 
   const scopeX = mouseX - scopeOffsetX;
   const scopeY = mouseY - scopeOffsetY;
@@ -158,24 +159,24 @@ export const normalizePozition = (mouseX, mouseY, scope, contextMenu) => {
 export const fontFAmilies = () => {
   TailwindStyles.fonts
     .reduce((acc, font) => {
-      const family = font[0].replace(/ +/g, '+');
-      const weights = ([400] || []).join(',');
+      const family = font[0].replace(/ +/g, "+");
+      const weights = ([400] || []).join(",");
 
       return [...acc, family + (weights && `:${weights}`)];
     }, [])
-    .join('|');
+    .join("|");
 };
 
 export const getStyleSheets = () => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return [];
   }
 
-  const links = document.getElementsByTagName('link') || [];
+  const links = document.getElementsByTagName("link") || [];
   const filtered = [];
   let i = links.length;
   while (i--) {
-    links[i].rel === 'stylesheet' && filtered.push(links[i].href);
+    links[i].rel === "stylesheet" && filtered.push(links[i].href);
   }
 
   return filtered;
@@ -217,7 +218,7 @@ export const generatePattern = (props) => {
   angle = patternAngle || 0;
 
   const co = [
-    'transparent',
+    "transparent",
     ...[...Array(maxColors - 1).keys()]
       .map((_) => hexToHSL(props.root[`patternColor${+_ + 1}`]))
       .filter((_) => _),
@@ -239,66 +240,60 @@ export const generatePattern = (props) => {
     function multiStroke(i) {
       let defColor = colors[i + 1];
       if (vHeight === 0 && maxColors > 2) {
-        // if(colorCounts !== maxColors) defColor = colors[1];
-        if (colorCounts === 3 && maxColors === 4 && i === 2) defColor = colors[1];
-        else if (colorCounts === 4 && maxColors === 5 && i === 3) defColor = colors[1];
-        else if (colorCounts === 3 && maxColors === 5 && i === 3) defColor = colors[1];
-        else if (colorCounts === 3 && maxColors === 5 && i === 2) defColor = colors[1];
+        if (colorCounts === 3 && maxColors === 4 && i === 2)
+          defColor = colors[1];
+        else if (colorCounts === 4 && maxColors === 5 && i === 3)
+          defColor = colors[1];
+        else if (colorCounts === 3 && maxColors === 5 && i === 3)
+          defColor = colors[1];
+        else if (colorCounts === 3 && maxColors === 5 && i === 2)
+          defColor = colors[1];
         else if (colorCounts === 2) defColor = colors[1];
       }
-      if (mode === 'stroke-join') {
+      if (mode === "stroke-join") {
         strokeFill = ` stroke='${defColor}' fill='none'`;
-        joinMode = join == 2
-          ? "stroke-linejoin='round' stroke-linecap='round' "
-          : "stroke-linecap='square' ";
-      } else if (mode === 'stroke') {
+        joinMode =
+          join == 2
+            ? "stroke-linejoin='round' stroke-linecap='round' "
+            : "stroke-linecap='square' ";
+      } else if (mode === "stroke") {
         strokeFill = ` stroke='${defColor}' fill='none'`;
-      } else strokeFill = ` stroke='none' fill='${defColor || 'white'}'`;
+      } else strokeFill = ` stroke='none' fill='${defColor || "white"}'`;
       return path
-        .split('~')
+        .split("~")
         [i].replace(
-          '/>',
-          ` transform='translate(${
-            spacing[0] / 2
-          },0)' ${
+          "/>",
+          ` transform='translate(${spacing[0] / 2},0)' ${
             joinMode
-          }stroke-width='${
-            stroke
-          }'${
-            strokeFill
-          }/>`
+          }stroke-width='${stroke}'${strokeFill}/>`
         )
-        .replace("transform='translate(0,0)' ", ' ');
+        .replace("transform='translate(0,0)' ", " ");
     }
-    let strokeFill = '';
-    let joinMode = '';
-    let strokeGroup = '';
+    let strokeFill = "";
+    let joinMode = "";
+    let strokeGroup = "";
     if (vHeight === 0 && maxColors > 2) {
       for (let i = 0; i < maxColors - 1; i++) strokeGroup += multiStroke(i);
     } else {
       for (let i = 0; i < colorCounts - 1; i++) strokeGroup += multiStroke(i);
     }
 
-    const patternNew = '<svg id=\'patternId\' width=\'100%\' height=\'100%\' xmlns=\'http://www.w3.org/2000/svg\'><defs>'
-      + `<pattern id='a' patternUnits='userSpaceOnUse' width='${
+    const patternNew =
+      "<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs>" +
+      `<pattern id='a' patternUnits='userSpaceOnUse' width='${
         width + spacing[0]
       }' height='${
-      // (height * (colors.length - 1) + spacing[1] * ((colors.length - 1) * 0.5)) +
         height - vHeight * (maxColors - colorCounts) + spacing[1]
-      }' patternTransform='scale(${
-        scale
-      }) rotate(${
+      }' patternTransform='scale(${scale}) rotate(${
         angle
       })'><rect x='0' y='0' width='100%' height='100%' fill='${
-        colors[0] || 'white'
+        colors[0] || "white"
       }'/>${
         strokeGroup
       }</pattern></defs><rect width='800%' height='800%' transform='translate(${
         scale * moveLeft
-      },${
-        scale * moveTop
-      })' fill='url(#a)'/></svg>`;
-    return `"data:image/svg+xml,${patternNew.replace('#', '%23')}"`;
+      },${scale * moveTop})' fill='url(#a)'/></svg>`;
+    return `"data:image/svg+xml,${patternNew.replace("#", "%23")}"`;
   };
 
   return svgPattern(
@@ -317,9 +312,10 @@ export const generatePattern = (props) => {
 export const getMedialUrl = (props) => {
   const { videoId, content, type } = props;
 
-  if (type === 'img' && videoId) return videoId;
+  if (type === "img" && videoId) return videoId;
 
-  if (type === 'cdn' && videoId) return `https://imagedelivery.net/8PYt12v3QMuDRiYrOftNUQ/${videoId}/public`;
+  if (type === "cdn" && videoId)
+    return `https://imagedelivery.net/8PYt12v3QMuDRiYrOftNUQ/${videoId}/public`;
 };
 
 export const getBackgroundUrl = (props) => {
@@ -327,7 +323,8 @@ export const getBackgroundUrl = (props) => {
     const type = props.backgroundImageType;
     const content = props.backgroundImage;
 
-    if (type === 'cdn' && content) return `https://imagedelivery.net/8PYt12v3QMuDRiYrOftNUQ/${content}/public`;
+    if (type === "cdn" && content)
+      return `https://imagedelivery.net/8PYt12v3QMuDRiYrOftNUQ/${content}/public`;
 
     return content;
   }
@@ -370,22 +367,22 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
 
   let href = `https://fonts.googleapis.com/css?family=${props.root.fontFamily[0].replace(
     / +/g,
-    '+'
+    "+"
   )}`;
 
   const weights = [
     ...new Set(
-      ['desktop', 'mobile', 'tablet'].map((_) => (props[_] || {}).fontWeight)
+      ["desktop", "mobile", "tablet"].map((_) => (props[_] || {}).fontWeight)
     ),
   ].filter((_) => _);
 
   if (!weights.length) {
-    weights.push('font-normal');
+    weights.push("font-normal");
   }
 
-  href += `:400,${weights.join(',')}`;
+  href += `:400,${weights.join(",")}`;
 
-  href += '&display=swap';
+  href += "&display=swap";
 
   const filtered = getStyleSheets();
 
@@ -393,15 +390,15 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
     return;
   }
 
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return;
   }
 
-  const head = document.getElementsByTagName('HEAD')[0];
+  const head = document.getElementsByTagName("HEAD")[0];
 
-  const link = document.createElement('link');
+  const link = document.createElement("link");
 
-  link.rel = 'stylesheet';
+  link.rel = "stylesheet";
   link.href = href;
 
   head.appendChild(link);
@@ -433,15 +430,16 @@ export const selectAfterAdding = (selectNode, setActiveTab, id, enabled) => {
     if (!id || !enabled) return;
 
     selectNode(id);
-    setActiveTab('');
+    setActiveTab("");
   }, [id, enabled]);
 };
 
-export const motionIt = (props, tagName) => (props.root?.animation ? motion(tagName) : tagName);
+export const motionIt = (props, tagName) =>
+  props.root?.animation ? motion(tagName) : tagName;
 
 export const variants = {
   open: { opacity: 1, x: 0 },
-  closed: { opacity: 0, x: '-100%' },
+  closed: { opacity: 0, x: "-100%" },
 };
 
 export const getPageCount = (query) => {
@@ -450,8 +448,8 @@ export const getPageCount = (query) => {
   const pageCount = !root
     ? []
     : root?.data?.nodes.filter(
-      (_) => query.node(_).get().data.props.type === 'page'
-    ) || [];
+        (_) => query.node(_).get().data.props.type === "page"
+      ) || [];
 
   return pageCount;
 };
@@ -471,7 +469,7 @@ export const isolatePage = (
     .map((_) => {
       const _props = query.node(_).get();
 
-      if (!_props || _props?.data?.props?.type !== 'page') return _;
+      if (!_props || _props?.data?.props?.type !== "page") return _;
 
       actions.setHidden(_, false);
       actions.setProp(_, (prop) => (prop.hidden = false));
@@ -482,7 +480,7 @@ export const isolatePage = (
     .forEach((_) => {
       const _props = query.node(_).get();
 
-      if (!_props || _props?.data?.props?.type !== 'page') return;
+      if (!_props || _props?.data?.props?.type !== "page") return;
 
       actions.setHidden(_, !isolate);
       actions.setProp(_, (prop) => (prop.hidden = !isolate));
@@ -490,8 +488,8 @@ export const isolatePage = (
 
   if (select) setTimeout(() => actions.selectNode(_active), 100);
 
-  setIsolate(!isolate ? _active : '');
-  localStorage.setItem('isolated', !isolate ? _active : '');
+  setIsolate(!isolate ? _active : "");
+  localStorage.setItem("isolated", !isolate ? _active : "");
 };
 
 export const isolatePageAlt = (
@@ -509,7 +507,7 @@ export const isolatePageAlt = (
     .map((_) => {
       const _props = query.node(_).get();
 
-      if (!_props || _props?.data?.props?.type !== 'page') return _;
+      if (!_props || _props?.data?.props?.type !== "page") return _;
 
       actions.setHidden(_, !!active);
       actions.setProp(_, (prop) => (prop.hidden = !!active));
@@ -520,7 +518,7 @@ export const isolatePageAlt = (
     .forEach((_) => {
       const _props = query.node(_).get();
 
-      if (!_props || _props?.data?.props?.type !== 'page') return;
+      if (!_props || _props?.data?.props?.type !== "page") return;
 
       actions.setHidden(_, false);
       actions.setProp(_, (prop) => (prop.hidden = false));
@@ -529,7 +527,7 @@ export const isolatePageAlt = (
   if (select) setTimeout(() => actions.selectNode(_active), 100);
 
   setIsolate(active);
-  localStorage.setItem('isolated', active);
+  localStorage.setItem("isolated", active);
 };
 
 export const isCssValid = (code: string): boolean => {
@@ -542,7 +540,7 @@ export const isCssValid = (code: string): boolean => {
 };
 
 export const isJsValid = (code: string): boolean => {
-  const strippedCode = code.replace(/<script[^>]*>|<\/script>/gi, '');
+  const strippedCode = code.replace(/<script[^>]*>|<\/script>/gi, "");
 
   try {
     new Function(strippedCode);
@@ -558,11 +556,13 @@ export const popupCenter = (url, title) => {
   const dualScreenLeft = window.screenLeft ?? window.screenX;
   const dualScreenTop = window.screenTop ?? window.screenY;
 
-  const width = window.innerWidth ?? document.documentElement.clientWidth ?? screen.width;
+  const width =
+    window.innerWidth ?? document.documentElement.clientWidth ?? screen.width;
 
-  const height = window.innerHeight
-    ?? document.documentElement.clientHeight
-    ?? screen.height;
+  const height =
+    window.innerHeight ??
+    document.documentElement.clientHeight ??
+    screen.height;
 
   const systemZoom = width / window.screen.availWidth;
 

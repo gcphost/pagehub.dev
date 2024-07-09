@@ -1,31 +1,31 @@
-import { TabBody } from 'components/editor/Toolbar/Tab';
-import { BiPaint } from 'react-icons/bi';
+import { TabBody } from "components/editor/Toolbar/Tab";
+import { BiPaint } from "react-icons/bi";
 
-import { useEditor } from '@craftjs/core';
-import { ToolboxMenu } from 'components/editor/RenderNode';
-import { ToolbarItem, ToolbarSection } from 'components/editor/Toolbar';
+import { useEditor } from "@craftjs/core";
+import { ToolboxMenu } from "components/editor/RenderNode";
+import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
 import {
   TableBodyStyleControl,
   TBWrap,
-} from 'components/editor/Toolbar/Helpers/SettingsHelper';
-import { AnimationsInput } from 'components/editor/Toolbar/Inputs/AnimationsInput';
-import { BorderInput } from 'components/editor/Toolbar/Inputs/BorderInput';
-import { ColorInput } from 'components/editor/Toolbar/Inputs/ColorInput';
-import DisplaySettingsInput from 'components/editor/Toolbar/Inputs/DisplaySettingsInput';
-import { FontInput } from 'components/editor/Toolbar/Inputs/FontInput';
-import { IpsumGenerator } from 'components/editor/Toolbar/Inputs/IpsumGenerator';
-import { PresetInput } from 'components/editor/Toolbar/Inputs/PresetInput';
-import { ShadowInput } from 'components/editor/Toolbar/Inputs/ShadowInput';
-import { SpacingInput } from 'components/editor/Toolbar/Inputs/SpacingInput';
-import { TypeInput } from 'components/editor/Toolbar/Inputs/TypeInput';
-import { TabAtom } from 'components/editor/Viewport';
-import { useEffect } from 'react';
-import { BsInputCursorText } from 'react-icons/bs';
-import { MdStyle } from 'react-icons/md';
-import { TbBoxPadding, TbMouse, TbPlayerPlay } from 'react-icons/tb';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { useDefaultTab } from 'utils/lib';
-import { inputTypes } from '.';
+} from "components/editor/Toolbar/Helpers/SettingsHelper";
+import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInput";
+import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
+import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
+import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
+import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
+import { IpsumGenerator } from "components/editor/Toolbar/Inputs/IpsumGenerator";
+import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
+import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
+import { SpacingInput } from "components/editor/Toolbar/Inputs/SpacingInput";
+import { TypeInput } from "components/editor/Toolbar/Inputs/TypeInput";
+import { TabAtom } from "components/editor/Viewport";
+import { useEffect } from "react";
+import { BsInputCursorText } from "react-icons/bs";
+import { MdStyle } from "react-icons/md";
+import { TbBoxPadding, TbMouse, TbPlayerPlay } from "react-icons/tb";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { useDefaultTab } from "utils/lib";
+import { inputTypes } from ".";
 
 export const FormElementSettings = () => {
   const { actions, query } = useEditor();
@@ -37,27 +37,27 @@ export const FormElementSettings = () => {
 
   const head = [
     {
-      title: 'Form Input',
+      title: "Form Input",
       icon: <BsInputCursorText />,
     },
     {
-      title: 'Appearance',
+      title: "Appearance",
       icon: <BiPaint />,
     },
     {
-      title: 'Layout',
+      title: "Layout",
       icon: <TbBoxPadding />,
     },
     {
-      title: 'Hover & Click',
+      title: "Hover & Click",
       icon: <TbMouse />,
     },
     {
-      title: 'Animations',
+      title: "Animations",
       icon: <TbPlayerPlay />,
     },
     {
-      title: 'Style',
+      title: "Style",
       icon: <MdStyle />,
     },
   ];
@@ -111,62 +111,62 @@ export const FormElementSettings = () => {
   );
 
   const TBBody = () => (
-      <TableBodyStyleControl
-        actions={actions}
-        activeTab={activeTab}
-        head={head}
-        query={query}
-        tab={<MainTab />}
-      >
-        {activeTab === 'Form Input' && <MainTab />}
+    <TableBodyStyleControl
+      actions={actions}
+      activeTab={activeTab}
+      head={head}
+      query={query}
+      tab={<MainTab />}
+    >
+      {activeTab === "Form Input" && <MainTab />}
 
-        {activeTab === 'Appearance' && (
-          <TabBody>
-            <PresetInput presets={presets} />
+      {activeTab === "Appearance" && (
+        <TabBody>
+          <PresetInput presets={presets} />
 
-            <FontInput />
-            <ToolbarSection>
-              <ColorInput
-                propKey="color"
-                label="Color"
-                prefix="text"
-                propType="root"
-              />
-              <BorderInput />
-              <TypeInput />
-              <ShadowInput />
-            </ToolbarSection>
-          </TabBody>
-        )}
+          <FontInput />
+          <ToolbarSection>
+            <ColorInput
+              propKey="color"
+              label="Color"
+              prefix="text"
+              propType="root"
+            />
+            <BorderInput />
+            <TypeInput />
+            <ShadowInput />
+          </ToolbarSection>
+        </TabBody>
+      )}
 
-        {activeTab === 'Layout' && <SpacingInput />}
+      {activeTab === "Layout" && <SpacingInput />}
 
-        {activeTab === 'Style' && (
-          <TabBody>
-            <DisplaySettingsInput />
-          </TabBody>
-        )}
+      {activeTab === "Style" && (
+        <TabBody>
+          <DisplaySettingsInput />
+        </TabBody>
+      )}
 
-        {activeTab === 'Animations' && (
-          <TabBody>
-            <AnimationsInput />
-          </TabBody>
-        )}
+      {activeTab === "Animations" && (
+        <TabBody>
+          <AnimationsInput />
+        </TabBody>
+      )}
 
-        {activeTab === 'Hover & Click' && (
-          <TabBody>
-            <ToolbarSection>
-              <ColorInput
-                propKey="color"
-                label="Color"
-                prefix="text"
-                index="hover"
-                propType="component"
-              />
-            </ToolbarSection>
-          </TabBody>
-        )}
-      </TableBodyStyleControl>
+      {activeTab === "Hover & Click" && (
+        <TabBody>
+          <ToolbarSection>
+            <ColorInput
+              propKey="color"
+              label="Color"
+              prefix="text"
+              index="hover"
+              propType="component"
+            />
+          </ToolbarSection>
+        </TabBody>
+      )}
+    </TableBodyStyleControl>
   );
 
   return (

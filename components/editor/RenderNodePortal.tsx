@@ -1,8 +1,8 @@
-import { useNode } from '@craftjs/core';
-import { useFindScrollingParent } from 'components/selectors/lib';
-import { AnimatePresence } from 'framer-motion';
-import { useCallback, useEffect, useRef } from 'react';
-import { getRect } from './Viewport/useRect';
+import { useNode } from "@craftjs/core";
+import { useFindScrollingParent } from "components/selectors/lib";
+import { AnimatePresence } from "framer-motion";
+import { useCallback, useEffect, useRef } from "react";
+import { getRect } from "./Viewport/useRect";
 
 export function RenderNodePortal({ children }) {
   const clonedElementRef = useRef(null);
@@ -72,10 +72,10 @@ export function RenderNodePortal({ children }) {
       });
     };
 
-    scrollingParent.addEventListener('scroll', handleScroll);
+    scrollingParent.addEventListener("scroll", handleScroll);
 
     return () => {
-      scrollingParent.removeEventListener('scroll', handleScroll);
+      scrollingParent.removeEventListener("scroll", handleScroll);
       window.cancelAnimationFrame(animationFrameId);
     };
   }, [originalElementRef, scrollingParent]);

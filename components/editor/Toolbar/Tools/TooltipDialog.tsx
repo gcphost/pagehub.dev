@@ -1,19 +1,19 @@
-import { useGetRectLater } from 'components/editor/Tools/Dialog';
-import { ulVariants } from 'components/editor/Viewport/ToolboxContextual';
-import { getRect } from 'components/editor/Viewport/useRect';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useRef } from 'react';
-import { atom, useRecoilValue } from 'recoil';
+import { useGetRectLater } from "components/editor/Tools/Dialog";
+import { ulVariants } from "components/editor/Viewport/ToolboxContextual";
+import { getRect } from "components/editor/Viewport/useRect";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRef } from "react";
+import { atom, useRecoilValue } from "recoil";
 
 export const ToolTipDialogAtom = atom({
-  key: 'tooltip',
+  key: "tooltip",
   default: {
     enabled: false,
-    prefix: '',
+    prefix: "",
     value: null,
     key: null,
     e: null,
-    placement: 'bottom',
+    placement: "bottom",
   } as any,
 });
 
@@ -25,7 +25,7 @@ export const ToolTipDialog = () => {
 
   const style = {
     top:
-      dialog.placement === 'bottom'
+      dialog.placement === "bottom"
         ? rect.bottom + 10
         : rect.top - refRect.height - 10,
     left: rect.left - refRect.width / 2,
@@ -36,7 +36,7 @@ export const ToolTipDialog = () => {
     <AnimatePresence>
       {dialog.enabled && (
         <motion.div
-          animate={{ opacity: 1, width: 'unset', height: 'unset' }}
+          animate={{ opacity: 1, width: "unset", height: "unset" }}
           variants={ulVariants}
           transition={ulVariants.transition}
           initial={{ opacity: 0, width: 0, height: 0 }}
@@ -45,7 +45,7 @@ export const ToolTipDialog = () => {
           id={`tooltip-${dialog.key}`}
           data-tooltip={true}
           style={style}
-          className={'absolute z-20 flex pointer-events-none '}
+          className={"absolute z-20 flex pointer-events-none "}
         >
           <div
             ref={ref}

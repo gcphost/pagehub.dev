@@ -1,6 +1,6 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const SettingsAtom = atom({
-  key: 'settings',
+  key: "settings",
   default: null,
 });

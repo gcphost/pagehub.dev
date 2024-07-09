@@ -1,16 +1,14 @@
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
 
 // @ts-ignore
-import User from 'models/user.model';
-import { getServerSession } from 'next-auth';
-import { authOptions } from './auth/[...nextauth]';
-import Page from '../../models/page';
-import dbConnect from '../../utils/dbConnect';
-import {
-  addDomain, deploy, getDomain, removeDomain
-} from './domain';
+import User from "models/user.model";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
+import Page from "../../models/page";
+import dbConnect from "../../utils/dbConnect";
+import { addDomain, deploy, getDomain, removeDomain } from "./domain";
 
-const generate = require('boring-name-generator');
+const generate = require("boring-name-generator");
 
 export async function uniqueNanoId(query = null) {
   const nanoId = nanoid();
@@ -42,7 +40,11 @@ const newPage = async (content, draft) => {
   const draftId = (await uniqueNameId()).toLowerCase();
 
   const page = new Page({
-    _id, content, draft, draftId, editable: true
+    _id,
+    content,
+    draft,
+    draftId,
+    editable: true,
   });
 
   await page.save();
@@ -51,12 +53,10 @@ const newPage = async (content, draft) => {
 };
 
 const createPage = async (req) => {
-  const {
-    _id, content, draft, name, type
-  } = req.body;
+  const { _id, content, draft, name, type } = req.body;
 
   if (_id && _id.length > 50) {
-    return { error: 'Id too long' };
+    return { error: "Id too long" };
   }
 
   if (!_id) return newPage(content, draft);
@@ -67,54 +67,54 @@ const createPage = async (req) => {
 
   const domain = req.body.domain;
   const res = {};
-  console.log('d', type, domain, found.domain);
+  console.log("d", type, domain, found.domain);
 
-  if (type === 'publish' && domain && domain !== found.domain) {
+  if (type === "publish" && domain && domain !== found.domain) {
     const existing = await getDomain(domain);
     console.log(existing);
 
-    if (existing?.error?.code === 'not_found') {
+    if (existing?.error?.code === "not_found") {
       await removeDomain(found.domain);
       const add = await addDomain(domain);
-      console.log('add', add);
+      console.log("add", add);
       found.domain = domain;
     } else {
-      res.error = 'Domain already exists';
+      res.error = "Domain already exists";
     }
   }
 
-  if (type === 'publish' && !domain && found.domain) {
-    console.log('removing');
+  if (type === "publish" && !domain && found.domain) {
+    console.log("removing");
     await removeDomain(found.domain);
     found.domain = null;
   }
 
-  if (type === 'publish' && found.domain) {
+  if (type === "publish" && found.domain) {
     await deploy();
   }
 
   [
-    'content',
-    'draft',
-    'title',
-    'description',
-    'company',
-    'companyType',
-    'companyLocation',
+    "content",
+    "draft",
+    "title",
+    "description",
+    "company",
+    "companyType",
+    "companyLocation",
   ].forEach((_) => {
     const value = req.body[_];
 
-    if (['content', 'draft', 'title', 'description'].includes(_)) {
+    if (["content", "draft", "title", "description"].includes(_)) {
       if (!value) return;
     }
 
     if (value) {
-      if (_ === 'title' && value.length > 60) {
-        return { error: 'Title limit 60.' };
+      if (_ === "title" && value.length > 60) {
+        return { error: "Title limit 60." };
       }
 
-      if (_ === 'description' && value.length > 160) {
-        return { error: 'Description limit 60.' };
+      if (_ === "description" && value.length > 160) {
+        return { error: "Description limit 60." };
       }
     }
 
@@ -123,7 +123,7 @@ const createPage = async (req) => {
 
   if (name && name !== found.name) {
     if (name.length > 50) {
-      return { error: 'Name limit 50' };
+      return { error: "Name limit 50" };
     }
     const foundName = await Page.findOne({ name });
     if (!foundName) found.name = name;

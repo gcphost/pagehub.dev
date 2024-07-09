@@ -1,20 +1,20 @@
-import { useNode } from '@craftjs/core';
-import { changeProp } from 'components/editor/Viewport/lib';
-import { getRect } from 'components/editor/Viewport/useRect';
-import { useRef } from 'react';
-import { useRecoilState } from 'recoil';
-import { Wrap } from '../ToolbarStyle';
-import ClientIconLoader from '../Tools/ClientIconLoader';
-import { IconDialogAtom } from '../Tools/IconDialog';
-import { useDialog } from '../Tools/lib';
+import { useNode } from "@craftjs/core";
+import { changeProp } from "components/editor/Viewport/lib";
+import { getRect } from "components/editor/Viewport/useRect";
+import { useRef } from "react";
+import { useRecoilState } from "recoil";
+import { Wrap } from "../ToolbarStyle";
+import ClientIconLoader from "../Tools/ClientIconLoader";
+import { IconDialogAtom } from "../Tools/IconDialog";
+import { useDialog } from "../Tools/lib";
 
 export const IconDialogInput = ({
   propKey,
-  label = '',
-  prefix = '',
+  label = "",
+  prefix = "",
   index = null,
-  propItemKey = '',
-  propType = 'class',
+  propItemKey = "",
+  propType = "class",
 }) => {
   const [dialog, setDialog] = useRecoilState(IconDialogAtom);
 
@@ -36,7 +36,7 @@ export const IconDialogInput = ({
     });
   };
 
-  const value = nodeProps[propKey][index][propItemKey] || '';
+  const value = nodeProps[propKey][index][propItemKey] || "";
 
   const ref = useRef(null);
 

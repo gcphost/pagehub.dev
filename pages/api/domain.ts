@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,7 +14,7 @@ export async function getDomain(name) {
       headers: {
         Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
       },
-      method: 'get',
+      method: "get",
     }
   );
 
@@ -22,22 +22,22 @@ export async function getDomain(name) {
 }
 
 export async function deploy() {
-  const dd = await fetch('https://api.vercel.com/v6/deployments', {
+  const dd = await fetch("https://api.vercel.com/v6/deployments", {
     headers: {
       Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
     },
-    method: 'get',
+    method: "get",
   });
 
   const deployments = await dd.json();
 
   const result = await fetch(
-    'https://vercel.com/api/v13/deployments?forceNew=1&withCache=1',
+    "https://vercel.com/api/v13/deployments?forceNew=1&withCache=1",
     {
       headers: {
         Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
       },
-      method: 'POST',
+      method: "POST",
       body: `{"deploymentId":"${deployments.deployments[0].uid}","meta":{"action":"redeploy"},"name":"pagehub","target":"production"}`,
     }
   );
@@ -51,7 +51,7 @@ export async function removeDomain(name) {
       headers: {
         Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
       },
-      method: 'delete',
+      method: "delete",
     }
   );
   return result.json();
@@ -59,7 +59,7 @@ export async function removeDomain(name) {
 
 export async function addDomain(name) {
   const result = await fetch(
-    'https://api.vercel.com/v10/projects/pagehub/domains',
+    "https://api.vercel.com/v10/projects/pagehub/domains",
     {
       body: JSON.stringify({
         name,
@@ -67,7 +67,7 @@ export async function addDomain(name) {
       headers: {
         Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
       },
-      method: 'post',
+      method: "post",
     }
   );
 

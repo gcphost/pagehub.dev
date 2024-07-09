@@ -1,6 +1,6 @@
-import { Tooltip } from 'components/layout/Tooltip';
-import { TbAlignCenter, TbAlignLeft, TbAlignRight } from 'react-icons/tb';
-import { ToolbarItem } from '../ToolbarItem';
+import { Tooltip } from "components/layout/Tooltip";
+import { TbAlignCenter, TbAlignLeft, TbAlignRight } from "react-icons/tb";
+import { ToolbarItem } from "../ToolbarItem";
 
 export const AlignItemsInput = () => (
   <ToolbarItem
@@ -15,7 +15,7 @@ export const AlignItemsInput = () => (
             <TbAlignLeft />
           </Tooltip>
         ),
-        value: 'items-start',
+        value: "items-start",
       },
       {
         label: (
@@ -23,7 +23,7 @@ export const AlignItemsInput = () => (
             <TbAlignCenter />
           </Tooltip>
         ),
-        value: 'items-center',
+        value: "items-center",
       },
       {
         label: (
@@ -31,7 +31,7 @@ export const AlignItemsInput = () => (
             <TbAlignRight />
           </Tooltip>
         ),
-        value: 'items-end',
+        value: "items-end",
       },
     ]}
   />

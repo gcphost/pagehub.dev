@@ -1,11 +1,9 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import {
-  useCallback, useEffect, useRef, useState
-} from 'react';
-import ReactDOM from 'react-dom';
-import { MdClose } from 'react-icons/md';
-import { useRecoilState } from 'recoil';
-import { getRect } from '../Viewport/useRect';
+import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
+import { MdClose } from "react-icons/md";
+import { useRecoilState } from "recoil";
+import { getRect } from "../Viewport/useRect";
 
 export const useGetRectLater = (localRef) => {
   const [rect, setRect] = useState({
@@ -23,22 +21,20 @@ export const useGetRectLater = (localRef) => {
     if (!localRef?.current) return;
     const originalDisplay = localRef.current.style.display;
 
-    localRef.current.style.display = 'flex';
+    localRef.current.style.display = "flex";
     const rect = getRect(localRef.current);
 
     localRef.current.style.display = originalDisplay;
 
     setRect(rect);
 
-    localRef.current.style.display = 'flex';
+    localRef.current.style.display = "flex";
   }, [localRef]);
 
   return rect;
 };
 
-function Dialog({
-  children, target, state, opener
-}: any): any {
+function Dialog({ children, target, state, opener }: any): any {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const dialogRef = useRef(null);
@@ -68,7 +64,7 @@ function Dialog({
 
     const targetRect = target.getBoundingClientRect();
     const dialogContentRect = getRect(dialogContentRef.current);
-    const viewportRect = getRect(document.getElementById('viewport'));
+    const viewportRect = getRect(document.getElementById("viewport"));
     const openerRect = getRect(opener.current);
 
     const dialogWidth = dialogContentRect.width;
@@ -136,8 +132,8 @@ function Dialog({
         setPosition({
           left: e.clientX - offset.x,
           top: e.clientY - offset.y,
-          right: '',
-          bottom: '',
+          right: "",
+          bottom: "",
         });
       }
     }
@@ -146,12 +142,12 @@ function Dialog({
       setIsDragging(false);
     }
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging, offset]);
 
@@ -162,10 +158,10 @@ function Dialog({
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener("click", handleClickOutside, true);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, [dialogRef]);
 
@@ -177,7 +173,7 @@ function Dialog({
             initial={{ scale: 1, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 1, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
             className="absolute select-none bg-gray-700  max-w-[320px] text-white  border-2 border-gray-900 flex-col gap- rounded-lg shadow-2xl overflow-hidden"
             style={{
               zIndex: 50,

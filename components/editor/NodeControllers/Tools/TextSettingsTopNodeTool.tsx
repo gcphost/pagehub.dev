@@ -1,9 +1,9 @@
-import { ToolbarItem } from 'components/editor/Toolbar';
-import { PresetInput } from 'components/editor/Toolbar/Inputs/PresetInput';
-import { NodeToolWrapper } from 'components/editor/Tools/NodeDialog';
-import { textPresets } from 'components/selectors/Text/TextSettings';
-import { AiOutlineAlignRight } from 'react-icons/ai';
-import { TbAlignCenter, TbAlignLeft } from 'react-icons/tb';
+import { ToolbarItem } from "components/editor/Toolbar";
+import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
+import { NodeToolWrapper } from "components/editor/Tools/NodeDialog";
+import { textPresets } from "components/selectors/Text/TextSettings";
+import { AiOutlineAlignRight } from "react-icons/ai";
+import { TbAlignCenter, TbAlignLeft } from "react-icons/tb";
 
 export function TextSettingsTopNodeTool() {
   return (
@@ -17,7 +17,7 @@ export function TextSettingsTopNodeTool() {
           transition: {
             delay: 0.5,
             duration: 0.5,
-            type: 'spring',
+            type: "spring",
             stiffness: 200,
             damping: 20,
             mass: 0.5,
@@ -29,7 +29,7 @@ export function TextSettingsTopNodeTool() {
           transition: {
             delay: 0.2,
             duration: 0.3,
-            type: 'spring',
+            type: "spring",
             stiffness: 200,
             damping: 20,
             mass: 0.5,
@@ -53,9 +53,9 @@ export function TextSettingsTopNodeTool() {
         cols={true}
         wrap="control"
         options={[
-          { value: 'text-left', label: <TbAlignLeft /> },
-          { value: 'text-center', label: <TbAlignCenter /> },
-          { value: 'text-right', label: <AiOutlineAlignRight /> },
+          { value: "text-left", label: <TbAlignLeft /> },
+          { value: "text-center", label: <TbAlignCenter /> },
+          { value: "text-right", label: <AiOutlineAlignRight /> },
         ]}
       />
     </NodeToolWrapper>

@@ -1,20 +1,20 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
+import { useEditor, useNode } from "@craftjs/core";
+import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import {
   getClonedState,
   setClonedProps,
-} from 'components/editor/Toolbar/Helpers/CloneHelper';
-import { PreviewAtom, TabAtom, ViewAtom } from 'components/editor/Viewport';
-import Link from 'next/link';
-import React, { useRef } from 'react';
-import { TbCheck, TbPhoto } from 'react-icons/tb';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { getMedialUrl, motionIt } from 'utils/lib';
-import { CSStoObj, ClassGenerator, applyAnimation } from 'utils/tailwind';
-import { BaseSelectorProps } from '..';
-import { ImageSettings } from './ImageSettings';
+} from "components/editor/Toolbar/Helpers/CloneHelper";
+import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import Link from "next/link";
+import React, { useRef } from "react";
+import { TbCheck, TbPhoto } from "react-icons/tb";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { getMedialUrl, motionIt } from "utils/lib";
+import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
+import { BaseSelectorProps } from "..";
+import { ImageSettings } from "./ImageSettings";
 
-const NextImage = require('next/image');
+const NextImage = require("next/image");
 
 export const ImageDefault = ({ tab, props }) => {
   const setActiveTab = useSetRecoilState(TabAtom);
@@ -44,7 +44,7 @@ interface ImageProps extends BaseSelectorProps {
 }
 
 const defaultProps: ImageProps = {
-  type: 'img',
+  type: "img",
   className: [],
   root: {},
   mobile: {},
@@ -62,7 +62,9 @@ export const Image = (props: ImageProps) => {
     connectors: { connect, drag },
     id,
   } = useNode();
-  const { actions, query, enabled } = useEditor((state) => getClonedState(props, state));
+  const { actions, query, enabled } = useEditor((state) =>
+    getClonedState(props, state)
+  );
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
@@ -86,24 +88,24 @@ export const Image = (props: ImageProps) => {
       props,
       view,
       enabled,
-      ['objectFit', 'ojectPosition'],
+      ["objectFit", "ojectPosition"],
       [],
       preview
     )}`,
   };
 
-  prop.style = { ...prop.style, position: 'relative' };
+  prop.style = { ...prop.style, position: "relative" };
 
   const _imgProp = {
-    loading: 'eager', // or lazy
-    alt: '',
-    title: '',
+    loading: "eager", // or lazy
+    alt: "",
+    title: "",
     className: ClassGenerator(
       props,
       view,
       enabled,
       [],
-      ['objectFit', 'ojectPosition', 'radius', 'width', 'height'],
+      ["objectFit", "ojectPosition", "radius", "width", "height"],
       preview
     ),
     // width: "100",
@@ -111,7 +113,7 @@ export const Image = (props: ImageProps) => {
     // fill: true,
   };
 
-  if (type === 'svg' && content) {
+  if (type === "svg" && content) {
     prop.dangerouslySetInnerHTML = { __html: content };
   } else {
     _imgProp.src = getMedialUrl(props);
@@ -121,11 +123,11 @@ export const Image = (props: ImageProps) => {
     }
 
     if (props.priority) {
-      const link = document.createElement('link');
+      const link = document.createElement("link");
 
-      link.rel = 'preload';
+      link.rel = "preload";
       link.href = _imgProp.src;
-      link.as = 'image';
+      link.as = "image";
 
       const preloadLink = document.querySelector(
         `link[rel="preload"][href="${link.href}"][as="image"]`
@@ -141,12 +143,12 @@ export const Image = (props: ImageProps) => {
     if (empty) {
       prop.children = <ImageDefault tab="Image" props={props} />;
     }
-    prop['data-bounding-box'] = enabled;
-    prop['data-empty-state'] = empty;
-    prop['node-id'] = id;
+    prop["data-bounding-box"] = enabled;
+    prop["data-empty-state"] = empty;
+    prop["node-id"] = id;
   }
 
-  const tagName = empty ? 'div' : type === 'svg' ? 'svg' : 'img';
+  const tagName = empty ? "div" : type === "svg" ? "svg" : "img";
 
   const Img = React.createElement(motionIt(props, tagName), {
     ...applyAnimation({ ..._imgProp, ...prop, key: id }, props),
@@ -157,11 +159,11 @@ export const Image = (props: ImageProps) => {
     },
   });
 
-  if (type !== 'svg' && !empty) {
+  if (type !== "svg" && !empty) {
     prop.children = Img;
   }
 
-  const ele = props.url ? Link : 'div';
+  const ele = props.url ? Link : "div";
 
   if (props.url) {
     return React.createElement(ele, {
@@ -173,7 +175,7 @@ export const Image = (props: ImageProps) => {
 };
 
 Image.craft = {
-  displayName: 'Image',
+  displayName: "Image",
   rules: {
     canDrag: () => true,
     canMoveIn: () => false,

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -15,16 +15,18 @@ const UserSchema = new mongoose.Schema(
         accessTokenExpires: Date,
       },
     ],
-    pages: [{
-      type: String,
-      ref: 'Page',
-    }],
+    pages: [
+      {
+        type: String,
+        ref: "Page",
+      },
+    ],
   },
   { timestamps: true }
 );
 
-const User = mongoose.models.User || mongoose.model('User', UserSchema);
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
-module.exports = mongoose.models.User || mongoose.model('User', PageSchema);
+module.exports = mongoose.models.User || mongoose.model("User", PageSchema);
 
 export default User;

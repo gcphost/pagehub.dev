@@ -1,7 +1,7 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { AnimatePresence, motion } from 'framer-motion';
-import debounce from 'lodash.debounce';
-import RenderNodeControl from '../RenderNodeControl';
+import { useEditor, useNode } from "@craftjs/core";
+import { AnimatePresence, motion } from "framer-motion";
+import debounce from "lodash.debounce";
+import RenderNodeControl from "../RenderNodeControl";
 
 const EditableName = () => {
   const { name, id } = useNode((node) => ({
@@ -12,7 +12,9 @@ const EditableName = () => {
 
   return (
     <div
-      className={'pointer-events-auto rounded-sm overflow-hidden border flex flex-row gap-3 bg-white/90 text-black !text-base !font-normal fontfamily-base'}
+      className={
+        "pointer-events-auto rounded-sm overflow-hidden border flex flex-row gap-3 bg-white/90 text-black !text-base !font-normal fontfamily-base"
+      }
     >
       <div
         className="px-2"
@@ -38,14 +40,12 @@ export const NameNodeController = (props: {
   placement;
   alt?: any;
 }) => {
-  const {
-    position, align, placement, alt
-  } = props as any;
+  const { position, align, placement, alt } = props as any;
 
   const { id } = useNode();
 
   const { isActive } = useEditor((_, query) => ({
-    isActive: query.getEvent('selected').contains(id),
+    isActive: query.getEvent("selected").contains(id),
   }));
 
   return (
@@ -57,9 +57,9 @@ export const NameNodeController = (props: {
           alt={alt}
           placement={placement}
           className={`${
-            position === 'top' && align === 'start' && placement === 'end'
-              ? 'm-1'
-              : ''
+            position === "top" && align === "start" && placement === "end"
+              ? "m-1"
+              : ""
           } whitespace-nowrap fixed items-center justify-center select-none will-change-auto`}
         >
           <motion.div
@@ -70,13 +70,13 @@ export const NameNodeController = (props: {
               },
               animate: {
                 opacity: 1,
-                width: 'unset',
-                transition: { ease: 'easeOut', duration: 0.5 },
+                width: "unset",
+                transition: { ease: "easeOut", duration: 0.5 },
               },
               exit: {
                 opacity: 0,
                 width: 0,
-                transition: { ease: 'easeOut', duration: 0.3 },
+                transition: { ease: "easeOut", duration: 0.3 },
               },
             }}
           >

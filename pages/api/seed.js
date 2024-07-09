@@ -1,7 +1,6 @@
 // @ts-ignore
-// import patterns from '../../../patterns';
-import Pattern from '../../models/patterns.model';
-import dbConnect from '../../utils/dbConnect';
+import Pattern from "../../models/patterns.model";
+import dbConnect from "../../utils/dbConnect";
 
 const patterns = [];
 
@@ -21,5 +20,5 @@ export default async function seed(req, res) {
     return res.status(500).json(e);
   }
 
-  res.status(200).json({});
+  return res.status(200).json({});
 }

@@ -1,5 +1,5 @@
-import { ToolbarItem } from '../ToolbarItem';
-import { ToolbarSection } from '../ToolbarSection';
+import { ToolbarItem } from "../ToolbarItem";
+import { ToolbarSection } from "../ToolbarSection";
 
 export const AnchorInput = () => (
   <ToolbarSection

@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 export const MotionIcon = ({
   children,
-  className = 'flex items-center justify-center gap-1.5',
+  className = "flex items-center justify-center gap-1.5",
 }) => (
   <motion.div
     whileHover={{
@@ -16,8 +16,8 @@ export const MotionIcon = ({
   </motion.div>
 );
 
-export const MotionInside = ({ children, className = '' }) => (
-  <motion.div style={{ transformOrigin: '50% 50%' }} className={className}>
+export const MotionInside = ({ children, className = "" }) => (
+  <motion.div style={{ transformOrigin: "50% 50%" }} className={className}>
     {children}
   </motion.div>
 );

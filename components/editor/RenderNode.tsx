@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export interface ToolboxMenuInterface {
   enabled?: boolean;
@@ -15,18 +15,18 @@ export interface ToolboxMenuInterface {
 }
 
 export const ToolboxMenu = atom({
-  key: 'menu',
+  key: "menu",
   default: {
     enabled: false,
-    position: 'after',
+    position: "after",
     x: 0,
     y: 0,
-    name: '',
+    name: "",
     components: [],
-    id: '',
+    id: "",
     parent: {
-      name: '',
-      displayName: '',
+      name: "",
+      displayName: "",
       props: {},
     },
   } as any,

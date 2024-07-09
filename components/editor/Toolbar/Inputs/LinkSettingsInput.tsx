@@ -1,6 +1,6 @@
-import { ToolbarItem } from '../ToolbarItem';
-import { ToolbarSection } from '../ToolbarSection';
-import { AnchorInput } from './AnchorInput';
+import { ToolbarItem } from "../ToolbarItem";
+import { ToolbarSection } from "../ToolbarSection";
+import { AnchorInput } from "./AnchorInput";
 
 export default () => (
   <>

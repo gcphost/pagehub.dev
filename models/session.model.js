@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const SessionSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     expires: Date,
     sessionToken: { type: String },
     accessToken: { type: String },
@@ -10,6 +10,7 @@ const SessionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Session = mongoose.models.Session || mongoose.model('Session', SessionSchema);
+const Session =
+  mongoose.models.Session || mongoose.model("Session", SessionSchema);
 
 export default Session;

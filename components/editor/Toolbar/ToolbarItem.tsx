@@ -1,39 +1,39 @@
-import { useNode } from '@craftjs/core';
-import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { ViewAtom } from '../Viewport';
-import { changeProp, getPropFinalValue } from '../Viewport/lib';
-import { QullInput } from './Quill';
+import { useNode } from "@craftjs/core";
+import React from "react";
+import { useRecoilValue } from "recoil";
+import { ViewAtom } from "../Viewport";
+import { changeProp, getPropFinalValue } from "../Viewport/lib";
+import { QullInput } from "./Quill";
 
-import { ToolbarDropdown } from './ToolbarDropdown';
-import { BgWrap, Wrap } from './ToolbarStyle';
+import { ToolbarDropdown } from "./ToolbarDropdown";
+import { BgWrap, Wrap } from "./ToolbarStyle";
 
 const Input = (__props, ref) => {
   const {
     props,
     propKey,
     type,
-    value = '',
+    value = "",
     changed,
     index,
-    propTag = '',
-    propType = 'class',
+    propTag = "",
+    propType = "class",
     wrap = null,
   } = __props;
 
-  if (type === 'toggle') {
+  if (type === "toggle") {
     return (
       <BgWrap wrap={wrap}>
         <label className="relative flex flex-col text-center items-center cursor-pointer">
           <div className="text-sm mb-3 font-medium text-white">
-            {props.option ? props.option : 'Enable'}
+            {props.option ? props.option : "Enable"}
           </div>
 
           <div className="relative">
             <input
               type="checkbox"
               defaultChecked={!!value}
-              onChange={() => changed(value ? '' : props.on)}
+              onChange={() => changed(value ? "" : props.on)}
               className="sr-only peer"
             />
             <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-violet-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-violet-500"></div>
@@ -43,19 +43,19 @@ const Input = (__props, ref) => {
     );
   }
 
-  if (type === 'checkbox') {
+  if (type === "checkbox") {
     return (
       <BgWrap wrap={wrap}>
         <label className="relative flex flex-col text-center items-center cursor-pointer">
           <div className="text-sm mb-3 font-medium text-white">
-            {props.option ? props.option : 'Enable'}
+            {props.option ? props.option : "Enable"}
           </div>
 
           <div className="relative">
             <input
               type="checkbox"
               defaultChecked={!!value}
-              onChange={() => changed(value ? '' : props.on)}
+              onChange={() => changed(value ? "" : props.on)}
               className="sr-only peer"
             />
             <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-violet-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-violet-500"></div>
@@ -65,7 +65,7 @@ const Input = (__props, ref) => {
     );
   }
 
-  if (type === 'number') {
+  if (type === "number") {
     return (
       <input
         type="number"
@@ -77,7 +77,7 @@ const Input = (__props, ref) => {
     );
   }
 
-  if (['custom'].includes(type)) {
+  if (["custom"].includes(type)) {
     const str = value;
     const regex = /\[([^\]]?)\]/;
     const match = regex.exec(str);
@@ -95,7 +95,7 @@ const Input = (__props, ref) => {
     );
   }
 
-  if (['url', 'text', 'email', 'number'].includes(type)) {
+  if (["url", "text", "email", "number"].includes(type)) {
     return (
       <input
         type={type}
@@ -108,7 +108,7 @@ const Input = (__props, ref) => {
     );
   }
 
-  if (type === 'textarea') {
+  if (type === "textarea") {
     return (
       <textarea
         id={`input-${props.label || index}`}
@@ -121,11 +121,11 @@ const Input = (__props, ref) => {
     );
   }
 
-  if (type === 'quill') {
+  if (type === "quill") {
     return <QullInput value={value} changed={changed} props={props} />;
   }
 
-  if (type === 'slider') {
+  if (type === "slider") {
     return (
       <BgWrap wrap={wrap}>
         <input
@@ -147,23 +147,23 @@ const Input = (__props, ref) => {
     );
   }
 
-  if (type === 'select') {
+  if (type === "select") {
     return (
       <ToolbarDropdown
         wrap={wrap}
-        value={value || ''}
+        value={value || ""}
         onChange={(value) => changed(value)}
         {...props}
       />
     );
   }
 
-  if (type === 'radio') {
+  if (type === "radio") {
     return (
       <BgWrap wrap={wrap}>
         <div
           className={`flex justify-center items-center p-1 gap-3 ${
-            !props.cols ? 'flex-col' : 'flex-row'
+            !props.cols ? "flex-col" : "flex-row"
           }`}
         >
           {props?.options?.map((_, key) => {
@@ -181,7 +181,7 @@ const Input = (__props, ref) => {
                 <label
                   htmlFor={`radio-${propKey}-${key}`}
                   className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${
-                    checked ? 'font-bold ' : 'text-gray-400'
+                    checked ? "font-bold " : "text-gray-400"
                   }`}
                 >
                   {_.label}
@@ -194,7 +194,7 @@ const Input = (__props, ref) => {
     );
   }
 
-  if (type === 'toggleNext') {
+  if (type === "toggleNext") {
     const checked = value;
     const opt = props?.options;
     const options = [];
@@ -207,35 +207,35 @@ const Input = (__props, ref) => {
       <BgWrap wrap={wrap}>
         <div
           className={`flex justify-center items-center p-1 gap-3 ${
-            !props.cols ? 'flex-col' : 'flex-row'
+            !props.cols ? "flex-col" : "flex-row"
           }`}
         >
           {options?.map((_, key) => (
-              <div key={key} className="flex items-center">
-                <input
-                  id={`radio-${propKey}-${key}`}
-                  type="radio"
-                  name={propKey}
-                  defaultChecked={checked}
-                  onClick={() => {
-                    // find next value..
-                    const me = opt.find((_) => _.value === value);
-                    const index = opt.indexOf(me);
-                    const next = index < opt.length - 1 ? opt[index + 1] : opt[0];
+            <div key={key} className="flex items-center">
+              <input
+                id={`radio-${propKey}-${key}`}
+                type="radio"
+                name={propKey}
+                defaultChecked={checked}
+                onClick={() => {
+                  // find next value..
+                  const me = opt.find((_) => _.value === value);
+                  const index = opt.indexOf(me);
+                  const next = index < opt.length - 1 ? opt[index + 1] : opt[0];
 
-                    changed(next.value);
-                  }}
-                  className="hidden"
-                />
-                <label
-                  htmlFor={`radio-${propKey}-${key}`}
-                  className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${
-                    checked ? 'font-bold ' : 'text-gray-400'
-                  }`}
-                >
-                  {_.label}
-                </label>
-              </div>
+                  changed(next.value);
+                }}
+                className="hidden"
+              />
+              <label
+                htmlFor={`radio-${propKey}-${key}`}
+                className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${
+                  checked ? "font-bold " : "text-gray-400"
+                }`}
+              >
+                {_.label}
+              </label>
+            </div>
           ))}
         </div>
       </BgWrap>
@@ -277,13 +277,13 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
     full = 1,
     propKey,
     propItem,
-    propType = 'class',
+    propType = "class",
     propItemKey,
     type,
     onChange = null,
     index = null,
-    propTag = '',
-    wrap = '',
+    propTag = "",
+    wrap = "",
     ...props
   } = __props;
 
@@ -311,9 +311,10 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
     });
   };
 
-  const label = props.valueLabels && props.valueLabels[value]
-    ? props.valueLabels[value]
-    : value;
+  const label =
+    props.valueLabels && props.valueLabels[value]
+      ? props.valueLabels[value]
+      : value;
 
   return (
     <Wrap

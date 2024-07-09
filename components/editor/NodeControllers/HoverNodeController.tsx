@@ -1,6 +1,6 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { AnimatePresence } from 'framer-motion';
-import RenderNodeControl from '../RenderNodeControl';
+import { useEditor, useNode } from "@craftjs/core";
+import { AnimatePresence } from "framer-motion";
+import RenderNodeControl from "../RenderNodeControl";
 
 export const HoverNodeController = (props: {
   position;
@@ -8,9 +8,7 @@ export const HoverNodeController = (props: {
   placement;
   alt?: any;
 }) => {
-  const {
-    position, align, placement, alt
-  } = props as any;
+  const { position, align, placement, alt } = props as any;
 
   const { name, id } = useNode((node) => ({
     name: node.data.custom.displayName || node.data.displayName,
@@ -21,7 +19,7 @@ export const HoverNodeController = (props: {
   }));
 
   const { isActive } = useEditor((_, query) => ({
-    isActive: query.getEvent('selected').contains(id),
+    isActive: query.getEvent("selected").contains(id),
   }));
 
   return (
@@ -31,26 +29,28 @@ export const HoverNodeController = (props: {
           position={position}
           align={align}
           alt={alt}
-          placement={placement || 'start'}
+          placement={placement || "start"}
           className={`${
-            position === 'top' && align === 'start' && placement === 'end'
-              ? 'm-0.5'
-              : ''
+            position === "top" && align === "start" && placement === "end"
+              ? "m-0.5"
+              : ""
           } whitespace-nowrap fixed items-center justify-center select-none will-change-auto`}
           animate={{
             initial: { opacity: 0 },
             animate: {
               opacity: 1,
-              transition: { ease: 'easeOut' },
+              transition: { ease: "easeOut" },
             },
             exit: {
               opacity: 0,
-              transition: { ease: 'easeOut', duration: 0.3 },
+              transition: { ease: "easeOut", duration: 0.3 },
             },
           }}
         >
           <div
-            className={'px-2 border flex flex-row gap-3 bg-white text-black !text-base !font-normal fontfamily-base'}
+            className={
+              "px-2 border flex flex-row gap-3 bg-white text-black !text-base !font-normal fontfamily-base"
+            }
           >
             {name}
           </div>

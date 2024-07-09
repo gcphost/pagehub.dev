@@ -47,21 +47,21 @@ export interface BaseStyleProps {
 }
 
 export const RootClassGenProps = [
-  'background',
-  'color',
-  'bgOpacity',
-  'backgroundGradient',
-  'backgroundGradientTo',
-  'backgroundGradientFrom',
-  'radius',
-  'shadow',
-  'border',
-  'borderColor',
-  'borderTop',
-  'borderBottom',
-  'borderLeft',
-  'borderRight',
-  'order',
+  "background",
+  "color",
+  "bgOpacity",
+  "backgroundGradient",
+  "backgroundGradientTo",
+  "backgroundGradientFrom",
+  "radius",
+  "shadow",
+  "border",
+  "borderColor",
+  "borderTop",
+  "borderBottom",
+  "borderLeft",
+  "borderRight",
+  "order",
 ];
 
 export interface RootStyleProps {

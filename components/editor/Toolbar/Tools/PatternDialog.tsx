@@ -1,14 +1,14 @@
-import { atom, useRecoilState } from 'recoil';
-import { generatePattern } from 'utils/lib';
+import { atom, useRecoilState } from "recoil";
+import { generatePattern } from "utils/lib";
 
-import { useEffect, useState } from 'react';
-import { Dialog } from './Dialog';
+import { useEffect, useState } from "react";
+import { Dialog } from "./Dialog";
 
 export const PatternDialogAtom = atom({
-  key: 'patternDialog',
+  key: "patternDialog",
   default: {
     enabled: false,
-    prefix: '',
+    prefix: "",
     changed: null,
     e: null,
   } as any,
@@ -19,11 +19,11 @@ export const PatternDialog = () => {
   const [patterns, setPatterns] = useState([]);
 
   useEffect(() => {
-    fetch('/api/patterns', {
-      method: 'POST',
+    fetch("/api/patterns", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({}),
     }).then((res) => {
@@ -46,9 +46,10 @@ export const PatternDialog = () => {
       dialogName="pattern"
       value={dialog?.value?.slug}
       items={patterns}
-      onSearch={(_, value) => _.title.search(
-        new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
-      ) > -1
+      onSearch={(_, value) =>
+        _.title.search(
+          new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")
+        ) > -1
       }
       callback={(_, k) => {
         const patt = generatePattern({
@@ -61,10 +62,10 @@ export const PatternDialog = () => {
             patternAngle: 0,
             patternSpacingX: 0,
             patternSpacingY: 0,
-            patternColor1: 'rgba(0,0,0,100)',
-            patternColor2: 'rgba(0,0,0,100)',
-            patternColor3: 'rgba(0,0,0,100)',
-            patternColor4: 'rgba(0,0,0,100)',
+            patternColor1: "rgba(0,0,0,100)",
+            patternColor2: "rgba(0,0,0,100)",
+            patternColor3: "rgba(0,0,0,100)",
+            patternColor4: "rgba(0,0,0,100)",
           },
         });
 
@@ -72,7 +73,7 @@ export const PatternDialog = () => {
           <div
             id={`pattern-${_.slug}`}
             className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${
-              dialog.value?.slug === _.slug ? 'bg-gray-100' : ''
+              dialog.value?.slug === _.slug ? "bg-gray-100" : ""
             }`}
             key={k}
             onClick={(e) => changed(_)}

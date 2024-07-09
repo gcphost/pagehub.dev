@@ -1,15 +1,15 @@
-import { getRandomId, ROOT_NODE } from '@craftjs/utils';
-import lz from 'lzutf8';
+import { getRandomId, ROOT_NODE } from "@craftjs/utils";
+import lz from "lzutf8";
 
-const generate = require('boring-name-generator');
+const generate = require("boring-name-generator");
 
 export const GetHtmlToComponent = async (html) => {
   try {
-    const res = await fetch('/api/convert', {
-      method: 'POST',
+    const res = await fetch("/api/convert", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ content: html }),
     });
@@ -22,11 +22,11 @@ export const GetHtmlToComponent = async (html) => {
 
 export const GetSignedUrl = async () => {
   try {
-    const res = await fetch('/api/media/get', {
-      method: 'POST',
+    const res = await fetch("/api/media/get", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({}),
     });
@@ -39,11 +39,11 @@ export const GetSignedUrl = async () => {
 
 export const SaveMedia = async (media, url) => {
   const formData = new FormData();
-  formData.append('file', media);
+  formData.append("file", media);
 
   try {
     const res = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       body: formData,
     });
 
@@ -59,11 +59,11 @@ export const SaveSubmissions = async (
   additional = {}
 ) => {
   try {
-    const res = await fetch('/api/submissions', {
-      method: 'POST',
+    const res = await fetch("/api/submissions", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         submission,
@@ -80,11 +80,11 @@ export const SaveSubmissions = async (
 
 export const DeleteMedia = async (mediaId, settings) => {
   try {
-    const res = await fetch('/api/files', {
-      method: 'DELETE',
+    const res = await fetch("/api/files", {
+      method: "DELETE",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         mediaId,
@@ -101,9 +101,9 @@ export const DeleteMedia = async (mediaId, settings) => {
 export const SaveToServer = async (json, draft, settings, setSettings) => {
   const content = lz.encodeBase64(lz.compress(json));
 
-  localStorage.setItem('draft', content);
+  localStorage.setItem("draft", content);
 
-  const _id = settings?._id || '';
+  const _id = settings?._id || "";
 
   const r = { _id };
 
@@ -111,12 +111,12 @@ export const SaveToServer = async (json, draft, settings, setSettings) => {
     r.draft = content;
   } else r.content = content;
 
-  console.info('Saving...');
-  const res = await fetch('/api/save', {
-    method: 'POST',
+  console.info("Saving...");
+  const res = await fetch("/api/save", {
+    method: "POST",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(r),
   });
@@ -130,19 +130,19 @@ export const SaveToServer = async (json, draft, settings, setSettings) => {
   }
 
   if (result && result._id) {
-    const lsIds = JSON.parse(localStorage.getItem('history')) || [];
+    const lsIds = JSON.parse(localStorage.getItem("history")) || [];
 
     if (!lsIds.find((_) => _._id === result._id)) {
       lsIds.push({
         _id: result._id,
         draftId: result?.title || result?.draftId,
       });
-      localStorage.setItem('history', JSON.stringify(lsIds));
+      localStorage.setItem("history", JSON.stringify(lsIds));
     }
 
     if (result._id !== _id) {
       window.history.pushState(result._id, result._id, `/build/${result._id}`);
-      localStorage.setItem('_id', result._id);
+      localStorage.setItem("_id", result._id);
       setSettings(result);
     }
   }
@@ -150,11 +150,11 @@ export const SaveToServer = async (json, draft, settings, setSettings) => {
 };
 
 export const SearchGpt = async (search, existing) => {
-  const res = await fetch('/api/generate', {
-    method: 'POST',
+  const res = await fetch("/api/generate", {
+    method: "POST",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ search, existing }),
   });
@@ -184,9 +184,9 @@ const getPropValue = ({ propKey, propItemKey, index }, _props = {}) => {
 export const getProp = (params, view, nodeProps) => {
   let nodeProp;
 
-  if (params.propType === 'root') {
+  if (params.propType === "root") {
     nodeProp = nodeProps.root;
-  } else if (params.propType === 'component') {
+  } else if (params.propType === "component") {
     nodeProp = nodeProps;
   } else nodeProp = nodeProps[view];
 
@@ -200,7 +200,7 @@ export const getPropFinalValue = (__props, view, nodeProps) => {
   let viewValue = view;
 
   if (!value) {
-    const theView = view === 'desktop' ? 'mobile' : 'desktop';
+    const theView = view === "desktop" ? "mobile" : "desktop";
     value = getProp(__props, theView, nodeProps);
     viewValue = theView;
   }
@@ -222,9 +222,10 @@ export const setPropOnView = (
   try {
     setProp((props: any) => {
       // possible to do non root shit here..
-      const setting = view === 'component'
-        ? (props = props || {})
-        : (props[view] = props[view] || {});
+      const setting =
+        view === "component"
+          ? (props = props || {})
+          : (props[view] = props[view] || {});
 
       if (index >= 0 && propItemKey) {
         setting[propKey] = setting[propKey] || {};
@@ -260,12 +261,12 @@ interface PropType {
 }
 
 export const changeProp = (props: PropType, delay = 2000) => {
-  if (props.propType === 'root') {
-    return setPropOnView({ ...props, view: 'root' }, delay);
+  if (props.propType === "root") {
+    return setPropOnView({ ...props, view: "root" }, delay);
   }
 
-  if (props.propType === 'component') {
-    return setPropOnView({ ...props, view: 'component' }, delay);
+  if (props.propType === "component") {
+    return setPropOnView({ ...props, view: "component" }, delay);
   }
 
   return setPropOnView(props, delay);
@@ -285,7 +286,7 @@ export const removeHasManyRelation = (node, query, actions) => {
 };
 
 export const deleteNode = async (query, actions, active, settings) => {
-  const selected = query.getEvent('selected').first();
+  const selected = query.getEvent("selected").first();
 
   const node = query.node(selected).get();
   if (!node.data.props.canDelete) return;
@@ -306,13 +307,14 @@ export const deleteNode = async (query, actions, active, settings) => {
   const theParent = query.node(node.data.parent).get();
   const index = theParent.data.nodes.indexOf(active);
 
-  const theNew = index > 0 ? query.node(theParent.data.nodes[index - 1]).get() : theParent;
+  const theNew =
+    index > 0 ? query.node(theParent.data.nodes[index - 1]).get() : theParent;
 
   actions.selectNode(theNew.id);
 
   const { type, videoId } = node.data.props || {};
 
-  if (type === 'cdn' && videoId) {
+  if (type === "cdn" && videoId) {
     DeleteMedia(videoId, settings);
   }
 
@@ -329,7 +331,7 @@ export const addHandler = ({
   data = null,
   setProp,
 }) => {
-  data = data || JSON.parse(localStorage.getItem('clipBoard'));
+  data = data || JSON.parse(localStorage.getItem("clipBoard"));
   const newNodes = JSON.parse(data.nodes);
 
   Object.keys(newNodes).forEach((_) => {
@@ -337,13 +339,13 @@ export const addHandler = ({
     // newNodes[_].props.belongsTo = _;
     // newNodes[_].props.hasMany = [];
 
-    if (d?.type === 'page') {
+    if (d?.type === "page") {
       if (!d.canDelete) {
         d.canDelete = true;
       }
 
-      if (newNodes[_].custom.displayName === 'Home Page') {
-        newNodes[_].custom.displayName = 'Page';
+      if (newNodes[_].custom.displayName === "Home Page") {
+        newNodes[_].custom.displayName = "Page";
         newNodes[_].props.isHomePage = false;
       }
 
@@ -407,10 +409,10 @@ export const saveHandler = ({ query, id, component = null }) => {
   // assign component it came froms id.. then that new comp can see if we can mod or take settings..
 
   if (component) {
-    const components = JSON.parse(localStorage.getItem('components')) || [];
+    const components = JSON.parse(localStorage.getItem("components")) || [];
     components.push(saveData);
-    localStorage.setItem('components', JSON.stringify(components));
-  } else localStorage.setItem('clipBoard', JSON.stringify(saveData));
+    localStorage.setItem("components", JSON.stringify(components));
+  } else localStorage.setItem("clipBoard", JSON.stringify(saveData));
 
   return saveData;
 };
@@ -419,7 +421,9 @@ export const getNodeTree = ({ tree, query }) => {
   const newNodes = {};
   const changeNodeId = (node: any, newParentId?: string) => {
     const newNodeId = getRandomId();
-    const childNodes = node.data.nodes.map((childId) => changeNodeId(tree.nodes[childId], newNodeId));
+    const childNodes = node.data.nodes.map((childId) =>
+      changeNodeId(tree.nodes[childId], newNodeId)
+    );
     const linkedNodes = Object.keys(node.data.linkedNodes).reduce((acc, id) => {
       const newLinkedNodeId = changeNodeId(
         tree.nodes[node.data.linkedNodes[id]],
@@ -457,7 +461,9 @@ export const buildClonedTree = ({ tree, query, setProp }) => {
   const newNodes = {};
   const changeNodeId = (node: any, newParentId?: string) => {
     const newNodeId = getRandomId();
-    const childNodes = node.data.nodes.map((childId) => changeNodeId(tree.nodes[childId], newNodeId));
+    const childNodes = node.data.nodes.map((childId) =>
+      changeNodeId(tree.nodes[childId], newNodeId)
+    );
     const linkedNodes = Object.keys(node.data.linkedNodes).reduce((acc, id) => {
       const newLinkedNodeId = changeNodeId(
         tree.nodes[node.data.linkedNodes[id]],
@@ -502,41 +508,39 @@ export const buildClonedTree = ({ tree, query, setProp }) => {
     nodes: newNodes,
   };
 };
-export type Position = 'top' | 'bottom' | 'left' | 'right';
-export type Align = 'start' | 'middle' | 'end';
+export type Position = "top" | "bottom" | "left" | "right";
+export type Align = "start" | "middle" | "end";
 
 export const positionIt = (
   element,
-  position: Position = 'top',
-  align: Align = 'start',
+  position: Position = "top",
+  align: Align = "start",
   pos
 ) => {
   if (!element) return;
   const { current: domRef } = element;
 
   if (!domRef || !pos || !domRef.style) return;
-  const {
-    top, left, bottom, width, height, right
-  } = pos;
+  const { top, left, bottom, width, height, right } = pos;
 
   const getVerticalPosition = () => {
     switch (align) {
-      case 'start':
+      case "start":
         return left;
-      case 'middle':
+      case "middle":
         return left + width / 2;
-      case 'end':
+      case "end":
         return right;
     }
   };
 
   const getHorizontalPosition = () => {
     switch (align) {
-      case 'start':
+      case "start":
         return top;
-      case 'middle':
+      case "middle":
         return top + height / 2;
-      case 'end':
+      case "end":
         return bottom;
     }
   };
@@ -545,11 +549,11 @@ export const positionIt = (
   // domRef.style.display = "none";
   // } else domRef.style.display = "flex";
 
-  if (['top', 'bottom'].includes(position)) {
-    domRef.style.top = `${position === 'top' ? top : bottom}px`;
+  if (["top", "bottom"].includes(position)) {
+    domRef.style.top = `${position === "top" ? top : bottom}px`;
     domRef.style.left = `${getVerticalPosition()}px`;
-  } else if (['left', 'right'].includes(position)) {
+  } else if (["left", "right"].includes(position)) {
     domRef.style.top = `${getHorizontalPosition()}px`;
-    domRef.style.left = `${position === 'left' ? left : right}px`;
+    domRef.style.left = `${position === "left" ? left : right}px`;
   }
 };

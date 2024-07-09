@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const DragTable = () => {
   const [numRows, setNumRows] = useState(3);
@@ -25,12 +25,12 @@ const DragTable = () => {
       const deltaY = event.clientY - startY;
       if (!dragDirection) {
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
-          setDragDirection('horizontal');
+          setDragDirection("horizontal");
         } else {
-          setDragDirection('vertical');
+          setDragDirection("vertical");
         }
       }
-      if (dragDirection === 'horizontal') {
+      if (dragDirection === "horizontal") {
         if (deltaX > 50) {
           setNumCols(numCols + 1);
           setStartX(event.clientX);
@@ -38,7 +38,7 @@ const DragTable = () => {
           setNumCols(Math.max(numCols - 1, 1));
           setStartX(event.clientX);
         }
-      } else if (dragDirection === 'vertical') {
+      } else if (dragDirection === "vertical") {
         if (deltaY > 50) {
           setNumRows(numRows + 1);
           setStartY(event.clientY);
@@ -46,7 +46,7 @@ const DragTable = () => {
           setNumRows(Math.max(numRows - 1, 1));
           setStartY(event.clientY);
         }
-      } else if (dragDirection === 'diagonal') {
+      } else if (dragDirection === "diagonal") {
         if (deltaX > 50 && deltaY > 50) {
           setNumCols(numCols + 1);
           setNumRows(numRows + 1);
@@ -60,7 +60,7 @@ const DragTable = () => {
         }
       }
       if (Math.abs(deltaX) > 50 && Math.abs(deltaY) > 50) {
-        setDragDirection('diagonal');
+        setDragDirection("diagonal");
       }
     }
   };

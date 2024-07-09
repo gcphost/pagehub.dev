@@ -1,6 +1,6 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { ToolbarSection } from '../ToolbarSection';
-import { ColorInput } from './ColorInput';
+import { useEditor, useNode } from "@craftjs/core";
+import { ToolbarSection } from "../ToolbarSection";
+import { ColorInput } from "./ColorInput";
 
 export const ColorPalletInput = () => {
   const { nodeProps } = useNode((node) => ({
@@ -39,10 +39,10 @@ export const ColorPalletInput = () => {
 
                   const escapedRegexString = old?.replace(
                     /[.*+?^${}()|[\]\\]/g,
-                    '\\$&'
+                    "\\$&"
                   );
 
-                  if (prop.search(new RegExp(escapedRegexString, 'i')) > -1) {
+                  if (prop.search(new RegExp(escapedRegexString, "i")) > -1) {
                     actions.setProp(
                       _,
                       (prop) => (prop.root[p] = prop.root[p].replace(old, data))

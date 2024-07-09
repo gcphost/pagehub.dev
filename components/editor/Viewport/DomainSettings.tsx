@@ -1,36 +1,32 @@
-import { useEditor } from '@craftjs/core';
-import debounce from 'lodash.debounce';
-import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import {
-  TbCheck, TbLock, TbLogin, TbLogout, TbX
-} from 'react-icons/tb';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
-import { popupCenter } from 'utils/lib';
-import { UnsavedChangesAtom } from '.';
-import { SaveToServer } from './lib';
+import { useEditor } from "@craftjs/core";
+import debounce from "lodash.debounce";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { TbCheck, TbLock, TbLogin, TbLogout, TbX } from "react-icons/tb";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { SettingsAtom } from "utils/atoms";
+import { popupCenter } from "utils/lib";
+import { UnsavedChangesAtom } from ".";
+import { SaveToServer } from "./lib";
 
 export const DomainSettings = () => {
   const [settings, setSettings] = useRecoilState(SettingsAtom);
   const { data: session, status } = useSession();
 
   const [data, setData] = useState(settings);
-  const [name, setName] = useState(data?.name || '');
+  const [name, setName] = useState(data?.name || "");
   const [nameOk, setNameOk] = useState(null);
   const [publishType, setPublishType] = useState(
-    status === 'authenticated'
+    status === "authenticated"
       ? settings.domain
-        ? 'domain'
-        : 'local'
-      : 'draft'
+        ? "domain"
+        : "local"
+      : "draft"
   );
   const [saving, setSaving] = useState(false);
   const [domainData, setDomainData] = useState(null);
   const setUnsavedChanged = useSetRecoilState(UnsavedChangesAtom);
-  const {
-    enabled, canUndo, canRedo, actions, query
-  } = useEditor(
+  const { enabled, canUndo, canRedo, actions, query } = useEditor(
     (state, query) => ({
       enabled: state.options.enabled,
       canUndo: query.history.canUndo(),
@@ -39,18 +35,16 @@ export const DomainSettings = () => {
   );
   const save = async () => {
     setSaving(true);
-    const {
-      name, title, description, _id, domain
-    } = data;
+    const { name, title, description, _id, domain } = data;
     let result = null;
 
     // console.log({ data });
 
-    const body = {
+    const body: any = {
       title,
       description,
       _id: settings._id,
-      type: 'publish',
+      type: "publish",
       publishType,
     };
 
@@ -64,11 +58,11 @@ export const DomainSettings = () => {
     // console.log({ body });
 
     try {
-      const res = await fetch('/api/save', {
-        method: 'POST',
+      const res = await fetch("/api/save", {
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
@@ -82,7 +76,7 @@ export const DomainSettings = () => {
 
     // setDialogOpen(false);
 
-    if (publishType !== 'draft') {
+    if (publishType !== "draft") {
       await SaveToServer(query.serialize(), false, result, setSettings);
       setUnsavedChanged(false);
     }
@@ -100,11 +94,11 @@ export const DomainSettings = () => {
 
   const checkName = async (name) => {
     setName(name);
-    const res = await fetch('/api/check', {
-      method: 'POST',
+    const res = await fetch("/api/check", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ name }),
     });
@@ -121,17 +115,17 @@ export const DomainSettings = () => {
       return setNameOk(false);
     }
 
-    change('name', name);
+    change("name", name);
     setNameOk(true);
   };
 
   useEffect(() => {
     const run = () => {
-      fetch('/api/domain', {
-        method: 'POST',
+      fetch("/api/domain", {
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ domain: settings.domain }),
       }).then(async (res) => {
@@ -149,7 +143,7 @@ export const DomainSettings = () => {
     };
   }, [settings?.domain]);
 
-  const inputClass = 'input  ';
+  const inputClass = "input  ";
 
   if (!settings) {
     return null;
@@ -166,12 +160,12 @@ export const DomainSettings = () => {
     >
       <div className="space-y-4 pb-4 sm:pb-6 px-3 xl:pb-8">
         <div className="flex items-center gap-3 cursor-pointer  p-3">
-          {status === 'authenticated' ? (
+          {status === "authenticated" ? (
             <div className="mx-auto  flex flex-row gap-3 items-center text-lg">
-              <p className="text-center">Logged in as {session.user.email}</p>{' '}
+              <p className="text-center">Logged in as {session.user.email}</p>{" "}
               <div
                 className="cursor-pointer"
-                onClick={() => popupCenter('/google-signout', 'Sign Out')}
+                onClick={() => popupCenter("/google-signout", "Sign Out")}
               >
                 <TbLogout />
               </div>
@@ -179,7 +173,7 @@ export const DomainSettings = () => {
           ) : (
             <div
               className="btn px-6 py-3 mx-auto cursor-pointer"
-              onClick={() => popupCenter('/google-signin', 'Sign In')}
+              onClick={() => popupCenter("/google-signin", "Sign In")}
             >
               Sign in with Google &nbsp;
               <TbLogin />
@@ -193,8 +187,8 @@ export const DomainSettings = () => {
               defaultChecked={false}
               className="input w-6 h-6 mr-3"
               required={true}
-            />{' '}
-            I agree to the{' '}
+            />{" "}
+            I agree to the{" "}
             <a
               href="https://pagehub.dev/terms"
               target="_blank"
@@ -215,7 +209,7 @@ export const DomainSettings = () => {
             placeholder="Site Title"
             required={true}
             defaultValue={settings.title}
-            onChange={(e) => change('title', e.target.value)}
+            onChange={(e) => change("title", e.target.value)}
             className={inputClass}
             data-gramm="false"
           />
@@ -227,7 +221,7 @@ export const DomainSettings = () => {
             placeholder="Site Description"
             required={true}
             defaultValue={settings.description}
-            onChange={(e) => change('description', e.target.value)}
+            onChange={(e) => change("description", e.target.value)}
             className={inputClass}
             data-gramm="false"
           />
@@ -238,55 +232,57 @@ export const DomainSettings = () => {
         <div className="flex flex-col gap-3">
           <label
             className="cursor-pointer flex flex-row items-center gap-2"
-            onClick={() => status === 'authenticated' && setPublishType('local')
+            onClick={() =>
+              status === "authenticated" && setPublishType("local")
             }
           >
             <input
               type="radio"
               name="local"
               className="input w-3"
-              checked={publishType === 'local'}
-            />{' '}
+              checked={publishType === "local"}
+            />{" "}
             Publish to pagehub.dev
-            {status !== 'authenticated' && <TbLogin />}
+            {status !== "authenticated" && <TbLogin />}
           </label>
 
           <label
             className="cursor-pointer flex flex-row items-center gap-2"
-            onClick={() => status === 'authenticated' && setPublishType('domain')
+            onClick={() =>
+              status === "authenticated" && setPublishType("domain")
             }
           >
             <input
               type="radio"
               name="domain"
               className="input w-3"
-              checked={publishType === 'domain'}
-            />{' '}
+              checked={publishType === "domain"}
+            />{" "}
             Publish to your own domain
-            {status !== 'authenticated' && <TbLogin />} <TbLock />
+            {status !== "authenticated" && <TbLogin />} <TbLock />
           </label>
 
           <label
             className="cursor-pointer flex flex-row items-center gap-2"
-            onClick={() => setPublishType('draft')}
+            onClick={() => setPublishType("draft")}
           >
             <input
               type="radio"
               name="draft"
               className="input w-3"
-              checked={publishType === 'draft'}
-            />{' '}
+              checked={publishType === "draft"}
+            />{" "}
             Save as draft
           </label>
         </div>
 
-        {publishType === 'local' && (
+        {publishType === "local" && (
           <div className="flex flex-col">
             <div className="flex flex-row items-center ">
               <input
                 type="text"
                 autoFocus={!settings.name}
-                placeholder={settings.name || 'name'}
+                placeholder={settings.name || "name"}
                 data-gramm="false"
                 data-lpignore="true"
                 autoComplete="off"
@@ -309,9 +305,9 @@ export const DomainSettings = () => {
           </div>
         )}
 
-        {publishType === 'draft' && (
+        {publishType === "draft" && (
           <div>
-            This page will be viewable at{' '}
+            This page will be viewable at{" "}
             <strong>
               {settings.draftId}
               .pagehub.dev
@@ -319,14 +315,14 @@ export const DomainSettings = () => {
           </div>
         )}
 
-        {publishType === 'domain' && (
+        {publishType === "domain" && (
           <>
             <div>
               <input
                 type="text"
                 placeholder="domain.tld"
                 defaultValue={settings.domain}
-                onChange={(e) => change('domain', e.target.value)}
+                onChange={(e) => change("domain", e.target.value)}
                 className={inputClass}
                 data-gramm="false"
                 pattern="^[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$"
@@ -344,9 +340,9 @@ export const DomainSettings = () => {
           </div>
         )}
 
-        {!settings.error
-          && domainData?.name
-          && !domainData?.configVerifiedAt && (
+        {!settings.error &&
+          domainData?.name &&
+          !domainData?.configVerifiedAt && (
             <div>
               Set the following record on your DNS provider to continue:
               <div className="bg-white text-black my-6 p-3 rounded-xl w-full overflow-auto">
@@ -372,31 +368,31 @@ export const DomainSettings = () => {
                     </tr>
 
                     {domainData?.verification?.map((_) => (
-                        <tr className="">
-                          <td className="divide-x divide-gray-300 px-4 py-2">
-                            {_.type}
-                          </td>
-                          <td className="divide-x divide-gray-300 px-4 py-2">
-                            {_.domain}
-                          </td>
-                          <td className="divide-x divide-gray-300 px-4 py-2">
-                            {_.value}
-                          </td>
-                        </tr>
+                      <tr className="">
+                        <td className="divide-x divide-gray-300 px-4 py-2">
+                          {_.type}
+                        </td>
+                        <td className="divide-x divide-gray-300 px-4 py-2">
+                          {_.domain}
+                        </td>
+                        <td className="divide-x divide-gray-300 px-4 py-2">
+                          {_.value}
+                        </td>
+                      </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             </div>
-        )}
+          )}
 
         <div className="w-full  ">
           <button
             className={`${
-              saving ? 'bg-violet-300' : 'bg-violet-500'
+              saving ? "bg-violet-300" : "bg-violet-500"
             } btn w-full p-3`}
           >
-            {saving ? 'Saving...' : 'Save'}
+            {saving ? "Saving..." : "Save"}
           </button>
         </div>
       </div>

@@ -1,10 +1,10 @@
-import { TailwindStyles } from 'utils/tailwind';
-import { ToolbarItem } from '../ToolbarItem';
+import { TailwindStyles } from "utils/tailwind";
+import { ToolbarItem } from "../ToolbarItem";
 
 export const ShadowInput = ({
-  propKey = 'shadow',
-  propType = 'root',
-  label = 'Shadow',
+  propKey = "shadow",
+  propType = "root",
+  label = "Shadow",
 }) => (
   <ToolbarItem
     propKey={propKey}

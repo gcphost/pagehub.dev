@@ -1,22 +1,22 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
-import { ToolNodeController } from 'components/editor/NodeControllers/ToolNodeController';
-import TextSettingsNodeTool from 'components/editor/NodeControllers/Tools/TextSettingsNodeTool';
+import { useEditor, useNode } from "@craftjs/core";
+import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
+import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
+import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
 import {
   getClonedState,
   setClonedProps,
-} from 'components/editor/Toolbar/Helpers/CloneHelper';
-import { PreviewAtom, TabAtom, ViewAtom } from 'components/editor/Viewport';
-import React, { useRef } from 'react';
-import { TbCode } from 'react-icons/tb';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { motionIt, selectAfterAdding } from 'utils/lib';
-import { ClassGenerator, applyAnimation } from 'utils/tailwind';
-import { HoverNodeController } from 'components/editor/NodeControllers/HoverNodeController';
-import { BaseSelectorProps } from '..';
-import { useScrollToSelected } from '../lib';
+} from "components/editor/Toolbar/Helpers/CloneHelper";
+import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import React, { useRef } from "react";
+import { TbCode } from "react-icons/tb";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { motionIt, selectAfterAdding } from "utils/lib";
+import { ClassGenerator, applyAnimation } from "utils/tailwind";
+import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
+import { BaseSelectorProps } from "..";
+import { useScrollToSelected } from "../lib";
 
-import { EmbedSettings } from './EmbedSettings';
+import { EmbedSettings } from "./EmbedSettings";
 
 const YoutubeDiv = `
   width: 100%;
@@ -25,7 +25,7 @@ const YoutubeDiv = `
     height: 100%;
   }
   iframe {
-    pointer-events: ${(props) => (props.enabled ? 'none' : 'auto')};
+    pointer-events: ${(props) => (props.enabled ? "none" : "auto")};
     // width:100%!important;
     // height:100%!important;
   }
@@ -53,7 +53,9 @@ export const Embed = (props: EmbedProps) => {
     id,
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) => getClonedState(props, state));
+  const { actions, query, enabled } = useEditor((state) =>
+    getClonedState(props, state)
+  );
 
   useScrollToSelected(id, enabled);
   selectAfterAdding(
@@ -80,23 +82,23 @@ export const Embed = (props: EmbedProps) => {
     className: ClassGenerator(props, view, enabled, [], [], preview),
   };
 
-  if (videoId) prop.dangerouslySetInnerHTML = { __html: videoId || '' };
+  if (videoId) prop.dangerouslySetInnerHTML = { __html: videoId || "" };
 
   if (enabled) {
     if (!videoId) prop.children = <TbCode />;
-    prop['data-bounding-box'] = enabled;
-    prop['data-empty-state'] = !videoId;
-    prop['node-id'] = id;
+    prop["data-bounding-box"] = enabled;
+    prop["data-empty-state"] = !videoId;
+    prop["node-id"] = id;
   }
 
   return React.createElement(
-    motionIt(props, 'div'),
+    motionIt(props, "div"),
     applyAnimation({ ...prop, key: id }, props)
   );
 };
 
 Embed.craft = {
-  displayName: 'Embed',
+  displayName: "Embed",
   rules: {
     canDrag: () => true,
     canMoveIn: () => false,
@@ -113,9 +115,9 @@ Embed.craft = {
           align="start"
           placement="end"
           alt={{
-            position: 'bottom',
-            align: 'start',
-            placement: 'start',
+            position: "bottom",
+            align: "start",
+            placement: "start",
           }}
         />,
 

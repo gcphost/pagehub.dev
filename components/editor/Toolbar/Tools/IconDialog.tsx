@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { atom, useRecoilState } from 'recoil';
-import { Dialog } from './Dialog';
-import { IconLoader } from './IconLoader';
+import { useState } from "react";
+import { atom, useRecoilState } from "recoil";
+import { Dialog } from "./Dialog";
+import { IconLoader } from "./IconLoader";
 
-const iconList = require('utils/icons.json');
+const iconList = require("utils/icons.json");
 
 export const IconDialogAtom = atom({
-  key: 'iconDialog',
+  key: "iconDialog",
   default: {
     enabled: false,
-    prefix: '',
+    prefix: "",
     changed: null,
     e: null,
   } as any,
@@ -17,7 +17,7 @@ export const IconDialogAtom = atom({
 
 export const IconDialogDialog = () => {
   const [dialog, setDialog] = useRecoilState(IconDialogAtom);
-  const [svgDataUri, setSvgDataUri] = useState('');
+  const [svgDataUri, setSvgDataUri] = useState("");
 
   const changed = async (value) => {
     if (dialog.changed) {
@@ -43,7 +43,7 @@ export const IconDialogDialog = () => {
         <div
           id={`iconPicker-${_}`}
           className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md justify-center gap-3 items-center ${
-            dialog.value === _ ? 'bg-gray-100' : ''
+            dialog.value === _ ? "bg-gray-100" : ""
           }`}
           key={k}
           onClick={(e) => changed(_)}

@@ -1,6 +1,6 @@
 // @ts-ignore
-import Page from '../../../models/page';
-import dbConnect from '../../../utils/dbConnect';
+import Page from "../../../models/page";
+import dbConnect from "../../../utils/dbConnect";
 
 export default async function media(req, res) {
   await dbConnect();
@@ -13,19 +13,19 @@ export default async function media(req, res) {
 
   if (named) {
     const image = named.media.find(
-      (_) => _._id === mediaId.replace('.webp', '')
+      (_) => _._id === mediaId.replace(".webp", "")
     );
 
     if (!image) return res.status(404).json({ first: true });
 
     const decoded = image.content
       .toString()
-      .replace('data:image/webp;base64,', '');
-    const imageResp = Buffer.from(decoded, 'base64');
+      .replace("data:image/webp;base64,", "");
+    const imageResp = Buffer.from(decoded, "base64");
 
     res.writeHead(200, {
-      'Content-Type': 'image/webp',
-      'Content-Length': imageResp.length,
+      "Content-Type": "image/webp",
+      "Content-Length": imageResp.length,
     });
 
     return res.end(imageResp);

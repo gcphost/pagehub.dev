@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+const fs = require("fs");
+const path = require("path");
+const glob = require("glob");
 
-const rootDir = './public/icons/fa';
-const outputFile = './utils/icons.json';
+const rootDir = "./public/icons/fa";
+const outputFile = "./utils/icons.json";
 
 // Find all SVG files in the root directory and its subdirectories
 glob(`${rootDir}/**/*.svg`, (err, files) => {
@@ -21,7 +21,7 @@ glob(`${rootDir}/**/*.svg`, (err, files) => {
     if (!folderObject[dirName]) {
       folderObject[dirName] = [];
     }
-    folderObject[dirName].push(file.replace('./public', ''));
+    folderObject[dirName].push(file.replace("./public", ""));
   });
 
   // Write the object to a JSON file

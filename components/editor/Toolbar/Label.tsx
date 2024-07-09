@@ -1,6 +1,6 @@
-import { useNode } from '@craftjs/core';
-import { Tooltip } from 'components/layout/Tooltip';
-import { changeProp } from '../Viewport/lib';
+import { useNode } from "@craftjs/core";
+import { Tooltip } from "components/layout/Tooltip";
+import { changeProp } from "../Viewport/lib";
 
 export const ToolbarLabel = ({
   lab,
@@ -25,21 +25,21 @@ export const ToolbarLabel = ({
     actions: { setProp },
   } = useNode();
 
-  let bg = 'bg-gray-500/50';
+  let bg = "bg-gray-500/50";
 
   const view = viewValue;
 
-  if (viewValue === 'mobile') {
-    bg = 'bg-green-500';
+  if (viewValue === "mobile") {
+    bg = "bg-green-500";
   }
 
-  if (viewValue === 'desktop') {
-    bg = 'bg-yellow-500';
+  if (viewValue === "desktop") {
+    bg = "bg-yellow-500";
   }
 
-  if (propType === 'component' || propType === 'root') {
-    viewValue = 'component';
-    bg = 'bg-violet-300';
+  if (propType === "component" || propType === "root") {
+    viewValue = "component";
+    bg = "bg-violet-300";
   }
   if (!lab) return null;
 
@@ -50,7 +50,7 @@ export const ToolbarLabel = ({
         onClick={() => {
           changeProp({
             propKey,
-            value: '',
+            value: "",
             setProp,
             propType,
             view,
@@ -68,12 +68,12 @@ export const ToolbarLabel = ({
 };
 
 ToolbarLabel.defaultProps = {
-  lab: '',
-  prefix: '',
-  suffix: '',
-  viewValue: 'mobile',
-  propType: 'class',
-  propKey: '',
+  lab: "",
+  prefix: "",
+  suffix: "",
+  viewValue: "mobile",
+  propType: "class",
+  propKey: "",
   index: null,
   propItemKey: null,
 };

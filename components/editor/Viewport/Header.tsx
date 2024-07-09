@@ -1,13 +1,13 @@
-import { ROOT_NODE, useEditor } from '@craftjs/core';
-import { Tooltip } from 'components/layout/Tooltip';
+import { ROOT_NODE, useEditor } from "@craftjs/core";
+import { Tooltip } from "components/layout/Tooltip";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
-import { motion } from 'framer-motion';
-import TbHidden from 'icons/TbHidden';
-import TbNotHidden from 'icons/TbNotHidden';
-import { useSession } from 'next-auth/react';
-import Link from 'next/link';
+import { motion } from "framer-motion";
+import TbHidden from "icons/TbHidden";
+import TbNotHidden from "icons/TbNotHidden";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import {
   TbArrowBackUp,
   TbArrowForwardUp,
@@ -35,29 +35,28 @@ import {
   TbPlus,
   TbUpload,
   TbX,
-} from 'react-icons/tb';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
-import { getAltView } from 'utils/craft';
+} from "react-icons/tb";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { SettingsAtom } from "utils/atoms";
+import { getAltView } from "utils/craft";
 import {
   LastctiveAtom,
   MenuItemState,
   MenuState,
   SideBarAtom,
   popupCenter,
-} from 'utils/lib';
-import {
-  DeviceAtom, EnabledAtom, PreviewAtom, ViewAtom
-} from '.';
-import { ComponentSettings } from './ComponentSettings';
-import { DomainSettings } from './DomainSettings';
-import { ExportModal } from './ExportModal';
-import { ImportModal } from './ImportModal';
-import { PageSettings } from './PageSettings';
-import { PagesSettings } from './PagesSettings';
+} from "utils/lib";
+import { DeviceAtom, EnabledAtom, PreviewAtom, ViewAtom } from ".";
+import { ComponentSettings } from "./ComponentSettings";
+import { DomainSettings } from "./DomainSettings";
+import { ExportModal } from "./ExportModal";
+import { ImportModal } from "./ImportModal";
+import { PageSettings } from "./PageSettings";
+import { PagesSettings } from "./PagesSettings";
 
 export function useComponentVisible(initialIsVisible) {
-  const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible);
+  const [isComponentVisible, setIsComponentVisible] =
+    useState(initialIsVisible);
   const ref = useRef(null);
 
   const handleClickOutside = (event) => {
@@ -67,22 +66,20 @@ export function useComponentVisible(initialIsVisible) {
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener("click", handleClickOutside, true);
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
 
   return { ref, isComponentVisible, setIsComponentVisible };
 }
 
-const Item = ({
-  onClick, children, disabled = false, className = ''
-}) => (
+const Item = ({ onClick, children, disabled = false, className = "" }) => (
   <motion.div
     onClick={onClick}
     className={`cursor-pointer hover:bg-gray-600/20 hover:text-white py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-white ${
-      disabled && 'opacity-50'
+      disabled && "opacity-50"
     } ${className}`}
     whileHover={{
       scale: 1.1,
@@ -95,9 +92,7 @@ const Item = ({
 );
 
 export const Header = () => {
-  const {
-    enabled, canUndo, canRedo, actions, query
-  } = useEditor(
+  const { enabled, canUndo, canRedo, actions, query } = useEditor(
     (state, query) => ({
       enabled: state.options.enabled,
       canUndo: query.history.canUndo(),
@@ -124,49 +119,50 @@ export const Header = () => {
       }
     }
     // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside, true);
+    document.addEventListener("mousedown", handleClickOutside, true);
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside, true);
+      document.removeEventListener("mousedown", handleClickOutside, true);
     };
   }, [ref]);
 
   const [preview, setPreview] = useRecoilState(PreviewAtom);
 
-  const toggle = () => actions.setOptions((options) => {
-    // selectNode(ROOT_NODE);
-    options.enabled = !enabled;
+  const toggle = () =>
+    actions.setOptions((options) => {
+      // selectNode(ROOT_NODE);
+      options.enabled = !enabled;
 
-    if (!options.enabled) {
-      const dom = document.getElementById('viewport');
+      if (!options.enabled) {
+        const dom = document.getElementById("viewport");
 
-      const arr_elms = dom.getElementsByTagName('*') || [];
-      const elms_len = arr_elms.length;
+        const arr_elms = dom.getElementsByTagName("*") || [];
+        const elms_len = arr_elms.length;
 
-      for (var i = 0; i < elms_len; i++) {
-        [
-          'data-bounding-box',
-          'data-empty-state',
-          'data-renderer',
-          'contenteditable',
-          'data-no-scrollbars',
-          'draggable',
-          'data-enabled',
-          'data-selected',
-          'data-border',
-          'data-hover',
-          'draggable',
-          'main-node',
-          'node-id',
-        ].forEach((_) => arr_elms[i].removeAttribute(_));
+        for (var i = 0; i < elms_len; i++) {
+          [
+            "data-bounding-box",
+            "data-empty-state",
+            "data-renderer",
+            "contenteditable",
+            "data-no-scrollbars",
+            "draggable",
+            "data-enabled",
+            "data-selected",
+            "data-border",
+            "data-hover",
+            "draggable",
+            "main-node",
+            "node-id",
+          ].forEach((_) => arr_elms[i].removeAttribute(_));
+        }
       }
-    }
 
-    const active = query.getEvent('selected').first();
-    setActive(active);
+      const active = query.getEvent("selected").first();
+      setActive(active);
 
-    setEnabled(options.enabled);
-  });
+      setEnabled(options.enabled);
+    });
 
   const [view, setView] = useRecoilState(ViewAtom);
   const [device, setDevice] = useRecoilState(DeviceAtom);
@@ -174,7 +170,7 @@ export const Header = () => {
   const [showHidden, setShowHidden] = useState(true);
 
   useEffect(
-    () => setLsIds(JSON.parse(localStorage.getItem('history')) || []),
+    () => setLsIds(JSON.parse(localStorage.getItem("history")) || []),
     []
   );
 
@@ -185,10 +181,10 @@ export const Header = () => {
 
   const [sideBarLeft, setSideBarLeft] = useRecoilState(SideBarAtom);
 
-  let pos = 'right-3';
+  let pos = "right-3";
 
   if (!sideBarLeft) {
-    pos = 'left-3';
+    pos = "left-3";
   }
 
   const { data: session, status } = useSession();
@@ -204,7 +200,7 @@ export const Header = () => {
         <Tooltip content="Add Component" placement="bottom" arrow={false}>
           <Item
             onClick={() => {
-              setShowMenuType('components');
+              setShowMenuType("components");
               setShowMenu(true);
             }}
           >
@@ -218,7 +214,7 @@ export const Header = () => {
             onClick={() => {
               actions.history.undo();
 
-              const active = query.getEvent('selected');
+              const active = query.getEvent("selected");
               if (!active) actions.selectNode(ROOT_NODE);
             }}
           >
@@ -232,7 +228,7 @@ export const Header = () => {
             onClick={() => {
               actions.history.redo();
 
-              const active = query.getEvent('selected');
+              const active = query.getEvent("selected");
               if (!active) actions.selectNode(ROOT_NODE);
             }}
           >
@@ -249,18 +245,18 @@ export const Header = () => {
         )}
 
         <Tooltip
-          content={`${showHidden ? 'Show' : 'Hide'} Hidden Components`}
+          content={`${showHidden ? "Show" : "Hide"} Hidden Components`}
           placement="bottom"
           arrow={false}
         >
           <Item
             onClick={() => {
-              const viewport = document.getElementById('viewport');
+              const viewport = document.getElementById("viewport");
 
               setShowHidden(!showHidden);
               viewport.setAttribute(
-                'data-show-hidden',
-                showHidden ? 'true' : 'false'
+                "data-show-hidden",
+                showHidden ? "true" : "false"
               );
             }}
           >
@@ -282,13 +278,13 @@ export const Header = () => {
               }, 200);
             }}
           >
-            {view === 'desktop' && <TbDeviceDesktop />}
-            {view === 'mobile' && <TbDeviceMobile />}
+            {view === "desktop" && <TbDeviceDesktop />}
+            {view === "mobile" && <TbDeviceMobile />}
           </Item>
         </Tooltip>
 
         <Tooltip
-          content={`${device ? 'Disable' : 'Enable'} Device View`}
+          content={`${device ? "Disable" : "Enable"} Device View`}
           placement="bottom"
           arrow={false}
         >
@@ -306,7 +302,7 @@ export const Header = () => {
             onClick={() => {
               toggle();
               setPreview(!preview);
-              document.getElementById('viewport').focus();
+              document.getElementById("viewport").focus();
             }}
           >
             {enabled ? <TbEye /> : <TbCode />}
@@ -318,7 +314,7 @@ export const Header = () => {
             disabled={!canUndo || !settings}
             onClick={async () => {
               if (!canUndo) return;
-              setShowMenuType('domain');
+              setShowMenuType("domain");
               setShowMenu(true);
               // sssetDialogOpen(true);
             }}
@@ -356,19 +352,19 @@ export const Header = () => {
           </div>
           <div className="p-1.5 w-full"></div>
 
-          {showMenuType === 'export' && <ExportModal />}
-          {showMenuType === 'import' && (
+          {showMenuType === "export" && <ExportModal />}
+          {showMenuType === "import" && (
             <ImportModal
               stateToLoad={stateToLoad}
               setStateToLoad={setStateToLoad}
               actions={actions}
             />
           )}
-          {showMenuType === 'components' && <ComponentSettings />}
-          {showMenuType === 'domain' && <DomainSettings />}
-          {showMenuType === 'page' && <PageSettings />}
-          {showMenuType === 'pages' && <PagesSettings />}
-          {showMenuType === 'builds' && lsIds.length && (
+          {showMenuType === "components" && <ComponentSettings />}
+          {showMenuType === "domain" && <DomainSettings />}
+          {showMenuType === "page" && <PageSettings />}
+          {showMenuType === "pages" && <PagesSettings />}
+          {showMenuType === "builds" && lsIds.length && (
             <>
               <div className="p-3 flex flex-col gap-6">
                 <div className="text-xl">Account Builds</div>
@@ -404,7 +400,7 @@ export const Header = () => {
               ) : null}
             </>
           )}
-          {showMenuType === 'submissions' && (
+          {showMenuType === "submissions" && (
             <div className="p-3">
               <h3 className="text-2xl">Form Submissions</h3>
               <p className="mb-3">
@@ -462,13 +458,13 @@ export const Header = () => {
                 <div
                   onClick={() => {
                     setShowMenu(true);
-                    setShowMenuType('submissions');
+                    setShowMenuType("submissions");
                   }}
                   className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
                 >
                   <div className="text-2xl">
                     <TbForms />
-                  </div>{' '}
+                  </div>{" "}
                   Form Submissions
                 </div>
               ) : null}
@@ -482,20 +478,20 @@ export const Header = () => {
               >
                 <div className="text-2xl">
                   <TbBoxModel2 />
-                </div>{' '}
+                </div>{" "}
                 Background
               </div>
 
               <div
                 onClick={() => {
                   setShowMenu(true);
-                  setShowMenuType('pages');
+                  setShowMenuType("pages");
                 }}
                 className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
               >
                 <div className="text-2xl">
                   <TbListDetails />
-                </div>{' '}
+                </div>{" "}
                 Pages
               </div>
 
@@ -507,7 +503,7 @@ export const Header = () => {
                 >
                   <div className="text-2xl">
                     <TbExternalLink />
-                  </div>{' '}
+                  </div>{" "}
                   View Live Version
                 </a>
               )}
@@ -519,7 +515,7 @@ export const Header = () => {
                 >
                   <div className="text-2xl">
                     <TbExternalLink />
-                  </div>{' '}
+                  </div>{" "}
                   View Draft Version
                 </a>
               )}
@@ -528,7 +524,7 @@ export const Header = () => {
               <div
                 onClick={async () => {
                   //  return;
-                  const dom = document.getElementById('viewport');
+                  const dom = document.getElementById("viewport");
                   toggle();
 
                   const htmlOutput = dom.innerHTML;
@@ -552,7 +548,7 @@ export const Header = () => {
               </div>
               <div
                 onClick={() => {
-                  setShowMenuType('export');
+                  setShowMenuType("export");
                   setShowMenu(true);
                 }}
                 className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
@@ -564,14 +560,14 @@ export const Header = () => {
               </div>
               <div
                 onClick={() => {
-                  setShowMenuType('import');
+                  setShowMenuType("import");
                   setShowMenu(true);
                 }}
                 className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
               >
                 <div className="text-2xl">
                   <TbUpload />
-                </div>{' '}
+                </div>{" "}
                 Import
               </div>
 
@@ -580,14 +576,14 @@ export const Header = () => {
               {settings && (
                 <div
                   onClick={() => {
-                    setShowMenuType('page');
+                    setShowMenuType("page");
                     setShowMenu(true);
                   }}
                   className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
                 >
                   <div className="text-2xl">
                     <TbBrandOpenai />
-                  </div>{' '}
+                  </div>{" "}
                   AI Settings
                 </div>
               )}
@@ -596,42 +592,42 @@ export const Header = () => {
                 <div
                   onClick={() => {
                     setShowMenu(true);
-                    setShowMenuType('builds');
+                    setShowMenuType("builds");
                   }}
                   className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
                 >
                   <div className="text-2xl">
                     <TbDevices2 />
-                  </div>{' '}
+                  </div>{" "}
                   Previous Builds
                 </div>
               ) : null}
 
               <hr className="border-b border-gray-500 " />
 
-              {status === 'authenticated' ? (
+              {status === "authenticated" ? (
                 <>
                   <p className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3">
                     Signed in as {session.user.email}
-                  </p>{' '}
+                  </p>{" "}
                   <div
-                    onClick={() => popupCenter('/google-signout', 'Sign Out')}
+                    onClick={() => popupCenter("/google-signout", "Sign Out")}
                     className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
                   >
                     <div className="text-2xl">
                       <TbLogout />
-                    </div>{' '}
+                    </div>{" "}
                     Sign out
                   </div>
                 </>
               ) : (
                 <div
-                  onClick={() => popupCenter('/google-signin', 'Sign In')}
+                  onClick={() => popupCenter("/google-signin", "Sign In")}
                   className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
                 >
                   <div className="text-2xl">
                     <TbLogin />
-                  </div>{' '}
+                  </div>{" "}
                   Sign in
                 </div>
               )}
@@ -643,7 +639,7 @@ export const Header = () => {
                 <div className="text-2xl">
                   {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
                 </div>
-                {sideBarLeft ? 'Right' : 'Left'} Settings Panel
+                {sideBarLeft ? "Right" : "Left"} Settings Panel
               </div>
             </>
           )}

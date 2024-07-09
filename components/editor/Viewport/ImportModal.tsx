@@ -1,5 +1,5 @@
-import { ROOT_NODE } from '@craftjs/core';
-import lz from 'lzutf8';
+import { ROOT_NODE } from "@craftjs/core";
+import lz from "lzutf8";
 
 export const ImportModal = ({ stateToLoad, setStateToLoad, actions }) => (
   <div className="space-y-6 px-3 pb-4 sm:pb-6 xl:pb-8">

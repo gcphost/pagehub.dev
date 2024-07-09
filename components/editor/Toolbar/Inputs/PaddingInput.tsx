@@ -1,13 +1,13 @@
-import { useNode } from '@craftjs/core';
-import { ViewAtom } from 'components/editor/Viewport';
-import { TbBoxPadding, TbInfoSquare } from 'react-icons/tb';
-import { useRecoilValue } from 'recoil';
-import { TailwindStyles } from 'utils/tailwind';
-import { ItemAdvanceToggle } from '../Helpers/ItemSelector';
-import { ToolbarItem } from '../ToolbarItem';
-import { ToolbarSection } from '../ToolbarSection';
+import { useNode } from "@craftjs/core";
+import { ViewAtom } from "components/editor/Viewport";
+import { TbBoxPadding, TbInfoSquare } from "react-icons/tb";
+import { useRecoilValue } from "recoil";
+import { TailwindStyles } from "utils/tailwind";
+import { ItemAdvanceToggle } from "../Helpers/ItemSelector";
+import { ToolbarItem } from "../ToolbarItem";
+import { ToolbarSection } from "../ToolbarSection";
 
-export const PaddingInput = ({ propKey = 'padding' }) => {
+export const PaddingInput = ({ propKey = "padding" }) => {
   const { propValues } = useNode((node) => ({
     propValue: node.data.props.activeTab,
     propValues: node.data.props,
@@ -89,15 +89,15 @@ export const PaddingInput = ({ propKey = 'padding' }) => {
         </ToolbarSection>
       </ItemAdvanceToggle>
 
-      {view === 'mobile'
-        && TailwindStyles.px.indexOf(propValues[view]?.px)
-          > TailwindStyles.px.indexOf('px-3') && (
+      {view === "mobile" &&
+        TailwindStyles.px.indexOf(propValues[view]?.px) >
+          TailwindStyles.px.indexOf("px-3") && (
           <ToolbarSection>
             <div className="flex gap-3 items-center text-xs text-gray-300">
               <TbInfoSquare /> Padding may be too large for mobile.
             </div>
           </ToolbarSection>
-      )}
+        )}
     </>
   );
 };

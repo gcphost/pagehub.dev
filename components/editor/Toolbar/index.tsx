@@ -1,13 +1,13 @@
-import { useEditor } from '@craftjs/core';
-import { motion } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { SideBarAtom, SideBarOpen } from 'utils/lib';
-import { PreviewAtom } from '../Viewport';
+import { useEditor } from "@craftjs/core";
+import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { SideBarAtom, SideBarOpen } from "utils/lib";
+import { PreviewAtom } from "../Viewport";
 
-export * from './ToolbarDropdown';
-export * from './ToolbarItem';
-export * from './ToolbarSection';
+export * from "./ToolbarDropdown";
+export * from "./ToolbarItem";
+export * from "./ToolbarSection";
 
 export const Toolbar = () => {
   const [sideBarOpen, setSideBarOpen] = useRecoilState(SideBarOpen);
@@ -21,26 +21,26 @@ export const Toolbar = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener("click", handleClickOutside, true);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, [ref]);
 
   const variants = {
-    open: { opacity: 1, x: 0, width: '360px' },
-    closed: { opacity: 0, x: sideBarLeft ? '-100%' : '100%', width: '0' },
+    open: { opacity: 1, x: 0, width: "360px" },
+    closed: { opacity: 0, x: sideBarLeft ? "-100%" : "100%", width: "0" },
     exit: {
-      width: '0',
+      width: "0",
     },
-    transition: { type: 'linear', duration: 0.2 },
+    transition: { type: "linear", duration: 0.2 },
   };
 
   const preview = useRecoilValue(PreviewAtom);
 
   const { related } = useEditor((state, query) => {
-    const currentlySelectedNodeId = query.getEvent('selected').first();
+    const currentlySelectedNodeId = query.getEvent("selected").first();
 
     return {
       related:
@@ -65,13 +65,15 @@ export const Toolbar = () => {
 
   return (
     <motion.div
-      animate={sideBarOpen && !preview ? 'open' : 'closed'}
+      animate={sideBarOpen && !preview ? "open" : "closed"}
       initial="closed"
       variants={variants}
       transition={variants.transition}
       key="sideMenu"
       id="toolbar"
-      className={'z-40 absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen  text-white border-x border-violet-500 '}
+      className={
+        "z-40 absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen  text-white border-x border-violet-500 "
+      }
       style={style}
       ref={ref}
     >

@@ -1,9 +1,9 @@
-import { useNode } from '@craftjs/core';
-import { ToolbarItem } from '../ToolbarItem';
-import { ToolbarSection } from '../ToolbarSection';
-import { ColorInput } from './ColorInput';
+import { useNode } from "@craftjs/core";
+import { ToolbarItem } from "../ToolbarItem";
+import { ToolbarSection } from "../ToolbarSection";
+import { ColorInput } from "./ColorInput";
 
-import { PatternsDialogInput } from './PatternsDialogInput';
+import { PatternsDialogInput } from "./PatternsDialogInput";
 
 export const PatternInput = () => {
   const { props } = useNode((node) => ({

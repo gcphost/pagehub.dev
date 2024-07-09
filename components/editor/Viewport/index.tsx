@@ -1,26 +1,26 @@
-import { NodeTree, useEditor } from '@craftjs/core';
-import { ROOT_NODE } from '@craftjs/utils';
-import { Tooltip } from 'components/layout/Tooltip';
-import { Background } from 'components/selectors/Background';
-import { Button, OnlyButtons } from 'components/selectors/Button';
-import { Container } from 'components/selectors/Container';
-import { Divider } from 'components/selectors/Divider';
-import { Embed } from 'components/selectors/Embed';
-import { Form, FormDrop } from 'components/selectors/Form';
-import { FormElement, OnlyFormElement } from 'components/selectors/FormElement';
-import { Image } from 'components/selectors/Image';
-import { OnlyText, Text } from 'components/selectors/Text';
-import { Video } from 'components/selectors/Video';
-import router from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
-import { TbCode } from 'react-icons/tb';
+import { NodeTree, useEditor } from "@craftjs/core";
+import { ROOT_NODE } from "@craftjs/utils";
+import { Tooltip } from "components/layout/Tooltip";
+import { Background } from "components/selectors/Background";
+import { Button, OnlyButtons } from "components/selectors/Button";
+import { Container } from "components/selectors/Container";
+import { Divider } from "components/selectors/Divider";
+import { Embed } from "components/selectors/Embed";
+import { Form, FormDrop } from "components/selectors/Form";
+import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
+import { Image } from "components/selectors/Image";
+import { OnlyText, Text } from "components/selectors/Text";
+import { Video } from "components/selectors/Video";
+import router from "next/router";
+import React, { useCallback, useEffect, useState } from "react";
+import { TbCode } from "react-icons/tb";
 import {
   atom,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
-} from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
+} from "recoil";
+import { SettingsAtom } from "utils/atoms";
 import {
   IsolateAtom,
   LastctiveAtom,
@@ -28,54 +28,57 @@ import {
   ScreenshotAtom,
   SideBarAtom,
   SideBarOpen,
-} from 'utils/lib';
-import { DeviceOffline } from '../Toolbar/DeviceOffline';
+} from "utils/lib";
+import { DeviceOffline } from "../Toolbar/DeviceOffline";
 import {
-  GetHtmlToComponent, buildClonedTree, SaveToServer, deleteNode
-} from './lib';
+  GetHtmlToComponent,
+  SaveToServer,
+  buildClonedTree,
+  deleteNode,
+} from "./lib";
 
 export const PreviewAtom = atom({
-  key: 'preview',
+  key: "preview",
   default: false,
 });
 
 export const ViewportScrollAtom = atom({
-  key: 'vpscroll',
+  key: "vpscroll",
   default: false,
 });
 
 export const MouseInEditor = atom({
-  key: 'mousein',
+  key: "mousein",
   default: false,
 });
 
 export const UnsavedChangesAtom = atom({
-  key: 'unsavedchanges',
+  key: "unsavedchanges",
   default: {},
 });
 
 export const ViewAtom = atom({
-  key: 'view',
-  default: 'desktop',
+  key: "view",
+  default: "desktop",
 });
 
 export const ToolbarTitleAtom = atom({
-  key: 'ttt',
-  default: '',
+  key: "ttt",
+  default: "",
 });
 
 export const TabAtom = atom({
-  key: 'editorTab',
-  default: '',
+  key: "editorTab",
+  default: "",
 });
 
 export const DeviceAtom = atom({
-  key: 'device',
+  key: "device",
   default: false,
 });
 
 export const EnabledAtom = atom({
-  key: 'enabled',
+  key: "enabled",
   default: true,
 });
 
@@ -102,9 +105,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
     });
   }, [setOptions]);
 
-  const {
-    canUndo, canRedo, actions, query
-  } = useEditor((state, query) => ({
+  const { canUndo, canRedo, actions, query } = useEditor((state, query) => ({
     enabled: state.options.enabled,
     canUndo: query.history.canUndo(),
     canRedo: query.history.canRedo(),
@@ -113,7 +114,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const [ac, setAc] = useState(false);
 
   useEffect(() => {
-    const active = query.getEvent('selected').first();
+    const active = query.getEvent("selected").first();
 
     if (!active && !ac) {
       const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
@@ -125,7 +126,8 @@ export const Viewport: React.FC<any> = ({ children }) => {
     }
   }, []);
 
-  const [unsavedChanges, setUnsavedChanged] = useRecoilState(UnsavedChangesAtom);
+  const [unsavedChanges, setUnsavedChanged] =
+    useRecoilState(UnsavedChangesAtom);
 
   const view = useRecoilValue(ViewAtom);
   const device = useRecoilValue(DeviceAtom);
@@ -140,21 +142,13 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const sideBarLeft = useRecoilValue(SideBarAtom);
 
   useEffect(() => {
-    localStorage.setItem('clipBoard', JSON.stringify({}));
+    localStorage.setItem("clipBoard", JSON.stringify({}));
   }, []);
 
   const onlineStateChange = async (event) => {
-    setOnline(event.type === 'online');
+    setOnline(event.type === "online");
 
-    if (event.type !== 'online') return;
-
-    // let draft = localStorage.getItem("draft");
-
-    // if (!draft) return;
-
-    // await SaveToServer(draft, true, settings, setSettings);
-
-    // localStorage.removeItem("draft");
+    if (event.type !== "online") return;
 
     setUnsavedChanged(false);
   };
@@ -162,32 +156,30 @@ export const Viewport: React.FC<any> = ({ children }) => {
   useEffect(() => {
     setOnline(window.navigator.onLine);
 
-    window.addEventListener('online', onlineStateChange);
-    window.addEventListener('offline', onlineStateChange);
+    window.addEventListener("online", onlineStateChange);
+    window.addEventListener("offline", onlineStateChange);
     return () => {
-      window.removeEventListener('online', onlineStateChange);
-      window.removeEventListener('offline', onlineStateChange);
+      window.removeEventListener("online", onlineStateChange);
+      window.removeEventListener("offline", onlineStateChange);
     };
   }, []);
 
   useEffect(() => {
-    const warningText = 'Leave site? Changes you made may not be saved.';
+    const warningText = "Leave site? Changes you made may not be saved.";
     const handleWindowClose = (e: BeforeUnloadEvent) => {
-      // if (!unsavedChanges) return;
       e.preventDefault();
       return (e.returnValue = warningText);
     };
     const handleBrowseAway = () => {
-      // if (!unsavedChanges) return;
       if (window.confirm(warningText)) return;
-      router.events.emit('routeChangeError');
-      throw 'routeChange aborted.';
+      router.events.emit("routeChangeError");
+      throw "routeChange aborted.";
     };
-    window.addEventListener('beforeunload', handleWindowClose);
-    router.events.on('routeChangeStart', handleBrowseAway);
+    window.addEventListener("beforeunload", handleWindowClose);
+    router.events.on("routeChangeStart", handleBrowseAway);
     return () => {
-      window.removeEventListener('beforeunload', handleWindowClose);
-      router.events.off('routeChangeStart', handleBrowseAway);
+      window.removeEventListener("beforeunload", handleWindowClose);
+      router.events.off("routeChangeStart", handleBrowseAway);
     };
   }, [unsavedChanges]);
 
@@ -215,10 +207,10 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
   async function checkIfHtmlInClipboard() {
     let text = await navigator.clipboard.readText();
-    text = text.replace(/\s+/g, ' ').trim();
-    text = text.replace(/\s{2,}/g, ' '); // replace any sequence of 2 or more whitespace characters with a single space
+    text = text.replace(/\s+/g, " ").trim();
+    text = text.replace(/\s{2,}/g, " "); // replace any sequence of 2 or more whitespace characters with a single space
 
-    if (text.startsWith('<')) {
+    if (text.startsWith("<")) {
       // The clipboard contains HTML starting with <div>
       return text;
     }
@@ -227,10 +219,11 @@ export const Viewport: React.FC<any> = ({ children }) => {
   }
 
   const handleSaveTemplate = useCallback(() => {
-    const active = query.getEvent('selected').first();
+    const active = query.getEvent("selected").first();
     const node = query.node(active).get();
 
-    if (['page', 'background'].includes(node.data.props.type)) return localStorage.setItem('clipBoard', JSON.stringify({}));
+    if (["page", "background"].includes(node.data.props.type))
+      return localStorage.setItem("clipBoard", JSON.stringify({}));
 
     const tree = query.node(active).toNodeTree();
     const nodePairs = Object.keys(tree.nodes).map((id) => [
@@ -243,12 +236,12 @@ export const Viewport: React.FC<any> = ({ children }) => {
       nodes: serializedNodesJSON,
     };
     // save to your database
-    localStorage.setItem('clipBoard', JSON.stringify(saveData));
+    localStorage.setItem("clipBoard", JSON.stringify(saveData));
   }, [query]);
 
   // add templates where you want
   const handleAdd = useCallback(async () => {
-    let active = query.getEvent('selected').first();
+    let active = query.getEvent("selected").first();
 
     if (!active) active = ROOT_NODE;
     const id = active;
@@ -303,7 +296,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
           });
         }
 
-        console.log('toNode', freoshNode.id, parent);
+        console.log("toNode", freoshNode.id, parent);
 
         return freoshNode;
       };
@@ -314,108 +307,13 @@ export const Viewport: React.FC<any> = ({ children }) => {
       console.log({ originalNodeTree: query.node(ROOT_NODE).toNodeTree() });
 
       if (data.result) {
-        data.result.forEach((item) => {
-          const root = toNode(item, active);
-        });
-
         console.log({ newTree: query.node(ROOT_NODE).toNodeTree() });
-
-        return;
-
-        const tree = {
-          data: {
-            type: Container,
-            props: { text: 'Hello' },
-            nodes: [],
-          },
-        };
-
-        const freoshNode = query.parseFreshNode(tree).toNode();
-
-        actions.add(freoshNode, 'ROOT');
-
-        const ooo = {
-          data: {
-            type: Container,
-            props: { text: 'Hello' },
-            nodes: [],
-          },
-        };
-
-        const oo = query.parseFreshNode(ooo).toNode();
-
-        actions.add(oo, freoshNode.id);
-
-        // actions.addNodeTree(tree, active);
-
-        const originalNodeTree = query.node(ROOT_NODE).toNodeTree();
-
-        console.log({ originalNodeTree });
-
-        // Create a new valid Node object from the fresh Node
-        // const node = query.parseFreshNode(freshNode).toNode();
-        // actions.add(node, "ROOT");
       }
-      // console.log(data.result);
-    }
-    return;
-
-    const data = JSON.parse(localStorage.getItem('clipBoard'));
-
-    if (!data || !data.nodes) {
-      return;
-    }
-    const newNodes = JSON.parse(data.nodes);
-
-    // thought is we could check of OG node is moveable into type but that node is gone if we use a real db not ls
-
-    const nodePairs = Object.keys(newNodes).map((id) => {
-      const nodeId = id;
-
-      return [
-        nodeId,
-        query
-          .parseSerializedNode(newNodes[id])
-          .toNode((node) => (node.id = nodeId)),
-      ];
-    });
-    const tree = { rootNodeId: data.rootNodeId, nodes: fromEntries(nodePairs) };
-    const newTree = getCloneTree(tree);
-
-    const theNode = query.node(active).get();
-    const parentNode = query.node(theNode.data.parent).get();
-    const indexToAdd = parentNode.data.nodes.indexOf(id);
-
-    const a = query.node(newTree.rootNodeId).get();
-
-    actions.addNodeTree(newTree, active);
-
-    const rot = query.node(id).get();
-
-    const newnodei = Object.keys(rot.data.nodes);
-    const newnode = rot.data.nodes[newnodei[newnodei.length - 1]];
-
-    const nn = query.node(newnode).get();
-
-    // @ts-ignore
-    const canadd = theNode.rules.canMoveIn(nn.data.nodes, nn);
-    // @ts-ignore
-    const canparent = parentNode.rules.canMoveIn(nn.data.nodes, nn);
-    // delete node we used to check placement with.
-    actions.delete(nn.id);
-
-    if (canadd) {
-      actions.addNodeTree(newTree, active);
-      return;
-    }
-
-    if (canparent) {
-      actions.addNodeTree(newTree, parentNode.id, indexToAdd + 1);
     }
   }, [actions, getCloneTree, query]);
 
   const handleBodyKeyDown = (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       if (preview) {
         event.preventDefault();
         actions.setOptions((options) => {
@@ -436,7 +334,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
   };
 
   const handleKeyDown = (event) => {
-    if (event.target.getAttribute('contenteditable') === 'true') {
+    if (event.target.getAttribute("contenteditable") === "true") {
       return;
     }
 
@@ -444,7 +342,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
     handleBodyKeyDown(event);
     // copy
-    if ((event.ctrlKey || event.metaKey) && charCode === 'c') {
+    if ((event.ctrlKey || event.metaKey) && charCode === "c") {
       event.preventDefault();
 
       try {
@@ -457,7 +355,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
     }
 
     // paste
-    if ((event.ctrlKey || event.metaKey) && charCode === 'v') {
+    if ((event.ctrlKey || event.metaKey) && charCode === "v") {
       event.preventDefault();
 
       // if we get position of mouse over selected div we can order better..
@@ -472,11 +370,11 @@ export const Viewport: React.FC<any> = ({ children }) => {
       return;
     }
 
-    if (event.key === 'Tab') {
+    if (event.key === "Tab") {
       event.preventDefault();
 
       try {
-        const active = query.getEvent('selected').first();
+        const active = query.getEvent("selected").first();
         const theNode = query.node(active).get();
         const parentNode = query.node(theNode.data.parent).get();
         const indexToAdd = parentNode.data.nodes.indexOf(active);
@@ -498,7 +396,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
     if (event.which === 8) {
       try {
         event.preventDefault();
-        const active = query.getEvent('selected').first();
+        const active = query.getEvent("selected").first();
         const theNode = query.node(active).get();
 
         if (!theNode.data.props.canDelete) return;
@@ -510,7 +408,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       return;
     }
 
-    if ((event.ctrlKey || event.metaKey) && charCode === 's') {
+    if ((event.ctrlKey || event.metaKey) && charCode === "s") {
       try {
         event.preventDefault();
         SaveToServer(query.serialize(), true, settings, setSettings);
@@ -522,7 +420,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       return;
     }
 
-    if ((event.ctrlKey || event.metaKey) && charCode === 'z') {
+    if ((event.ctrlKey || event.metaKey) && charCode === "z") {
       try {
         event.preventDefault();
         canUndo && actions?.history?.undo();
@@ -532,7 +430,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       return;
     }
 
-    if ((event.ctrlKey || event.metaKey) && charCode === 'y') {
+    if ((event.ctrlKey || event.metaKey) && charCode === "y") {
       try {
         event.preventDefault();
         canRedo && actions?.history?.redo();
@@ -542,43 +440,44 @@ export const Viewport: React.FC<any> = ({ children }) => {
     }
   };
 
-  const sb = enabled && sideBarOpen
-    ? sideBarLeft
-      ? 'lg:ml-[360px]'
-      : 'lg:mr-[360px]'
-    : null;
+  const sb =
+    enabled && sideBarOpen
+      ? sideBarLeft
+        ? "lg:ml-[360px]"
+        : "lg:mr-[360px]"
+      : null;
 
   const deviceClasses = {
     mobile: [
-      'mx-auto flex z-2 transition overflow-hidden mt-32 mx-auto w-full md:w-[380px] mb-32 px-2 py-6 rounded-2xl bg-gray-700 border-4 border-gray-800 drop-shadow-2xl',
-      'w-full h-full flex overflow-auto rounded-xl border-4 border-gray-900 disable-scrollbars',
+      "mx-auto flex z-2 transition overflow-hidden mt-32 mx-auto w-full md:w-[380px] mb-32 px-2 py-6 rounded-2xl bg-gray-700 border-4 border-gray-800 drop-shadow-2xl",
+      "w-full h-full flex overflow-auto rounded-xl border-4 border-gray-900 disable-scrollbars",
     ],
 
     desktop: [
       enabled
-        ? 'flex h-screen overflow-hidden flex-row w-full bg-gray-200 w-screen absolute top-0 left-0 right-0 bottom-0'
-        : '',
-      enabled ? 'w-full overflow-hidden' : 'w-screen h-screen overflow-auto',
+        ? "flex h-screen overflow-hidden flex-row w-full bg-gray-200 w-screen absolute top-0 left-0 right-0 bottom-0"
+        : "",
+      enabled ? "w-full overflow-hidden" : "w-screen h-screen overflow-auto",
     ],
   };
 
   let viewClasses = {
     mobile: [
       `flex h-screen overflow-hidden flex-row mx-auto w-${
-        enabled ? '[380px]' : 'screen'
+        enabled ? "[380px]" : "screen"
       } mx-auto bg-gray-200`,
       enabled
-        ? 'w-full my-6 rounded-lg overflow-auto scrollbar bg-white'
-        : 'w-screen h-screen overflow-auto',
+        ? "w-full my-6 rounded-lg overflow-auto scrollbar bg-white"
+        : "w-screen h-screen overflow-auto",
     ],
 
     desktop: [
       enabled
         ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen bg-gray-200`
-        : 'w-screen',
+        : "w-screen",
       enabled
-        ? 'w-full m-1 relative overflow-auto  bg-white'
-        : 'w-screen h-screen overflow-show',
+        ? "w-full m-1 relative overflow-auto  bg-white"
+        : "w-screen h-screen overflow-show",
     ],
   };
 
@@ -589,14 +488,14 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const activeClass = viewClasses[view];
 
   useEffect(() => {
-    document.addEventListener('keydown', handleBodyKeyDown);
+    document.addEventListener("keydown", handleBodyKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleBodyKeyDown);
+      document.removeEventListener("keydown", handleBodyKeyDown);
     };
   }, []);
 
   const { active, related } = useEditor((state, query) => {
-    const currentlySelectedNodeId = query.getEvent('selected').first();
+    const currentlySelectedNodeId = query.getEvent("selected").first();
 
     return {
       active: currentlySelectedNodeId,
@@ -615,7 +514,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
     <div
       data-container={true}
       className={`flex h-screen overflow-hidden flex-row w-full ${
-        enabled && 'bg-gray-200'
+        enabled && "bg-gray-200"
       }`}
     >
       {!enabled && !screenshot && (
@@ -623,16 +522,17 @@ export const Viewport: React.FC<any> = ({ children }) => {
           <Tooltip content="Edit" placement="bottom" arrow={false}>
             <div
               className="p-4 btn text-2xl bg-violet-500/90 cursor-pointer select-none rounded-md text-white"
-              onClick={() => setOptions((options) => {
-                options.enabled = true;
-                setPreview(false);
-                setTimeout(() => {
-                  if (!lastActive) return;
+              onClick={() =>
+                setOptions((options) => {
+                  options.enabled = true;
+                  setPreview(false);
+                  setTimeout(() => {
+                    if (!lastActive) return;
 
-                  const node = query.node(lastActive).get();
-                  if (node) actions.selectNode(lastActive);
-                }, 0);
-              })
+                    const node = query.node(lastActive).get();
+                    if (node) actions.selectNode(lastActive);
+                  }, 0);
+                })
               }
             >
               <TbCode />
@@ -650,7 +550,8 @@ export const Viewport: React.FC<any> = ({ children }) => {
           data-isolated={!!isolated}
           tabIndex={0}
           className={activeClass[1]}
-          ref={(ref: any) => connectors.select(connectors.hover(ref, null), null)
+          ref={(ref: any) =>
+            connectors.select(connectors.hover(ref, null), null)
           }
         >
           {children}

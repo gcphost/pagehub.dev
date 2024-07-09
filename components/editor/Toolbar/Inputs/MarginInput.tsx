@@ -1,10 +1,10 @@
-import { TbBoxPadding } from 'react-icons/tb';
-import { TailwindStyles } from 'utils/tailwind';
-import { ItemAdvanceToggle } from '../Helpers/ItemSelector';
-import { ToolbarItem } from '../ToolbarItem';
-import { ToolbarSection } from '../ToolbarSection';
+import { TbBoxPadding } from "react-icons/tb";
+import { TailwindStyles } from "utils/tailwind";
+import { ItemAdvanceToggle } from "../Helpers/ItemSelector";
+import { ToolbarItem } from "../ToolbarItem";
+import { ToolbarSection } from "../ToolbarSection";
 
-export const MarginInput = ({ propKey = 'margin' }) => (
+export const MarginInput = ({ propKey = "margin" }) => (
   <>
     <ToolbarSection
       title="Margin"

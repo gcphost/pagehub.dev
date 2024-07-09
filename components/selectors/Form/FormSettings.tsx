@@ -1,37 +1,35 @@
-import { useEditor, useNode } from '@craftjs/core';
-import { ToolbarItem, ToolbarSection } from 'components/editor/Toolbar';
-import { ItemAdvanceToggle } from 'components/editor/Toolbar/Helpers/ItemSelector';
+import { useEditor, useNode } from "@craftjs/core";
+import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
+import { ItemAdvanceToggle } from "components/editor/Toolbar/Helpers/ItemSelector";
 import {
   TBWrap,
   TableBodyStyleControl,
-} from 'components/editor/Toolbar/Helpers/SettingsHelper';
-import { AlignItemsInput } from 'components/editor/Toolbar/Inputs/AlignItemsInput';
-import { AnchorInput } from 'components/editor/Toolbar/Inputs/AnchorInput';
-import { BackgroundInput } from 'components/editor/Toolbar/Inputs/BackgroundInput';
-import { BorderInput } from 'components/editor/Toolbar/Inputs/BorderInput';
-import { ClassNameInput } from 'components/editor/Toolbar/Inputs/ClassNameInput';
-import { ColorInput } from 'components/editor/Toolbar/Inputs/ColorInput';
-import { DisplayInput } from 'components/editor/Toolbar/Inputs/DisplayInput';
-import { FlexDirectionInput } from 'components/editor/Toolbar/Inputs/FlexDirectionInput';
-import { FlexInput } from 'components/editor/Toolbar/Inputs/FlexInput';
-import { HeightInput } from 'components/editor/Toolbar/Inputs/HeightInput';
-import { MarginInput } from 'components/editor/Toolbar/Inputs/MarginInput';
-import { PaddingInput } from 'components/editor/Toolbar/Inputs/PaddingInput';
-import { PatternInput } from 'components/editor/Toolbar/Inputs/PatternInput';
-import { ShadowInput } from 'components/editor/Toolbar/Inputs/ShadowInput';
-import { WidthInput } from 'components/editor/Toolbar/Inputs/WidthInput';
-import { TabBody } from 'components/editor/Toolbar/Tab';
-import { getNode } from 'components/editor/Toolbar/Tools/lib';
-import { TabAtom } from 'components/editor/Viewport';
-import { useState } from 'react';
-import { BiPaint } from 'react-icons/bi';
-import { MdStyle } from 'react-icons/md';
-import {
-  TbBoxPadding, TbForms, TbMouse, TbPlayerPlay
-} from 'react-icons/tb';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
-import { useDefaultTab } from 'utils/lib';
+} from "components/editor/Toolbar/Helpers/SettingsHelper";
+import { AlignItemsInput } from "components/editor/Toolbar/Inputs/AlignItemsInput";
+import { AnchorInput } from "components/editor/Toolbar/Inputs/AnchorInput";
+import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
+import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
+import { ClassNameInput } from "components/editor/Toolbar/Inputs/ClassNameInput";
+import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
+import { DisplayInput } from "components/editor/Toolbar/Inputs/DisplayInput";
+import { FlexDirectionInput } from "components/editor/Toolbar/Inputs/FlexDirectionInput";
+import { FlexInput } from "components/editor/Toolbar/Inputs/FlexInput";
+import { HeightInput } from "components/editor/Toolbar/Inputs/HeightInput";
+import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
+import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
+import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
+import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
+import { WidthInput } from "components/editor/Toolbar/Inputs/WidthInput";
+import { TabBody } from "components/editor/Toolbar/Tab";
+import { getNode } from "components/editor/Toolbar/Tools/lib";
+import { TabAtom } from "components/editor/Viewport";
+import { useState } from "react";
+import { BiPaint } from "react-icons/bi";
+import { MdStyle } from "react-icons/md";
+import { TbBoxPadding, TbForms, TbMouse, TbPlayerPlay } from "react-icons/tb";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { SettingsAtom } from "utils/atoms";
+import { useDefaultTab } from "utils/lib";
 
 export const FormSettings = () => {
   const { actions, query } = useEditor();
@@ -46,27 +44,27 @@ export const FormSettings = () => {
 
   const head = [
     {
-      title: 'Form',
+      title: "Form",
       icon: <TbForms />,
     },
     {
-      title: 'Appearance',
+      title: "Appearance",
       icon: <BiPaint />,
     },
     {
-      title: 'Layout',
+      title: "Layout",
       icon: <TbBoxPadding />,
     },
     {
-      title: 'Hover & Click',
+      title: "Hover & Click",
       icon: <TbMouse />,
     },
     {
-      title: 'Animations',
+      title: "Animations",
       icon: <TbPlayerPlay />,
     },
     {
-      title: 'Style',
+      title: "Style",
       icon: <MdStyle />,
     },
   ];
@@ -74,17 +72,20 @@ export const FormSettings = () => {
   useDefaultTab(head, activeTab, setActiveTab);
 
   const MainTab = () => {
-    let help = '';
+    let help = "";
 
     switch (formType) {
-      case 'iframe':
-        help = 'Submit your form to a hidden iframe. Define your URL and Methods to submit anywhere.';
+      case "iframe":
+        help =
+          "Submit your form to a hidden iframe. Define your URL and Methods to submit anywhere.";
         break;
-      case 'save':
-        help = 'Save your data here, you can view your submissions when they occur.';
+      case "save":
+        help =
+          "Save your data here, you can view your submissions when they occur.";
         break;
-      case 'emailSave':
-        help = 'Save your data here and email you upon submission, you can view your submissions here when they occur.';
+      case "emailSave":
+        help =
+          "Save your data here and email you upon submission, you can view your submissions here when they occur.";
         break;
     }
 
@@ -117,7 +118,7 @@ export const FormSettings = () => {
           </ToolbarItem>
         </ToolbarSection>
 
-        {formType === 'emailSave' && (
+        {formType === "emailSave" && (
           <ToolbarItem
             propKey="mailto"
             propType="component"
@@ -128,7 +129,7 @@ export const FormSettings = () => {
           />
         )}
 
-        {formType === 'iframe' && (
+        {formType === "iframe" && (
           <>
             <ToolbarItem
               propKey="action"
@@ -177,85 +178,85 @@ export const FormSettings = () => {
   };
 
   const TBBody = () => (
-      <TableBodyStyleControl
-        actions={actions}
-        activeTab={activeTab}
-        head={head}
-        query={query}
-        tab={<MainTab />}
-      >
-        {activeTab === 'Form' && <MainTab />}
+    <TableBodyStyleControl
+      actions={actions}
+      activeTab={activeTab}
+      head={head}
+      query={query}
+      tab={<MainTab />}
+    >
+      {activeTab === "Form" && <MainTab />}
 
-        {activeTab === 'Appearance' && (
+      {activeTab === "Appearance" && (
+        <TabBody>
+          <ToolbarSection full={2} title="Alignment" tabClass={false}>
+            <FlexDirectionInput />
+            <AlignItemsInput />
+          </ToolbarSection>
+
+          <ToolbarSection full={2}>
+            <WidthInput />
+          </ToolbarSection>
+
+          <ToolbarSection>
+            <HeightInput />
+          </ToolbarSection>
+          <ToolbarSection>
+            <ColorInput
+              propKey="color"
+              label="Text Color"
+              prefix="text"
+              propType="root"
+            />
+          </ToolbarSection>
+
+          <BackgroundInput />
+
+          <PatternInput />
+
+          <ToolbarSection title="Border">
+            <BorderInput />
+          </ToolbarSection>
+
+          <ToolbarSection title="Decoration">
+            <ShadowInput />
+          </ToolbarSection>
+        </TabBody>
+      )}
+      {activeTab === "Layout" && (
+        <TabBody>
+          <FlexInput />
+
+          <MarginInput />
+          <PaddingInput />
+        </TabBody>
+      )}
+      {activeTab === "Style" && (
+        <>
           <TabBody>
-            <ToolbarSection full={2} title="Alignment" tabClass={false}>
-              <FlexDirectionInput />
-              <AlignItemsInput />
-            </ToolbarSection>
+            <ClassNameInput />
 
-            <ToolbarSection full={2}>
-              <WidthInput />
-            </ToolbarSection>
-
-            <ToolbarSection>
-              <HeightInput />
-            </ToolbarSection>
-            <ToolbarSection>
-              <ColorInput
-                propKey="color"
-                label="Text Color"
-                prefix="text"
-                propType="root"
-              />
-            </ToolbarSection>
-
-            <BackgroundInput />
-
-            <PatternInput />
-
-            <ToolbarSection title="Border">
-              <BorderInput />
-            </ToolbarSection>
-
-            <ToolbarSection title="Decoration">
-              <ShadowInput />
+            <ToolbarSection title="Display" onClick={() => {}} enabled={true}>
+              <DisplayInput />
             </ToolbarSection>
           </TabBody>
-        )}
-        {activeTab === 'Layout' && (
-          <TabBody>
-            <FlexInput />
-
-            <MarginInput />
-            <PaddingInput />
-          </TabBody>
-        )}
-        {activeTab === 'Style' && (
-          <>
-            <TabBody>
-              <ClassNameInput />
-
-              <ToolbarSection title="Display" onClick={() => {}} enabled={true}>
-                <DisplayInput />
-              </ToolbarSection>
-            </TabBody>
-          </>
-        )}
-        {activeTab === 'Animations' && (
-          <TabBody>
-            <p className="p-3">
-              Animations are not available for this component.
-            </p>
-          </TabBody>
-        )}
-        {activeTab === 'Hover & Click' && (
-          <TabBody>
-            <p className="p-3">
-              Hover settings are not available for this component.
-            </p>
-          </TabBody>
-        )}
-      </TableBodyStyleControl>
+        </>
+      )}
+      {activeTab === "Animations" && (
+        <TabBody>
+          <p className="p-3">
+            Animations are not available for this component.
+          </p>
+        </TabBody>
+      )}
+      {activeTab === "Hover & Click" && (
+        <TabBody>
+          <p className="p-3">
+            Hover settings are not available for this component.
+          </p>
+        </TabBody>
+      )}
+    </TableBodyStyleControl>
   );
 
   return (

@@ -1,7 +1,7 @@
-import { NodeToolWrapper } from 'components/editor/Tools/NodeDialog';
-import { ColorInput } from '../../Toolbar/Inputs/ColorInput';
-import { AnimatedTooltipButton } from '../../Tools/AnimatedButton';
-import OpenSettingsDialogNodeTool from './OpenSettingsDialogNodeTool';
+import { NodeToolWrapper } from "components/editor/Tools/NodeDialog";
+import { ColorInput } from "../../Toolbar/Inputs/ColorInput";
+import { AnimatedTooltipButton } from "../../Tools/AnimatedButton";
+import OpenSettingsDialogNodeTool from "./OpenSettingsDialogNodeTool";
 
 export function ButtonSettingsNodeTool() {
   return (

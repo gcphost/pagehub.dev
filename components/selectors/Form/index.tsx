@@ -1,31 +1,31 @@
-import { Element, useEditor, useNode } from '@craftjs/core';
-import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
-import { ToolNodeController } from 'components/editor/NodeControllers/ToolNodeController';
-import TextSettingsNodeTool from 'components/editor/NodeControllers/Tools/TextSettingsNodeTool';
+import { Element, useEditor, useNode } from "@craftjs/core";
+import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
+import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
+import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
 import {
   getClonedState,
   setClonedProps,
-} from 'components/editor/Toolbar/Helpers/CloneHelper';
-import { TabAtom } from 'components/editor/Viewport';
-import { SaveSubmissions } from 'components/editor/Viewport/lib';
-import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
-import { selectAfterAdding } from 'utils/lib';
+} from "components/editor/Toolbar/Helpers/CloneHelper";
+import { TabAtom } from "components/editor/Viewport";
+import { SaveSubmissions } from "components/editor/Viewport/lib";
+import { useEffect, useRef, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { SettingsAtom } from "utils/atoms";
+import { selectAfterAdding } from "utils/lib";
 
-import { HoverNodeController } from 'components/editor/NodeControllers/HoverNodeController';
-import { Button } from '../Button';
-import { Container } from '../Container';
-import { FormElement } from '../FormElement';
-import { Text } from '../Text';
-import { useScrollToSelected } from '../lib';
-import { FormSettings } from './FormSettings';
+import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
+import { Button } from "../Button";
+import { Container } from "../Container";
+import { FormElement } from "../FormElement";
+import { Text } from "../Text";
+import { useScrollToSelected } from "../lib";
+import { FormSettings } from "./FormSettings";
 
 export const FormDrop = ({
   children,
   canDelete = false,
-  action = '',
-  method = 'POST',
+  action = "",
+  method = "POST",
   submissions = [],
   ...props
 }) => {
@@ -56,9 +56,9 @@ export const FormDrop = ({
       setLoading(false);
     };
 
-    document.querySelector('iframe').addEventListener('load', fnu, true);
+    document.querySelector("iframe").addEventListener("load", fnu, true);
 
-    return document.querySelector('iframe').removeEventListener('load', fnu);
+    return document.querySelector("iframe").removeEventListener("load", fnu);
   }, []);
 
   return (
@@ -76,10 +76,10 @@ export const FormDrop = ({
         setLoaded(false);
         setLoading(true);
 
-        if (props.type === 'iframe') return;
+        if (props.type === "iframe") return;
 
         const form = e.target;
-        const fields = form.querySelectorAll('input, select, textarea');
+        const fields = form.querySelectorAll("input, select, textarea");
         const formData = {};
         const additional = {};
 
@@ -91,7 +91,7 @@ export const FormDrop = ({
         }
 
         fields.forEach((field) => {
-          if (field.type !== 'file') {
+          if (field.type !== "file") {
             // selects??
             formData[field.name] = field.value;
           }
@@ -108,7 +108,7 @@ export const FormDrop = ({
       }}
     >
       {!loading && !loaded && !props.view && children}
-      {(loading || enabled || props.view === 'loading') && (
+      {(loading || enabled || props.view === "loading") && (
         <Element
           canvas
           id="loadingTextContainer"
@@ -116,31 +116,31 @@ export const FormDrop = ({
           canDelete={true}
           canEditName={true}
           mobile={{
-            display: 'flex',
-            justifyContent: 'justify-center',
-            flexDirection: 'flex-row',
-            width: 'w-full',
-            gap: 'gap-3',
-            px: 'px-6',
-            py: 'py-6',
+            display: "flex",
+            justifyContent: "justify-center",
+            flexDirection: "flex-row",
+            width: "w-full",
+            gap: "gap-3",
+            px: "px-6",
+            py: "py-6",
           }}
           custom={{
-            displayName: 'Loading Text Container',
-            id: 'loadingTextContainer',
+            displayName: "Loading Text Container",
+            id: "loadingTextContainer",
           }}
         >
           <Element
             canvas
             id="loadingText"
             is={Text}
-            custom={{ displayName: 'Loading Text', id: 'loadingText' }}
+            custom={{ displayName: "Loading Text", id: "loadingText" }}
             canDelete={true}
             canEditName={true}
-            text={props.loading || 'Sending...'}
+            text={props.loading || "Sending..."}
           />
         </Element>
       )}
-      {(loaded || enabled || props.view === 'loaded') && (
+      {(loaded || enabled || props.view === "loaded") && (
         <Element
           canvas
           id="sentTextContainer"
@@ -148,27 +148,27 @@ export const FormDrop = ({
           canDelete={true}
           canEditName={true}
           mobile={{
-            display: 'flex',
-            justifyContent: 'justify-center',
-            flexDirection: 'flex-row',
-            width: 'w-full',
-            gap: 'gap-3',
-            px: 'px-6',
-            py: 'py-6',
+            display: "flex",
+            justifyContent: "justify-center",
+            flexDirection: "flex-row",
+            width: "w-full",
+            gap: "gap-3",
+            px: "px-6",
+            py: "py-6",
           }}
           custom={{
-            displayName: 'Sent Text Container',
-            id: 'sentTextContainer',
+            displayName: "Sent Text Container",
+            id: "sentTextContainer",
           }}
         >
           <Element
             canvas
             id="sentText"
             is={Text}
-            custom={{ displayName: 'Sent Text', id: 'sentText' }}
+            custom={{ displayName: "Sent Text", id: "sentText" }}
             canDelete={true}
             canEditName={true}
-            text={'Thank you!'}
+            text={"Thank you!"}
           />
         </Element>
       )}
@@ -180,11 +180,12 @@ FormDrop.craft = {
   // ...Container.craft,
   canDelete: false,
   rules: {
-    canMoveIn: (nodes) => nodes.every(
-      (node) => node.data?.type != 'Form' && node.data?.props?.type !== 'form'
-    ),
+    canMoveIn: (nodes) =>
+      nodes.every(
+        (node) => node.data?.type != "Form" && node.data?.props?.type !== "form"
+      ),
   },
-  displayName: 'Form',
+  displayName: "Form",
   related: {
     toolbar: FormSettings,
   },
@@ -210,16 +211,16 @@ export const Form = (props: any) => {
           id="formDrop"
           canDelete={false}
           mobile={{
-            py: 'py-3',
-            px: 'px-3',
-            mx: 'mx-auto',
-            display: 'flex',
-            justifyContent: 'justify-center',
-            flexDirection: 'flex-col',
-            width: 'w-full',
-            gap: 'gap-3',
+            py: "py-3",
+            px: "px-3",
+            mx: "mx-auto",
+            display: "flex",
+            justifyContent: "justify-center",
+            flexDirection: "flex-col",
+            width: "w-full",
+            gap: "gap-3",
           }}
-          desktop={{ flexDirection: 'flex-col', alignItems: 'items-center' }}
+          desktop={{ flexDirection: "flex-col", alignItems: "items-center" }}
           root={{}}
         >
           <Element
@@ -229,15 +230,15 @@ export const Form = (props: any) => {
             canDelete={true}
             canEditName={true}
             mobile={{
-              display: 'flex',
-              justifyContent: 'justify-center',
-              flexDirection: 'flex-row',
-              width: 'w-full',
-              gap: 'gap-3',
-              px: 'px-6',
-              py: 'py-6',
+              display: "flex",
+              justifyContent: "justify-center",
+              flexDirection: "flex-row",
+              width: "w-full",
+              gap: "gap-3",
+              px: "px-6",
+              py: "py-6",
             }}
-            custom={{ displayName: 'Form Container' }}
+            custom={{ displayName: "Form Container" }}
           >
             <Element
               canvas
@@ -246,20 +247,20 @@ export const Form = (props: any) => {
               canDelete={true}
               canEditName={true}
               mobile={{
-                display: 'flex',
-                justifyContent: 'justify-center',
-                flexDirection: 'flex-col',
-                width: 'w-full',
-                gap: 'gap-3',
-                px: 'px-6',
-                py: 'py-6',
+                display: "flex",
+                justifyContent: "justify-center",
+                flexDirection: "flex-col",
+                width: "w-full",
+                gap: "gap-3",
+                px: "px-6",
+                py: "py-6",
               }}
-              custom={{ displayName: 'Item Container' }}
+              custom={{ displayName: "Item Container" }}
             >
               <Element
                 canvas
                 is={Text}
-                custom={{ displayName: 'Leading Text' }}
+                custom={{ displayName: "Leading Text" }}
                 canDelete={true}
                 canEditName={true}
               />
@@ -267,12 +268,12 @@ export const Form = (props: any) => {
               <Element
                 canvas
                 is={FormElement}
-                custom={{ displayName: 'Email Input' }}
+                custom={{ displayName: "Email Input" }}
                 type="email"
                 placeholder="Email"
                 canDelete={true}
                 canEditName={true}
-                root={{ color: 'text-black', background: 'bg-white' }}
+                root={{ color: "text-black", background: "bg-white" }}
                 name="email"
               />
             </Element>
@@ -281,9 +282,9 @@ export const Form = (props: any) => {
           <Element
             canvas
             is={Button}
-            custom={{ displayName: 'Submit Button' }}
-            buttons={[{ type: 'submit', text: 'Submit' }]}
-            mobile={{ px: 'px-6', py: 'py-3' }}
+            custom={{ displayName: "Submit Button" }}
+            buttons={[{ type: "submit", text: "Submit" }]}
+            mobile={{ px: "px-6", py: "py-3" }}
             canDelete={true}
             canEditName={true}
           />
@@ -298,11 +299,12 @@ Form.craft = {
   canDelete: true,
   rules: {
     canDrag: () => true,
-    canMoveIn: (nodes) => nodes.every(
-      (node) => node.data?.type != 'Form' && node.data?.props?.type !== 'form'
-    ),
+    canMoveIn: (nodes) =>
+      nodes.every(
+        (node) => node.data?.type != "Form" && node.data?.props?.type !== "form"
+      ),
   },
-  displayName: 'Form Parent',
+  displayName: "Form Parent",
   props: {
     tools: (props) => {
       const baseControls = [
@@ -312,9 +314,9 @@ Form.craft = {
           align="start"
           placement="end"
           alt={{
-            position: 'bottom',
-            align: 'start',
-            placement: 'start',
+            position: "bottom",
+            align: "start",
+            placement: "start",
           }}
         />,
 

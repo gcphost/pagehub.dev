@@ -1,9 +1,9 @@
-import { useEditor } from '@craftjs/core';
-import ReactDOM from 'react-dom';
-import { RenderNodeDataStates } from './RenderNodeDataStates';
-import { RenderNodeInViewPort } from './RenderNodeInViewPort';
-import { RenderNodePortal } from './RenderNodePortal';
-import { RenderNodeTools } from './RenderNodeTools';
+import { useEditor } from "@craftjs/core";
+import ReactDOM from "react-dom";
+import { RenderNodeDataStates } from "./RenderNodeDataStates";
+import { RenderNodeInViewPort } from "./RenderNodeInViewPort";
+import { RenderNodePortal } from "./RenderNodePortal";
+import { RenderNodeTools } from "./RenderNodeTools";
 
 export const RenderNodeNewer = ({ render }) => {
   const { enabled } = useEditor((state) => ({
@@ -22,7 +22,7 @@ export const RenderNodeNewer = ({ render }) => {
 
   if (!enabled) return render;
 
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return render;
   }
 

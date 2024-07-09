@@ -1,36 +1,34 @@
-import { Editor, Frame, Element } from '@craftjs/core';
-import { ColorPickerDialog } from 'components/editor/Toolbar/Tools/ColorPickerDialog';
-import { FontFamilyDialog } from 'components/editor/Toolbar/Tools/FontFamilyDialog';
-import { IconDialogDialog } from 'components/editor/Toolbar/Tools/IconDialog';
-import { PatternDialog } from 'components/editor/Toolbar/Tools/PatternDialog';
-import { ToolTipDialog } from 'components/editor/Toolbar/Tools/TooltipDialog';
-import { Background } from 'components/selectors/Background';
-import { Container } from 'components/selectors/Container';
-import { Divider } from 'components/selectors/Divider';
-import { Embed } from 'components/selectors/Embed';
-import { OnlyText, Text } from 'components/selectors/Text';
-import debounce from 'lodash.debounce';
-import lz from 'lzutf8';
-import { NextSeo } from 'next-seo';
-import { useSetRecoilState } from 'recoil';
-import { siteDescription, siteTitle } from 'utils/lib';
-import { templates } from 'utils/templates';
+import { Editor, Element, Frame } from "@craftjs/core";
+import { ColorPickerDialog } from "components/editor/Toolbar/Tools/ColorPickerDialog";
+import { FontFamilyDialog } from "components/editor/Toolbar/Tools/FontFamilyDialog";
+import { IconDialogDialog } from "components/editor/Toolbar/Tools/IconDialog";
+import { PatternDialog } from "components/editor/Toolbar/Tools/PatternDialog";
+import { ToolTipDialog } from "components/editor/Toolbar/Tools/TooltipDialog";
+import { Background } from "components/selectors/Background";
+import { Container } from "components/selectors/Container";
+import { Divider } from "components/selectors/Divider";
+import { Embed } from "components/selectors/Embed";
+import { OnlyText, Text } from "components/selectors/Text";
+import debounce from "lodash.debounce";
+import lz from "lzutf8";
+import { NextSeo } from "next-seo";
+import { useSetRecoilState } from "recoil";
+import { siteDescription, siteTitle } from "utils/lib";
+import { templates } from "utils/templates";
 
-import { RenderNodeNewer } from 'components/editor/RenderNodeNewer';
-import { Toolbar } from 'components/editor/Toolbar';
+import { RenderNodeNewer } from "components/editor/RenderNodeNewer";
+import { Toolbar } from "components/editor/Toolbar";
 
-import { UnsavedChangesAtom, Viewport } from 'components/editor/Viewport';
-import DebugPanel from 'components/editor/Viewport/DebugPanel';
-import { Form, FormDrop } from 'components/selectors/Form';
-import { FormElement, OnlyFormElement } from 'components/selectors/FormElement';
-import { Save } from '../../components/Save';
-import { Button, OnlyButtons } from '../../components/selectors/Button';
-import { Image } from '../../components/selectors/Image';
-import { Video } from '../../components/selectors/Video';
+import { UnsavedChangesAtom, Viewport } from "components/editor/Viewport";
+import DebugPanel from "components/editor/Viewport/DebugPanel";
+import { Form, FormDrop } from "components/selectors/Form";
+import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
+import { Save } from "../../components/Save";
+import { Button, OnlyButtons } from "../../components/selectors/Button";
+import { Image } from "../../components/selectors/Image";
+import { Video } from "../../components/selectors/Video";
 
-function App({
-  data, slug, result, session
-}) {
+function App({ data, slug, result, session }) {
   data = lz.decompress(lz.decodeBase64(data));
 
   console.log(result);
@@ -62,9 +60,6 @@ function App({
     Divider,
   };
 
-  // const { setIsOpen } = useTour();
-  // useEffect(() => setIsOpen(true), []);
-
   const debug = false;
 
   return (
@@ -84,9 +79,9 @@ function App({
         enabled={true}
         onRender={RenderNodeNewer}
         indicator={{
-          success: 'currentColor',
-          error: 'rgb(153 27 27)',
-          transition: 'currentColor',
+          success: "currentColor",
+          error: "rgb(153 27 27)",
+          transition: "currentColor",
           thickness: 10,
         }}
         onNodesChange={debounce((query) => {
@@ -115,19 +110,19 @@ function App({
                 type="background"
                 is={Background}
                 data-renderer={true}
-                custom={{ displayName: 'Background' }}
+                custom={{ displayName: "Background" }}
                 pallet={[]}
                 root={{
-                  background: 'bg-white',
-                  color: 'text-black',
+                  background: "bg-white",
+                  color: "text-black",
                 }}
                 mobile={{
-                  height: 'h-full',
-                  width: 'w-screen',
-                  gap: 'gap-3',
-                  display: 'flex',
-                  flexDirection: 'flex-col',
-                  overflow: 'overflow-auto',
+                  height: "h-full",
+                  width: "w-screen",
+                  gap: "gap-3",
+                  display: "flex",
+                  flexDirection: "flex-col",
+                  overflow: "overflow-auto",
                 }}
                 desktop={{}}
               >
@@ -140,17 +135,17 @@ function App({
                   isHomePage={true}
                   root={{}}
                   mobile={{
-                    mx: 'mx-auto',
-                    display: 'flex',
-                    justifyContent: 'justify-start',
-                    alignItems: 'items-center',
-                    flexDirection: 'flex-col',
-                    width: 'w-full',
-                    gap: 'gap-3',
-                    py: 'py-12',
+                    mx: "mx-auto",
+                    display: "flex",
+                    justifyContent: "justify-start",
+                    alignItems: "items-center",
+                    flexDirection: "flex-col",
+                    width: "w-full",
+                    gap: "gap-3",
+                    py: "py-12",
                   }}
                   desktop={{}}
-                  custom={{ displayName: 'Home Page' }}
+                  custom={{ displayName: "Home Page" }}
                 >
                   <Element
                     canvas
@@ -159,24 +154,24 @@ function App({
                     canEditName={true}
                     root={{}}
                     mobile={{
-                      py: 'py-3',
-                      px: 'px-3',
-                      mx: 'mx-auto',
+                      py: "py-3",
+                      px: "px-3",
+                      mx: "mx-auto",
 
-                      display: 'flex',
-                      justifyContent: 'justify-center',
-                      alignItems: 'items-center',
-                      flexDirection: 'flex-col',
-                      width: 'w-full',
-                      gap: 'gap-3',
+                      display: "flex",
+                      justifyContent: "justify-center",
+                      alignItems: "items-center",
+                      flexDirection: "flex-col",
+                      width: "w-full",
+                      gap: "gap-3",
                     }}
                     desktop={{
-                      py: 'py-12',
-                      px: 'px-12',
-                      flexDirection: 'flex-row',
-                      alignItems: 'items-start',
+                      py: "py-12",
+                      px: "px-12",
+                      flexDirection: "flex-row",
+                      alignItems: "items-start",
                     }}
-                    custom={{ displayName: 'Content' }}
+                    custom={{ displayName: "Content" }}
                   >
                     <Element
                       canvas
@@ -185,18 +180,18 @@ function App({
                       canEditName={true}
                       root={{}}
                       mobile={{
-                        py: 'py-3',
-                        px: 'px-3',
-                        mx: 'mx-auto',
-                        display: 'flex',
-                        justifyContent: 'justify-center',
-                        alignItems: 'items-center',
-                        flexDirection: 'flex-col',
-                        width: 'w-full',
-                        gap: 'gap-3',
+                        py: "py-3",
+                        px: "px-3",
+                        mx: "mx-auto",
+                        display: "flex",
+                        justifyContent: "justify-center",
+                        alignItems: "items-center",
+                        flexDirection: "flex-col",
+                        width: "w-full",
+                        gap: "gap-3",
                       }}
                       desktop={{}}
-                      custom={{ displayName: 'Left Container' }}
+                      custom={{ displayName: "Left Container" }}
                     >
                       <Element
                         canvas
@@ -206,11 +201,11 @@ function App({
                         text=""
                         root={{}}
                         mobile={{
-                          fontSize: 'text-3xl',
-                          fontWeight: 'font-bold',
+                          fontSize: "text-3xl",
+                          fontWeight: "font-bold",
                         }}
                         desktop={{}}
-                        custom={{ displayName: 'Header Text' }}
+                        custom={{ displayName: "Header Text" }}
                       />
                     </Element>
 
@@ -221,18 +216,18 @@ function App({
                       canEditName={true}
                       root={{}}
                       mobile={{
-                        py: 'py-3',
-                        px: 'px-3',
-                        mx: 'mx-auto',
-                        display: 'flex',
-                        justifyContent: 'justify-center',
-                        alignItems: 'items-center',
-                        flexDirection: 'flex-col',
-                        width: 'w-full',
-                        gap: 'gap-3',
+                        py: "py-3",
+                        px: "px-3",
+                        mx: "mx-auto",
+                        display: "flex",
+                        justifyContent: "justify-center",
+                        alignItems: "items-center",
+                        flexDirection: "flex-col",
+                        width: "w-full",
+                        gap: "gap-3",
                       }}
                       desktop={{}}
-                      custom={{ displayName: 'Right Container' }}
+                      custom={{ displayName: "Right Container" }}
                     />
                   </Element>
                 </Element>
@@ -246,10 +241,10 @@ function App({
 }
 
 export async function getServerSideProps({ req, query }) {
-  const host = req.headers.host.split('.');
-  const subdomain = host.length === 2 ? host[0] : '';
+  const host = req.headers.host.split(".");
+  const subdomain = host.length === 2 ? host[0] : "";
 
-  let data = '';
+  let data = "";
 
   let json = null;
   let result = null;
@@ -273,7 +268,7 @@ export async function getServerSideProps({ req, query }) {
       }
 
       if (result) {
-        data = result.draft || result.content || '';
+        data = result.draft || result.content || "";
       }
     }
 
@@ -284,7 +279,7 @@ export async function getServerSideProps({ req, query }) {
     props: {
       subdomain,
       data: json ? lz.encodeBase64(lz.compress(json)) : null,
-      slug: query?.slug?.length ? query.slug[0] : '',
+      slug: query?.slug?.length ? query.slug[0] : "",
       domain: process.env.DOMAIN,
       result,
     }, // will be passed to the page component as props

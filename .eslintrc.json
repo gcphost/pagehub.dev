@@ -30,6 +30,8 @@
     "no-nested-ternary": "warn",
     "no-unreachable": "warn",
     "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "import/no-anonymous-default-export": "off",
     "prettier/prettier": [
       "warn",
       {

@@ -1,10 +1,10 @@
-import { ToolbarItem } from '../ToolbarItem';
-import { ToolbarSection } from '../ToolbarSection';
-import { ClassNameInput } from './ClassNameInput';
-import { CursorInput } from './CursorInput';
-import { DisplayInput } from './DisplayInput';
-import { GptInput } from './GptInput';
-import { OverflowInput } from './OverflowInput';
+import { ToolbarItem } from "../ToolbarItem";
+import { ToolbarSection } from "../ToolbarSection";
+import { ClassNameInput } from "./ClassNameInput";
+import { CursorInput } from "./CursorInput";
+import { DisplayInput } from "./DisplayInput";
+import { GptInput } from "./GptInput";
+import { OverflowInput } from "./OverflowInput";
 
 export default () => (
   <>
