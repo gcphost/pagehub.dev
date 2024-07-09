@@ -44,6 +44,8 @@ function App({ subdomain, data, meta, seo }) {
     }
   }
 
+  console.log("data", data);
+
   const router = useRouter();
 
   const [favicon, setFavicon] = useState("/alt.ico");
