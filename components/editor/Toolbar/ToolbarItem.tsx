@@ -311,10 +311,7 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
     });
   };
 
-  const label =
-    props.valueLabels && props.valueLabels[value]
-      ? props.valueLabels[value]
-      : value;
+  const label = props.valueLabels?.[value] ?? value;
 
   return (
     <Wrap

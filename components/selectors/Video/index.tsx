@@ -48,9 +48,7 @@ export const Video = (props: VideoProps) => {
     id,
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
@@ -102,9 +100,18 @@ Video.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController position="top" align="end" placement="start" />,
+        <NameNodeController
+          position="top"
+          align="end"
+          placement="start"
+          key="videoNameController"
+        />,
 
-        <ToolNodeController position="bottom" align="start">
+        <ToolNodeController
+          position="bottom"
+          align="start"
+          key="videoSettingsController"
+        >
           <TextSettingsNodeTool />
         </ToolNodeController>,
       ];

@@ -386,8 +386,14 @@ Button.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController position="top" align="end" placement="start" />,
+        <NameNodeController
+          position="top"
+          align="end"
+          placement="start"
+          key="buttonNameController"
+        />,
         <HoverNodeController
+          key="buttonHoverController"
           position="top"
           align="end"
           placement="end"
@@ -398,7 +404,11 @@ Button.craft = {
           }}
         />,
 
-        <ToolNodeController position="bottom" align="start">
+        <ToolNodeController
+          position="bottom"
+          align="start"
+          key="buttonSettingsController"
+        >
           <ButtonSettingsNodeTool />
         </ToolNodeController>,
       ];

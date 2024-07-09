@@ -88,16 +88,12 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     ...props,
   };
 
-  const { actions, query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   props = setClonedProps(props, query);
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
-
-  const { tagName } = props;
 
   const {
     connectors: { connect, drag },
@@ -139,8 +135,14 @@ FormElement.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController position="top" align="end" placement="end" />,
+        <NameNodeController
+          position="top"
+          align="end"
+          placement="end"
+          key="formElementNameController"
+        />,
         <HoverNodeController
+          key="formElementHoverController"
           position="top"
           align="start"
           placement="end"
@@ -151,7 +153,11 @@ FormElement.craft = {
           }}
         />,
 
-        <ToolNodeController position="bottom" align="start">
+        <ToolNodeController
+          position="bottom"
+          align="start"
+          key="formElementSettingsController"
+        >
           <TextSettingsNodeTool />
         </ToolNodeController>,
       ];

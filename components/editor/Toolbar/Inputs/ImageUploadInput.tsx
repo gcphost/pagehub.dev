@@ -12,6 +12,61 @@ import Spinner from "../Helpers/Spinner";
 
 import { Wrap } from "../ToolbarStyle";
 
+const handleFileSelection = (e, setErrors) => {
+  const errors = [];
+  const files = [];
+
+  for (let i = 0; i < e.target?.files?.length; i++) {
+    const _file = e.target.files[i];
+    files.push(_file);
+  }
+
+  setErrors(errors);
+  return files;
+};
+
+const uploadFiles = async (files, settings, setErrors) => {
+  const _saved = [];
+
+  const geturl = await GetSignedUrl();
+  const signedURL = geturl?.result?.uploadURL;
+
+  if (!signedURL) {
+    setErrors([{ error: "Failed to upload", file: files[0] }]);
+  } else {
+    for (const file of files) {
+      const res = await SaveMedia(file, signedURL);
+      if (res?.result?.id) _saved.push(res.result.id);
+    }
+  }
+
+  return _saved;
+};
+
+const updateNodeProps = (
+  setProp,
+  isLoading,
+  loaded,
+  propKey = null,
+  typeKey = null,
+  id = null
+) => {
+  setProp((_props) => {
+    _props.isLoading = isLoading;
+    _props.loaded = loaded;
+    if (id) {
+      _props[propKey] = id;
+      _props[typeKey] = "cdn";
+    }
+  }, 3000);
+};
+
+const handleMediaDeletion = async (mediaId, settings) => {
+  if (mediaId) {
+    await DeleteMedia(mediaId, settings);
+  }
+};
+
 export const ImageUploadInput: any = ({
   full = false,
   multiple = false,
@@ -30,7 +85,6 @@ export const ImageUploadInput: any = ({
     nodeProps: node.data.props,
   }));
 
-  const [file, setFile] = useState([]);
   const [errors, setErrors] = useState([]);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,88 +94,44 @@ export const ImageUploadInput: any = ({
   const settings = useRecoilValue(SettingsAtom);
 
   let timeout;
-  const handleChange = (e) => {
-    return new Promise((resolve) => {
-      const asyncFunction = async () => {
-        if (timeout) clearTimeout(timeout);
 
-        setSaved(false);
-        setFile([]);
-        setErrors([]);
-        setLoading(true);
-        setEnabled(false);
+  const handleChange = async (e) => {
+    if (timeout) clearTimeout(timeout);
 
-        setProp((_props) => {
-          _props.isLoading = true;
-          _props.loaded = false;
-        }, 3000);
+    setSaved(false);
+    setErrors([]);
+    setLoading(true);
+    setEnabled(false);
 
-        const type = nodeProps[typeKey];
-        const mediaId = nodeProps[propKey];
+    updateNodeProps(setProp, true, false);
 
-        const errors = [];
-        const files = [];
+    const mediaId = nodeProps[propKey];
 
-        for (let i = 0; i < e.target?.files?.length; i++) {
-          const _file = e.target.files[i];
-          // if (_file.size > 2097152) {
-          //   errors.push({ error: "File size too large", file: _file });
-          // } else
-          files.push(_file);
-        }
+    const files = handleFileSelection(e, setErrors);
+    const _saved = [];
 
-        const _saved = [];
+    if (files.length) {
+      await handleMediaDeletion(mediaId, settings);
+      const savedFiles = await uploadFiles(files, settings, setErrors);
+      _saved.push(...savedFiles);
+    }
 
-        if (files.length) {
-          if (type && mediaId) {
-            await DeleteMedia(mediaId, settings);
-          }
+    setLoading(false);
+    setEnabled(true);
+    setSaved(true);
 
-          const geturl = await GetSignedUrl();
-          const signedURL = geturl?.result?.uploadURL;
+    updateNodeProps(setProp, false, true);
 
-          if (!signedURL) {
-            errors.push({ error: "Failed to upload", file: file[0] });
-          } else {
-            for (const file of files) {
-              const res = await SaveMedia(file, signedURL);
-              if (res?.result?.id) _saved.push(res.result.id);
-            }
-          }
-        }
+    setTimeout(() => {
+      _saved.forEach((id) => {
+        updateNodeProps(setProp, false, true, propKey, typeKey, id);
+      });
+    }, 500);
 
-        setFile(files);
-        setErrors(errors);
-        setLoading(false);
-        setEnabled(true);
-        setSaved(true);
-
-        setProp((_props) => {
-          _props.isLoading = false;
-          _props.loaded = true;
-        }, 3000);
-
-        setTimeout(() => {
-          _saved.forEach((id) => {
-            setProp((_props) => {
-              _props[propKey] = id;
-              _props[typeKey] = "cdn";
-            }, 3000);
-          });
-        }, 500);
-
-        timeout = setTimeout(() => {
-          setSaved(false);
-          setProp((_props) => {
-            _props.loaded = false;
-          }, 3000);
-        }, 3000);
-
-        resolve(true);
-      };
-
-      asyncFunction();
-    });
+    timeout = setTimeout(() => {
+      setSaved(false);
+      updateNodeProps(setProp, false, false);
+    }, 3000);
   };
 
   if (loading) label = "Uploading";

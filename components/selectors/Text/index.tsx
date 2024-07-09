@@ -139,12 +139,12 @@ export const Text = (props: Partial<TextProps>) => {
       <AutoTextSize
         style={{ margin: "0 auto" }}
         as={props.url ? Link : "div"}
-        dangerouslySetInnerHTML={{ __html: text || "" }}
+        dangerouslySetInnerHTML={{ __html: text }}
       />
     ) as any;
     prop.children = t;
   } else if (text) {
-    prop.dangerouslySetInnerHTML = { __html: text || "" };
+    prop.dangerouslySetInnerHTML = { __html: text };
   }
 
   const final = applyAnimation({ ...prop, key: id }, props);
@@ -165,6 +165,7 @@ Text.craft = {
     tools: (props) => {
       const baseControls = [
         <NameNodeController
+          key="textNameController"
           position="top"
           align="end"
           placement="start"
@@ -175,6 +176,7 @@ Text.craft = {
           }}
         />,
         <HoverNodeController
+          key="textHoverController"
           position="top"
           align="start"
           placement="end"
@@ -185,10 +187,15 @@ Text.craft = {
           }}
         />,
 
-        <ToolNodeController position="bottom" align="start">
+        <ToolNodeController position="bottom" align="start" key="textSettings">
           <TextSettingsNodeTool />
         </ToolNodeController>,
-        <ToolNodeController position="top" align="middle" placement="start">
+        <ToolNodeController
+          position="top"
+          align="middle"
+          placement="start"
+          key="textTopSettings"
+        >
           <TextSettingsTopNodeTool />
         </ToolNodeController>,
       ];

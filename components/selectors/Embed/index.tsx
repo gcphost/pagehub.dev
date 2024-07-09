@@ -109,8 +109,14 @@ Embed.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController position="top" align="end" placement="start" />,
+        <NameNodeController
+          position="top"
+          align="end"
+          placement="start"
+          key="embedNameController"
+        />,
         <HoverNodeController
+          key="emebedHoverController"
           position="top"
           align="start"
           placement="end"
@@ -121,7 +127,11 @@ Embed.craft = {
           }}
         />,
 
-        <ToolNodeController position="bottom" align="start">
+        <ToolNodeController
+          position="bottom"
+          align="start"
+          key="embedSettingsController"
+        >
           <TextSettingsNodeTool />
         </ToolNodeController>,
       ];

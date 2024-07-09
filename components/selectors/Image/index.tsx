@@ -62,9 +62,7 @@ export const Image = (props: ImageProps) => {
     connectors: { connect, drag },
     id,
   } = useNode();
-  const { actions, query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
@@ -148,7 +146,14 @@ export const Image = (props: ImageProps) => {
     prop["node-id"] = id;
   }
 
-  const tagName = empty ? "div" : type === "svg" ? "svg" : "img";
+  let tagName;
+  if (empty) {
+    tagName = "div";
+  } else if (type === "svg") {
+    tagName = "svg";
+  } else {
+    tagName = "img";
+  }
 
   const Img = React.createElement(motionIt(props, tagName), {
     ...applyAnimation({ ..._imgProp, ...prop, key: id }, props),

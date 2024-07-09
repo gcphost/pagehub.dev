@@ -177,15 +177,9 @@ export const Header = () => {
   const altView = getAltView(view);
 
   const animate = false;
-  const [settings, setSettings] = useRecoilState(SettingsAtom);
+  const [settings] = useRecoilState(SettingsAtom);
 
   const [sideBarLeft, setSideBarLeft] = useRecoilState(SideBarAtom);
-
-  let pos = "right-3";
-
-  if (!sideBarLeft) {
-    pos = "left-3";
-  }
 
   const { data: session, status } = useSession();
 
@@ -524,10 +518,8 @@ export const Header = () => {
               <button
                 onClick={async () => {
                   //  return;
-                  const dom = document.getElementById("viewport");
-                  toggle();
 
-                  const htmlOutput = dom.innerHTML;
+                  toggle();
 
                   setShowMenu(false);
 

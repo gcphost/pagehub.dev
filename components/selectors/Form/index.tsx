@@ -301,8 +301,14 @@ Form.craft = {
   props: {
     tools: () => {
       const baseControls = [
-        <NameNodeController position="top" align="end" placement="start" />,
+        <NameNodeController
+          position="top"
+          align="end"
+          placement="start"
+          key="formNameController"
+        />,
         <HoverNodeController
+          key="formHoverController"
           position="top"
           align="start"
           placement="end"
@@ -313,7 +319,11 @@ Form.craft = {
           }}
         />,
 
-        <ToolNodeController position="bottom" align="start">
+        <ToolNodeController
+          position="bottom"
+          align="start"
+          key="formSettingsController"
+        >
           <TextSettingsNodeTool />
         </ToolNodeController>,
       ];

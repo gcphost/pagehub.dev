@@ -136,9 +136,7 @@ export const ColorPickerDialog = () => {
     ? [...colorPallet, ...presetColors]
     : presetColors;
 
-  const { open, close, isSupported } = useEyeDropper();
-  const [color, setColor] = useState("#fff");
-  const [error, setError] = useState(null);
+  const { open, isSupported } = useEyeDropper();
   const [show, setShow] = useState(false);
 
   const { actions, query } = useEditor();
@@ -172,13 +170,12 @@ export const ColorPickerDialog = () => {
     open()
       .then((color) => {
         const value = hexToRGBA(color.sRGBHex, 1);
-        setColor(value);
         changed({ type: "hex", value });
 
         // closed();
       })
       .catch((e) => {
-        if (!e.canceled) setError(e);
+        console.log(e);
       });
   };
 
@@ -187,10 +184,6 @@ export const ColorPickerDialog = () => {
       setColorPicker({ ...colorPicker, value: value.value });
       colorPicker.changed(value);
     }
-  };
-
-  const closed = () => {
-    setColorPicker({ enabled: false });
   };
 
   return (

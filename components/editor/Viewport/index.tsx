@@ -173,7 +173,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
     const handleBrowseAway = () => {
       if (window.confirm(warningText)) return;
       router.events.emit("routeChangeError");
-      throw "routeChange aborted.";
+      throw new Error("routeChange aborted.");
     };
     window.addEventListener("beforeunload", handleWindowClose);
     router.events.on("routeChangeStart", handleBrowseAway);

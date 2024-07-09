@@ -62,9 +62,7 @@ export const Container = (props: Partial<ContainerProps>) => {
     connectors: { connect, drag },
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   const { name, id } = useNode((node) => ({
     name: node.data.custom.displayName || node.data.displayName,
@@ -265,6 +263,7 @@ Container.craft = {
     tools: (props) => {
       const baseControls = [
         <NameNodeController
+          key="container1"
           position="top"
           align="start"
           placement="end"
@@ -275,6 +274,7 @@ Container.craft = {
           }}
         />,
         <HoverNodeController
+          key="container2"
           position="top"
           align="start"
           placement="end"
@@ -286,6 +286,7 @@ Container.craft = {
         />,
 
         <ToolNodeController
+          key="container3"
           position="bottom"
           align="start"
           alt={{
@@ -305,6 +306,7 @@ Container.craft = {
       return [
         ...baseControls,
         <DragAdjustNodeController
+          key="containerdrag1"
           position="top"
           align="end"
           direction="vertical"
@@ -314,6 +316,7 @@ Container.craft = {
           icon={<TbArrowBarToDown />}
         />,
         <DragAdjustNodeController
+          key="containerdrag2"
           position="bottom"
           align="end"
           direction="vertical"
@@ -322,10 +325,20 @@ Container.craft = {
           name="Height"
           icon={<CgArrowsV />}
         />,
-        <ToolNodeController position="top" align="middle" placement="start">
+        <ToolNodeController
+          position="top"
+          align="middle"
+          placement="start"
+          key="containercontroller1"
+        >
           <ContainerSettingsTopNodeTool />
         </ToolNodeController>,
-        <ToolNodeController position="left" align="middle" placement="middle">
+        <ToolNodeController
+          position="left"
+          align="middle"
+          placement="middle"
+          key="containercontroller2"
+        >
           <ContainerSettingsTopNodeTool direction="vertical" />
         </ToolNodeController>,
       ];

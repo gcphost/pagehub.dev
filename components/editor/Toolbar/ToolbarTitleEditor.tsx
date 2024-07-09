@@ -22,6 +22,12 @@ export const ToolbarTitleEditor = () => {
   const settings = useRecoilValue(SettingsAtom);
   const title = useRecoilValue(TabAtom);
 
+  const baseUrl = settings?.draftId
+    ? `https://${settings.draftId}.pagehub.dev/`
+    : "";
+  const pageSlug = !propValues.isHomePage ? slug(name, "-") : "";
+  const newCode = `${baseUrl}${pageSlug}`;
+
   return (
     <div className="flex items-center gap-3 justify-between">
       {!propValues.canEditName && <div>{name}</div>}
@@ -49,17 +55,7 @@ export const ToolbarTitleEditor = () => {
           arrow={false}
           placement="bottom"
         >
-          <a
-            className="text-gray-300 text-base"
-            href={
-              settings?.draftId
-                ? `https://${settings?.draftId}.pagehub.dev/${
-                    !propValues.isHomePage ? slug(name, "-") : ""
-                  }`
-                : null
-            }
-            target="_blank"
-          >
+          <a className="text-gray-300 text-base" href={newCode} target="_blank">
             {settings?.draftId ? <TbExternalLink /> : <TbExternalLinkOff />}
           </a>
         </Tooltip>

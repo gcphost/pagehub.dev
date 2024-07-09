@@ -1,4 +1,4 @@
-import { useEditor, useNode } from "@craftjs/core";
+import { useEditor } from "@craftjs/core";
 import { ToolboxMenu } from "components/editor/RenderNode";
 import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
 import {
@@ -38,7 +38,6 @@ export const SelectedButtonAtom = atom({
 });
 
 export const ButtonSettings = () => {
-  const { id } = useNode();
   const { actions, query } = useEditor();
 
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);

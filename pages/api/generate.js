@@ -9,7 +9,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export default async function (req, res) {
+export default async function generate(req, res) {
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -43,15 +43,7 @@ export default async function (req, res) {
       stop: ["input:"],
     });
 
-    const repl = new RegExp(
-      ["output", "class", "Classes", "Output", "=", "Answer", ":"].join("|"),
-      "gi"
-    );
-
-    const reps = completion.data.choices[0].text
-      .split(/\n| /)
-      .map((_) => _.replace(repl, ""))
-      .filter((_) => _);
+    const reps = completion.data.choices[0].text.split(/[\n ]/);
 
     res.status(200).json({ result: reps, og: completion.data.choices[0].text });
   } catch (error) {

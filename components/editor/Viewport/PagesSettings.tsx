@@ -53,9 +53,9 @@ export const PagesSettings = () => {
           <div className="w-full">All Pages</div>
         </button>
 
-        {pages.map((page, k) => (
+        {pages.map((page) => (
           <button
-            key={k}
+            key={page.id}
             className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
               isolate === page.id
                 ? "bg-gray-500 hover:text-gray-700"
