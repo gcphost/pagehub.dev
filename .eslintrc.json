@@ -1,10 +1,5 @@
 {
-  "extends": [
-    "next",
-    "airbnb-base",
-    "next/core-web-vitals",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["next/core-web-vitals"],
   "rules": {
     "class-methods-use-this": ["off"],
     "comma-dangle": 0,
@@ -18,38 +13,12 @@
         "allowSeparatedGroups": false
       }
     ],
-    "no-param-reassign": "off",
-    "no-console": "off",
-    "no-restricted-syntax": "off",
-    "no-await-in-loop": "off",
-    "prefer-destructuring": "off",
-    "no-continue": "off",
-    "no-multi-assign": "off",
-    "no-unused-vars": "never",
-    "@typescript-eslint/default-param-last": "off",
-    "import/no-named-as-default": "off",
-    "consistent-return": "off",
-    "no-shadow": "off",
-    "react/jsx-key": "off",
-    "react/rules-of-hooks": "off",
-    "no-use-before-define": "off",
-    "no-nested-ternary": "warn",
-    "no-unreachable": "warn",
-    "import/extensions": "off",
-    "import/prefer-default-export": "off",
-    "import/no-anonymous-default-export": "off",
-    "no-return-assign": "off",
-    "no-underscore-dangle": "off",
-    "no-unused-expressions": "off",
-    "no-plusplus": "off",
-    "prefer-const": "off",
-    "prettier/prettier": [
-      "warn",
-      {
-        "singleQuote": false,
-        "endOfLine": "auto",
-        "trailingComma": "es5"
-      }
-    ]
+    "react/jsx-key": "warn",
+    "react-hooks/rules-of-hooks": "warn",
+    "@next/next/no-html-link-for-pages": "warn",
+    "react/no-unescaped-entities": "warn",
+    "import/no-anonymous-default-export": "warn",
+    "react/display-name": "warn",
+    "react/no-children-prop": "warn"
   }
 }

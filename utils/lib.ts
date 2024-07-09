@@ -253,7 +253,7 @@ export const generatePattern = (props) => {
       if (mode === "stroke-join") {
         strokeFill = ` stroke='${defColor}' fill='none'`;
         joinMode =
-          join == 2
+          join === 2
             ? "stroke-linejoin='round' stroke-linecap='round' "
             : "stroke-linecap='square' ";
       } else if (mode === "stroke") {

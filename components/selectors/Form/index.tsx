@@ -8,7 +8,7 @@ import {
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { TabAtom } from "components/editor/Viewport";
 import { SaveSubmissions } from "components/editor/Viewport/lib";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { selectAfterAdding } from "utils/lib";
@@ -29,10 +29,7 @@ export const FormDrop = ({
   submissions = [],
   ...props
 }) => {
-  const {
-    id,
-    connectors: { connect },
-  } = useNode();
+  const { id } = useNode();
 
   const { actions, enabled } = useEditor((state) => ({
     enabled: state.options.enabled,
@@ -80,8 +77,8 @@ export const FormDrop = ({
 
         const form = e.target;
         const fields = form.querySelectorAll("input, select, textarea");
-        const formData = {};
-        const additional = {};
+        const formData: any = {};
+        const additional: any = {};
 
         if (props.mailto) {
           additional.mailTo = props.mailto;
@@ -182,7 +179,8 @@ FormDrop.craft = {
   rules: {
     canMoveIn: (nodes) =>
       nodes.every(
-        (node) => node.data?.type != "Form" && node.data?.props?.type !== "form"
+        (node) =>
+          node.data?.type !== "Form" && node.data?.props?.type !== "form"
       ),
   },
   displayName: "Form",
@@ -192,15 +190,9 @@ FormDrop.craft = {
 };
 
 export const Form = (props: any) => {
-  const {
-    connectors: { connect, drag },
-  } = useNode();
-
-  const { query, enabled } = useEditor((state) => getClonedState(props, state));
+  const { query } = useEditor((state) => getClonedState(props, state));
 
   props = setClonedProps(props, query);
-
-  const ref = useRef(null);
 
   return (
     <Container {...props}>
@@ -301,12 +293,13 @@ Form.craft = {
     canDrag: () => true,
     canMoveIn: (nodes) =>
       nodes.every(
-        (node) => node.data?.type != "Form" && node.data?.props?.type !== "form"
+        (node) =>
+          node.data?.type !== "Form" && node.data?.props?.type !== "form"
       ),
   },
   displayName: "Form Parent",
   props: {
-    tools: (props) => {
+    tools: () => {
       const baseControls = [
         <NameNodeController position="top" align="end" placement="start" />,
         <HoverNodeController
@@ -320,11 +313,9 @@ Form.craft = {
           }}
         />,
 
-        <ToolNodeController
-          position="bottom"
-          align="start"
-          children={<TextSettingsNodeTool />}
-        />,
+        <ToolNodeController position="bottom" align="start">
+          <TextSettingsNodeTool />
+        </ToolNodeController>,
       ];
 
       return [...baseControls];
