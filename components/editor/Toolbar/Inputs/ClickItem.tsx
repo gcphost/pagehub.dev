@@ -1,5 +1,5 @@
-import { ToolbarItem } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
 
 export default () => (
   <>
@@ -15,7 +15,7 @@ export default () => (
           propType="component"
         >
           <option value="">None</option>
-          {["click", "hover"].map((_, k) => (
+          {['click', 'hover'].map((_, k) => (
             <option key={_}>{_}</option>
           ))}
         </ToolbarItem>
@@ -28,7 +28,7 @@ export default () => (
           cols={true}
           propType="component"
         >
-          {["toggle", "show", "hide"].map((_, k) => (
+          {['toggle', 'show', 'hide'].map((_, k) => (
             <option key={_}>{_}</option>
           ))}
         </ToolbarItem>

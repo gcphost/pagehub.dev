@@ -1,5 +1,5 @@
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarItem } from "../ToolbarItem";
+import { TailwindStyles } from 'utils/tailwind';
+import { ToolbarItem } from '../ToolbarItem';
 
 export const CursorInput = () => (
   <ToolbarItem propKey="display" type="select" label="" labelHide={true}>

@@ -1,7 +1,6 @@
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarItem } from "../ToolbarItem";
+import { TailwindStyles } from 'utils/tailwind';
 
-import { AiOutlineAlignRight } from "react-icons/ai";
+import { AiOutlineAlignRight } from 'react-icons/ai';
 import {
   TbAlignCenter,
   TbAlignJustified,
@@ -9,14 +8,14 @@ import {
   TbAlignRight,
   TbClearAll,
   TbSettings,
-} from "react-icons/tb";
-import { ItemAdvanceToggle } from "../Helpers/ItemSelector";
-import { ToolbarSection } from "../ToolbarSection";
-import { FontFamilyInput } from "./FontFamilyInput";
-import { TailwindInput } from "./TailwindInput";
+} from 'react-icons/tb';
+import { ToolbarItem } from '../ToolbarItem';
+import { ItemAdvanceToggle } from '../Helpers/ItemSelector';
+import { ToolbarSection } from '../ToolbarSection';
+import { FontFamilyInput } from './FontFamilyInput';
+import { TailwindInput } from './TailwindInput';
 
-export const FontInput = () => {
-  return (
+export const FontInput = () => (
     <>
       <FontFamilyInput />
 
@@ -26,13 +25,13 @@ export const FontInput = () => {
         label="Alignment"
         cols={true}
         options={[
-          { label: <TbClearAll />, value: "" },
-          { value: "text-left", label: <TbAlignLeft /> },
-          { value: "text-center", label: <TbAlignCenter /> },
-          { value: "text-right", label: <AiOutlineAlignRight /> },
-          { value: "text-justify", label: <TbAlignJustified /> },
-          { value: "text-start", label: <TbAlignLeft /> },
-          { value: "text-end", label: <TbAlignRight /> },
+          { label: <TbClearAll />, value: '' },
+          { value: 'text-left', label: <TbAlignLeft /> },
+          { value: 'text-center', label: <TbAlignCenter /> },
+          { value: 'text-right', label: <AiOutlineAlignRight /> },
+          { value: 'text-justify', label: <TbAlignJustified /> },
+          { value: 'text-start', label: <TbAlignLeft /> },
+          { value: 'text-end', label: <TbAlignRight /> },
         ]}
       />
 
@@ -113,5 +112,4 @@ export const FontInput = () => {
         </ToolbarSection>
       </ItemAdvanceToggle>
     </>
-  );
-};
+);

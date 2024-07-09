@@ -1,5 +1,5 @@
-import { AnimatePresence } from "framer-motion";
-import { getNode } from "./Toolbar/Tools/lib";
+import { AnimatePresence } from 'framer-motion';
+import { getNode } from './Toolbar/Tools/lib';
 
 export const RenderNodeTools = () => {
   const node = getNode();
@@ -10,9 +10,7 @@ export const RenderNodeTools = () => {
   return (
     <div className="relative w-full h-full pointer-events-none">
       <AnimatePresence>
-        {tools.map((tool, index) => {
-          return { ...tool, key: index };
-        })}
+        {tools.map((tool, index) => ({ ...tool, key: index }))}
       </AnimatePresence>
     </div>
   );

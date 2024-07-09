@@ -1,4 +1,4 @@
-import { removeHasManyRelation } from "components/editor/Viewport/lib";
+import { removeHasManyRelation } from 'components/editor/Viewport/lib';
 
 export const setClonedProps = (props, query, exclude = []) => {
   return props;
@@ -6,11 +6,11 @@ export const setClonedProps = (props, query, exclude = []) => {
     const parent = query.node(props.belongsTo).get();
     const parentProps = parent?.data?.props || {};
 
-    if (parentProps && props.relationType !== "style") {
+    if (parentProps && props.relationType !== 'style') {
       props = { ...props, ...parent?.data?.props };
     }
 
-    if (parentProps && props.relationType === "style") {
+    if (parentProps && props.relationType === 'style') {
       const propsWithout = (_name) => {
         const pro = parent.data?.props[_name] || {};
         const og = props[_name];
@@ -27,9 +27,9 @@ export const setClonedProps = (props, query, exclude = []) => {
         return newRootProps;
       };
 
-      props.root = propsWithout("root");
-      props.desktop = propsWithout("desktop");
-      props.mobile = propsWithout("mobile");
+      props.root = propsWithout('root');
+      props.desktop = propsWithout('desktop');
+      props.mobile = propsWithout('mobile');
     }
   }
 
@@ -48,18 +48,15 @@ export const getClonedState = (props, state) => {
   };
 };
 
-export const NoSettings = ({ actions, id, query }) => {
-  return (
+export const NoSettings = ({ actions, id, query }) => (
     <>
       <p className="text-xl">No settings available.</p>
 
       <ConvertToRegularComponent query={query} actions={actions} id={id} />
     </>
-  );
-};
+);
 
-export const ConvertToRegularComponent = ({ query, actions, id }) => {
-  return (
+export const ConvertToRegularComponent = ({ query, actions, id }) => (
     <p>
       <strong
         className="cursor-pointer underline"
@@ -68,48 +65,46 @@ export const ConvertToRegularComponent = ({ query, actions, id }) => {
           removeHasManyRelation(node, query, actions);
 
           actions.setProp(id, (prop) => {
-            prop.belongsTo = "";
-            prop.relationType = "";
+            prop.belongsTo = '';
+            prop.relationType = '';
           });
         }}
       >
         Convert to a regular component
-      </strong>{" "}
+      </strong>{' '}
       to adjust all of the settings and remove the relation.
     </p>
-  );
-};
+);
 
-export const ConvertToStyledComponent = ({ actions, id }) => {
-  return (
+export const ConvertToStyledComponent = ({ actions, id }) => (
     <p>
       <strong
         className="cursor-pointer underline"
-        onClick={() =>
-          actions.setProp(id, (prop) => (prop.relationType = "style"))
+        onClick={() => actions.setProp(id, (prop) => (prop.relationType = 'style'))
         }
       >
         Convert to a styled component
-      </strong>{" "}
+      </strong>{' '}
       to adjust non style related settings.
     </p>
-  );
-};
+);
 
-export const RenderChildren = ({ props, children, query, actions, id }) => {
-  if (props.belongsTo && props.relationType !== "style") {
+export const RenderChildren = ({
+  props, children, query, actions, id
+}) => {
+  if (props.belongsTo && props.relationType !== 'style') {
     const parent = query.node(props.belongsTo).get();
     if (parent) {
       return (
         <div className="p-3 flex flex-col gap-6">
           <p>
-            Properties are defined in the{" "}
+            Properties are defined in the{' '}
             <strong
               className="cursor-pointer underline"
               onClick={() => actions.selectNode(props.belongsTo)}
             >
               {parent.data.custom.displayName || parent.data.displayName}
-            </strong>{" "}
+            </strong>{' '}
             component and can be adjusted there.
           </p>
 

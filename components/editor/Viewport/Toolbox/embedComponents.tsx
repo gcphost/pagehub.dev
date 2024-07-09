@@ -1,19 +1,19 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { TbCode, TbLock } from "react-icons/tb";
-import { Embed } from "../../../selectors/Embed";
-import { RenderToolComponent } from "./lib";
+import { Tooltip } from 'components/layout/Tooltip';
+import { TbCode, TbLock } from 'react-icons/tb';
+import { Embed } from '../../../selectors/Embed';
+import { RenderToolComponent } from './lib';
 
 export const RenderEmbedComponent = ({ display, ...props }) => (
   <RenderToolComponent
     element={Embed}
-    mobile={{ width: "w-full" }}
+    mobile={{ width: 'w-full' }}
     display={display}
     {...props}
   />
 );
 
 export const EmbedToolbox = {
-  title: "Embeds",
+  title: 'Embeds',
   content: [
     <RenderEmbedComponent
       key="1"
@@ -27,7 +27,7 @@ export const EmbedToolbox = {
           </Tooltip>
         </div>
       }
-      custom={{ displayName: "Embedded coded" }}
+      custom={{ displayName: 'Embedded coded' }}
     />,
   ],
 };

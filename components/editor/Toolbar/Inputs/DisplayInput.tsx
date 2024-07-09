@@ -1,6 +1,6 @@
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarItem } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
+import { TailwindStyles } from 'utils/tailwind';
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
 
 export const DisplayInput = () => (
   <ToolbarSection title="Display">

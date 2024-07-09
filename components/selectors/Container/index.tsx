@@ -1,28 +1,30 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { DragAdjustNodeController } from "components/editor/NodeControllers/DragAdjustNodeController";
-import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
-import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
-import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
-import ContainerSettingsNodeTool from "components/editor/NodeControllers/Tools/ContainerSettingsNodeTool";
-import ContainerSettingsTopNodeTool from "components/editor/NodeControllers/Tools/ContainerSettingsTopNodeTool";
-import { ToolboxMenu } from "components/editor/RenderNode";
+import { useEditor, useNode } from '@craftjs/core';
+import { DragAdjustNodeController } from 'components/editor/NodeControllers/DragAdjustNodeController';
+import { HoverNodeController } from 'components/editor/NodeControllers/HoverNodeController';
+import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
+import { ToolNodeController } from 'components/editor/NodeControllers/ToolNodeController';
+import ContainerSettingsNodeTool from 'components/editor/NodeControllers/Tools/ContainerSettingsNodeTool';
+import ContainerSettingsTopNodeTool from 'components/editor/NodeControllers/Tools/ContainerSettingsTopNodeTool';
+import { ToolboxMenu } from 'components/editor/RenderNode';
 import {
   getClonedState,
   setClonedProps,
-} from "components/editor/Toolbar/Helpers/CloneHelper";
-import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
-import { SelectedNodeAtom } from "components/editor/Viewport/Toolbox/lib";
-import React, { useEffect, useRef } from "react";
-import { CgArrowsV } from "react-icons/cg";
-import { TbArrowBarToDown, TbContainer, TbNote } from "react-icons/tb";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { SettingsAtom } from "utils/atoms";
-import { applyBackgroundImage, enableContext, motionIt } from "utils/lib";
-import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
-import { BaseSelectorProps } from "..";
-import { EmptyState } from "../EmptyState";
-import { RenderGradient, RenderPattern, hasInlay, inlayProps } from "../lib";
-import { ContainerSettings } from "./ContainerSettings";
+} from 'components/editor/Toolbar/Helpers/CloneHelper';
+import { PreviewAtom, ViewAtom } from 'components/editor/Viewport';
+import { SelectedNodeAtom } from 'components/editor/Viewport/Toolbox/lib';
+import React, { useEffect, useRef } from 'react';
+import { CgArrowsV } from 'react-icons/cg';
+import { TbArrowBarToDown, TbContainer, TbNote } from 'react-icons/tb';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { SettingsAtom } from 'utils/atoms';
+import { applyBackgroundImage, enableContext, motionIt } from 'utils/lib';
+import { CSStoObj, ClassGenerator, applyAnimation } from 'utils/tailwind';
+import { BaseSelectorProps } from '..';
+import { EmptyState } from '../EmptyState';
+import {
+  RenderGradient, RenderPattern, hasInlay, inlayProps
+} from '../lib';
+import { ContainerSettings } from './ContainerSettings';
 
 export interface ContainerProps extends BaseSelectorProps {
   type: string;
@@ -36,7 +38,7 @@ export interface ContainerProps extends BaseSelectorProps {
 }
 
 const defaultProps: ContainerProps = {
-  type: "container",
+  type: 'container',
   root: {},
   mobile: {},
   tablet: {},
@@ -62,9 +64,7 @@ export const Container = (props: Partial<ContainerProps>) => {
     connectors: { connect, drag },
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) => {
-    return getClonedState(props, state);
-  });
+  const { actions, query, enabled } = useEditor((state) => getClonedState(props, state));
 
   const { name, id } = useNode((node) => ({
     name: node.data.custom.displayName || node.data.displayName,
@@ -73,12 +73,12 @@ export const Container = (props: Partial<ContainerProps>) => {
   //  const [isolate, setIsolate] = useRecoilState(IsolateAtom);
 
   useEffect(() => {
-    if (props.type === "page") {
+    if (props.type === 'page') {
       // isolatePage(false, query, id, actions, setIsolate);
     }
   }, []);
 
-  props = setClonedProps(props, query, ["order"]);
+  props = setClonedProps(props, query, ['order']);
 
   const { children } = props;
 
@@ -87,7 +87,7 @@ export const Container = (props: Partial<ContainerProps>) => {
   const contexted = (e) => {
     if (!enabled || !enableContext) return;
     if (!enableContext) {
-      const theNode = id ? query.node(id).get() : { data: "no active node" };
+      const theNode = id ? query.node(id).get() : { data: 'no active node' };
 
       console.info(theNode.data);
     }
@@ -101,17 +101,15 @@ export const Container = (props: Partial<ContainerProps>) => {
       x: e.clientX,
       y: e.clientY,
       enabled: true,
-      position: "inside",
+      position: 'inside',
       name,
       id,
       parent: {
-        name: name,
+        name,
         props,
         displayName: name,
       },
     });
-
-    return;
   };
 
   const inlayed = hasInlay(props);
@@ -150,7 +148,7 @@ export const Container = (props: Partial<ContainerProps>) => {
         >
           {children || (
             <EmptyState
-              icon={props.type === "page" ? <TbNote /> : <TbContainer />}
+              icon={props.type === 'page' ? <TbNote /> : <TbContainer />}
             />
           )}
         </RenderGradient>
@@ -159,7 +157,7 @@ export const Container = (props: Partial<ContainerProps>) => {
   };
 
   if (props.url) {
-    prop["onClick"] = (e) => {
+    prop.onClick = (e) => {
       e.preventDefault();
 
       if (!enabled) {
@@ -168,30 +166,29 @@ export const Container = (props: Partial<ContainerProps>) => {
     };
   }
 
-  if (props.type === "form") {
-    prop["action"] = props.action;
-    prop["method"] = props.method;
-    prop["onSubmit"] = props.onSubmit;
-    prop["target"] = props.target;
+  if (props.type === 'form') {
+    prop.action = props.action;
+    prop.method = props.method;
+    prop.onSubmit = props.onSubmit;
+    prop.target = props.target;
   }
 
-  if (props.id) prop["id"] = props.id;
+  if (props.id) prop.id = props.id;
 
   if (enabled) {
-    prop["data-border"] =
-      props.root?.border || props.root?.borderColor ? true : false;
+    prop['data-border'] = !!(props.root?.border || props.root?.borderColor);
 
-    prop["data-bounding-box"] = enabled;
-    prop["onContextMenu"] = contexted;
-    prop["onDoubleClick"] = contexted;
-    prop["data-empty-state"] = !children;
-    prop["node-id"] = id;
-    prop["data-enabled"] = true;
+    prop['data-bounding-box'] = enabled;
+    prop.onContextMenu = contexted;
+    prop.onDoubleClick = contexted;
+    prop['data-empty-state'] = !children;
+    prop['node-id'] = id;
+    prop['data-enabled'] = true;
 
-    prop["onClick"] = (event) => {
+    prop.onClick = (event) => {
       let closestChild = null;
       let minDistance = Infinity;
-      const children = ref.current.querySelectorAll("*");
+      const children = ref.current.querySelectorAll('*');
 
       children.forEach((child) => {
         const childRect = child.getBoundingClientRect();
@@ -218,23 +215,23 @@ export const Container = (props: Partial<ContainerProps>) => {
 
       if (closestChild) {
         setSelectedNode({
-          id: closestChild.getAttribute(["node-id"]),
-          position: "after",
+          id: closestChild.getAttribute(['node-id']),
+          position: 'after',
         });
       }
     };
   }
 
-  if (props.anchor) prop["id"] = props.anchor;
+  if (props.anchor) prop.id = props.anchor;
 
   prop = {
     ...applyBackgroundImage(prop, props, settings),
     ...applyAnimation({ ...prop, key: id }, props),
   };
 
-  let tagName = props?.type === "page" ? "article" : "div";
+  let tagName = props?.type === 'page' ? 'article' : 'div';
 
-  if (props?.type === "form") tagName = "form";
+  if (props?.type === 'form') tagName = 'form';
 
   const container = React.createElement(motionIt(prop, tagName), prop);
 
@@ -243,11 +240,11 @@ export const Container = (props: Partial<ContainerProps>) => {
 
 const canMoveIn = (nodes, into) => {
   const result = nodes.every((node) => {
-    if (node?.data?.props?.type === "form") {
-      if (into.data?.props?.type === "form") return false;
+    if (node?.data?.props?.type === 'form') {
+      if (into.data?.props?.type === 'form') return false;
     }
 
-    return node?.data?.props?.type !== "page";
+    return node?.data?.props?.type !== 'page';
   });
 
   // console.log(nodes, into, result);
@@ -256,7 +253,7 @@ const canMoveIn = (nodes, into) => {
 };
 
 Container.craft = {
-  displayName: "Container",
+  displayName: 'Container',
   rules: {
     canDrag: () => true,
     canMoveIn: (node, into) => canMoveIn(node, into),
@@ -272,9 +269,9 @@ Container.craft = {
           align="start"
           placement="end"
           alt={{
-            position: "bottom",
-            align: "start",
-            placement: "start",
+            position: 'bottom',
+            align: 'start',
+            placement: 'start',
           }}
         />,
         <HoverNodeController
@@ -282,9 +279,9 @@ Container.craft = {
           align="start"
           placement="end"
           alt={{
-            position: "bottom",
-            align: "start",
-            placement: "start",
+            position: 'bottom',
+            align: 'start',
+            placement: 'start',
           }}
         />,
 
@@ -292,15 +289,15 @@ Container.craft = {
           position="bottom"
           align="start"
           alt={{
-            position: "top",
-            align: "start",
-            placement: "start",
+            position: 'top',
+            align: 'start',
+            placement: 'start',
           }}
           children={<ContainerSettingsNodeTool />}
         />,
       ];
 
-      if (props.type === "page") {
+      if (props.type === 'page') {
         return baseControls;
       }
 

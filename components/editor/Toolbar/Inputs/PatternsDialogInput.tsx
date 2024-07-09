@@ -1,20 +1,20 @@
-import { useNode } from "@craftjs/core";
-import { changeProp } from "components/editor/Viewport/lib";
-import { getRect } from "components/editor/Viewport/useRect";
-import { useRef } from "react";
-import { useRecoilState } from "recoil";
-import { generatePattern } from "utils/lib";
-import { Wrap } from "../ToolbarStyle";
-import { useDialog } from "../Tools/lib";
-import { PatternDialogAtom } from "../Tools/PatternDialog";
+import { useNode } from '@craftjs/core';
+import { changeProp } from 'components/editor/Viewport/lib';
+import { getRect } from 'components/editor/Viewport/useRect';
+import { useRef } from 'react';
+import { useRecoilState } from 'recoil';
+import { generatePattern } from 'utils/lib';
+import { Wrap } from '../ToolbarStyle';
+import { useDialog } from '../Tools/lib';
+import { PatternDialogAtom } from '../Tools/PatternDialog';
 
 export const PatternsDialogInput = ({
   propKey,
-  label = "",
-  prefix = "",
+  label = '',
+  prefix = '',
   index = null,
-  propItemKey = "",
-  propType = "class",
+  propItemKey = '',
+  propType = 'class',
 }) => {
   const [dialog, setDialog] = useRecoilState(PatternDialogAtom);
 
@@ -36,7 +36,7 @@ export const PatternsDialogInput = ({
     });
   };
 
-  const value = nodeProps.root ? nodeProps.root[propKey] || "" : null;
+  const value = nodeProps.root ? nodeProps.root[propKey] || '' : null;
 
   let patt;
 
@@ -51,10 +51,10 @@ export const PatternsDialogInput = ({
         patternAngle: 0,
         patternSpacingX: 0,
         patternSpacingY: 0,
-        patternColor1: "rgba(0,0,0,100)",
-        patternColor2: "rgba(0,0,0,100)",
-        patternColor3: "rgba(0,0,0,100)",
-        patternColor4: "rgba(0,0,0,100)",
+        patternColor1: 'rgba(0,0,0,100)',
+        patternColor2: 'rgba(0,0,0,100)',
+        patternColor3: 'rgba(0,0,0,100)',
+        patternColor4: 'rgba(0,0,0,100)',
       },
     });
   }

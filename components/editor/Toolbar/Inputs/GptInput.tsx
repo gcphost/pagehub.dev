@@ -1,17 +1,17 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { changeProp, SearchGpt } from "components/editor/Viewport/lib";
-import { Card, Wrap } from "../ToolbarStyle";
+import { useEditor, useNode } from '@craftjs/core';
+import { changeProp, SearchGpt } from 'components/editor/Viewport/lib';
 
-import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
-import { Tooltip } from "components/layout/Tooltip";
-import { useEffect, useRef, useState } from "react";
-import { SiOpenai } from "react-icons/si";
-import { TbX } from "react-icons/tb";
-import { atom, useRecoilValue } from "recoil";
-import { ClassGenerator, classNameToVar } from "utils/tailwind";
+import { PreviewAtom, ViewAtom } from 'components/editor/Viewport';
+import { Tooltip } from 'components/layout/Tooltip';
+import { useEffect, useRef, useState } from 'react';
+import { SiOpenai } from 'react-icons/si';
+import { TbX } from 'react-icons/tb';
+import { atom, useRecoilValue } from 'recoil';
+import { ClassGenerator, classNameToVar } from 'utils/tailwind';
+import { Card, Wrap } from '../ToolbarStyle';
 
 export const GPTAtom = atom({
-  key: "gpt",
+  key: 'gpt',
   default: {
     enabled: true,
   },
@@ -21,7 +21,7 @@ export const GptInput = ({ autoFocus = false }) => {
   const [searching, setSearching] = useState(false);
   const [searched, setSearched] = useState(false);
   const [classes, setClasses] = useState([]);
-  const [classInput, setClassInput] = useState("");
+  const [classInput, setClassInput] = useState('');
   const gpt = useRecoilValue(GPTAtom);
   const preview = useRecoilValue(PreviewAtom);
   const view = useRecoilValue(ViewAtom);
@@ -75,7 +75,7 @@ export const GptInput = ({ autoFocus = false }) => {
           value,
           setProp,
           view,
-          propType: "root",
+          propType: 'root',
         });
 
         return value;
@@ -112,7 +112,7 @@ export const GptInput = ({ autoFocus = false }) => {
     <Wrap
       props={{
         ...propValues,
-        label: "OpenAI Style Generator",
+        label: 'OpenAI Style Generator',
         labelHide: true,
       }}
     >
@@ -134,7 +134,7 @@ export const GptInput = ({ autoFocus = false }) => {
               placeholder="white text black background"
               onChange={(event) => setClassInput(event.target.value)}
               onKeyUp={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === 'Enter') {
                   save();
                 }
               }}

@@ -1,122 +1,122 @@
-import { TabBody } from "components/editor/Toolbar/Tab";
-import { BiFont, BiPaint } from "react-icons/bi";
+import { TabBody } from 'components/editor/Toolbar/Tab';
+import { BiFont, BiPaint } from 'react-icons/bi';
 
-import { useEditor } from "@craftjs/core";
-import { ToolboxMenu } from "components/editor/RenderNode";
-import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
+import { useEditor } from '@craftjs/core';
+import { ToolboxMenu } from 'components/editor/RenderNode';
+import { ToolbarItem, ToolbarSection } from 'components/editor/Toolbar';
 import {
   TableBodyStyleControl,
   TBWrap,
-} from "components/editor/Toolbar/Helpers/SettingsHelper";
-import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInput";
-import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
-import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
-import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
-import { IpsumGenerator } from "components/editor/Toolbar/Inputs/IpsumGenerator";
-import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
-import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
-import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
-import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
-import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
-import { TypeInput } from "components/editor/Toolbar/Inputs/TypeInput";
-import { WidthInput } from "components/editor/Toolbar/Inputs/WidthInput";
-import { TabAtom } from "components/editor/Viewport";
-import { useEffect, useRef } from "react";
-import { MdStyle } from "react-icons/md";
-import { TbBoxPadding, TbMouse, TbPlayerPlay } from "react-icons/tb";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { useDefaultTab } from "utils/lib";
+} from 'components/editor/Toolbar/Helpers/SettingsHelper';
+import { AnimationsInput } from 'components/editor/Toolbar/Inputs/AnimationsInput';
+import { ColorInput } from 'components/editor/Toolbar/Inputs/ColorInput';
+import DisplaySettingsInput from 'components/editor/Toolbar/Inputs/DisplaySettingsInput';
+import { FontInput } from 'components/editor/Toolbar/Inputs/FontInput';
+import { IpsumGenerator } from 'components/editor/Toolbar/Inputs/IpsumGenerator';
+import LinkSettingsInput from 'components/editor/Toolbar/Inputs/LinkSettingsInput';
+import { MarginInput } from 'components/editor/Toolbar/Inputs/MarginInput';
+import { PaddingInput } from 'components/editor/Toolbar/Inputs/PaddingInput';
+import { PresetInput } from 'components/editor/Toolbar/Inputs/PresetInput';
+import { ShadowInput } from 'components/editor/Toolbar/Inputs/ShadowInput';
+import { TypeInput } from 'components/editor/Toolbar/Inputs/TypeInput';
+import { WidthInput } from 'components/editor/Toolbar/Inputs/WidthInput';
+import { TabAtom } from 'components/editor/Viewport';
+import { useEffect, useRef } from 'react';
+import { MdStyle } from 'react-icons/md';
+import { TbBoxPadding, TbMouse, TbPlayerPlay } from 'react-icons/tb';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useDefaultTab } from 'utils/lib';
 
 export const textPresets = [
   {
-    title: "H7",
-    var: "h7",
+    title: 'H7',
+    var: 'h7',
     mobile: {
-      fontSize: "text-base",
+      fontSize: 'text-base',
     },
     desktop: {
-      fontSize: "text-xl",
+      fontSize: 'text-xl',
     },
     root: {
-      tagName: "h2",
+      tagName: 'h2',
     },
   },
   {
-    title: "H6",
-    var: "h6",
+    title: 'H6',
+    var: 'h6',
     mobile: {
-      fontSize: "text-lg",
+      fontSize: 'text-lg',
     },
     desktop: {
-      fontSize: "text-2xl",
+      fontSize: 'text-2xl',
     },
     root: {
-      tagName: "h2",
+      tagName: 'h2',
     },
   },
   {
-    title: "H5",
-    var: "h5",
+    title: 'H5',
+    var: 'h5',
     mobile: {
-      fontSize: "text-xl",
+      fontSize: 'text-xl',
     },
     desktop: {
-      fontSize: "text-3xl",
+      fontSize: 'text-3xl',
     },
     root: {
-      tagName: "h2",
+      tagName: 'h2',
     },
   },
   {
-    title: "H4",
-    var: "h4",
+    title: 'H4',
+    var: 'h4',
     mobile: {
-      fontSize: "text-2xl",
+      fontSize: 'text-2xl',
     },
     desktop: {
-      fontSize: "text-4xl",
+      fontSize: 'text-4xl',
     },
     root: {
-      tagName: "h2",
+      tagName: 'h2',
     },
   },
   {
-    title: "H3",
-    var: "h3",
+    title: 'H3',
+    var: 'h3',
     mobile: {
-      fontSize: "text-3xl",
+      fontSize: 'text-3xl',
     },
     desktop: {
-      fontSize: "text-5xl",
+      fontSize: 'text-5xl',
     },
     root: {
-      tagName: "h2",
+      tagName: 'h2',
     },
   },
   {
-    title: "H2",
-    var: "h2",
+    title: 'H2',
+    var: 'h2',
     mobile: {
-      fontSize: "text-4xl",
+      fontSize: 'text-4xl',
     },
     desktop: {
-      fontSize: "text-6xl",
+      fontSize: 'text-6xl',
     },
     root: {
-      tagName: "h2",
+      tagName: 'h2',
     },
   },
   {
-    title: "H1",
-    var: "h1",
+    title: 'H1',
+    var: 'h1',
     mobile: {
-      fontSize: "text-5xl",
+      fontSize: 'text-5xl',
     },
     desktop: {
-      fontSize: "text-7xl",
+      fontSize: 'text-7xl',
     },
     root: {
-      tagName: "h1",
+      tagName: 'h1',
     },
   },
 ];
@@ -131,27 +131,27 @@ export const TextSettings = () => {
 
   const head = [
     {
-      title: "Text",
+      title: 'Text',
       icon: <BiFont />,
     },
     {
-      title: "Appearance",
+      title: 'Appearance',
       icon: <BiPaint />,
     },
     {
-      title: "Layout",
+      title: 'Layout',
       icon: <TbBoxPadding />,
     },
     {
-      title: "Hover & Click",
+      title: 'Hover & Click',
       icon: <TbMouse />,
     },
     {
-      title: "Animations",
+      title: 'Animations',
       icon: <TbPlayerPlay />,
     },
     {
-      title: "Style",
+      title: 'Style',
       icon: <MdStyle />,
     },
   ];
@@ -171,8 +171,7 @@ export const TextSettings = () => {
     };
   }, [ref]);
 
-  const MainTab = () => {
-    return (
+  const MainTab = () => (
       <TabBody>
         <ToolbarSection>
           <ToolbarItem
@@ -193,11 +192,9 @@ export const TextSettings = () => {
           <IpsumGenerator propKey="text" propType="component" />
         </ToolbarSection>
       </TabBody>
-    );
-  };
+  );
 
-  const TBBody = () => {
-    return (
+  const TBBody = () => (
       <TableBodyStyleControl
         query={query}
         actions={actions}
@@ -205,21 +202,21 @@ export const TextSettings = () => {
         head={head}
         tab={<MainTab />}
       >
-        {activeTab === "Text" && <MainTab />}
+        {activeTab === 'Text' && <MainTab />}
 
-        {activeTab === "Appearance" && (
+        {activeTab === 'Appearance' && (
           <TabBody
             jumps={[
               {
-                title: "Colors",
+                title: 'Colors',
                 content: <div className="text-sm">Colors</div>,
               },
               {
-                title: "Text",
+                title: 'Text',
                 content: <div className="text-sm">Text</div>,
               },
               {
-                title: "Decoration",
+                title: 'Decoration',
                 content: <div className="text-sm">Decoration</div>,
               },
             ]}
@@ -242,20 +239,20 @@ export const TextSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Layout" && (
+        {activeTab === 'Layout' && (
           <TabBody
             jumps={[
               {
-                title: "Size",
+                title: 'Size',
                 content: <div className="text-sm">Size</div>,
               },
 
               {
-                title: "Margin",
+                title: 'Margin',
                 content: <div className="text-sm">Margin</div>,
               },
               {
-                title: "Padding",
+                title: 'Padding',
                 content: <div className="text-sm">Padding</div>,
               },
             ]}
@@ -281,7 +278,7 @@ export const TextSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Style" && (
+        {activeTab === 'Style' && (
           <TabBody>
             <DisplaySettingsInput />
 
@@ -291,13 +288,13 @@ export const TextSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Animations" && (
+        {activeTab === 'Animations' && (
           <TabBody>
             <AnimationsInput />
           </TabBody>
         )}
 
-        {activeTab === "Hover & Click" && (
+        {activeTab === 'Hover & Click' && (
           <TabBody>
             <LinkSettingsInput />
             <ToolbarSection title="Color">
@@ -312,8 +309,7 @@ export const TextSettings = () => {
           </TabBody>
         )}
       </TableBodyStyleControl>
-    );
-  };
+  );
 
   return (
     <TBWrap head={head}>

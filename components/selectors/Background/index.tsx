@@ -1,31 +1,33 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
-import { EmptyState } from "../EmptyState";
+import { useEditor, useNode } from '@craftjs/core';
+import { CSStoObj, ClassGenerator, applyAnimation } from 'utils/tailwind';
 
-import React, { useEffect, useRef } from "react";
-import { TbContainer } from "react-icons/tb";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { BaseSelectorProps } from "..";
+import React, { useEffect, useRef } from 'react';
+import { TbContainer } from 'react-icons/tb';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
-import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
-import ContainerSettingsNodeTool from "components/editor/NodeControllers/Tools/ContainerSettingsNodeTool";
-import { ToolboxMenu } from "components/editor/RenderNode";
-import { DeviceAtom, PreviewAtom, ViewAtom } from "components/editor/Viewport";
-import { SettingsAtom } from "utils/atoms";
+import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
+import { ToolNodeController } from 'components/editor/NodeControllers/ToolNodeController';
+import ContainerSettingsNodeTool from 'components/editor/NodeControllers/Tools/ContainerSettingsNodeTool';
+import { ToolboxMenu } from 'components/editor/RenderNode';
+import { DeviceAtom, PreviewAtom, ViewAtom } from 'components/editor/Viewport';
+import { SettingsAtom } from 'utils/atoms';
 import {
   applyBackgroundImage,
   enableContext,
   getMedialUrl,
   isCssValid,
   isJsValid,
-} from "utils/lib";
-import { RenderGradient, RenderPattern, hasInlay, inlayProps } from "../lib";
-import { BackgroundSettings } from "./BackgroundSettings";
+} from 'utils/lib';
+import { BaseSelectorProps } from '..';
+import { EmptyState } from '../EmptyState';
+import {
+  RenderGradient, RenderPattern, hasInlay, inlayProps
+} from '../lib';
+import { BackgroundSettings } from './BackgroundSettings';
 
 export interface ContainerProps extends BaseSelectorProps {
   activeTab?: number;
-  "data-renderer"?: boolean;
+  'data-renderer'?: boolean;
   pallet?: [];
   header?: string;
   footer?: string;
@@ -37,15 +39,15 @@ export interface ContainerProps extends BaseSelectorProps {
 }
 
 const defaultProps: ContainerProps = {
-  type: "background",
+  type: 'background',
   pallet: [],
   root: {},
   mobile: {
-    width: "w-full",
-    height: "h-full",
-    display: "flex",
-    flexDirection: "flex-col",
-    alignItems: "items-center",
+    width: 'w-full',
+    height: 'h-full',
+    display: 'flex',
+    flexDirection: 'flex-col',
+    alignItems: 'items-center',
   },
   tablet: {},
   desktop: {},
@@ -89,8 +91,8 @@ export const Background = (props: Partial<ContainerProps>) => {
       if (link) {
         link.href = favicon;
       } else {
-        const newLink = document.createElement("link");
-        newLink.rel = "icon";
+        const newLink = document.createElement('link');
+        newLink.rel = 'icon';
         newLink.href = favicon;
         document.head.appendChild(newLink);
       }
@@ -107,17 +109,15 @@ export const Background = (props: Partial<ContainerProps>) => {
       enabled: true,
       x: e.clientX,
       y: e.clientY,
-      position: "inside",
-      name: "Background",
+      position: 'inside',
+      name: 'Background',
       id,
       parent: {
-        name: "Background",
+        name: 'Background',
         props,
-        displayName: "Background",
+        displayName: 'Background',
       },
     });
-
-    return;
   };
 
   const inlayed = hasInlay(props);
@@ -139,21 +139,21 @@ export const Background = (props: Partial<ContainerProps>) => {
   };
 
   if (enabled) {
-    prop["data-no-scrollbars"] = view !== "desktop" && device;
-    prop["data-renderer"] = enabled;
-    prop["data-bounding-box"] = enabled;
-    prop["onContextMenu"] = contexted;
-    prop["node-id"] = id;
-    prop["main-node"] = "true";
+    prop['data-no-scrollbars'] = view !== 'desktop' && device;
+    prop['data-renderer'] = enabled;
+    prop['data-bounding-box'] = enabled;
+    prop.onContextMenu = contexted;
+    prop['node-id'] = id;
+    prop['main-node'] = 'true';
   }
-  const validScriptTypes = ["link", "meta", "title", "style", "script"];
+  const validScriptTypes = ['link', 'meta', 'title', 'style', 'script'];
 
   function addElementsToHead(header, head) {
     const elements = [];
 
-    if (header && typeof window !== "undefined") {
+    if (header && typeof window !== 'undefined') {
       const parser = new DOMParser();
-      const doc = parser.parseFromString(header, "text/html");
+      const doc = parser.parseFromString(header, 'text/html');
       const headElement = doc.head;
 
       for (let i = 0; i < headElement.childNodes?.length; i++) {
@@ -161,7 +161,7 @@ export const Background = (props: Partial<ContainerProps>) => {
         const nodeName = node.nodeName.toLowerCase();
 
         if (validScriptTypes.includes(nodeName)) {
-          if (nodeName === "style") {
+          if (nodeName === 'style') {
             const styleContent = node.textContent.trim();
 
             if (!isCssValid(styleContent)) {
@@ -172,12 +172,12 @@ export const Background = (props: Partial<ContainerProps>) => {
             }
           }
 
-          if (nodeName === "script") {
-            if (node.hasAttribute("src")) {
-              const src = node.getAttribute("src");
-              const script = document.createElement("script");
-              script.setAttribute("src", src);
-              script.setAttribute("async", "");
+          if (nodeName === 'script') {
+            if (node.hasAttribute('src')) {
+              const src = node.getAttribute('src');
+              const script = document.createElement('script');
+              script.setAttribute('src', src);
+              script.setAttribute('async', '');
               elements.push(script);
 
               try {
@@ -209,16 +209,16 @@ export const Background = (props: Partial<ContainerProps>) => {
             }
           }
 
-          if (nodeName === "link") {
+          if (nodeName === 'link') {
             if (
-              node.hasAttribute("href") &&
-              node.hasAttribute("rel") &&
-              node.getAttribute("rel") === "stylesheet"
+              node.hasAttribute('href')
+              && node.hasAttribute('rel')
+              && node.getAttribute('rel') === 'stylesheet'
             ) {
-              const href = node.getAttribute("href");
-              const link = document.createElement("link");
-              link.setAttribute("href", href);
-              link.setAttribute("rel", "stylesheet");
+              const href = node.getAttribute('href');
+              const link = document.createElement('link');
+              link.setAttribute('href', href);
+              link.setAttribute('rel', 'stylesheet');
               elements.push(link);
 
               try {
@@ -239,7 +239,7 @@ export const Background = (props: Partial<ContainerProps>) => {
   }
 
   useEffect(() => {
-    const head = document.getElementsByTagName("head")[0];
+    const head = document.getElementsByTagName('head')[0];
 
     const elements = addElementsToHead(props.header, head);
 
@@ -262,7 +262,7 @@ export const Background = (props: Partial<ContainerProps>) => {
     };
   }, [props.footer]);
 
-  (prop["children"] = (
+  (prop.children = (
     <>
       <RenderPattern
         props={props}
@@ -284,20 +284,17 @@ export const Background = (props: Partial<ContainerProps>) => {
       </RenderPattern>
     </>
   )),
-    applyBackgroundImage(prop, props, settings);
+  applyBackgroundImage(prop, props, settings);
   applyAnimation(prop, props);
 
-  return React.createElement("main", prop);
+  return React.createElement('main', prop);
 };
 
 Background.craft = {
-  displayName: "Background",
+  displayName: 'Background',
   rules: {
     canDrag: () => false,
-    canMoveIn: (nodes) =>
-      nodes.every((node) => {
-        return node.data?.name === "Container";
-      }),
+    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === 'Container'),
   },
   related: {
     toolbar: BackgroundSettings,

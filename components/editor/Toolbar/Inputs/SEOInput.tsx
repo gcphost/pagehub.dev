@@ -1,5 +1,5 @@
-import { ToolbarItem } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
 
 export default () => (
   <ToolbarSection title="SEO">

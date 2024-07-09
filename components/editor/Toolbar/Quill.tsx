@@ -1,8 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export const QullInput = ({ value, changed, props }) => {
-  const ReactQuill =
-    typeof window === "object" ? require("react-quill") : () => false;
+  const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
 
   const quillRef = useRef(null);
 
@@ -27,32 +26,32 @@ export const QullInput = ({ value, changed, props }) => {
         pasteAsPlainText: true,
       },
       toolbar: [
-        "bold",
-        "italic",
-        "underline",
-        "strike",
+        'bold',
+        'italic',
+        'underline',
+        'strike',
         { color: [] },
 
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
 
-        "link",
-        "clean",
+        'link',
+        'clean',
       ],
     },
 
     formats: [
-      "header",
-      "bold",
-      "italic",
-      "underline",
-      "strike",
-      "list",
-      "bullet",
-      "indent",
-      "link",
+      'header',
+      'bold',
+      'italic',
+      'underline',
+      'strike',
+      'list',
+      'bullet',
+      'indent',
+      'link',
     ],
   };
 

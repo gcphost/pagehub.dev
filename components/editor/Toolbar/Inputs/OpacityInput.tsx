@@ -1,12 +1,12 @@
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarItem } from "../ToolbarItem";
+import { TailwindStyles } from 'utils/tailwind';
+import { ToolbarItem } from '../ToolbarItem';
 
 export const OpacityInput = ({
-  propKey = "opacity",
+  propKey = 'opacity',
   index = null,
-  prefix = "",
+  prefix = '',
   labelHide = false,
-  label = "Opacity",
+  label = 'Opacity',
 }) => (
   <ToolbarItem
     propKey={propKey}

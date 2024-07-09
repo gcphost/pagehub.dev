@@ -1,10 +1,10 @@
-import { useNode } from "@craftjs/core";
-import { changeProp } from "components/editor/Viewport/lib";
-import { Wrap } from "../ToolbarStyle";
+import { useNode } from '@craftjs/core';
+import { changeProp } from 'components/editor/Viewport/lib';
 
-import { ViewAtom } from "components/editor/Viewport";
-import { LoremIpsum } from "lorem-ipsum";
-import { useRecoilValue } from "recoil";
+import { ViewAtom } from 'components/editor/Viewport';
+import { LoremIpsum } from 'lorem-ipsum';
+import { useRecoilValue } from 'recoil';
+import { Wrap } from '../ToolbarStyle';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -45,7 +45,7 @@ export const IpsumGenerator = ({ propKey, propType }) => {
     <Wrap
       props={{
         ...propValues,
-        label: "Lorem Ipsum",
+        label: 'Lorem Ipsum',
         labelHide: true,
       }}
     >

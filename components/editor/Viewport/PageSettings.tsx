@@ -1,13 +1,13 @@
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { SettingsAtom } from "utils/atoms";
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { SettingsAtom } from 'utils/atoms';
 
 export const PageSettings = ({}) => {
   const [settings, setSettings] = useRecoilState(SettingsAtom);
 
   const [data, setData] = useState(settings);
-  const [name, setName] = useState(data?.name || "");
+  const [name, setName] = useState(data?.name || '');
   const [nameOk, setNameOk] = useState(null);
   const [saving, setSaving] = useState(false);
   const [domainData, setDomainData] = useState(null);
@@ -18,11 +18,11 @@ export const PageSettings = ({}) => {
     let result = null;
 
     try {
-      const res = await fetch(`/api/save`, {
-        method: "POST",
+      const res = await fetch('/api/save', {
+        method: 'POST',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           company,
@@ -55,11 +55,11 @@ export const PageSettings = ({}) => {
 
   const checkName = async (name) => {
     setName(name);
-    const res = await fetch(`/api/check`, {
-      method: "POST",
+    const res = await fetch('/api/check', {
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name }),
     });
@@ -76,24 +76,24 @@ export const PageSettings = ({}) => {
       return setNameOk(false);
     }
 
-    change("name", name);
+    change('name', name);
     setNameOk(true);
   };
 
   useEffect(() => {
     const run = () => {
-      fetch(`/api/domain`, {
-        method: "POST",
+      fetch('/api/domain', {
+        method: 'POST',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ domain: settings.domain }),
       }).then(async (res) => {
         const r = await res.json();
         setDomainData(r);
 
-        console.log("domainData", r);
+        console.log('domainData', r);
       });
     };
 
@@ -105,7 +105,7 @@ export const PageSettings = ({}) => {
     //  };
   }, [settings?.domain]);
 
-  const inputClass = "input  ";
+  const inputClass = 'input  ';
 
   if (!settings) {
     return null;
@@ -140,7 +140,7 @@ export const PageSettings = ({}) => {
                 placeholder="Your Company"
                 required={true}
                 defaultValue={settings.company}
-                onChange={(e) => change("company", e.target.value)}
+                onChange={(e) => change('company', e.target.value)}
                 className={inputClass}
                 data-gramm="false"
               />
@@ -153,7 +153,7 @@ export const PageSettings = ({}) => {
                 placeholder="ecommerce, finance"
                 required={true}
                 defaultValue={settings.companyType}
-                onChange={(e) => change("companyType", e.target.value)}
+                onChange={(e) => change('companyType', e.target.value)}
                 className={inputClass}
                 data-gramm="false"
               />
@@ -166,7 +166,7 @@ export const PageSettings = ({}) => {
                 placeholder="Los Angeles, CA"
                 required={true}
                 defaultValue={settings.companyLocation}
-                onChange={(e) => change("companyLocation", e.target.value)}
+                onChange={(e) => change('companyLocation', e.target.value)}
                 className={inputClass}
                 data-gramm="false"
               />
@@ -177,10 +177,10 @@ export const PageSettings = ({}) => {
         <div className="w-full">
           <button
             className={`${
-              saving ? "bg-violet-300" : "bg-violet-500"
+              saving ? 'bg-violet-300' : 'bg-violet-500'
             } btn w-full p-3`}
           >
-            {saving ? "Saving..." : "Save"}
+            {saving ? 'Saving...' : 'Save'}
           </button>
         </div>
       </div>

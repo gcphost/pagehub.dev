@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from "react";
-import { ButtonToolbox } from "./Toolbox/buttonComponents";
-import { DividerToolbox } from "./Toolbox/dividerComponents";
-import { EmbedToolbox } from "./Toolbox/embedComponents";
-import { FormToolbox } from "./Toolbox/formComponents";
-import { FormElementToolbox } from "./Toolbox/formElement";
-import { ImageToolbox } from "./Toolbox/imageComponents";
-import { pageToolboxItems } from "./Toolbox/pageComponents";
-import { sectionToolboxItems } from "./Toolbox/sectionComponents";
-import { TextToolbox } from "./Toolbox/textComponents";
-import { VideoToolbox } from "./Toolbox/videoComponents";
+import { useEffect, useRef, useState } from 'react';
+import throttle from 'lodash.throttle';
+import { ButtonToolbox } from './Toolbox/buttonComponents';
+import { DividerToolbox } from './Toolbox/dividerComponents';
+import { EmbedToolbox } from './Toolbox/embedComponents';
+import { FormToolbox } from './Toolbox/formComponents';
+import { FormElementToolbox } from './Toolbox/formElement';
+import { ImageToolbox } from './Toolbox/imageComponents';
+import { pageToolboxItems } from './Toolbox/pageComponents';
+import { sectionToolboxItems } from './Toolbox/sectionComponents';
+import { TextToolbox } from './Toolbox/textComponents';
+import { VideoToolbox } from './Toolbox/videoComponents';
 
-import throttle from "lodash.throttle";
-import { ListToolbox } from "./Toolbox/listComponents";
+import { ListToolbox } from './Toolbox/listComponents';
 
 const items = [
   ...sectionToolboxItems,
@@ -41,23 +41,22 @@ export const ComponentSettings = () => {
 
   useEffect(() => {
     if (search) {
-      const regex = new RegExp(search, "i"); // Create a case-insensitive regex
+      const regex = new RegExp(search, 'i'); // Create a case-insensitive regex
       setList(
         items
           .map((item) => {
-            const title = item.title.toString() || ""; // Convert element to string
+            const title = item.title.toString() || ''; // Convert element to string
             if (title.match(regex)) {
               return item;
             }
 
             const filteredContent = item.content.filter((nestedItem) => {
-              const text =
-                nestedItem.props?.custom?.displayName?.toString() || ""; // Convert element to string
+              const text = nestedItem.props?.custom?.displayName?.toString() || ''; // Convert element to string
               if (text.match(regex)) {
                 return true;
               }
 
-              const text1 = nestedItem.props?.text?.toString() || ""; // Convert element to string
+              const text1 = nestedItem.props?.text?.toString() || ''; // Convert element to string
               if (text1.match(regex)) {
                 return true;
               }
@@ -96,8 +95,7 @@ export const ComponentSettings = () => {
           />
         </div>
       </form>
-      {list?.map((a, k) => {
-        return (
+      {list?.map((a, k) => (
           <div key={k}>
             <div className="px-3 pb-3 font-bold">{a.title}</div>
 
@@ -109,8 +107,7 @@ export const ComponentSettings = () => {
               ))}
             </div>
           </div>
-        );
-      })}
+      ))}
     </div>
   );
 };

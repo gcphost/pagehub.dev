@@ -1,5 +1,5 @@
 // source: https://gist.github.com/morajabi/523d7a642d8c0a2f71fcfa0d8b3d2846
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 
 type RectResult = {
   bottom: number;
@@ -47,9 +47,9 @@ export function useRect<T extends HTMLElement>(
 
     handleResize();
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [ref]);
 

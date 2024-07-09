@@ -1,9 +1,8 @@
-import { ClassItem } from "../Items/ClassItem";
-import { ToolbarItem } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
+import { ClassItem } from '../Items/ClassItem';
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
 
-export const ClassNameInput = () => {
-  return (
+export const ClassNameInput = () => (
     <>
       <ToolbarSection>
         <ToolbarItem
@@ -26,5 +25,4 @@ export const ClassNameInput = () => {
         />
       </ToolbarSection>
     </>
-  );
-};
+);

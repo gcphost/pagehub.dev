@@ -1,8 +1,8 @@
-import { TbDimensions } from "react-icons/tb";
-import { ItemAdvanceToggle } from "../Helpers/ItemSelector";
-import { ToolbarSection } from "../ToolbarSection";
-import { HeightInput } from "./HeightInput";
-import { WidthInput } from "./WidthInput";
+import { TbDimensions } from 'react-icons/tb';
+import { ItemAdvanceToggle } from '../Helpers/ItemSelector';
+import { ToolbarSection } from '../ToolbarSection';
+import { HeightInput } from './HeightInput';
+import { WidthInput } from './WidthInput';
 
 export const SizeInput = () => (
   <>

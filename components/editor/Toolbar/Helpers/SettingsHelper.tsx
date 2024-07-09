@@ -1,9 +1,9 @@
-import { useNode } from "@craftjs/core";
-import React from "react";
-import { TabBody } from "../Tab";
-import { ToolbarSection } from "../ToolbarSection";
-import { ToolbarWrapper } from "../ToolBarWrapper";
-import { NoSettings } from "./CloneHelper";
+import { useNode } from '@craftjs/core';
+import React from 'react';
+import { TabBody } from '../Tab';
+import { ToolbarSection } from '../ToolbarSection';
+import { ToolbarWrapper } from '../ToolBarWrapper';
+import { NoSettings } from './CloneHelper';
 
 export const TableBodyStyleControl = ({
   children,
@@ -17,11 +17,11 @@ export const TableBodyStyleControl = ({
   const propValues = query.node(id).get().data.props;
 
   if (propValues.belongsTo) {
-    if (propValues.relationType !== "style") {
+    if (propValues.relationType !== 'style') {
       return <TBNoSettings query={query} actions={actions} id={id} />;
     }
 
-    if (propValues.relationType === "style") {
+    if (propValues.relationType === 'style') {
       if (activeTab === head[0].title) {
         return tab;
       }

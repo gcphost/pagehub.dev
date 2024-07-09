@@ -1,17 +1,18 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { Tooltip } from "components/layout/Tooltip";
-import debounce from "lodash.debounce";
-import { TbExternalLink, TbExternalLinkOff } from "react-icons/tb";
-import { useRecoilValue } from "recoil";
-import { SettingsAtom } from "utils/atoms";
-import { TabAtom } from "../Viewport";
-const slug = require("slug");
+import { useEditor, useNode } from '@craftjs/core';
+import { Tooltip } from 'components/layout/Tooltip';
+import debounce from 'lodash.debounce';
+import { TbExternalLink, TbExternalLinkOff } from 'react-icons/tb';
+import { useRecoilValue } from 'recoil';
+import { SettingsAtom } from 'utils/atoms';
+import { TabAtom } from '../Viewport';
+
+const slug = require('slug');
 
 export const ToolbarTitleEditor = () => {
   const { id, name, propValues } = useNode((node) => ({
-    propValue: node.data.props["activeTab"],
+    propValue: node.data.props.activeTab,
     propValues: node.data.props,
-    activeSettingVa: node.data.props["activeSetting"],
+    activeSettingVa: node.data.props.activeSetting,
     nodeData: node.data,
     id: node.id,
     name: node.data.custom.displayName || node.data.displayName,
@@ -42,7 +43,7 @@ export const ToolbarTitleEditor = () => {
 
       <div className="text-xs whitespace-nowrap capitalize">{title}</div>
 
-      {propValues.type === "page" && (
+      {propValues.type === 'page' && (
         <Tooltip
           content="Open page in a new tab"
           arrow={false}
@@ -53,8 +54,8 @@ export const ToolbarTitleEditor = () => {
             href={
               settings?.draftId
                 ? `https://${settings?.draftId}.pagehub.dev/${
-                    !propValues.isHomePage ? slug(name, "-") : ""
-                  }`
+                  !propValues.isHomePage ? slug(name, '-') : ''
+                }`
                 : null
             }
             target="_blank"

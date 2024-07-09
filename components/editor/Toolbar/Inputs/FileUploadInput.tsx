@@ -1,16 +1,16 @@
-import { useNode } from "@craftjs/core";
-import { Tooltip } from "components/layout/Tooltip";
+import { useNode } from '@craftjs/core';
+import { Tooltip } from 'components/layout/Tooltip';
 import {
   TbCode,
   TbPhoto,
   TbPhotoOff,
   TbSettings,
   TbUpload,
-} from "react-icons/tb";
-import { ItemAdvanceToggle } from "../Helpers/ItemSelector";
-import { ToolbarItem } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
-import { ImageUploadInput } from "./ImageUploadInput";
+} from 'react-icons/tb';
+import { ItemAdvanceToggle } from '../Helpers/ItemSelector';
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
+import { ImageUploadInput } from './ImageUploadInput';
 
 export const FileUploadInput = (propa) => {
   const props = { ...propa };
@@ -18,14 +18,14 @@ export const FileUploadInput = (propa) => {
     props: node.data.props,
   }));
 
-  props["props"] = a;
+  props.props = a;
 
   const { typeKey } = props;
 
   return (
     <>
       <ToolbarSection title={props.title}>
-        {(!props.props[typeKey] || props.props[typeKey] === "cdn") && (
+        {(!props.props[typeKey] || props.props[typeKey] === 'cdn') && (
           <ImageUploadInput
             propKey={props.propKey}
             typeKey={props.typeKey}
@@ -34,7 +34,7 @@ export const FileUploadInput = (propa) => {
           />
         )}
 
-        {props.props[typeKey] === "img" && (
+        {props.props[typeKey] === 'img' && (
           <ToolbarItem
             propKey={props.propKey}
             propType="component"
@@ -45,7 +45,7 @@ export const FileUploadInput = (propa) => {
         )}
       </ToolbarSection>
 
-      {props.props[typeKey] === "svg" && (
+      {props.props[typeKey] === 'svg' && (
         <ToolbarItem
           propKey={props.contentKey}
           propType="component"
@@ -78,7 +78,7 @@ export const FileUploadInput = (propa) => {
                   <TbUpload />
                 </Tooltip>
               ),
-              value: "cdn",
+              value: 'cdn',
             },
             {
               label: (
@@ -86,7 +86,7 @@ export const FileUploadInput = (propa) => {
                   <TbPhoto />
                 </Tooltip>
               ),
-              value: "img",
+              value: 'img',
             },
 
             {
@@ -95,7 +95,7 @@ export const FileUploadInput = (propa) => {
                   <TbCode />
                 </Tooltip>
               ),
-              value: "svg",
+              value: 'svg',
             },
             {
               label: (
@@ -103,7 +103,7 @@ export const FileUploadInput = (propa) => {
                   <TbPhotoOff />
                 </Tooltip>
               ),
-              value: "",
+              value: '',
             },
           ]}
         />

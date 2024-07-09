@@ -1,7 +1,6 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-const Footer = () => {
-  return (
+const Footer = () => (
     <>
       <div className="container mx-auto flex justify-center items-center gap-12 mt-24">
         <Link href="/privacy" className=" opacity-50 hover:opacity-100 ">
@@ -26,7 +25,6 @@ const Footer = () => {
         </a>
       </div>
     </>
-  );
-};
+);
 
 export default Footer;

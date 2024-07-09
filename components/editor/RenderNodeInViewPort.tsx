@@ -1,6 +1,8 @@
-import { useNode } from "@craftjs/core";
-import { useFindScrollingParent } from "components/selectors/lib";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useNode } from '@craftjs/core';
+import { useFindScrollingParent } from 'components/selectors/lib';
+import {
+  useCallback, useEffect, useRef, useState
+} from 'react';
 
 export const useIsInViewPort = (id) => {
   const [isInViewport, setIsInViewport] = useState(false);
@@ -23,20 +25,19 @@ export const useIsInViewPort = (id) => {
 
     const clonedElementRect = originalElement.getBoundingClientRect();
     const viewportRect = document
-      .getElementById("viewport")
+      .getElementById('viewport')
       .getBoundingClientRect();
     const margin = 140;
-    const inViewport =
-      clonedElementRect.bottom + margin >= viewportRect.top &&
-      clonedElementRect.top - margin <= viewportRect.bottom &&
-      clonedElementRect.right + margin >= viewportRect.left &&
-      clonedElementRect.left - margin <= viewportRect.right;
+    const inViewport = clonedElementRect.bottom + margin >= viewportRect.top
+      && clonedElementRect.top - margin <= viewportRect.bottom
+      && clonedElementRect.right + margin >= viewportRect.left
+      && clonedElementRect.left - margin <= viewportRect.right;
 
     const dom = originalElementRef.current;
 
     if (!inViewport) {
-      dom.removeAttribute("data-enabled");
-    } else dom.setAttribute("data-enabled", true);
+      dom.removeAttribute('data-enabled');
+    } else dom.setAttribute('data-enabled', true);
 
     setIsInViewport(inViewport);
   }, [originalElementRef]);
@@ -54,10 +55,10 @@ export const useIsInViewPort = (id) => {
       });
     };
 
-    scrollingParent.addEventListener("scroll", handleScroll);
+    scrollingParent.addEventListener('scroll', handleScroll);
 
     return () => {
-      scrollingParent.removeEventListener("scroll", handleScroll);
+      scrollingParent.removeEventListener('scroll', handleScroll);
       window.cancelAnimationFrame(animationFrameId);
     };
   }, [originalElementRef, scrollingParent]);
@@ -66,11 +67,9 @@ export const useIsInViewPort = (id) => {
 };
 
 export function RenderNodeInViewPort({ children }) {
-  const { id } = useNode((node) => {
-    return {
-      dom: node.dom,
-    };
-  });
+  const { id } = useNode((node) => ({
+    dom: node.dom,
+  }));
 
   const isInViewport = useIsInViewPort(id);
 

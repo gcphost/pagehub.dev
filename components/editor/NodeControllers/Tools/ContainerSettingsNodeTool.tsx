@@ -1,5 +1,5 @@
-import { NodeToolWrapper } from "components/editor/Tools/NodeDialog";
-import OpenSettingsDialogNodeTool from "./OpenSettingsDialogNodeTool";
+import { NodeToolWrapper } from 'components/editor/Tools/NodeDialog';
+import OpenSettingsDialogNodeTool from './OpenSettingsDialogNodeTool';
 
 export function ContainerSettingsNodeTool() {
   return (

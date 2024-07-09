@@ -1,15 +1,16 @@
-import { useNode } from "@craftjs/core";
-import { motion } from "framer-motion";
-import React, { useRef } from "react";
-import { TbSettings } from "react-icons/tb";
-import { atom, useSetRecoilState } from "recoil";
-import { v4 as uuidv4 } from "uuid";
-import { AnimatedTooltipButton } from "./AnimatedButton";
-import Dialog from "./Dialog";
+import { useNode } from '@craftjs/core';
+import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { TbSettings } from 'react-icons/tb';
+import { atom, useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
+import { AnimatedTooltipButton } from './AnimatedButton';
+import Dialog from './Dialog';
+
 const MemoizedAnimatedTooltipButton = React.memo(AnimatedTooltipButton);
 
 export function NodeDialog({
-  tooltip = "",
+  tooltip = '',
   button = <TbSettings />,
   children = null,
 }) {
@@ -20,7 +21,7 @@ export function NodeDialog({
 
   const setIsOpen = useSetRecoilState(itemListState);
 
-  //const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   const openDialog = () => {
     setIsOpen(true);
@@ -52,13 +53,13 @@ export function NodeDialog({
 
 export const NodeToolWrapper = ({
   children,
-  className = "",
+  className = '',
   animate = {},
   col = false,
 }) => (
   <motion.div
     className={`flex items-center justify-center ${
-      col ? "flex-col" : "flex-row"
+      col ? 'flex-col' : 'flex-row'
     } z-50 gap-3 py-1.5 ${className}`}
     {...animate}
   >

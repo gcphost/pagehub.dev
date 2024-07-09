@@ -1,8 +1,8 @@
-import { FontFamiltAltInput } from "./FontFamiltAltInput";
+import { FontFamiltAltInput } from './FontFamiltAltInput';
 
 export const FontFamilyInput = () => (
   <FontFamiltAltInput
-    propKey={"fontFamily"}
-    label={"Font Family"}
+    propKey={'fontFamily'}
+    label={'Font Family'}
   ></FontFamiltAltInput>
 );

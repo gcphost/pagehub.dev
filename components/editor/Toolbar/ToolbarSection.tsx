@@ -1,5 +1,5 @@
-import { TbQuestionMark } from "react-icons/tb";
-import { ToolbarLabel } from "./Label";
+import { TbQuestionMark } from 'react-icons/tb';
+import { ToolbarLabel } from './Label';
 
 export const ToolbarSection = ({
   title,
@@ -9,15 +9,15 @@ export const ToolbarSection = ({
   onClick,
   propKey,
   tabClass = true,
-  className = "",
+  className = '',
   subtitle = false,
-  help = "",
+  help = '',
 }: any) => {
   const classNames = className
-    ? "items-center flex text-lg text-white text-left font-medium text-dark-gray bg-gray-800 p-3 cursor-pointer border-y-gray-900 border-y border border-yellow-500"
+    ? 'items-center flex text-lg text-white text-left font-medium text-dark-gray bg-gray-800 p-3 cursor-pointer border-y-gray-900 border-y border border-yellow-500'
     : `items-center flex text-${
-        subtitle ? "lg" : "2xl"
-      } mt-6 font-bold text-white gap-3 flex`;
+      subtitle ? 'lg' : '2xl'
+    } mt-6 font-bold text-white gap-3 flex`;
 
   return (
     <>

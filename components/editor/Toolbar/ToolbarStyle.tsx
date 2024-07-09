@@ -1,15 +1,15 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { TbInfoCircle } from "react-icons/tb";
-import { ToolbarLabel } from "./Label";
+import { Tooltip } from 'components/layout/Tooltip';
+import { TbInfoCircle } from 'react-icons/tb';
+import { ToolbarLabel } from './Label';
 
-export const BgWrap = ({ children, className = "", wrap = null }) => {
+export const BgWrap = ({ children, className = '', wrap = null }) => {
   if (wrap) {
     return children;
   }
   return (
     <div
       className={`rounded-lg bg-gray-500/50 border-gray-500 border w-full px-3 py-3  space-y-3 ${
-        className ? className : " input-hover"
+        className || ' input-hover'
       }`}
     >
       {children}
@@ -20,8 +20,8 @@ export const BgWrap = ({ children, className = "", wrap = null }) => {
 const Labler = ({
   props,
   lab,
-  viewValue = "mobile",
-  propType = "class",
+  viewValue = 'mobile',
+  propType = 'class',
   propKey,
   index = null,
   propItemKey = null,
@@ -32,7 +32,7 @@ const Labler = ({
   return (
     <h4
       className={`text-white ${
-        lab ? "my-3" : "mb-3"
+        lab ? 'my-3' : 'mb-3'
       } gap-3 h-6 flex justify-between`}
     >
       <div className="flex gap-1.5 items-center">
@@ -61,10 +61,10 @@ const Labler = ({
 export const Wrap = ({
   children,
   props,
-  lab = "",
-  viewValue = "mobile",
-  propType = "class",
-  propKey = "",
+  lab = '',
+  viewValue = 'mobile',
+  propType = 'class',
+  propKey = '',
   index = null,
   propItemKey = null,
   wrap = null,
@@ -87,7 +87,7 @@ export const Wrap = ({
 export const Card = ({
   value,
   onClick,
-  bgColor = "bg-violet-300 inside-shadow",
+  bgColor = 'bg-violet-300 inside-shadow',
 }) => {
   if (!value) {
     return null;
@@ -126,7 +126,7 @@ export const Accord = ({
   setAccordion,
   title,
   children,
-  className = "",
+  className = '',
   buttons = [],
 }) => {
   const active = accordion === prop;
@@ -136,7 +136,7 @@ export const Accord = ({
       <div className="flex">
         <h4
           className="whitespace-nowrap font-2xl font-bold cursor-pointer truncate pr-3 w-full"
-          onClick={() => setAccordion(active ? "" : prop)}
+          onClick={() => setAccordion(active ? '' : prop)}
         >
           {title}
         </h4>

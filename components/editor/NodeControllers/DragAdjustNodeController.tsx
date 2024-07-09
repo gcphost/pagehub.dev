@@ -1,9 +1,9 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { AnimatePresence } from "framer-motion";
-import { useRecoilValue } from "recoil";
-import RenderNodeControl from "../RenderNodeControl";
-import { ViewAtom } from "../Viewport";
-import DragAdjust from "../Viewport/Toolbox/DragAdjust";
+import { useEditor, useNode } from '@craftjs/core';
+import { AnimatePresence } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
+import RenderNodeControl from '../RenderNodeControl';
+import { ViewAtom } from '../Viewport';
+import DragAdjust from '../Viewport/Toolbox/DragAdjust';
 
 export const DragAdjustNodeController = (props: {
   position;
@@ -15,13 +15,14 @@ export const DragAdjustNodeController = (props: {
   styleToUse;
   alt?: any;
 }) => {
-  const { position, align, direction, propVar, icon, name, styleToUse, alt } =
-    props as any;
+  const {
+    position, align, direction, propVar, icon, name, styleToUse, alt
+  } = props as any;
 
   const { id } = useNode();
 
   const { isActive } = useEditor((_, query) => ({
-    isActive: query.getEvent("selected").contains(id),
+    isActive: query.getEvent('selected').contains(id),
   }));
 
   const dom = document.querySelector(`[node-id="${id}"]`);
@@ -32,7 +33,7 @@ export const DragAdjustNodeController = (props: {
 
   const view = useRecoilValue(ViewAtom);
 
-  //const { basecolor, background } = getColors(dom, node.data.props);
+  // const { basecolor, background } = getColors(dom, node.data.props);
 
   return (
     <AnimatePresence>
@@ -43,10 +44,10 @@ export const DragAdjustNodeController = (props: {
           alt={alt}
           placement="middle"
           hPlacement="start"
-          className={`whitespace-nowrap items-center justify-center select-none fixed pointer-events-auto`}
+          className={'whitespace-nowrap items-center justify-center select-none fixed pointer-events-auto'}
         >
           <DragAdjust
-            //className={` ${basecolor} ${background}`}
+            // className={` ${basecolor} ${background}`}
             className="btn"
             targetElement={dom}
             direction={direction}

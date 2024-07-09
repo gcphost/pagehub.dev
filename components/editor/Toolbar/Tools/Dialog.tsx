@@ -1,8 +1,8 @@
-import { ulVariants } from "components/editor/Viewport/ToolboxContextual";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { SideBarAtom } from "utils/lib";
+import { ulVariants } from 'components/editor/Viewport/ToolboxContextual';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { SideBarAtom } from 'utils/lib';
 
 export const Dialog = ({
   dialogName,
@@ -10,13 +10,12 @@ export const Dialog = ({
   items = [],
   height = 320,
   callback = null,
-  value = "",
+  value = '',
   children = null,
   width = null,
-  className = "",
-  onSearch = (_, value) =>
-    _.search(new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")) >
-    -1,
+  className = '',
+  onSearch = (_, value) => _.search(new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'))
+    > -1,
 }) => {
   const [dialog, setDialog] = useRecoilState(dialogAtom) as any;
   const sideBarLeft = useRecoilValue(SideBarAtom);
@@ -67,7 +66,7 @@ export const Dialog = ({
   const changed = (value) => {
     if (!dialog.changed) return;
 
-    setDialog({ ...dialog, value: value, enabled: false });
+    setDialog({ ...dialog, value, enabled: false });
     dialog.changed(value);
   };
 
@@ -84,10 +83,10 @@ export const Dialog = ({
   };
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener('click', handleClickOutside, true);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener('click', handleClickOutside, true);
     };
   }, [dialog.enabled, ref]);
 
@@ -96,8 +95,7 @@ export const Dialog = ({
   useEffect(() => {
     if (dialog.value) {
       const element = document.getElementById(`${dialogName}-${value}`);
-      if (element && refIe.current)
-        refIe.current.scrollTo({ top: element.offsetTop });
+      if (element && refIe.current) refIe.current.scrollTo({ top: element.offsetTop });
     }
   }, [dialog.enabled, dialog.value, ref]);
 
@@ -105,19 +103,19 @@ export const Dialog = ({
     <AnimatePresence>
       {dialog.enabled && (
         <motion.div
-          animate={{ opacity: 1, width: width, height }}
+          animate={{ opacity: 1, width, height }}
           variants={ulVariants}
           transition={ulVariants.transition}
-          initial={{ opacity: 1, width: width, height: 0 }}
-          exit={{ opacity: 1, width: width, height: 0 }}
+          initial={{ opacity: 1, width, height: 0 }}
+          exit={{ opacity: 1, width, height: 0 }}
           key={dialogName}
           id={dialogName}
           ref={ref}
           style={style}
-          className={`absolute z-20 flex pointer-events-none `}
+          className={'absolute z-20 flex pointer-events-none '}
         >
           <div
-            className={`h-full w-full overflow-hidden my-auto bg-white rounded-lg  p-0 border-2 border-gray-800/60  pointer-events-auto  drop-shadow-2xl  `}
+            className={'h-full w-full overflow-hidden my-auto bg-white rounded-lg  p-0 border-2 border-gray-800/60  pointer-events-auto  drop-shadow-2xl  '}
           >
             {children && children}
 
@@ -158,13 +156,13 @@ export const Dialog = ({
                       <div
                         id={`font-${_}`}
                         className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${
-                          dialog.value === _ ? "bg-white" : ""
+                          dialog.value === _ ? 'bg-white' : ''
                         }`}
-                        style={{ fontFamily: (_ || []).join(", ") }}
+                        style={{ fontFamily: (_ || []).join(', ') }}
                         key={k}
                         onClick={(e) => changed(_)}
                       >
-                        {_.join(", ")}
+                        {_.join(', ')}
                       </div>
                     );
                   })}

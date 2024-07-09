@@ -21,7 +21,7 @@ glob(`${rootDir}/**/*.svg`, (err, files) => {
     if (!folderObject[dirName]) {
       folderObject[dirName] = [];
     }
-    folderObject[dirName].push(file.replace("./public", ""));
+    folderObject[dirName].push(file.replace('./public', ''));
   });
 
   // Write the object to a JSON file

@@ -1,8 +1,8 @@
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarItem } from "../ToolbarItem";
+import { TailwindStyles } from 'utils/tailwind';
+import { ToolbarItem } from '../ToolbarItem';
 
 export const TailwindInput = ({
-  type = "slider",
+  type = 'slider',
   propKey,
   min = 0,
   label,

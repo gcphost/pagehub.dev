@@ -1,29 +1,29 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
-import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
-import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
+import { useEditor, useNode } from '@craftjs/core';
+import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
+import { ToolNodeController } from 'components/editor/NodeControllers/ToolNodeController';
+import TextSettingsNodeTool from 'components/editor/NodeControllers/Tools/TextSettingsNodeTool';
 import {
   getClonedState,
   setClonedProps,
-} from "components/editor/Toolbar/Helpers/CloneHelper";
-import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
-import React, { useRef } from "react";
-import { TbBrandYoutube } from "react-icons/tb";
+} from 'components/editor/Toolbar/Helpers/CloneHelper';
+import { PreviewAtom, ViewAtom } from 'components/editor/Viewport';
+import React, { useRef } from 'react';
+import { TbBrandYoutube } from 'react-icons/tb';
 
-const DynamicYouTube = React.lazy(() => import("react-youtube"));
+import { useRecoilValue } from 'recoil';
+import { motionIt } from 'utils/lib';
+import { ClassGenerator, applyAnimation } from 'utils/tailwind';
+import { BaseSelectorProps } from '..';
+
+import { VideoSettings } from './VideoSettings';
+
+const DynamicYouTube = React.lazy(() => import('react-youtube'));
 
 const YouTube = (props) => (
   <React.Suspense fallback={<div>Loading...</div>}>
     <DynamicYouTube {...props} />
   </React.Suspense>
 );
-
-import { useRecoilValue } from "recoil";
-import { motionIt } from "utils/lib";
-import { ClassGenerator, applyAnimation } from "utils/tailwind";
-import { BaseSelectorProps } from "..";
-
-import { VideoSettings } from "./VideoSettings";
 
 interface VideoProps extends BaseSelectorProps {
   videoId?: string;
@@ -48,9 +48,7 @@ export const Video = (props: VideoProps) => {
     id,
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) => {
-    return getClonedState(props, state);
-  });
+  const { actions, query, enabled } = useEditor((state) => getClonedState(props, state));
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
@@ -66,14 +64,14 @@ export const Video = (props: VideoProps) => {
       ref.current = r;
       connect(drag(r));
     },
-    className: "",
+    className: '',
     children: videoId ? (
       <YouTube
         className={ClassGenerator(props, view, enabled, [], [], preview)}
         videoId={videoId}
         opts={{
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
         }}
       />
     ) : enabled ? (
@@ -82,20 +80,20 @@ export const Video = (props: VideoProps) => {
   };
 
   if (enabled) {
-    prop["data-bounding-box"] = enabled;
-    prop["data-empty-state"] = !videoId;
-    prop["node-id"] = id;
-    prop["onClick"] = (e) => e.preventDefault();
+    prop['data-bounding-box'] = enabled;
+    prop['data-empty-state'] = !videoId;
+    prop['node-id'] = id;
+    prop.onClick = (e) => e.preventDefault();
   }
 
   return React.createElement(
-    motionIt(props, "div"),
+    motionIt(props, 'div'),
     applyAnimation({ ...prop, key: id }, props)
   );
 };
 
 Video.craft = {
-  displayName: "Video",
+  displayName: 'Video',
   related: {
     toolbar: VideoSettings,
   },

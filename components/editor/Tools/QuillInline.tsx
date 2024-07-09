@@ -1,35 +1,35 @@
-import PropTypes from "prop-types";
-import Quill from "quill";
-import { useEffect, useRef } from "react";
+import PropTypes from 'prop-types';
+import Quill from 'quill';
+import { useEffect, useRef } from 'react';
 
 const defaultMenuItems = [
   {
-    label: "Bold",
+    label: 'Bold',
     icon: '<i class="fa fa-bold"></i>',
     handler: () => {
-      document.execCommand("bold", false, null);
+      document.execCommand('bold', false, null);
     },
   },
   {
-    label: "Italic",
+    label: 'Italic',
     icon: '<i class="fa fa-italic"></i>',
     handler: () => {
-      document.execCommand("italic", false, null);
+      document.execCommand('italic', false, null);
     },
   },
   {
-    label: "Underline",
+    label: 'Underline',
     icon: '<i class="fa fa-underline"></i>',
     handler: () => {
-      document.execCommand("underline", false, null);
+      document.execCommand('underline', false, null);
     },
   },
   {
-    label: "Link",
+    label: 'Link',
     icon: '<i class="fa fa-link"></i>',
     handler: () => {
-      const url = window.prompt("Enter URL");
-      document.execCommand("createLink", false, url);
+      const url = window.prompt('Enter URL');
+      document.execCommand('createLink', false, url);
     },
   },
 ];
@@ -44,7 +44,7 @@ export const QuillInline = ({
   useEffect(() => {
     if (quillRef.current) {
       const quill = new Quill(quillRef.current, {
-        theme: "snow",
+        theme: 'snow',
         modules: {
           toolbar: {
             container: toolbarRef.current,
@@ -56,7 +56,7 @@ export const QuillInline = ({
         contentEditableRef.current.innerHTML = quill.root.innerHTML;
       }
 
-      quill.on("text-change", () => {
+      quill.on('text-change', () => {
         if (contentEditableRef) {
           contentEditableRef.current.innerHTML = quill.root.innerHTML;
         }

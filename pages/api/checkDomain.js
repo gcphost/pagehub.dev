@@ -1,6 +1,6 @@
 // @ts-ignore
-import Page from "../../models/page";
-import dbConnect from "../../utils/dbConnect";
+import Page from '../../models/page';
+import dbConnect from '../../utils/dbConnect';
 
 export default async function check(req, res) {
   await dbConnect();
@@ -14,10 +14,14 @@ export default async function check(req, res) {
     const named = await Page.findOne({ $or: [{ name }, { draftId: name }] });
 
     if (named) {
-      const { title, description, content, name, domain } = named;
+      const {
+        title, description, content, name, domain
+      } = named;
       return res
         .status(200)
-        .json({ name, title, description, content, domain });
+        .json({
+          name, title, description, content, domain
+        });
     }
   } catch (e) {
     return res.status(500).json(e);

@@ -1,12 +1,11 @@
-import { ToolbarItem } from "../ToolbarItem";
+import { useNode } from '@craftjs/core';
+import { TailwindStyles } from 'utils/tailwind';
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
+import { ColorInput } from './ColorInput';
+import { RadiusInput } from './RadiusInput';
 
-import { useNode } from "@craftjs/core";
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarSection } from "../ToolbarSection";
-import { ColorInput } from "./ColorInput";
-import { RadiusInput } from "./RadiusInput";
-
-export const BorderInput = ({ index = "" }) => {
+export const BorderInput = ({ index = '' }) => {
   const { props } = useNode((node) => ({
     props: node.data.props,
   }));
@@ -73,7 +72,7 @@ export const BorderInput = ({ index = "" }) => {
               on="border-b"
               labelHide={true}
               cols={true}
-              label={" "}
+              label={' '}
               index={index}
             />
             <ToolbarItem
@@ -84,7 +83,7 @@ export const BorderInput = ({ index = "" }) => {
               on="border-l"
               labelHide={true}
               cols={true}
-              label={" "}
+              label={' '}
               index={index}
             />
             <ToolbarItem
@@ -95,7 +94,7 @@ export const BorderInput = ({ index = "" }) => {
               on="border-r"
               labelHide={true}
               cols={true}
-              label={" "}
+              label={' '}
               index={index}
             />
           </ToolbarSection>

@@ -1,26 +1,25 @@
-import { useNode } from "@craftjs/core";
-import { ViewAtom } from "components/editor/Viewport";
-import { changeProp, getProp } from "components/editor/Viewport/lib";
-import { getRect } from "components/editor/Viewport/useRect";
-import { useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { Wrap } from "../ToolbarStyle";
-import { ColorPickerAtom } from "../Tools/ColorPickerDialog";
-import { useDialog } from "../Tools/lib";
+import { useNode } from '@craftjs/core';
+import { ViewAtom } from 'components/editor/Viewport';
+import { changeProp, getProp } from 'components/editor/Viewport/lib';
+import { getRect } from 'components/editor/Viewport/useRect';
+import { useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { Wrap } from '../ToolbarStyle';
+import { ColorPickerAtom } from '../Tools/ColorPickerDialog';
+import { useDialog } from '../Tools/lib';
 
 export const bgAndVal = ({ value, prefix }) => {
   let val = value ? value?.split(`${prefix}-`).filter((_) => _)[0] : null;
   let bg = val;
 
   if (
-    val &&
-    !val.includes("-") &&
-    !val.includes("[") &&
-    (val.includes("#") || val.includes("rgba"))
-  )
-    bg = `[${val}]`;
+    val
+    && !val.includes('-')
+    && !val.includes('[')
+    && (val.includes('#') || val.includes('rgba'))
+  ) bg = `[${val}]`;
 
-  if (bg?.includes("[")) val = bg.replace("[", "").replace("]", "");
+  if (bg?.includes('[')) val = bg.replace('[', '').replace(']', '');
 
   return [bg, val];
 };
@@ -28,11 +27,11 @@ export const bgAndVal = ({ value, prefix }) => {
 export const ColorInput = (__props: any) => {
   const {
     propKey,
-    label = "",
-    prefix = "",
+    label = '',
+    prefix = '',
     index = null,
-    propItemKey = "",
-    propType = "class",
+    propItemKey = '',
+    propType = 'class',
     showPallet = true,
     onChange = () => {},
     labelHide = false,
@@ -48,7 +47,7 @@ export const ColorInput = (__props: any) => {
     nodeProps: node.data.props || {},
   }));
 
-  const value = getProp(__props, view, nodeProps) || "";
+  const value = getProp(__props, view, nodeProps) || '';
 
   const [bg, cpVAl] = bgAndVal({ value, prefix });
 
@@ -56,9 +55,9 @@ export const ColorInput = (__props: any) => {
     let val = data.value;
 
     if (val) {
-      if (data.type === "hex") {
+      if (data.type === 'hex') {
         val = prefix ? `${prefix}-[${val}]` : `${val}`;
-      } else if (data.type === "rgb") {
+      } else if (data.type === 'rgb') {
         val = `rgba(${val.r},${val.g},${val.b},${val.a})`;
         val = prefix ? `${prefix}-[${val}]` : val;
       } else {

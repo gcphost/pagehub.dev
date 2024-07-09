@@ -1,18 +1,14 @@
 // @ts-ignore
-//import patterns from '../../../patterns';
-import Pattern from "../../models/patterns.model";
-import dbConnect from "../../utils/dbConnect";
+// import patterns from '../../../patterns';
+import Pattern from '../../models/patterns.model';
+import dbConnect from '../../utils/dbConnect';
 
-const patterns = []
+const patterns = [];
 
 export default async function seed(req, res) {
   await dbConnect();
 
-
   try {
-
-
-
     for (const pattern of patterns) {
       try {
         await Pattern.create(pattern);
@@ -21,9 +17,6 @@ export default async function seed(req, res) {
         console.error(`Error creating pattern: ${pattern.title}`, error);
       }
     }
-
-
-
   } catch (e) {
     return res.status(500).json(e);
   }

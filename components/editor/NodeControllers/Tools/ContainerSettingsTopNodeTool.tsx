@@ -1,10 +1,10 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { ToolbarItem } from "components/editor/Toolbar";
-import { FlexDirectionInput } from "components/editor/Toolbar/Inputs/FlexDirectionInput";
-import { NodeToolWrapper } from "components/editor/Tools/NodeDialog";
-import { ViewAtom } from "components/editor/Viewport";
-import { getPropFinalValue } from "components/editor/Viewport/lib";
-import { AddElement, Tools } from "components/editor/Viewport/Toolbox/lib";
+import { useEditor, useNode } from '@craftjs/core';
+import { ToolbarItem } from 'components/editor/Toolbar';
+import { FlexDirectionInput } from 'components/editor/Toolbar/Inputs/FlexDirectionInput';
+import { NodeToolWrapper } from 'components/editor/Tools/NodeDialog';
+import { ViewAtom } from 'components/editor/Viewport';
+import { getPropFinalValue } from 'components/editor/Viewport/lib';
+import { AddElement, Tools } from 'components/editor/Viewport/Toolbox/lib';
 import {
   TbLayoutAlignBottom,
   TbLayoutAlignCenter,
@@ -14,14 +14,14 @@ import {
   TbLayoutAlignTop,
   TbPlus,
   TbRowInsertTop,
-} from "react-icons/tb";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { MenuItemState, MenuState } from "utils/lib";
+} from 'react-icons/tb';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { MenuItemState, MenuState } from 'utils/lib';
 
 // if row alignItems is vertical,
 // if row justify is horizontal
 
-export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
+export function ContainerSettingsTopNodeTool({ direction = 'horizontal' }) {
   const view = useRecoilValue(ViewAtom);
 
   const {
@@ -31,29 +31,29 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
     nodeProps: node.data.props || {},
   }));
 
-  let { value, viewValue } = getPropFinalValue(
+  const { value, viewValue } = getPropFinalValue(
     {
-      propKey: "flexDirection",
+      propKey: 'flexDirection',
     },
     view,
     nodeProps
   );
 
-  let horizontal = "items";
-  let vertical = "justify";
-  let propKey = "alignItems";
+  let horizontal = 'items';
+  let vertical = 'justify';
+  let propKey = 'alignItems';
 
-  if (["flex-row", "flex-row-reverse"].includes(value)) {
-    propKey = "justifyContent";
-    horizontal = "justify";
-    vertical = "items";
+  if (['flex-row', 'flex-row-reverse'].includes(value)) {
+    propKey = 'justifyContent';
+    horizontal = 'justify';
+    vertical = 'items';
   }
 
   let options = [
     {
       value: `${horizontal}-start`,
       label:
-        value === "flex-row-reverse" ? (
+        value === 'flex-row-reverse' ? (
           <TbLayoutAlignRight />
         ) : (
           <TbLayoutAlignLeft />
@@ -63,7 +63,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
     {
       value: `${horizontal}-end`,
       label:
-        value === "flex-row-reverse" ? (
+        value === 'flex-row-reverse' ? (
           <TbLayoutAlignLeft />
         ) : (
           <TbLayoutAlignRight />
@@ -71,18 +71,18 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
     },
   ];
 
-  if (direction !== "horizontal") {
-    propKey = "justifyContent";
+  if (direction !== 'horizontal') {
+    propKey = 'justifyContent';
 
-    if (["flex-row", "flex-row-reverse"].includes(value)) {
-      propKey = "alignItems";
+    if (['flex-row', 'flex-row-reverse'].includes(value)) {
+      propKey = 'alignItems';
     }
 
     options = [
       {
         value: `${vertical}-start`,
         label:
-          value === "flex-col-reverse" ? (
+          value === 'flex-col-reverse' ? (
             <TbLayoutAlignBottom />
           ) : (
             <TbLayoutAlignTop />
@@ -92,7 +92,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
       {
         value: `${vertical}-end`,
         label:
-          value === "flex-col-reverse" ? (
+          value === 'flex-col-reverse' ? (
             <TbLayoutAlignTop />
           ) : (
             <TbLayoutAlignBottom />
@@ -105,18 +105,17 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
   const setShowMenu = useSetRecoilState(MenuState);
   const setShowMenuType = useSetRecoilState(MenuItemState);
 
-  const match =
-    (direction === "horizontal" &&
-      ["flex-row", "flex-row-reverse"].includes(value)) ||
-    (direction !== "horizontal" &&
-      ["flex-col", "flex-col-reverse"].includes(value));
+  const match = (direction === 'horizontal'
+      && ['flex-row', 'flex-row-reverse'].includes(value))
+    || (direction !== 'horizontal'
+      && ['flex-col', 'flex-col-reverse'].includes(value));
 
   return (
     <NodeToolWrapper
-      col={direction !== "horizontal"}
+      col={direction !== 'horizontal'}
       className={`bg-violet-500 inside-shadow text-black rounded-${
-        direction == "horizontal" ? "t" : "l"
-      }-md ${direction == "horizontal" ? "px-3" : "py-3 px-1.5"}`}
+        direction == 'horizontal' ? 't' : 'l'
+      }-md ${direction == 'horizontal' ? 'px-3' : 'py-3 px-1.5'}`}
       animate={{
         initial: { opacity: 0 },
         animate: {
@@ -125,7 +124,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
           transition: {
             delay: 0.5,
             duration: 0.5,
-            type: "spring",
+            type: 'spring',
             stiffness: 200,
             damping: 20,
             mass: 0.5,
@@ -137,7 +136,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
           transition: {
             delay: 0.2,
             duration: 0.3,
-            type: "spring",
+            type: 'spring',
             stiffness: 200,
             damping: 20,
             mass: 0.5,
@@ -150,12 +149,12 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         type="toggleNext"
         label=""
         labelHide={true}
-        cols={direction === "horizontal"}
+        cols={direction === 'horizontal'}
         wrap="control"
         options={options}
       />
 
-      {direction == "horizontal" && (
+      {direction == 'horizontal' && (
         <FlexDirectionInput wrap="control" type="toggleNext" />
       )}
 
@@ -163,11 +162,11 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         <div className="h-6 w-6 flex items-center justify-center">
           <button
             className={`text-white ${
-              direction == "horizontal" ? "-rotate-90" : ""
+              direction == 'horizontal' ? '-rotate-90' : ''
             }`}
             onClick={() => {
               AddElement({
-                element: ["flex-row", "flex-row-reverse"].includes(value)
+                element: ['flex-row', 'flex-row-reverse'].includes(value)
                   ? Tools.columnContainer
                   : Tools.rowContainer,
                 actions,
@@ -184,11 +183,11 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         <div className="h-6 w-6 flex items-center justify-center">
           <button
             className={`text-white ${
-              direction == "horizontal" ? "-rotate-90" : ""
+              direction == 'horizontal' ? '-rotate-90' : ''
             }`}
             onClick={() => {
               setShowMenu(true);
-              setShowMenuType("components");
+              setShowMenuType('components');
             }}
           >
             <TbPlus />

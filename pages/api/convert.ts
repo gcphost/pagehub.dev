@@ -1,11 +1,11 @@
-import * as htmlparser2 from "htmlparser2";
-import { NextApiRequest, NextApiResponse } from "next";
+import * as htmlparser2 from 'htmlparser2';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{}>
 ) {
-  let _content = `<div class="items-start border-solid flex flex-col justify-center leading-6 p-8">
+  const _content = `<div class="items-start border-solid flex flex-col justify-center leading-6 p-8">
   <h1 class="text-yellow-300 text-[3.00rem] leading-[3.00rem] p-2">TechFest</h1>
   <h2 class="text-[3.00rem] leading-[4.13rem] mb-2">Space : The Timeless Infinity
   </h2>
@@ -14,75 +14,75 @@ export default async function handler(
   <a class="rounded text-yellow-300 cursor-pointer leading-6 p-2" href="https://tailwindcomponents.com/#">Explore Now</a>
 </div>`;
 
-  //console.log(
+  // console.log(
   //  JSON.stringify({
   //    content: _content,
   //  })
-  //);
+  // );
 
   let { content } = req.body;
 
-  //content = _content;
-  content = content.replace(/\n/g, "");
-  content = content.replace(/\s{2,}/g, " "); // replace any sequence of 2 or more whitespace characters with a single space
+  // content = _content;
+  content = content.replace(/\n/g, '');
+  content = content.replace(/\s{2,}/g, ' '); // replace any sequence of 2 or more whitespace characters with a single space
 
-  let parsedData = [];
+  const parsedData = [];
 
   const nodeLookup = {
-    div: "Container",
-    section: "Container",
-    main: "Container",
-    a: "Text",
-    text: "Text",
-    p: "Text",
-    h1: "Text",
-    h2: "Text",
-    h3: "Text",
-    h4: "Text",
-    h5: "Text",
-    h6: "Text",
-    h7: "Text",
-    img: "Image",
-    abbr: "Text",
-    acronym: "Text",
-    address: "Text",
-    article: "Container",
-    aside: "Container",
+    div: 'Container',
+    section: 'Container',
+    main: 'Container',
+    a: 'Text',
+    text: 'Text',
+    p: 'Text',
+    h1: 'Text',
+    h2: 'Text',
+    h3: 'Text',
+    h4: 'Text',
+    h5: 'Text',
+    h6: 'Text',
+    h7: 'Text',
+    img: 'Image',
+    abbr: 'Text',
+    acronym: 'Text',
+    address: 'Text',
+    article: 'Container',
+    aside: 'Container',
     // audio: "Media",
-    b: "Text",
-    bdi: "Text",
-    bdo: "Text",
-    big: "Text",
-    blockquote: "Text",
-    //body: "Container",
-    br: "Text",
-    button: "Button",
+    b: 'Text',
+    bdi: 'Text',
+    bdo: 'Text',
+    big: 'Text',
+    blockquote: 'Text',
+    // body: "Container",
+    br: 'Text',
+    button: 'Button',
     // canvas: "Canvas",
-    caption: "Text",
-    cite: "Text",
-    code: "Text",
-    col: "Text",
-    colgroup: "Text",
-    data: "Text",
-    datalist: "Text",
-    dd: "Text",
-    del: "Text",
-    details: "Container",
-    dfn: "Text",
+    caption: 'Text',
+    cite: 'Text',
+    code: 'Text',
+    col: 'Text',
+    colgroup: 'Text',
+    data: 'Text',
+    datalist: 'Text',
+    dd: 'Text',
+    del: 'Text',
+    details: 'Container',
+    dfn: 'Text',
     // dialog: "",
-    form: "Form",
-    input: "FormElement",
-    select: "FormElement",
-    textarea: "FormElement",
+    form: 'Form',
+    input: 'FormElement',
+    select: 'FormElement',
+    textarea: 'FormElement',
   };
 
   const parseHtml = (html) => {
-    const parsedData = { tag: "html", children: [], props: {} };
+    const parsedData = { tag: 'html', children: [], props: {} };
     let currentTag: any = parsedData;
 
     const parser = new htmlparser2.Parser(
       {
-        onopentag: function (tagName, attributes) {
+        onopentag(tagName, attributes) {
           const tagData: any = {
             type: nodeLookup[tagName],
             props: {
@@ -96,25 +96,25 @@ export default async function handler(
             parent: currentTag,
           };
 
-          if (tagData.type === "Image") {
+          if (tagData.type === 'Image') {
             tagData.props.videoId = tagData.props.src;
           }
 
           if (attributes.class) {
-            tagData.props.className = attributes.class.split(" ");
+            tagData.props.className = attributes.class.split(' ');
           } else {
             tagData.props.className = [];
           }
           currentTag.children.push(tagData);
           currentTag = tagData;
         },
-        ontext: function (text) {
+        ontext(text) {
           const trimmedText = text.trim();
-          if (trimmedText !== "") {
+          if (trimmedText !== '') {
             currentTag.props.text = trimmedText;
           }
         },
-        onclosetag: function (tagName) {
+        onclosetag(tagName) {
           if (currentTag.parent) {
             currentTag = currentTag.parent;
           }

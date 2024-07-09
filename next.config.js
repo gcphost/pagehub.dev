@@ -1,28 +1,26 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
+});
+
 module.exports = withBundleAnalyzer({
   basePath: '',
   assetPrefix: '',
-  rewrites: async () => {
-
-    return [
-      {
-        source: '/robots.txt',
-        destination: '/api/robots.txt',
-      },
-      {
-        source: '/',
-        has: [
-          {
-            type: 'host',
-            value: '^(?!.*\\.pagehub\\.co$)(?!pagehub\\.co$).+',
-          },
-        ],
-        destination: '/static/:host',
-      },
-    ]
-  },
+  rewrites: async () => [
+    {
+      source: '/robots.txt',
+      destination: '/api/robots.txt',
+    },
+    {
+      source: '/',
+      has: [
+        {
+          type: 'host',
+          value: '^(?!.*\\.pagehub\\.co$)(?!pagehub\\.co$).+',
+        },
+      ],
+      destination: '/static/:host',
+    },
+  ],
   compress: true,
   images: {
     unoptimized: true,
@@ -42,9 +40,6 @@ module.exports = withBundleAnalyzer({
       use: ['svg-url-loader']
     });
 
-
-
     return config;
   }
-})
-
+});

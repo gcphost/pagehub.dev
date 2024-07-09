@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { applyPattern } from "utils/lib";
-import { ClassGenerator } from "utils/tailwind";
+import { useEffect, useState } from 'react';
+import { applyPattern } from 'utils/lib';
+import { ClassGenerator } from 'utils/tailwind';
 
 export const RenderPattern = ({
   children,
@@ -13,15 +13,15 @@ export const RenderPattern = ({
 }) => {
   const inlayProps = applyPattern({}, props, settings);
   const inlayClass = props?.root?.backgroundGradient
-    ? "flex w-full h-full"
+    ? 'flex w-full h-full'
     : `${ClassGenerator(
-        props,
-        view,
-        enabled,
-        [],
-        properties,
-        preview
-      )} flex w-full h-full`;
+      props,
+      view,
+      enabled,
+      [],
+      properties,
+      preview
+    )} flex w-full h-full`;
 
   if (inlayProps?.style?.backgroundImage) {
     return (
@@ -59,40 +59,36 @@ export const RenderGradient = ({
 };
 
 export const inlayProps = [
-  "backgroundGradient",
-  "backgroundGradientTo",
-  "backgroundGradientFrom",
-  "px",
-  "py",
-  "flexDirection",
-  "alignItems",
-  "justifyContent",
-  "flexGrow",
-  "p",
-  "gap",
+  'backgroundGradient',
+  'backgroundGradientTo',
+  'backgroundGradientFrom',
+  'px',
+  'py',
+  'flexDirection',
+  'alignItems',
+  'justifyContent',
+  'flexGrow',
+  'p',
+  'gap',
 ];
 
-export const hasInlay = (props) => {
-  return props.backgroundImage && props.root.backgroundGradient;
-};
+export const hasInlay = (props) => props.backgroundImage && props.root.backgroundGradient;
 
 export const useFindScrollingParent = (id) => {
   const [scrollingParent, setScrollingParent] = useState<HTMLElement | null>(
     null
   );
   const element: HTMLElement = document.querySelector(`[node-id="${id}"]`);
-  const classesToCheck = ["overflow-auto", "overflow-y-auto"];
+  const classesToCheck = ['overflow-auto', 'overflow-y-auto'];
 
   useEffect(() => {
     let currentElement = element?.parentElement;
     while (currentElement && currentElement !== null) {
-      const hasClass = classesToCheck.some((className) =>
-        currentElement.classList.contains(className)
-      );
+      const hasClass = classesToCheck.some((className) => currentElement.classList.contains(className));
 
       if (
-        currentElement.scrollHeight > currentElement.clientHeight &&
-        hasClass
+        currentElement.scrollHeight > currentElement.clientHeight
+        && hasClass
       ) {
         setScrollingParent(currentElement);
         break;
@@ -115,10 +111,10 @@ export const useIsInViewport = (
     if (element && scrollingParent) {
       const rect = element.getBoundingClientRect();
       setIsInViewport(
-        rect.top >= 0 &&
-          rect.left >= 0 &&
-          rect.bottom <= scrollingParent.clientHeight &&
-          rect.right <= scrollingParent.clientWidth
+        rect.top >= 0
+          && rect.left >= 0
+          && rect.bottom <= scrollingParent.clientHeight
+          && rect.right <= scrollingParent.clientWidth
       );
     }
   }, [element, scrollingParent]);
@@ -126,44 +122,41 @@ export const useIsInViewport = (
   return isInViewport;
 };
 
-export const useScrollToSelected = (id, enabled) =>
-  useEffect(() => {
-    const selected: HTMLElement = document.querySelector(`[node-id="${id}"]`);
+export const useScrollToSelected = (id, enabled) => useEffect(() => {
+  const selected: HTMLElement = document.querySelector(`[node-id="${id}"]`);
 
-    if (!id || !selected || !enabled) return;
+  if (!id || !selected || !enabled) return;
 
-    const classesToCheck = ["overflow-auto", "overflow-y-auto"];
-    let scrollingDiv = null;
-    let currentElement = selected.parentElement;
-    while (currentElement !== null) {
-      const hasClass = classesToCheck.some((className) =>
-        currentElement.classList.contains(className)
-      );
+  const classesToCheck = ['overflow-auto', 'overflow-y-auto'];
+  let scrollingDiv = null;
+  let currentElement = selected.parentElement;
+  while (currentElement !== null) {
+    const hasClass = classesToCheck.some((className) => currentElement.classList.contains(className));
 
-      if (
-        currentElement.scrollHeight > currentElement.clientHeight &&
-        hasClass
-      ) {
-        scrollingDiv = currentElement;
-        break;
-      }
-      currentElement = currentElement.parentElement;
+    if (
+      currentElement.scrollHeight > currentElement.clientHeight
+        && hasClass
+    ) {
+      scrollingDiv = currentElement;
+      break;
     }
+    currentElement = currentElement.parentElement;
+  }
 
-    const isInViewport = (element) => {
-      const rect = element.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= scrollingDiv.clientHeight &&
-        rect.right <= scrollingDiv.clientWidth
-      );
-    };
+  const isInViewport = (element) => {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0
+        && rect.left >= 0
+        && rect.bottom <= scrollingDiv.clientHeight
+        && rect.right <= scrollingDiv.clientWidth
+    );
+  };
 
-    if (scrollingDiv !== null && !isInViewport(selected)) {
-      scrollingDiv.scroll({
-        top: selected.offsetTop,
-        behavior: "smooth",
-      });
-    }
-  }, [id, enabled]);
+  if (scrollingDiv !== null && !isInViewport(selected)) {
+    scrollingDiv.scroll({
+      top: selected.offsetTop,
+      behavior: 'smooth',
+    });
+  }
+}, [id, enabled]);

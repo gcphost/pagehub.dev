@@ -1,7 +1,7 @@
 module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    height: theme => ({
+    height: (theme) => ({
       auto: 'auto',
       ...theme('spacing'),
       full: '100%',
@@ -23,7 +23,7 @@ module.exports = {
   },
   variants: {},
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./public/**/*.html",
+    './pages/**/*.{ts,tsx}',
+    './public/**/*.html',
   ]
 };

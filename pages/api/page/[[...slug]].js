@@ -1,12 +1,12 @@
-import lz from "lzutf8";
+import lz from 'lzutf8';
 // @ts-ignore
-import { getServerSession } from "next-auth";
-import Page from "../../../models/page";
-import dbConnect from "../../../utils/dbConnect";
-import { authOptions } from "../auth/[...nextauth]";
-import { getDomain } from "../domain";
+import { getServerSession } from 'next-auth';
+import Page from '../../../models/page';
+import dbConnect from '../../../utils/dbConnect';
+import { authOptions } from '../auth/[...nextauth]';
+import { getDomain } from '../domain';
 
-const sluggit = require("slug");
+const sluggit = require('slug');
 
 // sanitize inputs for lenghts
 
@@ -27,8 +27,8 @@ export const parseContent = (content, slug) => {
 
   Object.keys(da)
     .map((_) => {
-      if (da[_]?.props?.type === "page") {
-        const slug = sluggit(da[_]?.custom?.displayName, "-");
+      if (da[_]?.props?.type === 'page') {
+        const slug = sluggit(da[_]?.custom?.displayName, '-');
         pageData[slug] = { key: _, data: da[_], slug };
         return slug;
       }
@@ -43,7 +43,7 @@ export const parseContent = (content, slug) => {
     if (homePage) {
       onlyPage = homePage;
     }
-  } else if (slug[0] === "index") {
+  } else if (slug[0] === 'index') {
     const homePage = Object.keys(pageData).find(
       (_) => pageData[_].data?.props?.isHomePage === true
     );
@@ -65,16 +65,14 @@ export const parseContent = (content, slug) => {
     const k = pageData[onlyPage].key;
     const props = da[k];
 
-    seo.title =
-      props.props.pageTitle ||
-      props.pageTitle ||
-      props?.custom?.displayName ||
-      null;
-    seo.description =
-      props.props.pageDescription || props.pageDescription || null;
+    seo.title = props.props.pageTitle
+      || props.pageTitle
+      || props?.custom?.displayName
+      || null;
+    seo.description = props.props.pageDescription || props.pageDescription || null;
 
     Object.keys(da).map((_) => {
-      if (da[_]?.props?.type === "page" && _ !== k) {
+      if (da[_]?.props?.type === 'page' && _ !== k) {
         da[_].props.isHidden = true;
         da[_].hidden = true;
       }
@@ -83,27 +81,30 @@ export const parseContent = (content, slug) => {
     data = JSON.stringify(da);
     return { data: lz.encodeBase64(lz.compress(data)), seo };
   }
-  console.error("404");
+  console.error('404');
 };
 
 export default async function api(req, res) {
   await dbConnect();
   const session = await getServerSession(req, res, authOptions);
 
-
   const [page, ...slug] = req.query.slug;
 
-  if (page === "&") return res.status(200).json({});
+  if (page === '&') return res.status(200).json({});
 
   try {
     const domained = await Page.findOne({ domain: page });
 
     if (domained) {
-      const { title, description, content, domain, name } = domained;
+      const {
+        title, description, content, domain, name
+      } = domained;
       const { data, seo } = parseContent(content, slug);
       return res
         .status(200)
-        .json({ title, description, content: data, seo, domain, name });
+        .json({
+          title, description, content: data, seo, domain, name
+        });
     }
   } catch (e) {
     return res.status(500).json(e);
@@ -113,11 +114,15 @@ export default async function api(req, res) {
     const named = await Page.findOne({ name: page });
 
     if (named) {
-      const { title, description, content, domain, name } = named;
+      const {
+        title, description, content, domain, name
+      } = named;
       const { data, seo } = parseContent(content, slug);
       return res
         .status(200)
-        .json({ title, description, content: data, seo, domain, name });
+        .json({
+          title, description, content: data, seo, domain, name
+        });
     }
   } catch (e) {
     return res.status(500).json(e);
@@ -158,14 +163,14 @@ export default async function api(req, res) {
     byid.submissions.reverse();
 
     return res.status(200).json({
-      title: byid.title || "",
-      description: byid.description || "",
-      content: byid.draft || "",
+      title: byid.title || '',
+      description: byid.description || '',
+      content: byid.draft || '',
       _id: byid._id,
-      draftId: byid.draftId || "",
+      draftId: byid.draftId || '',
       name: byid.name || null,
       submissions: byid.submissions || [],
-      domain: byid.domain || "",
+      domain: byid.domain || '',
       domainData: data || null,
       company: byid.company || null,
       companyType: byid.companyType || null,

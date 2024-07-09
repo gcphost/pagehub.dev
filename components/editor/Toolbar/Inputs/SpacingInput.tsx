@@ -1,27 +1,27 @@
-import { TabBody } from "../Tab";
-import { FlexInput } from "./FlexInput";
-import { MarginInput } from "./MarginInput";
-import { PaddingInput } from "./PaddingInput";
-import { SizeInput } from "./SizeInput";
+import { TabBody } from '../Tab';
+import { FlexInput } from './FlexInput';
+import { MarginInput } from './MarginInput';
+import { PaddingInput } from './PaddingInput';
+import { SizeInput } from './SizeInput';
 
 export const SpacingInput = () => (
   <TabBody
     jumps={[
       {
-        title: "Flex",
+        title: 'Flex',
         content: <div className="text-sm">Flex</div>,
       },
       {
-        title: "Size",
+        title: 'Size',
         content: <div className="text-sm">Size</div>,
       },
 
       {
-        title: "Margin",
+        title: 'Margin',
         content: <div className="text-sm">Margin</div>,
       },
       {
-        title: "Padding",
+        title: 'Padding',
         content: <div className="text-sm">Padding</div>,
       },
     ]}

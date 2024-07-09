@@ -1,7 +1,7 @@
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarItem } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
-import { FileUploadInput } from "./FileUploadInput";
+import { TailwindStyles } from 'utils/tailwind';
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
+import { FileUploadInput } from './FileUploadInput';
 
 export const BackgroundSettingsInput = ({ props }) => (
   <>
@@ -16,10 +16,10 @@ export const BackgroundSettingsInput = ({ props }) => (
       <ToolbarSection title="Image Settings" subtitle={true}>
         <ToolbarSection full={2}>
           <ToolbarItem
-            propKey={"backgroundRepeat"}
+            propKey={'backgroundRepeat'}
             propType="class"
             type="select"
-            label={"Repeat"}
+            label={'Repeat'}
           >
             <option value="">None</option>
             {TailwindStyles.backgroundRepeat.map((_, k) => (
@@ -28,10 +28,10 @@ export const BackgroundSettingsInput = ({ props }) => (
           </ToolbarItem>
 
           <ToolbarItem
-            propKey={"backgroundSize"}
+            propKey={'backgroundSize'}
             propType="class"
             type="select"
-            label={"Size"}
+            label={'Size'}
           >
             <option value="">None</option>
             {TailwindStyles.backgroundSize.map((_, k) => (
@@ -42,10 +42,10 @@ export const BackgroundSettingsInput = ({ props }) => (
 
         <ToolbarSection full={2}>
           <ToolbarItem
-            propKey={"backgroundOrigin"}
+            propKey={'backgroundOrigin'}
             propType="class"
             type="select"
-            label={"Origin"}
+            label={'Origin'}
           >
             <option value="">None</option>
             {TailwindStyles.backgroundOrigin.map((_, k) => (
@@ -54,10 +54,10 @@ export const BackgroundSettingsInput = ({ props }) => (
           </ToolbarItem>
 
           <ToolbarItem
-            propKey={"backgroundPosition"}
+            propKey={'backgroundPosition'}
             propType="class"
             type="select"
-            label={"Position"}
+            label={'Position'}
           >
             <option value="">None</option>
             {TailwindStyles.backgroundPosition.map((_, k) => (
@@ -67,10 +67,10 @@ export const BackgroundSettingsInput = ({ props }) => (
         </ToolbarSection>
 
         <ToolbarItem
-          propKey={"backgroundAttachment"}
+          propKey={'backgroundAttachment'}
           propType="class"
           type="select"
-          label={"Attachment"}
+          label={'Attachment'}
         >
           <option value="">None</option>
           {TailwindStyles.backgroundAttachment.map((_, k) => (

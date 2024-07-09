@@ -1,15 +1,16 @@
-import { Element, ROOT_NODE, useEditor } from "@craftjs/core";
-var generate = require("boring-name-generator");
+import { Element, ROOT_NODE, useEditor } from '@craftjs/core';
 
-import { motion } from "framer-motion";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { TbActiveMenuAtom } from "../atoms";
+import { motion } from 'framer-motion';
+import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
+import { TbActiveMenuAtom } from '../atoms';
+
+const generate = require('boring-name-generator');
 
 export const Tools: any = {};
 
 export const SelectedNodeAtom = atom({
-  key: "selectedNode",
-  default: { id: null, position: "" },
+  key: 'selectedNode',
+  default: { id: null, position: '' },
 });
 
 export const AddElement = ({
@@ -19,27 +20,27 @@ export const AddElement = ({
   index = 1,
   addTo = null,
   selected = null,
-  position = "",
+  position = '',
 }) => {
   if (!element) return;
 
-  let active = query.getEvent("selected").first();
+  let active = query.getEvent('selected').first();
   if (!active) active = ROOT_NODE;
 
   if (
-    ["afterParent", "beforeParent"].includes(position) &&
-    active !== ROOT_NODE
+    ['afterParent', 'beforeParent'].includes(position)
+    && active !== ROOT_NODE
   ) {
-    let node = query.node(active).get();
+    const node = query.node(active).get();
     active = node.data.parent;
   }
 
-  let activeNode = query.node(active).get();
+  const activeNode = query.node(active).get();
   if (!activeNode) return false;
 
   if (selected) {
     index = activeNode.data.nodes.indexOf(selected);
-    if (["after", "afterParent"].includes(position)) {
+    if (['after', 'afterParent'].includes(position)) {
       index += 1;
     } else index -= 1;
   }
@@ -47,10 +48,9 @@ export const AddElement = ({
   try {
     const newElement = query.parseReactElement(element).toNodeTree();
 
-    const type =
-      newElement?.nodes[newElement?.rootNodeId]?.data?.props?.type || "";
+    const type = newElement?.nodes[newElement?.rootNodeId]?.data?.props?.type || '';
 
-    if (type === "page") {
+    if (type === 'page') {
       addTo = ROOT_NODE;
     }
 
@@ -60,7 +60,7 @@ export const AddElement = ({
     if (
       !addToNode.rules.canMoveIn([newElement?.nodes[newElement?.rootNodeId]])
     ) {
-      console.error("Cant move in.", addToNode, newElement);
+      console.error('Cant move in.', addToNode, newElement);
       return false;
     }
 
@@ -76,7 +76,7 @@ export const AddElement = ({
 
 export const RenderToolComponent = ({
   element,
-  className = "",
+  className = '',
   renderer = null,
   display = null,
   ...props
@@ -105,7 +105,7 @@ export const RenderToolComponent = ({
   const _className = [
     ...Object.keys(props.mobile || {}).map((_) => props.mobile[_]),
     ...Object.keys(props.root || {}).map((_) => props.root[_]),
-  ].join(" ");
+  ].join(' ');
 
   return (
     <motion.div
@@ -114,7 +114,7 @@ export const RenderToolComponent = ({
         transition: { duration: 0.2 },
       }}
       whileTap={{ scale: 0.9 }}
-      className={`cursor-move w-full pointer-events-auto`}
+      className={'cursor-move w-full pointer-events-auto'}
       ref={(ref: any) => create(ref, tool)}
       onDragEnterCapture={() => {
         //  console.log("a");
@@ -140,7 +140,7 @@ export const RenderToolComponent = ({
         AddElement(props);
       }}
     >
-      {renderer || <div className={` w-full`}>{display}</div>}
+      {renderer || <div className={' w-full'}>{display}</div>}
     </motion.div>
   );
 };

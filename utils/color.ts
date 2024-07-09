@@ -10,43 +10,44 @@ export function getColors(dom, props) {
     color = domstyl;
   }
 
-  let basecolor, background;
+  let basecolor; let
+    background;
 
   if (color) {
-    let _color = color.getPropertyValue("color");
+    let _color = color.getPropertyValue('color');
 
-    let bg = "",
-      base = "";
+    let bg = '';
+    const base = '';
 
     const myElement = dom;
     let currentElement = myElement;
-    while (currentElement && currentElement.tagName !== "BODY") {
+    while (currentElement && currentElement.tagName !== 'BODY') {
       const style = window.getComputedStyle(currentElement);
 
-      const backgroundColor = style.getPropertyValue("background-color");
-      if (backgroundColor !== "rgba(0, 0, 0, 0)") {
+      const backgroundColor = style.getPropertyValue('background-color');
+      if (backgroundColor !== 'rgba(0, 0, 0, 0)') {
         bg = backgroundColor;
-        if (!_color) _color = style.getPropertyValue("color");
+        if (!_color) _color = style.getPropertyValue('color');
         break;
       }
       currentElement = currentElement.parentElement;
     }
 
-    background = bg.replace(/\s/g, "");
+    background = bg.replace(/\s/g, '');
 
     if (!_color) {
       basecolor = props?.root?.color
-        ? `${props?.root?.color} border-${props?.root?.color.split("text-")[1]}`
-        : "text-black border-black";
+        ? `${props?.root?.color} border-${props?.root?.color.split('text-')[1]}`
+        : 'text-black border-black';
     }
 
     if (_color) {
-      if (_color.replace(/\s/g, "") == background.replace(/\s/g, "")) {
+      if (_color.replace(/\s/g, '') == background.replace(/\s/g, '')) {
         _color = invertColor(_color);
       }
-      basecolor = `text-[${_color.replace(/\s/g, "")}] border-[${_color.replace(
+      basecolor = `text-[${_color.replace(/\s/g, '')}] border-[${_color.replace(
         /\s/g,
-        ""
+        ''
       )}]`;
     }
   }
@@ -55,15 +56,15 @@ export function getColors(dom, props) {
     background = background
       ? `bg-[${background}]`
       : props?.root?.background
-      ? props.root.background
-      : "";
+        ? props.root.background
+        : '';
   }
 
   return { background, basecolor };
 }
 
 export function invertColor(color: string): string {
-  let invertedColor = "";
+  let invertedColor = '';
 
   // Check if color is in RGB format
   const rgbMatch = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -94,7 +95,7 @@ export function invertColor(color: string): string {
     const b = 255 - parseInt(hexMatch[3], 16);
     invertedColor = `#${((r << 16) | (g << 8) | b)
       .toString(16)
-      .padStart(6, "0")}`;
+      .padStart(6, '0')}`;
   }
 
   return invertedColor;

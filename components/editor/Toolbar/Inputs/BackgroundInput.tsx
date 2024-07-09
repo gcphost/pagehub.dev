@@ -1,9 +1,9 @@
-import { useNode } from "@craftjs/core";
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarItem } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
-import { BackgroundSettingsInput } from "./BackgroundSettingsInput";
-import { ColorInput } from "./ColorInput";
+import { useNode } from '@craftjs/core';
+import { TailwindStyles } from 'utils/tailwind';
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
+import { BackgroundSettingsInput } from './BackgroundSettingsInput';
+import { ColorInput } from './ColorInput';
 
 export const BackgroundInput = () => {
   const { props } = useNode((node) => ({
@@ -17,10 +17,10 @@ export const BackgroundInput = () => {
 
         <ToolbarSection title="Gradient" subtitle={true}>
           <ToolbarItem
-            propKey={"backgroundGradient"}
+            propKey={'backgroundGradient'}
             propType="root"
             type="select"
-            label={""}
+            label={''}
             labelHide={true}
           >
             <option value="">None</option>

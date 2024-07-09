@@ -1,25 +1,27 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { ToolboxMenu } from "components/editor/RenderNode";
-import { ToolbarSection } from "components/editor/Toolbar";
-import { NoSettings } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { TBWrap } from "components/editor/Toolbar/Helpers/SettingsHelper";
-import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
-import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
-import { HeightInput } from "components/editor/Toolbar/Inputs/HeightInput";
-import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
-import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
-import { RadiusInput } from "components/editor/Toolbar/Inputs/RadiusInput";
-import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
-import { WidthInput } from "components/editor/Toolbar/Inputs/WidthInput";
-import { TabBody } from "components/editor/Toolbar/Tab";
-import { getNode } from "components/editor/Toolbar/Tools/lib";
-import { TabAtom } from "components/editor/Viewport";
-import { useEffect } from "react";
-import { BiPaint } from "react-icons/bi";
-import { MdStyle } from "react-icons/md";
-import { TbBoxPadding, TbLine, TbMouse, TbPlayerPlay } from "react-icons/tb";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { useDefaultTab } from "utils/lib";
+import { useEditor, useNode } from '@craftjs/core';
+import { ToolboxMenu } from 'components/editor/RenderNode';
+import { ToolbarSection } from 'components/editor/Toolbar';
+import { NoSettings } from 'components/editor/Toolbar/Helpers/CloneHelper';
+import { TBWrap } from 'components/editor/Toolbar/Helpers/SettingsHelper';
+import { ColorInput } from 'components/editor/Toolbar/Inputs/ColorInput';
+import DisplaySettingsInput from 'components/editor/Toolbar/Inputs/DisplaySettingsInput';
+import { HeightInput } from 'components/editor/Toolbar/Inputs/HeightInput';
+import { MarginInput } from 'components/editor/Toolbar/Inputs/MarginInput';
+import { PaddingInput } from 'components/editor/Toolbar/Inputs/PaddingInput';
+import { RadiusInput } from 'components/editor/Toolbar/Inputs/RadiusInput';
+import { ShadowInput } from 'components/editor/Toolbar/Inputs/ShadowInput';
+import { WidthInput } from 'components/editor/Toolbar/Inputs/WidthInput';
+import { TabBody } from 'components/editor/Toolbar/Tab';
+import { getNode } from 'components/editor/Toolbar/Tools/lib';
+import { TabAtom } from 'components/editor/Viewport';
+import { useEffect } from 'react';
+import { BiPaint } from 'react-icons/bi';
+import { MdStyle } from 'react-icons/md';
+import {
+  TbBoxPadding, TbLine, TbMouse, TbPlayerPlay
+} from 'react-icons/tb';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useDefaultTab } from 'utils/lib';
 
 export const DividerSettings = () => {
   const { id } = useNode();
@@ -34,27 +36,27 @@ export const DividerSettings = () => {
 
   const head = [
     {
-      title: "Divider",
+      title: 'Divider',
       icon: <TbLine />,
     },
     {
-      title: "Appearance",
+      title: 'Appearance',
       icon: <BiPaint />,
     },
     {
-      title: "Layout",
+      title: 'Layout',
       icon: <TbBoxPadding />,
     },
     {
-      title: "Hover & Click",
+      title: 'Hover & Click',
       icon: <TbMouse />,
     },
     {
-      title: "Animations",
+      title: 'Animations',
       icon: <TbPlayerPlay />,
     },
     {
-      title: "Style",
+      title: 'Style',
       icon: <MdStyle />,
     },
   ];
@@ -62,7 +64,7 @@ export const DividerSettings = () => {
   useDefaultTab(head, activeTab, setActiveTab);
 
   const TBBody = () => {
-    if (propValues.relationType === "style") {
+    if (propValues.relationType === 'style') {
       return (
         <TabBody>
           <ToolbarSection>
@@ -74,7 +76,7 @@ export const DividerSettings = () => {
 
     return (
       <>
-        {activeTab === "Divider" && (
+        {activeTab === 'Divider' && (
           <TabBody>
             <ToolbarSection full={2}>
               <WidthInput />
@@ -90,7 +92,7 @@ export const DividerSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Appearance" && (
+        {activeTab === 'Appearance' && (
           <TabBody>
             <ToolbarSection>
               <RadiusInput />
@@ -99,20 +101,20 @@ export const DividerSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Style" && (
+        {activeTab === 'Style' && (
           <TabBody>
             <DisplaySettingsInput />
           </TabBody>
         )}
 
-        {activeTab === "Layout" && (
+        {activeTab === 'Layout' && (
           <TabBody>
             <MarginInput />
             <PaddingInput />
           </TabBody>
         )}
 
-        {activeTab === "Animations" && (
+        {activeTab === 'Animations' && (
           <TabBody>
             <p className="p-3">
               Animation settings are not available for this component.
@@ -120,7 +122,7 @@ export const DividerSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Hover & Click" && (
+        {activeTab === 'Hover & Click' && (
           <TabBody>
             <p className="p-3">
               Hover settings are not available for this component.

@@ -1,9 +1,9 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { TbClearAll, TbLayoutColumns, TbLayoutRows } from "react-icons/tb";
-import { TailwindStyles } from "utils/tailwind";
-import { ToolbarItem } from "../ToolbarItem";
+import { Tooltip } from 'components/layout/Tooltip';
+import { TbClearAll, TbLayoutColumns, TbLayoutRows } from 'react-icons/tb';
+import { TailwindStyles } from 'utils/tailwind';
+import { ToolbarItem } from '../ToolbarItem';
 
-export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
+export const FlexDirectionInput = ({ type = 'radio', wrap = '' }) => (
   <ToolbarItem
     propKey="flexDirection"
     type={type}
@@ -18,7 +18,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
             <TbClearAll />
           </Tooltip>
         ),
-        value: "",
+        value: '',
       },
       {
         label: (
@@ -26,7 +26,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
             <TbLayoutColumns />
           </Tooltip>
         ),
-        value: "flex-row",
+        value: 'flex-row',
       },
       {
         label: (
@@ -34,7 +34,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
             <TbLayoutRows />
           </Tooltip>
         ),
-        value: "flex-col",
+        value: 'flex-col',
       },
       {
         label: (
@@ -42,7 +42,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
             <TbLayoutColumns />
           </Tooltip>
         ),
-        value: "flex-row-reverse",
+        value: 'flex-row-reverse',
       },
       {
         label: (
@@ -50,7 +50,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
             <TbLayoutRows />
           </Tooltip>
         ),
-        value: "flex-col-reverse",
+        value: 'flex-col-reverse',
       },
     ]}
   >

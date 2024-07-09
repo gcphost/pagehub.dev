@@ -1,13 +1,12 @@
-import { ROOT_NODE, useEditor, useNode } from "@craftjs/core";
-import { AnimatePresence, motion } from "framer-motion";
-import { useRef } from "react";
-import { TbPlus } from "react-icons/tb";
-import { useSetRecoilState } from "recoil";
-import { ToolboxMenu } from "../RenderNode";
-import RenderNodeControl from "../RenderNodeControl";
-import { TbActiveItemAtom, TbActiveMenuAtom } from "../Viewport/atoms";
-import { SelectedNodeAtom } from "../Viewport/Toolbox/lib";
-import { useMousePosition } from "./lib";
+import { ROOT_NODE, useEditor, useNode } from '@craftjs/core';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRef } from 'react';
+import { TbPlus } from 'react-icons/tb';
+import { useSetRecoilState } from 'recoil';
+import { ToolboxMenu } from '../RenderNode';
+import RenderNodeControl from '../RenderNodeControl';
+import { SelectedNodeAtom } from '../Viewport/Toolbox/lib';
+import { TbActiveItemAtom, TbActiveMenuAtom } from '../Viewport/atoms';
 
 export const AddSectionNodeController = (props: { position; align }) => {
   const { position, align } = props as any;
@@ -20,11 +19,9 @@ export const AddSectionNodeController = (props: { position; align }) => {
   const setActiveItem = useSetRecoilState(TbActiveItemAtom);
   const setSelectedNode = useSetRecoilState(SelectedNodeAtom);
 
-  const { parent } = useNode((node) => {
-    return {
-      parent: node.data.parent,
-    };
-  });
+  const { parent } = useNode((node) => ({
+    parent: node.data.parent,
+  }));
 
   const { query } = useEditor();
 
@@ -32,25 +29,18 @@ export const AddSectionNodeController = (props: { position; align }) => {
   const propType = parentNode?.data?.props?.type;
 
   let type = null;
-  if (propType === "page") type = "Section";
-  if (propType === "background") type = "Page";
+  if (propType === 'page') type = 'Section';
+  if (propType === 'background') type = 'Page';
 
   const setMenu = useSetRecoilState(ToolboxMenu);
 
-  const { isInTopOrLeft, isInBottomOrRight } = useMousePosition(
-    id,
-    45,
-    ref.current
-  );
-
-  
   return (
     <AnimatePresence>
       <RenderNodeControl
         position={position}
         placement="middle"
         align={align}
-        className={`whitespace-nowrap fixed items-center justify-center select-none cursor-pointer pointer-events-auto`}
+        className={'whitespace-nowrap fixed items-center justify-center select-none cursor-pointer pointer-events-auto'}
         animate={{
           initial: { opacity: 0, y: 2 },
           animate: {
@@ -59,7 +49,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
             transition: {
               delay: 0.2,
               duration: 0.5,
-              type: "spring",
+              type: 'spring',
               stiffness: 200,
               damping: 20,
               mass: 0.5,
@@ -71,7 +61,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
             transition: {
               delay: 0.2,
               duration: 0.3,
-              type: "spring",
+              type: 'spring',
               stiffness: 200,
               damping: 20,
               mass: 0.5,
@@ -83,7 +73,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
       >
         <motion.div
           ref={ref}
-          className={`border btn text-white rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base`}
+          className={'border btn text-white rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base'}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -91,9 +81,9 @@ export const AddSectionNodeController = (props: { position; align }) => {
 
             setSelectedNode({
               id,
-              position: position === "bottom" ? "afterParent" : "beforeParent",
+              position: position === 'bottom' ? 'afterParent' : 'beforeParent',
             });
-            setActiveMenu(type === "Section" ? 1 : 2);
+            setActiveMenu(type === 'Section' ? 1 : 2);
             setActiveItem(0);
           }}
         >

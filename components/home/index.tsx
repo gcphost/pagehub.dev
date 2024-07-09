@@ -1,16 +1,16 @@
-import Footer from "components/footer";
-import { NextSeo } from "next-seo";
-import Head from "next/head";
-import Link from "next/link";
-import { SiTailwindcss } from "react-icons/si";
+import Footer from 'components/footer';
+import { NextSeo } from 'next-seo';
+import Head from 'next/head';
+import Link from 'next/link';
+import { SiTailwindcss } from 'react-icons/si';
 import {
   TbDeviceFloppy,
   TbDeviceMobile,
   TbLogin,
   TbPageBreak,
   TbWorldWww,
-} from "react-icons/tb";
-import { siteDescription, siteTitle } from "utils/lib";
+} from 'react-icons/tb';
+import { siteDescription, siteTitle } from 'utils/lib';
 
 const Card = ({ icon, title, description }) => (
   <div className="text-center flex gap-6 flex-col justify-center items-center w-full mb-12 md:mb-0 md:w-1/2">
@@ -121,7 +121,7 @@ function Home() {
             </p>
 
             <p className="mb-8 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-gray-400 hidden">
-              Start with one of our designs or a{" "}
+              Start with one of our designs or a{' '}
               <Link href="/builder" legacyBehavior>
                 <a className="text-white ">blank template</a>
               </Link>

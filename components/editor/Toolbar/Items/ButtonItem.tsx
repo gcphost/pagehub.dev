@@ -1,26 +1,26 @@
-import { useNode } from "@craftjs/core";
-import { ViewAtom } from "components/editor/Viewport";
-import { changeProp, getProp } from "components/editor/Viewport/lib";
-import { SelectedButtonAtom } from "components/selectors/Button/ButtonSettings";
-import { TbTrash } from "react-icons/tb";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { ColorInput } from "../Inputs/ColorInput";
-import { IconDialogInput } from "../Inputs/IconDialogInput";
+import { useNode } from '@craftjs/core';
+import { ViewAtom } from 'components/editor/Viewport';
+import { changeProp, getProp } from 'components/editor/Viewport/lib';
+import { SelectedButtonAtom } from 'components/selectors/Button/ButtonSettings';
+import { TbTrash } from 'react-icons/tb';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { ColorInput } from '../Inputs/ColorInput';
+import { IconDialogInput } from '../Inputs/IconDialogInput';
 
-import { ToolbarItem, ToolbarItemProps } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
-import { Accord, Wrap } from "../ToolbarStyle";
+import { ToolbarItem, ToolbarItemProps } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
+import { Accord, Wrap } from '../ToolbarStyle';
 
 const Input = ({ nodeProps, setProp }) => {
   const [accordion, setAccordion] = useRecoilState(SelectedButtonAtom);
 
-  let buttons = nodeProps.buttons ? [...nodeProps.buttons] : [];
+  const buttons = nodeProps.buttons ? [...nodeProps.buttons] : [];
 
   const saveButtons = (_buttons) => {
     changeProp({
       setProp,
-      propKey: "buttons",
-      propType: "component",
+      propKey: 'buttons',
+      propType: 'component',
       value: _buttons,
     });
   };
@@ -126,7 +126,7 @@ const Input = ({ nodeProps, setProp }) => {
         onClick={() => {
           const _buttons = [...buttons];
 
-          _buttons.push({ text: "Button" });
+          _buttons.push({ text: 'Button' });
 
           setAccordion(buttons.length - 1);
 
@@ -161,7 +161,7 @@ export const ButtonItem = (__props: ToolbarItemProps) => {
 
   const value = getProp(__props, view, nodeProps);
 
-  let lab = value || "";
+  let lab = value || '';
 
   if (props.valueLabels && props.valueLabels[value]) {
     lab = props.valueLabels[value];

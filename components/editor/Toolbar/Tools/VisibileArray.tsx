@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-export function VisibleArray({ items, height = "400px" }) {
+export function VisibleArray({ items, height = '400px' }) {
   const [visibleItems, setVisibleItems] = useState([]);
   const containerRef = useRef(null);
 
@@ -23,13 +23,13 @@ export function VisibleArray({ items, height = "400px" }) {
         setVisibleItems(newVisibleItems);
       };
       updateVisibleItems();
-      container.addEventListener("scroll", updateVisibleItems);
-      return () => container.removeEventListener("scroll", updateVisibleItems);
+      container.addEventListener('scroll', updateVisibleItems);
+      return () => container.removeEventListener('scroll', updateVisibleItems);
     }
   }, [items]);
 
   return (
-    <div ref={containerRef} style={{ height, overflow: "scroll" }}>
+    <div ref={containerRef} style={{ height, overflow: 'scroll' }}>
       {visibleItems.map((item) => (
         <div key={item.id}>
           {/* Render the contents of each item */}

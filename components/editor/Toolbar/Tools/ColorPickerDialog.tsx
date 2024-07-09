@@ -1,47 +1,47 @@
-import { ROOT_NODE, useEditor } from "@craftjs/core";
-import { SketchPicker } from "@hello-pangea/color-picker";
+import { ROOT_NODE, useEditor } from '@craftjs/core';
+import { SketchPicker } from '@hello-pangea/color-picker';
 
-import { Tooltip } from "components/layout/Tooltip";
-import { motion } from "framer-motion";
-import debounce from "lodash.debounce";
-import { useEffect, useState } from "react";
-import { BsEyedropper } from "react-icons/bs";
-import { TbCaretRight, TbDeviceFloppy, TbX } from "react-icons/tb";
-import { atom, useRecoilState } from "recoil";
-import useEyeDropper from "use-eye-dropper";
-import { getColorPallet } from "utils/tailwind";
-import { Dialog } from "./Dialog";
+import { Tooltip } from 'components/layout/Tooltip';
+import { motion } from 'framer-motion';
+import debounce from 'lodash.debounce';
+import { useEffect, useState } from 'react';
+import { BsEyedropper } from 'react-icons/bs';
+import { TbCaretRight, TbDeviceFloppy, TbX } from 'react-icons/tb';
+import { atom, useRecoilState } from 'recoil';
+import useEyeDropper from 'use-eye-dropper';
+import { getColorPallet } from 'utils/tailwind';
+import { Dialog } from './Dialog';
 
 const presetColors = [
-  "#D0021B",
-  "#F5A623",
-  "#F8E71C",
-  "#8B572A",
-  "#7ED321",
-  "#417505",
-  "#BD10E0",
-  "#9013FE",
-  "#4A90E2",
-  "#50E3C2",
-  "#B8E986",
-  "#000000",
-  "#4A4A4A",
-  "#9B9B9B",
-  "#FFFFFF",
-  "transparent",
+  '#D0021B',
+  '#F5A623',
+  '#F8E71C',
+  '#8B572A',
+  '#7ED321',
+  '#417505',
+  '#BD10E0',
+  '#9013FE',
+  '#4A90E2',
+  '#50E3C2',
+  '#B8E986',
+  '#000000',
+  '#4A4A4A',
+  '#9B9B9B',
+  '#FFFFFF',
+  'transparent',
 ];
 
 export const ColorPalletAtom = atom({
-  key: "colorPallet",
+  key: 'colorPallet',
   default: [],
 });
 
 export const ColorPickerAtom = atom({
-  key: "colorPicker",
+  key: 'colorPicker',
   default: {
     enabled: false,
-    value: "",
-    prefix: "",
+    value: '',
+    prefix: '',
     changed: null,
     showPallet: false,
     e: null,
@@ -52,25 +52,25 @@ export const ColorPickerAtom = atom({
 export const uloVariants = {
   open: {
     opacity: 1,
-    display: "flex",
-    width: "unset",
+    display: 'flex',
+    width: 'unset',
     transition: {
       staggerDirection: 1,
       y: { stiffness: 1000, velocity: -100 },
     },
   },
   closed: {
-    width: "1300px",
-    display: "none",
+    width: '1300px',
+    display: 'none',
     opacity: 1,
     transition: {
       staggerDirection: 1,
       y: { stiffness: 1000, velocity: -100 },
     },
   },
-  transition: { type: "tween", duration: 3.4 },
+  transition: { type: 'tween', duration: 3.4 },
 
-  initial: { display: "none", opacity: 0, width: 0 },
+  initial: { display: 'none', opacity: 0, width: 0 },
 };
 
 const Item = ({
@@ -79,7 +79,7 @@ const Item = ({
   title,
   value,
   changed,
-  type = "class",
+  type = 'class',
   children = null,
   style = {},
   selected = false,
@@ -89,22 +89,21 @@ const Item = ({
   },
   onMouseOut = (e, value) => {},
   onMouseOver = (e, value) => {},
-}) => {
-  return (
+}) => (
     <motion.div
       whileHover={
         animate
           ? {
-              scale: 2,
-              transition: { duration: 0.2 },
-              zIndex: 999,
-            }
+            scale: 2,
+            transition: { duration: 0.2 },
+            zIndex: 999,
+          }
           : {}
       }
       initial={{ zIndex: 1 }}
       title={title}
       className={`relative w-5 h-5 rounded cursor-pointer border-2 ${
-        selected ? "border-violet-500" : "border-gray-600"
+        selected ? 'border-violet-500' : 'border-gray-600'
       }`}
       style={{ backgroundColor: value, ...style }}
       onClick={(e) => onClick(e, value)}
@@ -114,14 +113,12 @@ const Item = ({
     >
       {children}
     </motion.div>
-  );
-};
+);
 
-const hexToRGBA = (hex, alpha) =>
-  `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(
-    hex.slice(3, 5),
-    16
-  )},${parseInt(hex.slice(5, 7), 16)},${alpha})`;
+const hexToRGBA = (hex, alpha) => `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(
+  hex.slice(3, 5),
+  16
+)},${parseInt(hex.slice(5, 7), 16)},${alpha})`;
 
 export const ColorPickerDialog = () => {
   const pallet = getColorPallet();
@@ -136,7 +133,7 @@ export const ColorPickerDialog = () => {
     : presetColors;
 
   const { open, close, isSupported } = useEyeDropper();
-  const [color, setColor] = useState("#fff");
+  const [color, setColor] = useState('#fff');
   const [error, setError] = useState(null);
   const [show, setShow] = useState(false);
 
@@ -172,7 +169,7 @@ export const ColorPickerDialog = () => {
       .then((color) => {
         const value = hexToRGBA(color.sRGBHex, 1);
         setColor(value);
-        changed({ type: "hex", value });
+        changed({ type: 'hex', value });
 
         // closed();
       })
@@ -237,7 +234,7 @@ export const ColorPickerDialog = () => {
                       <Tooltip content="Color Picker" arrow={false}>
                         <div
                           onClick={pickColor}
-                          className={`w-8 h-8 rounded-md cursor-pointer flex items-center justify-center`}
+                          className={'w-8 h-8 rounded-md cursor-pointer flex items-center justify-center'}
                         >
                           <BsEyedropper />
                         </div>
@@ -259,17 +256,17 @@ export const ColorPickerDialog = () => {
                 styles={{
                   picker: {},
                   saturation: {
-                    width: "100%",
-                    height: "100px",
-                    paddingBottom: "",
-                    position: "relative",
-                    overflow: "hidden",
+                    width: '100%',
+                    height: '100px',
+                    paddingBottom: '',
+                    position: 'relative',
+                    overflow: 'hidden',
                   },
                 }}
                 color={colorPicker.value || undefined}
                 onChangeComplete={(_color) => {
                   // if (!_color?.rgb) return;
-                  changed({ type: "rgb", value: _color?.rgb });
+                  changed({ type: 'rgb', value: _color?.rgb });
                 }}
                 onChange={debounce((_color) => {
                   // if (!_color?.rgb) return;
@@ -281,9 +278,9 @@ export const ColorPickerDialog = () => {
         </div>
 
         <motion.div
-          animate={show ? { width: "unset" } : { width: 0 }}
+          animate={show ? { width: 'unset' } : { width: 0 }}
           initial={{ width: 0 }}
-          transition={{ type: "tween" }}
+          transition={{ type: 'tween' }}
           onMouseLeave={() => setShow(false)}
         >
           {colorPicker.showPallet && (
@@ -307,14 +304,14 @@ export const ColorPickerDialog = () => {
                         style={{ backgroundColor: color.color }}
                         onClick={(e, value) => {
                           e.stopPropagation();
-                          changed({ type: "class", value: value });
+                          changed({ type: 'class', value });
                           //  closed();
                         }}
                         onMouseOver={(e, value) => {
                           // changed({ type: "class", value: value })
                         }}
                         onMouseOut={(e, value) => {
-                          //changed({
+                          // changed({
                           //  type: "class",
                           //  value: colorPicker.value,
                           // })

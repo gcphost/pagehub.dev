@@ -1,26 +1,26 @@
-import { Editor, Frame, useEditor } from "@craftjs/core";
-import lz from "lzutf8";
+import { Editor, Frame, useEditor } from '@craftjs/core';
+import lz from 'lzutf8';
 
-import { HomePage } from "components/home";
-import { useSetRecoilState } from "recoil";
+import { HomePage } from 'components/home';
+import { useSetRecoilState } from 'recoil';
 
-import { Background } from "components/selectors/Background";
-import { Embed } from "components/selectors/Embed";
+import { Background } from 'components/selectors/Background';
+import { Embed } from 'components/selectors/Embed';
 
-import { Container } from "components/selectors/Container";
-import { Divider } from "components/selectors/Divider";
-import { Form, FormDrop } from "components/selectors/Form";
-import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
-import { OnlyText, Text } from "components/selectors/Text";
-import { NextSeo } from "next-seo";
-import { useRouter } from "next/router";
-import { parseContent } from "pages/api/page/[[...slug]]";
-import { useEffect, useState } from "react";
-import { SettingsAtom } from "utils/atoms";
-import dbConnect from "utils/dbConnect";
-import { Button, OnlyButtons } from "../../components/selectors/Button";
-import { Image } from "../../components/selectors/Image";
-import { Video } from "../../components/selectors/Video";
+import { Container } from 'components/selectors/Container';
+import { Divider } from 'components/selectors/Divider';
+import { Form, FormDrop } from 'components/selectors/Form';
+import { FormElement, OnlyFormElement } from 'components/selectors/FormElement';
+import { OnlyText, Text } from 'components/selectors/Text';
+import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
+import { parseContent } from 'pages/api/page/[[...slug]]';
+import { useEffect, useState } from 'react';
+import { SettingsAtom } from 'utils/atoms';
+import dbConnect from 'utils/dbConnect';
+import { Button, OnlyButtons } from '../../components/selectors/Button';
+import { Image } from '../../components/selectors/Image';
+import { Video } from '../../components/selectors/Video';
 
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
@@ -30,10 +30,12 @@ const CustomDeserializer = ({ data }) => {
   return null;
 };
 
-function App({ subdomain, data, meta, seo }) {
+function App({
+  subdomain, data, meta, seo
+}) {
   const setSettings = useSetRecoilState(SettingsAtom);
 
-  console.log("static");
+  console.log('static');
 
   data = data ? lz.decompress(lz.decodeBase64(data)) : null;
 
@@ -49,15 +51,15 @@ function App({ subdomain, data, meta, seo }) {
   if (subdomain) {
     const router = useRouter();
 
-    const [favicon, setFavicon] = useState("/alt.ico");
+    const [favicon, setFavicon] = useState('/alt.ico');
 
     useEffect(() => {
       const link = document.querySelector("link[rel~='icon']") as any;
       if (link) {
         link.href = favicon;
       } else {
-        const newLink = document.createElement("link");
-        newLink.rel = "icon";
+        const newLink = document.createElement('link');
+        newLink.rel = 'icon';
         newLink.href = favicon;
         document.head.appendChild(newLink);
       }
@@ -67,9 +69,9 @@ function App({ subdomain, data, meta, seo }) {
       const handlePopstate = () => {
         router.push(window.location.pathname);
       };
-      window.addEventListener("popstate", handlePopstate);
+      window.addEventListener('popstate', handlePopstate);
       return () => {
-        window.removeEventListener("popstate", handlePopstate);
+        window.removeEventListener('popstate', handlePopstate);
       };
     }, [router]);
 
@@ -80,9 +82,9 @@ function App({ subdomain, data, meta, seo }) {
 
     useEffect(() => {
       const path = window.location.hash;
-      if (path && path.includes("#")) {
+      if (path && path.includes('#')) {
         setTimeout(() => {
-          const id = path.replace("#", "");
+          const id = path.replace('#', '');
           const el = document.getElementById(id);
           if (!el) return;
 
@@ -93,7 +95,7 @@ function App({ subdomain, data, meta, seo }) {
           if (root) {
             root?.scroll({
               top: r.top,
-              behavior: "smooth",
+              behavior: 'smooth',
             });
           }
         }, 600);
@@ -102,14 +104,14 @@ function App({ subdomain, data, meta, seo }) {
       router.beforePopState(({ url, as, options }) => {
         const root = document.querySelector('[data-root="true"]');
 
-        if (as === "/") {
+        if (as === '/') {
           root?.scroll({
             top: 0,
-            behavior: "smooth",
+            behavior: 'smooth',
           });
         } else {
-          const b = as.split("/");
-          const c = b[1].replace("#", "");
+          const b = as.split('/');
+          const c = b[1].replace('#', '');
 
           const el = document.getElementById(c);
           if (!el) return;
@@ -122,7 +124,7 @@ function App({ subdomain, data, meta, seo }) {
             if (!root) return;
             root?.scroll({
               top: r.top,
-              behavior: "smooth",
+              behavior: 'smooth',
             });
           }, 600);
         }
@@ -148,7 +150,7 @@ function App({ subdomain, data, meta, seo }) {
       Divider,
     };
 
-    const { title, descripton } = seo || { title: "", descripton: "" };
+    const { title, descripton } = seo || { title: '', descripton: '' };
 
     if (!data) {
       return <div>404</div>;
@@ -157,8 +159,8 @@ function App({ subdomain, data, meta, seo }) {
     return (
       <>
         <NextSeo
-          title={`${title} ${meta?.title || ""}`}
-          description={`${descripton || meta.description || ""}`}
+          title={`${title} ${meta?.title || ''}`}
+          description={`${descripton || meta.description || ''}`}
         />
 
         <Editor resolver={editorComponents} enabled={false}>
@@ -175,14 +177,14 @@ function App({ subdomain, data, meta, seo }) {
 export async function getStaticProps({ params }) {
   await dbConnect();
 
-  const Page = require("../../models/page");
+  const Page = require('../../models/page');
 
   const named = await Page.findOne({ domain: params.slug[0] });
 
   if (named) {
     const {
-      title = "",
-      description = "",
+      title = '',
+      description = '',
       content,
       draft,
       name,
@@ -210,36 +212,34 @@ export async function getStaticProps({ params }) {
         slug: params.slug[0] || null,
       },
     };
-  } else return { props: {} };
+  } return { props: {} };
 }
 
 export async function getStaticPaths() {
   await dbConnect();
 
-  const Page = require("../../models/page");
+  const Page = require('../../models/page');
 
   const domains = await Page.find({ domain: { $ne: null } });
 
   return {
-    paths: domains.map((post) => {
-      return {
-        params: {
-          slug: [`${post.domain}`],
-        },
-      };
-    }),
-    fallback: "blocking",
+    paths: domains.map((post) => ({
+      params: {
+        slug: [`${post.domain}`],
+      },
+    })),
+    fallback: 'blocking',
   };
 }
 export async function getServerSidseProps({ req, params }) {
-  const host = req.headers.host.split(".");
+  const host = req.headers.host.split('.');
   let subdomain = host.length === 3 ? host[0] : host[0];
 
-  if (["localhost:3000", "pagehub"].includes(subdomain)) {
-    subdomain = "";
+  if (['localhost:3000', 'pagehub'].includes(subdomain)) {
+    subdomain = '';
   }
 
-  let data = "";
+  let data = '';
   let meta = null;
   let seo = {};
   const json = null;
@@ -248,7 +248,7 @@ export async function getServerSidseProps({ req, params }) {
     try {
       const res = await fetch(
         `${process.env.API_ENDPOINT}/page/${subdomain}/${
-          params?.slug?.join("/") || ""
+          params?.slug?.join('/') || ''
         }`
       );
 

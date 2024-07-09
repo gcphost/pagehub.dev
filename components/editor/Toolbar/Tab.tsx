@@ -1,16 +1,14 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { motion } from "framer-motion";
-import { useRecoilState } from "recoil";
-import { TabAtom } from "../Viewport";
-import MenuItem from "./Helpers/MenuIcon";
+import { Tooltip } from 'components/layout/Tooltip';
+import { motion } from 'framer-motion';
+import { useRecoilState } from 'recoil';
+import { TabAtom } from '../Viewport';
+import MenuItem from './Helpers/MenuIcon';
 
-export const Tab = ({ tabId, icon = null, title = "" }) => {
+export const Tab = ({ tabId, icon = null, title = '' }) => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
 
-  const inactive =
-    "flex items-center justify-center p-3 text-lg font-medium text-gray-500 rounded-xl hover:bg-gray-900/30 hover:text-gray-200";
-  const active =
-    "flex items-center justify-center p-3 text-lg font-medium bg-gray-900/30 rounded-xl text-white";
+  const inactive = 'flex items-center justify-center p-3 text-lg font-medium text-gray-500 rounded-xl hover:bg-gray-900/30 hover:text-gray-200';
+  const active = 'flex items-center justify-center p-3 text-lg font-medium bg-gray-900/30 rounded-xl text-white';
   const isActive = activeTab === tabId;
 
   if (!icon) return null;
@@ -48,7 +46,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
             <MenuItem
               key={k}
               onClick={() => {
-                document.getElementById("toolbarContents").scrollTo({
+                document.getElementById('toolbarContents').scrollTo({
                   top: document.getElementById(_.title).offsetTop,
                 });
               }}
@@ -63,7 +61,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
       <div
         id="toolbarContents"
         className={`w-full flex flex-col p-3 scrollbar overflow-auto absolute bottom-[64px] top-[${
-          jumps.length ? "188px" : "142px"
+          jumps.length ? '188px' : '142px'
         }] pb-[400px] gap-6`}
       >
         {children}

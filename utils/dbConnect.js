@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 
 mongoose.set('strictQuery', false);
 
-/** 
-Source : 
-https://github.com/vercel/next.js/blob/canary/examples/with-mongodb-mongoose/utils/dbConnect.js 
+/**
+Source :
+https://github.com/vercel/next.js/blob/canary/examples/with-mongodb-mongoose/utils/dbConnect.js
 * */
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -35,9 +35,7 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {};
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mo) => {
-      return mo;
-    });
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mo) => mo);
   }
   cached.conn = await cached.promise;
   return cached.conn;

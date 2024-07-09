@@ -1,13 +1,12 @@
-import { TailwindStyles } from "utils/tailwind";
-import { ItemAdvanceToggle } from "../Helpers/ItemSelector";
-import { ToolbarItem } from "../ToolbarItem";
-import { ToolbarSection } from "../ToolbarSection";
-import { FlexDirectionInput } from "./FlexDirectionInput";
-import { GapInput } from "./GapInput";
-import { TailwindInput } from "./TailwindInput";
+import { TailwindStyles } from 'utils/tailwind';
+import { ItemAdvanceToggle } from '../Helpers/ItemSelector';
+import { ToolbarItem } from '../ToolbarItem';
+import { ToolbarSection } from '../ToolbarSection';
+import { FlexDirectionInput } from './FlexDirectionInput';
+import { GapInput } from './GapInput';
+import { TailwindInput } from './TailwindInput';
 
-export const FlexInput = ({ propKey = "flex" }) => {
-  return (
+export const FlexInput = ({ propKey = 'flex' }) => (
     <ToolbarSection
       title="Flex"
       help="Control the position of the components inside this one."
@@ -93,5 +92,4 @@ export const FlexInput = ({ propKey = "flex" }) => {
         </ToolbarSection>
       </ItemAdvanceToggle>
     </ToolbarSection>
-  );
-};
+);

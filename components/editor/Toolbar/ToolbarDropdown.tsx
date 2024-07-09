@@ -1,6 +1,4 @@
-const Label = ({ value }) => {
-  return <label>{value}</label>;
-};
+const Label = ({ value }) => <label>{value}</label>;
 
 export const ToolbarDropdown = ({
   title,
@@ -34,7 +32,7 @@ export const ToolbarDropdown = ({
 
       <select
         className={`${
-          wrap || "input"
+          wrap || 'input'
         } active:outline-none focus:outline-none focus:border-transparent active:border-transparent`}
         value={value}
         onChange={(e) => onChange(e.target.value)}

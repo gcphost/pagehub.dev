@@ -1,9 +1,8 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { motion } from "framer-motion";
-import { v4 as uuidv4 } from "uuid";
+import { Tooltip } from 'components/layout/Tooltip';
+import { motion } from 'framer-motion';
+import { v4 as uuidv4 } from 'uuid';
 
-export const AnimatedButton = ({ children, className = "", ...props }) => {
-  return (
+export const AnimatedButton = ({ children, className = '', ...props }) => (
     <div className="h-8">
       <motion.div
         onClick={props.onClick}
@@ -17,7 +16,7 @@ export const AnimatedButton = ({ children, className = "", ...props }) => {
         initial={{
           scale: 0,
           opacity: 0,
-          //x: -100,
+          // x: -100,
           // y: -48,
           //  width: 0,
           //  height: 0,
@@ -25,7 +24,7 @@ export const AnimatedButton = ({ children, className = "", ...props }) => {
         animate={{
           scale: 1,
           opacity: 1,
-          //x: 0,
+          // x: 0,
           y: 0,
           // width: "24px",
           //  height: "24px",
@@ -35,10 +34,10 @@ export const AnimatedButton = ({ children, className = "", ...props }) => {
           scale: 0,
           opacity: 0,
           // y: -24,
-          transition: { type: "spring", duration: 0.3 },
+          transition: { type: 'spring', duration: 0.3 },
         }}
         transition={{
-          type: "spring",
+          type: 'spring',
           stiffness: 500,
           damping: 20,
         }}
@@ -46,23 +45,20 @@ export const AnimatedButton = ({ children, className = "", ...props }) => {
         {children}
       </motion.div>
     </div>
-  );
-};
+);
 
 export const AnimatedTooltipButton = ({
   content,
-  placement = "bottom",
+  placement = 'bottom',
   children,
-  className = "flex inside-shadow  w-8 h-8 items-center justify-center border border-gray-500 flex-row gap-3 bg-violet-500 text-white rounded-full text-base",
+  className = 'flex inside-shadow  w-8 h-8 items-center justify-center border border-gray-500 flex-row gap-3 bg-violet-500 text-white rounded-full text-base',
   ...props
-}) => {
-  return (
+}) => (
     <Tooltip content={content} placement={placement}>
       <AnimatedButton {...props} className={className}>
         {children}
       </AnimatedButton>
     </Tooltip>
-  );
-};
+);
 
 export default AnimatedButton;

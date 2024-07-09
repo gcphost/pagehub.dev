@@ -1,9 +1,11 @@
-import { useEditor } from "@craftjs/core";
-import copy from "copy-to-clipboard";
-import lz from "lzutf8";
+import { useEditor } from '@craftjs/core';
+import copy from 'copy-to-clipboard';
+import lz from 'lzutf8';
 
 export const ExportModal = () => {
-  const { enabled, canUndo, canRedo, actions, query } = useEditor(
+  const {
+    enabled, canUndo, canRedo, actions, query
+  } = useEditor(
     (state, query) => ({
       enabled: state.options.enabled,
       canUndo: query.history.canUndo(),

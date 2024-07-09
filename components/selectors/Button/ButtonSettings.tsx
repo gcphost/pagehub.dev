@@ -1,39 +1,39 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { ToolboxMenu } from "components/editor/RenderNode";
-import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
+import { useEditor, useNode } from '@craftjs/core';
+import { ToolboxMenu } from 'components/editor/RenderNode';
+import { ToolbarItem, ToolbarSection } from 'components/editor/Toolbar';
 import {
   TableBodyStyleControl,
   TBWrap,
-} from "components/editor/Toolbar/Helpers/SettingsHelper";
-import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInput";
-import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
-import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
-import { ButtonInput } from "components/editor/Toolbar/Inputs/ButtonInput";
-import ClickItem from "components/editor/Toolbar/Inputs/ClickItem";
-import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
-import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
-import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
-import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
-import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
-import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
-import { SpacingInput } from "components/editor/Toolbar/Inputs/SpacingInput";
-import { TabBody } from "components/editor/Toolbar/Tab";
-import { TabAtom } from "components/editor/Viewport";
-import { useEffect } from "react";
-import { BiPaint } from "react-icons/bi";
-import { MdStyle } from "react-icons/md";
+} from 'components/editor/Toolbar/Helpers/SettingsHelper';
+import { AnimationsInput } from 'components/editor/Toolbar/Inputs/AnimationsInput';
+import { BackgroundInput } from 'components/editor/Toolbar/Inputs/BackgroundInput';
+import { BorderInput } from 'components/editor/Toolbar/Inputs/BorderInput';
+import { ButtonInput } from 'components/editor/Toolbar/Inputs/ButtonInput';
+import ClickItem from 'components/editor/Toolbar/Inputs/ClickItem';
+import { ColorInput } from 'components/editor/Toolbar/Inputs/ColorInput';
+import DisplaySettingsInput from 'components/editor/Toolbar/Inputs/DisplaySettingsInput';
+import { FontInput } from 'components/editor/Toolbar/Inputs/FontInput';
+import { OpacityInput } from 'components/editor/Toolbar/Inputs/OpacityInput';
+import { PatternInput } from 'components/editor/Toolbar/Inputs/PatternInput';
+import { ShadowInput } from 'components/editor/Toolbar/Inputs/ShadowInput';
+import { SpacingInput } from 'components/editor/Toolbar/Inputs/SpacingInput';
+import { TabBody } from 'components/editor/Toolbar/Tab';
+import { TabAtom } from 'components/editor/Viewport';
+import { useEffect } from 'react';
+import { BiPaint } from 'react-icons/bi';
+import { MdStyle } from 'react-icons/md';
 import {
   TbBoxPadding,
   TbColorPicker,
   TbMouse,
   TbPlayerPlay,
-} from "react-icons/tb";
-import { atom, useRecoilState, useSetRecoilState } from "recoil";
-import { useDefaultTab } from "utils/lib";
-import { TailwindStyles } from "utils/tailwind";
+} from 'react-icons/tb';
+import { atom, useRecoilState, useSetRecoilState } from 'recoil';
+import { useDefaultTab } from 'utils/lib';
+import { TailwindStyles } from 'utils/tailwind';
 
 export const SelectedButtonAtom = atom({
-  key: "selectedbutton",
+  key: 'selectedbutton',
   default: 0,
 });
 
@@ -48,28 +48,28 @@ export const ButtonSettings = () => {
 
   const head = [
     {
-      title: "Button",
+      title: 'Button',
       icon: <TbColorPicker />,
     },
     {
-      title: "Appearance",
+      title: 'Appearance',
       icon: <BiPaint />,
     },
     {
-      title: "Layout",
+      title: 'Layout',
       icon: <TbBoxPadding />,
     },
     {
-      title: "Hover & Click",
+      title: 'Hover & Click',
       icon: <TbMouse />,
     },
     {
-      title: "Animations",
+      title: 'Animations',
       icon: <TbPlayerPlay />,
     },
 
     {
-      title: "Style",
+      title: 'Style',
       icon: <MdStyle />,
     },
   ];
@@ -84,8 +84,7 @@ export const ButtonSettings = () => {
     </TabBody>
   );
 
-  const TBBody = () => {
-    return (
+  const TBBody = () => (
       <TableBodyStyleControl
         actions={actions}
         activeTab={activeTab}
@@ -93,28 +92,28 @@ export const ButtonSettings = () => {
         query={query}
         tab={<MainTab />}
       >
-        {activeTab === "Button" && <MainTab />}
-        {activeTab === "Appearance" && (
+        {activeTab === 'Button' && <MainTab />}
+        {activeTab === 'Appearance' && (
           <TabBody
             jumps={[
               {
-                title: "Colors",
+                title: 'Colors',
                 content: <div className="text-sm">Colors</div>,
               },
               {
-                title: "Icon",
+                title: 'Icon',
                 content: <div className="text-sm">Icon</div>,
               },
               {
-                title: "Background",
+                title: 'Background',
                 content: <div className="text-sm">Background</div>,
               },
               {
-                title: "Text",
+                title: 'Text',
                 content: <div className="text-sm">Text</div>,
               },
               {
-                title: "Border",
+                title: 'Border',
                 content: <div className="text-sm">Border</div>,
               },
             ]}
@@ -195,21 +194,21 @@ export const ButtonSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Style" && (
+        {activeTab === 'Style' && (
           <TabBody>
             <DisplaySettingsInput />
           </TabBody>
         )}
 
-        {activeTab === "Animations" && (
+        {activeTab === 'Animations' && (
           <TabBody>
             <AnimationsInput />
           </TabBody>
         )}
 
-        {activeTab === "Layout" && <SpacingInput />}
+        {activeTab === 'Layout' && <SpacingInput />}
 
-        {activeTab === "Hover & Click" && (
+        {activeTab === 'Hover & Click' && (
           <TabBody>
             <ClickItem />
 
@@ -248,8 +247,7 @@ export const ButtonSettings = () => {
           </TabBody>
         )}
       </TableBodyStyleControl>
-    );
-  };
+  );
 
   return (
     <TBWrap head={head}>

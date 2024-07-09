@@ -1,5 +1,4 @@
-export default () => {
-  return (
+export default () => (
     <div role="status">
       <svg
         aria-hidden="true"
@@ -19,5 +18,4 @@ export default () => {
       </svg>
       <span className="sr-only">Loading...</span>
     </div>
-  );
-};
+);

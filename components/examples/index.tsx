@@ -1,6 +1,6 @@
-import Footer from "components/footer";
-import Link from "next/link";
-import { templates } from "utils/templates";
+import Footer from 'components/footer';
+import Link from 'next/link';
+import { templates } from 'utils/templates';
 
 const Card = ({ icon, title, description }) => (
   <div className="text-center flex gap-6 flex-col justify-center items-center w-1/2">
@@ -100,7 +100,7 @@ function Examples() {
             <p className="w-2/3 mx-auto leading-8  font-normal lg:text-xl sm:px-16 xl:px-48 text-gray-400"></p>
 
             <p className="text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-gray-400 hidden">
-              Start with one of our designs or a{" "}
+              Start with one of our designs or a{' '}
               <Link href="/builder" legacyBehavior>
                 <a className="text-white ">blank template</a>
               </Link>
@@ -110,8 +110,7 @@ function Examples() {
         </div>
 
         <div className="pb-44 gap-6 mx-auto grid lg:grid-cols-2 xl:grid-cols-3">
-          {templates.map((tpl, key) => {
-            return (
+          {templates.map((tpl, key) => (
               <figure
                 key={key}
                 className="w-[300px] md:w-[400px] h-[290px] bg-center bg-cover flex flex-cl rounded-2xl border-violet-400/50 border-2 mb-3 group"
@@ -138,8 +137,7 @@ function Examples() {
                   </div>
                 </div>
               </figure>
-            );
-          })}
+          ))}
         </div>
 
         <div className="container mx-auto flex justify-center">

@@ -1,7 +1,7 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { TbForms, TbLock } from "react-icons/tb";
-import { Form } from "../../../selectors/Form";
-import { RenderToolComponent } from "./lib";
+import { Tooltip } from 'components/layout/Tooltip';
+import { TbForms, TbLock } from 'react-icons/tb';
+import { Form } from '../../../selectors/Form';
+import { RenderToolComponent } from './lib';
 
 export const RenderFormComponent = ({ text }) => (
   <RenderToolComponent
@@ -21,7 +21,7 @@ export const RenderFormComponent = ({ text }) => (
 );
 
 export const FormToolbox = {
-  title: "Forms",
+  title: 'Forms',
   content: [
     <RenderFormComponent key="1" text="Subscribe" />,
     <RenderFormComponent key="2" text="Contact" />,

@@ -1,16 +1,16 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const TbActiveMenuAtom = atom({
-  key: "TbActiveMenuAtom",
+  key: 'TbActiveMenuAtom',
   default: null,
 });
 
 export const TbActiveItemAtom = atom({
-  key: "TbActiveItemAtom",
+  key: 'TbActiveItemAtom',
   default: 0,
 });
 
 export const TbActiveSubItemAtom = atom({
-  key: "TbActiveSubItemAtom",
+  key: 'TbActiveSubItemAtom',
   default: 0,
 });

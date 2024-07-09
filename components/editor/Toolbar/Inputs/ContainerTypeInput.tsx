@@ -1,15 +1,15 @@
-import { useEditor } from "@craftjs/core";
-import { AddElement } from "components/editor/Viewport/Toolbox/lib";
-import { Container } from "components/selectors/Container";
-import { ToolbarItem } from "../ToolbarItem";
-import { getTypeProp, typeProps } from "../Tools/lib";
+import { useEditor } from '@craftjs/core';
+import { AddElement } from 'components/editor/Viewport/Toolbox/lib';
+import { Container } from 'components/selectors/Container';
+import { ToolbarItem } from '../ToolbarItem';
+import { getTypeProp, typeProps } from '../Tools/lib';
 
 export const ContainerTypeInput = () => {
   const { nodeProps } = typeProps();
 
   const flexDirection = getTypeProp(
     {
-      propKey: "flexDirection",
+      propKey: 'flexDirection',
     },
     nodeProps
   );
@@ -34,7 +34,7 @@ export const ContainerTypeInput = () => {
         <option value="flex-row-reverse">Reverse Row</option>
       </ToolbarItem>
 
-      {["flex-row", "flex-row-reverse"].includes(flexDirection) && (
+      {['flex-row', 'flex-row-reverse'].includes(flexDirection) && (
         <div>
           <button
             className="h-fill w-full btn btn-text"
@@ -43,17 +43,17 @@ export const ContainerTypeInput = () => {
                 element: (
                   <Container
                     mobile={{
-                      display: "flex",
-                      justifyContent: "justify-center",
-                      flexDirection: "flex-col",
-                      width: "w-full",
-                      gap: "gap-8",
-                      height: "h-auto",
-                      py: "py-6",
-                      px: "px-3",
+                      display: 'flex',
+                      justifyContent: 'justify-center',
+                      flexDirection: 'flex-col',
+                      width: 'w-full',
+                      gap: 'gap-8',
+                      height: 'h-auto',
+                      py: 'py-6',
+                      px: 'px-3',
                     }}
                     desktop={{}}
-                    custom={{ displayName: "Column" }}
+                    custom={{ displayName: 'Column' }}
                   />
                 ),
                 actions,

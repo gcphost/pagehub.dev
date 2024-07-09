@@ -1,16 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import { Tooltip as ReactTooltip } from "react-tooltip";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useRef, useState } from 'react';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import { v4 as uuidv4 } from 'uuid';
 
 export const Tooltip = ({
   children = null,
   content,
   arrow = false,
-  placement = "top" as any,
-  className = "",
+  placement = 'top' as any,
+  className = '',
   tipStyle = {},
   onClick = () => {},
-  key = "" as any,
+  key = '' as any,
 }) => {
   const ref = useRef(null);
 

@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-
+import mongoose from 'mongoose';
 
 const SubmissionSchema = new mongoose.Schema({
   data: Object,
@@ -30,11 +29,10 @@ export const PageSchema = new mongoose.Schema({
   }]
 }, { timestamps: true });
 
-//PageSchema.index({ name: "ids", "Page._id": "text" });
+// PageSchema.index({ name: "ids", "Page._id": "text" });
 
-const Page = mongoose.models.Page || mongoose.model("Page", PageSchema);
+const Page = mongoose.models.Page || mongoose.model('Page', PageSchema);
 
-module.exports = mongoose.models.Page || mongoose.model("Page", PageSchema);
-
+module.exports = mongoose.models.Page || mongoose.model('Page', PageSchema);
 
 export default Page;

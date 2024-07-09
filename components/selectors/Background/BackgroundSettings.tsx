@@ -1,30 +1,30 @@
-import { useNode } from "@craftjs/core";
-import { ToolboxMenu } from "components/editor/RenderNode";
-import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
-import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
-import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
-import { ColorPalletInput } from "components/editor/Toolbar/Inputs/ColorPalletInput";
-import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
-import { FileUploadInput } from "components/editor/Toolbar/Inputs/FileUploadInput";
-import { FlexInput } from "components/editor/Toolbar/Inputs/FlexInput";
-import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
-import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
-import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
-import { TabBody } from "components/editor/Toolbar/Tab";
-import { ToolbarWrapper } from "components/editor/Toolbar/ToolBarWrapper";
-import { getNode } from "components/editor/Toolbar/Tools/lib";
-import { TabAtom } from "components/editor/Viewport";
-import React from "react";
-import { BiPaint } from "react-icons/bi";
-import { MdStyle } from "react-icons/md";
+import { useNode } from '@craftjs/core';
+import { ToolboxMenu } from 'components/editor/RenderNode';
+import { ToolbarItem, ToolbarSection } from 'components/editor/Toolbar';
+import { BackgroundInput } from 'components/editor/Toolbar/Inputs/BackgroundInput';
+import { ColorInput } from 'components/editor/Toolbar/Inputs/ColorInput';
+import { ColorPalletInput } from 'components/editor/Toolbar/Inputs/ColorPalletInput';
+import DisplaySettingsInput from 'components/editor/Toolbar/Inputs/DisplaySettingsInput';
+import { FileUploadInput } from 'components/editor/Toolbar/Inputs/FileUploadInput';
+import { FlexInput } from 'components/editor/Toolbar/Inputs/FlexInput';
+import { FontInput } from 'components/editor/Toolbar/Inputs/FontInput';
+import { PaddingInput } from 'components/editor/Toolbar/Inputs/PaddingInput';
+import { PatternInput } from 'components/editor/Toolbar/Inputs/PatternInput';
+import { TabBody } from 'components/editor/Toolbar/Tab';
+import { ToolbarWrapper } from 'components/editor/Toolbar/ToolBarWrapper';
+import { getNode } from 'components/editor/Toolbar/Tools/lib';
+import { TabAtom } from 'components/editor/Viewport';
+import React from 'react';
+import { BiPaint } from 'react-icons/bi';
+import { MdStyle } from 'react-icons/md';
 import {
   TbBoxPadding,
   TbContainer,
   TbMouse,
   TbPlayerPlay,
-} from "react-icons/tb";
-import { useRecoilState } from "recoil";
-import { autoOpenMenu, useDefaultTab } from "utils/lib";
+} from 'react-icons/tb';
+import { useRecoilState } from 'recoil';
+import { autoOpenMenu, useDefaultTab } from 'utils/lib';
 
 export const BackgroundSettings = () => {
   const { id } = useNode();
@@ -37,27 +37,27 @@ export const BackgroundSettings = () => {
 
   const head = [
     {
-      title: "Background",
+      title: 'Background',
       icon: <TbContainer />,
     },
     {
-      title: "Appearance",
+      title: 'Appearance',
       icon: <BiPaint />,
     },
     {
-      title: "Layout",
+      title: 'Layout',
       icon: <TbBoxPadding />,
     },
     {
-      title: "Hover & Click",
+      title: 'Hover & Click',
       icon: <TbMouse />,
     },
     {
-      title: "Animations",
+      title: 'Animations',
       icon: <TbPlayerPlay />,
     },
     {
-      title: "Style",
+      title: 'Style',
       icon: <MdStyle />,
     },
   ];
@@ -67,7 +67,7 @@ export const BackgroundSettings = () => {
   return (
     <React.Fragment>
       <ToolbarWrapper head={head} foot="">
-        {activeTab === "Background" && (
+        {activeTab === 'Background' && (
           <TabBody>
             <ColorPalletInput />
 
@@ -105,19 +105,19 @@ export const BackgroundSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Appearance" && (
+        {activeTab === 'Appearance' && (
           <TabBody
             jumps={[
               {
-                title: "Colors",
+                title: 'Colors',
                 content: <div className="text-sm">Colors</div>,
               },
               {
-                title: "Background",
+                title: 'Background',
                 content: <div className="text-sm">Background</div>,
               },
               {
-                title: "Text",
+                title: 'Text',
                 content: <div className="text-sm">Text</div>,
               },
             ]}
@@ -152,22 +152,22 @@ export const BackgroundSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Style" && (
+        {activeTab === 'Style' && (
           <TabBody>
             <DisplaySettingsInput />
           </TabBody>
         )}
 
-        {activeTab === "Layout" && (
+        {activeTab === 'Layout' && (
           <TabBody
             jumps={[
               {
-                title: "Flex",
+                title: 'Flex',
                 content: <div className="text-sm">Flex</div>,
               },
 
               {
-                title: "Padding",
+                title: 'Padding',
                 content: <div className="text-sm">Padding</div>,
               },
             ]}
@@ -178,7 +178,7 @@ export const BackgroundSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Animations" && (
+        {activeTab === 'Animations' && (
           <TabBody>
             <p className="p-3">
               Animations are not available for this component.
@@ -186,7 +186,7 @@ export const BackgroundSettings = () => {
           </TabBody>
         )}
 
-        {activeTab === "Hover & Click" && (
+        {activeTab === 'Hover & Click' && (
           <TabBody>
             <p className="p-3">
               Hover settings are not available for this component.

@@ -1,14 +1,15 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
-const MenuItem = ({ tooltip, onClick, children, animate = false }) => {
-  return (
+const MenuItem = ({
+  tooltip, onClick, children, animate = false
+}) => (
     <motion.button
       whileHover={
         animate
           ? {
-              scale: 1.3,
-              transition: { duration: 0.2 },
-            }
+            scale: 1.3,
+            transition: { duration: 0.2 },
+          }
           : {}
       }
       whileTap={animate ? { scale: 0.9 } : {}}
@@ -17,7 +18,6 @@ const MenuItem = ({ tooltip, onClick, children, animate = false }) => {
     >
       {children}
     </motion.button>
-  );
-};
+);
 
 export default MenuItem;

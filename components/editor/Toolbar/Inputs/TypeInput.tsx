@@ -1,4 +1,4 @@
-import { ToolbarItem } from "../ToolbarItem";
+import { ToolbarItem } from '../ToolbarItem';
 
 export const TypeInput = () => (
   <ToolbarItem

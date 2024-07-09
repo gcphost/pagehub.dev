@@ -1,23 +1,25 @@
-import { useEditor } from "@craftjs/core";
-import { ToolboxMenu } from "components/editor/RenderNode";
-import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
+import { useEditor } from '@craftjs/core';
+import { ToolboxMenu } from 'components/editor/RenderNode';
+import { ToolbarItem, ToolbarSection } from 'components/editor/Toolbar';
 import {
   TableBodyStyleControl,
   TBWrap,
-} from "components/editor/Toolbar/Helpers/SettingsHelper";
-import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInput";
-import { DisplayInput } from "components/editor/Toolbar/Inputs/DisplayInput";
-import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
-import { RadiusInput } from "components/editor/Toolbar/Inputs/RadiusInput";
-import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
-import { TabBody } from "components/editor/Toolbar/Tab";
-import { TabAtom } from "components/editor/Viewport";
-import { useEffect } from "react";
-import { BiPaint } from "react-icons/bi";
-import { MdStyle } from "react-icons/md";
-import { TbBoxPadding, TbCode, TbMouse, TbPlayerPlay } from "react-icons/tb";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { useDefaultTab } from "utils/lib";
+} from 'components/editor/Toolbar/Helpers/SettingsHelper';
+import { AnimationsInput } from 'components/editor/Toolbar/Inputs/AnimationsInput';
+import { DisplayInput } from 'components/editor/Toolbar/Inputs/DisplayInput';
+import DisplaySettingsInput from 'components/editor/Toolbar/Inputs/DisplaySettingsInput';
+import { RadiusInput } from 'components/editor/Toolbar/Inputs/RadiusInput';
+import { ShadowInput } from 'components/editor/Toolbar/Inputs/ShadowInput';
+import { TabBody } from 'components/editor/Toolbar/Tab';
+import { TabAtom } from 'components/editor/Viewport';
+import { useEffect } from 'react';
+import { BiPaint } from 'react-icons/bi';
+import { MdStyle } from 'react-icons/md';
+import {
+  TbBoxPadding, TbCode, TbMouse, TbPlayerPlay
+} from 'react-icons/tb';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useDefaultTab } from 'utils/lib';
 
 export const EmbedSettings = () => {
   const { actions, query } = useEditor();
@@ -29,27 +31,27 @@ export const EmbedSettings = () => {
 
   const head = [
     {
-      title: "Embed",
+      title: 'Embed',
       icon: <TbCode />,
     },
     {
-      title: "Appearance",
+      title: 'Appearance',
       icon: <BiPaint />,
     },
     {
-      title: "Layout",
+      title: 'Layout',
       icon: <TbBoxPadding />,
     },
     {
-      title: "Hover & Click",
+      title: 'Hover & Click',
       icon: <TbMouse />,
     },
     {
-      title: "Animations",
+      title: 'Animations',
       icon: <TbPlayerPlay />,
     },
     {
-      title: "Style",
+      title: 'Style',
       icon: <MdStyle />,
     },
   ];
@@ -81,8 +83,7 @@ export const EmbedSettings = () => {
     </TabBody>
   );
 
-  const TBBody = () => {
-    return (
+  const TBBody = () => (
       <TableBodyStyleControl
         actions={actions}
         activeTab={activeTab}
@@ -90,9 +91,9 @@ export const EmbedSettings = () => {
         query={query}
         tab={<MainTab />}
       >
-        {activeTab === "Embed" && <MainTab />}
+        {activeTab === 'Embed' && <MainTab />}
         <>
-          {activeTab === "Appearance" && (
+          {activeTab === 'Appearance' && (
             <TabBody>
               <ToolbarSection>
                 <RadiusInput />
@@ -101,13 +102,13 @@ export const EmbedSettings = () => {
             </TabBody>
           )}
 
-          {activeTab === "Style" && (
+          {activeTab === 'Style' && (
             <TabBody>
               <DisplaySettingsInput />
             </TabBody>
           )}
 
-          {activeTab === "Layout" && (
+          {activeTab === 'Layout' && (
             <TabBody>
               <p className="p-3">
                 Spacing is not available for this component.
@@ -115,13 +116,13 @@ export const EmbedSettings = () => {
             </TabBody>
           )}
 
-          {activeTab === "Animations" && (
+          {activeTab === 'Animations' && (
             <TabBody>
               <AnimationsInput />
             </TabBody>
           )}
 
-          {activeTab === "Hover & Click" && (
+          {activeTab === 'Hover & Click' && (
             <TabBody>
               <p className="p-3">
                 Hover settings are not available for this component.
@@ -130,8 +131,7 @@ export const EmbedSettings = () => {
           )}
         </>
       </TableBodyStyleControl>
-    );
-  };
+  );
 
   return (
     <TBWrap head={head}>

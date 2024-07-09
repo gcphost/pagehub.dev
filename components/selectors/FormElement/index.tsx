@@ -1,41 +1,41 @@
-import { useEditor, useNode } from "@craftjs/core";
-import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
-import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
-import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
+import { useEditor, useNode } from '@craftjs/core';
+import { NameNodeController } from 'components/editor/NodeControllers/NameNodeController';
+import { ToolNodeController } from 'components/editor/NodeControllers/ToolNodeController';
+import TextSettingsNodeTool from 'components/editor/NodeControllers/Tools/TextSettingsNodeTool';
 import {
   getClonedState,
   setClonedProps,
-} from "components/editor/Toolbar/Helpers/CloneHelper";
-import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
-import React from "react";
-import { useRecoilValue } from "recoil";
-import { motionIt } from "utils/lib";
+} from 'components/editor/Toolbar/Helpers/CloneHelper';
+import { PreviewAtom, ViewAtom } from 'components/editor/Viewport';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { motionIt } from 'utils/lib';
 
-import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
-import { applyAnimation, ClassGenerator } from "utils/tailwind";
-import { BaseSelectorProps } from "..";
-import { FormElementSettings } from "./FormElementSettings";
+import { HoverNodeController } from 'components/editor/NodeControllers/HoverNodeController';
+import { applyAnimation, ClassGenerator } from 'utils/tailwind';
+import { BaseSelectorProps } from '..';
+import { FormElementSettings } from './FormElementSettings';
 
 export const inputTypes = [
-  "text",
-  "textarea",
-  "email",
-  "password",
-  "url",
-  "tel",
-  "date",
-  "datetime-local",
-  "radio",
-  "checkbox",
-  "reset",
-  "hidden",
-  "color",
-  "month",
-  "number",
-  "range",
-  "search",
-  "time",
-  "week",
+  'text',
+  'textarea',
+  'email',
+  'password',
+  'url',
+  'tel',
+  'date',
+  'datetime-local',
+  'radio',
+  'checkbox',
+  'reset',
+  'hidden',
+  'color',
+  'month',
+  'number',
+  'range',
+  'search',
+  'time',
+  'week',
 ];
 
 export const OnlyFormElement = ({ children, ...props }) => {
@@ -57,8 +57,7 @@ export const OnlyFormElement = ({ children, ...props }) => {
 
 OnlyFormElement.craft = {
   rules: {
-    canMoveIn: (nodes) =>
-      nodes.every((node) => node.data?.name === "FormElement"),
+    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === 'FormElement'),
   },
 };
 
@@ -77,9 +76,9 @@ const defaultProps: FormElementProps = {
   mobile: {},
   desktop: {},
   canDelete: true,
-  type: "",
-  placeholder: "",
-  name: "",
+  type: '',
+  placeholder: '',
+  name: '',
 };
 
 export const FormElement = (props: Partial<FormElementProps>) => {
@@ -88,16 +87,14 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     ...props,
   };
 
-  const { actions, query, enabled } = useEditor((state) => {
-    return getClonedState(props, state);
-  });
+  const { actions, query, enabled } = useEditor((state) => getClonedState(props, state));
 
   props = setClonedProps(props, query);
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
 
-  let { tagName } = props;
+  const { tagName } = props;
 
   const {
     connectors: { connect, drag },
@@ -112,24 +109,23 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     name: props.name,
   };
 
-  prop["data-border"] =
-    props.root?.border || props.root?.borderColor ? true : false;
+  prop['data-border'] = !!(props.root?.border || props.root?.borderColor);
 
   if (enabled) {
     // if (!text) prop["children"] = <BsInputCursorText />;
-    prop["data-bounding-box"] = enabled;
+    prop['data-bounding-box'] = enabled;
     // prop["data-empty-state"] = !text;
-    prop["node-id"] = id;
+    prop['node-id'] = id;
   }
 
   return React.createElement(
-    motionIt(props, prop.type === "textarea" ? "textarea" : "input"),
+    motionIt(props, prop.type === 'textarea' ? 'textarea' : 'input'),
     applyAnimation({ ...prop, key: id }, props)
   );
 };
 
 FormElement.craft = {
-  displayName: "Form Item",
+  displayName: 'Form Item',
   rules: {
     canDrag: () => true,
     canMoveIn: () => false,
@@ -146,9 +142,9 @@ FormElement.craft = {
           align="start"
           placement="end"
           alt={{
-            position: "bottom",
-            align: "start",
-            placement: "start",
+            position: 'bottom',
+            align: 'start',
+            placement: 'start',
           }}
         />,
 
