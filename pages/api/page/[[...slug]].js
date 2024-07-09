@@ -82,8 +82,9 @@ export const parseContent = (content, slug) => {
     Object.keys(da).forEach((_) => {
       console.log('check', da[_]?.props?.type, _, k)
       if (da[_]?.props?.type === "page" && _ !== k) {
-        da[_].props.isHidden = true;
-        da[_].hidden = true;
+        delete da[_]
+        //  da[_].props.isHidden = true;
+        // da[_].hidden = true;
       }
     });
 
