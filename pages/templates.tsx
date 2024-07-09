@@ -6,7 +6,7 @@ export const siteTitle =
 export const siteDescription =
   "Templates - Create stunning single page applications and components with TailwindCSS and OpenAI. No code going strong!";
 
-function App({}) {
+function App() {
   return (
     <>
       <NextSeo title={siteTitle} description={siteDescription} />

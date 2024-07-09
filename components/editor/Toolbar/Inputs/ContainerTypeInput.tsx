@@ -2,12 +2,12 @@ import { useEditor } from "@craftjs/core";
 import { AddElement } from "components/editor/Viewport/Toolbox/lib";
 import { Container } from "components/selectors/Container";
 import { ToolbarItem } from "../ToolbarItem";
-import { getTypeProp, typeProps } from "../Tools/lib";
+import { useGetTypeProp, useTypeProps } from "../Tools/lib";
 
 export const ContainerTypeInput = () => {
-  const { nodeProps } = typeProps();
+  const { nodeProps } = useTypeProps();
 
-  const flexDirection = getTypeProp(
+  const flexDirection = useGetTypeProp(
     {
       propKey: "flexDirection",
     },

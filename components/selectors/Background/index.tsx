@@ -260,7 +260,7 @@ export const Background = (props: Partial<ContainerProps>) => {
     };
   }, [props.footer]);
 
-  (prop.children = (
+  prop.children = (
     <>
       <RenderPattern
         props={props}
@@ -281,8 +281,8 @@ export const Background = (props: Partial<ContainerProps>) => {
         </RenderGradient>
       </RenderPattern>
     </>
-  )),
-    applyBackgroundImage(prop, props, settings);
+  );
+  applyBackgroundImage(prop, props, settings);
   applyAnimation(prop, props);
 
   return React.createElement("main", prop);

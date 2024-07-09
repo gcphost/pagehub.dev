@@ -178,11 +178,7 @@ export const Toolbox = ({ userStyle = null }) => {
     >
       <div
         className={`flex ${
-          col
-            ? "flex-col gap-3"
-            : !sideBarLeft
-              ? "flex-col gap-1.5"
-              : "flex-col gap-1.5"
+          col ? "flex-col gap-3" : "flex-col gap-1.5"
         } "items-end" }`}
       >
         {itemMenuButton(item, getter, setter, col)}
@@ -234,6 +230,8 @@ export const Toolbox = ({ userStyle = null }) => {
             className={
               "flex flex-col md:flex-row gap-6 justify-center items-center pointer-events-auto"
             }
+            role="button"
+            tabIndex={0}
           >
             <motion.div
               variants={iconVariants}

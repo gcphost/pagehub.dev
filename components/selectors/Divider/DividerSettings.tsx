@@ -12,7 +12,7 @@ import { RadiusInput } from "components/editor/Toolbar/Inputs/RadiusInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { WidthInput } from "components/editor/Toolbar/Inputs/WidthInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
-import { getNode } from "components/editor/Toolbar/Tools/lib";
+import { useGetNode } from "components/editor/Toolbar/Tools/lib";
 import { TabAtom } from "components/editor/Viewport";
 import { useEffect } from "react";
 import { BiPaint } from "react-icons/bi";
@@ -23,7 +23,7 @@ import { useDefaultTab } from "utils/lib";
 
 export const DividerSettings = () => {
   const { id } = useNode();
-  const propValues = getNode().data.props;
+  const propValues = useGetNode().data.props;
 
   const { actions, query } = useEditor();
 

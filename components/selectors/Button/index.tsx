@@ -213,7 +213,6 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   return (
     <div
       ref={(r: any) => connect(drag(r))}
-      node-id={id}
       className={[
         ...ClassGenerator({ ...props }, view, enabled, [], baseProps).split(
           " "
@@ -243,7 +242,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
           props.iconShadow,
           "flex",
           "items-center",
-        ].filter((_) => (_ = _));
+        ];
 
         const className = [
           ...ClassGene(props.button, [], []),

@@ -361,11 +361,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       // if we get position of mouse over selected div we can order better..
       // var elements = Array.from(document.querySelectorAll(":hover"));
 
-      try {
-        handleAdd();
-      } catch (e) {
-        console.error(e);
-      }
+      handleAdd();
 
       return;
     }
@@ -546,6 +542,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       <div className={activeClass[0]}>
         <div
           id="viewport"
+          role="button"
           onKeyDown={handleKeyDown}
           data-isolated={!!isolated}
           tabIndex={0}

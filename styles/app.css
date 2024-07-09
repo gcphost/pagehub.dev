@@ -103,12 +103,12 @@ iframe {
 }
 
 .fontfamily-base {
-  font-family: Helvetica;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 body,
 html {
-  font-family: Helvetica;
+  font-family: Helvetica, Arial, sans-serif;
   font-weight: 400;
   @apply subpixel-antialiased;
 }

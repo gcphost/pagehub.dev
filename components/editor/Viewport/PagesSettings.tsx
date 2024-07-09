@@ -7,7 +7,7 @@ import { IsolateAtom, isolatePageAlt } from "utils/lib";
 
 const sluggit = require("slug");
 
-export const PagesSettings = ({}) => {
+export const PagesSettings = () => {
   const [settings, setSettings] = useRecoilState(SettingsAtom);
 
   const [data, setData] = useState(settings);

@@ -71,6 +71,8 @@ const DragTable = () => {
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       className="table border"
+      role="button"
+      tabIndex={0}
     >
       {Array(numRows)
         .fill(null)

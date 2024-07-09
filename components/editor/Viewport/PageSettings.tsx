@@ -1,9 +1,8 @@
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 
-export const PageSettings = ({}) => {
+export const PageSettings = () => {
   const [settings, setSettings] = useRecoilState(SettingsAtom);
 
   const [data, setData] = useState(settings);
@@ -98,11 +97,6 @@ export const PageSettings = ({}) => {
     };
 
     run();
-    const interval = setInterval(() => run, 5000);
-
-    //  return () => {
-    //    clearInterval(interval);
-    //  };
   }, [settings?.domain]);
 
   const inputClass = "input  ";
@@ -110,9 +104,6 @@ export const PageSettings = ({}) => {
   if (!settings) {
     return null;
   }
-
-  console.log(settings);
-  const { data: session, status } = useSession();
 
   return (
     <form
@@ -133,8 +124,9 @@ export const PageSettings = ({}) => {
 
           <div className="flex flex-col gap-6">
             <div>
-              <label>Company Name</label>
+              <label htmlFor="companyName">Company Name</label>
               <input
+                id="companyName"
                 type="text"
                 autoFocus={settings.company}
                 placeholder="Your Company"
@@ -146,8 +138,9 @@ export const PageSettings = ({}) => {
               />
             </div>
             <div>
-              <label>Company Type</label>
+              <label htmlFor="companyType">Company Type</label>
               <input
+                id="companyType"
                 type="text"
                 autoFocus={settings.companyType}
                 placeholder="ecommerce, finance"
@@ -159,8 +152,9 @@ export const PageSettings = ({}) => {
               />
             </div>
             <div>
-              <label>Company Location</label>
+              <label htmlFor="companylocation">Company Location</label>
               <input
+                id="companyLocation"
                 type="text"
                 autoFocus={settings.companyLocation}
                 placeholder="Los Angeles, CA"

@@ -26,7 +26,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <RecoilRoot>
         <Component {...pageProps} />
 
-        <iframe className="hidden" name="iframe" id="iframe"></iframe>
+        <iframe
+          className="hidden"
+          name="iframe"
+          id="iframe"
+          title="Submission Frame"
+        ></iframe>
       </RecoilRoot>
     </SessionProvider>
   );

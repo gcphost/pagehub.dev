@@ -108,6 +108,9 @@ const Item = ({
     style={{ backgroundColor: value, ...style }}
     onClick={(e) => onClick(e, value)}
     onMouseOver={(e) => onMouseOver(e, value)}
+    onFocus={(e) => onMouseOver(e, value)}
+    tabIndex={0}
+    role="button"
     onMouseLeave={(e) => onMouseOut(e, value)}
     key="colorpicker"
   >
@@ -157,7 +160,7 @@ export const ColorPickerDialog = () => {
     }
 
     actions.setProp(ROOT_NODE, (props) => {
-      props.pallet = [val, ...props.pallet.filter((_) => _ !== val)] || [val];
+      props.pallet = [val, ...props.pallet.filter((_) => _ !== val)];
 
       setColorPallet(props.pallet);
     });
@@ -202,6 +205,9 @@ export const ColorPickerDialog = () => {
           <div
             className="flex flex-col gap-0 w-full max-w-[320px]"
             onMouseOver={() => setShow(false)}
+            onFocus={() => setShow(false)}
+            tabIndex={0}
+            role="button"
           >
             {
               <div className="w-full flex flex-row px-3 gap-3 items-center justify-between">
@@ -310,15 +316,6 @@ export const ColorPickerDialog = () => {
                           changed({ type: "class", value });
                           //  closed();
                         }}
-                        onMouseOver={(e, value) => {
-                          // changed({ type: "class", value: value })
-                        }}
-                        onMouseOut={(e, value) => {
-                          // changed({
-                          //  type: "class",
-                          //  value: colorPicker.value,
-                          // })
-                        }}
                       />
                     );
                   })}
@@ -334,6 +331,9 @@ export const ColorPickerDialog = () => {
             onMouseOver={() => {
               setShow(true);
             }}
+            onFocus={() => setShow(true)}
+            tabIndex={0}
+            role="button"
           >
             {show ? null : <TbCaretRight />}
           </div>

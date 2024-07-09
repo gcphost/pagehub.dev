@@ -364,7 +364,7 @@ export const Header = () => {
           {showMenuType === "domain" && <DomainSettings />}
           {showMenuType === "page" && <PageSettings />}
           {showMenuType === "pages" && <PagesSettings />}
-          {showMenuType === "builds" && lsIds.length && (
+          {showMenuType === "builds" && lsIds.length > 0 && (
             <>
               <div className="p-3 flex flex-col gap-6">
                 <div className="text-xl">Account Builds</div>

@@ -46,90 +46,100 @@ function App({ subdomain, data, meta, seo }) {
     }
   }
 
-  if (subdomain) {
-    const router = useRouter();
+  const router = useRouter();
 
-    const [favicon, setFavicon] = useState("/alt.ico");
+  const [favicon, setFavicon] = useState("/alt.ico");
 
-    useEffect(() => {
-      const link = document.querySelector("link[rel~='icon']") as any;
-      if (link) {
-        link.href = favicon;
+  useEffect(() => {
+    if (!subdomain) return;
+
+    const link = document.querySelector("link[rel~='icon']") as any;
+    if (link) {
+      link.href = favicon;
+    } else {
+      const newLink = document.createElement("link");
+      newLink.rel = "icon";
+      newLink.href = favicon;
+      document.head.appendChild(newLink);
+    }
+  }, [favicon, subdomain]);
+
+  useEffect(() => {
+    if (!subdomain) return;
+
+    const handlePopstate = () => {
+      router.push(window.location.pathname);
+    };
+    window.addEventListener("popstate", handlePopstate);
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, [router, subdomain]);
+
+  useEffect(() => {
+    if (!subdomain) return;
+    console.log({ meta });
+    setSettings(meta);
+  }, [meta, setSettings, subdomain]);
+
+  useEffect(() => {
+    if (!subdomain) return;
+    const path = window.location.hash;
+    if (path && path.includes("#")) {
+      setTimeout(() => {
+        const id = path.replace("#", "");
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const r = el.getBoundingClientRect();
+
+        const root = document.querySelector('[data-root="true"]');
+
+        if (root) {
+          root?.scroll({
+            top: r.top,
+            behavior: "smooth",
+          });
+        }
+      }, 600);
+    }
+
+    router.beforePopState(({ url, as, options }) => {
+      const root = document.querySelector('[data-root="true"]');
+
+      if (as === "/") {
+        root?.scroll({
+          top: 0,
+          behavior: "smooth",
+        });
       } else {
-        const newLink = document.createElement("link");
-        newLink.rel = "icon";
-        newLink.href = favicon;
-        document.head.appendChild(newLink);
-      }
-    }, [favicon]);
+        const b = as.split("/");
+        const c = b[1].replace("#", "");
 
-    useEffect(() => {
-      const handlePopstate = () => {
-        router.push(window.location.pathname);
-      };
-      window.addEventListener("popstate", handlePopstate);
-      return () => {
-        window.removeEventListener("popstate", handlePopstate);
-      };
-    }, [router]);
+        const el = document.getElementById(c);
+        if (!el) return;
 
-    useEffect(() => {
-      console.log({ meta });
-      setSettings(meta);
-    }, [meta]);
+        const r = el.getBoundingClientRect();
 
-    useEffect(() => {
-      const path = window.location.hash;
-      if (path && path.includes("#")) {
+        if (!r) return;
+
         setTimeout(() => {
-          const id = path.replace("#", "");
-          const el = document.getElementById(id);
-          if (!el) return;
-
-          const r = el.getBoundingClientRect();
-
-          const root = document.querySelector('[data-root="true"]');
-
-          if (root) {
-            root?.scroll({
-              top: r.top,
-              behavior: "smooth",
-            });
-          }
+          if (!root) return;
+          root?.scroll({
+            top: r.top,
+            behavior: "smooth",
+          });
         }, 600);
       }
 
-      router.beforePopState(({ url, as, options }) => {
-        const root = document.querySelector('[data-root="true"]');
+      return true;
+    });
+  }, [router, subdomain]);
 
-        if (as === "/") {
-          root?.scroll({
-            top: 0,
-            behavior: "smooth",
-          });
-        } else {
-          const b = as.split("/");
-          const c = b[1].replace("#", "");
-
-          const el = document.getElementById(c);
-          if (!el) return;
-
-          const r = el.getBoundingClientRect();
-
-          if (!r) return;
-
-          setTimeout(() => {
-            if (!root) return;
-            root?.scroll({
-              top: r.top,
-              behavior: "smooth",
-            });
-          }, 600);
-        }
-
-        return true;
-      });
-    }, []);
+  if (subdomain) {
+    if (!data) {
+      return <div>404</div>;
+    }
 
     const editorComponents = {
       Background,
@@ -149,10 +159,6 @@ function App({ subdomain, data, meta, seo }) {
     };
 
     const { title, descripton } = seo || { title: "", descripton: "" };
-
-    if (!data) {
-      return <div>404</div>;
-    }
 
     return (
       <>
@@ -229,7 +235,7 @@ export async function getStaticPaths() {
 }
 export async function getServerSidseProps({ req, params }) {
   const host = req.headers.host.split(".");
-  let subdomain = host.length === 3 ? host[0] : host[0];
+  let subdomain = host[0];
 
   if (["localhost:3000", "pagehub"].includes(subdomain)) {
     subdomain = "";

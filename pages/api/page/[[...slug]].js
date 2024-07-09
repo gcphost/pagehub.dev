@@ -21,7 +21,7 @@ export const parseContent = (content, slug) => {
 
   try {
     da = JSON.parse(data);
-  } catch (e) {}
+  } catch (e) { }
 
   if (!da) return { data: null, seo: null };
 
@@ -73,7 +73,7 @@ export const parseContent = (content, slug) => {
     seo.description =
       props.props.pageDescription || props.pageDescription || null;
 
-    Object.keys(da).map((_) => {
+    Object.keys(da).forEach((_) => {
       if (da[_]?.props?.type === "page" && _ !== k) {
         da[_].props.isHidden = true;
         da[_].hidden = true;

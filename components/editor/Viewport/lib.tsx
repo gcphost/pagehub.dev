@@ -165,19 +165,21 @@ export const SearchGpt = async (search, existing) => {
 };
 
 const getPropValue = ({ propKey, propItemKey, index }, _props = {}) => {
-  const value = { ..._props } || {};
+  const value = _props ? { ..._props } : {};
 
   if (!propItemKey && !index && index !== 0) {
     return value[propKey] || null;
   }
 
   if (propItemKey && (index || index >= 0)) {
-    value[propKey] = { ...value[propKey] } || {};
-    value[propKey][index] = { ...value[propKey][index] } || {};
+    value[propKey] = value[propKey] ? { ...value[propKey] } : {};
+    value[propKey][index] = value[propKey][index]
+      ? { ...value[propKey][index] }
+      : {};
     return value[propKey][index][propItemKey] || null;
   }
 
-  value[index] = { ...value[index] } || {};
+  value[index] = value[index] ? { ...value[index] } : {};
   return value[index][propKey] || null;
 };
 

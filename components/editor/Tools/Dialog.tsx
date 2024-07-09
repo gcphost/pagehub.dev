@@ -179,7 +179,12 @@ function Dialog({ children, target, state, opener }: any): any {
               zIndex: 50,
             }}
           >
-            <div onMouseDown={handleMouseDown} className="h-8 cursor-move">
+            <div
+              onMouseDown={handleMouseDown}
+              role="button"
+              tabIndex={0}
+              className="h-8 cursor-move"
+            >
               <div className="w-2/3 h-4 inside-shadow bg-violet-500 hover:bg-violet-900 rounded-b-md mx-auto -mt-[2px]   border-gray-900 border-2 border-t-violet-500 hover:border-t-violet-900 drop-shadow-lg  px-3 py-1.5"></div>
 
               <div className="flex items-center justify-between ">

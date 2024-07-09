@@ -54,7 +54,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
 
   const searched = !!(classInput && matches.length);
 
-  const _nodeProps = { ...nodeProps } || {};
+  const _nodeProps = nodeProps ? { ...nodeProps } : {};
 
   const delNodeProp = (prop, view) => {
     Object.keys(nodeProps[view])

@@ -22,7 +22,7 @@ import SEOInput from "components/editor/Toolbar/Inputs/SEOInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SizeInput } from "components/editor/Toolbar/Inputs/SizeInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
-import { getNode } from "components/editor/Toolbar/Tools/lib";
+import { useGetNode } from "components/editor/Toolbar/Tools/lib";
 import { TabAtom } from "components/editor/Viewport";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
@@ -37,7 +37,7 @@ import { autoOpenMenu, useDefaultTab } from "utils/lib";
 
 export const ContainerSettings = () => {
   const { id } = useNode();
-  const node = getNode();
+  const node = useGetNode();
   const props = node.data.props;
 
   const { actions, query } = useEditor();

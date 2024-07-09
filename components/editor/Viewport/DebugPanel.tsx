@@ -2,7 +2,7 @@ import { useEditor } from "@craftjs/core";
 import { useRef, useState } from "react";
 import { ParseTree } from "../Toolbar/Helpers/ParseTree";
 
-export default () => {
+export default function DebugPanel() {
   const { state, query } = useEditor((state, query) => ({ state }));
 
   const active = query.getEvent("selected").first();
@@ -50,10 +50,12 @@ export default () => {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      role="button"
+      tabIndex={0}
     >
       <div>
         <ParseTree tree={theNode.data} />
       </div>
     </div>
   );
-};
+}

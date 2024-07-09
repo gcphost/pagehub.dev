@@ -13,34 +13,7 @@ export default async function media(req, res) {
   if (!found) return res.status(404).json({});
 
   if (req.method === "DELETE") {
-    // rando images deleted?
     return res.status(200).json({ _id: null, updated: false });
-
-    if (req.body.mediaId) {
-      try {
-        await Page.findOneAndUpdate(
-          { _id },
-          { $pull: { media: { _id: req.body.mediaId } } },
-          { safe: true, multi: true }
-        );
-
-        await fetch(
-          `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ID}/images/v1/${req.body.mediaId}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${process.env.CLOUDFLARE_TOKEN}`,
-            },
-          }
-        );
-
-        return res.status(200).json({ _id: null, updated: true });
-      } catch (e) {
-        return res.status(500).json(e);
-      }
-    }
-
-    return res.status(404).json({});
   }
 
   if (req.method === "POST") {

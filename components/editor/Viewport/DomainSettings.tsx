@@ -2,6 +2,7 @@ import { useEditor } from "@craftjs/core";
 import debounce from "lodash.debounce";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { FaCheck, FaCircle } from "react-icons/fa";
 import { TbCheck, TbLock, TbLogin, TbLogout, TbX } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
@@ -202,8 +203,9 @@ export const DomainSettings = () => {
         <hr className="border-b border-gray-500 -mx-3" />
 
         <div>
-          <label>Title</label>
+          <label htmlFor="siteTitle">Title</label>
           <input
+            id="siteTitle"
             type="text"
             autoFocus={settings.name}
             placeholder="Site Title"
@@ -216,8 +218,9 @@ export const DomainSettings = () => {
         </div>
 
         <div>
-          <label>Description</label>
+          <label htmlFor="siteDescription">Description</label>
           <textarea
+            id="siteDescription"
             placeholder="Site Description"
             required={true}
             defaultValue={settings.description}
@@ -230,7 +233,9 @@ export const DomainSettings = () => {
         <hr className="border-b border-gray-500 -mx-3" />
 
         <div className="flex flex-col gap-3">
-          <label
+          <div
+            role="button"
+            tabIndex={0}
             className="cursor-pointer flex flex-row items-center gap-2"
             onClick={() =>
               status === "authenticated" && setPublishType("local")
@@ -241,17 +246,14 @@ export const DomainSettings = () => {
               }
             }}
           >
-            <input
-              type="radio"
-              name="local"
-              className="input w-3"
-              checked={publishType === "local"}
-            />{" "}
+            {publishType === "local" ? <FaCheck /> : <FaCircle size={6} />}{" "}
             Publish to pagehub.dev
             {status !== "authenticated" && <TbLogin />}
-          </label>
+          </div>
 
-          <label
+          <div
+            role="button"
+            tabIndex={-1}
             className="cursor-pointer flex flex-row items-center gap-2"
             onClick={() =>
               status === "authenticated" && setPublishType("domain")
@@ -262,17 +264,14 @@ export const DomainSettings = () => {
               }
             }}
           >
-            <input
-              type="radio"
-              name="domain"
-              className="input w-3"
-              checked={publishType === "domain"}
-            />{" "}
+            {publishType === "domain" ? <FaCheck /> : <FaCircle size={6} />}{" "}
             Publish to your own domain
             {status !== "authenticated" && <TbLogin />} <TbLock />
-          </label>
+          </div>
 
-          <label
+          <div
+            role="button"
+            tabIndex={-2}
             className="cursor-pointer flex flex-row items-center gap-2"
             onClick={() => setPublishType("draft")}
             onKeyDown={(e) => {
@@ -281,14 +280,9 @@ export const DomainSettings = () => {
               }
             }}
           >
-            <input
-              type="radio"
-              name="draft"
-              className="input w-3"
-              checked={publishType === "draft"}
-            />{" "}
-            Save as draft
-          </label>
+            {publishType === "draft" ? <FaCheck /> : <FaCircle size={6} />} Save
+            as draft
+          </div>
         </div>
 
         {publishType === "local" && (

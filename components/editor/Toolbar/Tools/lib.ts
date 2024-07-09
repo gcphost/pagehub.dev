@@ -7,7 +7,7 @@ import { getProp } from "components/editor/Viewport/lib";
 import throttle from "lodash.throttle";
 import { useRecoilValue } from "recoil";
 
-export const typeProps = () => {
+export const useTypeProps = () => {
   const {
     actions: { setProp },
     nodeProps,
@@ -18,7 +18,7 @@ export const typeProps = () => {
   return { setProp, nodeProps };
 };
 
-export const getTypeProp = (props = {}, nodeProps) => {
+export const useGetTypeProp = (props = {}, nodeProps) => {
   const view = useRecoilValue(ViewAtom);
 
   return getProp(props, view, nodeProps);
@@ -45,7 +45,7 @@ export const useDialog = (dialog, setDialog, ref, propKey = "") => {
   }, [ref.current, dialog.enabled]);
 };
 
-export const getNode = () => {
+export const useGetNode = () => {
   const { id } = useNode();
 
   const { query } = useEditor();

@@ -21,7 +21,7 @@ import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { WidthInput } from "components/editor/Toolbar/Inputs/WidthInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
-import { getNode } from "components/editor/Toolbar/Tools/lib";
+import { useGetNode } from "components/editor/Toolbar/Tools/lib";
 import { TabAtom } from "components/editor/Viewport";
 import { useState } from "react";
 import { BiPaint } from "react-icons/bi";
@@ -34,7 +34,7 @@ import { useDefaultTab } from "utils/lib";
 export const FormSettings = () => {
   const { actions, query } = useEditor();
   const { id } = useNode();
-  const node = getNode();
+  const node = useGetNode();
   const props = node.data.props;
 
   const [formType, setFormType] = useState(props.type);

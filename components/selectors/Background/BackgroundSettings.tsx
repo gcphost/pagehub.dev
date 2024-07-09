@@ -12,7 +12,7 @@ import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
 import { ToolbarWrapper } from "components/editor/Toolbar/ToolBarWrapper";
-import { getNode } from "components/editor/Toolbar/Tools/lib";
+import { useGetNode } from "components/editor/Toolbar/Tools/lib";
 import { TabAtom } from "components/editor/Viewport";
 import React from "react";
 import { BiPaint } from "react-icons/bi";
@@ -28,7 +28,7 @@ import { autoOpenMenu, useDefaultTab } from "utils/lib";
 
 export const BackgroundSettings = () => {
   const { id } = useNode();
-  const node = getNode();
+  const node = useGetNode();
 
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
 

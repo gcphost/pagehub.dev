@@ -56,7 +56,7 @@ export const Dialog = ({
     }
   }
 
-  width = width || 308 || rect?.width || 308;
+  width = width || rect?.width || 308;
 
   const closed = () => {
     setSearchValue(null);
@@ -121,7 +121,7 @@ export const Dialog = ({
               "h-full w-full overflow-hidden my-auto bg-white rounded-lg  p-0 border-2 border-gray-800/60  pointer-events-auto  drop-shadow-2xl  "
             }
           >
-            {children && children}
+            {children}
 
             {!children && (
               <div

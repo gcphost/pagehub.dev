@@ -1,8 +1,8 @@
 import { AnimatePresence } from "framer-motion";
-import { getNode } from "./Toolbar/Tools/lib";
+import { useGetNode } from "./Toolbar/Tools/lib";
 
 export const RenderNodeTools = () => {
-  const node = getNode();
+  const node = useGetNode();
   const tools = node?.data?.props?.tools?.(node.data.props) || [];
 
   if (!tools.length) return null;
