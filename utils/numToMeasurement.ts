@@ -4,7 +4,7 @@ export const isPercentage = (val: string) =>
 export const percentToPx = (value: any, comparativeValue: number) => {
   if (value.indexOf("px") > -1 || value === "auto" || !comparativeValue)
     return value;
-  const percent = parseInt(value);
+  const percent = parseInt(value, 2);
   return `${(percent / 100) * comparativeValue}px`;
 };
 export const pxToPercent = (value: any, comparativeValue: number) => {

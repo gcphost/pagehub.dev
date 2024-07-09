@@ -26,8 +26,6 @@ export default async function handler(
   content = content.replace(/\n/g, "");
   content = content.replace(/\s{2,}/g, " "); // replace any sequence of 2 or more whitespace characters with a single space
 
-  const parsedData = [];
-
   const nodeLookup = {
     div: "Container",
     section: "Container",
@@ -80,6 +78,17 @@ export default async function handler(
     const parsedData = { tag: "html", children: [], props: {} };
     let currentTag: any = parsedData;
 
+    const removeParent = (children) => {
+      const cleanChildren = children.map((child) => {
+        if (child.children && Array.isArray(child.children)) {
+          child.children = removeParent(child.children);
+        }
+        delete child.parent;
+        return child;
+      });
+      return cleanChildren;
+    };
+
     const parser = new htmlparser2.Parser(
       {
         onopentag(tagName, attributes) {
@@ -129,17 +138,6 @@ export default async function handler(
     const cleanData = removeParent(parsedData.children);
 
     return cleanData;
-  };
-
-  const removeParent = (children) => {
-    const cleanChildren = children.map((child) => {
-      if (child.children && Array.isArray(child.children)) {
-        child.children = removeParent(child.children);
-      }
-      delete child.parent;
-      return child;
-    });
-    return cleanChildren;
   };
 
   const o = parseHtml(content);

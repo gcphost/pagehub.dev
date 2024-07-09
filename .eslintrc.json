@@ -26,6 +26,13 @@
     "no-continue": "off",
     "no-multi-assign": "off",
     "no-unused-vars": "off",
+    "@typescript-eslint/default-param-last": "off",
+    "import/no-named-as-default": "off",
+    "consistent-return": "off",
+    "no-shadow": "off",
+    "react/jsx-key": "off",
+    "react/rules-of-hooks": "off",
+    "no-use-before-define": "off",
     "no-nested-ternary": "warn",
     "no-unreachable": "warn",
     "import/extensions": "off",
@@ -33,6 +40,9 @@
     "import/no-anonymous-default-export": "off",
     "no-return-assign": "off",
     "no-underscore-dangle": "off",
+    "no-unused-expressions": "off",
+    "no-plusplus": "off",
+    "prefer-const": "off",
     "prettier/prettier": [
       "warn",
       {
