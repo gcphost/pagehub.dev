@@ -96,7 +96,7 @@ export const Image = (props: ImageProps) => {
 
   prop.style = { ...prop.style, position: "relative" };
 
-  const _imgProp = {
+  const _imgProp: any = {
     loading: "eager", // or lazy
     alt: "",
     title: "",

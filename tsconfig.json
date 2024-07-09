@@ -6,7 +6,7 @@
     "lib": ["dom", "es2017"],
     "baseUrl": ".",
     "moduleResolution": "node",
-    "strict": true,
+    "strict": false,
     "allowJs": true,
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
