@@ -3,13 +3,11 @@ import copy from "copy-to-clipboard";
 import lz from "lzutf8";
 
 export const ExportModal = () => {
-  const { enabled, canUndo, canRedo, actions, query } = useEditor(
-    (state, query) => ({
-      enabled: state.options.enabled,
-      canUndo: query.history.canUndo(),
-      canRedo: query.history.canRedo(),
-    })
-  );
+  const { query } = useEditor((state, query) => ({
+    enabled: state.options.enabled,
+    canUndo: query.history.canUndo(),
+    canRedo: query.history.canRedo(),
+  }));
 
   const json = query.serialize();
 

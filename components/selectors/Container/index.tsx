@@ -245,8 +245,6 @@ const canMoveIn = (nodes, into) => {
     return node?.data?.props?.type !== "page";
   });
 
-  // console.log(nodes, into, result);
-
   return result;
 };
 

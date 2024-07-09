@@ -94,8 +94,6 @@ export const FormDrop = ({
           }
         });
 
-        // console.log(formData, additional);
-
         SaveSubmissions(formData, settings, additional);
 
         setTimeout(() => {

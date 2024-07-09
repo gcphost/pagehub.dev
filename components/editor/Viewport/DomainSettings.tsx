@@ -27,19 +27,15 @@ export const DomainSettings = () => {
   const [saving, setSaving] = useState(false);
   const [domainData, setDomainData] = useState(null);
   const setUnsavedChanged = useSetRecoilState(UnsavedChangesAtom);
-  const { enabled, canUndo, canRedo, actions, query } = useEditor(
-    (state, query) => ({
-      enabled: state.options.enabled,
-      canUndo: query.history.canUndo(),
-      canRedo: query.history.canRedo(),
-    })
-  );
+  const { query } = useEditor((state, query) => ({
+    enabled: state.options.enabled,
+    canUndo: query.history.canUndo(),
+    canRedo: query.history.canRedo(),
+  }));
   const save = async () => {
     setSaving(true);
     const { name, title, description, _id, domain } = data;
     let result = null;
-
-    // console.log({ data });
 
     const body: any = {
       title,
@@ -56,8 +52,6 @@ export const DomainSettings = () => {
       body.domain = domain;
     }
 
-    // console.log({ body });
-
     try {
       const res = await fetch("/api/save", {
         method: "POST",
@@ -69,8 +63,6 @@ export const DomainSettings = () => {
       });
 
       result = await res.json();
-
-      // console.log("saved", result);
     } catch (e) {
       console.error(e);
     }
@@ -131,7 +123,6 @@ export const DomainSettings = () => {
         body: JSON.stringify({ domain: settings.domain }),
       }).then(async (res) => {
         const r = await res.json();
-        // console.log("d", r);
         setDomainData(r);
       });
     };

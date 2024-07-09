@@ -27,10 +27,10 @@ export const ItemToggle = ({ items = [], children, selected, onChange }) => (
     {children}
 
     <div className="flex flex-row gap-1.5">
-      {items.map((item, index) => (
+      {items.map((item) => (
         <ItemSelector
           {...item}
-          key={index}
+          key={item.id}
           onClick={() => onChange(item.id)}
           selected={selected === item.id}
         />

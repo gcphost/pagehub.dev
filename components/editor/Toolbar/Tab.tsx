@@ -1,6 +1,7 @@
 import { Tooltip } from "components/layout/Tooltip";
 import { motion } from "framer-motion";
 import { useRecoilState } from "recoil";
+import { v4 as uuidv4 } from "uuid";
 import { TabAtom } from "../Viewport";
 import MenuItem from "./Helpers/MenuIcon";
 
@@ -44,9 +45,9 @@ export const TabBody = ({ children = null, jumps = [] }) => {
     <>
       {jumps.length ? (
         <div className="bg-gray-600 border-b-gray-500 border-b flex flex-row gap-3 px-3 justify-end">
-          {jumps.map((_, k) => (
+          {jumps.map((_) => (
             <MenuItem
-              key={k}
+              key={uuidv4()}
               onClick={() => {
                 document.getElementById("toolbarContents").scrollTo({
                   top: document.getElementById(_.title).offsetTop,

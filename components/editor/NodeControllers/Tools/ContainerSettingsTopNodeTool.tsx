@@ -18,67 +18,36 @@ import {
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { MenuItemState, MenuState } from "utils/lib";
 
-// if row alignItems is vertical,
-// if row justify is horizontal
+// Helper function to get alignment options based on direction and value
+const getAlignmentOptions = (direction, value) => {
+  const isHorizontal = direction === "horizontal";
+  const horizontal = isHorizontal ? "items" : "justify";
+  const vertical = isHorizontal ? "justify" : "items";
 
-export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
-  const view = useRecoilValue(ViewAtom);
-
-  const {
-    actions: { setProp },
-    nodeProps,
-  } = useNode((node) => ({
-    nodeProps: node.data.props || {},
-  }));
-
-  const { value, viewValue } = getPropFinalValue(
-    {
-      propKey: "flexDirection",
-    },
-    view,
-    nodeProps
-  );
-
-  let horizontal = "items";
-  let vertical = "justify";
-  let propKey = "alignItems";
-
-  if (["flex-row", "flex-row-reverse"].includes(value)) {
-    propKey = "justifyContent";
-    horizontal = "justify";
-    vertical = "items";
-  }
-
-  let options = [
-    {
-      value: `${horizontal}-start`,
-      label:
-        value === "flex-row-reverse" ? (
-          <TbLayoutAlignRight />
-        ) : (
-          <TbLayoutAlignLeft />
-        ),
-    },
-    { value: `${horizontal}-center`, label: <TbLayoutAlignCenter /> },
-    {
-      value: `${horizontal}-end`,
-      label:
-        value === "flex-row-reverse" ? (
-          <TbLayoutAlignLeft />
-        ) : (
-          <TbLayoutAlignRight />
-        ),
-    },
-  ];
-
-  if (direction !== "horizontal") {
-    propKey = "justifyContent";
-
-    if (["flex-row", "flex-row-reverse"].includes(value)) {
-      propKey = "alignItems";
-    }
-
-    options = [
+  if (isHorizontal) {
+    return [
+      {
+        value: `${horizontal}-start`,
+        label:
+          value === "flex-row-reverse" ? (
+            <TbLayoutAlignRight />
+          ) : (
+            <TbLayoutAlignLeft />
+          ),
+      },
+      { value: `${horizontal}-center`, label: <TbLayoutAlignCenter /> },
+      {
+        value: `${horizontal}-end`,
+        label:
+          value === "flex-row-reverse" ? (
+            <TbLayoutAlignLeft />
+          ) : (
+            <TbLayoutAlignRight />
+          ),
+      },
+    ];
+  } else {
+    return [
       {
         value: `${vertical}-start`,
         label:
@@ -100,6 +69,37 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
       },
     ];
   }
+};
+
+// Helper function to determine the propKey based on direction and value
+const determinePropKey = (direction, value) => {
+  if (direction === "horizontal") {
+    return ["flex-row", "flex-row-reverse"].includes(value)
+      ? "justifyContent"
+      : "alignItems";
+  } else {
+    return ["flex-row", "flex-row-reverse"].includes(value)
+      ? "alignItems"
+      : "justifyContent";
+  }
+};
+
+export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
+  const view = useRecoilValue(ViewAtom);
+  const { nodeProps } = useNode((node) => ({
+    nodeProps: node.data.props || {},
+  }));
+
+  const { value } = getPropFinalValue(
+    {
+      propKey: "flexDirection",
+    },
+    view,
+    nodeProps
+  );
+
+  const propKey = determinePropKey(direction, value);
+  const options = getAlignmentOptions(direction, value);
 
   const { actions, query } = useEditor();
   const setShowMenu = useSetRecoilState(MenuState);
@@ -133,7 +133,6 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         },
         exit: {
           opacity: 0,
-
           transition: {
             delay: 0.2,
             duration: 0.3,

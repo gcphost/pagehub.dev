@@ -131,7 +131,6 @@ export const RenderNodeControl = ({
 
     const stillOutOfView =
       newsRect.bottom > viewportRect.bottom || newsRect.top < viewportRect.top;
-    // console.log(stillOutOfView, newsRect);
 
     if (stillOutOfView) {
       ref.current.style.bottom = "10px";

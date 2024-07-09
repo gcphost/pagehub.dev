@@ -117,18 +117,6 @@ export const RenderToolComponent = ({
       whileTap={{ scale: 0.9 }}
       className={"cursor-move w-full pointer-events-auto"}
       ref={(ref: any) => create(ref, tool)}
-      onDragEnterCapture={() => {
-        //  console.log("a");
-        //  setMenu({enabled:false})
-      }}
-      onDragCapture={() => {}}
-      onDragExitCapture={() => {
-        //  console.log("de");
-      }}
-      onDragEndCapture={() => {
-        // setMenu({ enabled: false });
-        // console.log("end");
-      }}
       onDoubleClick={() => {
         const props = {
           element: tool,

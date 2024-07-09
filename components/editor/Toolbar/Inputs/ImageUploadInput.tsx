@@ -86,7 +86,7 @@ export const ImageUploadInput: any = ({
   }));
 
   const [errors, setErrors] = useState([]);
-  const [value, setValue] = useState("");
+  const [value] = useState("");
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [enabled, setEnabled] = useState(true);

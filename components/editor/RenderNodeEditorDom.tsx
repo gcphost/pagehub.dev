@@ -6,13 +6,13 @@ import { RenderNodeTools } from "./RenderNodeTools";
 
 export const RenderNodeEditorDom = ({ render }) => {
   const nodeItems = [
-    <RenderNodeInViewPort>
+    <RenderNodeInViewPort key="renderInView">
       <RenderNodePortal>
         <RenderNodeTools />
       </RenderNodePortal>
     </RenderNodeInViewPort>,
 
-    <RenderNodeDataStates />,
+    <RenderNodeDataStates key="renderDataStates" />,
   ];
 
   return (

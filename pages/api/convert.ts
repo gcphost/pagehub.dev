@@ -5,21 +5,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{}>
 ) {
-  const _content = `<div class="items-start border-solid flex flex-col justify-center leading-6 p-8">
-  <h1 class="text-yellow-300 text-[3.00rem] leading-[3.00rem] p-2">TechFest</h1>
-  <h2 class="text-[3.00rem] leading-[4.13rem] mb-2">Space : The Timeless Infinity
-  </h2>
-  <p class="text-gray-50 leading-6 mb-4">Explore your favourite events and
-    register now to showcase your talent and win exciting prizes.</p>
-  <a class="rounded text-yellow-300 cursor-pointer leading-6 p-2" href="https://tailwindcomponents.com/#">Explore Now</a>
-</div>`;
-
-  // console.log(
-  //  JSON.stringify({
-  //    content: _content,
-  //  })
-  // );
-
   let { content } = req.body;
 
   // content = _content;

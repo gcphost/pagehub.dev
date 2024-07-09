@@ -11,13 +11,13 @@ export const RenderNodeNewer = ({ render }) => {
   }));
 
   const nodeItems = [
-    <RenderNodeInViewPort>
+    <RenderNodeInViewPort key="renderViewPort">
       <RenderNodePortal>
         <RenderNodeTools />
       </RenderNodePortal>
     </RenderNodeInViewPort>,
 
-    <RenderNodeDataStates />,
+    <RenderNodeDataStates key="renderDataStates" />,
   ];
 
   if (!enabled) return render;

@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 const Label = ({ value }) => <label>{value}</label>;
 
 export const ToolbarDropdown = ({
@@ -17,7 +19,7 @@ export const ToolbarDropdown = ({
       </option>
     );
 
-    res.push(...valueLabels.map((_, k) => <option key={k}>{_}</option>));
+    res.push(...valueLabels.map((_) => <option key={uuidv4()}>{_}</option>));
 
     children = res;
   }

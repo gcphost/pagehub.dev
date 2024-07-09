@@ -21,14 +21,8 @@ export function NodeDialog({
 
   const setIsOpen = useSetRecoilState(itemListState);
 
-  // const [isOpen, setIsOpen] = useState(false);
-
   const openDialog = () => {
     setIsOpen(true);
-  };
-
-  const closeDialog = () => {
-    setIsOpen(false);
   };
 
   const { id } = useNode();

@@ -43,7 +43,6 @@ export const useIsInViewPort = (id) => {
 
   useEffect(() => {
     if (!scrollingParent || !originalElementRef.current) return;
-    const originalElement = originalElementRef.current;
     let animationFrameId;
 
     const handleScroll = () => {

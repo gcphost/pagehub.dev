@@ -41,8 +41,6 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
   const [matches, setMatches] = useState([]);
 
   useEffect(() => {
-    // console.log(AllStyles.length);
-
     if (classInput.length < 2) return;
 
     const matches = (

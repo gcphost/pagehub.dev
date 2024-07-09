@@ -14,11 +14,8 @@ import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { ImageSettings } from "./ImageSettings";
 
-const NextImage = require("next/image");
-
 export const ImageDefault = ({ tab, props }) => {
   const setActiveTab = useSetRecoilState(TabAtom);
-  // console.log("default image")
 
   return (
     <button
