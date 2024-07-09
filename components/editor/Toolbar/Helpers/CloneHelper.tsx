@@ -2,59 +2,7 @@ import { removeHasManyRelation } from "components/editor/Viewport/lib";
 
 export const setClonedProps = (props, query, exclude = []) => {
   return props;
-  if (props.belongsTo) {
-    const parent = query.node(props.belongsTo).get();
-    const parentProps = parent?.data?.props || {};
-
-    if (parentProps && props.relationType !== "style") {
-      props = { ...props, ...parent?.data?.props };
-    }
-
-    if (parentProps && props.relationType === "style") {
-      const propsWithout = (_name) => {
-        const pro = parent.data?.props[_name] || {};
-        const og = props[_name];
-        const newRootProps = {};
-
-        Object.keys(pro).forEach((_) => {
-          if (!exclude.includes(_)) {
-            newRootProps[_] = pro[_];
-          } else {
-            newRootProps[_] = og[_];
-          }
-        });
-
-        return newRootProps;
-      };
-
-      props.root = propsWithout("root");
-      props.desktop = propsWithout("desktop");
-      props.mobile = propsWithout("mobile");
-    }
-  }
-
-  return props;
 };
-
-export const getClonedState = (props, state) => {
-  if (!props.belongsTo) {
-    return {
-      enabled: state.options.enabled,
-    };
-  }
-  return {
-    enabled: state.options.enabled,
-    state,
-  };
-};
-
-export const NoSettings = ({ actions, id, query }) => (
-  <>
-    <p className="text-xl">No settings available.</p>
-
-    <ConvertToRegularComponent query={query} actions={actions} id={id} />
-  </>
-);
 
 export const ConvertToRegularComponent = ({ query, actions, id }) => (
   <p>
@@ -74,6 +22,26 @@ export const ConvertToRegularComponent = ({ query, actions, id }) => (
     </strong>{" "}
     to adjust all of the settings and remove the relation.
   </p>
+);
+
+export const getClonedState = (props, state) => {
+  if (!props.belongsTo) {
+    return {
+      enabled: state.options.enabled,
+    };
+  }
+  return {
+    enabled: state.options.enabled,
+    state,
+  };
+};
+
+export const NoSettings = ({ actions, id, query }) => (
+  <>
+    <p className="text-xl">No settings available.</p>
+
+    <ConvertToRegularComponent query={query} actions={actions} id={id} />
+  </>
 );
 
 export const ConvertToStyledComponent = ({ actions, id }) => (

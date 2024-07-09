@@ -20,8 +20,8 @@ import { HoverNodeController } from "components/editor/NodeControllers/HoverNode
 import TextSettingsTopNodeTool from "components/editor/NodeControllers/Tools/TextSettingsTopNodeTool";
 import { changeProp } from "components/editor/Viewport/lib";
 import debounce from "lodash.debounce";
-import { useScrollToSelected } from "../lib";
 import { BaseSelectorProps } from "..";
+import { useScrollToSelected } from "../lib";
 import { TextSettings } from "./TextSettings";
 
 export interface TextProps extends BaseSelectorProps {
@@ -103,7 +103,7 @@ export const Text = (props: Partial<TextProps>) => {
       if (text === "<br>") text = "";
     }
   }
-  const prop = {
+  const prop: any = {
     ref: (r) => connect(drag(r)),
     className: ClassGenerator(props, view, enabled, [], [], preview),
   };

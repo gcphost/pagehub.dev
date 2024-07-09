@@ -57,7 +57,7 @@ export const Divider = (props: DividerProps) => {
 
   props = setClonedProps(props, query);
 
-  const prop = {
+  const prop: any = {
     ref: (r) => {
       ref.current = r;
       connect(drag(r));

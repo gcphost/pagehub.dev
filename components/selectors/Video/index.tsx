@@ -61,7 +61,7 @@ export const Video = (props: VideoProps) => {
 
   const ref = useRef();
 
-  const prop = {
+  const prop: any = {
     ref: (r) => {
       ref.current = r;
       connect(drag(r));

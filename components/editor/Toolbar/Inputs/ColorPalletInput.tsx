@@ -35,7 +35,7 @@ export const ColorPalletInput = () => {
                 const props = node.data.props;
 
                 Object.keys(props.root).forEach((p) => {
-                  const prop = props.root[p];
+                  const prop: any = props.root[p];
 
                   const escapedRegexString = old?.replace(
                     /[.*+?^${}()|[\]\\]/g,

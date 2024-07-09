@@ -105,7 +105,7 @@ export const SaveToServer = async (json, draft, settings, setSettings) => {
 
   const _id = settings?._id || "";
 
-  const r = { _id };
+  const r: any = { _id };
 
   if (draft) {
     r.draft = content;

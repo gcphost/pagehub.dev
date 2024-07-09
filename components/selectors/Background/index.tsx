@@ -120,7 +120,7 @@ export const Background = (props: Partial<ContainerProps>) => {
 
   const inlayed = hasInlay(props);
 
-  const prop = {
+  const prop: any = {
     ref: (r) => {
       ref.current = r;
       connect(drag(r));

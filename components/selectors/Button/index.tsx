@@ -24,7 +24,6 @@ import {
   ClassGenerator,
   CSStoObj,
 } from "utils/tailwind";
-import { ButtonSettings, SelectedButtonAtom } from "./ButtonSettings";
 import { BaseSelectorProps, BaseStyleProps, RootStyleProps } from "..";
 import {
   hasInlay,
@@ -32,6 +31,7 @@ import {
   RenderPattern,
   useScrollToSelected,
 } from "../lib";
+import { ButtonSettings, SelectedButtonAtom } from "./ButtonSettings";
 
 const EditableName = ({ but, ikey, enabled }) => {
   const {
@@ -161,7 +161,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
 
   props = setClonedProps(props, query);
 
-  const defaultProp = {
+  const defaultProp: any = {
     ref: (r) => connect(drag(r)),
     style: props.root?.style ? CSStoObj(props.root.style) || {} : {},
     className: ClassGenerator(props, view, enabled),

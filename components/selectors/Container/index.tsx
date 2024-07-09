@@ -123,7 +123,7 @@ export const Container = (props: Partial<ContainerProps>) => {
     preview
   );
 
-  let prop = {
+  let prop: any = {
     ref: (r) => {
       ref.current = r;
       connect(drag(r));

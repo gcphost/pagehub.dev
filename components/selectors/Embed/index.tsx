@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
@@ -12,7 +13,6 @@ import { TbCode } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { motionIt, selectAfterAdding } from "utils/lib";
 import { ClassGenerator, applyAnimation } from "utils/tailwind";
-import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { BaseSelectorProps } from "..";
 import { useScrollToSelected } from "../lib";
 
@@ -74,7 +74,7 @@ export const Embed = (props: EmbedProps) => {
 
   props = setClonedProps(props, query);
 
-  const prop = {
+  const prop: any = {
     ref: (r) => {
       ref.current = r;
       connect(drag(r));

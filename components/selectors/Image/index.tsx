@@ -74,7 +74,7 @@ export const Image = (props: ImageProps) => {
   props = setClonedProps(props, query);
   const ref = useRef(null);
 
-  const prop = {
+  const prop: any = {
     ref: (r) => {
       ref.current = r;
       connect(drag(r));

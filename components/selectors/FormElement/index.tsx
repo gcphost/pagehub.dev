@@ -104,7 +104,7 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     id,
   } = useNode();
 
-  const prop = {
+  const prop: any = {
     ref: (r) => connect(drag(r)),
     className: ClassGenerator(props, view, enabled, [], [], preview),
     type: props.type,
