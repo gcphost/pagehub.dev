@@ -15,7 +15,7 @@ module.exports = withBundleAnalyzer({
       has: [
         {
           type: "host",
-          value: "^(?!.*\\.pagehub\\.co$)(?!pagehub\\.co$).+",
+          value: "^(?!.*\\.pagehub\\.dev$)(?!pagehub\\.dev$).+",
         },
       ],
       destination: "/static/:host",

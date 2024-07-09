@@ -34,7 +34,7 @@ export const DomainSettings = () => {
   }));
   const save = async () => {
     setSaving(true);
-    const { name, title, description, _id, domain } = data;
+    const { name, title, description, domain } = data;
     let result = null;
 
     const body: any = {
@@ -227,9 +227,10 @@ export const DomainSettings = () => {
           <button
             tabIndex={0}
             className="cursor-pointer flex flex-row items-center gap-2"
-            onClick={() =>
-              status === "authenticated" && setPublishType("local")
-            }
+            onClick={(e) => {
+              e.preventDefault();
+              status === "authenticated" && setPublishType("local");
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 status === "authenticated" && setPublishType("local");
@@ -244,9 +245,10 @@ export const DomainSettings = () => {
           <button
             tabIndex={-1}
             className="cursor-pointer flex flex-row items-center gap-2"
-            onClick={() =>
-              status === "authenticated" && setPublishType("domain")
-            }
+            onClick={(e) => {
+              e.preventDefault();
+              status === "authenticated" && setPublishType("domain");
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 status === "authenticated" && setPublishType("domain");
@@ -261,7 +263,10 @@ export const DomainSettings = () => {
           <button
             tabIndex={-2}
             className="cursor-pointer flex flex-row items-center gap-2"
-            onClick={() => setPublishType("draft")}
+            onClick={(e) => {
+              e.preventDefault();
+              setPublishType("draft");
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 status === "authenticated" && setPublishType("draft");
