@@ -33,6 +33,7 @@ export interface ContainerProps extends BaseSelectorProps {
   onSubmit?: any;
   target?: any;
   id?: any;
+  hidden?: false;
 }
 
 const defaultProps: ContainerProps = {
@@ -144,6 +145,7 @@ export const Container = (props: Partial<ContainerProps>) => {
           properties={inlayProps}
           preview={preview}
         >
+          {props.hidden ? "a" : "b"}
           {children || (
             <EmptyState
               icon={props.type === "page" ? <TbNote /> : <TbContainer />}
