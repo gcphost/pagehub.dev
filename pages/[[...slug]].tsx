@@ -187,7 +187,6 @@ export async function getServerSideProps({ req, params }) {
   let data = "";
   let meta = null;
   let seo = {};
-  const json = null;
 
   if (subdomain) {
     try {

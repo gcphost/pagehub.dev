@@ -194,8 +194,7 @@ export async function getStaticProps({ params }) {
       draftId,
     } = named;
     const { seo } = parseContent(content || draft, params.slug[0]);
-    // By returning { props: { posts } }, the Blog component
-    // will receive `posts` as a prop at build time
+
     return {
       props: {
         subdomain: params.slug[0] || null,
