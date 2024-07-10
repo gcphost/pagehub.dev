@@ -170,7 +170,7 @@ function App({ subdomain, data, meta, seo }) {
           description={`${descripton || meta.description || ""}`}
         />
 
-        <Editor resolver={editorComponents} enabled={false}>
+        <Editor resolver={editorComponents} enabled={true}>
           <CustomDeserializer data={data} />
           <Frame data={data} />
         </Editor>
