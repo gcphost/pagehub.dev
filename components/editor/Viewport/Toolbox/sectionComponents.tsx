@@ -1,7 +1,5 @@
 import { Element } from "@craftjs/core";
 import { Tooltip } from "components/layout/Tooltip";
-import { AiOutlineAlert, AiOutlineIdcard } from "react-icons/ai";
-import { BsPostcard } from "react-icons/bs";
 import { TbLayoutColumns, TbLayoutRows, TbQuestionMark } from "react-icons/tb";
 import { Container } from "../../../selectors/Container";
 import { RenderToolComponent } from "./lib";
@@ -128,6 +126,7 @@ export const sectionToolboxItems = [
       />,
     ],
   },
+  /*
   {
     title: "Sections",
     content: [
@@ -231,5 +230,5 @@ export const sectionToolboxItems = [
         custom={{ displayName: "Call to Attention" }}
       />,
     ],
-  },
+  },*/
 ];

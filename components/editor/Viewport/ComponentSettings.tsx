@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import throttle from "lodash.throttle";
+import { useEffect, useRef, useState } from "react";
 import { ButtonToolbox } from "./Toolbox/buttonComponents";
 import { DividerToolbox } from "./Toolbox/dividerComponents";
 import { EmbedToolbox } from "./Toolbox/embedComponents";
@@ -11,8 +11,6 @@ import { sectionToolboxItems } from "./Toolbox/sectionComponents";
 import { TextToolbox } from "./Toolbox/textComponents";
 import { VideoToolbox } from "./Toolbox/videoComponents";
 
-import { ListToolbox } from "./Toolbox/listComponents";
-
 const items = [
   ...sectionToolboxItems,
   TextToolbox,
@@ -23,7 +21,7 @@ const items = [
   FormElementToolbox,
   DividerToolbox,
   EmbedToolbox,
-  ListToolbox,
+  //  ListToolbox,
   ...pageToolboxItems,
 ];
 
