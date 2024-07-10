@@ -23,7 +23,6 @@ import { Video } from "../components/selectors/Video";
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
   useEffect(() => {
-    console.log("update data in CustomDeserializer");
     actions.deserialize(data);
   }, [data]);
   return <Frame data={data} />;
@@ -44,8 +43,6 @@ function App({ subdomain, data, meta, seo }) {
       data = null;
     }
   }
-
-  console.log("data", data);
 
   const router = useRouter();
 
@@ -80,7 +77,6 @@ function App({ subdomain, data, meta, seo }) {
   useEffect(() => {
     if (!subdomain) return;
 
-    console.log({ meta });
     setSettings(meta);
   }, [meta, setSettings, subdomain]);
 
