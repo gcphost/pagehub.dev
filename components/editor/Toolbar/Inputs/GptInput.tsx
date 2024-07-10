@@ -13,7 +13,7 @@ import { Card, Wrap } from "../ToolbarStyle";
 export const GPTAtom = atom({
   key: "gpt",
   default: {
-    enabled: true,
+    enabled: false,
   },
 });
 
@@ -55,8 +55,6 @@ export const GptInput = ({ autoFocus = false }) => {
 
     const rest = results.result;
 
-    console.log(results, rest);
-
     const classes = saveclass(rest);
     setClasses(classes);
     setSearched(true);
@@ -70,9 +68,15 @@ export const GptInput = ({ autoFocus = false }) => {
       .map((value) => {
         const propKey = classNameToVar(value);
 
-        console.log({ propKey });
-
         if (!propKey) return;
+
+        console.log({
+          propKey,
+          value,
+          setProp,
+          view,
+          propType: "root",
+        });
 
         changeProp({
           propKey,

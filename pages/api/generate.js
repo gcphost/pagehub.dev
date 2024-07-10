@@ -34,7 +34,7 @@ export default async function generate(req, res) {
     const completion = await openai.createCompletion({
       model: "gpt-3.5-turbo-instruct",
       // prompt: `input: tailwindcss class name for ${search} that is seperated by spaces, exclude the following ${req.body.existing.split(" ").join(", ")}`,
-      prompt: `input: tailwindcss class name for ${search} that is seperated by spaces`,
+      prompt: `using tailwindcss version 3, I need a list of class names, seperated by a space, that would apply to this search term: "${search}", you can also list things that may be related to it, but if there is nothing thats a good match just return no response, and don't return partials, and make sure its an actual class name provided by tailwind css, and if its a class that has sizes, like space-x and i wasnt specific make sure you return it with all the sizes`,
       temperature: 0,
       max_tokens: 50,
       top_p: 1,
@@ -43,11 +43,10 @@ export default async function generate(req, res) {
       stop: ["input:"],
     });
 
-    const reps = completion.data.choices[0].text.split(/[\n ]/);
+    const reps = completion.data.choices[0].text.split(/\s+/).filter(item => item.trim() !== "");
+    const cleanedArray = reps.filter(item => /^[a-zA-Z0-9-:]+$/.test(item));
 
-    console.log(reps, completion.data.choices[0].text)
-
-    res.status(200).json({ result: reps, og: completion.data.choices[0].text });
+    res.status(200).json({ result: cleanedArray, og: completion.data.choices[0].text });
   } catch (error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
