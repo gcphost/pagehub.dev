@@ -78,6 +78,21 @@ export const ButtonSettings = () => {
   const MainTab = () => (
     <TabBody>
       <ToolbarSection>
+        <ToolbarItem
+          propKey="flexDirection"
+          type="select"
+          labelHide={true}
+          label="Container Type"
+          cols={true}
+        >
+          <option value="">None</option>
+
+          <option value="flex-col">Column</option>
+          <option value="flex-row">Row</option>
+
+          <option value="flex-col-reverse">Reverse Column</option>
+          <option value="flex-row-reverse">Reverse Row</option>
+        </ToolbarItem>
         <ButtonInput />
       </ToolbarSection>
     </TabBody>
