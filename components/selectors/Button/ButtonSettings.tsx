@@ -93,6 +93,8 @@ export const ButtonSettings = () => {
           <option value="flex-col-reverse">Reverse Column</option>
           <option value="flex-row-reverse">Reverse Row</option>
         </ToolbarItem>
+      </ToolbarSection>
+      <ToolbarSection>
         <ButtonInput />
       </ToolbarSection>
     </TabBody>
