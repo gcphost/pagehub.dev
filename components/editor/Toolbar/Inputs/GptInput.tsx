@@ -55,6 +55,8 @@ export const GptInput = ({ autoFocus = false }) => {
 
     const rest = results.result;
 
+    console.log(results, rest);
+
     const classes = saveclass(rest);
     setClasses(classes);
     setSearched(true);
@@ -67,6 +69,8 @@ export const GptInput = ({ autoFocus = false }) => {
     const classes = rest
       .map((value) => {
         const propKey = classNameToVar(value);
+
+        console.log({ propKey });
 
         if (!propKey) return;
 

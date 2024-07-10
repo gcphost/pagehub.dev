@@ -232,7 +232,7 @@ export async function getStaticPaths() {
     fallback: "blocking",
   };
 }
-export async function getServerSideProps({ req, params }) {
+export async function getServerSidePropsDep({ req, params }) {
   const host = req.headers.host.split(".");
   let subdomain = host[0];
 

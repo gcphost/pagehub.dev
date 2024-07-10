@@ -32,7 +32,7 @@ export default async function generate(req, res) {
 
   try {
     const completion = await openai.createCompletion({
-      model: "text-davinci-003",
+      model: "gpt-3.5-turbo-instruct",
       // prompt: `input: tailwindcss class name for ${search} that is seperated by spaces, exclude the following ${req.body.existing.split(" ").join(", ")}`,
       prompt: `input: tailwindcss class name for ${search} that is seperated by spaces`,
       temperature: 0,
@@ -44,6 +44,8 @@ export default async function generate(req, res) {
     });
 
     const reps = completion.data.choices[0].text.split(/[\n ]/);
+
+    console.log(reps, completion.data.choices[0].text)
 
     res.status(200).json({ result: reps, og: completion.data.choices[0].text });
   } catch (error) {
