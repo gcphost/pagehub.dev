@@ -23,8 +23,9 @@ import { Video } from "../components/selectors/Video";
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
   useEffect(() => {
+    console.log("update data in CustomDeserializer");
     actions.deserialize(data);
-  }, [actions, data]);
+  }, [data]);
   return null;
 };
 
