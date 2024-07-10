@@ -26,7 +26,7 @@ const CustomDeserializer = ({ data }) => {
     console.log("update data in CustomDeserializer");
     actions.deserialize(data);
   }, [data]);
-  return null;
+  return <Frame data={data} />;
 };
 
 function App({ subdomain, data, meta, seo }) {
@@ -172,7 +172,6 @@ function App({ subdomain, data, meta, seo }) {
 
         <Editor resolver={editorComponents} enabled={false}>
           <CustomDeserializer data={data} />
-          <Frame data={data} />
         </Editor>
       </>
     );
