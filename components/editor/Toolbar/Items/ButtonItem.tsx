@@ -49,6 +49,7 @@ const Input = ({ nodeProps, setProp }) => {
             }
             buttons={[
               <button
+                key="button-1"
                 className="text-gray-500"
                 onClick={(e) => {
                   e.preventDefault();

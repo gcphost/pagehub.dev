@@ -31,7 +31,7 @@ export const RenderNodeNewer = ({ render }) => {
       {render}
 
       {ReactDOM.createPortal(
-        nodeItems.map((tool, index) => ({ ...tool, key: index })),
+        nodeItems.map((tool: any, index) => ({ ...tool, key: index })),
         document.querySelector('[data-container="true"]')
       )}
     </>

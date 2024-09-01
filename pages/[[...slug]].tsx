@@ -24,7 +24,7 @@ const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
   useEffect(() => {
     actions.deserialize(data);
-  }, [data]);
+  }, [actions, data]);
   return <Frame data={data} />;
 };
 

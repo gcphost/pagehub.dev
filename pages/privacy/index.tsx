@@ -1,5 +1,6 @@
 import Footer from "components/footer";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 
 function Privacy() {
   return (
@@ -63,12 +64,12 @@ function Privacy() {
           </div>
 
           <div className="container mx-auto flex justify-center">
-            <a
+            <Link
               href="/build"
               className="bg-violet-500 hover:bg-violet-400 cursor-pointer text-white text-center text-2xl w-full m-3 lg:w-1/3 p-12 rounded-xl"
             >
               Start building!
-            </a>
+            </Link>
           </div>
 
           <Footer />

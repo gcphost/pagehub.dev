@@ -1,5 +1,6 @@
 import Footer from "components/footer";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 
 function Terms() {
   return (
@@ -108,9 +109,9 @@ function Terms() {
                 <p className="mb-2">
                   You agree to indemnify and hold Pagehub and its affiliates,
                   officers, agents, employees, and partners harmless from any
-                  claim or demand, including reasonable attorneys' fees, made by
-                  any third party due to or arising out of your use of our
-                  service, your violation of these terms of service, or your
+                  claim or demand, including reasonable attorneys&apos; fees,
+                  made by any third party due to or arising out of your use of
+                  our service, your violation of these terms of service, or your
                   violation of any rights of another.
                 </p>
                 <h3 className="text-lg font-bold mb-2">8. Governing Law:</h3>
@@ -133,12 +134,12 @@ function Terms() {
           </div>
 
           <div className="container mx-auto flex justify-center">
-            <a
+            <Link
               href="/build"
               className="bg-violet-500 hover:bg-violet-400 cursor-pointer text-white text-center text-2xl w-full m-3 lg:w-1/3 p-12 rounded-xl"
             >
               Build a page today!
-            </a>
+            </Link>
           </div>
 
           <Footer />

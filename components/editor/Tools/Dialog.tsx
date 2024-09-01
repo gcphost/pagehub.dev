@@ -112,7 +112,7 @@ function Dialog({ children, target, state, opener }: any): any {
 
     // Update the position state with the calculated top and left values
     setPosition({ left, top, right });
-  }, [isOpen, target, dialogRect, opener]);
+  }, [isOpen, target, dialogRect, opener, setPosition]);
 
   function handleMouseDown(e) {
     setIsDragging(true);
@@ -149,7 +149,7 @@ function Dialog({ children, target, state, opener }: any): any {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isDragging, offset]);
+  }, [isDragging, offset, setPosition]);
 
   const handleClickOutside = (event) => {
     if (dialogRef.current && !dialogRef.current.contains(event.target)) {

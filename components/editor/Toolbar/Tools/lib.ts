@@ -42,7 +42,7 @@ export const useDialog = (dialog, setDialog, ref, propKey = "") => {
         .querySelector('[data-toolbar="true"]')
         ?.removeEventListener("scroll", scroll);
     };
-  }, [ref.current, dialog.enabled]);
+  }, [dialog.enabled, scroll]);
 };
 
 export const useGetNode = () => {

@@ -66,12 +66,12 @@ function Home() {
         </div>
 
         <div className="container mx-auto flex justify-center mb-24">
-          <a
+          <Link
             href="/templates"
             className="bg-violet-500 hover:bg-violet-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
             Start Today, Free!
-          </a>
+          </Link>
         </div>
 
         <div className="my-6 md:my-12 mx-auto md:flex gap-24 md:w-2/3  items-start">

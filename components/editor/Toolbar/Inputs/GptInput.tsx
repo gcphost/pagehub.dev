@@ -112,7 +112,7 @@ export const GptInput = ({ autoFocus = false }) => {
     const time = setTimeout(() => focusRef?.current?.focus(), 50);
 
     return () => clearTimeout(time);
-  }, [focusRef]);
+  }, [autoFocus, focusRef]);
 
   if (!gpt.enabled) return null;
 

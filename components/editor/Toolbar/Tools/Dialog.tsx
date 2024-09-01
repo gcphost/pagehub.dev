@@ -89,7 +89,7 @@ export const Dialog = ({
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
-  }, [dialog.enabled, ref]);
+  }, [dialog.enabled, handleClickOutside, ref]);
 
   const refIe = useRef(null);
 
@@ -99,7 +99,7 @@ export const Dialog = ({
       if (element && refIe.current)
         refIe.current.scrollTo({ top: element.offsetTop });
     }
-  }, [dialog.enabled, dialog.value, ref]);
+  }, [dialog.enabled, dialog.value, dialogName, ref, value]);
 
   return (
     <AnimatePresence>

@@ -28,7 +28,7 @@ export function useMousePosition(id, distance = 45, cref = null) {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [dom]);
+  }, [distance, dom]);
 
   return {
     isInTopOrLeft,

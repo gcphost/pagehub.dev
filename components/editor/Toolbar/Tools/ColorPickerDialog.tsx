@@ -146,7 +146,7 @@ export const ColorPickerDialog = () => {
     const nodePrsets = node.data.props.pallet || [];
 
     setColorPallet(nodePrsets);
-  }, [colorPicker.enabled]);
+  }, [colorPicker.enabled, query, setColorPallet]);
 
   const saveToPallet = () => {
     const data = colorPicker.value;

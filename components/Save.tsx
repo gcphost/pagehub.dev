@@ -19,7 +19,7 @@ export const Save = ({ result }) => {
     const components = JSON.parse(localStorage.getItem("components")) || [];
 
     setComponents(components);
-  }, [result]);
+  }, [result, setComponents, setSettings]);
 
   useEffect(() => {
     if (!last || !Object.keys(last).length) {
@@ -33,7 +33,7 @@ export const Save = ({ result }) => {
       setUnsavedChanged(null);
       setLast(unsavedChanges);
     });
-  }, [unsavedChanges]);
+  }, [last, setSettings, setUnsavedChanged, settings, unsavedChanges]);
 
   return <></>;
 };

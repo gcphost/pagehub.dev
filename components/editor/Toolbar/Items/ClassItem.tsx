@@ -48,7 +48,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
     ).filter((item) => !classes?.includes(item));
 
     setMatches(matches);
-  }, [classInput]);
+  }, [classInput, classes]);
 
   const searched = !!(classInput && matches.length);
 

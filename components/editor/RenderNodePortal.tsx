@@ -30,7 +30,7 @@ export function RenderNodePortal({ children }) {
 
   useEffect(() => {
     originalElementRef.current = document.querySelector(`[node-id="${id}"]`);
-  }, [document.querySelector(`[node-id="${id}"]`)]);
+  }, [id]);
 
   useEffect(() => {
     if (!originalElementRef.current) return;
@@ -48,7 +48,7 @@ export function RenderNodePortal({ children }) {
     return () => {
       observer?.disconnect();
     };
-  }, [originalElementRef.current]);
+  }, [setPosition]);
 
   useEffect(() => {
     if (!clonedElementRef.current || !originalElementRef.current) return;
@@ -78,7 +78,7 @@ export function RenderNodePortal({ children }) {
       scrollingParent.removeEventListener("scroll", handleScroll);
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [originalElementRef, scrollingParent]);
+  }, [originalElementRef, scrollingParent, setPosition]);
 
   return (
     <div

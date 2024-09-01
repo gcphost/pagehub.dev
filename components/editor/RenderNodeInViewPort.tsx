@@ -13,10 +13,6 @@ export const useIsInViewPort = (id) => {
 
   const scrollingParent = useFindScrollingParent(id);
 
-  useEffect(() => {
-    setInView();
-  }, [originalElementRef]);
-
   const setInView = useCallback(() => {
     const originalElement = originalElementRef.current;
     if (!originalElement) return;
@@ -42,6 +38,10 @@ export const useIsInViewPort = (id) => {
   }, [originalElementRef]);
 
   useEffect(() => {
+    setInView();
+  }, [originalElementRef, setInView]);
+
+  useEffect(() => {
     if (!scrollingParent || !originalElementRef.current) return;
     let animationFrameId;
 
@@ -59,7 +59,7 @@ export const useIsInViewPort = (id) => {
       scrollingParent.removeEventListener("scroll", handleScroll);
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [originalElementRef, scrollingParent]);
+  }, [originalElementRef, scrollingParent, setInView]);
 
   return isInViewport;
 };

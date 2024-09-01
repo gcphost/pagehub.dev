@@ -52,7 +52,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
 
   const getCloneTree = useCallback(
     (tree: NodeTree) => buildClonedTree({ tree, query, setProp }),
-    [query]
+    [query, setProp]
   );
 
   const handleSaveTemplate = useCallback(
@@ -68,7 +68,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
       id,
       setProp,
     });
-  }, [actions, getCloneTree, query]);
+  }, [actions, getCloneTree, id, query, setProp]);
 
   const handleClone = (e) => {
     e.preventDefault();
@@ -88,7 +88,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   useEffect(() => {
     const iso = localStorage.getItem("isolated");
     if (iso) setIsolate(iso);
-  }, []);
+  }, [setIsolate]);
 
   const ref = useRef();
 

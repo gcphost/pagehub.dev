@@ -31,7 +31,7 @@ export const RenderNodeDataStates = () => {
       if (isHover) dom.setAttribute("data-hover", "true");
       else dom.removeAttribute("data-hover");
     }
-  }, [isActive, isHover, enabled]);
+  }, [isActive, isHover, enabled, dom, name]);
 
   return null;
 };
