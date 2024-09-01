@@ -1,4 +1,5 @@
 import { useEditor } from "@craftjs/core";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { RenderNodeDataStates } from "./RenderNodeDataStates";
 import { RenderNodeInViewPort } from "./RenderNodeInViewPort";
@@ -6,6 +7,8 @@ import { RenderNodePortal } from "./RenderNodePortal";
 import { RenderNodeTools } from "./RenderNodeTools";
 
 export const RenderNodeNewer = ({ render }) => {
+  const [show, setShow] = useState(false);
+
   const { enabled } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
@@ -20,20 +23,24 @@ export const RenderNodeNewer = ({ render }) => {
     <RenderNodeDataStates key="renderDataStates" />,
   ];
 
-  if (!enabled) return render;
+  useEffect(() => {
+    const container = document.querySelector('[data-container="true"]');
+    if (container) {
+      setShow(true);
+    }
+  }, []);
 
-  if (typeof window === "undefined") {
-    return render;
-  }
+  if (!enabled) return render;
 
   return (
     <>
       {render}
 
-      {ReactDOM.createPortal(
-        nodeItems.map((tool: any, index) => ({ ...tool, key: index })),
-        document.querySelector('[data-container="true"]')
-      )}
+      {show &&
+        ReactDOM.createPortal(
+          nodeItems.map((tool: any, index) => ({ ...tool, key: index })),
+          document.querySelector('[data-container="true"]')
+        )}
     </>
   );
 };
