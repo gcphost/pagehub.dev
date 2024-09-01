@@ -19,7 +19,7 @@ const Card = ({ icon, title, description }) => (
 function Examples() {
   return (
     <div className="bg-gray-800 text-white pb-32">
-      <nav className="p-3 border-gray-200 rounded bg-gradient-to-r from-emerald-300 to-cyan-300 h-20 flex items-center">
+      <nav className="p-3 border-gray-200 bg-gradient-to-r from-emerald-300 to-cyan-300 h-20 flex items-center">
         <div className="container flex flex-wrap items-center justify-between mx-auto"></div>
       </nav>
 

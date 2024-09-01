@@ -1,25 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { useQuill } from "react-quilljs";
 
 export const QullInput = ({ value, changed, props }) => {
-  const ReactQuill =
-    typeof window === "object" ? require("react-quill") : () => false;
-
-  const quillRef = useRef(null);
-
-  useEffect(() => {
-    const time = setTimeout(() => {
-      quillRef?.current?.editor.focus();
-      quillRef?.current?.editor.setSelection(
-        quillRef?.current?.editor.getLength(),
-        0
-      );
-    }, 10);
-
-    return () => {
-      clearTimeout(time);
-    };
-  }, [quillRef]);
-
   const qui = {
     modules: {
       clipboard: {
@@ -50,27 +32,44 @@ export const QullInput = ({ value, changed, props }) => {
       "underline",
       "strike",
       "list",
-      "bullet",
       "indent",
       "link",
     ],
   };
 
+  const theme = "snow";
+  // const theme = 'bubble';
+
+  const modules = qui.modules;
+
+  const placeholder = props.placeholder;
+
+  const formats = qui.formats;
+
+  const { quill, quillRef } = useQuill({
+    theme,
+    modules,
+    formats,
+    placeholder,
+  });
+
+  useEffect(() => {
+    if (quill) {
+      quill.clipboard.dangerouslyPasteHTML(value);
+    }
+  }, [quill, value]);
+
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", (delta, oldDelta, source) => {
+        changed(quill.root.innerHTML);
+      });
+    }
+  }, [changed, quill]);
+
   return (
     <div className="mb-3">
-      <ReactQuill
-        ref={quillRef}
-        id="quill"
-        theme="snow"
-        value={value}
-        onChange={(text) => {
-          changed(text);
-        }}
-        modules={qui.modules}
-        formats={qui.formats}
-        placeholder={props.placeholder}
-        autoFocus={true}
-      />
+      <div ref={quillRef} id="quill" />
     </div>
   );
 };

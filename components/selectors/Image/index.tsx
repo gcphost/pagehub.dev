@@ -117,7 +117,7 @@ export const Image = (props: ImageProps) => {
       _imgProp.loading = props.loading;
     }
 
-    if (props.priority) {
+    if (props.priority && typeof document !== "undefined") {
       const link = document.createElement("link");
 
       link.rel = "preload";
@@ -188,7 +188,12 @@ Image.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController position="top" align="end" placement="end" />,
+        <NameNodeController
+          position="top"
+          align="end"
+          placement="end"
+          key="image-1"
+        />,
       ];
 
       return [...baseControls];

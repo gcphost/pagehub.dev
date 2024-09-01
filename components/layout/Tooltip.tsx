@@ -22,7 +22,7 @@ export const Tooltip = ({
 
   return (
     <>
-      <button
+      <div
         ref={ref}
         className={className}
         onClick={onClick}
@@ -32,7 +32,7 @@ export const Tooltip = ({
         data-tooltip-offset={10}
       >
         {children}
-      </button>
+      </div>
       <ReactTooltip id={id} classNameArrow="hidden" className="max-w-[220px]" />
     </>
   );

@@ -28,15 +28,16 @@ export const ToolbarSection = ({
           {propKey && <ToolbarLabel lab={propKey} propKey={propKey} />}
 
           {help && (
-            <span className="text-xs p-0.5 bg-gray-500 hover:bg-gray-600 cursor-pointer group rounded-full">
-              <TbQuestionMark />
-            </span>
+            <>
+              <span className="text-xs p-0.5 bg-gray-500 hover:bg-gray-600 cursor-pointer rounded-full group relative">
+                <TbQuestionMark />
+                <span className="hidden absolute text-sm w-44 left-6 -top-3 group-active:flex group-hover:flex bg-[#222]/80 rounded p-3 font-semibold">
+                  {help}
+                </span>
+              </span>
+            </>
           )}
         </button>
-      )}
-
-      {help && (
-        <div className="hidden group-active:flex group-hover:flex ">{help}</div>
       )}
 
       {enabled && (

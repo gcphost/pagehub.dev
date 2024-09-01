@@ -82,7 +82,9 @@ export const Text = (props: Partial<TextProps>) => {
 
   let { text, tagName } = props;
 
-  if (text && typeof window !== "undefined") {
+  /* -- throws hydration errors after react-quilljs update.
+
+if (text && typeof window !== "undefined") {
     const doc = new DOMParser().parseFromString(text, "text/html");
     const a = doc.getElementsByTagName("p");
 
@@ -102,7 +104,8 @@ export const Text = (props: Partial<TextProps>) => {
 
       if (text === "<br>") text = "";
     }
-  }
+  }]*/
+
   const prop: any = {
     ref: (r) => connect(drag(r)),
     className: ClassGenerator(props, view, enabled, [], [], preview),

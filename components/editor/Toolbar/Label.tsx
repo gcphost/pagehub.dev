@@ -6,11 +6,11 @@ export const ToolbarLabel = ({
   lab,
   prefix,
   suffix,
-  viewValue,
-  propType,
+  viewValue = "mobile",
+  propType = "class",
   propKey,
-  index,
-  propItemKey,
+  index = null,
+  propItemKey = null,
 }: {
   lab?: string;
   prefix?: string;
@@ -68,15 +68,4 @@ export const ToolbarLabel = ({
       </div>
     </Tooltip>
   );
-};
-
-ToolbarLabel.defaultProps = {
-  lab: "",
-  prefix: "",
-  suffix: "",
-  viewValue: "mobile",
-  propType: "class",
-  propKey: "",
-  index: null,
-  propItemKey: null,
 };

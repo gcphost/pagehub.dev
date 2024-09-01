@@ -76,7 +76,7 @@ export function useComponentVisible(initialIsVisible) {
 }
 
 const Item = ({ onClick, children, disabled = false, className = "" }) => (
-  <motion.button
+  <motion.div
     onClick={onClick}
     className={`cursor-pointer hover:bg-gray-600/20 hover:text-white py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-white ${
       disabled && "opacity-50"
@@ -88,7 +88,7 @@ const Item = ({ onClick, children, disabled = false, className = "" }) => (
     whileTap={{ scale: 0.9 }}
   >
     {children}
-  </motion.button>
+  </motion.div>
 );
 
 export const Header = () => {
@@ -124,7 +124,7 @@ export const Header = () => {
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside, true);
     };
-  }, [ref]);
+  }, [ref, setShowMenu]);
 
   const [preview, setPreview] = useRecoilState(PreviewAtom);
 
@@ -332,7 +332,7 @@ export const Header = () => {
       {showMenu && (
         <div
           ref={ref}
-          className="pointer-events-auto drop-shadow-2xl    overflow-y-auto scrollbar bg-gray-700    gap-3 pt-3 flex flex-col z-20 text-white absolute w-full bottom-0 z-50 top-12"
+          className="pointer-events-auto drop-shadow-2xl overflow-y-auto scrollbar bg-gray-700    gap-3 pt-3 flex flex-col text-white absolute w-full bottom-0 z-50 top-12"
         >
           <button
             onClick={() => setShowMenu(false)}

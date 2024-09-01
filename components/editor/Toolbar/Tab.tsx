@@ -9,17 +9,16 @@ export const Tab = ({ tabId, icon = null, title = "" }) => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
 
   const inactive =
-    "flex items-center justify-center p-3 text-lg font-medium text-gray-500 rounded-xl hover:bg-gray-900/30 hover:text-gray-200";
+    "flex items-center justify-center p-3 text-lg font-medium text-gray-500 rounded-xl hover:bg-gray-900/30 hover:text-gray-200 cursor-pointer";
   const active =
-    "flex items-center justify-center p-3 text-lg font-medium bg-gray-900/30 rounded-xl text-white";
+    "flex items-center justify-center p-3 text-lg font-medium bg-gray-900/30 rounded-xl text-white cursor-pointer";
   const isActive = activeTab === tabId;
 
   if (!icon) return null;
 
   return (
     <Tooltip content={title} placement="bottom" arrow={false}>
-      <motion.button
-        type="button"
+      <motion.div
         className={isActive ? active : inactive}
         role="tab"
         tabIndex={isActive ? 0 : -1}
@@ -33,7 +32,7 @@ export const Tab = ({ tabId, icon = null, title = "" }) => {
         whileTap={{ scale: 0.9 }}
       >
         {icon}
-      </motion.button>
+      </motion.div>
     </Tooltip>
   );
 };
@@ -64,7 +63,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
       <div
         id="toolbarContents"
         className={`w-full flex flex-col p-3 scrollbar overflow-auto absolute bottom-[64px] top-[${
-          jumps.length ? "188px" : "142px"
+          jumps.length ? "194px" : "148px"
         }] pb-[400px] gap-6`}
       >
         {children}

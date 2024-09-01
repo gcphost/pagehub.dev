@@ -67,7 +67,7 @@ export const EmptyState = ({ icon = null }) => {
   }
 
   return (
-    <button className="w-auto flex justify-center items-center">
+    <div className="w-auto flex justify-center items-center">
       {isActive || isHover ? (
         <motion.button
           id={`empty${id}`}
@@ -89,6 +89,6 @@ export const EmptyState = ({ icon = null }) => {
       {!isActive && !isHover && icon && (
         <div data-empty-state={true}>{icon}</div>
       )}
-    </button>
+    </div>
   );
 };
