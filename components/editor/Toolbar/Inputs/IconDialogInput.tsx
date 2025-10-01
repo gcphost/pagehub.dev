@@ -43,32 +43,31 @@ export const IconDialogInput = ({
   useDialog(dialog, setDialog, ref, propKey);
 
   return (
-    <div ref={ref}>
-      <Wrap
-        props={{ label, labelHide: true }}
-        lab={value?.name}
-        propType={propType}
-        propKey={propKey}
+    <Wrap
+      props={{ label, labelHide: true }}
+      lab={value?.name}
+      propType={propType}
+      propKey={propKey}
+    >
+      <button
+        ref={ref}
+        title={value?.name}
+        onClick={(e) => {
+          setDialog({
+            enabled: true,
+            value,
+            prefix,
+            propKey,
+            changed,
+            e: getRect(ref.current),
+          });
+        }}
+        className="input"
       >
-        <button
-          title={value?.name}
-          onClick={(e) => {
-            setDialog({
-              enabled: true,
-              value,
-              prefix,
-              propKey,
-              changed,
-              e: getRect(ref.current),
-            });
-          }}
-          className="input "
-        >
-          <div className="pointer-events-none flex gap-3 items-center w-6 h-6 fill-white">
-            <ClientIconLoader value={value} />
-          </div>
-        </button>
-      </Wrap>
-    </div>
+        <div className="pointer-events-none flex gap-3 items-center w-6 h-6 fill-white">
+          <ClientIconLoader value={value} />
+        </div>
+      </button>
+    </Wrap>
   );
 };

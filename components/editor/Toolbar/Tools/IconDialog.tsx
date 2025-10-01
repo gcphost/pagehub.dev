@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { FixedSizeGrid as Grid } from "react-window";
 import { atom, useRecoilState } from "recoil";
 import { Dialog } from "./Dialog";
 import { IconLoader } from "./IconLoader";
@@ -18,6 +19,9 @@ export const IconDialogAtom = atom({
 export const IconDialogDialog = () => {
   const [dialog, setDialog] = useRecoilState(IconDialogAtom);
   const [svgDataUri, setSvgDataUri] = useState("");
+  const [category, setCategory] = useState("all");
+  const [searchValue, setSearchValue] = useState("");
+  const gridRef = useRef(null);
 
   const changed = async (value) => {
     if (dialog.changed) {
@@ -30,29 +34,142 @@ export const IconDialogDialog = () => {
     }
   };
 
-  const _icons = [...iconList.regular, ...iconList.brands, ...iconList.solid];
+  const _icons = useMemo(() => {
+    let icons = [];
+    if (category === "all") {
+      icons = [...iconList.regular, ...iconList.brands, ...iconList.solid];
+    } else if (category === "regular") {
+      icons = iconList.regular;
+    } else if (category === "brands") {
+      icons = iconList.brands;
+    } else if (category === "solid") {
+      icons = iconList.solid;
+    }
+    return icons;
+  }, [category]);
+
+  const filteredIcons = useMemo(() => {
+    if (!searchValue) {
+      return _icons;
+    }
+    return _icons.filter((_) =>
+      _.search(new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")) > -1
+    );
+  }, [_icons, searchValue]);
+
+  const handleSearch = (value) => {
+    setSearchValue(value);
+    // Reset scroll position when search changes
+    if (gridRef.current) {
+      gridRef.current.scrollTo({ scrollLeft: 0, scrollTop: 0 });
+    }
+  };
+
+  const handleCategoryChange = (newCategory) => {
+    setCategory(newCategory);
+    if (gridRef.current) {
+      gridRef.current.scrollTo({ scrollLeft: 0, scrollTop: 0 });
+    }
+  };
+
+  // Grid configuration - show ~24 icons (6 cols x 4 rows = 24)
+  const columnCount = 6;
+  const columnWidth = 60;
+  const rowHeight = 60;
+  const containerWidth = 400;
+  const visibleRows = 4; // Show 4 rows (~24 icons)
+  const containerHeight = visibleRows * rowHeight + 120; // Extra space for search + tabs
+  const rowCount = Math.ceil(filteredIcons.length / columnCount);
+
+  const Cell = ({ columnIndex, rowIndex, style }) => {
+    const index = rowIndex * columnCount + columnIndex;
+    if (index >= filteredIcons.length) return null;
+
+    const icon = filteredIcons[index];
+
+    return (
+      <div style={style}>
+        <button
+          id={`iconPicker-${icon}`}
+          className={`w-full h-full flex flex-row cursor-pointer hover:bg-gray-100 rounded-md justify-center items-center ${dialog.value === icon ? "bg-gray-100" : ""
+            }`}
+          onClick={(e) => changed(icon)}
+        >
+          <div className="pointer-events-none flex justify-center items-center">
+            <IconLoader icon={icon} />
+          </div>
+        </button>
+      </div>
+    );
+  };
 
   return (
     <Dialog
       dialogAtom={IconDialogAtom}
       dialogName="iconPicker"
       value={dialog.value}
-      items={_icons}
-      className="text-2xl grid grid-cols-4"
-      callback={(_, k) => (
-        <button
-          id={`iconPicker-${_}`}
-          className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md justify-center gap-3 items-center ${
-            dialog.value === _ ? "bg-gray-100" : ""
-          }`}
-          key={k}
-          onClick={(e) => changed(_)}
-        >
-          <div className="pointer-events-none flex  jusitfy-center items-center">
-            <IconLoader icon={_} />
+      items={filteredIcons}
+      height={containerHeight}
+      width={containerWidth}
+      customOnSearch={handleSearch}
+      customRenderer={
+        <div className="flex flex-col h-full overflow-hidden">
+          {/* Category Tabs - Scrollable with max height */}
+          <div className="flex-shrink-0 max-h-20 overflow-y-auto scrollbar mb-2">
+            <div className="flex gap-1.5 flex-wrap">
+              <button
+                className={`px-2.5 py-1 rounded text-xs font-medium ${category === "all" ? "bg-gray-800 text-white" : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                onClick={() => handleCategoryChange("all")}
+              >
+                All
+              </button>
+              <button
+                className={`px-2.5 py-1 rounded text-xs font-medium ${category === "regular" ? "bg-gray-800 text-white" : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                onClick={() => handleCategoryChange("regular")}
+              >
+                Regular
+              </button>
+              <button
+                className={`px-2.5 py-1 rounded text-xs font-medium ${category === "brands" ? "bg-gray-800 text-white" : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                onClick={() => handleCategoryChange("brands")}
+              >
+                Brands
+              </button>
+              <button
+                className={`px-2.5 py-1 rounded text-xs font-medium ${category === "solid" ? "bg-gray-800 text-white" : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                onClick={() => handleCategoryChange("solid")}
+              >
+                Solid
+              </button>
+            </div>
           </div>
-        </button>
-      )}
+
+          {/* Icon count */}
+          <div className="flex-shrink-0 text-xs text-gray-500 mb-2">
+            {filteredIcons.length} icon{filteredIcons.length !== 1 ? "s" : ""}
+          </div>
+
+          {/* Virtualized Grid - Takes remaining space, scrolls independently */}
+          <div className="flex-1 min-h-0 overflow-hidden -mx-3 px-3">
+            <Grid
+              ref={gridRef}
+              columnCount={columnCount}
+              columnWidth={columnWidth}
+              height={visibleRows * rowHeight}
+              rowCount={rowCount}
+              rowHeight={rowHeight}
+              width={containerWidth - 24}
+              className="scrollbar"
+            >
+              {Cell}
+            </Grid>
+          </div>
+        </div>
+      }
     />
   );
 };

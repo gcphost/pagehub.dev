@@ -66,7 +66,7 @@ const Input = ({ nodeProps, setProp }) => {
             ]}
           >
             <div className="flex flex-col gap-3">
-              <ToolbarSection full={2}>
+              <ToolbarSection full={1}>
                 <ToolbarItem
                   propKey="buttons"
                   propType="component"
@@ -77,7 +77,9 @@ const Input = ({ nodeProps, setProp }) => {
                   placeholder="https://pagehub.dev"
                   labelHide={true}
                 />
+              </ToolbarSection>
 
+              <ToolbarSection full={2}>
                 <IconDialogInput
                   propKey="buttons"
                   propType="component"
@@ -85,6 +87,30 @@ const Input = ({ nodeProps, setProp }) => {
                   propItemKey="icon"
                   label="Icon"
                 />
+
+                <ToolbarItem
+                  propKey="buttons"
+                  propType="component"
+                  index={butKey}
+                  propItemKey="iconOnly"
+                  type="checkbox"
+                  label="Icon Only"
+                  on={true}
+                />
+              </ToolbarSection>
+
+              <ToolbarSection full={1}>
+                <ToolbarItem
+                  propKey="buttons"
+                  propType="component"
+                  index={butKey}
+                  propItemKey="type"
+                  type="select"
+                  label="Type"
+                >
+                  <option value="button">Button</option>
+                  <option value="submit">Submit</option>
+                </ToolbarItem>
               </ToolbarSection>
 
               <ToolbarSection full={2}>
@@ -103,29 +129,6 @@ const Input = ({ nodeProps, setProp }) => {
                   propItemKey="color"
                   label="Text"
                   prefix="text"
-                />
-              </ToolbarSection>
-
-              <ToolbarSection full={2}>
-                <ToolbarItem
-                  propKey="buttons"
-                  propType="component"
-                  index={butKey}
-                  propItemKey="type"
-                  type="select"
-                  label="Type"
-                >
-                  <option value="button">Button</option>
-                  <option value="submit">Submit</option>
-                </ToolbarItem>
-
-                <ToolbarItem
-                  propKey="buttons"
-                  propType="component"
-                  index={butKey}
-                  propItemKey="iconOnly"
-                  type="checkbox"
-                  label="Icon Only"
                 />
               </ToolbarSection>
             </div>

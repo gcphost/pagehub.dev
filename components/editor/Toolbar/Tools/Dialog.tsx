@@ -17,6 +17,8 @@ export const Dialog = ({
   onSearch = (_, value) =>
     _.search(new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")) >
     -1,
+  customOnSearch = null,
+  customRenderer = null,
 }) => {
   const [dialog, setDialog] = useRecoilState(dialogAtom) as any;
   const sideBarLeft = useRecoilValue(SideBarAtom);
@@ -80,7 +82,13 @@ export const Dialog = ({
   const search = (e) => {
     setSearchValue(e.target.value);
 
-    setItemList(items.filter((_) => onSearch(_, e.target.value)));
+    if (customOnSearch) {
+      // If custom onSearch is provided, call it directly
+      customOnSearch(e.target.value);
+    } else {
+      // Use default filtering logic
+      setItemList(items.filter((_) => onSearch(_, e.target.value)));
+    }
   };
 
   useEffect(() => {
@@ -123,7 +131,25 @@ export const Dialog = ({
           >
             {children}
 
-            {!children && (
+            {customRenderer && (
+              <div className="rounded-lg w-full h-full overflow-hidden flex flex-col">
+                <div className="px-3 pt-3 pb-2 flex-shrink-0">
+                  <input
+                    type="text"
+                    className="input-base py-1 w-full"
+                    placeholder="Search"
+                    onKeyUp={(e) => search(e)}
+                    autoFocus={true}
+                    defaultValue={searchValue}
+                  />
+                </div>
+                <div className="px-3 pb-3 flex-1 min-h-0">
+                  {customRenderer}
+                </div>
+              </div>
+            )}
+
+            {!children && !customRenderer && (
               <div
                 ref={refIe}
                 className={`rounded-lg max-h-[${height}px] w-full overflow-auto scrollbar p-3 flex flex-col gap-3`}
@@ -159,9 +185,8 @@ export const Dialog = ({
                     return (
                       <button
                         id={`font-${_}`}
-                        className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${
-                          dialog.value === _ ? "bg-white" : ""
-                        }`}
+                        className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${dialog.value === _ ? "bg-white" : ""
+                          }`}
                         style={{ fontFamily: (_ || []).join(", ") }}
                         key={k}
                         onClick={(e) => changed(_)}

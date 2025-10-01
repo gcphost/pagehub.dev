@@ -194,7 +194,7 @@ export const Header = () => {
   return (
     <>
       <div
-        className="inside-shadow pointer-events-auto  bg-primary-500 text-black border-2 border-gray-700 items-center  flex flex-row-reverse justify-between"
+        className="inside-shadow pointer-events-auto  bg-primary-900 text-black border-2 border-gray-700 items-center  flex flex-row-reverse justify-between"
         data-tutorial="header"
       >
         <Tooltip content="Add Component" placement="bottom" arrow={false}>

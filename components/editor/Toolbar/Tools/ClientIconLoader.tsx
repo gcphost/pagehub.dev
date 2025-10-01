@@ -9,6 +9,9 @@ export const ClientIconLoader = ({ value }) => {
   return React.createElement("svg", {
     dangerouslySetInnerHTML: { __html: value },
     fill: "currentColor",
+    width: "100%",
+    height: "100%",
+    viewBox: "0 0 24 24",
   });
 };
 export default ClientIconLoader;
