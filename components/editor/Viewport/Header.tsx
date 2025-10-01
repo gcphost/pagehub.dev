@@ -208,19 +208,6 @@ export const Header = () => {
           </Item>
         </Tooltip>
 
-        <Tooltip content="Undo" placement="bottom" arrow={false}>
-          <Item
-            disabled={!canUndo}
-            onClick={() => {
-              actions.history.undo();
-
-              const active = query.getEvent("selected");
-              if (!active) actions.selectNode(ROOT_NODE);
-            }}
-          >
-            <TbArrowBackUp />
-          </Item>
-        </Tooltip>
 
         <Tooltip content="Redo" placement="bottom" arrow={false}>
           <Item
@@ -233,6 +220,21 @@ export const Header = () => {
             }}
           >
             <TbArrowForwardUp />
+          </Item>
+        </Tooltip>
+
+
+        <Tooltip content="Undo" placement="bottom" arrow={false}>
+          <Item
+            disabled={!canUndo}
+            onClick={() => {
+              actions.history.undo();
+
+              const active = query.getEvent("selected");
+              if (!active) actions.selectNode(ROOT_NODE);
+            }}
+          >
+            <TbArrowBackUp />
           </Item>
         </Tooltip>
 

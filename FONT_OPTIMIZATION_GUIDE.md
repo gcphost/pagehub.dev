@@ -10,19 +10,21 @@ This created a jarring user experience while also needing to maintain good PageS
 
 ## Solutions Implemented
 
-### 1. Optimized Tailwind CDN Loading Strategy
+### 1. Critical CSS Inlining Strategy
 **File: `pages/_document.tsx`**
 
-- **Changed** Tailwind CDN from `beforeInteractive` to `lazyOnload`
-  - Previously blocked rendering, now loads asynchronously
-  - Inlined critical Tailwind base styles to prevent FOUC
+- **Kept** Tailwind CDN on `beforeInteractive` for consistent styling
+  - Ensures styles are available immediately
+  - Prevents major layout shifts
   
 - **Added** crossOrigin attribute to Google Fonts preconnect
   - Improves font loading performance
+  - Enables early connection to font servers
 
 - **Inlined** critical CSS for immediate rendering
   - Box-sizing, font-family fallbacks, basic resets
   - Prevents layout shifts before Tailwind loads
+  - Uses system fonts as fallback for instant text rendering
 
 ### 2. Enhanced Font Loading with CSS2 API
 **Files: `utils/lib.ts`, `components/editor/Toolbar/Inputs/FontFamiltAltInput.tsx`**
@@ -34,30 +36,30 @@ This created a jarring user experience while also needing to maintain good PageS
 - **Improved** weight syntax for proper font loading
   - Uses `:wght@400;700` format instead of legacy syntax
   
-- **Added** preload hints for faster font fetching
-  - Fonts begin loading sooner in the page lifecycle
+- **Uses** `font-display: swap` for optimal UX
+  - Shows system font immediately
+  - Swaps to custom font when ready
+  - Prevents invisible text (FOIT)
 
 ### 3. Font Loading API Integration
 **File: `utils/fontLoader.ts` (new)**
 
 Created comprehensive font loading utilities:
-- `waitForFonts()` - Waits for fonts using CSS Font Loading API
+- `waitForFonts()` - Preloads fonts using CSS Font Loading API (non-blocking)
 - `loadGoogleFont()` - Dynamic font loader with proper display strategies
 - `preloadFont()` - Preload critical fonts
 - `getFontLoadingState()` - Check loading status
-- Built-in timeout mechanism (default 2-3 seconds)
+- Built-in timeout mechanism (default 1 second)
 
-### 4. Opacity Transition for Smooth Loading
+### 4. Non-Blocking Font Preload
 **Files: `pages/[[...slug]].tsx`, `pages/static/[[...slug]].tsx`**
 
-- **Added** font readiness state tracking
-- **Implemented** smooth fade-in transition (opacity 0→1)
-  - Prevents flash of unstyled/mismatched fonts
-  - 150ms transition for imperceptible load
+- **Added** background font preloading
+- **Does NOT block** content rendering (critical for FCP)
+- **Uses** `font-display: swap` to handle the transition
   
-- **Set** reasonable timeout (2 seconds)
-  - Shows content even if fonts are slow
-  - Prevents blank page issues
+- **Allows** content to show immediately with fallback fonts
+- **Seamlessly swaps** to custom fonts when ready
 
 ## Performance Impact
 
@@ -68,10 +70,20 @@ HTML → Tailwind (blocking) → Content → JS → Fonts (FOUC)
 
 ### After:
 ```
-HTML + Critical CSS → Content (opacity: 0) → Fonts → Fade-in (opacity: 1)
-                   ↓
-              Tailwind (async)
+HTML + Critical CSS → Content (with fallback fonts) → Fonts swap in gracefully
+            ↓
+    Tailwind (beforeInteractive)
+            ↓
+    Font preload (non-blocking)
 ```
+
+## Key Principle: Never Block FCP
+
+**CRITICAL:** Content must be visible immediately for PageSpeed Insights.
+- ✅ Use `font-display: swap` to show fallback fonts
+- ✅ Preload fonts in background
+- ❌ Never hide content with opacity/visibility
+- ❌ Never wait for fonts before rendering
 
 ## Additional Optimization Tips
 

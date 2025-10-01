@@ -32,20 +32,18 @@ export default class MyDocument extends Document {
               border-style: solid;
               border-color: #e5e7eb;
             }
-            html { line-height: 1.5; -webkit-text-size-adjust: 100%; -moz-tab-size: 4; tab-size: 4; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
-            body { margin: 0; line-height: inherit; }
-            img, video { max-width: 100%; height: auto; }
-          `}} />
-
-          {/* Font loading optimization */}
-          <style dangerouslySetInnerHTML={{
-            __html: `
-            /* Use font-display: optional for better performance */
-            @supports (font-display: optional) {
-              * {
-                font-display: optional;
-              }
+            html { 
+              line-height: 1.5; 
+              -webkit-text-size-adjust: 100%; 
+              -moz-tab-size: 4; 
+              tab-size: 4; 
+              font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
             }
+            body { margin: 0; line-height: inherit; }
+            img, video { max-width: 100%; height: auto; display: block; }
+            h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+            a { color: inherit; text-decoration: inherit; }
+            button, input, optgroup, select, textarea { font-family: inherit; font-size: 100%; line-height: inherit; margin: 0; padding: 0; }
           `}} />
         </Head>
         <body>

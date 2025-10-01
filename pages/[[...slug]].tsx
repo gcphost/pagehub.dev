@@ -14,7 +14,7 @@ import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
 import { OnlyText, Text } from "components/selectors/Text";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SettingsAtom } from "utils/atoms";
 import { waitForFonts } from "utils/fontLoader";
 import { Button, OnlyButtons } from "../components/selectors/Button";
@@ -33,7 +33,6 @@ const CustomDeserializer = ({ data }) => {
 
 function App({ subdomain, data, meta, seo }) {
   const setSettings = useSetRecoilState(SettingsAtom);
-  const [fontsReady, setFontsReady] = useState(false);
 
   console.log("app");
 
@@ -50,21 +49,15 @@ function App({ subdomain, data, meta, seo }) {
 
   const router = useRouter();
 
-  // Wait for fonts to load before showing content to prevent FOUC
+  // Preload fonts in background (non-blocking)
   useEffect(() => {
-    if (!subdomain) {
-      setFontsReady(true);
-      return;
-    }
+    if (!subdomain) return;
 
+    // Just preload fonts, don't block rendering
     waitForFonts({
-      timeout: 2000, // Wait max 2 seconds for fonts
+      timeout: 1000,
       onLoaded: () => {
-        setFontsReady(true);
-      },
-      onTimeout: () => {
-        // Show content anyway after timeout to prevent blank page
-        setFontsReady(true);
+        console.log('Fonts ready');
       }
     });
   }, [subdomain]);
@@ -173,15 +166,9 @@ function App({ subdomain, data, meta, seo }) {
           description={`${descripton || meta.description || ""}`}
         />
 
-        {/* Show minimal loading state until fonts are ready */}
-        <div style={{
-          opacity: fontsReady ? 1 : 0,
-          transition: 'opacity 0.15s ease-in'
-        }}>
-          <Editor resolver={editorComponents} enabled={false}>
-            <CustomDeserializer data={data} />
-          </Editor>
-        </div>
+        <Editor resolver={editorComponents} enabled={false}>
+          <CustomDeserializer data={data} />
+        </Editor>
       </>
     );
   }
