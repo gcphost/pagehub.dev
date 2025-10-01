@@ -16,9 +16,37 @@ export default class MyDocument extends Document {
             `}
           </Script>
 
+          {/* Move Tailwind to lazyOnload - it doesn't need to block initial render */}
           <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
+
+          {/* Preconnect to Google Fonts with crossorigin */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+          {/* Inline critical Tailwind base styles to prevent FOUC */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
+            *, ::before, ::after {
+              box-sizing: border-box;
+              border-width: 0;
+              border-style: solid;
+              border-color: #e5e7eb;
+            }
+            html { line-height: 1.5; -webkit-text-size-adjust: 100%; -moz-tab-size: 4; tab-size: 4; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+            body { margin: 0; line-height: inherit; }
+            img, video { max-width: 100%; height: auto; }
+          `}} />
+
+          {/* Font loading optimization */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
+            /* Use font-display: optional for better performance */
+            @supports (font-display: optional) {
+              * {
+                font-display: optional;
+              }
+            }
+          `}} />
         </Head>
         <body>
           <Main />

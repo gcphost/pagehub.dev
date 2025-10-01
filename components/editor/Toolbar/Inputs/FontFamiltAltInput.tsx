@@ -40,27 +40,35 @@ export const FontFamiltAltInput = ({
 
   const tw = require("utils/tailwind");
 
+  // Load all font families with Google Fonts CSS2 API for better performance
   const families = tw.fonts
-    .reduce((acc, font) => {
+    .map((font) => {
       const family = font[0].replace(/ +/g, "+");
-      const weights = [400].join(",");
-
-      return [...acc, family + (weights && `:${weights}`)];
-    }, [])
-    .join("|");
+      return `family=${family}:wght@400`;
+    })
+    .join("&");
 
   const sheetrefs = getStyleSheets();
 
-  let href = `https://fonts.googleapis.com/css?family=${families}`;
+  let href = `https://fonts.googleapis.com/css2?${families}`;
   href += "&display=swap";
+
   if (!sheetrefs.includes(href)) {
     const head = document.getElementsByTagName("HEAD")[0];
 
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
+    // Use preload pattern for faster font loading
+    const preloadLink = document.createElement("link");
+    preloadLink.rel = "preload";
+    preloadLink.as = "style";
+    preloadLink.href = href;
 
-    head.appendChild(link);
+    // Convert to stylesheet after loading
+    preloadLink.onload = function () {
+      (this as HTMLLinkElement).onload = null;
+      (this as HTMLLinkElement).rel = "stylesheet";
+    };
+
+    head.appendChild(preloadLink);
   }
 
   const ref = useRef(null);

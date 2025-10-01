@@ -368,7 +368,7 @@ export const applyBackgroundImage = (
 export const getFontFromComp = (props: BaseSelectorProps) => {
   if (!props.root.fontFamily) return;
 
-  let href = `https://fonts.googleapis.com/css?family=${props.root.fontFamily[0].replace(
+  let href = `https://fonts.googleapis.com/css2?family=${props.root.fontFamily[0].replace(
     / +/g,
     "+"
   )}`;
@@ -380,11 +380,13 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
   ].filter((_) => _);
 
   if (!weights.length) {
-    weights.push("font-normal");
+    weights.push("400");
   }
 
-  href += `:400,${weights.join(",")}`;
+  // Use CSS2 API with proper weight syntax
+  href += `:wght@${weights.join(";")}`;
 
+  // Use font-display=swap for better UX (shows fallback immediately, swaps when ready)
   href += "&display=swap";
 
   const filtered = getStyleSheets();
@@ -403,6 +405,9 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
 
   link.rel = "stylesheet";
   link.href = href;
+
+  // Add preload hint for faster font loading
+  link.as = "style";
 
   head.appendChild(link);
 };

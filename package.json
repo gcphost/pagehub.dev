@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "next dev",
-    "prebuild": "npx tailwindcss -o public/tailwind.css --minify",
     "build": "next build",
     "export": "next export",
     "clean": "rimraf lib .next out dist",
