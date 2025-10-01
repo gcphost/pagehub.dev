@@ -359,6 +359,20 @@ export const applyBackgroundImage = (
     if (_imgProp.src) {
       prop.style = prop.style || {};
       prop.style.backgroundImage = `url(${_imgProp.src})`;
+
+      // Handle background image priority/preloading
+      if (props.backgroundPriority && typeof document !== "undefined") {
+        const link = document.createElement("link");
+
+        link.rel = "preload";
+        link.href = _imgProp.src;
+        link.as = "image";
+
+        const preloadLink = document.querySelector(
+          `link[rel="preload"][href="${link.href}"][as="image"]`
+        );
+        if (!preloadLink) document.head.appendChild(link);
+      }
     }
   }
 

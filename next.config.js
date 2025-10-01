@@ -5,6 +5,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const { getCdnImageConfig } = require("./utils/cdn");
 
 module.exports = withBundleAnalyzer({
+  reactStrictMode: false,
   basePath: "",
   assetPrefix: "",
   rewrites: async () => [

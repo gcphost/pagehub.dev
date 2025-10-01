@@ -14,6 +14,23 @@ export const BackgroundSettingsInput = ({ props }) => (
 
     {props?.backgroundImage && (
       <ToolbarSection title="Image Settings" subtitle={true}>
+        <ToolbarSection
+          full={2}
+          title="Loading"
+          help="Preload important background images, like hero sections. This tells the browser to prioritize loading this image."
+        >
+          <ToolbarItem
+            propKey="backgroundPriority"
+            propType="component"
+            type="checkbox"
+            option=" "
+            on="priority"
+            cols={true}
+            labelHide={true}
+            label="Preload"
+          />
+        </ToolbarSection>
+
         <ToolbarSection full={2}>
           <ToolbarItem
             propKey={"backgroundRepeat"}

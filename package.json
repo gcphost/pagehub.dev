@@ -12,9 +12,9 @@
     "create-test-tenant": "node scripts/create-test-tenant.js"
   },
   "browserslist": [
-    ">0.5%",
-    "not dead",
-    "last 2 versions"
+    "defaults",
+    "not ie 11",
+    "not op_mini all"
   ],
   "dependencies": {
     "@craftjs/core": "^0.2.10",

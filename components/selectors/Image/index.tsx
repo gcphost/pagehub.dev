@@ -133,7 +133,6 @@ export const Image = (props: ImageProps) => {
 
   const empty = !videoId && !content;
 
-  console.log({ videoId, content, empty });
   if (enabled) {
     if (empty) {
       prop.children = <ImageDefault tab="Image" props={props} />;

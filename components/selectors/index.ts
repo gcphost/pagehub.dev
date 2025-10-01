@@ -128,6 +128,7 @@ export interface BaseSelectorProps {
   canEditName?: boolean;
   backgroundImage?: string;
   backgroundImageType?: string;
+  backgroundPriority?: string;
 
   isLoading?: boolean;
   loaded?: boolean;
