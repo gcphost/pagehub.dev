@@ -4,6 +4,53 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./utils/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    // Match all color utilities with any shade
+    { pattern: /^(bg|text|border|from|to|via)-.+-(50|100|200|300|400|500|600|700|800|900|950)$/ },
+    { pattern: /^(bg|text|border|from|to|via)-(white|black|transparent|current)$/ },
+
+    // Match all spacing utilities
+    { pattern: /^-?(m|p)(t|r|b|l|x|y)?-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/ },
+    { pattern: /^gap-(x|y)?-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/ },
+    { pattern: /^space-(x|y)-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/ },
+
+    // Match all sizing utilities
+    { pattern: /^(w|h|min-w|min-h|max-w|max-h)-.+$/ },
+
+    // Match all border utilities
+    { pattern: /^border(-[trbl])?-(0|2|4|8)$/ },
+    { pattern: /^rounded(-[trbl]|-[trbl][trbl])?(-none|-sm|-md|-lg|-xl|-2xl|-3xl|-full)?$/ },
+
+    // Match all flex/grid utilities
+    { pattern: /^(flex|grid|justify|items|content|self|place)-.+$/ },
+
+    // Match all text utilities
+    { pattern: /^text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)$/ },
+    { pattern: /^font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black)$/ },
+    { pattern: /^(text|font)-.+$/ },
+
+    // Match all display utilities
+    { pattern: /^(block|inline|inline-block|flex|inline-flex|grid|inline-grid|hidden)$/ },
+
+    // Match all position utilities
+    { pattern: /^(static|fixed|absolute|relative|sticky)$/ },
+    { pattern: /^(top|right|bottom|left|inset)-.+$/ },
+
+    // Match all opacity utilities
+    { pattern: /^(opacity|bg-opacity|text-opacity|border-opacity)-(0|5|10|20|25|30|40|50|60|70|75|80|90|95|100)$/ },
+
+    // Match all shadow utilities
+    { pattern: /^shadow-.+$/ },
+    { pattern: /^drop-shadow-.+$/ },
+
+    // Match transform utilities
+    { pattern: /^(scale|rotate|translate|skew)-.+$/ },
+
+    // Match transition utilities  
+    { pattern: /^transition-.+$/ },
+    { pattern: /^duration-.+$/ },
+    { pattern: /^ease-.+$/ },
+  ],
   theme: {
     height: (theme) => ({
       auto: "auto",

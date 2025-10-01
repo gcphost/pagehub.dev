@@ -16,7 +16,7 @@ export default class MyDocument extends Document {
             `}
           </Script>
 
-          <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
+          <link rel="stylesheet" href="/tailwind.css" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
         </Head>
