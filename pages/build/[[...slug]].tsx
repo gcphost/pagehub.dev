@@ -73,6 +73,7 @@ function App({ data, slug, result, session, tenant }) {
 
   return (
     <div className="h-screen w-screen">
+      <script src="https://cdn.tailwindcss.com" defer={true}></script>
       <NextSeo
         title={`${result?.title || result?.domain || result?.subdomain || slug
           } - ${tenantSiteTitle || siteTitle}`}

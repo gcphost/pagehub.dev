@@ -47,12 +47,11 @@ function Home() {
         <div className="container mx-auto ">
           <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
             <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-              Create your own landing pages!
+              Build beautiful pages in minutes
             </h1>
 
             <p className="mb-20 leading-10 text-xl font-normal lg:text-3xl sm:px-16 xl:px-48 text-gray-400">
-              Begin crafting your own <strong>responsive web pages</strong> and
-              secure your <strong>pagehub.dev</strong> link today!
+              The fastest way to create landing pages. No code, no hassle—just drag, drop, and publish.
             </p>
 
             <p className="mb-8 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-gray-400 hidden">
@@ -70,61 +69,81 @@ function Home() {
             href="/templates"
             className="bg-primary-500 hover:bg-primary-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
-            Start Today!
+            Get Started Free
           </Link>
         </div>
 
         <div className="my-6 md:my-12 mx-auto md:flex gap-24 md:w-2/3  items-start">
           <Card
             icon={<SiTailwindcss />}
-            title="TailwindCSS"
-            description="Styling simplified. We provide all the classes at your finger tips with room to spare. No more guessing what sizes or colors, pick and choose quickly."
+            title="Powered by Tailwind"
+            description="Access thousands of utility classes instantly. Style anything with precision—colors, spacing, shadows, and more."
           />
 
           <Card
             icon={<TbPageBreak />}
             title="Multiple Pages"
-            description="Adding a new page to your website is fast and easy. "
+            description="Build complete websites, not just landing pages. Add pages, link them together, create seamless navigation."
           />
         </div>
 
         <div className="my-6 md:my-12 mx-auto md:flex gap-24 w-2/3  items-start">
           <Card
             icon={<TbDeviceMobile />}
-            title="Mobile First"
-            description="Start by creating an attractive mobile site first—it's crucial. You can refine things for other screen sizes when you're ready."
+            title="Mobile Responsive"
+            description="Design for mobile and desktop separately. Preview on any screen size and ensure your site looks perfect everywhere."
           />
           <Card
             icon={<TbWorldWww />}
             title="Custom Domains"
-            description="No domain? No worries! Opt for our provided one or bring your own custom domain to create your unique online presence. Customize it to fit your style and preferences."
+            description="Launch on a free pagehub.dev subdomain instantly, or connect your own custom domain when you're ready."
           />
         </div>
 
         <div className="my-6 md:my-12 mx-auto md:flex gap-24 w-2/3  items-start">
           <Card
             icon={<TbDeviceFloppy />}
-            title="Auto-saving"
-            description="Rest assured knowing your work is safe with auto-saving. Every change is automatically saved as a draft—reload the page or come back later without worry. Press 'save' to publish your work and go live whenever you're ready."
+            title="Auto-Save"
+            description="Never lose your work. Every change saves automatically as you build. Come back anytime to continue where you left off."
           />
           <Card
             icon={<TbLogin />}
-            title="No Login Required!"
-            description="Each page is assigned a unique ID, which serves as your private link. Keep it secure and avoid sharing it. Name your page and save it to secure your own subdomain for safe browsing."
+            title="No Login Required"
+            description="Start building immediately—no signup needed. Each page gets a unique, private link. Ready to publish? Claim your subdomain with one click."
           />
         </div>
 
         <div className="text-center text-5xl md:w-1/2 mx-auto leading-relaxed">
-          Try all the features for free during the beta!
+          Free during beta. No credit card required.
         </div>
 
         <div className="container mx-auto flex justify-center">
-          <a
+          <Link
             href="/templates"
             className="bg-primary-500 hover:bg-primary-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
-            Start Today!
-          </a>
+            Get Started Free
+          </Link>
+        </div>
+
+        <div className="mt-32 bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 py-24">
+          <div className="container mx-auto px-4 text-center max-w-4xl">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8">
+              Integrate PageHub into your platform
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
+              Seamlessly add page building to your product. Your users create pages, you control the data.
+              Perfect for SaaS apps, CMSs, and platforms that need white-label page creation.
+            </p>
+            <div className="flex justify-center">
+              <a
+                href="mailto:gcphost@gmail.com"
+                className="bg-white text-gray-900 hover:bg-gray-100 font-semibold px-10 py-5 rounded-lg text-xl transition-colors"
+              >
+                Contact Us for More Info
+              </a>
+            </div>
+          </div>
         </div>
 
         <Footer />

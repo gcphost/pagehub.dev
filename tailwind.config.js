@@ -1,5 +1,9 @@
 module.exports = {
-  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./utils/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     height: (theme) => ({
       auto: "auto",
@@ -63,5 +67,4 @@ module.exports = {
     },
   },
   variants: {},
-  content: ["./pages/**/*.{ts,tsx}", "./public/**/*.html"],
 };

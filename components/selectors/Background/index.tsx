@@ -277,8 +277,8 @@ Background.craft = {
   },
   props: {
     tools: () => [
-      <NameNodeController position="bottom" align="end" placement="start" />,
-      <ToolNodeController position="bottom" align="start" placement="start">
+      <NameNodeController key="name" position="bottom" align="end" placement="start" />,
+      <ToolNodeController key="tool" position="bottom" align="start" placement="start">
         <ContainerSettingsNodeTool />
       </ToolNodeController>,
     ],

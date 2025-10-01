@@ -89,8 +89,9 @@ Divider.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController position="top" align="end" placement="start" />,
+        <NameNodeController key="name" position="top" align="end" placement="start" />,
         <HoverNodeController
+          key="hover"
           position="top"
           align="start"
           placement="end"

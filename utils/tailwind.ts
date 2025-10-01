@@ -998,7 +998,7 @@ export const ClassGenerator = (
         .map((_) => _p[_]);
 
   let res = [
-    ...ClassGene({ ...rootProps } || {}, exclude, only),
+    ...ClassGene({ ...rootProps }, exclude, only),
     ...bp,
     ...results,
     ...missingProps,

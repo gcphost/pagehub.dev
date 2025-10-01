@@ -1,7 +1,7 @@
 import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
 
-export default () => (
+const SEOInput = () => (
   <ToolbarSection title="SEO">
     <ToolbarItem
       propKey="pageTitle"
@@ -24,3 +24,5 @@ export default () => (
     />
   </ToolbarSection>
 );
+
+export default SEOInput;

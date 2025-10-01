@@ -2,7 +2,7 @@ import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
 import { AnchorInput } from "./AnchorInput";
 
-export default () => (
+const LinkSettingsInput = () => (
   <>
     <ToolbarSection
       full={2}
@@ -32,3 +32,5 @@ export default () => (
     <AnchorInput />
   </>
 );
+
+export default LinkSettingsInput;

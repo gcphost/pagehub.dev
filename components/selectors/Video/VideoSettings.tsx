@@ -64,7 +64,7 @@ export const VideoSettings = () => {
   const MainTab = () => (
     <TabBody>
       <p className="p-3 text-md">
-        Copy the Video ID from the Youtube video you'd like to show, paste it
+        Copy the Video ID from the Youtube video you&apos;d like to show, paste it
         below.
       </p>
 

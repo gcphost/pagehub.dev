@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { ViewportList } from "react-viewport-list";
 
-export default ({ items, row, className }) => {
+const InViewItems = ({ items, row, className }) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
@@ -18,3 +18,5 @@ export default ({ items, row, className }) => {
     </div>
   );
 };
+
+export default InViewItems;
