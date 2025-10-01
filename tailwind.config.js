@@ -5,51 +5,51 @@ module.exports = {
     "./utils/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
-    // Match all color utilities with any shade
-    { pattern: /^(bg|text|border|from|to|via)-.+-(50|100|200|300|400|500|600|700|800|900|950)$/ },
-    { pattern: /^(bg|text|border|from|to|via)-(white|black|transparent|current)$/ },
+    // Match all color utilities with any shade (with responsive variants)
+    { pattern: /^(bg|text|border|from|to|via)-.+-(50|100|200|300|400|500|600|700|800|900|950)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl', 'hover', 'focus'] },
+    { pattern: /^(bg|text|border|from|to|via)-(white|black|transparent|current)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl', 'hover', 'focus'] },
 
-    // Match all spacing utilities
-    { pattern: /^-?(m|p)(t|r|b|l|x|y)?-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/ },
-    { pattern: /^gap-(x|y)?-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/ },
-    { pattern: /^space-(x|y)-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/ },
+    // Match all spacing utilities (with responsive variants)
+    { pattern: /^-?(m|p)(t|r|b|l|x|y)?-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^gap-(x|y)?-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^space-(x|y)-(0|px|0\.5|1|1\.5|2|2\.5|3|3\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|52|56|60|64|72|80|96)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match all sizing utilities
-    { pattern: /^(w|h|min-w|min-h|max-w|max-h)-.+$/ },
+    // Match all sizing utilities (with responsive variants)
+    { pattern: /^(w|h|min-w|min-h|max-w|max-h)-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match all border utilities
-    { pattern: /^border(-[trbl])?-(0|2|4|8)$/ },
-    { pattern: /^rounded(-[trbl]|-[trbl][trbl])?(-none|-sm|-md|-lg|-xl|-2xl|-3xl|-full)?$/ },
+    // Match all border utilities (with responsive variants)
+    { pattern: /^border(-[trbl])?-(0|2|4|8)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^rounded(-[trbl]|-[trbl][trbl])?(-none|-sm|-md|-lg|-xl|-2xl|-3xl|-full)?$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match all flex/grid utilities
-    { pattern: /^(flex|grid|justify|items|content|self|place)-.+$/ },
+    // Match all flex/grid utilities (with responsive variants)
+    { pattern: /^(flex|grid|justify|items|content|self|place)-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match all text utilities
-    { pattern: /^text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)$/ },
-    { pattern: /^font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black)$/ },
-    { pattern: /^(text|font)-.+$/ },
+    // Match all text utilities (with responsive variants)
+    { pattern: /^text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^(text|font)-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match all display utilities
-    { pattern: /^(block|inline|inline-block|flex|inline-flex|grid|inline-grid|hidden)$/ },
+    // Match all display utilities (with responsive variants)
+    { pattern: /^(block|inline|inline-block|flex|inline-flex|grid|inline-grid|hidden)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match all position utilities
-    { pattern: /^(static|fixed|absolute|relative|sticky)$/ },
-    { pattern: /^(top|right|bottom|left|inset)-.+$/ },
+    // Match all position utilities (with responsive variants)
+    { pattern: /^(static|fixed|absolute|relative|sticky)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^(top|right|bottom|left|inset)-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match all opacity utilities
-    { pattern: /^(opacity|bg-opacity|text-opacity|border-opacity)-(0|5|10|20|25|30|40|50|60|70|75|80|90|95|100)$/ },
+    // Match all opacity utilities (with responsive variants)
+    { pattern: /^(opacity|bg-opacity|text-opacity|border-opacity)-(0|5|10|20|25|30|40|50|60|70|75|80|90|95|100)$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match all shadow utilities
-    { pattern: /^shadow-.+$/ },
-    { pattern: /^drop-shadow-.+$/ },
+    // Match all shadow utilities (with responsive variants)
+    { pattern: /^shadow-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^drop-shadow-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
-    // Match transform utilities
-    { pattern: /^(scale|rotate|translate|skew)-.+$/ },
+    // Match transform utilities (with responsive variants)
+    { pattern: /^(scale|rotate|translate|skew)-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
 
     // Match transition utilities  
-    { pattern: /^transition-.+$/ },
-    { pattern: /^duration-.+$/ },
-    { pattern: /^ease-.+$/ },
+    { pattern: /^transition-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^duration-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    { pattern: /^ease-.+$/, variants: ['sm', 'md', 'lg', 'xl', '2xl'] },
   ],
   theme: {
     height: (theme) => ({
