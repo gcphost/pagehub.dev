@@ -28,6 +28,30 @@ module.exports = withBundleAnalyzer({
       destination: "/static/:host",
     },
   ],
+  async headers() {
+    return [
+      {
+        // Cache static assets for 1 year
+        source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp|mp4|ttf|otf|woff|woff2)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        // Cache API responses that can be cached
+        source: "/api/page/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=60, stale-while-revalidate=300",
+          },
+        ],
+      },
+    ];
+  },
   compress: true,
   images: {
     unoptimized: true,

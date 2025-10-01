@@ -12,9 +12,10 @@
     "create-test-tenant": "node scripts/create-test-tenant.js"
   },
   "browserslist": [
-    "defaults",
-    "not ie 11",
-    "not op_mini all"
+    "chrome >= 93",
+    "firefox >= 92",
+    "safari >= 15.4",
+    "edge >= 93"
   ],
   "dependencies": {
     "@craftjs/core": "^0.2.10",

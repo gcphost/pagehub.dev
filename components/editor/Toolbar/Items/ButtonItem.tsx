@@ -106,17 +106,28 @@ const Input = ({ nodeProps, setProp }) => {
                 />
               </ToolbarSection>
 
-              <ToolbarItem
-                propKey="buttons"
-                propType="component"
-                index={butKey}
-                propItemKey="type"
-                type="select"
-                label="Type"
-              >
-                <option value="button">Button</option>
-                <option value="submit">Submit</option>
-              </ToolbarItem>
+              <ToolbarSection full={2}>
+                <ToolbarItem
+                  propKey="buttons"
+                  propType="component"
+                  index={butKey}
+                  propItemKey="type"
+                  type="select"
+                  label="Type"
+                >
+                  <option value="button">Button</option>
+                  <option value="submit">Submit</option>
+                </ToolbarItem>
+
+                <ToolbarItem
+                  propKey="buttons"
+                  propType="component"
+                  index={butKey}
+                  propItemKey="iconOnly"
+                  type="checkbox"
+                  label="Icon Only"
+                />
+              </ToolbarSection>
             </div>
           </Accord>
         ))}

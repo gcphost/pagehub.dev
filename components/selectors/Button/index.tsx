@@ -99,9 +99,10 @@ type ButtonArrayProp = {
   onClick?: any;
   background?: string;
   color?: string;
+  iconOnly?: boolean;
 };
 
-interface ButtonProp extends RootStyleProps, BaseStyleProps {}
+interface ButtonProp extends RootStyleProps, BaseStyleProps { }
 
 interface ButtonProps extends BaseSelectorProps {
   flex?: string;
@@ -274,6 +275,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
           ...prop,
           key,
           type: but.type || "",
+          ...(but.iconOnly && but.text ? { "aria-label": but.text } : {}),
           onMouseEnter: () => {
             if (enabled) {
               return;
@@ -352,7 +354,9 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
                   </span>
                 )}
 
-                <EditableName but={but} ikey={key} enabled={enabled} />
+                {!but.iconOnly && (
+                  <EditableName but={but} ikey={key} enabled={enabled} />
+                )}
 
                 {but.icon && props.iconPosition === "right" && (
                   <span className={butClass.join(" ")}>

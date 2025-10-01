@@ -253,9 +253,15 @@ export async function getStaticProps({ params }) {
         seo,
         slug: params.slug[0] || null,
       },
+      // Enable ISR - revalidate every 60 seconds
+      revalidate: 60,
     };
   }
-  return { props: {} };
+  return { 
+    props: {},
+    // Enable ISR for 404 pages too
+    revalidate: 60,
+  };
 }
 
 export async function getStaticPaths() {

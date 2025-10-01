@@ -176,7 +176,7 @@ function App({ subdomain, data, meta, seo }) {
   return <HomePage />;
 }
 
-export async function getServerSideProps({ req, params }) {
+export async function getServerSideProps({ req, res, params }) {
   const host = req.headers.host;
 
   // Check if this is a tenant subdomain or custom domain - if so, don't show PageHub brand
@@ -205,7 +205,7 @@ export async function getServerSideProps({ req, params }) {
     try {
       await dbConnect();
 
-      const res = await fetch(
+      const apiRes = await fetch(
         `${process.env.API_ENDPOINT}/page/${subdomain}/${params?.slug?.join("/") || ""
         }`
       );
@@ -213,7 +213,7 @@ export async function getServerSideProps({ req, params }) {
       let result = null;
 
       try {
-        result = await res.json();
+        result = await apiRes.json();
       } catch (e) {
         console.error(e);
       }
@@ -229,6 +229,13 @@ export async function getServerSideProps({ req, params }) {
       console.error(e);
     }
   }
+
+  // Set cache headers to enable bfcache (back/forward cache)
+  // Cache for 60 seconds, allow stale content for 300 seconds while revalidating
+  res.setHeader(
+    'Cache-Control',
+    'public, max-age=60, stale-while-revalidate=300'
+  );
 
   return {
     props: {
