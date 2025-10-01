@@ -27,13 +27,14 @@ import { Save } from "../../components/Save";
 import { Button, OnlyButtons } from "../../components/selectors/Button";
 import { Image } from "../../components/selectors/Image";
 import { Video } from "../../components/selectors/Video";
-import dbConnect from "../../utils/dbConnect";
 import { useSetTenant } from "../../utils/tenantStore";
-import { getTenantBySubdomain } from "../../utils/tenantUtils";
+import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
 
 function App({ data, slug, result, session, tenant }) {
   data = lz.decompress(lz.decodeBase64(data));
   const setTenant = useSetTenant();
+  // Use tenant prop directly to avoid delay from client-side store
+  const tenantSiteTitle = tenant?.settings?.siteTitle || tenant?.name || null;
 
   // Set tenant data in store when component mounts
   useEffect(() => {
@@ -74,9 +75,9 @@ function App({ data, slug, result, session, tenant }) {
     <div className="h-screen w-screen">
       <NextSeo
         title={`${result?.title || result?.domain || result?.subdomain || slug
-          } - ${siteTitle}`}
+          } - ${tenantSiteTitle || siteTitle}`}
         description={siteDescription}
-        canonical="https://pagehub.dev/"
+        canonical={tenant?.domain ? `https://${tenant.domain}/` : tenant?.subdomain ? `https://${tenant.subdomain}.pagehub.dev/` : "https://pagehub.dev/"}
       />
 
       <ToolTipDialog />
@@ -266,67 +267,21 @@ export async function getServerSideProps({ req, query }) {
 
   // Load tenant by subdomain
   try {
-    await dbConnect();
-    tenant = await getTenantBySubdomain(host);
+    tenant = await loadTenantSettings(host);
 
     if (tenant) {
-      // Convert Mongoose document to plain object for serialization
-      tenant = tenant.toObject();
-
-      // Convert non-serializable fields to strings for JSON serialization
-      if (tenant._id) {
-        tenant._id = tenant._id.toString();
-      }
-      if (tenant.createdAt) {
-        tenant.createdAt = tenant.createdAt.toISOString();
-      }
-      if (tenant.updatedAt) {
-        tenant.updatedAt = tenant.updatedAt.toISOString();
-      }
-
       // Check if tenant has onLoad webhook and call it directly
-      if (tenant.webhooks?.onLoad && !data) {
-        try {
-          const pageId = query?.slug?.length ? query.slug[0] : null;
-          const webhookUrl = pageId ? `${tenant.webhooks.onLoad}/${pageId}` : tenant.webhooks.onLoad;
+      if (!data) {
+        const pageId = query?.slug?.length ? query.slug[0] : null;
+        const webhookData = await runTenantWebhook(tenant, 'onLoad', {
+          req,
+          query,
+          method: 'GET',
+          pageId,
+        });
 
-          // Extract authentication information from the request
-          const authInfo = {
-            query: query || {},
-            headers: req.headers || {},
-            userAgent: req.headers['user-agent'],
-            ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection?.remoteAddress,
-          };
-
-          // Prepare headers with auth information
-          const headers = {};
-          const authHeaders = ['authorization', 'x-api-key', 'x-auth-token', 'x-access-token', 'cookie'];
-          authHeaders.forEach(headerName => {
-            if (authInfo.headers[headerName]) {
-              headers[headerName] = authInfo.headers[headerName];
-            }
-          });
-
-          console.log("Calling onLoad webhook with auth info:", {
-            webhookUrl,
-            pageId,
-            queryKeys: Object.keys(authInfo.query),
-            headerKeys: Object.keys(headers),
-          });
-
-          const webhookResponse = await fetch(webhookUrl, {
-            method: "GET",
-            headers,
-          });
-
-          if (webhookResponse.ok) {
-            const webhookData = await webhookResponse.json();
-            if (webhookData.document) {
-              data = webhookData.document;
-            }
-          }
-        } catch (webhookError) {
-          console.error("Error calling onLoad webhook:", webhookError);
+        if (webhookData?.document) {
+          data = webhookData.document;
         }
       }
 

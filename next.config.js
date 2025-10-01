@@ -9,6 +9,10 @@ module.exports = withBundleAnalyzer({
   assetPrefix: "",
   rewrites: async () => [
     {
+      source: "/favicon.ico",
+      destination: "/api/favicon",
+    },
+    {
       source: "/robots.txt",
       destination: "/api/robots.txt",
     },

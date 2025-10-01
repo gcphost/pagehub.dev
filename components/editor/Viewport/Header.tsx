@@ -472,7 +472,7 @@ export const Header = () => {
                     <div className="text-2xl">
                       <TbBoxModel2 />
                     </div>{" "}
-                    Background
+                    Select Background
                   </button>
 
                   <button
@@ -482,7 +482,7 @@ export const Header = () => {
                     <div className="text-2xl">
                       {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
                     </div>
-                    {sideBarLeft ? "Right" : "Left"} Settings Panel
+                    Move this panel to the {sideBarLeft ? "right" : "left"} side
                   </button>
                 </>
               ) : (

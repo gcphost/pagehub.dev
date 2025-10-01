@@ -14,7 +14,6 @@ import { SettingsAtom } from "utils/atoms";
 import {
   applyBackgroundImage,
   enableContext,
-  getMedialUrl,
   isCssValid,
   isJsValid,
 } from "utils/lib";
@@ -74,28 +73,6 @@ export const Background = (props: Partial<ContainerProps>) => {
   const preview = useRecoilValue(PreviewAtom);
   const settings = useRecoilValue(SettingsAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
-
-  useEffect(() => {
-    if (props.ico) {
-      const favicon = getMedialUrl({
-        videoId: props.ico,
-        content: props.icoContent,
-        type: props.icoType,
-      });
-      if (!favicon) return;
-
-      const link = document.querySelector("link[rel~='icon']") as any;
-
-      if (link) {
-        link.href = favicon;
-      } else {
-        const newLink = document.createElement("link");
-        newLink.rel = "icon";
-        newLink.href = favicon;
-        document.head.appendChild(newLink);
-      }
-    }
-  }, []);
 
   const contexted = (e) => {
     if (!enabled || !enableContext) return;

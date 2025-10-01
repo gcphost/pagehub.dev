@@ -20,6 +20,7 @@ export interface Tenant {
     accentColor?: string;
   };
   settings?: {
+    siteTitle?: string;
     showToolbar?: boolean;
     showSidebar?: boolean;
     allowCustomCSS?: boolean;
@@ -109,6 +110,11 @@ export const useTenantSettings = () => {
 
 export const useTenantTheme = () => {
   return useRecoilValue(tenantThemeSelector);
+};
+
+export const useTenantSiteTitle = () => {
+  const tenant = useRecoilValue(tenantAtom);
+  return tenant?.settings?.siteTitle || tenant?.name || null;
 };
 
 // Helper hook to update branding

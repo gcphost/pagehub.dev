@@ -15,13 +15,15 @@ import { OnlyText, Text } from "components/selectors/Text";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { parseContent } from "pages/api/page/[[...slug]]";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SettingsAtom } from "utils/atoms";
 import dbConnect from "utils/dbConnect";
+import { loadTenantByDomain, runTenantWebhook } from "utils/tenantUtils";
 import { Button, OnlyButtons } from "../../components/selectors/Button";
 import { Image } from "../../components/selectors/Image";
 import { Video } from "../../components/selectors/Video";
 import Page from "../../models/page";
+import Tenant from "../../models/tenant.model";
 
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
@@ -48,22 +50,6 @@ function App({ subdomain, data, meta, seo }) {
   }
 
   const router = useRouter();
-
-  const [favicon, setFavicon] = useState("/alt.ico");
-
-  useEffect(() => {
-    if (!subdomain) return;
-
-    const link = document.querySelector("link[rel~='icon']") as any;
-    if (link) {
-      link.href = favicon;
-    } else {
-      const newLink = document.createElement("link");
-      newLink.rel = "icon";
-      newLink.href = favicon;
-      document.head.appendChild(newLink);
-    }
-  }, [favicon, subdomain]);
 
   useEffect(() => {
     if (!subdomain) return;
@@ -182,11 +168,47 @@ export async function getStaticProps({ params }) {
   await dbConnect();
 
   // Check if this is a tenant subdomain
-  const slug = params.slug[0];
+  const domain = params.slug[0];
 
-  const pageByDomain = await Page.findOne({ domain: slug });
+  // Try to load tenant by domain to check for webhook
+  const tenant = await loadTenantByDomain(domain);
 
-  if (pageByDomain) {
+  console.log({ tenant, domain });
+
+  let pageData = null;
+
+  // If tenant has fetchPage webhook, use that
+  if (tenant?.webhooks?.fetchPage) {
+    try {
+      const webhookResult = await runTenantWebhook(tenant, 'fetchPage', {
+        method: 'GET',
+        pageId: domain,
+      });
+
+      if (webhookResult) {
+        pageData = webhookResult;
+      }
+    } catch (error) {
+      console.error("Error calling fetchPage webhook:", error);
+    }
+  }
+
+  // Fall back to database query if no webhook or webhook failed
+  if (!pageData) {
+    const pageByDomain = await Page.findOne({ domain });
+    if (pageByDomain) {
+      pageData = {
+        title: pageByDomain.title || "",
+        description: pageByDomain.description || "",
+        content: pageByDomain.content,
+        draft: pageByDomain.draft,
+        name: pageByDomain.name,
+        draftId: pageByDomain.draftId,
+      };
+    }
+  }
+
+  if (pageData) {
     const {
       title = "",
       description = "",
@@ -194,7 +216,7 @@ export async function getStaticProps({ params }) {
       draft,
       name,
       draftId,
-    } = pageByDomain;
+    } = pageData;
     const { seo } = parseContent(content || draft, params.slug[0]);
 
     return {
@@ -220,14 +242,46 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   await dbConnect();
 
+  let paths = [];
+
+  // Try to get all tenants with fetchPageList webhook
+  const tenants = await Tenant.find({ 'webhooks.fetchPageList': { $exists: true, $ne: null } });
+
+  // Collect pages from webhooks
+  for (const tenantDoc of tenants) {
+    try {
+      // Convert Mongoose document to plain object
+      const tenant = tenantDoc.toObject ? tenantDoc.toObject() : tenantDoc;
+
+      const webhookResult = await runTenantWebhook(tenant, 'fetchPageList', {
+        method: 'GET',
+      });
+
+      if (webhookResult?.pages && Array.isArray(webhookResult.pages)) {
+        const webhookPaths = webhookResult.pages.map((domain) => ({
+          params: {
+            slug: [domain],
+          },
+        }));
+        paths = [...paths, ...webhookPaths];
+      }
+    } catch (error) {
+      console.error("Error calling fetchPageList webhook for tenant:", tenantDoc.subdomain, error);
+    }
+  }
+
+  // Add pages from database
   const pagesWithDomains = await Page.find({ domain: { $ne: null } });
+  const dbPaths = pagesWithDomains.map((page) => ({
+    params: {
+      slug: [`${page.domain}`],
+    },
+  }));
+
+  paths = [...paths, ...dbPaths];
 
   return {
-    paths: pagesWithDomains.map((page) => ({
-      params: {
-        slug: [`${page.domain}`],
-      },
-    })),
+    paths,
     fallback: "blocking",
   };
 }

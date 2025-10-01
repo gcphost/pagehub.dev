@@ -56,6 +56,7 @@ export const Toolbar = () => {
 
   const style: any = {
     left: 0,
+    zIndex: 999
   };
 
   if (!sideBarLeft) {
@@ -72,7 +73,7 @@ export const Toolbar = () => {
       key="sideMenu"
       id="toolbar"
       className={
-        "z-40 absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen  text-white border-x border-primary-300 "
+        "absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen  text-white border-x border-primary-300 "
       }
       style={style}
       ref={ref}

@@ -4,95 +4,12 @@ import { nanoid } from "nanoid";
 import User from "models/user.model";
 import { getServerSession } from "next-auth";
 import Page from "../../models/page";
-import Tenant from "../../models/tenant.model";
 import dbConnect from "../../utils/dbConnect";
-import { getTenantBySubdomain } from "../../utils/tenantUtils";
+import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
 import { authOptions } from "./auth/[...nextauth]";
 import { addDomain, deploy, getDomain, removeDomain } from "./domain";
 
 const generate = require("boring-name-generator");
-
-// Function to call tenant's onSave webhook
-const callTenantWebhook = async (tenantId, pageId, document, isDraft, settings, authInfo = {}) => {
-  try {
-    const tenant = await Tenant.findById(tenantId);
-    if (!tenant?.webhooks?.onSave) {
-      return null;
-    }
-
-    const webhookUrl = `${tenant.webhooks.onSave}/${pageId}`
-
-    console.log("Calling tenant onSave webhook:", webhookUrl, "pageId:", pageId);
-
-    // Prepare headers with auth information
-    const headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    };
-
-    // Forward relevant auth headers
-    if (authInfo.headers) {
-      // Forward common auth headers
-      const authHeaders = ['authorization', 'x-api-key', 'x-auth-token', 'x-access-token', 'cookie'];
-      authHeaders.forEach(headerName => {
-        if (authInfo.headers[headerName]) {
-          headers[headerName] = authInfo.headers[headerName];
-        }
-      });
-    }
-
-    const webhookResponse = await fetch(webhookUrl, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        tenantId: tenantId,
-        pageId: pageId,
-        document: document,
-        isDraft: isDraft,
-        settings: settings,
-        timestamp: new Date().toISOString(),
-        // Include auth information in the body
-        auth: {
-          query: authInfo.query || {},
-          headers: authInfo.headers ? Object.keys(authInfo.headers) : [],
-          userAgent: authInfo.userAgent,
-          ip: authInfo.ip,
-        },
-      }),
-    });
-
-    if (webhookResponse.ok) {
-      // Check if response is JSON before parsing
-      const contentType = webhookResponse.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        const webhookResult = await webhookResponse.json();
-        console.log("Tenant webhook save successful:", webhookResult);
-        return webhookResult;
-      } else {
-        // If not JSON, get text to see what we received
-        const responseText = await webhookResponse.text();
-        console.error("Tenant webhook returned non-JSON response:", {
-          status: webhookResponse.status,
-          contentType: contentType,
-          responsePreview: responseText.substring(0, 200)
-        });
-        return null;
-      }
-    } else {
-      // Get response text to see what error was returned
-      const responseText = await webhookResponse.text();
-      console.error("Tenant webhook save failed:", {
-        status: webhookResponse.status,
-        statusText: webhookResponse.statusText,
-        responsePreview: responseText.substring(0, 200)
-      });
-      return null;
-    }
-  } catch (error) {
-    console.error("Error calling tenant webhook:", error);
-    return null;
-  }
-};
 
 export async function uniqueNanoId(query = null) {
   const nanoId = nanoid();
@@ -224,7 +141,7 @@ export default async function api(req, res) {
 
   try {
     // Get tenant from subdomain
-    const tenant = await getTenantBySubdomain(req.headers.host);
+    const tenant = await loadTenantSettings(req.headers.host);
 
     // Check if tenant has onSave webhook
     if (tenant?.webhooks?.onSave) {
@@ -251,29 +168,20 @@ export default async function api(req, res) {
         }
       }
 
-      // Extract authentication information from the request
-      const authInfo = {
-        query: req.query || {},
-        headers: req.headers || {},
-        userAgent: req.headers['user-agent'],
-        ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection?.remoteAddress,
-      };
-
-      console.log("Extracted auth info for webhook:", {
-        queryKeys: Object.keys(authInfo.query),
-        headerKeys: Object.keys(authInfo.headers),
-        userAgent: authInfo.userAgent,
-        ip: authInfo.ip,
-      });
-
-      const webhookResult = await callTenantWebhook(
-        tenant._id,
+      const webhookResult = await runTenantWebhook(tenant, 'onSave', {
+        req,
+        query: req.query,
+        method: 'POST',
+        body: {
+          tenantId: tenant._id,
+          pageId: pageId,
+          document: document,
+          isDraft: isDraft,
+          settings: req.body,
+          timestamp: new Date().toISOString(),
+        },
         pageId,
-        document,
-        isDraft,
-        req.body,
-        authInfo
-      );
+      });
 
       if (webhookResult) {
         return res.status(200).json(webhookResult);

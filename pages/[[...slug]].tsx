@@ -14,13 +14,13 @@ import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
 import { OnlyText, Text } from "components/selectors/Text";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SettingsAtom } from "utils/atoms";
 import { Button, OnlyButtons } from "../components/selectors/Button";
 import { Image } from "../components/selectors/Image";
 import { Video } from "../components/selectors/Video";
-import Tenant from "../models/tenant.model";
 import dbConnect from "../utils/dbConnect";
+import { loadTenantByDomain, loadTenantSettings } from "../utils/tenantUtils";
 
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
@@ -47,22 +47,6 @@ function App({ subdomain, data, meta, seo }) {
   }
 
   const router = useRouter();
-
-  const [favicon, setFavicon] = useState("/alt.ico");
-
-  useEffect(() => {
-    if (!subdomain) return;
-
-    const link = document.querySelector("link[rel~='icon']") as any;
-    if (link) {
-      link.href = favicon;
-    } else {
-      const newLink = document.createElement("link");
-      newLink.rel = "icon";
-      newLink.href = favicon;
-      document.head.appendChild(newLink);
-    }
-  }, [favicon, subdomain]);
 
   useEffect(() => {
     if (!subdomain) return;
@@ -181,31 +165,17 @@ function App({ subdomain, data, meta, seo }) {
 export async function getServerSideProps({ req, params }) {
   const host = req.headers.host;
 
-  // Strip port from host for tenant lookup
-  const hostWithoutPort = host.split(':')[0];
+  // Check if this is a tenant subdomain or custom domain - if so, don't show PageHub brand
+  const tenantBySubdomain = await loadTenantSettings(host);
+  const tenantByDomain = await loadTenantByDomain(host.split(':')[0]); // Remove port for domain lookup
 
-  // Check if this is NOT pagehub.dev (i.e., it's a tenant domain)
-  if (!hostWithoutPort.includes("pagehub.dev") && !hostWithoutPort.includes("localhost")) {
-    try {
-      await dbConnect();
-
-      // Look up tenant by subdomain (treating the full host as subdomain)
-      const tenant = await Tenant.findOne({ subdomain: hostWithoutPort });
-
-      if (tenant) {
-        // This is a tenant domain - redirect to editor
-        return {
-          redirect: {
-            destination: `/build/${tenant._id}`,
-            permanent: false,
-          },
-        };
-      }
-    } catch (e) {
-      console.error("Error checking tenant:", e);
-    }
+  if (tenantBySubdomain || tenantByDomain) {
+    return {
+      notFound: true, // Return 404 for tenant domains - they should use /static routes
+    };
   }
 
+  // Strip port from host for tenant lookup
   const hostParts = host.split(".");
   let subdomain = hostParts[0];
 
@@ -219,6 +189,8 @@ export async function getServerSideProps({ req, params }) {
 
   if (subdomain) {
     try {
+      await dbConnect();
+
       const res = await fetch(
         `${process.env.API_ENDPOINT}/page/${subdomain}/${params?.slug?.join("/") || ""
         }`
