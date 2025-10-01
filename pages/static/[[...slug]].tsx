@@ -197,26 +197,31 @@ export async function getStaticProps({ params }) {
   // Check if this is a tenant subdomain
   const domain = params.slug[0];
 
-  // Try to load tenant by domain to check for webhook
-  const tenant = await loadTenantByDomain(domain);
-
-  console.log({ tenant, domain });
-
   let pageData = null;
 
-  // If tenant has fetchPage webhook, use that
-  if (tenant?.webhooks?.fetchPage) {
-    try {
-      const webhookResult = await runTenantWebhook(tenant, 'fetchPage', {
-        method: 'GET',
-        pageId: domain,
-      });
+  // Skip webhook calls in dev mode for faster compilation
+  const isDev = process.env.NODE_ENV === 'development';
 
-      if (webhookResult) {
-        pageData = webhookResult;
+  if (!isDev) {
+    // Try to load tenant by domain to check for webhook
+    const tenant = await loadTenantByDomain(domain);
+
+    console.log({ tenant, domain });
+
+    // If tenant has fetchPage webhook, use that
+    if (tenant?.webhooks?.fetchPage) {
+      try {
+        const webhookResult = await runTenantWebhook(tenant, 'fetchPage', {
+          method: 'GET',
+          pageId: domain,
+        });
+
+        if (webhookResult) {
+          pageData = webhookResult;
+        }
+      } catch (error) {
+        console.error("Error calling fetchPage webhook:", error);
       }
-    } catch (error) {
-      console.error("Error calling fetchPage webhook:", error);
     }
   }
 
@@ -271,29 +276,34 @@ export async function getStaticPaths() {
 
   let paths = [];
 
-  // Try to get all tenants with fetchPageList webhook
-  const tenants = await Tenant.find({ 'webhooks.fetchPageList': { $exists: true, $ne: null } });
+  // Only fetch webhook paths in production builds (skip in dev for speed)
+  const isDev = process.env.NODE_ENV === 'development';
 
-  // Collect pages from webhooks
-  for (const tenantDoc of tenants) {
-    try {
-      // Convert Mongoose document to plain object
-      const tenant = tenantDoc.toObject ? tenantDoc.toObject() : tenantDoc;
+  if (!isDev) {
+    // Try to get all tenants with fetchPageList webhook
+    const tenants = await Tenant.find({ 'webhooks.fetchPageList': { $exists: true, $ne: null } });
 
-      const webhookResult = await runTenantWebhook(tenant, 'fetchPageList', {
-        method: 'GET',
-      });
+    // Collect pages from webhooks
+    for (const tenantDoc of tenants) {
+      try {
+        // Convert Mongoose document to plain object
+        const tenant = tenantDoc.toObject ? tenantDoc.toObject() : tenantDoc;
 
-      if (webhookResult?.pages && Array.isArray(webhookResult.pages)) {
-        const webhookPaths = webhookResult.pages.map((domain) => ({
-          params: {
-            slug: [domain],
-          },
-        }));
-        paths = [...paths, ...webhookPaths];
+        const webhookResult = await runTenantWebhook(tenant, 'fetchPageList', {
+          method: 'GET',
+        });
+
+        if (webhookResult?.pages && Array.isArray(webhookResult.pages)) {
+          const webhookPaths = webhookResult.pages.map((domain) => ({
+            params: {
+              slug: [domain],
+            },
+          }));
+          paths = [...paths, ...webhookPaths];
+        }
+      } catch (error) {
+        console.error("Error calling fetchPageList webhook for tenant:", tenantDoc.subdomain, error);
       }
-    } catch (error) {
-      console.error("Error calling fetchPageList webhook for tenant:", tenantDoc.subdomain, error);
     }
   }
 

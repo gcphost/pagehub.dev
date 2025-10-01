@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQuill } from "react-quilljs";
 
 export const QullInput = ({ value, changed, props }) => {
@@ -53,15 +53,23 @@ export const QullInput = ({ value, changed, props }) => {
     placeholder,
   });
 
+  const isInternalChange = useRef(false);
+
   useEffect(() => {
     if (quill) {
-      quill.clipboard.dangerouslyPasteHTML(value);
+      // Only set HTML if it's different and not from internal change
+      const currentHTML = quill.root.innerHTML;
+      if (currentHTML !== value && !isInternalChange.current) {
+        quill.clipboard.dangerouslyPasteHTML(value);
+      }
+      isInternalChange.current = false;
     }
   }, [quill, value]);
 
   useEffect(() => {
     if (quill) {
       quill.on("text-change", (delta, oldDelta, source) => {
+        isInternalChange.current = true;
         changed(quill.root.innerHTML);
       });
     }
