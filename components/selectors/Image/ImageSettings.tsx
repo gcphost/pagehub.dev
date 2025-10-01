@@ -97,6 +97,22 @@ export const ImageSettings = () => {
           <option value="lazy">lazy</option>
         </ToolbarItem>
       </ToolbarSection>
+      <ToolbarSection
+        full={1}
+        title="Fetch Priority"
+        help="Set fetch priority for the image. High priority for above-the-fold images, low for less important ones."
+      >
+        <ToolbarItem
+          propKey="fetchPriority"
+          propType="component"
+          type="select"
+          label="Priority"
+        >
+          <option value="">Auto</option>
+          <option value="high">High</option>
+          <option value="low">Low</option>
+        </ToolbarItem>
+      </ToolbarSection>
     </TabBody>
   );
 

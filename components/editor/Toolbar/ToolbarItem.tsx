@@ -24,19 +24,19 @@ const Input = (__props, ref) => {
   if (type === "toggle") {
     return (
       <BgWrap wrap={wrap}>
-        <label className="relative flex flex-col text-center items-center cursor-pointer">
-          <div className="text-sm mb-3 font-medium text-white">
+        <label className="relative flex flex-col items-center cursor-pointer">
+          {props.option && <div className="text-sm mb-3 font-medium text-white text-center">
             {props.option ? props.option : "Enable"}
-          </div>
+          </div>}
 
-          <div className="relative">
+          <div className="relative inline-flex">
             <input
               type="checkbox"
               defaultChecked={!!value}
               onChange={() => changed(value ? "" : props.on)}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-primary-500"></div>
+            <div className="w-11 h-6 bg-gray-500 rounded-full peer-focus:ring-4 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
           </div>
         </label>
       </BgWrap>
@@ -46,19 +46,19 @@ const Input = (__props, ref) => {
   if (type === "checkbox") {
     return (
       <BgWrap wrap={wrap}>
-        <label className="relative flex flex-col text-center items-center cursor-pointer">
-          <div className="text-sm mb-3 font-medium text-white">
+        <label className="relative flex flex-col items-center cursor-pointer">
+          {props.option && <div className="text-sm mb-3 font-medium text-white text-center">
             {props.option ? props.option : "Enable"}
-          </div>
+          </div>}
 
-          <div className="relative">
+          <div className="relative inline-flex">
             <input
               type="checkbox"
               defaultChecked={!!value}
               onChange={() => changed(value ? "" : props.on)}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-primary-500"></div>
+            <div className="w-11 h-6 bg-gray-500 rounded-full peer-focus:ring-4 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
           </div>
         </label>
       </BgWrap>

@@ -368,6 +368,14 @@ export const applyBackgroundImage = (
         link.href = _imgProp.src;
         link.as = "image";
 
+        // Apply fetchPriority to preload link if set
+        if (props.backgroundFetchPriority) {
+          link.fetchPriority = props.backgroundFetchPriority as
+            | "high"
+            | "low"
+            | "auto";
+        }
+
         const preloadLink = document.querySelector(
           `link[rel="preload"][href="${link.href}"][as="image"]`
         );

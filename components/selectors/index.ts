@@ -129,6 +129,7 @@ export interface BaseSelectorProps {
   backgroundImage?: string;
   backgroundImageType?: string;
   backgroundPriority?: string;
+  backgroundFetchPriority?: "high" | "low" | "auto" | "";
 
   isLoading?: boolean;
   loaded?: boolean;

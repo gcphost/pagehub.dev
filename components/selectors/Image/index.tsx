@@ -37,6 +37,7 @@ interface ImageProps extends BaseSelectorProps {
   content?: string;
   url?: string;
   priority?: string;
+  fetchPriority?: "high" | "low" | "auto" | "";
   loading?: string;
 }
 
@@ -117,12 +118,23 @@ export const Image = (props: ImageProps) => {
       _imgProp.loading = props.loading;
     }
 
+    // Add fetchpriority attribute to the img element
+    if (props.fetchPriority) {
+      _imgProp.fetchpriority = props.fetchPriority;
+    }
+
+    // Add preload link to document head when priority is enabled
     if (props.priority && typeof document !== "undefined") {
       const link = document.createElement("link");
 
       link.rel = "preload";
       link.href = _imgProp.src;
       link.as = "image";
+
+      // Apply fetchPriority to preload link if set
+      if (props.fetchPriority) {
+        link.fetchPriority = props.fetchPriority as "high" | "low" | "auto";
+      }
 
       const preloadLink = document.querySelector(
         `link[rel="preload"][href="${link.href}"][as="image"]`

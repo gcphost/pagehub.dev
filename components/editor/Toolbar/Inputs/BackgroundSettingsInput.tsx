@@ -16,19 +16,27 @@ export const BackgroundSettingsInput = ({ props }) => (
       <ToolbarSection title="Image Settings" subtitle={true}>
         <ToolbarSection
           full={2}
-          title="Loading"
-          help="Preload important background images, like hero sections. This tells the browser to prioritize loading this image."
         >
           <ToolbarItem
             propKey="backgroundPriority"
             propType="component"
             type="checkbox"
-            option=" "
+            option=""
             on="priority"
             cols={true}
             labelHide={true}
             label="Preload"
           />
+          <ToolbarItem
+            propKey="backgroundFetchPriority"
+            propType="component"
+            type="select"
+            label="Fetch Priority"
+          >
+            <option value="">Auto</option>
+            <option value="high">High</option>
+            <option value="low">Low</option>
+          </ToolbarItem>
         </ToolbarSection>
 
         <ToolbarSection full={2}>

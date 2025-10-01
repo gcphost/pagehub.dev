@@ -8,7 +8,7 @@ export const BgWrap = ({ children, className = "", wrap = null }) => {
   }
   return (
     <div
-      className={`rounded-lg bg-gray-500/50 border-gray-500 border w-full px-3 py-3  space-y-3 ${className || " input-hover"
+      className={`rounded-lg bg-gray-500/50 border-gray-500 border w-full px-3 py-3   ${className || " input-hover"
         }`}
     >
       {children}
