@@ -12,9 +12,15 @@ import {
 } from "react-icons/tb";
 import { siteDescription, siteTitle } from "utils/lib";
 
+const nunitoStyle = `
+  * {
+    font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
+  }
+`;
+
 const Card = ({ icon, title, description }) => (
   <div className="text-center flex gap-6 flex-col justify-center items-center w-full mb-12 md:mb-0 md:w-1/2">
-    <div className="border border-purple-900 bg-purple-800 rounded-full p-12  text-6xl">
+    <div className="border border-purple-900 bg-gradient-to-br from-emerald-300 to-cyan-300 rounded-full p-12  text-6xl drop-shadow-xl">
       {icon}
     </div>
 
@@ -30,6 +36,10 @@ export const HomePage = () => (
   <>
     <Head>
       <meta name="author" content="William Bowman" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+      <style dangerouslySetInnerHTML={{ __html: nunitoStyle }} />
     </Head>
 
     <NextSeo title={siteTitle} description={siteDescription} />
@@ -67,9 +77,9 @@ function Home() {
         <div className="container mx-auto flex justify-center mb-24">
           <Link
             href="/templates"
-            className="bg-primary-500 hover:bg-primary-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
+            className="bg-white text-black hover:bg-primary-200 cursor-pointer  text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
-            Get Started Free
+            Get Started
           </Link>
         </div>
 
@@ -114,19 +124,19 @@ function Home() {
         </div>
 
         <div className="text-center text-5xl md:w-1/2 mx-auto leading-relaxed">
-          Free during beta. No credit card required.
+          No credit card required.
         </div>
 
         <div className="container mx-auto flex justify-center">
           <Link
             href="/templates"
-            className="bg-primary-500 hover:bg-primary-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
+            className="bg-white text-black hover:bg-primary-200 cursor-pointer  text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
-            Get Started Free
+            Get Started
           </Link>
         </div>
 
-        <div className="mt-32 bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 py-24">
+        <div className="hidden mt-32 bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 py-24">
           <div className="container mx-auto px-4 text-center max-w-4xl">
             <h2 className="text-4xl md:text-5xl font-bold mb-8">
               Integrate PageHub into your platform

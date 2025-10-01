@@ -1,0 +1,583 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PageHub Tenant Webhooks API",
+    "description": "Webhook endpoints that can be implemented by tenants to customize page loading, saving, and compilation behavior. These webhooks are called by the PageHub platform when specific events occur.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "PageHub API Support"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Your custom webhook server"
+    }
+  ],
+  "paths": {
+    "/webhook/onLoad/{pageId}": {
+      "get": {
+        "summary": "On Load Webhook",
+        "description": "Called when a page is loaded in the PageHub editor. This webhook should return the page document structure for editing. The pageId parameter may be omitted or null for the homepage.",
+        "operationId": "onLoadWebhook",
+        "tags": ["Webhooks"],
+        "parameters": [
+          {
+            "name": "pageId",
+            "in": "path",
+            "description": "The unique identifier of the page being loaded. May be null or 'null' for the homepage.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "example": "my-page-123"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved page document",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OnLoadResponse"
+                },
+                "example": {
+                  "document": "TlpoOTFBWSZTWYbGZ...",
+                  "message": "Hello World from test webhook! Page ID: my-page-123",
+                  "timestamp": "2025-10-01T12:00:00.000Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Page not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed - only GET is supported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhook/onSave/{pageId}": {
+      "post": {
+        "summary": "On Save Webhook",
+        "description": "Called when a page is saved in the PageHub editor. This webhook receives the page document and metadata, and should persist the changes. It must return the saved page details.",
+        "operationId": "onSaveWebhook",
+        "tags": ["Webhooks"],
+        "parameters": [
+          {
+            "name": "pageId",
+            "in": "path",
+            "description": "The unique identifier of the page being saved",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "my-page-123"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Page data to save",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnSaveRequest"
+              },
+              "example": {
+                "tenantId": "tenant-123",
+                "pageId": "my-page-123",
+                "document": "TlpoOTFBWSZTWYbGZ...",
+                "isDraft": true,
+                "settings": {
+                  "title": "My Page Title",
+                  "description": "Page description",
+                  "seo": {
+                    "title": "SEO Title",
+                    "description": "SEO Description"
+                  }
+                },
+                "timestamp": "2025-10-01T12:00:00.000Z"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Page saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OnSaveResponse"
+                },
+                "example": {
+                  "_id": "my-page-123",
+                  "title": "My Page Title",
+                  "draftId": "my-page-123",
+                  "saved": true,
+                  "timestamp": "2025-10-01T12:00:00.000Z",
+                  "webhookReceived": true,
+                  "authReceived": true
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed - only POST is supported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhook/fetchPage/{domain}": {
+      "get": {
+        "summary": "Fetch Page Webhook",
+        "description": "Called during static site generation to fetch a page by its domain. This webhook should return the complete page data including content and metadata for compilation.",
+        "operationId": "fetchPageWebhook",
+        "tags": ["Webhooks"],
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "description": "The domain or identifier of the page to fetch",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "example-domain"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved page data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchPageResponse"
+                },
+                "example": {
+                  "title": "Test Page for example-domain",
+                  "description": "This is a test page returned from fetchPage webhook",
+                  "content": "TlpoOTFBWSZTWYbGZ...",
+                  "draft": "TlpoOTFBWSZTWYbGZ...",
+                  "name": "example-domain",
+                  "draftId": "draft-example-domain"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Page not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed - only GET is supported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhook/fetchPageList": {
+      "get": {
+        "summary": "Fetch Page List Webhook",
+        "description": "Called during static site generation to retrieve a list of all page domains that should be compiled. This is used for Next.js getStaticPaths generation.",
+        "operationId": "fetchPageListWebhook",
+        "tags": ["Webhooks"],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of pages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchPageListResponse"
+                },
+                "example": {
+                  "pages": [
+                    "test-page-1",
+                    "test-page-2",
+                    "test-page-3",
+                    "example-domain",
+                    "demo-site"
+                  ],
+                  "message": "List of pages to compile",
+                  "timestamp": "2025-10-01T12:00:00.000Z"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed - only GET is supported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Bearer token authentication. The PageHub platform forwards the 'authorization' header from the original request."
+      },
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "API key authentication. The PageHub platform forwards custom auth headers (x-api-key, x-auth-token, x-access-token)."
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "cookie",
+        "description": "Cookie-based authentication. The PageHub platform forwards the 'cookie' header from the original request."
+      }
+    },
+    "schemas": {
+      "OnLoadResponse": {
+        "type": "object",
+        "required": ["document"],
+        "properties": {
+          "document": {
+            "type": "string",
+            "description": "The page document structure, compressed with lzutf8 and base64 encoded. This should be a JSON object containing the page tree structure (ROOT, containers, components, etc.)."
+          },
+          "message": {
+            "type": "string",
+            "description": "Optional message for debugging or logging purposes"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Optional timestamp of when the document was retrieved"
+          }
+        }
+      },
+      "OnSaveRequest": {
+        "type": "object",
+        "required": ["tenantId", "pageId", "document", "isDraft", "timestamp"],
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "description": "The unique identifier of the tenant"
+          },
+          "pageId": {
+            "type": "string",
+            "description": "The unique identifier of the page being saved"
+          },
+          "document": {
+            "type": "string",
+            "description": "The page document structure, compressed with lzutf8 and base64 encoded"
+          },
+          "isDraft": {
+            "type": "boolean",
+            "description": "Whether this is a draft save (true) or a published save (false)"
+          },
+          "settings": {
+            "type": "object",
+            "description": "Page settings including title, description, SEO, and other metadata",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The page title"
+              },
+              "description": {
+                "type": "string",
+                "description": "The page description"
+              },
+              "seo": {
+                "type": "object",
+                "description": "SEO metadata for the page"
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp of when the save was initiated"
+          }
+        }
+      },
+      "OnSaveResponse": {
+        "type": "object",
+        "required": ["_id", "draftId"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The unique identifier of the saved page"
+          },
+          "title": {
+            "type": "string",
+            "description": "The page title"
+          },
+          "draftId": {
+            "type": "string",
+            "description": "The draft identifier for the page"
+          },
+          "saved": {
+            "type": "boolean",
+            "description": "Whether the save was successful"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of when the page was saved"
+          },
+          "webhookReceived": {
+            "type": "boolean",
+            "description": "Confirmation that the webhook was received"
+          },
+          "authReceived": {
+            "type": "boolean",
+            "description": "Whether authentication information was received"
+          }
+        }
+      },
+      "FetchPageResponse": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The page title"
+          },
+          "description": {
+            "type": "string",
+            "description": "The page description"
+          },
+          "content": {
+            "type": "string",
+            "description": "The published page content, compressed with lzutf8 and base64 encoded"
+          },
+          "draft": {
+            "type": "string",
+            "description": "The draft page content, compressed with lzutf8 and base64 encoded"
+          },
+          "name": {
+            "type": "string",
+            "description": "The page name/identifier"
+          },
+          "draftId": {
+            "type": "string",
+            "description": "The draft identifier"
+          }
+        }
+      },
+      "FetchPageListResponse": {
+        "type": "object",
+        "required": ["pages"],
+        "properties": {
+          "pages": {
+            "type": "array",
+            "description": "Array of page domain identifiers that should be compiled",
+            "items": {
+              "type": "string"
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "Optional message for debugging or logging purposes"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Optional timestamp of when the list was generated"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Webhooks",
+      "description": "Tenant webhook endpoints for customizing page loading, saving, and compilation"
+    }
+  ],
+  "x-webhook-configuration": {
+    "description": "Webhook Configuration in Tenant Model",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "webhooks": {
+          "type": "object",
+          "properties": {
+            "onSave": {
+              "type": "string",
+              "description": "Base URL for the onSave webhook (pageId will be appended)",
+              "example": "https://api.example.com/webhook/onSave"
+            },
+            "onLoad": {
+              "type": "string",
+              "description": "Base URL for the onLoad webhook (pageId will be appended)",
+              "example": "https://api.example.com/webhook/onLoad"
+            },
+            "fetchPage": {
+              "type": "string",
+              "description": "Base URL for the fetchPage webhook (domain will be appended)",
+              "example": "https://api.example.com/webhook/fetchPage"
+            },
+            "fetchPageList": {
+              "type": "string",
+              "description": "URL for the fetchPageList webhook",
+              "example": "https://api.example.com/webhook/fetchPageList"
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-authentication-forwarding": {
+    "description": "Authentication Headers Forwarded by PageHub",
+    "headers": [
+      "authorization",
+      "x-api-key",
+      "x-auth-token",
+      "x-access-token",
+      "cookie"
+    ],
+    "notes": [
+      "PageHub automatically forwards authentication headers from the original request to your webhook endpoints",
+      "This allows you to validate requests and ensure they come from authenticated users",
+      "You can implement any authentication mechanism supported by these headers"
+    ]
+  },
+  "x-document-format": {
+    "description": "Page Document Format",
+    "notes": [
+      "Page documents are JSON objects representing a tree structure of components",
+      "The document is compressed using lzutf8.compress() and then base64 encoded using lzutf8.encodeBase64()",
+      "To decode: const json = lz.decompress(lz.decodeBase64(document))",
+      "The uncompressed document structure contains a 'ROOT' node and child components",
+      "Each node has properties including type, props, displayName, parent, and nodes (children)"
+    ],
+    "example": {
+      "ROOT": {
+        "type": {
+          "resolvedName": "Background"
+        },
+        "isCanvas": true,
+        "props": {
+          "type": "background",
+          "root": {
+            "background": "bg-white",
+            "color": "text-black"
+          },
+          "mobile": {
+            "height": "h-full",
+            "width": "w-screen"
+          }
+        },
+        "parent": null,
+        "nodes": ["page-container"]
+      },
+      "page-container": {
+        "type": {
+          "resolvedName": "Container"
+        },
+        "isCanvas": true,
+        "props": {
+          "type": "page"
+        },
+        "parent": "ROOT",
+        "nodes": ["child-component-id"]
+      }
+    }
+  }
+}

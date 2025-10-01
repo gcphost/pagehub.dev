@@ -2,7 +2,7 @@ import Examples from "components/examples";
 import { NextSeo } from "next-seo";
 
 export const siteTitle =
-  "Templates - Pagehub (beta) - Create a fast landing page in seconds - Free!";
+  "Templates - PageHub - Create a fast landing page in seconds - Free!";
 export const siteDescription =
   "Templates - Create stunning single page applications and components with TailwindCSS and OpenAI. No code going strong!";
 
@@ -22,7 +22,7 @@ export async function getServerSideProps({ req, res, params }) {
     'Cache-Control',
     'public, max-age=3600, stale-while-revalidate=86400'
   );
-  
+
   return {
     props: {},
   };
