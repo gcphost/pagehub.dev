@@ -8,6 +8,41 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: false,
   basePath: "",
   assetPrefix: "",
+  modularizeImports: {
+    'react-icons/tb': {
+      transform: 'react-icons/tb/{{member}}',
+    },
+    'react-icons/si': {
+      transform: 'react-icons/si/{{member}}',
+    },
+    'react-icons/bi': {
+      transform: 'react-icons/bi/{{member}}',
+    },
+    'react-icons/md': {
+      transform: 'react-icons/md/{{member}}',
+    },
+    'react-icons/fa': {
+      transform: 'react-icons/fa/{{member}}',
+    },
+    'react-icons/ai': {
+      transform: 'react-icons/ai/{{member}}',
+    },
+    'react-icons/bs': {
+      transform: 'react-icons/bs/{{member}}',
+    },
+    'react-icons/cg': {
+      transform: 'react-icons/cg/{{member}}',
+    },
+    'react-icons/rx': {
+      transform: 'react-icons/rx/{{member}}',
+    },
+    'react-icons/ri': {
+      transform: 'react-icons/ri/{{member}}',
+    },
+    'react-icons/hi': {
+      transform: 'react-icons/hi/{{member}}',
+    },
+  },
   rewrites: async () => [
     {
       source: "/favicon.ico",
@@ -31,7 +66,7 @@ module.exports = withBundleAnalyzer({
   async headers() {
     return [
       {
-        // Cache static assets for 1 year
+        // Cache static assets for 1 year (immutable)
         source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp|mp4|ttf|otf|woff|woff2)",
         headers: [
           {
@@ -41,12 +76,42 @@ module.exports = withBundleAnalyzer({
         ],
       },
       {
-        // Cache API responses that can be cached
+        // Cache Next.js static files (JS, CSS) for 1 year
+        source: "/_next/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        // Cache static pages with stale-while-revalidate
+        source: "/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=3600, stale-while-revalidate=86400",
+          },
+        ],
+      },
+      {
+        // Cache API page responses with ISR strategy
         source: "/api/page/:path*",
         headers: [
           {
             key: "Cache-Control",
             value: "public, max-age=60, stale-while-revalidate=300",
+          },
+        ],
+      },
+      {
+        // Cache media API responses
+        source: "/api/media/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
           },
         ],
       },

@@ -10,7 +10,7 @@ const SubmissionSchema = new mongoose.Schema(
 
 export const PageSchema = new mongoose.Schema(
   {
-    _id: { type: String, unique: true },
+    _id: String,
     draftId: { type: String, unique: true },
     name: String,
     domain: String,
@@ -42,7 +42,5 @@ export const PageSchema = new mongoose.Schema(
 // PageSchema.index({ name: "ids", "Page._id": "text" });
 
 const Page = mongoose.models.Page || mongoose.model("Page", PageSchema);
-
-module.exports = mongoose.models.Page || mongoose.model("Page", PageSchema);
 
 export default Page;

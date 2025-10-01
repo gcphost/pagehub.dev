@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const TenantSchema = new mongoose.Schema(
   {
@@ -35,4 +35,4 @@ TenantSchema.index({ domains: 1 });
 
 const Tenant = mongoose.models.Tenant || mongoose.model("Tenant", TenantSchema);
 
-module.exports = Tenant;
+export default Tenant;
