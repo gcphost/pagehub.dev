@@ -19,12 +19,24 @@ export default async function handler(
       return;
     }
 
+    // Check if this is bare pagehub domain (no subdomain, any TLD)
+    const hostWithoutPort = host.split(":")[0];
+    const parts = hostWithoutPort.split(".");
+    // Check if it's pagehub.{tld} or www.pagehub.{tld}
+    const isBarePagehub =
+      (parts.length === 2 && parts[0] === "pagehub") || // pagehub.com, pagehub.dev
+      (parts.length === 3 && parts[0] === "www" && parts[1] === "pagehub"); // www.pagehub.com
+
     // Check for tenant by subdomain or domain
     const tenant = await loadTenantSettings(host);
 
     if (!tenant) {
-      // No tenant found, use default pagehub favicon
-      res.status(302).setHeader("Location", "/default.ico").end();
+      // Only use default for bare pagehub domain, otherwise 404
+      if (isBarePagehub) {
+        res.status(302).setHeader("Location", "/default.ico").end();
+      } else {
+        res.status(404).end();
+      }
       return;
     }
 
