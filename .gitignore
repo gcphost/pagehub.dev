@@ -40,3 +40,6 @@ next-env.d.ts
 
 .scannerwork
 sonar-project.properties
+
+dist
+docs

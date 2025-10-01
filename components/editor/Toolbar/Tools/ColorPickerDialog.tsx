@@ -87,24 +87,23 @@ const Item = ({
     e.stopPropagation();
     changed({ type, value });
   },
-  onMouseOut = (e, value) => {},
-  onMouseOver = (e, value) => {},
+  onMouseOut = (e, value) => { },
+  onMouseOver = (e, value) => { },
 }) => (
   <motion.button
     whileHover={
       animate
         ? {
-            scale: 2,
-            transition: { duration: 0.2 },
-            zIndex: 999,
-          }
+          scale: 2,
+          transition: { duration: 0.2 },
+          zIndex: 999,
+        }
         : {}
     }
     initial={{ zIndex: 1 }}
     title={title}
-    className={`relative w-5 h-5 rounded cursor-pointer border-2 ${
-      selected ? "border-violet-500" : "border-gray-600"
-    }`}
+    className={`relative w-5 h-5 rounded cursor-pointer border-2 ${selected ? "border-primary-500" : "border-gray-600"
+      }`}
     style={{ backgroundColor: value, ...style }}
     onClick={(e) => onClick(e, value)}
     onMouseOver={(e) => onMouseOver(e, value)}
@@ -246,9 +245,8 @@ export const ColorPickerDialog = () => {
             }
 
             <div
-              className={`m-3 rounded-md overflow-hidden w-[${
-                colorPicker?.e?.width - 40
-              }px] min-w-[280px]`}
+              className={`m-3 rounded-md overflow-hidden w-[${colorPicker?.e?.width - 40
+                }px] min-w-[280px]`}
             >
               <SketchPicker
                 width="100%"

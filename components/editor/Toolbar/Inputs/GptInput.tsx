@@ -127,7 +127,7 @@ export const GptInput = ({ autoFocus = false }) => {
       <p className="mb-3"></p>
 
       {searching && (
-        <div className="bg-gray-500/50 p-3 text-white border-gray-500 w-full rounded-lg active:border-violet-500 focus:border-violet-500">
+        <div className="bg-gray-500/50 p-3 text-white border-gray-500 w-full rounded-lg active:border-primary-500 focus:border-primary-500">
           <strong>OpenAI</strong> is working on your styles.
         </div>
       )}

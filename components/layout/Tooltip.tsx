@@ -9,23 +9,34 @@ export const Tooltip = ({
   placement = "top" as any,
   className = "",
   tipStyle = {},
-  onClick = (e?: React.MouseEvent) => {},
+  onClick = (e?: React.MouseEvent) => { },
   key = "" as any,
 }) => {
   const ref = useRef(null);
 
   const [id, setId] = useState(null);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     setId(uuidv4());
   }, []);
+
+  const handleClick = (e: React.MouseEvent) => {
+    setIsVisible(false);
+    onClick(e);
+
+    // Reset visibility after a short delay
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 1000);
+  };
 
   return (
     <>
       <div
         ref={ref}
         className={className}
-        onClick={onClick}
+        onClick={handleClick}
         data-tooltip-id={id}
         data-tooltip-content={content}
         data-tooltip-place={placement}
@@ -33,7 +44,9 @@ export const Tooltip = ({
       >
         {children}
       </div>
-      <ReactTooltip id={id} classNameArrow="hidden" className="max-w-[220px]" />
+      {isVisible && (
+        <ReactTooltip id={id} classNameArrow="hidden" className="max-w-[220px]" />
+      )}
     </>
   );
 };

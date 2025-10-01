@@ -459,8 +459,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
   let viewClasses = {
     mobile: [
-      `flex h-screen overflow-hidden flex-row mx-auto w-${
-        enabled ? "[380px]" : "screen"
+      `flex h-screen overflow-hidden flex-row mx-auto w-${enabled ? "[380px]" : "screen"
       } mx-auto bg-gray-200`,
       enabled
         ? "w-full my-6 rounded-lg overflow-auto scrollbar bg-white"
@@ -493,15 +492,14 @@ export const Viewport: React.FC<any> = ({ children }) => {
   return (
     <div
       data-container={true}
-      className={`flex h-screen overflow-hidden flex-row w-full ${
-        enabled && "bg-gray-200"
-      }`}
+      className={`flex h-screen overflow-hidden flex-row w-full ${enabled && "bg-gray-200"
+        }`}
     >
       {!enabled && !screenshot && (
         <div className="absolute right-12 top-12 z-50">
           <Tooltip content="Edit" placement="bottom" arrow={false}>
             <button
-              className="p-4 btn text-2xl bg-violet-500/90 cursor-pointer select-none rounded-md text-white"
+              className="p-4 btn text-2xl bg-primary-500/90 cursor-pointer select-none rounded-md text-white"
               onClick={() =>
                 setOptions((options) => {
                   options.enabled = true;

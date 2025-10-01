@@ -19,6 +19,8 @@ import { SettingsAtom } from "utils/atoms";
 import { Button, OnlyButtons } from "../components/selectors/Button";
 import { Image } from "../components/selectors/Image";
 import { Video } from "../components/selectors/Video";
+import Tenant from "../models/tenant.model";
+import dbConnect from "../utils/dbConnect";
 
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
@@ -177,8 +179,35 @@ function App({ subdomain, data, meta, seo }) {
 }
 
 export async function getServerSideProps({ req, params }) {
-  const host = req.headers.host.split(".");
-  let subdomain = host[0];
+  const host = req.headers.host;
+
+  // Strip port from host for tenant lookup
+  const hostWithoutPort = host.split(':')[0];
+
+  // Check if this is NOT pagehub.dev (i.e., it's a tenant domain)
+  if (!hostWithoutPort.includes("pagehub.dev") && !hostWithoutPort.includes("localhost")) {
+    try {
+      await dbConnect();
+
+      // Look up tenant by subdomain (treating the full host as subdomain)
+      const tenant = await Tenant.findOne({ subdomain: hostWithoutPort });
+
+      if (tenant) {
+        // This is a tenant domain - redirect to editor
+        return {
+          redirect: {
+            destination: `/build/${tenant._id}`,
+            permanent: false,
+          },
+        };
+      }
+    } catch (e) {
+      console.error("Error checking tenant:", e);
+    }
+  }
+
+  const hostParts = host.split(".");
+  let subdomain = hostParts[0];
 
   if (["localhost:3000", "pagehub"].includes(subdomain)) {
     subdomain = "";
@@ -191,8 +220,7 @@ export async function getServerSideProps({ req, params }) {
   if (subdomain) {
     try {
       const res = await fetch(
-        `${process.env.API_ENDPOINT}/page/${subdomain}/${
-          params?.slug?.join("/") || ""
+        `${process.env.API_ENDPOINT}/page/${subdomain}/${params?.slug?.join("/") || ""
         }`
       );
 

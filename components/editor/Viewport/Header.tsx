@@ -46,13 +46,16 @@ import {
   SideBarAtom,
   popupCenter,
 } from "utils/lib";
+import { useTenant } from "utils/tenantStore";
 import { DeviceAtom, EnabledAtom, PreviewAtom, ViewAtom } from ".";
+import { AnimatedSaveButton } from "../Tools/AnimatedSaveButton";
 import { ComponentSettings } from "./ComponentSettings";
 import { DomainSettings } from "./DomainSettings";
 import { ExportModal } from "./ExportModal";
 import { ImportModal } from "./ImportModal";
 import { PageSettings } from "./PageSettings";
 import { PagesSettings } from "./PagesSettings";
+import { SaveToServer } from "./lib";
 
 export function useComponentVisible(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] =
@@ -78,9 +81,8 @@ export function useComponentVisible(initialIsVisible) {
 const Item = ({ onClick, children, disabled = false, className = "" }) => (
   <motion.div
     onClick={onClick}
-    className={`cursor-pointer hover:bg-gray-600/20 hover:text-white py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-white ${
-      disabled && "opacity-50"
-    } ${className}`}
+    className={`cursor-pointer hover:bg-gray-600/20 hover:text-white py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-white ${disabled && "opacity-50"
+      } ${className}`}
     whileHover={{
       scale: 1.1,
       transition: { duration: 0.2 },
@@ -107,6 +109,10 @@ export const Header = () => {
   const [showMenuType, setShowMenuType] = useRecoilState(MenuItemState);
 
   const setEnabled = useSetRecoilState(EnabledAtom);
+
+  // Check if this is a tenant
+  const tenant = useTenant();
+  const isTenant = !!tenant;
 
   const ref = useRef(null);
   useEffect(() => {
@@ -177,7 +183,7 @@ export const Header = () => {
   const altView = getAltView(view);
 
   const animate = false;
-  const [settings] = useRecoilState(SettingsAtom);
+  const [settings, setSettings] = useRecoilState(SettingsAtom);
 
   const [sideBarLeft, setSideBarLeft] = useRecoilState(SideBarAtom);
 
@@ -188,7 +194,7 @@ export const Header = () => {
   return (
     <>
       <div
-        className="inside-shadow pointer-events-auto  bg-violet-500 text-black border-2 border-gray-700 items-center  flex flex-row-reverse justify-between"
+        className="inside-shadow pointer-events-auto  bg-primary-500 text-black border-2 border-gray-700 items-center  flex flex-row-reverse justify-between"
         data-tutorial="header"
       >
         <Tooltip content="Add Component" placement="bottom" arrow={false}>
@@ -232,7 +238,7 @@ export const Header = () => {
 
         {animate && (
           <Tooltip content="Play Animations" placement="bottom" arrow={false}>
-            <Item onClick={() => {}}>
+            <Item onClick={() => { }}>
               <TbPlayerPlay />
             </Item>
           </Tooltip>
@@ -304,17 +310,29 @@ export const Header = () => {
         </Tooltip>
 
         <Tooltip content="Save" placement="bottom" arrow={false}>
-          <Item
-            disabled={!canUndo || !settings}
-            onClick={async () => {
-              if (!canUndo) return;
-              setShowMenuType("domain");
-              setShowMenu(true);
-              // sssetDialogOpen(true);
-            }}
-          >
-            <TbDeviceFloppy />
-          </Item>
+          {isTenant ? (
+            <AnimatedSaveButton
+              onClick={async () => {
+                if (!canUndo) return;
+                const json = query.serialize();
+                await SaveToServer(json, true, settings, setSettings);
+              }}
+              disabled={!canUndo || !settings}
+            />
+          ) : (
+            <Item
+              disabled={!canUndo || !settings}
+              onClick={async () => {
+                if (!canUndo) return;
+
+                // For non-tenants, show the domain settings editor pane
+                setShowMenuType("domain");
+                setShowMenu(true);
+              }}
+            >
+              <TbDeviceFloppy />
+            </Item>
+          )}
         </Tooltip>
 
         <Tooltip content="More Options" placement="bottom" arrow={false}>
@@ -441,198 +459,229 @@ export const Header = () => {
 
           {!showMenuType && (
             <>
-              <Link
-                href="/build"
-                className="hidden items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-              >
-                <TbFilePlus /> New Builder
-              </Link>
-
-              {settings?.submissions.length ? (
-                <button
-                  onClick={() => {
-                    setShowMenu(true);
-                    setShowMenuType("submissions");
-                  }}
-                  className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                >
-                  <div className="text-2xl">
-                    <TbForms />
-                  </div>{" "}
-                  Form Submissions
-                </button>
-              ) : null}
-
-              <button
-                onClick={() => {
-                  setShowMenu(false);
-                  actions.selectNode(ROOT_NODE);
-                }}
-                className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-              >
-                <div className="text-2xl">
-                  <TbBoxModel2 />
-                </div>{" "}
-                Background
-              </button>
-
-              <button
-                onClick={() => {
-                  setShowMenu(true);
-                  setShowMenuType("pages");
-                }}
-                className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-              >
-                <div className="text-2xl">
-                  <TbListDetails />
-                </div>{" "}
-                Pages
-              </button>
-
-              {settings?.name && (
-                <a
-                  href={`https://${settings.name}.pagehub.dev`}
-                  target="_blank"
-                  className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                >
-                  <div className="text-2xl">
-                    <TbExternalLink />
-                  </div>{" "}
-                  View Live Version
-                </a>
-              )}
-              {settings?.draftId && (
-                <a
-                  href={`https://${settings.draftId}.pagehub.dev`}
-                  target="_blank"
-                  className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                >
-                  <div className="text-2xl">
-                    <TbExternalLink />
-                  </div>{" "}
-                  View Draft Version
-                </a>
-              )}
-
-              <hr className="border-b border-gray-500 " />
-              <button
-                onClick={async () => {
-                  //  return;
-
-                  toggle();
-
-                  setShowMenu(false);
-
-                  actions.setOptions((options) => (options.enabled = true));
-
-                  const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
-
-                  if (nl) actions.selectNode(nl[0]);
-
-                  // isetDialogOpen(htmlOutput);
-                }}
-                className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-              >
-                <div className="text-2xl">
-                  <TbCode />
-                </div>
-                <div className="">Copy As Html</div>
-              </button>
-              <button
-                onClick={() => {
-                  setShowMenuType("export");
-                  setShowMenu(true);
-                }}
-                className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-              >
-                <div className="text-2xl">
-                  <TbDownload />
-                </div>
-                <div className="">Export</div>
-              </button>
-              <button
-                onClick={() => {
-                  setShowMenuType("import");
-                  setShowMenu(true);
-                }}
-                className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-              >
-                <div className="text-2xl">
-                  <TbUpload />
-                </div>{" "}
-                Import
-              </button>
-
-              <hr className="border-b border-gray-500 " />
-
-              {settings && (
-                <button
-                  onClick={() => {
-                    setShowMenuType("page");
-                    setShowMenu(true);
-                  }}
-                  className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                >
-                  <div className="text-2xl">
-                    <TbBrandOpenai />
-                  </div>{" "}
-                  AI Settings
-                </button>
-              )}
-
-              {lsIds.length ? (
-                <button
-                  onClick={() => {
-                    setShowMenu(true);
-                    setShowMenuType("builds");
-                  }}
-                  className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                >
-                  <div className="text-2xl">
-                    <TbDevices2 />
-                  </div>{" "}
-                  Previous Builds
-                </button>
-              ) : null}
-
-              <hr className="border-b border-gray-500 " />
-
-              {status === "authenticated" ? (
+              {isTenant ? (
+                // For tenant users, show background and settings panel buttons
                 <>
-                  <p className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3">
-                    Signed in as {session.user.email}
-                  </p>{" "}
                   <button
-                    onClick={() => popupCenter("/google-signout", "Sign Out")}
+                    onClick={() => {
+                      setShowMenu(false);
+                      actions.selectNode(ROOT_NODE);
+                    }}
                     className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
                   >
                     <div className="text-2xl">
-                      <TbLogout />
+                      <TbBoxModel2 />
                     </div>{" "}
-                    Sign out
+                    Background
+                  </button>
+
+                  <button
+                    onClick={() => setSideBarLeft(!sideBarLeft)}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
+                    </div>
+                    {sideBarLeft ? "Right" : "Left"} Settings Panel
                   </button>
                 </>
               ) : (
-                <button
-                  onClick={() => popupCenter("/google-signin", "Sign In")}
-                  className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                >
-                  <div className="text-2xl">
-                    <TbLogin />
-                  </div>{" "}
-                  Sign in
-                </button>
-              )}
+                // For regular users, show all the original items
+                <>
+                  <Link
+                    href="/build"
+                    className="hidden items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <TbFilePlus /> New Builder
+                  </Link>
 
-              <button
-                onClick={() => setSideBarLeft(!sideBarLeft)}
-                className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-              >
-                <div className="text-2xl">
-                  {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
-                </div>
-                {sideBarLeft ? "Right" : "Left"} Settings Panel
-              </button>
+                  {settings?.submissions.length ? (
+                    <button
+                      onClick={() => {
+                        setShowMenu(true);
+                        setShowMenuType("submissions");
+                      }}
+                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    >
+                      <div className="text-2xl">
+                        <TbForms />
+                      </div>{" "}
+                      Form Submissions
+                    </button>
+                  ) : null}
+
+                  <button
+                    onClick={() => {
+                      setShowMenu(false);
+                      actions.selectNode(ROOT_NODE);
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbBoxModel2 />
+                    </div>{" "}
+                    Background
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setShowMenu(true);
+                      setShowMenuType("pages");
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbListDetails />
+                    </div>{" "}
+                    Pages
+                  </button>
+
+                  {settings?.name && (
+                    <a
+                      href={`https://${settings.name}.pagehub.dev`}
+                      target="_blank"
+                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    >
+                      <div className="text-2xl">
+                        <TbExternalLink />
+                      </div>{" "}
+                      View Live Version
+                    </a>
+                  )}
+                  {settings?.draftId && (
+                    <a
+                      href={`https://${settings.draftId}.pagehub.dev`}
+                      target="_blank"
+                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    >
+                      <div className="text-2xl">
+                        <TbExternalLink />
+                      </div>{" "}
+                      View Draft Version
+                    </a>
+                  )}
+
+                  <hr className="border-b border-gray-500 " />
+                  <button
+                    onClick={async () => {
+                      //  return;
+
+                      toggle();
+
+                      setShowMenu(false);
+
+                      actions.setOptions((options) => (options.enabled = true));
+
+                      const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
+
+                      if (nl) actions.selectNode(nl[0]);
+
+                      // isetDialogOpen(htmlOutput);
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbCode />
+                    </div>
+                    <div className="">Copy As Html</div>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowMenuType("export");
+                      setShowMenu(true);
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbDownload />
+                    </div>
+                    <div className="">Export</div>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowMenuType("import");
+                      setShowMenu(true);
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbUpload />
+                    </div>{" "}
+                    Import
+                  </button>
+
+                  <hr className="border-b border-gray-500 " />
+
+                  {settings && (
+                    <button
+                      onClick={() => {
+                        setShowMenuType("page");
+                        setShowMenu(true);
+                      }}
+                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    >
+                      <div className="text-2xl">
+                        <TbBrandOpenai />
+                      </div>{" "}
+                      AI Settings
+                    </button>
+                  )}
+
+                  {lsIds.length ? (
+                    <button
+                      onClick={() => {
+                        setShowMenu(true);
+                        setShowMenuType("builds");
+                      }}
+                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    >
+                      <div className="text-2xl">
+                        <TbDevices2 />
+                      </div>{" "}
+                      Previous Builds
+                    </button>
+                  ) : null}
+
+                  <hr className="border-b border-gray-500 " />
+
+                  {status === "authenticated" ? (
+                    <>
+                      <p className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3">
+                        Signed in as {session.user.email}
+                      </p>{" "}
+                      <button
+                        onClick={() => popupCenter("/google-signout", "Sign Out")}
+                        className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                      >
+                        <div className="text-2xl">
+                          <TbLogout />
+                        </div>{" "}
+                        Sign out
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => popupCenter("/google-signin", "Sign In")}
+                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    >
+                      <div className="text-2xl">
+                        <TbLogin />
+                      </div>{" "}
+                      Sign in
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => setSideBarLeft(!sideBarLeft)}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
+                    </div>
+                    {sideBarLeft ? "Right" : "Left"} Settings Panel
+                  </button>
+                </>
+              )}
             </>
           )}
         </div>

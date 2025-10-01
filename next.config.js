@@ -2,6 +2,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
+const { getCdnImageConfig } = require("./utils/cdn");
+
 module.exports = withBundleAnalyzer({
   basePath: "",
   assetPrefix: "",
@@ -25,12 +27,7 @@ module.exports = withBundleAnalyzer({
   images: {
     unoptimized: true,
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "imagedelivery.net",
-        port: "",
-        pathname: "/8PYt12v3QMuDRiYrOftNUQ/**",
-      },
+      getCdnImageConfig(),
     ],
   },
   webpack: (config, { isServer }) => {

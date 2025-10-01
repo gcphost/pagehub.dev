@@ -147,18 +147,18 @@ body {
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  @apply bg-violet-500;
+  @apply bg-primary-500;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-  @apply bg-violet-600;
+  @apply bg-primary-600;
 }
 
 input[type="range"]::-moz-range-thumb {
-  @apply bg-violet-500;
+  @apply bg-primary-500;
 }
 input[type="range"]::-ms-thumb {
-  @apply bg-violet-500;
+  @apply bg-primary-500;
 }
 
 #viewport .w-screen {
@@ -204,14 +204,14 @@ input[type="range"]::-ms-thumb {
 }
 
 .input-base {
-  @apply p-3  border-gray-500  rounded-lg active:border-violet-500 focus:border-violet-500 hover:border-violet-500 cursor-pointer;
+  @apply p-3  border-gray-500  rounded-lg active:border-primary-500 focus:border-primary-500 hover:border-primary-500 cursor-pointer;
 }
 
 .input {
-  @apply p-3 w-full bg-gray-500/50 border text-white border-gray-500  rounded-lg active:border-violet-500 focus:border-violet-500 hover:border-violet-500 cursor-pointer;
+  @apply p-3 w-full bg-gray-500/50 border text-white border-gray-500  rounded-lg active:border-primary-500 focus:border-primary-500 hover:border-primary-500 cursor-pointer;
 }
 .input-hover {
-  @apply active:border-violet-500 focus:border-violet-500 hover:border-violet-500 border-gray-500 cursor-pointer;
+  @apply active:border-primary-500 focus:border-primary-500 hover:border-primary-500 border-gray-500 cursor-pointer;
 }
 
 .control {
@@ -223,7 +223,7 @@ input[type="range"]::-ms-thumb {
 }
 
 .btn {
-  @apply bg-violet-500 rounded-md text-white text-base flex items-center justify-center  inside-shadow border border-gray-500 hover:bg-violet-600 cursor-pointer hover:text-gray-200;
+  @apply bg-primary-500 rounded-md text-white text-base flex items-center justify-center  inside-shadow border border-gray-500 hover:bg-primary-600 cursor-pointer hover:text-gray-200;
 }
 
 .btn-green {
@@ -231,7 +231,7 @@ input[type="range"]::-ms-thumb {
 }
 
 .dialog-input {
-  @apply rounded-md border-green-500 border p-3 scrollbar bg-gray-50  active:border-violet-500 focus:border-violet-500;
+  @apply rounded-md border-green-500 border p-3 scrollbar bg-gray-50  active:border-primary-500 focus:border-primary-500;
 }
 
 .hue-horizontal {

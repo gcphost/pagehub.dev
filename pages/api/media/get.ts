@@ -1,18 +1,21 @@
+import { getCdnAuthHeaders, getCdnUploadUrl } from "utils/cdn";
+
 export default async function MediaGet(req, res) {
-  const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ID}/images/v2/direct_upload`;
-
-  const options = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.CLOUDFLARE_TOKEN}`,
-      //  "Content-Type": "application/json",
-    },
-  };
-
-  // options.body.append("requireSignedURLs", "true");
-  // options.body.append("metadata", '{"key":"value"}');
-
   try {
+    const url = getCdnUploadUrl();
+    const authHeaders = getCdnAuthHeaders();
+
+    const options = {
+      method: "POST",
+      headers: {
+        ...authHeaders,
+        //  "Content-Type": "application/json",
+      },
+    };
+
+    // options.body.append("requireSignedURLs", "true");
+    // options.body.append("metadata", '{"key":"value"}');
+
     const response = await fetch(url, options);
     const data = await response.json();
 

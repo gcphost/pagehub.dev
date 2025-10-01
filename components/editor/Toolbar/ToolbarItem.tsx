@@ -36,7 +36,7 @@ const Input = (__props, ref) => {
               onChange={() => changed(value ? "" : props.on)}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-violet-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-violet-500"></div>
+            <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-primary-500"></div>
           </div>
         </label>
       </BgWrap>
@@ -58,7 +58,7 @@ const Input = (__props, ref) => {
               onChange={() => changed(value ? "" : props.on)}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-violet-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-violet-500"></div>
+            <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-primary-500"></div>
           </div>
         </label>
       </BgWrap>
@@ -162,9 +162,8 @@ const Input = (__props, ref) => {
     return (
       <BgWrap wrap={wrap}>
         <div
-          className={`flex justify-center items-center p-1 gap-3 ${
-            !props.cols ? "flex-col" : "flex-row"
-          }`}
+          className={`flex justify-center items-center p-1 gap-3 ${!props.cols ? "flex-col" : "flex-row"
+            }`}
         >
           {props?.options?.map((_, key) => {
             const checked = value === _.value;
@@ -180,9 +179,8 @@ const Input = (__props, ref) => {
                 />
                 <label
                   htmlFor={`radio-${propKey}-${key}`}
-                  className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${
-                    checked ? "font-bold " : "text-gray-400"
-                  }`}
+                  className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${checked ? "font-bold " : "text-gray-400"
+                    }`}
                 >
                   {_.label}
                 </label>
@@ -206,9 +204,8 @@ const Input = (__props, ref) => {
     return (
       <BgWrap wrap={wrap}>
         <div
-          className={`flex justify-center items-center p-1 gap-3 ${
-            !props.cols ? "flex-col" : "flex-row"
-          }`}
+          className={`flex justify-center items-center p-1 gap-3 ${!props.cols ? "flex-col" : "flex-row"
+            }`}
         >
           {options?.map((_, key) => (
             <div key={key} className="flex items-center">
@@ -229,9 +226,8 @@ const Input = (__props, ref) => {
               />
               <label
                 htmlFor={`radio-${propKey}-${key}`}
-                className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${
-                  checked ? "font-bold " : "text-gray-400"
-                }`}
+                className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${checked ? "font-bold " : "text-gray-400"
+                  }`}
               >
                 {_.label}
               </label>

@@ -142,9 +142,8 @@ export const ImageUploadInput: any = ({
     <Wrap props={props}>
       <label
         htmlFor="files"
-        className={`flex gap-3 h-12 bg-violet-500 rounded-md btn text-base ${
-          !enabled ? "opacity-50" : ""
-        }`}
+        className={`flex gap-3 h-12 bg-primary-500 rounded-md btn text-base ${!enabled ? "opacity-50" : ""
+          }`}
       >
         <div className="">
           {errors.length ? <TbAlertTriangle /> : null}

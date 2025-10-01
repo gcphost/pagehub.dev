@@ -8,7 +8,7 @@ import { TbAlignCenter, TbAlignLeft } from "react-icons/tb";
 export function TextSettingsTopNodeTool() {
   return (
     <NodeToolWrapper
-      className="bg-violet-500 inside-shadow text-black rounded-t-md px-3"
+      className="bg-primary-500 inside-shadow text-black rounded-t-md px-3"
       animate={{
         initial: { opacity: 0 },
         animate: {

@@ -3,17 +3,101 @@ import { nanoid } from "nanoid";
 // @ts-ignore
 import User from "models/user.model";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
 import Page from "../../models/page";
+import Tenant from "../../models/tenant.model";
 import dbConnect from "../../utils/dbConnect";
+import { getTenantBySubdomain } from "../../utils/tenantUtils";
+import { authOptions } from "./auth/[...nextauth]";
 import { addDomain, deploy, getDomain, removeDomain } from "./domain";
 
 const generate = require("boring-name-generator");
 
+// Function to call tenant's onSave webhook
+const callTenantWebhook = async (tenantId, pageId, document, isDraft, settings, authInfo = {}) => {
+  try {
+    const tenant = await Tenant.findById(tenantId);
+    if (!tenant?.webhooks?.onSave) {
+      return null;
+    }
+
+    const webhookUrl = `${tenant.webhooks.onSave}/${pageId}`
+
+    console.log("Calling tenant onSave webhook:", webhookUrl, "pageId:", pageId);
+
+    // Prepare headers with auth information
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    // Forward relevant auth headers
+    if (authInfo.headers) {
+      // Forward common auth headers
+      const authHeaders = ['authorization', 'x-api-key', 'x-auth-token', 'x-access-token', 'cookie'];
+      authHeaders.forEach(headerName => {
+        if (authInfo.headers[headerName]) {
+          headers[headerName] = authInfo.headers[headerName];
+        }
+      });
+    }
+
+    const webhookResponse = await fetch(webhookUrl, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        tenantId: tenantId,
+        pageId: pageId,
+        document: document,
+        isDraft: isDraft,
+        settings: settings,
+        timestamp: new Date().toISOString(),
+        // Include auth information in the body
+        auth: {
+          query: authInfo.query || {},
+          headers: authInfo.headers ? Object.keys(authInfo.headers) : [],
+          userAgent: authInfo.userAgent,
+          ip: authInfo.ip,
+        },
+      }),
+    });
+
+    if (webhookResponse.ok) {
+      // Check if response is JSON before parsing
+      const contentType = webhookResponse.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const webhookResult = await webhookResponse.json();
+        console.log("Tenant webhook save successful:", webhookResult);
+        return webhookResult;
+      } else {
+        // If not JSON, get text to see what we received
+        const responseText = await webhookResponse.text();
+        console.error("Tenant webhook returned non-JSON response:", {
+          status: webhookResponse.status,
+          contentType: contentType,
+          responsePreview: responseText.substring(0, 200)
+        });
+        return null;
+      }
+    } else {
+      // Get response text to see what error was returned
+      const responseText = await webhookResponse.text();
+      console.error("Tenant webhook save failed:", {
+        status: webhookResponse.status,
+        statusText: webhookResponse.statusText,
+        responsePreview: responseText.substring(0, 200)
+      });
+      return null;
+    }
+  } catch (error) {
+    console.error("Error calling tenant webhook:", error);
+    return null;
+  }
+};
+
 export async function uniqueNanoId(query = null) {
   const nanoId = nanoid();
-  const sameNanoId = await Page.findOne({ nano_id: nanoId });
-  if (sameNanoId) {
+  const existingPageByNanoId = await Page.findOne({ nano_id: nanoId });
+  if (existingPageByNanoId) {
     return uniqueNanoId(query);
   }
   return nanoId;
@@ -21,8 +105,8 @@ export async function uniqueNanoId(query = null) {
 
 export async function uniqueNameId(query = null) {
   const nanoId = generate().dashed;
-  const sameNanoId = await Page.findOne({ draftId: nanoId });
-  if (sameNanoId) {
+  const existingPageByDraftId = await Page.findOne({ draftId: nanoId });
+  if (existingPageByDraftId) {
     return uniqueNameId(query);
   }
   return nanoId;
@@ -61,35 +145,35 @@ const createPage = async (req) => {
 
   if (!_id) return newPage(content, draft);
 
-  const found = await Page.findOne({ _id });
+  const existingPage = await Page.findOne({ _id });
 
-  if (!found || !found.editable) return newPage(content, draft);
+  if (!existingPage || !existingPage.editable) return newPage(content, draft);
 
   const domain = req.body.domain;
   const res = {};
-  console.log("d", type, domain, found.domain);
+  console.log("d", type, domain, existingPage.domain);
 
-  if (type === "publish" && domain && domain !== found.domain) {
+  if (type === "publish" && domain && domain !== existingPage.domain) {
     const existing = await getDomain(domain);
     console.log(existing);
 
     if (existing?.error?.code === "not_found") {
-      await removeDomain(found.domain);
+      await removeDomain(existingPage.domain);
       const add = await addDomain(domain);
       console.log("add", add);
-      found.domain = domain;
+      existingPage.domain = domain;
     } else {
       res.error = "Domain already exists";
     }
   }
 
-  if (type === "publish" && !domain && found.domain) {
+  if (type === "publish" && !domain && existingPage.domain) {
     console.log("removing");
-    await removeDomain(found.domain);
-    found.domain = null;
+    await removeDomain(existingPage.domain);
+    existingPage.domain = null;
   }
 
-  if (type === "publish" && found.domain) {
+  if (type === "publish" && existingPage.domain) {
     await deploy();
   }
 
@@ -118,27 +202,88 @@ const createPage = async (req) => {
       }
     }
 
-    found[_] = value;
+    existingPage[_] = value;
   });
 
-  if (name && name !== found.name) {
+  if (name && name !== existingPage.name) {
     if (name.length > 50) {
       return { error: "Name limit 50" };
     }
-    const foundName = await Page.findOne({ name });
-    if (!foundName) found.name = name;
+    const pageByName = await Page.findOne({ name });
+    if (!pageByName) existingPage.name = name;
   }
 
-  await found.save();
+  await existingPage.save();
 
-  const page = await Page.findOne({ _id });
-  return { ...page._doc, ...res };
+  const savedPage = await Page.findOne({ _id });
+  return { ...savedPage._doc, ...res };
 };
 
 export default async function api(req, res) {
   await dbConnect();
 
   try {
+    // Get tenant from subdomain
+    const tenant = await getTenantBySubdomain(req.headers.host);
+
+    // Check if tenant has onSave webhook
+    if (tenant?.webhooks?.onSave) {
+      console.log("Tenant has onSave webhook, calling instead of internal save");
+
+      const { _id, content, draft } = req.body;
+      const document = content || draft;
+      const isDraft = !!draft;
+
+      console.log("Save request body:", {
+        _id: _id,
+        hasContent: !!content,
+        hasDraft: !!draft,
+        bodyKeys: Object.keys(req.body)
+      });
+
+      // Try to extract pageId from referer if _id is not available
+      let pageId = _id;
+      if (!pageId && req.headers.referer) {
+        const refererMatch = req.headers.referer.match(/\/build\/([^\/\?]+)/);
+        if (refererMatch) {
+          pageId = refererMatch[1];
+          console.log("Extracted pageId from referer:", pageId);
+        }
+      }
+
+      // Extract authentication information from the request
+      const authInfo = {
+        query: req.query || {},
+        headers: req.headers || {},
+        userAgent: req.headers['user-agent'],
+        ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection?.remoteAddress,
+      };
+
+      console.log("Extracted auth info for webhook:", {
+        queryKeys: Object.keys(authInfo.query),
+        headerKeys: Object.keys(authInfo.headers),
+        userAgent: authInfo.userAgent,
+        ip: authInfo.ip,
+      });
+
+      const webhookResult = await callTenantWebhook(
+        tenant._id,
+        pageId,
+        document,
+        isDraft,
+        req.body,
+        authInfo
+      );
+
+      if (webhookResult) {
+        return res.status(200).json(webhookResult);
+      } else {
+        console.error("Tenant webhook failed, returning error");
+        return res.status(500).json({ error: "Save failed - tenant webhook error" });
+      }
+    }
+
+    // Only use internal save for non-tenant requests
     const page = await createPage(req);
     const session = await getServerSession(req, res, authOptions);
 

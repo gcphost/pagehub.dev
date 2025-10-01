@@ -50,7 +50,7 @@ function Examples() {
           {templates.map((tpl, key) => (
             <figure
               key={key}
-              className="w-[300px] md:w-[400px] h-[290px] bg-center bg-cover flex flex-cl rounded-2xl border-violet-400/50 border-2 mb-3 group"
+              className="w-[300px] md:w-[400px] h-[290px] bg-center bg-cover flex flex-cl rounded-2xl border-primary-400/50 border-2 mb-3 group"
               style={{ backgroundImage: `url(${tpl.image})` }}
             >
               <Link href={`/build/${tpl.href}`}></Link>
@@ -59,7 +59,7 @@ function Examples() {
                 <div className="flex gap-3 self-end justify-between w-full">
                   <div className="w-full">
                     <Link href={`/build/${tpl.href}`} target="_blank">
-                      <div className="bg-violet-500 px-3 py-3 rounded-lg w-full text-center border border-violet-700 hover:bg-violet-400/90">
+                      <div className="bg-primary-500 px-3 py-3 rounded-lg w-full text-center border border-primary-700 hover:bg-primary-400/90">
                         Build
                       </div>
                     </Link>
@@ -80,7 +80,7 @@ function Examples() {
         <div className="container mx-auto flex justify-center">
           <Link
             href="/build"
-            className="bg-violet-500 hover:bg-violet-400 cursor-pointer text-white text-center text-2xl w-full m-3 lg:w-1/3 p-12 rounded-xl"
+            className="bg-primary-500 hover:bg-primary-400 cursor-pointer text-white text-center text-2xl w-full m-3 lg:w-1/3 p-12 rounded-xl"
           >
             Start from scratch
           </Link>

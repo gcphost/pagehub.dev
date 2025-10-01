@@ -21,6 +21,7 @@ import dbConnect from "utils/dbConnect";
 import { Button, OnlyButtons } from "../../components/selectors/Button";
 import { Image } from "../../components/selectors/Image";
 import { Video } from "../../components/selectors/Video";
+import Page from "../../models/page";
 
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
@@ -180,11 +181,12 @@ function App({ subdomain, data, meta, seo }) {
 export async function getStaticProps({ params }) {
   await dbConnect();
 
-  const Page = require("../../models/page");
+  // Check if this is a tenant subdomain
+  const slug = params.slug[0];
 
-  const named = await Page.findOne({ domain: params.slug[0] });
+  const pageByDomain = await Page.findOne({ domain: slug });
 
-  if (named) {
+  if (pageByDomain) {
     const {
       title = "",
       description = "",
@@ -192,7 +194,7 @@ export async function getStaticProps({ params }) {
       draft,
       name,
       draftId,
-    } = named;
+    } = pageByDomain;
     const { seo } = parseContent(content || draft, params.slug[0]);
 
     return {
@@ -218,70 +220,17 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   await dbConnect();
 
-  const Page = require("../../models/page");
-
-  const domains = await Page.find({ domain: { $ne: null } });
+  const pagesWithDomains = await Page.find({ domain: { $ne: null } });
 
   return {
-    paths: domains.map((post) => ({
+    paths: pagesWithDomains.map((page) => ({
       params: {
-        slug: [`${post.domain}`],
+        slug: [`${page.domain}`],
       },
     })),
     fallback: "blocking",
   };
 }
-export async function getServerSidePropsDep({ req, params }) {
-  const host = req.headers.host.split(".");
-  let subdomain = host[0];
 
-  if (["localhost:3000", "pagehub"].includes(subdomain)) {
-    subdomain = "";
-  }
-
-  let data = "";
-  let meta = null;
-  let seo = {};
-
-  if (subdomain) {
-    try {
-      const res = await fetch(
-        `${process.env.API_ENDPOINT}/page/${subdomain}/${
-          params?.slug?.join("/") || ""
-        }`
-      );
-
-      let result = null;
-
-      try {
-        result = await res.json();
-
-        console.log({ result });
-      } catch (e) {
-        console.error(e);
-      }
-
-      seo = result.seo || {};
-
-      if (result && (result.content || result.draft)) {
-        data = result.preview ? result.draft : result.content;
-      }
-
-      meta = result || {};
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  return {
-    props: {
-      subdomain,
-      data,
-      meta,
-      seo,
-      slug: params.slug || null,
-    },
-  };
-}
 
 export default App;

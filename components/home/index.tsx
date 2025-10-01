@@ -68,9 +68,9 @@ function Home() {
         <div className="container mx-auto flex justify-center mb-24">
           <Link
             href="/templates"
-            className="bg-violet-500 hover:bg-violet-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
+            className="bg-primary-500 hover:bg-primary-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
-            Start Today, Free!
+            Start Today!
           </Link>
         </div>
 
@@ -121,9 +121,9 @@ function Home() {
         <div className="container mx-auto flex justify-center">
           <a
             href="/templates"
-            className="bg-violet-500 hover:bg-violet-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
+            className="bg-primary-500 hover:bg-primary-400 cursor-pointer text-white text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
-            Start Today, Free!
+            Start Today!
           </a>
         </div>
 

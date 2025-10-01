@@ -20,12 +20,12 @@ async function checkAlt(req, res) {
   // spamm control, throttles, etc..
 
   try {
-    const named = await Page.findOne({ $or: [{ name }, { draftId: name }] });
+    const page = await Page.findOne({ $or: [{ name }, { draftId: name }] });
 
-    if (named) {
-      console.log(submission, named.submissions);
-      named.submissions.push({ data: submission, formName });
-      await named.save();
+    if (page) {
+      console.log(submission, page.submissions);
+      page.submissions.push({ data: submission, formName });
+      await page.save();
 
       if (mailTo) {
         // create reusable transporter object using the default SMTP transport
@@ -49,7 +49,7 @@ async function checkAlt(req, res) {
         const mailOptions = {
           from: "Pagehub <no-reply@pagehub.dev>",
           to: mailTo,
-          subject: `You have received a submission for ${named.domain || name || named.draftId}`,
+          subject: `You have received a submission for ${page.domain || name || page.draftId}`,
           text: emailContent,
         };
 

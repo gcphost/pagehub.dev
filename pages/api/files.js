@@ -8,9 +8,9 @@ export default async function media(req, res) {
 
   const { _id } = req.body;
 
-  const found = await Page.findOne({ _id });
+  const page = await Page.findOne({ _id });
 
-  if (!found) return res.status(404).json({});
+  if (!page) return res.status(404).json({});
 
   if (req.method === "DELETE") {
     return res.status(200).json({ _id: null, updated: false });
@@ -18,7 +18,7 @@ export default async function media(req, res) {
 
   if (req.method === "POST") {
     if (req.body.media) {
-      const media = found.media || [];
+      const media = page.media || [];
 
       if (media.length >= 10) {
         // return { error: "Media limit reached." };
@@ -45,7 +45,7 @@ export default async function media(req, res) {
         };
         media.push(ne);
 
-        await found.save();
+        await page.save();
 
         return res.status(200).json({ _id: ne._id });
       } catch (e) {

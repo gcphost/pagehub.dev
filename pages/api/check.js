@@ -11,10 +11,10 @@ export default async function check(req, res) {
   // maybe slugify
 
   try {
-    const named = await Page.findOne({ $or: [{ name }, { draftId: name }] });
+    const page = await Page.findOne({ $or: [{ name }, { draftId: name }] });
 
-    if (named) {
-      const { title, description, content, name } = named;
+    if (page) {
+      const { title, description, content, name } = page;
       return res.status(200).json({
         name,
         title,

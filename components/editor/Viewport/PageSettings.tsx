@@ -170,9 +170,8 @@ export const PageSettings = () => {
 
         <div className="w-full">
           <button
-            className={`${
-              saving ? "bg-violet-300" : "bg-violet-500"
-            } btn w-full p-3`}
+            className={`${saving ? "bg-primary-300" : "bg-primary-500"
+              } btn w-full p-3`}
           >
             {saving ? "Saving..." : "Save"}
           </button>

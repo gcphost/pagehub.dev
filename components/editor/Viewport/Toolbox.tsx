@@ -143,9 +143,8 @@ export const Toolbox = ({ userStyle = null }) => {
         setActiveMenu(k);
         setActiveItem(0);
       }}
-      className={`btn text-2xl rounded-full bg-violet-500 text-white border  drop-shadow-2xl p-3 cursor-pointer ${
-        activeMenu === k ? " bg-violet-800" : ""
-      }`}
+      className={`btn text-2xl rounded-full bg-primary-500 text-white border  drop-shadow-2xl p-3 cursor-pointer ${activeMenu === k ? " bg-primary-800" : ""
+        }`}
     >
       {items[_].icon}
     </DelayedMouseEnter>
@@ -172,14 +171,12 @@ export const Toolbox = ({ userStyle = null }) => {
 
   const itemMenu = (item, getter, setter, col = false) => (
     <div
-      className={` p-4 flex flex-col bg-gray-700/90  overflow-auto scrollbar min-w-[170px] ${
-        col ? "bg-gray-100 text-black" : "bg-gray-700/90 text-white"
-      }`}
+      className={` p-4 flex flex-col bg-gray-700/90  overflow-auto scrollbar min-w-[170px] ${col ? "bg-gray-100 text-black" : "bg-gray-700/90 text-white"
+        }`}
     >
       <div
-        className={`flex ${
-          col ? "flex-col gap-3" : "flex-col gap-1.5"
-        } "items-end" }`}
+        className={`flex ${col ? "flex-col gap-3" : "flex-col gap-1.5"
+          } "items-end" }`}
       >
         {itemMenuButton(item, getter, setter, col)}
       </div>
@@ -192,9 +189,8 @@ export const Toolbox = ({ userStyle = null }) => {
     return item.items?.map((a, k) => (
       <DelayedMouseEnter
         delayTime={300}
-        className={`px-3 py-1.5 w-min cursor-pointer rounded-md whitespace-nowrap ${
-          getter === k ? (!col ? "font-bold underline" : "font-bold") : ""
-        }`}
+        className={`px-3 py-1.5 w-min cursor-pointer rounded-md whitespace-nowrap ${getter === k ? (!col ? "font-bold underline" : "font-bold") : ""
+          }`}
         key={`btn${k}`}
         onClick={() => {
           setter(k);

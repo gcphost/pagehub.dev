@@ -27,6 +27,6 @@ const UserSchema = new mongoose.Schema(
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
-module.exports = mongoose.models.User || mongoose.model("User", PageSchema);
+module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
 
 export default User;

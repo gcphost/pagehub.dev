@@ -94,7 +94,7 @@ const Item = ({ children }) => (
   <motion.a
     variants={liVariants}
     className={
-      "flex w-full items-center gap-y-6  p-2  hover:text-gray-300 inner-shadow  rounded-md hover:bg-violet-500  cursor-pointer"
+      "flex w-full items-center gap-y-6  p-2  hover:text-gray-300 inner-shadow  rounded-md hover:bg-primary-500  cursor-pointer"
     }
   >
     {children}

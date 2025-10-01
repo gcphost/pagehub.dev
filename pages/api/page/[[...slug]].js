@@ -104,10 +104,10 @@ export default async function api(req, res) {
   if (page === "&") return res.status(200).json({});
 
   try {
-    const domained = await Page.findOne({ domain: page });
+    const pageByDomain = await Page.findOne({ domain: page });
 
-    if (domained) {
-      const { title, description, content, domain, name } = domained;
+    if (pageByDomain) {
+      const { title, description, content, domain, name } = pageByDomain;
       const { data, seo } = parseContent(content, slug);
       return res.status(200).json({
         title,
@@ -123,10 +123,10 @@ export default async function api(req, res) {
   }
 
   try {
-    const named = await Page.findOne({ name: page });
+    const pageByName = await Page.findOne({ name: page });
 
-    if (named) {
-      const { title, description, content, domain, name } = named;
+    if (pageByName) {
+      const { title, description, content, domain, name } = pageByName;
       const { data, seo } = parseContent(content, slug);
       return res.status(200).json({
         title,
@@ -142,21 +142,21 @@ export default async function api(req, res) {
   }
 
   try {
-    const found = await Page.findOne({ draftId: page });
+    const pageByDraftId = await Page.findOne({ draftId: page });
 
-    if (found) {
-      const { data, seo } = parseContent(found.draft, slug);
+    if (pageByDraftId) {
+      const { data, seo } = parseContent(pageByDraftId.draft, slug);
 
       return res.status(200).json({
-        title: found.title,
-        description: found.description,
+        title: pageByDraftId.title,
+        description: pageByDraftId.description,
         content: data,
         seo,
         draft: data,
-        draftId: found.draftId,
+        draftId: pageByDraftId.draftId,
         preview: true,
-        name: found.name,
-        domain: found.domain,
+        name: pageByDraftId.name,
+        domain: pageByDraftId.domain,
       });
     }
   } catch (e) {
@@ -164,30 +164,30 @@ export default async function api(req, res) {
   }
 
   try {
-    const byid = await Page.findOne({ _id: page });
+    const pageById = await Page.findOne({ _id: page });
 
-    if (!byid) return res.status(404).json({});
+    if (!pageById) return res.status(404).json({});
 
     let data = null;
 
-    if (byid.domain) {
-      data = await getDomain(byid.domain);
+    if (pageById.domain) {
+      data = await getDomain(pageById.domain);
     }
-    byid.submissions.reverse();
+    pageById.submissions.reverse();
 
     return res.status(200).json({
-      title: byid.title || "",
-      description: byid.description || "",
-      content: byid.draft || "",
-      _id: byid._id,
-      draftId: byid.draftId || "",
-      name: byid.name || null,
-      submissions: byid.submissions || [],
-      domain: byid.domain || "",
+      title: pageById.title || "",
+      description: pageById.description || "",
+      content: pageById.draft || "",
+      _id: pageById._id,
+      draftId: pageById.draftId || "",
+      name: pageById.name || null,
+      submissions: pageById.submissions || [],
+      domain: pageById.domain || "",
       domainData: data || null,
-      company: byid.company || null,
-      companyType: byid.companyType || null,
-      companyLocation: byid.companyLocation || null,
+      company: pageById.company || null,
+      companyType: pageById.companyType || null,
+      companyLocation: pageById.companyLocation || null,
     });
   } catch (e) {
     return res.status(500).json(e);

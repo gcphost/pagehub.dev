@@ -39,7 +39,7 @@ export const ToolbarLabel = ({
 
   if (propType === "component" || propType === "root") {
     viewValue = "component";
-    bg = "bg-violet-300";
+    bg = "bg-primary-300";
   }
   if (!lab) return null;
 

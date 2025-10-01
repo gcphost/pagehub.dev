@@ -114,9 +114,8 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
   return (
     <NodeToolWrapper
       col={direction !== "horizontal"}
-      className={`bg-violet-500 inside-shadow text-black rounded-${
-        direction == "horizontal" ? "t" : "l"
-      }-md ${direction == "horizontal" ? "px-3" : "py-3 px-1.5"}`}
+      className={`bg-primary-500 inside-shadow text-black rounded-${direction == "horizontal" ? "t" : "l"
+        }-md ${direction == "horizontal" ? "px-3" : "py-3 px-1.5"}`}
       animate={{
         initial: { opacity: 0 },
         animate: {
@@ -161,9 +160,8 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
       {match && (
         <div className="h-6 w-6 flex items-center justify-center">
           <button
-            className={`text-white ${
-              direction == "horizontal" ? "-rotate-90" : ""
-            }`}
+            className={`text-white ${direction == "horizontal" ? "-rotate-90" : ""
+              }`}
             onClick={() => {
               AddElement({
                 element: ["flex-row", "flex-row-reverse"].includes(value)
@@ -182,9 +180,8 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
       {match && (
         <div className="h-6 w-6 flex items-center justify-center">
           <button
-            className={`text-white ${
-              direction == "horizontal" ? "-rotate-90" : ""
-            }`}
+            className={`text-white ${direction == "horizontal" ? "-rotate-90" : ""
+              }`}
             onClick={() => {
               setShowMenu(true);
               setShowMenuType("components");

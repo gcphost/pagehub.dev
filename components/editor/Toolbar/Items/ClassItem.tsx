@@ -111,7 +111,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
         />
         <button
           type="submit"
-          className="text-white inside-shadow absolute right-2.5 bottom-2.5 h-8 bg-violet-500 border border-gray-500 px-5 py-1.5 rounded-md hover:bg-violet-600 "
+          className="text-white inside-shadow absolute right-2.5 bottom-2.5 h-8 bg-primary-500 border border-gray-500 px-5 py-1.5 rounded-md hover:bg-primary-600 "
           onClick={() => save()}
         >
           <TbSearch />
@@ -163,7 +163,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
       <p>Legend</p>
 
       <div className="space-y-3 space-x-1.5 text-black">
-        <div className="bg-violet-300 px-2.5 py-1.5 rounded inline-flex text-xs inside-shadow">
+        <div className="bg-primary-300 px-2.5 py-1.5 rounded inline-flex text-xs inside-shadow">
           Component
         </div>
         <div className="bg-white text-black px-2.5 py-1.5 rounded inline-flex text-xs inside-shadow">

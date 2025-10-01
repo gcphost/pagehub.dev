@@ -7,12 +7,17 @@ import { TbCheck, TbLock, TbLogin, TbLogout, TbX } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { popupCenter } from "utils/lib";
+import { useTenant } from "utils/tenantStore";
 import { UnsavedChangesAtom } from ".";
 import { SaveToServer } from "./lib";
 
 export const DomainSettings = () => {
   const [settings, setSettings] = useRecoilState(SettingsAtom);
   const { data: session, status } = useSession();
+
+  // Check if this is a tenant
+  const tenant = useTenant();
+  const isTenant = !!tenant;
 
   const [data, setData] = useState(settings);
   const [name, setName] = useState(data?.name || "");
@@ -113,6 +118,11 @@ export const DomainSettings = () => {
   };
 
   useEffect(() => {
+    // Don't run domain checks for tenants or if no domain is set
+    if (isTenant || !settings?.domain) {
+      return;
+    }
+
     const run = () => {
       fetch("/api/domain", {
         method: "POST",
@@ -133,7 +143,7 @@ export const DomainSettings = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [settings?.domain]);
+  }, [settings?.domain, isTenant]);
 
   const inputClass = "input  ";
 
@@ -369,8 +379,8 @@ export const DomainSettings = () => {
                       </td>
                     </tr>
 
-                    {domainData?.verification?.map((_) => (
-                      <tr className="">
+                    {domainData?.verification?.map((_, index) => (
+                      <tr className="" key={index}>
                         <td className="divide-x divide-gray-300 px-4 py-2">
                           {_.type}
                         </td>
@@ -390,9 +400,8 @@ export const DomainSettings = () => {
 
         <div className="w-full  ">
           <button
-            className={`${
-              saving ? "bg-violet-300" : "bg-violet-500"
-            } btn w-full p-3`}
+            className={`${saving ? "bg-primary-300" : "bg-primary-500"
+              } btn w-full p-3`}
           >
             {saving ? "Saving..." : "Save"}
           </button>

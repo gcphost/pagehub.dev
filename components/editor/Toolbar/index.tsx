@@ -72,7 +72,7 @@ export const Toolbar = () => {
       key="sideMenu"
       id="toolbar"
       className={
-        "z-40 absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen  text-white border-x border-violet-500 "
+        "z-40 absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen  text-white border-x border-primary-300 "
       }
       style={style}
       ref={ref}

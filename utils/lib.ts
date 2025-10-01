@@ -4,6 +4,7 @@ import { parse } from "css-tree";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { atom } from "recoil";
+import { getCdnUrl } from "./cdn";
 import { TailwindStyles } from "./tailwind";
 
 export const enableContext = false;
@@ -314,8 +315,9 @@ export const getMedialUrl = (props) => {
 
   if (type === "img" && videoId) return videoId;
 
-  if (type === "cdn" && videoId)
-    return `https://imagedelivery.net/8PYt12v3QMuDRiYrOftNUQ/${videoId}/public`;
+  if (type === "cdn" && videoId) {
+    return getCdnUrl(videoId);
+  }
 };
 
 export const getBackgroundUrl = (props) => {
@@ -323,8 +325,9 @@ export const getBackgroundUrl = (props) => {
     const type = props.backgroundImageType;
     const content = props.backgroundImage;
 
-    if (type === "cdn" && content)
-      return `https://imagedelivery.net/8PYt12v3QMuDRiYrOftNUQ/${content}/public`;
+    if (type === "cdn" && content) {
+      return getCdnUrl(content);
+    }
 
     return content;
   }

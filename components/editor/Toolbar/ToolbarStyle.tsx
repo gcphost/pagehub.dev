@@ -8,9 +8,8 @@ export const BgWrap = ({ children, className = "", wrap = null }) => {
   }
   return (
     <div
-      className={`rounded-lg bg-gray-500/50 border-gray-500 border w-full px-3 py-3  space-y-3 ${
-        className || " input-hover"
-      }`}
+      className={`rounded-lg bg-gray-500/50 border-gray-500 border w-full px-3 py-3  space-y-3 ${className || " input-hover"
+        }`}
     >
       {children}
     </div>
@@ -31,9 +30,8 @@ const Labler = ({
 
   return (
     <h4
-      className={`text-white ${
-        lab ? "my-3" : "mb-3"
-      } gap-3 h-6 flex justify-between`}
+      className={`text-white ${lab ? "my-3" : "mb-3"
+        } gap-3 h-6 flex justify-between`}
     >
       <div className="flex gap-1.5 items-center">
         {props.label}
@@ -87,7 +85,7 @@ export const Wrap = ({
 export const Card = ({
   value,
   onClick,
-  bgColor = "bg-violet-300 inside-shadow",
+  bgColor = "bg-primary-300 inside-shadow",
 }) => {
   if (!value) {
     return null;

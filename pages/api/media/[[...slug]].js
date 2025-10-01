@@ -7,12 +7,12 @@ export default async function media(req, res) {
 
   const [_id, mediaId] = req.query.slug;
 
-  const named = await Page.findOne({
+  const page = await Page.findOne({
     $or: [{ draftId: _id }, { name: _id }, { _id }],
   });
 
-  if (named) {
-    const image = named.media.find(
+  if (page) {
+    const image = page.media.find(
       (_) => _._id === mediaId.replace(".webp", "")
     );
 

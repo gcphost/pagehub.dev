@@ -20,18 +20,27 @@ import { RenderNodeNewer } from "components/editor/RenderNodeNewer";
 import { Toolbar } from "components/editor/Toolbar";
 
 import { UnsavedChangesAtom, Viewport } from "components/editor/Viewport";
-import DebugPanel from "components/editor/Viewport/DebugPanel";
 import { Form, FormDrop } from "components/selectors/Form";
 import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
+import { useEffect } from "react";
 import { Save } from "../../components/Save";
 import { Button, OnlyButtons } from "../../components/selectors/Button";
 import { Image } from "../../components/selectors/Image";
 import { Video } from "../../components/selectors/Video";
+import dbConnect from "../../utils/dbConnect";
+import { useSetTenant } from "../../utils/tenantStore";
+import { getTenantBySubdomain } from "../../utils/tenantUtils";
 
-function App({ data, slug, result, session }) {
+function App({ data, slug, result, session, tenant }) {
   data = lz.decompress(lz.decodeBase64(data));
+  const setTenant = useSetTenant();
 
-  console.log(result);
+  // Set tenant data in store when component mounts
+  useEffect(() => {
+    if (tenant) {
+      setTenant(tenant);
+    }
+  }, [tenant, setTenant]);
 
   if (data) {
     try {
@@ -60,14 +69,12 @@ function App({ data, slug, result, session }) {
     Divider,
   };
 
-  const debug = false;
 
   return (
     <div className="h-screen w-screen">
       <NextSeo
-        title={`${
-          result?.title || result?.domain || result?.subdomain || slug
-        } - ${siteTitle}`}
+        title={`${result?.title || result?.domain || result?.subdomain || slug
+          } - ${siteTitle}`}
         description={siteDescription}
         canonical="https://pagehub.dev/"
       />
@@ -99,7 +106,6 @@ function App({ data, slug, result, session }) {
           <IconDialogDialog />
           <PatternDialog />
 
-          {debug && <DebugPanel />}
 
           <Save result={result} />
 
@@ -241,24 +247,112 @@ function App({ data, slug, result, session }) {
 }
 
 export async function getServerSideProps({ req, query }) {
-  const host = req.headers.host.split(".");
-  const subdomain = host.length === 2 ? host[0] : "";
+  const host = req.headers.host;
 
   let data = "";
-
   let json = null;
   let result = null;
+  let tenant = null;
 
-  if (query?.slug?.length) {
+  // Check for data parameter in query string (fallback for direct URL usage)
+  if (!data && query.data) {
+    try {
+      // Use the provided data directly (should be base64 encoded)
+      data = query.data as string;
+    } catch (e) {
+      console.error("Error parsing data parameter:", e);
+    }
+  }
+
+  // Load tenant by subdomain
+  try {
+    await dbConnect();
+    tenant = await getTenantBySubdomain(host);
+
+    if (tenant) {
+      // Convert Mongoose document to plain object for serialization
+      tenant = tenant.toObject();
+
+      // Convert non-serializable fields to strings for JSON serialization
+      if (tenant._id) {
+        tenant._id = tenant._id.toString();
+      }
+      if (tenant.createdAt) {
+        tenant.createdAt = tenant.createdAt.toISOString();
+      }
+      if (tenant.updatedAt) {
+        tenant.updatedAt = tenant.updatedAt.toISOString();
+      }
+
+      // Check if tenant has onLoad webhook and call it directly
+      if (tenant.webhooks?.onLoad && !data) {
+        try {
+          const pageId = query?.slug?.length ? query.slug[0] : null;
+          const webhookUrl = pageId ? `${tenant.webhooks.onLoad}/${pageId}` : tenant.webhooks.onLoad;
+
+          // Extract authentication information from the request
+          const authInfo = {
+            query: query || {},
+            headers: req.headers || {},
+            userAgent: req.headers['user-agent'],
+            ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection?.remoteAddress,
+          };
+
+          // Prepare headers with auth information
+          const headers = {};
+          const authHeaders = ['authorization', 'x-api-key', 'x-auth-token', 'x-access-token', 'cookie'];
+          authHeaders.forEach(headerName => {
+            if (authInfo.headers[headerName]) {
+              headers[headerName] = authInfo.headers[headerName];
+            }
+          });
+
+          console.log("Calling onLoad webhook with auth info:", {
+            webhookUrl,
+            pageId,
+            queryKeys: Object.keys(authInfo.query),
+            headerKeys: Object.keys(headers),
+          });
+
+          const webhookResponse = await fetch(webhookUrl, {
+            method: "GET",
+            headers,
+          });
+
+          if (webhookResponse.ok) {
+            const webhookData = await webhookResponse.json();
+            if (webhookData.document) {
+              data = webhookData.document;
+            }
+          }
+        } catch (webhookError) {
+          console.error("Error calling onLoad webhook:", webhookError);
+        }
+      }
+
+      // Only use default template if no data parameter was provided and no webhook data
+      if (!data) {
+        data = templates["blank"]?.content || "";
+      }
+    }
+  } catch (e) {
+    console.error("Error loading tenant:", e);
+  }
+
+  // Handle slug-based content if provided (only if no data from webhook)
+  if (query?.slug?.length && !data) {
+    const slug = query.slug[0];
+
+    // Handle regular templates and existing pages
     const template = Object.keys(templates).find(
-      (_) => templates[_].href === query.slug[0]
+      (_) => templates[_].href === slug
     );
 
     if (template) {
       data = templates[template].content;
     } else {
       const res = await fetch(
-        `${process.env.API_ENDPOINT}/page/${query.slug[0]}`
+        `${process.env.API_ENDPOINT}/page/${slug}`
       );
 
       try {
@@ -271,17 +365,19 @@ export async function getServerSideProps({ req, query }) {
         data = result.draft || result.content || "";
       }
     }
-
-    json = data ? lz.decompress(lz.decodeBase64(data)) : null;
   }
+
+  json = data ? lz.decompress(lz.decodeBase64(data)) : null;
+
 
   return {
     props: {
-      subdomain,
+      subdomain: tenant?.subdomain || null,
       data: json ? lz.encodeBase64(lz.compress(json)) : null,
       slug: query?.slug?.length ? query.slug[0] : "",
       domain: process.env.DOMAIN,
       result,
+      tenant,
     }, // will be passed to the page component as props
   };
 }
