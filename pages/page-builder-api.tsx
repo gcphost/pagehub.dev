@@ -201,7 +201,7 @@ export default function ApiDocs() {
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Why PageHub?</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              No need to build a page editor from scratch. Integrate PageHub in hours, not months.
+              Building your own page editor from scratch is hard. Integrate PageHub in hours, not months.
             </p>
           </div>
 
