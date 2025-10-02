@@ -11,12 +11,9 @@ module.exports = withBundleAnalyzer({
   // Configure SWC to target modern browsers only (no polyfills/transpiling)
   compiler: {
     emotion: false,
+    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
   experimental: {
-    // Use browserslist config for build targets
-    browsersListForSwc: true,
-    // Disable legacy browser support
-    legacyBrowsers: false,
   },
   swcMinify: true,
   modularizeImports: {
@@ -93,6 +90,20 @@ module.exports = withBundleAnalyzer({
           {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        // Add preload headers for fonts
+        source: "/_next/static/css/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
           },
         ],
       },

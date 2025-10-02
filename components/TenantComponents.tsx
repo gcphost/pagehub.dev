@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { useTenant, useTenantBranding, useTenantSettings } from '../utils/tenantStore'
 
 // Example component that shows/hides based on tenant settings
@@ -42,10 +43,12 @@ export const TenantHeader = () => {
     <div className="bg-gray-100 p-2 text-sm">
       <span className="font-semibold">{tenant.name}</span>
       {tenant.branding?.logo && (
-        <img
+        <Image
           src={tenant.branding.logo}
           alt={`${tenant.name} logo`}
-          className="h-6 w-auto ml-2 inline"
+          width={24}
+          height={24}
+          className="ml-2 inline"
         />
       )}
     </div>

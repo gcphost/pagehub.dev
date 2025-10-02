@@ -1,5 +1,7 @@
+import fs from "fs";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import Script from "next/script";
+import path from "path";
 
 export default class MyDocument extends Document {
   render() {
@@ -17,7 +19,9 @@ export default class MyDocument extends Document {
           </Script>
 
 
-          <Script src="/tailwind-cdn.js" strategy="beforeInteractive" />
+          <script dangerouslySetInnerHTML={{
+            __html: fs.readFileSync(path.join(process.cwd(), 'tailwind-cdn.js'), 'utf8')
+          }} />
 
           {/* Preconnect to Google Fonts with crossorigin */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />

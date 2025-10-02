@@ -1,5 +1,6 @@
 import Footer from "components/footer";
 import { NextSeo } from "next-seo";
+import { Nunito } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";
 import { SiTailwindcss } from "react-icons/si";
@@ -12,11 +13,12 @@ import {
 } from "react-icons/tb";
 import { siteDescription, siteTitle } from "utils/lib";
 
-const nunitoStyle = `
-  * {
-    font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
-  }
-`;
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '700', '800', '900'],
+  display: 'swap',
+  fallback: ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif"],
+});
 
 const Card = ({ icon, title, description }) => (
   <div className="text-center flex gap-6 flex-col justify-center items-center w-full mb-12 md:mb-0 md:w-1/2">
@@ -36,10 +38,6 @@ export const HomePage = () => (
   <>
     <Head>
       <meta name="author" content="William Bowman" />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
-      <style dangerouslySetInnerHTML={{ __html: nunitoStyle }} />
     </Head>
 
     <NextSeo title={siteTitle} description={siteDescription} />
@@ -50,7 +48,7 @@ export const HomePage = () => (
 
 function Home() {
   return (
-    <div className="bg-gray-800 text-white">
+    <div className={`bg-gray-800 text-white ${nunito.className}`}>
       <nav className="p-3 border-gray-200 bg-gradient-to-r from-emerald-300 to-cyan-300 h-20 flex items-center"></nav>
 
       <div className=" flex flex-col gap-12 pb-20">
