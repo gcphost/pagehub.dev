@@ -87,7 +87,7 @@ export const EmptyState = ({ icon = null }) => {
       ) : null}
 
       {!isActive && !isHover && icon && (
-        <div data-empty-state={true}>{icon}</div>
+        <div data-empty-state={true} className="text-3xl">{icon}</div>
       )}
     </div>
   );
