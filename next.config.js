@@ -61,6 +61,10 @@ module.exports = withBundleAnalyzer({
       destination: "/api/robots.txt",
     },
     {
+      source: "/sitemap.xml",
+      destination: "/api/sitemap.xml",
+    },
+    {
       source: "/",
       has: [
         {

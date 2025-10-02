@@ -67,6 +67,7 @@ export const parseContent = (content, slug) => {
     const k = pageData[onlyPage].key;
     const props = da[k];
 
+    // Basic SEO
     seo.title =
       props.props.pageTitle ||
       props.pageTitle ||
@@ -74,8 +75,24 @@ export const parseContent = (content, slug) => {
       null;
     seo.description =
       props.props.pageDescription || props.pageDescription || null;
+    seo.keywords = props.props.pageKeywords || null;
+    seo.author = props.props.pageAuthor || null;
 
+    // Open Graph
+    seo.ogTitle = props.props.ogTitle || seo.title;
+    seo.ogDescription = props.props.ogDescription || seo.description;
+    seo.ogImage = props.props.ogImage || null;
+    seo.ogType = props.props.ogType || 'website';
 
+    // Twitter
+    seo.twitterCard = props.props.twitterCard || 'summary_large_image';
+    seo.twitterSite = props.props.twitterSite || null;
+    seo.twitterCreator = props.props.twitterCreator || null;
+
+    // Advanced
+    seo.canonicalUrl = props.props.canonicalUrl || null;
+    seo.robots = props.props.robots || null;
+    seo.themeColor = props.props.themeColor || null;
 
     console.log('k', k)
 

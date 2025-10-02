@@ -159,13 +159,65 @@ function App({ subdomain, data, meta, seo }) {
       Divider,
     };
 
-    const { title, descripton } = seo || { title: "", descripton: "" };
+    const {
+      title = "",
+      description = "",
+      keywords,
+      author,
+      ogTitle,
+      ogDescription,
+      ogImage,
+      ogType = 'website',
+      twitterCard = 'summary_large_image',
+      twitterSite,
+      twitterCreator,
+      canonicalUrl,
+      robots,
+      themeColor
+    } = seo || {};
+
+    // Build the full URL for canonical and OG
+    const host = typeof window !== 'undefined' ? window.location.host : '';
+    const protocol = typeof window !== 'undefined' ? window.location.protocol : 'https:';
+    const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+    const fullUrl = `${protocol}//${host}${pathname}`;
 
     return (
       <>
         <NextSeo
-          title={`${title} ${meta?.title || ""}`}
-          description={`${descripton || meta.description || ""}`}
+          title={title || meta?.title || ""}
+          description={description || meta?.description || ""}
+          canonical={canonicalUrl || fullUrl}
+
+          additionalMetaTags={[
+            ...(keywords ? [{ name: 'keywords', content: keywords }] : []),
+            ...(author ? [{ name: 'author', content: author }] : []),
+            ...(robots ? [{ name: 'robots', content: robots }] : []),
+            ...(themeColor ? [{ name: 'theme-color', content: themeColor }] : []),
+          ]}
+
+          openGraph={{
+            type: ogType,
+            url: canonicalUrl || fullUrl,
+            title: ogTitle || title || meta?.title || "",
+            description: ogDescription || description || meta?.description || "",
+            ...(ogImage && {
+              images: [
+                {
+                  url: ogImage,
+                  width: 1200,
+                  height: 630,
+                  alt: ogTitle || title || "",
+                },
+              ],
+            }),
+          }}
+
+          twitter={{
+            cardType: twitterCard,
+            ...(twitterSite && { site: twitterSite }),
+            ...(twitterCreator && { handle: twitterCreator }),
+          }}
         />
 
         <Editor resolver={editorComponents} enabled={false}>
