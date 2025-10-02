@@ -2,12 +2,13 @@ import { Tooltip } from "components/layout/Tooltip";
 import { motion } from "framer-motion";
 import { v4 as uuidv4 } from "uuid";
 
-export const AnimatedButton = ({ children, className = "", ...props }) => (
+export const AnimatedButton = ({ children, className = "", ariaLabel = "", ...props }) => (
   <div className="h-8">
-    <motion.div
+    <motion.button
       onClick={props.onClick}
       key={uuidv4()}
       className={`${className} cursor-pointer origin-top`}
+      aria-label={ariaLabel}
       whileHover={{
         scale: 1.3,
         // transition: { duration: 0.2 },
@@ -43,7 +44,7 @@ export const AnimatedButton = ({ children, className = "", ...props }) => (
       }}
     >
       {children}
-    </motion.div>
+    </motion.button>
   </div>
 );
 
@@ -55,7 +56,7 @@ export const AnimatedTooltipButton = ({
   ...props
 }) => (
   <Tooltip content={content} placement={placement}>
-    <AnimatedButton {...props} className={className}>
+    <AnimatedButton {...props} className={className} ariaLabel={content}>
       {children}
     </AnimatedButton>
   </Tooltip>

@@ -51,6 +51,7 @@ const Input = ({ nodeProps, setProp }) => {
               <button
                 key="button-1"
                 className="text-gray-500"
+                aria-label="Delete button"
                 onClick={(e) => {
                   e.preventDefault();
 

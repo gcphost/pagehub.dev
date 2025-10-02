@@ -65,7 +65,9 @@ export const Toolbar = () => {
   }
 
   return (
-    <motion.div
+    <motion.aside
+      role="complementary"
+      aria-label="Component settings"
       animate={sideBarOpen && !preview ? "open" : "closed"}
       initial="closed"
       variants={variants}
@@ -80,10 +82,10 @@ export const Toolbar = () => {
     >
       <div
         className="overflow-hidden w-full antialiased bg-gray-800/90 select-none z-0"
-        aria-expanded="false"
+        aria-expanded={sideBarOpen && !preview ? "true" : "false"}
       >
         {tool}
       </div>
-    </motion.div>
+    </motion.aside>
   );
 };

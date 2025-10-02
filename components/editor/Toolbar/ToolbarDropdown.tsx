@@ -38,6 +38,7 @@ export const ToolbarDropdown = ({
         } active:outline-none focus:outline-none focus:border-transparent active:border-transparent`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        aria-label={title || placeholder || "Select option"}
       >
         {children}
       </select>

@@ -66,6 +66,8 @@ export const FormDrop = ({
       action={action}
       method={method}
       target="iframe"
+      role="form"
+      aria-label={props.formName || "Contact form"}
       onSubmit={async (e: any) => {
         e.preventDefault();
         if (enabled) return;

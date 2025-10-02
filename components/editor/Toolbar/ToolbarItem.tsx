@@ -73,6 +73,7 @@ const Input = (__props, ref) => {
         defaultValue={value}
         onChange={(event) => changed(event.target.value)}
         className="input"
+        aria-label={props.label || propKey || "Number input"}
       />
     );
   }
@@ -91,6 +92,7 @@ const Input = (__props, ref) => {
         defaultValue={match?.length ? match[0] : null}
         onChange={(event) => changed(`${propTag}-[${event.target.value}px]`)}
         className="input"
+        aria-label={props.label || props.placeholder || propKey || "Custom value"}
       />
     );
   }
@@ -104,6 +106,7 @@ const Input = (__props, ref) => {
         defaultValue={value}
         onChange={(event) => changed(event.target.value)}
         className="input"
+        aria-label={props.label || props.placeholder || propKey || `${type} input`}
       />
     );
   }
@@ -117,6 +120,7 @@ const Input = (__props, ref) => {
         rows={props.rows || 4}
         placeholder={props.placeholder}
         className="input"
+        aria-label={props.label || props.placeholder || propKey || "Text area"}
       />
     );
   }
@@ -126,6 +130,7 @@ const Input = (__props, ref) => {
   }
 
   if (type === "slider") {
+    const currentValue = props?.valueLabels?.indexOf(value) || value || 0;
     return (
       <BgWrap wrap={wrap}>
         <input
@@ -134,7 +139,7 @@ const Input = (__props, ref) => {
           min={props.min || 0}
           max={props.max || 100}
           step={props.step || 1}
-          defaultValue={props?.valueLabels?.indexOf(value) || value || 0}
+          defaultValue={currentValue}
           onChange={(event) => {
             changed(
               props?.valueLabels
@@ -142,6 +147,11 @@ const Input = (__props, ref) => {
                 : event.target.value
             );
           }}
+          aria-label={props.label || propKey || "Slider"}
+          aria-valuemin={props.min || 0}
+          aria-valuemax={props.max || 100}
+          aria-valuenow={currentValue}
+          aria-valuetext={value?.toString() || currentValue.toString()}
         />
       </BgWrap>
     );
@@ -176,6 +186,7 @@ const Input = (__props, ref) => {
                   defaultChecked={checked}
                   onClick={() => changed(_.value)}
                   className="hidden"
+                  aria-label={_.value}
                 />
                 <label
                   htmlFor={`radio-${propKey}-${key}`}
@@ -223,6 +234,7 @@ const Input = (__props, ref) => {
                   changed(next.value);
                 }}
                 className="hidden"
+                aria-label={_.value}
               />
               <label
                 htmlFor={`radio-${propKey}-${key}`}

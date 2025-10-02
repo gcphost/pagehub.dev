@@ -1,5 +1,4 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { TbCode, TbLock } from "react-icons/tb";
+import { TbCode } from "react-icons/tb";
 import { Embed } from "../../../selectors/Embed";
 import { RenderToolComponent } from "./lib";
 
@@ -22,9 +21,6 @@ export const EmbedToolbox = {
           <div className="flex flex-row gap-3 items-center">
             <TbCode /> Embedded Code
           </div>
-          <Tooltip content="Requires paid upgrade." placement="left">
-            <TbLock />
-          </Tooltip>
         </div>
       }
       custom={{ displayName: "Embedded coded" }}

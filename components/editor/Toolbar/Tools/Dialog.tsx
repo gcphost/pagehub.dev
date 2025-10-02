@@ -113,6 +113,9 @@ export const Dialog = ({
     <AnimatePresence>
       {dialog.enabled && (
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={dialogName || "Selection dialog"}
           animate={{ opacity: 1, width, height }}
           variants={ulVariants}
           transition={ulVariants.transition}
@@ -141,6 +144,7 @@ export const Dialog = ({
                     onKeyUp={(e) => search(e)}
                     autoFocus={true}
                     defaultValue={searchValue}
+                    aria-label="Search"
                   />
                 </div>
                 <div className="px-3 pb-3 flex-1 min-h-0">
@@ -161,6 +165,7 @@ export const Dialog = ({
                   onKeyUp={(e) => search(e)}
                   autoFocus={true}
                   defaultValue={searchValue}
+                  aria-label="Search"
                 />
 
                 {!searchValue && (

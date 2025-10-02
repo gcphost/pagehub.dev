@@ -170,6 +170,9 @@ function Dialog({ children, target, state, opener }: any): any {
       {isOpen && (
         <div className="absolute w-[350px] h-[350px]" ref={dialogRef}>
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Settings dialog"
             initial={{ scale: 1, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 1, opacity: 0 }}
@@ -183,6 +186,7 @@ function Dialog({ children, target, state, opener }: any): any {
               onMouseDown={handleMouseDown}
               tabIndex={0}
               className="h-8 cursor-move"
+              aria-label="Drag to move dialog"
             >
               <div className="w-2/3 h-4 inside-shadow bg-primary-500 hover:bg-primary-900 rounded-b-md mx-auto -mt-[2px]   border-gray-900 border-2 border-t-primary-500 hover:border-t-primary-900 drop-shadow-lg  px-3 py-1.5"></div>
 
@@ -190,6 +194,7 @@ function Dialog({ children, target, state, opener }: any): any {
                 <button
                   className="text-gray-500 absolute left-3 top-2.5"
                   onClick={() => setIsOpen(false)}
+                  aria-label="Close dialog"
                 >
                   <span className="sr-only">Close</span>
                   <MdClose />

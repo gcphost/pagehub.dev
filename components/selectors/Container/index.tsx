@@ -33,6 +33,8 @@ export interface ContainerProps extends BaseSelectorProps {
   onSubmit?: any;
   target?: any;
   id?: any;
+  role?: string;
+  "aria-label"?: string;
 }
 
 const defaultProps: ContainerProps = {
@@ -173,6 +175,8 @@ export const Container = (props: Partial<ContainerProps>) => {
   }
 
   if (props.id) prop.id = props.id;
+  if (props.role) prop.role = props.role;
+  if (props["aria-label"]) prop["aria-label"] = props["aria-label"];
 
   if (enabled) {
     prop["data-border"] = !!(props.root?.border || props.root?.borderColor);

@@ -56,11 +56,10 @@ export const NameNodeController = (props: {
           align={align}
           alt={alt}
           placement={placement}
-          className={`${
-            position === "top" && align === "start" && placement === "end"
+          className={`${position === "top" && align === "start" && placement === "end"
               ? "m-1"
               : ""
-          } whitespace-nowrap fixed items-center justify-center select-none will-change-auto`}
+            } whitespace-nowrap fixed items-center justify-center select-none will-change-auto`}
         >
           <motion.div
             {...{

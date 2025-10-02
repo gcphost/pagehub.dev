@@ -78,9 +78,11 @@ export function useComponentVisible(initialIsVisible) {
   return { ref, isComponentVisible, setIsComponentVisible };
 }
 
-const Item = ({ onClick, children, disabled = false, className = "" }) => (
-  <motion.div
+const Item = ({ onClick, children, disabled = false, className = "", ariaLabel = "" }) => (
+  <motion.button
     onClick={onClick}
+    disabled={disabled}
+    aria-label={ariaLabel}
     className={`cursor-pointer hover:bg-gray-600/20 hover:text-white py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-white ${disabled && "opacity-50"
       } ${className}`}
     whileHover={{
@@ -90,7 +92,7 @@ const Item = ({ onClick, children, disabled = false, className = "" }) => (
     whileTap={{ scale: 0.9 }}
   >
     {children}
-  </motion.div>
+  </motion.button>
 );
 
 export const Header = () => {
@@ -194,12 +196,14 @@ export const Header = () => {
 
   return (
     <>
-      <div
+      <header
+        role="banner"
         className="inside-shadow pointer-events-auto  bg-primary-900 text-black border-2 border-gray-700 items-center  flex flex-row-reverse justify-between"
         data-tutorial="header"
       >
         <Tooltip content="Add Component" placement="bottom" arrow={false}>
           <Item
+            ariaLabel="Add Component"
             onClick={() => {
               setShowMenuType("components");
               setShowMenu(true);
@@ -212,6 +216,7 @@ export const Header = () => {
 
         <Tooltip content="Redo" placement="bottom" arrow={false}>
           <Item
+            ariaLabel="Redo"
             disabled={!canRedo}
             onClick={() => {
               actions.history.redo();
@@ -227,6 +232,7 @@ export const Header = () => {
 
         <Tooltip content="Undo" placement="bottom" arrow={false}>
           <Item
+            ariaLabel="Undo"
             disabled={!canUndo}
             onClick={() => {
               actions.history.undo();
@@ -241,7 +247,7 @@ export const Header = () => {
 
         {animate && (
           <Tooltip content="Play Animations" placement="bottom" arrow={false}>
-            <Item onClick={() => { }}>
+            <Item ariaLabel="Play Animations" onClick={() => { }}>
               <TbPlayerPlay />
             </Item>
           </Tooltip>
@@ -253,6 +259,7 @@ export const Header = () => {
           arrow={false}
         >
           <Item
+            ariaLabel={`${showHidden ? "Show" : "Hide"} Hidden Components`}
             onClick={() => {
               const viewport = document.getElementById("viewport");
 
@@ -269,6 +276,7 @@ export const Header = () => {
 
         <Tooltip content={`Edit ${altView}`} placement="bottom" arrow={false}>
           <Item
+            ariaLabel={`Edit ${altView}`}
             onClick={() => {
               setView(altView);
 
@@ -292,6 +300,7 @@ export const Header = () => {
           arrow={false}
         >
           <Item
+            ariaLabel={`${device ? "Disable" : "Enable"} Device View`}
             onClick={() => {
               setDevice(!device);
             }}
@@ -302,6 +311,7 @@ export const Header = () => {
 
         <Tooltip content="Preview" placement="bottom" arrow={false}>
           <Item
+            ariaLabel="Preview"
             onClick={() => {
               toggle();
               setPreview(!preview);
@@ -324,6 +334,7 @@ export const Header = () => {
             />
           ) : (
             <Item
+              ariaLabel="Save"
               disabled={!canUndo || !settings}
               onClick={async () => {
                 if (!canUndo) return;
@@ -340,6 +351,7 @@ export const Header = () => {
 
         <Tooltip content="More Options" placement="bottom" arrow={false}>
           <Item
+            ariaLabel="More Options"
             onClick={() => {
               setShowMenuType(null);
               setShowMenu(!showMenu);
@@ -348,16 +360,19 @@ export const Header = () => {
             <TbMenu2 />
           </Item>
         </Tooltip>
-      </div>
+      </header>
 
       {showMenu && (
-        <div
+        <nav
           ref={ref}
+          role="navigation"
+          aria-label="Editor menu"
           className="pointer-events-auto drop-shadow-2xl overflow-y-auto scrollbar bg-gray-700    gap-3 pt-3 flex flex-col text-white absolute w-full bottom-0 z-50 top-12"
         >
           <button
             onClick={() => setShowMenu(false)}
             className="absolute right-3  "
+            aria-label="Close menu"
           >
             <div className="w-5 hover:text-white text-gray-400 cursor-pointer">
               <Tooltip content="Close" arrow={false}>
@@ -687,7 +702,7 @@ export const Header = () => {
               )}
             </>
           )}
-        </div>
+        </nav>
       )}
     </>
   );

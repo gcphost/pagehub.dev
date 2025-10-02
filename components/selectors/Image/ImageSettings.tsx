@@ -80,7 +80,7 @@ export const ImageSettings = () => {
           propKey="priority"
           propType="component"
           type="checkbox"
-          option=" "
+          option=""
           on="priority"
           cols={true}
           labelHide={true}

@@ -33,6 +33,7 @@ const YoutubeDiv = `
 
 interface EmbedProps extends BaseSelectorProps {
   videoId?: string;
+  title?: string;
 }
 
 const defaultProps: EmbedProps = {
@@ -80,12 +81,14 @@ export const Embed = (props: EmbedProps) => {
       connect(drag(r));
     },
     className: ClassGenerator(props, view, enabled, [], [], preview),
+    role: "region",
+    "aria-label": props.title || "Embedded content",
   };
 
   if (videoId) prop.dangerouslySetInnerHTML = { __html: videoId || "" };
 
   if (enabled) {
-    if (!videoId) prop.children = <TbCode />;
+    if (!videoId) prop.children = <TbCode aria-label="Code icon" />;
     prop["data-bounding-box"] = enabled;
     prop["data-empty-state"] = !videoId;
     prop["node-id"] = id;

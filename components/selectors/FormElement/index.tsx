@@ -69,6 +69,8 @@ export interface FormElementProps extends BaseSelectorProps {
   type?: string;
   placeholder?: string;
   name?: string;
+  required?: boolean;
+  invalid?: boolean;
 }
 
 const defaultProps: FormElementProps = {
@@ -106,7 +108,22 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     type: props.type,
     placeholder: props.placeholder,
     name: props.name,
+    "aria-label": props.placeholder || props.name || `${props.type || 'text'} input`,
+    ...(props.type === "email" && { "aria-describedby": "email-desc" }),
+    ...(props.type === "tel" && { "aria-describedby": "tel-desc" }),
+    ...(props.type === "url" && { "aria-describedby": "url-desc" }),
   };
+
+  // Add required attribute for better accessibility if needed
+  if (props.required) {
+    prop["aria-required"] = "true";
+    prop["required"] = true;
+  }
+
+  // Add invalid state support
+  if (props.invalid) {
+    prop["aria-invalid"] = "true";
+  }
 
   prop["data-border"] = !!(props.root?.border || props.root?.borderColor);
 

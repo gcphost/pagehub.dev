@@ -22,14 +22,14 @@ export const ToolbarSection = ({
   return (
     <>
       {title && (
-        <button id={title} className={classNames} onClick={onClick}>
+        <button id={title} className={classNames} onClick={onClick} aria-label={title}>
           {title}
 
           {propKey && <ToolbarLabel lab={propKey} propKey={propKey} />}
 
           {help && (
             <>
-              <span className="text-xs p-0.5 bg-gray-500 hover:bg-gray-600 cursor-pointer rounded-full group relative">
+              <span className="text-xs p-0.5 bg-gray-500 hover:bg-gray-600 cursor-pointer rounded-full group relative" role="tooltip" aria-label={help}>
                 <TbQuestionMark />
                 <span className="hidden absolute text-sm w-44 left-6 -top-3 group-active:flex group-hover:flex bg-[#222]/80 rounded p-3 font-semibold">
                   {help}
@@ -41,7 +41,7 @@ export const ToolbarSection = ({
       )}
 
       {enabled && (
-        <div className={`grid-cols-${full} gap-3 grid items-end`}>
+        <div className={`grid-cols-${full} gap-3 grid items-end`} role="group" aria-labelledby={title}>
           {children}
         </div>
       )}

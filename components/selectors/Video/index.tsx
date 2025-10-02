@@ -20,13 +20,14 @@ import { VideoSettings } from "./VideoSettings";
 const DynamicYouTube = React.lazy(() => import("react-youtube"));
 
 const YouTube = (props) => (
-  <React.Suspense fallback={<div>Loading...</div>}>
+  <React.Suspense fallback={<div role="status" aria-live="polite">Loading video...</div>}>
     <DynamicYouTube {...props} />
   </React.Suspense>
 );
 
 interface VideoProps extends BaseSelectorProps {
   videoId?: string;
+  title?: string;
 }
 
 const defaultProps: VideoProps = {
@@ -65,6 +66,8 @@ export const Video = (props: VideoProps) => {
       connect(drag(r));
     },
     className: "",
+    role: "region",
+    "aria-label": props.title || videoId ? `Video: ${props.title || videoId}` : "Video player",
     children: videoId ? (
       <YouTube
         className={ClassGenerator(props, view, enabled, [], [], preview)}
@@ -73,9 +76,12 @@ export const Video = (props: VideoProps) => {
           width: "100%",
           height: "100%",
         }}
+        title={props.title || `YouTube video ${videoId}`}
       />
     ) : enabled ? (
-      <TbBrandYoutube />
+      <div className="w-full h-full flex items-center justify-center text-3xl">
+        <TbBrandYoutube aria-label="YouTube icon" />
+      </div>
     ) : null,
   };
 

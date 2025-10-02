@@ -1,5 +1,4 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { TbInputSearch, TbLock, TbSelect, TbTextCaption } from "react-icons/tb";
+import { TbInputSearch, TbSelect, TbTextCaption } from "react-icons/tb";
 import { FormElement } from "../../../selectors/FormElement";
 import { RenderToolComponent } from "./lib";
 
@@ -27,9 +26,6 @@ export const FormElementToolbox = {
           <div className="flex flex-row gap-3 items-center">
             <TbTextCaption /> Textarea
           </div>
-          <Tooltip content="Requires paid upgrade." placement="left">
-            <TbLock />
-          </Tooltip>
         </div>
       }
     />,
@@ -44,9 +40,6 @@ export const FormElementToolbox = {
           <div className="flex flex-row gap-3 items-center">
             <TbInputSearch /> Input
           </div>
-          <Tooltip content="Requires paid upgrade." placement="left">
-            <TbLock />
-          </Tooltip>
         </div>
       }
     />,
@@ -61,9 +54,6 @@ export const FormElementToolbox = {
           <div className="flex flex-row gap-3 items-center">
             <TbSelect /> Select
           </div>
-          <Tooltip content="Requires paid upgrade." placement="left">
-            <TbLock />
-          </Tooltip>
         </div>
       }
     />,

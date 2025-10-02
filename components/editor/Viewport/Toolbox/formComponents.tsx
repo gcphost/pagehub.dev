@@ -1,5 +1,4 @@
-import { Tooltip } from "components/layout/Tooltip";
-import { TbForms, TbLock } from "react-icons/tb";
+import { TbForms } from "react-icons/tb";
 import { Form } from "../../../selectors/Form";
 import { RenderToolComponent } from "./lib";
 
@@ -12,9 +11,6 @@ export const RenderFormComponent = ({ text }) => (
         <div className="flex flex-row gap-3 items-center">
           <TbForms /> {text}
         </div>
-        <Tooltip content="Requires paid upgrade." placement="left">
-          <TbLock />
-        </Tooltip>
       </div>
     }
   />

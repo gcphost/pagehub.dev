@@ -502,6 +502,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
           <Tooltip content="Edit" placement="bottom" arrow={false}>
             <button
               className="p-4 btn text-2xl bg-primary-500/90 cursor-pointer select-none rounded-md text-white"
+              aria-label="Edit page"
               onClick={() =>
                 setOptions((options) => {
                   options.enabled = true;
@@ -524,9 +525,10 @@ export const Viewport: React.FC<any> = ({ children }) => {
       {enabled && !online && <DeviceOffline />}
 
       <div className={activeClass[0]}>
-        <div
+        <main
           id="viewport"
-          role="button"
+          role="main"
+          aria-label="Page canvas"
           onKeyDown={handleKeyDown}
           data-isolated={!!isolated}
           tabIndex={0}
@@ -536,7 +538,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
           }
         >
           {children}
-        </div>
+        </main>
       </div>
     </div>
   );

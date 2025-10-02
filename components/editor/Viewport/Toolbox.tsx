@@ -49,19 +49,19 @@ export const Toolbox = ({ userStyle = null }) => {
 
   const ref = useRef(null);
 
-  const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      setActiveMenu(null);
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setActiveMenu(null);
+      }
+    };
+
     document.addEventListener("click", handleClickOutside, true);
 
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
-  }, [menu.enabled, ref]);
+  }, [menu.enabled, setActiveMenu]);
 
   const parent = menu.parent;
 
@@ -131,6 +131,7 @@ export const Toolbox = ({ userStyle = null }) => {
 
   const iconList = Object.keys(items).map((_, k) => (
     <DelayedMouseEnter
+      as="button"
       delayTime={300}
       key={`icon${k}`}
       variants={subMenuItemVariants}
@@ -145,6 +146,8 @@ export const Toolbox = ({ userStyle = null }) => {
       }}
       className={`btn text-2xl rounded-full bg-primary-500 text-white border  drop-shadow-2xl p-3 cursor-pointer ${activeMenu === k ? " bg-primary-800" : ""
         }`}
+      aria-label={items[_].title}
+      role="button"
     >
       {items[_].icon}
     </DelayedMouseEnter>
@@ -208,7 +211,9 @@ export const Toolbox = ({ userStyle = null }) => {
   return (
     <AnimatePresence>
       {enabled && !preview && (
-        <motion.div
+        <motion.nav
+          role="navigation"
+          aria-label="Component toolbox"
           variants={containerVariants}
           ref={ref}
           key="wrapper"
@@ -217,7 +222,7 @@ export const Toolbox = ({ userStyle = null }) => {
           exit="hidden"
           className={`absolute z-40 ${pos} select-none flex flex-col md:flex-row h-screen items-center pointer-events-none`}
         >
-          <button
+          <div
             id="toolboxWrap"
             onMouseLeave={() => {
               setActiveMenu(null);
@@ -261,8 +266,8 @@ export const Toolbox = ({ userStyle = null }) => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </button>
-        </motion.div>
+          </div>
+        </motion.nav>
       )}
     </AnimatePresence>
   );

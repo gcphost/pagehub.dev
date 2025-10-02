@@ -23,10 +23,12 @@ export const ImageDefault = ({ tab, props }) => {
         setActiveTab(tab);
         // setTimeout(() => document.getElementById("files")?.click(), 50);
       }}
+      className="text-3xl w-full h-full flex items-center justify-center"
+      aria-label="Add image"
     >
-      {props.isLoading && <div>Loading...</div>}
-      {!props.isLoading && !props.loaded && <TbPhoto />}
-      {props.loaded && <TbCheck />}
+      {props.isLoading && <div role="status" aria-live="polite">Loading...</div>}
+      {!props.isLoading && !props.loaded && <TbPhoto aria-label="Photo icon" />}
+      {props.loaded && <TbCheck aria-label="Success" />}
     </button>
   );
 };
@@ -39,6 +41,8 @@ interface ImageProps extends BaseSelectorProps {
   priority?: string;
   fetchPriority?: "high" | "low" | "auto" | "";
   loading?: string;
+  alt?: string;
+  title?: string;
 }
 
 const defaultProps: ImageProps = {
@@ -96,8 +100,9 @@ export const Image = (props: ImageProps) => {
 
   const _imgProp: any = {
     loading: props.loading || "lazy",
-    alt: "",
-    title: "",
+    alt: props.alt || props.title || "",
+    title: props.title || "",
+    role: !props.alt && !props.title ? "presentation" : undefined,
     className: ClassGenerator(
       props,
       view,
@@ -181,6 +186,7 @@ export const Image = (props: ImageProps) => {
   if (props.url) {
     return React.createElement(ele, {
       ...prop,
+      "aria-label": props.alt || props.title || "Image link",
     });
   }
 

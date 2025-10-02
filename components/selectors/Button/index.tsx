@@ -56,6 +56,8 @@ const EditableName = ({ but, ikey, enabled }) => {
       className="flex-1 cursor-text"
       contentEditable={true}
       suppressContentEditableWarning={true}
+      role="textbox"
+      aria-label="Edit button text"
       onInput={debounce((e) => {
         const _buttons = [...buttons];
         _buttons[ikey] = { ..._buttons[ikey] };
@@ -274,7 +276,8 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
         prop = {
           ...prop,
           key,
-          type: but.type || "",
+          type: but.type || "button",
+          "aria-label": but.text || `Button ${key + 1}`,
           ...(but.iconOnly && but.text ? { "aria-label": but.text } : {}),
           onMouseEnter: () => {
             if (enabled) {
