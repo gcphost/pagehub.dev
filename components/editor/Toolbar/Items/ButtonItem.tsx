@@ -96,6 +96,7 @@ const Input = ({ nodeProps, setProp }) => {
                   type="checkbox"
                   label="Icon Only"
                   on={true}
+                  labelHide
                 />
               </ToolbarSection>
 
@@ -137,7 +138,7 @@ const Input = ({ nodeProps, setProp }) => {
       </div>
 
       <button
-        className="p-3 bg-gray-700 border-gray-500 border hover:bg-gray-800 rounded-md w-full"
+        className="btn p-3 w-full"
         onClick={() => {
           const _buttons = [...buttons];
 

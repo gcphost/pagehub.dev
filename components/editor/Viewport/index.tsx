@@ -170,11 +170,13 @@ export const Viewport: React.FC<any> = ({ children }) => {
       e.preventDefault();
       return (e.returnValue = warningText);
     };
+
     const handleBrowseAway = () => {
       if (window.confirm(warningText)) return;
       router.events.emit("routeChangeError");
-      throw new Error("routeChange aborted.");
+      // throw new Error("routeChange aborted.");
     };
+
     window.addEventListener("beforeunload", handleWindowClose);
     router.events.on("routeChangeStart", handleBrowseAway);
     return () => {
@@ -462,7 +464,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       `flex h-screen overflow-hidden flex-row mx-auto w-${enabled ? "[380px]" : "screen"
       } mx-auto bg-gray-200`,
       enabled
-        ? "w-full my-6 rounded-lg overflow-auto scrollbar bg-white"
+        ? "w-full my-6 rounded-lg overflow-auto scrollbar-light bg-white"
         : "w-screen h-screen overflow-auto",
     ],
 
@@ -471,7 +473,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
         ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen bg-gray-200`
         : "w-screen",
       enabled
-        ? "w-full m-1 relative overflow-auto  bg-white"
+        ? "w-full m-1 relative overflow-auto scrollbar-light bg-white"
         : "w-screen h-screen overflow-show",
     ],
   };

@@ -64,7 +64,7 @@ export const IconDialogInput = ({
         }}
         className="input"
       >
-        <div className="pointer-events-none flex gap-3 items-center w-6 h-6 fill-white">
+        <div className="pointer-events-none flex gap-3 items-center w-6 h-6 fill-white mx-auto">
           <ClientIconLoader value={value} />
         </div>
       </button>

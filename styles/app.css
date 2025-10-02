@@ -121,12 +121,12 @@ body {
 }
 
 .scrollbar::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  border-radius: 10px;
+  border-radius: 8px;
   @apply bg-transparent;
 }
 
@@ -138,6 +138,26 @@ body {
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-800;
+}
+
+.scrollbar-light::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-light::-webkit-scrollbar-track {
+  border-radius: 8px;
+  @apply bg-transparent;
+}
+
+.scrollbar-light::-webkit-scrollbar-thumb {
+  @apply bg-gray-700/90;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.scrollbar-light::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
 }
 
 .disable-scrollbars::-webkit-scrollbar,
