@@ -22,7 +22,7 @@ const nunito = Nunito({
 
 const Card = ({ icon, title, description }) => (
   <div className="text-center flex gap-6 flex-col justify-center items-center w-full mb-12 md:mb-0 md:w-1/2">
-    <div className="border border-purple-900 bg-gradient-to-br from-emerald-300 to-cyan-300 rounded-full p-12  text-6xl drop-shadow-xl">
+    <div className="bg-gray-700/50 border border-gray-600 rounded-full p-12 text-6xl shadow-lg backdrop-blur-sm">
       {icon}
     </div>
 
@@ -49,7 +49,7 @@ export const HomePage = () => (
 function Home() {
   return (
     <div className={`bg-gray-800 text-white ${nunito.className}`}>
-      <nav className="p-3 border-gray-200 bg-gradient-to-r from-emerald-300 to-cyan-300 h-20 flex items-center"></nav>
+      <nav className="p-3 border-gray-200 bg-gradient-to-r from-emerald-300 to-cyan-300 h-6 flex items-center"></nav>
 
       <div className=" flex flex-col gap-12 pb-20">
         <div className="container mx-auto ">

@@ -44,6 +44,7 @@ const defaultProps: ContainerProps = {
   canDelete: true,
   canEditName: true,
   isHomePage: false,
+  backgroundFetchPriority: "low",
 };
 
 export const Container = (props: Partial<ContainerProps>) => {

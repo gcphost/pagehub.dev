@@ -48,6 +48,8 @@ const defaultProps: ImageProps = {
   mobile: {},
   tablet: {},
   desktop: {},
+  loading: "lazy",
+  fetchPriority: "low",
 };
 
 export const Image = (props: ImageProps) => {
@@ -93,7 +95,7 @@ export const Image = (props: ImageProps) => {
   prop.style = { ...prop.style, position: "relative" };
 
   const _imgProp: any = {
-    loading: "eager", // or lazy
+    loading: props.loading || "lazy",
     alt: "",
     title: "",
     className: ClassGenerator(
@@ -114,9 +116,7 @@ export const Image = (props: ImageProps) => {
   } else {
     _imgProp.src = getMedialUrl(props);
 
-    if (props.loading) {
-      _imgProp.loading = props.loading;
-    }
+    // Loading attribute is already set above with default fallback
 
     // Add fetchpriority attribute to the img element
     if (props.fetchPriority) {

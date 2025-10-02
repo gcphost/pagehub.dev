@@ -48,6 +48,7 @@ const defaultProps: ContainerProps = {
   },
   tablet: {},
   desktop: {},
+  backgroundFetchPriority: "low",
 };
 
 export const Background = (props: Partial<ContainerProps>) => {

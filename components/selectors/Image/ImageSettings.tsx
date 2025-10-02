@@ -92,9 +92,8 @@ export const ImageSettings = () => {
           type="select"
           label="Loading"
         >
-          <option value="">None</option>
-          <option value="eager">eager</option>
           <option value="lazy">lazy</option>
+          <option value="eager">eager</option>
         </ToolbarItem>
       </ToolbarSection>
       <ToolbarSection
@@ -108,9 +107,9 @@ export const ImageSettings = () => {
           type="select"
           label="Priority"
         >
-          <option value="">Auto</option>
-          <option value="high">High</option>
           <option value="low">Low</option>
+          <option value="high">High</option>
+          <option value="">Auto</option>
         </ToolbarItem>
       </ToolbarSection>
     </TabBody>

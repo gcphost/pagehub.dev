@@ -33,9 +33,9 @@ export const BackgroundSettingsInput = ({ props }) => (
             type="select"
             label="Fetch Priority"
           >
-            <option value="">Auto</option>
-            <option value="high">High</option>
             <option value="low">Low</option>
+            <option value="high">High</option>
+            <option value="">Auto</option>
           </ToolbarItem>
         </ToolbarSection>
 
