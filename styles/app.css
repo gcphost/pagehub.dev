@@ -188,10 +188,6 @@ input[type="range"]::-ms-thumb {
   @apply !w-full;
 }
 
-.h-screen {
-  height: calc(var(--vh) * 100) !important;
-}
-
 [data-isolated="true"] [data-renderer].h-screen {
   @apply !h-full;
 }

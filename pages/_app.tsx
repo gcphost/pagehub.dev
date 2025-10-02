@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { RecoilEnv, RecoilRoot } from "recoil";
 
 import { SessionProvider } from "next-auth/react";
@@ -16,18 +15,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const marketingPages = ['/', '/templates', '/privacy', '/terms', '/page-builder-api'];
   const isMarketingPage = marketingPages.includes(router.pathname);
 
-  useEffect(() => {
-    const setHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
-    };
 
-    setHeight();
-
-    window.addEventListener("resize", setHeight);
-
-    return () => window.removeEventListener("resize", setHeight);
-  }, []);
 
   return (
     <SessionProvider session={session}>
