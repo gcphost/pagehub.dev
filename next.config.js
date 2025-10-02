@@ -8,6 +8,17 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: false,
   basePath: "",
   assetPrefix: "",
+  // Configure SWC to target modern browsers only (no polyfills/transpiling)
+  compiler: {
+    emotion: false,
+  },
+  experimental: {
+    // Use browserslist config for build targets
+    browsersListForSwc: true,
+    // Disable legacy browser support
+    legacyBrowsers: false,
+  },
+  swcMinify: true,
   modularizeImports: {
     'react-icons/tb': {
       transform: 'react-icons/tb/{{member}}',
