@@ -2,7 +2,7 @@ import { ROOT_NODE } from "@craftjs/core";
 import { BaseSelectorProps } from "components/selectors";
 import { parse } from "css-tree";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { atom } from "recoil";
 import { getCdnUrl } from "./cdn";
 import { TailwindStyles } from "./tailwind";
@@ -359,26 +359,33 @@ export const applyBackgroundImage = (
       prop.style = prop.style || {};
       prop.style.backgroundImage = `url(${_imgProp.src})`;
 
-      // Handle background image priority/preloading
-      if (props.backgroundPriority && typeof document !== "undefined") {
-        const link = document.createElement("link");
+      // Add a hidden high-priority img element to preload the image for LCP optimization
+      // This makes the image discoverable in the initial HTML while keeping CSS background-image
+      if (props.backgroundPriority) {
+        const existingChildren = prop.children;
 
-        link.rel = "preload";
-        link.href = _imgProp.src;
-        link.as = "image";
+        const preloadImageElement = React.createElement("img", {
+          src: _imgProp.src,
+          alt: "",
+          loading: "eager",
+          fetchpriority: props.backgroundFetchPriority || "high",
+          style: {
+            position: "absolute",
+            width: "1px",
+            height: "1px",
+            opacity: 0,
+            pointerEvents: "none",
+            zIndex: -9999,
+          },
+          "aria-hidden": "true",
+        });
 
-        // Apply fetchPriority to preload link if set
-        if (props.backgroundFetchPriority) {
-          link.fetchPriority = props.backgroundFetchPriority as
-            | "high"
-            | "low"
-            | "auto";
-        }
-
-        const preloadLink = document.querySelector(
-          `link[rel="preload"][href="${link.href}"][as="image"]`
+        prop.children = React.createElement(
+          React.Fragment,
+          {},
+          preloadImageElement,
+          existingChildren
         );
-        if (!preloadLink) document.head.appendChild(link);
       }
     }
   }
