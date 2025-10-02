@@ -51,7 +51,7 @@ function Home() {
     <div className={`bg-gray-800 text-white ${nunito.className}`}>
       <nav className="p-3 border-gray-200 bg-gradient-to-r from-emerald-300 to-cyan-300 h-6 flex items-center"></nav>
 
-      <div className=" flex flex-col gap-12 pb-20">
+      <div className=" flex flex-col gap-12 lg:gap-24 pb-20">
         <div className="container mx-auto ">
           <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
             <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
@@ -122,7 +122,7 @@ function Home() {
         </div>
 
         <div className="text-center text-5xl md:w-1/2 mx-auto leading-relaxed">
-          No credit card required.
+          Start building today.
         </div>
 
         <div className="container mx-auto flex justify-center">

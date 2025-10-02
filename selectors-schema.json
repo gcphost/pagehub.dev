@@ -1,0 +1,484 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PageHub Selector Components Schema",
+  "version": "1.0.0",
+  "definitions": {
+    "rootStyleProps": {
+      "description": "Root-level styling properties",
+      "properties": {
+        "fontFamily": "string",
+        "style": "string (custom CSS)",
+        "background": "string (Tailwind bg-* class)",
+        "color": "string (Tailwind text-* class)",
+        "bgOpacity": "string (Tailwind bg-opacity-* class)",
+        "backgroundGradient": "string (Tailwind gradient direction)",
+        "backgroundGradientTo": "string (Tailwind to-* class)",
+        "backgroundGradientFrom": "string (Tailwind from-* class)",
+        "border": "string (Tailwind border-* class)",
+        "borderColor": "string (Tailwind border-* color)",
+        "borderTop": "string",
+        "borderBottom": "string",
+        "borderLeft": "string",
+        "borderRight": "string",
+        "radius": "string (Tailwind rounded-* class)",
+        "shadow": "string (Tailwind shadow-* class)",
+        "animation": "string",
+        "pattern": "object",
+        "patternVerticalPosition": "string",
+        "patternHorizontalPosition": "string",
+        "patternStroke": "string",
+        "patternZoom": "string",
+        "patternColorA": "string",
+        "patternAngle": "string",
+        "patternColorB": "string",
+        "patternSpacingX": "string",
+        "patternSpacingY": "string",
+        "preset": "string",
+        "presetPadding": "string",
+        "presetMaxWidth": "string",
+        "order": "string (Tailwind order-* class)"
+      }
+    },
+    "baseStyleProps": {
+      "description": "Responsive styling properties for mobile/tablet/desktop/hover",
+      "properties": {
+        "flexDirection": "string (flex-col, flex-row, etc.)",
+        "flexBase": "string",
+        "alignItems": "string (items-* class)",
+        "justifyContent": "string (justify-* class)",
+        "flexGrow": "string",
+        "width": "string (w-* class)",
+        "maxWidth": "string (max-w-* class)",
+        "maxHeight": "string (max-h-* class)",
+        "minWidth": "string (min-w-* class)",
+        "minHeight": "string (min-h-* class)",
+        "lineHeight": "string (leading-* class)",
+        "tracking": "string (tracking-* class)",
+        "height": "string (h-* class)",
+        "p": "string (p-* class)",
+        "m": "string (m-* class)",
+        "px": "string (px-* class)",
+        "py": "string (py-* class)",
+        "mx": "string (mx-* class)",
+        "my": "string (my-* class)",
+        "ml": "string (ml-* class)",
+        "mt": "string (mt-* class)",
+        "mr": "string (mr-* class)",
+        "mb": "string (mb-* class)",
+        "pl": "string (pl-* class)",
+        "pr": "string (pr-* class)",
+        "pt": "string (pt-* class)",
+        "pb": "string (pb-* class)",
+        "display": "string (flex, block, grid, etc.)",
+        "gap": "string (gap-* class)",
+        "fontSize": "string (text-* size)",
+        "fontWeight": "string (font-* class)",
+        "objectFit": "string (object-* class)",
+        "transform": "string",
+        "wordBreak": "string",
+        "textOverflow": "string",
+        "indent": "string",
+        "textDecoration": "string",
+        "backgroundRepeat": "string",
+        "backgroundSize": "string",
+        "backgroundAttachment": "string",
+        "backgroundOrigin": "string",
+        "backgroundPosition": "string",
+        "overflow": "string (overflow-* class)",
+        "cursor": "string (cursor-* class)",
+        "position": "string (relative, absolute, etc.)"
+      }
+    },
+    "commonEditorProps": {
+      "description": "Common props shared across editable components",
+      "properties": {
+        "canDelete": "boolean",
+        "canEditName": "boolean",
+        "className": "array of strings"
+      }
+    },
+    "linkProps": {
+      "description": "Props for components that can be links",
+      "properties": {
+        "url": "string",
+        "urlTarget": "string (_blank, _self, etc.)"
+      }
+    },
+    "backgroundImageProps": {
+      "description": "Props for components with background images",
+      "properties": {
+        "backgroundImage": "string (URL or path)",
+        "backgroundImageType": "string (image type)",
+        "backgroundPriority": "string",
+        "backgroundFetchPriority": "string (high | low | auto)"
+      }
+    },
+    "responsiveProps": {
+      "description": "Responsive breakpoint props",
+      "properties": {
+        "root": { "$ref": "#/definitions/rootStyleProps" },
+        "mobile": { "$ref": "#/definitions/baseStyleProps" },
+        "tablet": { "$ref": "#/definitions/baseStyleProps" },
+        "desktop": { "$ref": "#/definitions/baseStyleProps" },
+        "hover": { "$ref": "#/definitions/baseStyleProps" }
+      }
+    }
+  },
+  "selectors": {
+    "Background": {
+      "description": "Main background container for the page, cannot be dragged or deleted",
+      "extends": [
+        "responsiveProps",
+        "backgroundImageProps",
+        "commonEditorProps"
+      ],
+      "specificProps": {
+        "pallet": "array",
+        "header": "string (custom HTML for <head>)",
+        "footer": "string (custom HTML for end of <body>)",
+        "pageTitle": "string",
+        "pageDescription": "string",
+        "ico": "string (favicon data)",
+        "icoType": "string",
+        "icoContent": "string"
+      }
+    },
+    "Container": {
+      "description": "Flexible container component that can hold other elements",
+      "extends": [
+        "responsiveProps",
+        "backgroundImageProps",
+        "commonEditorProps",
+        "linkProps"
+      ],
+      "specificProps": {
+        "type": "string (container | page | form | imageContainer | heroContainer)",
+        "anchor": "string (id for anchor links)",
+        "action": "string (form action URL)",
+        "method": "string (GET | POST)",
+        "onSubmit": "function",
+        "target": "string",
+        "id": "string",
+        "isHomePage": "boolean"
+      },
+      "notes": "Supports root.hover.border* properties for hover effects"
+    },
+    "Text": {
+      "description": "Text component with rich text editing capabilities",
+      "extends": ["commonEditorProps", "linkProps"],
+      "specificProps": {
+        "text": "string (HTML content)",
+        "tagName": "string (div | h1 | h2 | p | span | Textfit)"
+      },
+      "supports": {
+        "root": [
+          "color",
+          "shadow",
+          "fontFamily",
+          "style",
+          "animation",
+          "preset"
+        ],
+        "mobile": [
+          "fontSize",
+          "fontWeight",
+          "lineHeight",
+          "tracking",
+          "width",
+          "maxWidth",
+          "mt",
+          "mb",
+          "ml",
+          "mr",
+          "pt",
+          "pb",
+          "pl",
+          "pr",
+          "px",
+          "py",
+          "mx",
+          "my",
+          "display",
+          "textDecoration",
+          "wordBreak",
+          "textOverflow",
+          "indent"
+        ],
+        "tablet": ["*"],
+        "desktop": ["*"],
+        "hover": ["color"]
+      }
+    },
+    "Button": {
+      "description": "Button component that can display one or more buttons with icons",
+      "extends": ["commonEditorProps", "backgroundImageProps"],
+      "specificProps": {
+        "buttons": "array<{ text, url, icon, type, onClick, background, color, iconOnly }>",
+        "flexDirection": "string",
+        "alignItems": "string",
+        "justifyContent": "string",
+        "gap": "string",
+        "display": "string",
+        "iconPosition": "string (left | right)",
+        "iconSize": "string",
+        "iconFontSize": "string",
+        "iconColor": "string",
+        "iconGap": "string",
+        "iconShadow": "string",
+        "clickType": "string (click | hover)",
+        "clickValue": "string (target element id)",
+        "clickDirection": "string (show | hide)",
+        "button": "object (flex layout props for individual buttons)"
+      },
+      "supports": {
+        "root": [
+          "background",
+          "color",
+          "radius",
+          "shadow",
+          "border",
+          "borderColor",
+          "backgroundGradient",
+          "backgroundGradientTo",
+          "backgroundGradientFrom",
+          "fontFamily",
+          "animation",
+          "pattern",
+          "pattern*"
+        ],
+        "mobile": ["width", "fontSize", "fontWeight", "px", "py"],
+        "tablet": ["*"],
+        "desktop": ["*"],
+        "hover": ["background", "color", "borderColor", "opacity"]
+      }
+    },
+    "Image": {
+      "description": "Image component with support for regular images and SVG",
+      "extends": ["commonEditorProps", "linkProps"],
+      "specificProps": {
+        "videoId": "string",
+        "type": "string (img | svg)",
+        "content": "string (SVG content)",
+        "priority": "string",
+        "fetchPriority": "string (high | low | auto)",
+        "loading": "string (lazy | eager)"
+      },
+      "supports": {
+        "root": ["style", "animation"],
+        "mobile": ["objectFit", "objectPosition", "radius", "width", "height"],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      }
+    },
+    "Video": {
+      "description": "Video component with YouTube integration",
+      "extends": ["commonEditorProps"],
+      "specificProps": {
+        "videoId": "string (YouTube video ID)"
+      },
+      "supports": {
+        "root": ["animation"],
+        "mobile": ["*"],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      }
+    },
+    "Divider": {
+      "description": "Horizontal divider line component",
+      "extends": ["commonEditorProps", "linkProps"],
+      "specificProps": {
+        "showName": "string"
+      },
+      "supports": {
+        "root": ["animation"],
+        "mobile": [
+          "width",
+          "height",
+          "border",
+          "borderColor",
+          "mt",
+          "mb",
+          "ml",
+          "mr"
+        ],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      }
+    },
+    "Embed": {
+      "description": "Embed component for custom HTML/iframe content",
+      "extends": ["commonEditorProps"],
+      "specificProps": {
+        "videoId": "string (HTML/iframe content to embed)"
+      },
+      "supports": {
+        "root": ["animation"],
+        "mobile": ["width", "height", "display"],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      }
+    },
+    "Form": {
+      "description": "Form container component with submission handling",
+      "extends": [
+        "responsiveProps",
+        "backgroundImageProps",
+        "commonEditorProps"
+      ],
+      "specificProps": {
+        "type": "string (iframe | default)",
+        "action": "string (form action URL)",
+        "method": "string (GET | POST)",
+        "mailto": "string (email for submissions)",
+        "formName": "string",
+        "loading": "string (loading message text)",
+        "view": "string (loading | loaded | default)",
+        "submissions": "array"
+      }
+    },
+    "FormElement": {
+      "description": "Form input element (text, email, textarea, etc.)",
+      "extends": ["commonEditorProps"],
+      "specificProps": {
+        "type": "string (text | textarea | email | password | url | tel | date | datetime-local | radio | checkbox | reset | hidden | color | month | number | range | search | time | week)",
+        "placeholder": "string",
+        "name": "string (form field name)"
+      },
+      "supports": {
+        "root": [
+          "color",
+          "background",
+          "border",
+          "borderColor",
+          "radius",
+          "animation"
+        ],
+        "mobile": ["width", "height", "fontSize", "px", "py"],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      }
+    }
+  },
+  "usage": {
+    "description": "How to read this schema",
+    "extends": "Components inherit all properties from the definitions they extend. For example, 'Container' extends 'responsiveProps', so it has root, mobile, tablet, desktop, and hover objects with all their properties.",
+    "supports": "When a component uses 'supports', it means only the listed properties from that category are available. Use '*' to indicate all properties from that category are available.",
+    "wildcards": {
+      "pattern*": "All pattern-related properties (patternVerticalPosition, patternHorizontalPosition, etc.)"
+    },
+    "examples": {
+      "Container": {
+        "description": "Container with full responsive props",
+        "props": {
+          "type": "container",
+          "root": {
+            "background": "bg-blue-500",
+            "color": "text-white",
+            "radius": "rounded-lg"
+          },
+          "mobile": {
+            "flexDirection": "flex-col",
+            "px": "px-4",
+            "py": "py-6",
+            "gap": "gap-3"
+          },
+          "desktop": {
+            "flexDirection": "flex-row",
+            "px": "px-12",
+            "py": "py-12",
+            "gap": "gap-6"
+          }
+        }
+      },
+      "Text": {
+        "description": "Text with preset and custom styles",
+        "props": {
+          "text": "<p>Hello World</p>",
+          "tagName": "h1",
+          "root": {
+            "preset": "h1",
+            "color": "text-gray-900"
+          },
+          "mobile": {
+            "fontSize": "text-3xl"
+          },
+          "desktop": {
+            "fontSize": "text-5xl"
+          }
+        }
+      },
+      "Button": {
+        "description": "Button with multiple actions and icons",
+        "props": {
+          "buttons": [
+            {
+              "text": "Get Started",
+              "url": "/signup",
+              "icon": "FaArrowRight"
+            },
+            {
+              "text": "Learn More",
+              "url": "/about"
+            }
+          ],
+          "flexDirection": "flex-row",
+          "gap": "gap-4",
+          "iconPosition": "right",
+          "root": {
+            "background": "bg-blue-600",
+            "color": "text-white",
+            "radius": "rounded-full"
+          },
+          "mobile": {
+            "px": "px-6",
+            "py": "py-3"
+          },
+          "hover": {
+            "background": "bg-blue-700"
+          }
+        }
+      }
+    }
+  },
+  "reference": {
+    "formElementTypes": [
+      "text",
+      "textarea",
+      "email",
+      "password",
+      "url",
+      "tel",
+      "date",
+      "datetime-local",
+      "radio",
+      "checkbox",
+      "reset",
+      "hidden",
+      "color",
+      "month",
+      "number",
+      "range",
+      "search",
+      "time",
+      "week"
+    ],
+    "containerTypes": [
+      "container",
+      "page",
+      "form",
+      "imageContainer",
+      "heroContainer"
+    ],
+    "imageTypes": ["img", "svg"],
+    "fetchPriorities": ["high", "low", "auto"],
+    "tailwindReferences": {
+      "spacing": "Uses Tailwind spacing scale (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64, etc.)",
+      "colors": "Uses Tailwind color palette (slate, gray, zinc, neutral, stone, red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose)",
+      "breakpoints": {
+        "mobile": "default (no prefix)",
+        "tablet": "md: prefix (768px+)",
+        "desktop": "lg: prefix (1024px+)"
+      }
+    }
+  }
+}

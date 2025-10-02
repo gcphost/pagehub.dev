@@ -257,7 +257,7 @@ export async function getStaticProps({ params }) {
       revalidate: 60,
     };
   }
-  return { 
+  return {
     props: {},
     // Enable ISR for 404 pages too
     revalidate: 60,
