@@ -906,6 +906,31 @@ TailwindStyles.backgroundOpacity = genSizes("bg", TailwindStyles.opacity);
 export const AllStyles = [];
 Object.keys(TailwindStyles).map((_) => AllStyles.push(...TailwindStyles[_]));
 
+// Add custom color classes (primary, secondary, accent) with all shades
+const customColors = ["primary", "secondary", "accent"];
+const shades = [
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "950",
+  "DEFAULT",
+];
+customColors.forEach((color) => {
+  shades.forEach((shade) => {
+    const suffix = shade === "DEFAULT" ? "" : `-${shade}`;
+    AllStyles.push(`bg-${color}${suffix}`);
+    AllStyles.push(`text-${color}${suffix}`);
+    AllStyles.push(`border-${color}${suffix}`);
+  });
+});
+
 export const StyleGuide = [
   {
     prop: "fontSizes",

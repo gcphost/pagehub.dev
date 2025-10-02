@@ -425,7 +425,7 @@ export const Header = () => {
 
               <hr className="border-b border-gray-500 -mx-3 mb-6" />
 
-              {settings?.submissions.length ? (
+              {settings?.submissions?.length ? (
                 <div className="flex flex-col gap-6">
                   {settings?.submissions.map((submission, _key) => {
                     const items = Object.keys(submission.data);
@@ -498,7 +498,7 @@ export const Header = () => {
                     <TbFilePlus /> New Builder
                   </Link>
 
-                  {settings?.submissions.length ? (
+                  {settings?.submissions?.length ? (
                     <button
                       onClick={() => {
                         setShowMenu(true);

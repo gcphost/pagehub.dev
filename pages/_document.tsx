@@ -16,8 +16,8 @@ export default class MyDocument extends Document {
             `}
           </Script>
 
-          {/* Move Tailwind to lazyOnload - it doesn't need to block initial render */}
-          <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
+
+          <Script src="/tailwind-cdn.js" strategy="beforeInteractive" />
 
           {/* Preconnect to Google Fonts with crossorigin */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
