@@ -26,12 +26,23 @@ const TenantSchema = new mongoose.Schema(
       fetchPage: String,
       fetchPageList: String,
     },
+    authToken: { type: String, required: true, unique: true }, // Token PageHub sends to verify requests
   },
   { timestamps: true }
 );
 
 // Index domains array for fast lookups
 TenantSchema.index({ domains: 1 });
+
+// Generate auth token before saving if not provided
+TenantSchema.pre('save', function (next) {
+  if (!this.authToken) {
+    // Generate a secure random token (32 bytes = 64 hex characters)
+    const crypto = require('crypto');
+    this.authToken = 'ph_' + crypto.randomBytes(32).toString('hex');
+  }
+  next();
+});
 
 const Tenant = mongoose.models.Tenant || mongoose.model("Tenant", TenantSchema);
 

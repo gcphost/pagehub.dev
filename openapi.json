@@ -18,7 +18,7 @@
     "/webhook/onLoad/{pageId}": {
       "get": {
         "summary": "On Load Webhook",
-        "description": "Called when a page is loaded in the PageHub editor. This webhook should return the page document structure for editing. The pageId parameter may be omitted or null for the homepage.",
+        "description": "Called when a page is loaded in the PageHub editor. This webhook should return the page document structure for editing. The pageId parameter may be omitted or null for the homepage. Receives authentication token from query parameter and/or x-pagehub-token header.",
         "operationId": "onLoadWebhook",
         "tags": ["Webhooks"],
         "parameters": [
@@ -31,6 +31,36 @@
               "type": "string",
               "nullable": true,
               "example": "my-page-123"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Authentication token passed from the client application. Your application redirects to PageHub with this token to authenticate the user.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+            }
+          },
+          {
+            "name": "x-pagehub-token",
+            "in": "header",
+            "description": "Authentication token in header format (same as query param, provided for convenience)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+            }
+          },
+          {
+            "name": "x-pagehub-auth",
+            "in": "header",
+            "description": "PageHub authentication token to verify the request came from PageHub. This is your tenant's unique auth token that PageHub sends with every webhook call.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "ph_1234567890abcdef..."
             }
           }
         ],
@@ -55,6 +85,7 @@
                 },
                 "example": {
                   "document": "TlpoOTFBWSZTWYbGZ...",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjMiLCJwYWdlSWQiOiJteS1wYWdlLTEyMyIsImV4cCI6MTY0MDk5NTIwMH0.example",
                   "message": "Hello World from test webhook! Page ID: my-page-123",
                   "timestamp": "2025-10-01T12:00:00.000Z"
                 }
@@ -87,7 +118,7 @@
     "/webhook/onSave/{pageId}": {
       "post": {
         "summary": "On Save Webhook",
-        "description": "Called when a page is saved in the PageHub editor. This webhook receives the page document and metadata, and should persist the changes. It must return the saved page details.",
+        "description": "Called when a page is saved in the PageHub editor. This webhook receives the page document and metadata, and should persist the changes. It must return the saved page details. If a token was returned from onLoad, it will be included in the x-pagehub-token header and request body for authentication.",
         "operationId": "onSaveWebhook",
         "tags": ["Webhooks"],
         "parameters": [
@@ -99,6 +130,26 @@
             "schema": {
               "type": "string",
               "example": "my-page-123"
+            }
+          },
+          {
+            "name": "x-pagehub-token",
+            "in": "header",
+            "description": "Session token returned from onLoad webhook, automatically forwarded for authentication",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+            }
+          },
+          {
+            "name": "x-pagehub-auth",
+            "in": "header",
+            "description": "PageHub authentication token to verify the request came from PageHub. This is your tenant's unique auth token that PageHub sends with every webhook call.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "ph_1234567890abcdef..."
             }
           }
         ],
@@ -329,6 +380,10 @@
             "type": "string",
             "description": "The page document structure, compressed with lzutf8 and base64 encoded. This should be a JSON object containing the page tree structure (ROOT, containers, components, etc.)."
           },
+          "token": {
+            "type": "string",
+            "description": "Optional session token to be used for subsequent save operations. This token will be automatically included in onSave webhook calls. Use this to maintain authentication state between load and save operations."
+          },
           "message": {
             "type": "string",
             "description": "Optional message for debugging or logging purposes"
@@ -524,19 +579,47 @@
     }
   },
   "x-authentication-forwarding": {
-    "description": "Authentication Headers Forwarded by PageHub",
-    "headers": [
-      "authorization",
-      "x-api-key",
-      "x-auth-token",
-      "x-access-token",
-      "cookie"
-    ],
-    "notes": [
-      "PageHub automatically forwards authentication headers from the original request to your webhook endpoints",
-      "This allows you to validate requests and ensure they come from authenticated users",
-      "You can implement any authentication mechanism supported by these headers"
-    ]
+    "description": "Authentication System for PageHub Webhooks",
+    "pagehubAuth": {
+      "description": "PageHub server-to-server authentication (required for all webhooks)",
+      "header": "x-pagehub-auth",
+      "details": [
+        "Every webhook call includes your tenant's unique auth token in the x-pagehub-auth header",
+        "This token is generated when your tenant is created and never changes",
+        "Verify this token on your webhook endpoints to ensure requests came from PageHub",
+        "Example: ph_1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+        "Store this token securely when you receive it (visible in your tenant configuration)"
+      ]
+    },
+    "tokenBasedAuth": {
+      "description": "Token-based authentication flow for user sessions (recommended for cross-domain integration)",
+      "flow": [
+        "1. Your application redirects to PageHub with a token: https://tenant.pagehub.dev/build/page-123?token=YOUR_TOKEN",
+        "2. PageHub calls your onLoad webhook with token in query param and x-pagehub-token header",
+        "3. Your onLoad webhook validates the token and returns page document + new session token",
+        "4. PageHub stores the session token and automatically includes it in all onSave webhook calls",
+        "5. Your onSave webhook validates the session token and saves the page"
+      ],
+      "headers": {
+        "x-pagehub-token": "Session token automatically forwarded to webhook endpoints",
+        "x-pagehub-auth": "PageHub authentication token (proves request came from PageHub)"
+      }
+    },
+    "legacyAuth": {
+      "description": "Legacy authentication header forwarding (backward compatibility)",
+      "headers": [
+        "authorization",
+        "x-api-key",
+        "x-auth-token",
+        "x-access-token",
+        "cookie"
+      ],
+      "notes": [
+        "PageHub forwards these headers from the original request when available",
+        "Note: In cross-domain scenarios, cookies and auth headers are not sent by browsers",
+        "Token-based auth is recommended for reliable cross-domain authentication"
+      ]
+    }
   },
   "x-document-format": {
     "description": "Page Document Format",

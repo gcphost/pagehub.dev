@@ -98,7 +98,7 @@ export const DeleteMedia = async (mediaId, settings) => {
   }
 };
 
-export const SaveToServer = async (json, draft, settings, setSettings) => {
+export const SaveToServer = async (json, draft, settings, setSettings, sessionToken = null) => {
   const content = lz.encodeBase64(lz.compress(json));
 
   localStorage.setItem("draft", content);
@@ -111,13 +111,25 @@ export const SaveToServer = async (json, draft, settings, setSettings) => {
     r.draft = content;
   } else r.content = content;
 
+  // Include sessionToken if provided
+  if (sessionToken) {
+    r.sessionToken = sessionToken;
+  }
+
   console.info("Saving...");
+  const headers: any = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  };
+
+  // Also send token in header for redundancy
+  if (sessionToken) {
+    headers['x-pagehub-token'] = sessionToken;
+  }
+
   const res = await fetch("/api/save", {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify(r),
   });
 

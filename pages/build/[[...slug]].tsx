@@ -13,6 +13,7 @@ import debounce from "lodash.debounce";
 import lz from "lzutf8";
 import { NextSeo } from "next-seo";
 import { useSetRecoilState } from "recoil";
+import { SessionTokenAtom } from "utils/atoms";
 import { siteDescription, siteTitle } from "utils/lib";
 import { templates } from "utils/templates";
 
@@ -30,9 +31,10 @@ import { Video } from "../../components/selectors/Video";
 import { useSetTenant } from "../../utils/tenantStore";
 import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
 
-function App({ data, slug, result, session, tenant }) {
+function App({ data, slug, result, session, tenant, sessionToken }) {
   data = lz.decompress(lz.decodeBase64(data));
   const setTenant = useSetTenant();
+  const setSessionToken = useSetRecoilState(SessionTokenAtom);
   // Use tenant prop directly to avoid delay from client-side store
   const tenantSiteTitle = tenant?.settings?.siteTitle || tenant?.name || null;
 
@@ -42,6 +44,13 @@ function App({ data, slug, result, session, tenant }) {
       setTenant(tenant);
     }
   }, [tenant, setTenant]);
+
+  // Set session token for authenticated saves
+  useEffect(() => {
+    if (sessionToken) {
+      setSessionToken(sessionToken);
+    }
+  }, [sessionToken, setSessionToken]);
 
   if (data) {
     try {
@@ -255,6 +264,10 @@ export async function getServerSideProps({ req, query }) {
   let json = null;
   let result = null;
   let tenant = null;
+  let sessionToken = null;
+
+  // Extract token from query params (for auth)
+  const incomingToken = query.token as string | undefined;
 
   // Check for data parameter in query string (fallback for direct URL usage)
   if (!data && query.data) {
@@ -279,10 +292,16 @@ export async function getServerSideProps({ req, query }) {
           query,
           method: 'GET',
           pageId,
+          token: incomingToken, // Pass the token to the webhook
         });
 
         if (webhookData?.document) {
           data = webhookData.document;
+        }
+
+        // Store the returned token for use in saves
+        if (webhookData?.token) {
+          sessionToken = webhookData.token;
         }
       }
 
@@ -334,6 +353,7 @@ export async function getServerSideProps({ req, query }) {
       domain: process.env.DOMAIN,
       result,
       tenant,
+      sessionToken: sessionToken || null, // Token for subsequent saves
     }, // will be passed to the page component as props
   };
 }

@@ -147,14 +147,18 @@ export default async function api(req, res) {
     if (tenant?.webhooks?.onSave) {
       console.log("Tenant has onSave webhook, calling instead of internal save");
 
-      const { _id, content, draft } = req.body;
+      const { _id, content, draft, sessionToken } = req.body;
       const document = content || draft;
       const isDraft = !!draft;
+
+      // Extract token from body or header
+      const token = sessionToken || req.headers['x-pagehub-token'];
 
       console.log("Save request body:", {
         _id: _id,
         hasContent: !!content,
         hasDraft: !!draft,
+        hasToken: !!token,
         bodyKeys: Object.keys(req.body)
       });
 
@@ -181,6 +185,7 @@ export default async function api(req, res) {
           timestamp: new Date().toISOString(),
         },
         pageId,
+        token, // Pass the token to the webhook
       });
 
       if (webhookResult) {

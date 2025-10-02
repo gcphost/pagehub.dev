@@ -36,8 +36,8 @@ import {
   TbUpload,
   TbX,
 } from "react-icons/tb";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { SettingsAtom } from "utils/atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { SessionTokenAtom, SettingsAtom } from "utils/atoms";
 import { getAltView } from "utils/craft";
 import {
   LastctiveAtom,
@@ -184,6 +184,7 @@ export const Header = () => {
 
   const animate = false;
   const [settings, setSettings] = useRecoilState(SettingsAtom);
+  const sessionToken = useRecoilValue(SessionTokenAtom);
 
   const [sideBarLeft, setSideBarLeft] = useRecoilState(SideBarAtom);
 
@@ -317,7 +318,7 @@ export const Header = () => {
               onClick={async () => {
                 if (!canUndo) return;
                 const json = query.serialize();
-                await SaveToServer(json, true, settings, setSettings);
+                await SaveToServer(json, true, settings, setSettings, sessionToken);
               }}
               disabled={!canUndo || !settings}
             />

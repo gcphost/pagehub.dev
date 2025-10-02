@@ -4,8 +4,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { FaCheck, FaCircle } from "react-icons/fa";
 import { TbCheck, TbLock, TbLogin, TbLogout, TbX } from "react-icons/tb";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { SettingsAtom } from "utils/atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { SessionTokenAtom, SettingsAtom } from "utils/atoms";
 import { popupCenter } from "utils/lib";
 import { useTenant } from "utils/tenantStore";
 import { UnsavedChangesAtom } from ".";
@@ -13,6 +13,7 @@ import { SaveToServer } from "./lib";
 
 export const DomainSettings = () => {
   const [settings, setSettings] = useRecoilState(SettingsAtom);
+  const sessionToken = useRecoilValue(SessionTokenAtom);
   const { data: session, status } = useSession();
 
   // Check if this is a tenant
@@ -75,7 +76,7 @@ export const DomainSettings = () => {
     // setDialogOpen(false);
 
     if (publishType !== "draft") {
-      await SaveToServer(query.serialize(), false, result, setSettings);
+      await SaveToServer(query.serialize(), false, result, setSettings, sessionToken);
       setUnsavedChanged(false);
     }
 

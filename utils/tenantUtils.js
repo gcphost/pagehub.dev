@@ -142,6 +142,7 @@ export const loadTenantByDomain = async (domain) => {
  * @param {string} [options.method='GET'] - HTTP method (GET or POST)
  * @param {Object} [options.body] - Body data for POST requests
  * @param {string} [options.pageId] - Optional page ID to append to webhook URL
+ * @param {string} [options.token] - Authentication token to pass to webhook
  * @returns {Object|null} Webhook response data or null if webhook fails
  */
 export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
@@ -155,14 +156,27 @@ export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
     method = 'GET',
     body,
     pageId,
+    token,
   } = options;
 
   try {
     const webhookBaseUrl = tenant.webhooks[webhookType];
     const webhookUrl = pageId ? `${webhookBaseUrl}/${pageId}` : webhookBaseUrl;
 
-    // Extract authentication headers from request (if available)
+    // Build headers
     const headers = {};
+
+    // Add PageHub's auth token to verify the request came from us
+    if (tenant.authToken) {
+      headers['x-pagehub-auth'] = tenant.authToken;
+    }
+
+    // Add user's session token if provided
+    if (token) {
+      headers['x-pagehub-token'] = token;
+    }
+
+    // Also extract any existing auth headers from request (backward compatibility)
     const authHeaders = [
       'authorization',
       'x-api-key',
@@ -184,10 +198,19 @@ export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
       headers['content-type'] = 'application/json';
     }
 
+    // Build query string with token if provided (for GET requests)
+    let finalWebhookUrl = webhookUrl;
+    if (token && method === 'GET') {
+      const url = new URL(webhookUrl);
+      url.searchParams.set('token', token);
+      finalWebhookUrl = url.toString();
+    }
+
     console.log(`Calling ${webhookType} webhook:`, {
-      webhookUrl,
+      webhookUrl: finalWebhookUrl,
       method,
       pageId,
+      hasToken: !!token,
       queryKeys: query ? Object.keys(query) : [],
       headerKeys: Object.keys(headers),
     });
@@ -201,7 +224,7 @@ export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
       fetchOptions.body = JSON.stringify(body);
     }
 
-    const webhookResponse = await fetch(webhookUrl, fetchOptions);
+    const webhookResponse = await fetch(finalWebhookUrl, fetchOptions);
 
     if (webhookResponse.ok) {
       const webhookData = await webhookResponse.json();
