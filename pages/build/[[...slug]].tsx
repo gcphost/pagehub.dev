@@ -17,6 +17,9 @@ import { SessionTokenAtom } from "utils/atoms";
 import { siteDescription, siteTitle } from "utils/lib";
 import { templates } from "utils/templates";
 
+// Custom template data - set to null to use default JSX template
+const CUSTOM_TEMPLATE_DATA = "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"
+
 import { RenderNodeNewer } from "components/editor/RenderNodeNewer";
 import { Toolbar } from "components/editor/Toolbar";
 
@@ -34,7 +37,8 @@ import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
 
 
 function App({ data, slug, result, session, tenant, sessionToken }) {
-  data = data ? lz.decompress(lz.decodeBase64(data)) : null;
+  console.log({ data });
+  data = data ? lz.decompress(lz.decodeBase64(data)) : lz.decompress(lz.decodeBase64(CUSTOM_TEMPLATE_DATA));
   const setTenant = useSetTenant();
   const setSessionToken = useSetRecoilState(SessionTokenAtom);
   // Use tenant prop directly to avoid delay from client-side store
@@ -234,8 +238,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                       justifyContent: "justify-center",
                       alignItems: "items-center",
                       width: "w-full",
-                      height: "h-screen",
-                      overflow: "overflow-auto",
                       px: "px-6",
                       py: "py-12",
                       gap: "gap-6",

@@ -336,7 +336,7 @@ export const GapDragControl = () => {
 
   const shouldShow = (gapHoverInfo?.show || isDragging) && gapHoverInfo;
 
-  const container = document.querySelector('[data-container="true"]');
+  const container = document?.querySelector('[data-container="true"]');
   if (!container) return null;
 
   return ReactDOM.createPortal(

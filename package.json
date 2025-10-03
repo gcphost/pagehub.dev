@@ -21,6 +21,7 @@
     "@craftjs/core": "^0.2.10",
     "@craftjs/layers": "^0.2.5",
     "@craftjs/utils": "^0.2.4",
+    "@floating-ui/react-dom": "^2.1.6",
     "@fortawesome/fontawesome-free": "^6.6.0",
     "@hello-pangea/color-picker": "^3.2.2",
     "@liquify/prettify": "^0.5.5-beta.1",
@@ -97,13 +98,13 @@
     "babel-plugin-inline-react-svg": "^2.0.2",
     "cross-env": "7.0.3",
     "eslint": "^8.57.0",
-    "tsx": "^4.7.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-next": "^14.2.7",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
     "tailwindcss": "latest",
+    "tsx": "^4.7.0",
     "typescript": "^5.5.4"
   }
 }
