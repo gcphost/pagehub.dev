@@ -30,7 +30,7 @@ export const useIsInViewPort = (id) => {
 
     if (!inViewport) {
       dom.removeAttribute("data-enabled");
-    } else dom.setAttribute("data-enabled", true);
+    } else dom.setAttribute("data-enabled", "true");
 
     setIsInViewport(inViewport);
   }, [id, dom]);
