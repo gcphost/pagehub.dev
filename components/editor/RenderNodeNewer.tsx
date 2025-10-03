@@ -1,6 +1,7 @@
 import { useEditor } from "@craftjs/core";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { ProximityHover } from "./NodeControllers/ProximityHover";
 import { RenderNodeDataStates } from "./RenderNodeDataStates";
 import { RenderNodeInViewPort } from "./RenderNodeInViewPort";
 import { RenderNodePortal } from "./RenderNodePortal";
@@ -21,6 +22,7 @@ export const RenderNodeNewer = ({ render }) => {
     </RenderNodeInViewPort>,
 
     <RenderNodeDataStates key="renderDataStates" />,
+    <ProximityHover key="proximityHover" />,
   ];
 
   useEffect(() => {

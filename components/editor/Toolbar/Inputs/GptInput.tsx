@@ -35,10 +35,8 @@ export const GptInput = ({ autoFocus = false }) => {
     id: node.id,
   }));
 
-  const { enabled, query, actions } = useEditor((state) => ({
+  const { enabled, query, actions } = useEditor((state, query) => ({
     enabled: state.options.enabled,
-    query: state.query,
-    actions: state.actions,
   }));
 
   const cs = ClassGenerator(propValues, view, enabled, [], [], preview);
