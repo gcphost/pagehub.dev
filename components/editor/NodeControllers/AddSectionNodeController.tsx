@@ -73,9 +73,10 @@ export const AddSectionNodeController = (props: { position; align }) => {
           // Scroll to the new element first, then select it
           if (newElement && newElement.rootNodeId) {
             setTimeout(() => {
-              const newNode = document.querySelector(`[node-id="${newElement.rootNodeId}"]`);
-              if (newNode) {
-                newNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              // Get DOM from CraftJS instead of querySelector
+              const node = query.node(newElement.rootNodeId).get();
+              if (node && node.dom) {
+                node.dom.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
                 // Select after scrolling completes
                 setTimeout(() => {
@@ -178,9 +179,10 @@ export const AddSectionNodeController = (props: { position; align }) => {
                   // Scroll to the new page first, then select it
                   if (newElement && newElement.rootNodeId) {
                     setTimeout(() => {
-                      const newNode = document.querySelector(`[node-id="${newElement.rootNodeId}"]`);
-                      if (newNode) {
-                        newNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      // Get DOM from CraftJS instead of querySelector
+                      const node = query.node(newElement.rootNodeId).get();
+                      if (node && node.dom) {
+                        node.dom.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
                         // Select after scrolling completes
                         setTimeout(() => {

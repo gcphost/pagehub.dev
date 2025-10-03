@@ -15,7 +15,6 @@ import { motionIt, selectAfterAdding } from "utils/lib";
 
 import { applyAnimation, ClassGenerator } from "utils/tailwind";
 
-import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import TextSettingsTopNodeTool from "components/editor/NodeControllers/Tools/TextSettingsTopNodeTool";
 import { changeProp } from "components/editor/Viewport/lib";
 import debounce from "lodash.debounce";
@@ -195,17 +194,18 @@ Text.craft = {
         //     placement: "start",
         //   }}
         // />,
-        <HoverNodeController
-          key="textHoverController"
-          position="top"
-          align="start"
-          placement="end"
-          alt={{
-            position: "bottom",
-            align: "start",
-            placement: "start",
-          }}
-        />,
+        // Disabled: Hover name display
+        // <HoverNodeController
+        //   key="textHoverController"
+        //   position="top"
+        //   align="start"
+        //   placement="end"
+        //   alt={{
+        //     position: "bottom",
+        //     align: "start",
+        //     placement: "start",
+        //   }}
+        // />,
 
         <ToolNodeController position="bottom" align="start" key="textSettings">
           <TextSettingsNodeTool />

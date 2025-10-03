@@ -309,6 +309,8 @@ export const ColorPickerDialog = () => {
                       colorPicker.value?.r &&
                       paletteColor.color === `rgba(${colorPicker.value.r},${colorPicker.value.g},${colorPicker.value.b},${colorPicker.value.a})`);
 
+                  const isTailwindClass = !paletteColor.color.includes("rgba") && !paletteColor.color.startsWith("#");
+
                   return (
                     <button
                       key={index}
@@ -320,12 +322,9 @@ export const ColorPickerDialog = () => {
                         }`}
                     >
                       <div
-                        className="w-full h-8 rounded border-2 border-gray-200"
+                        className={`w-full h-8 rounded border-2 border-gray-200 ${isTailwindClass ? paletteColor.color : ""}`}
                         style={{
-                          backgroundColor:
-                            paletteColor.color.includes("rgba") || paletteColor.color.startsWith("#")
-                              ? paletteColor.color
-                              : undefined
+                          backgroundColor: !isTailwindClass ? paletteColor.color : undefined
                         }}
                       />
                       <span className="text-xs text-gray-700 font-medium truncate w-full text-center">

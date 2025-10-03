@@ -6,9 +6,8 @@ import { getRect } from "./Viewport/useRect";
 
 export function RenderNodePortal({ children }) {
   const clonedElementRef = useRef(null);
-  const originalElementRef = useRef(null);
 
-  const { id } = useNode((node) => ({
+  const { id, dom } = useNode((node) => ({
     dom: node.dom,
   }));
 
@@ -29,17 +28,13 @@ export function RenderNodePortal({ children }) {
   const scrollingParent = useFindScrollingParent(id);
 
   useEffect(() => {
-    originalElementRef.current = document.querySelector(`[node-id="${id}"]`);
-  }, [id]);
-
-  useEffect(() => {
-    if (!originalElementRef.current) return;
+    if (!dom) return;
 
     const observer = new MutationObserver(() => {
-      setPosition(getRect(originalElementRef.current));
+      setPosition(getRect(dom));
     });
 
-    observer?.observe(originalElementRef.current, {
+    observer?.observe(dom, {
       attributes: true,
       childList: false,
       subtree: true,
@@ -48,15 +43,14 @@ export function RenderNodePortal({ children }) {
     return () => {
       observer?.disconnect();
     };
-  }, [setPosition]);
+  }, [dom, setPosition]);
 
   useEffect(() => {
-    if (!clonedElementRef.current || !originalElementRef.current) return;
+    if (!clonedElementRef.current || !dom) return;
 
     const clonedElement = clonedElementRef.current;
-    const originalElement = originalElementRef.current;
 
-    setPosition(getRect(originalElementRef.current));
+    setPosition(getRect(dom));
 
     let animationFrameId;
 
@@ -66,8 +60,7 @@ export function RenderNodePortal({ children }) {
       window.cancelAnimationFrame(animationFrameId);
 
       animationFrameId = window.requestAnimationFrame(() => {
-        const originalElement = originalElementRef.current;
-        const rect = getRect(originalElement);
+        const rect = getRect(dom);
         clonedElement.style.top = `${rect.top}px`;
       });
     };
@@ -78,7 +71,7 @@ export function RenderNodePortal({ children }) {
       scrollingParent.removeEventListener("scroll", handleScroll);
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [originalElementRef, scrollingParent, setPosition]);
+  }, [dom, scrollingParent, setPosition]);
 
   return (
     <div

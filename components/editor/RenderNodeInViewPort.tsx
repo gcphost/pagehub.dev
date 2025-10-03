@@ -1,48 +1,48 @@
 import { useNode } from "@craftjs/core";
 import { useFindScrollingParent } from "components/selectors/lib";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useIsInViewPort = (id) => {
   const [isInViewport, setIsInViewport] = useState(false);
 
-  const originalElementRef = useRef(null);
-
-  useEffect(() => {
-    originalElementRef.current = document.querySelector(`[node-id="${id}"]`);
-  }, [id]);
+  // Get the DOM element directly from CraftJS
+  const { dom } = useNode((node) => ({
+    dom: node.dom,
+  }));
 
   const scrollingParent = useFindScrollingParent(id);
 
   const setInView = useCallback(() => {
-    const originalElement = originalElementRef.current;
-    if (!originalElement) return;
+    if (!dom) return;
 
-    const clonedElementRect = originalElement.getBoundingClientRect();
-    const viewportRect = document
-      .getElementById("viewport")
-      .getBoundingClientRect();
+    const viewportElement = document.getElementById("viewport");
+    if (!viewportElement) return;
+
+    const clonedElementRect = dom.getBoundingClientRect();
+    const viewportRect = viewportElement.getBoundingClientRect();
     const margin = 140;
+
     const inViewport =
       clonedElementRect.bottom + margin >= viewportRect.top &&
       clonedElementRect.top - margin <= viewportRect.bottom &&
       clonedElementRect.right + margin >= viewportRect.left &&
       clonedElementRect.left - margin <= viewportRect.right;
 
-    const dom = originalElementRef.current;
-
     if (!inViewport) {
       dom.removeAttribute("data-enabled");
     } else dom.setAttribute("data-enabled", true);
 
     setIsInViewport(inViewport);
-  }, [originalElementRef]);
+  }, [id, dom]);
 
   useEffect(() => {
-    setInView();
-  }, [originalElementRef, setInView]);
+    if (dom) {
+      setInView();
+    }
+  }, [dom, setInView]);
 
   useEffect(() => {
-    if (!scrollingParent || !originalElementRef.current) return;
+    if (!scrollingParent || !dom) return;
     let animationFrameId;
 
     const handleScroll = () => {
@@ -59,7 +59,7 @@ export const useIsInViewPort = (id) => {
       scrollingParent.removeEventListener("scroll", handleScroll);
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [originalElementRef, scrollingParent, setInView]);
+  }, [dom, scrollingParent, setInView]);
 
   return isInViewport;
 };

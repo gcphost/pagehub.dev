@@ -28,10 +28,32 @@ export const RenderNodeNewer = ({ render }) => {
   ];
 
   useEffect(() => {
-    const container = document.querySelector('[data-container="true"]');
-    if (container) {
-      setShow(true);
-    }
+    const checkContainer = () => {
+      const container = document.querySelector('[data-container="true"]');
+      if (container) {
+        setShow(true);
+        return true;
+      }
+      return false;
+    };
+
+    // Try immediately
+    if (checkContainer()) return;
+
+    // If not found, use MutationObserver to wait for it
+    const observer = new MutationObserver(() => {
+      if (checkContainer()) {
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // Cleanup
+    return () => observer.disconnect();
   }, []);
 
   if (!enabled) return render;

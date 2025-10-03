@@ -43,7 +43,7 @@
                   "fontSize": "text-5xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {
                   "fontSize": "text-6xl"
@@ -61,7 +61,7 @@
                 "mobile": {
                   "fontSize": "text-lg",
                   "textAlign": "text-center",
-                  "color": "text-gray-600",
+                  "color": "text-palette:Alternate Text",
                   "maxWidth": "max-w-2xl"
                 },
                 "desktop": {},
@@ -75,7 +75,7 @@
                 "canDelete": true,
                 "canEditName": true,
                 "root": {
-                  "background": "bg-primary-500"
+                  "background": "bg-palette:Primary"
                 },
                 "mobile": {
                   "px": "px-8",
@@ -108,7 +108,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-gray-900"
+              "background": "bg-palette:Primary"
             },
             "mobile": {
               "display": "flex",
@@ -167,14 +167,14 @@
                 "canDelete": true,
                 "canEditName": true,
                 "root": {
-                  "background": "bg-white",
-                  "color": "text-gray-900"
+                  "background": "bg-palette:Background"
                 },
                 "mobile": {
                   "px": "px-8",
                   "py": "py-4",
                   "fontSize": "text-lg",
                   "fontWeight": "font-semibold",
+                  "color": "text-palette:Primary",
                   "radius": "rounded-lg",
                   "gap": "gap-4"
                 },
@@ -219,7 +219,7 @@
                 "canDelete": true,
                 "canEditName": true,
                 "root": {
-                  "background": "bg-primary-500"
+                  "background": "bg-palette:Primary"
                 },
                 "mobile": {
                   "display": "flex",
@@ -376,7 +376,7 @@
                   "fontSize": "text-4xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {},
                 "custom": { "displayName": "Services Title" },
@@ -430,7 +430,7 @@
                         "mobile": {
                           "fontSize": "text-2xl",
                           "fontWeight": "font-semibold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Title" },
@@ -445,7 +445,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-base",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Description" },
@@ -483,7 +483,7 @@
                         "mobile": {
                           "fontSize": "text-2xl",
                           "fontWeight": "font-semibold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Title" },
@@ -498,7 +498,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-base",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Description" },
@@ -536,7 +536,7 @@
                         "mobile": {
                           "fontSize": "text-2xl",
                           "fontWeight": "font-semibold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Title" },
@@ -551,7 +551,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-base",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Description" },
@@ -601,7 +601,7 @@
                   "fontSize": "text-3xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {
                   "fontSize": "text-4xl"
@@ -634,7 +634,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "background": "bg-gray-50"
+                      "background": "bg-palette:Alternate Background"
                     },
                     "mobile": {
                       "display": "flex",
@@ -660,7 +660,7 @@
                         "mobile": {
                           "fontSize": "text-2xl",
                           "fontWeight": "font-bold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Title" },
@@ -675,7 +675,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-base",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Description" },
@@ -690,7 +690,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "background": "bg-gray-50"
+                      "background": "bg-palette:Alternate Background"
                     },
                     "mobile": {
                       "display": "flex",
@@ -716,7 +716,7 @@
                         "mobile": {
                           "fontSize": "text-2xl",
                           "fontWeight": "font-bold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Title" },
@@ -731,7 +731,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-base",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Service Description" },
@@ -756,7 +756,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-primary-500"
+              "background": "bg-palette:Primary"
             },
             "mobile": {
               "display": "flex",
@@ -872,7 +872,7 @@
                   "fontSize": "text-4xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {},
                 "custom": { "displayName": "CTA Title" },
@@ -888,7 +888,7 @@
                 "mobile": {
                   "fontSize": "text-lg",
                   "textAlign": "text-center",
-                  "color": "text-gray-600",
+                  "color": "text-palette:Alternate Text",
                   "maxWidth": "max-w-2xl"
                 },
                 "desktop": {},
@@ -902,7 +902,7 @@
                 "canDelete": true,
                 "canEditName": true,
                 "root": {
-                  "background": "bg-primary-500",
+                  "background": "bg-palette:Primary",
                   "color": "text-white"
                 },
                 "mobile": {
@@ -1076,7 +1076,7 @@
                     "mobile": {
                       "fontSize": "text-3xl",
                       "fontWeight": "font-bold",
-                      "color": "text-gray-900"
+                      "color": "text-palette:Text"
                     },
                     "desktop": {
                       "fontSize": "text-4xl"
@@ -1093,7 +1093,7 @@
                     "root": {},
                     "mobile": {
                       "fontSize": "text-base",
-                      "color": "text-gray-600"
+                      "color": "text-palette:Alternate Text"
                     },
                     "desktop": {
                       "fontSize": "text-lg"
@@ -1110,7 +1110,7 @@
                 "canDelete": true,
                 "canEditName": true,
                 "root": {
-                  "background": "bg-primary-500",
+                  "background": "bg-palette:Primary",
                   "color": "text-white"
                 },
                 "mobile": {
@@ -1229,7 +1229,7 @@
                     "mobile": {
                       "fontSize": "text-3xl",
                       "fontWeight": "font-bold",
-                      "color": "text-gray-900"
+                      "color": "text-palette:Text"
                     },
                     "desktop": {},
                     "custom": { "displayName": "Title" },
@@ -1244,7 +1244,7 @@
                     "root": {},
                     "mobile": {
                       "fontSize": "text-base",
-                      "color": "text-gray-600"
+                      "color": "text-palette:Alternate Text"
                     },
                     "desktop": {},
                     "custom": { "displayName": "Description" },
@@ -1312,7 +1312,7 @@
                     "mobile": {
                       "fontSize": "text-3xl",
                       "fontWeight": "font-bold",
-                      "color": "text-gray-900"
+                      "color": "text-palette:Text"
                     },
                     "desktop": {
                       "fontSize": "text-4xl"
@@ -1329,7 +1329,7 @@
                     "root": {},
                     "mobile": {
                       "fontSize": "text-base",
-                      "color": "text-gray-600"
+                      "color": "text-palette:Alternate Text"
                     },
                     "desktop": {
                       "fontSize": "text-lg"
@@ -1418,7 +1418,7 @@
                   "fontSize": "text-3xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900",
+                  "color": "text-palette:Text",
                   "maxWidth": "max-w-3xl"
                 },
                 "desktop": {},
@@ -1435,7 +1435,7 @@
                 "mobile": {
                   "fontSize": "text-lg",
                   "textAlign": "text-center",
-                  "color": "text-gray-600",
+                  "color": "text-palette:Alternate Text",
                   "maxWidth": "max-w-3xl"
                 },
                 "desktop": {},
@@ -1496,7 +1496,7 @@
                     "mobile": {
                       "fontSize": "text-2xl",
                       "fontWeight": "font-bold",
-                      "color": "text-gray-900"
+                      "color": "text-palette:Text"
                     },
                     "desktop": {},
                     "custom": { "displayName": "Heading" },
@@ -1511,7 +1511,7 @@
                     "root": {},
                     "mobile": {
                       "fontSize": "text-base",
-                      "color": "text-gray-600"
+                      "color": "text-palette:Alternate Text"
                     },
                     "desktop": {},
                     "custom": { "displayName": "Text" },
@@ -1547,7 +1547,7 @@
                     "mobile": {
                       "fontSize": "text-2xl",
                       "fontWeight": "font-bold",
-                      "color": "text-gray-900"
+                      "color": "text-palette:Text"
                     },
                     "desktop": {},
                     "custom": { "displayName": "Heading" },
@@ -1562,7 +1562,7 @@
                     "root": {},
                     "mobile": {
                       "fontSize": "text-base",
-                      "color": "text-gray-600"
+                      "color": "text-palette:Alternate Text"
                     },
                     "desktop": {},
                     "custom": { "displayName": "Text" },
@@ -1610,7 +1610,7 @@
                   "fontSize": "text-3xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {
                   "fontSize": "text-4xl"
@@ -1665,7 +1665,7 @@
                         "mobile": {
                           "fontSize": "text-xl",
                           "fontWeight": "font-semibold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Column Title" },
@@ -1680,7 +1680,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-base",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Column Content" },
@@ -1716,7 +1716,7 @@
                         "mobile": {
                           "fontSize": "text-xl",
                           "fontWeight": "font-semibold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Column Title" },
@@ -1731,7 +1731,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-base",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Column Content" },
@@ -1754,7 +1754,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-gray-50"
+              "background": "bg-palette:Alternate Background"
             },
             "mobile": {
               "display": "flex",
@@ -1783,7 +1783,7 @@
                   "fontSize": "text-2xl",
                   "fontWeight": "font-medium",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {
                   "fontSize": "text-3xl"
@@ -1801,7 +1801,7 @@
                 "mobile": {
                   "fontSize": "text-base",
                   "textAlign": "text-center",
-                  "color": "text-gray-600",
+                  "color": "text-palette:Alternate Text",
                   "fontWeight": "font-semibold"
                 },
                 "desktop": {
@@ -1825,7 +1825,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-gray-50"
+              "background": "bg-palette:Alternate Background"
             },
             "mobile": {
               "display": "flex",
@@ -1852,7 +1852,7 @@
                   "fontSize": "text-3xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {
                   "fontSize": "text-4xl"
@@ -1913,7 +1913,7 @@
                           "fontSize": "text-xl",
                           "fontWeight": "font-semibold",
                           "textAlign": "text-center",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Plan Name" },
@@ -1930,7 +1930,7 @@
                           "fontSize": "text-4xl",
                           "fontWeight": "font-bold",
                           "textAlign": "text-center",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Price" },
@@ -1946,7 +1946,7 @@
                         "mobile": {
                           "fontSize": "text-sm",
                           "textAlign": "text-center",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Description" },
@@ -1960,7 +1960,7 @@
                         "canEditName": true,
                         "root": {
                           "background": "bg-gray-100",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "mobile": {
                           "px": "px-6",
@@ -1989,7 +1989,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "background": "bg-primary-500"
+                      "background": "bg-palette:Primary"
                     },
                     "mobile": {
                       "display": "flex",
@@ -2119,7 +2119,7 @@
                           "fontSize": "text-xl",
                           "fontWeight": "font-semibold",
                           "textAlign": "text-center",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Plan Name" },
@@ -2136,7 +2136,7 @@
                           "fontSize": "text-4xl",
                           "fontWeight": "font-bold",
                           "textAlign": "text-center",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Price" },
@@ -2152,7 +2152,7 @@
                         "mobile": {
                           "fontSize": "text-sm",
                           "textAlign": "text-center",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Description" },
@@ -2166,7 +2166,7 @@
                         "canEditName": true,
                         "root": {
                           "background": "bg-gray-100",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "mobile": {
                           "px": "px-6",
@@ -2230,7 +2230,7 @@
                   "fontSize": "text-3xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {
                   "fontSize": "text-4xl"
@@ -2300,7 +2300,7 @@
                             "mobile": {
                               "fontSize": "text-xl",
                               "fontWeight": "font-semibold",
-                              "color": "text-gray-900"
+                              "color": "text-palette:Text"
                             },
                             "desktop": {},
                             "custom": { "displayName": "Item Name" },
@@ -2333,7 +2333,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-sm",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Description" },
@@ -2385,7 +2385,7 @@
                             "mobile": {
                               "fontSize": "text-xl",
                               "fontWeight": "font-semibold",
-                              "color": "text-gray-900"
+                              "color": "text-palette:Text"
                             },
                             "desktop": {},
                             "custom": { "displayName": "Item Name" },
@@ -2418,7 +2418,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-sm",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Description" },
@@ -2470,7 +2470,7 @@
                             "mobile": {
                               "fontSize": "text-xl",
                               "fontWeight": "font-semibold",
-                              "color": "text-gray-900"
+                              "color": "text-palette:Text"
                             },
                             "desktop": {},
                             "custom": { "displayName": "Item Name" },
@@ -2503,7 +2503,7 @@
                         "root": {},
                         "mobile": {
                           "fontSize": "text-sm",
-                          "color": "text-gray-600"
+                          "color": "text-palette:Alternate Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Description" },
@@ -2553,7 +2553,7 @@
                   "fontSize": "text-3xl",
                   "fontWeight": "font-bold",
                   "textAlign": "text-center",
-                  "color": "text-gray-900"
+                  "color": "text-palette:Text"
                 },
                 "desktop": {
                   "fontSize": "text-4xl"
@@ -2649,7 +2649,7 @@
                         "mobile": {
                           "fontSize": "text-xl",
                           "fontWeight": "font-semibold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Product Name" },
@@ -2678,7 +2678,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "background": "bg-primary-500",
+                          "background": "bg-palette:Primary",
                           "color": "text-white"
                         },
                         "mobile": {
@@ -2770,7 +2770,7 @@
                         "mobile": {
                           "fontSize": "text-xl",
                           "fontWeight": "font-semibold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Product Name" },
@@ -2799,7 +2799,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "background": "bg-primary-500",
+                          "background": "bg-palette:Primary",
                           "color": "text-white"
                         },
                         "mobile": {
@@ -2891,7 +2891,7 @@
                         "mobile": {
                           "fontSize": "text-xl",
                           "fontWeight": "font-semibold",
-                          "color": "text-gray-900"
+                          "color": "text-palette:Text"
                         },
                         "desktop": {},
                         "custom": { "displayName": "Product Name" },
@@ -2920,7 +2920,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "background": "bg-primary-500",
+                          "background": "bg-palette:Primary",
                           "color": "text-white"
                         },
                         "mobile": {

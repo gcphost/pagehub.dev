@@ -20,7 +20,7 @@ const getComponentRegistry = () => {
 };
 
 // Convert JSON structure to React Element
-const buildElementFromStructure = (structure: any): any => {
+const buildElementFromStructure = (structure: any, key?: string): any => {
   const componentRegistry = getComponentRegistry();
   const Component = componentRegistry[structure.type];
   if (!Component) {
@@ -28,12 +28,12 @@ const buildElementFromStructure = (structure: any): any => {
     return null;
   }
 
-  const children = structure.children?.map((child: any) =>
-    buildElementFromStructure(child)
+  const children = structure.children?.map((child: any, index: number) =>
+    buildElementFromStructure(child, `${key || 'root'}-${index}`)
   );
 
   return (
-    <Element canvas is={Component} {...structure.props}>
+    <Element key={key} canvas is={Component} {...structure.props}>
       {children}
     </Element>
   );
@@ -47,7 +47,7 @@ const convertTemplates = (categoryId: string) => {
   return templates.map((template) => ({
     id: template.id,
     name: template.name,
-    element: buildElementFromStructure(template.structure),
+    element: buildElementFromStructure(template.structure, template.id),
   }));
 };
 

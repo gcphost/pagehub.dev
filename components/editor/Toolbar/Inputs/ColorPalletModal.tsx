@@ -2,7 +2,7 @@ import { ROOT_NODE, useEditor } from "@craftjs/core";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { TbCheck, TbEdit, TbPlus, TbTrash, TbX } from "react-icons/tb";
+import { TbCheck, TbEdit, TbLock, TbPlus, TbTrash, TbX } from "react-icons/tb";
 import { useRecoilState } from "recoil";
 import { ColorPickerAtom } from "../Tools/ColorPickerDialog";
 import { bgAndVal } from "./ColorInput";
@@ -32,12 +32,40 @@ const getColorStyle = (color: string) => {
   return {}; // Let Tailwind handle it via className
 };
 
+// Helper to convert any color class to a background class for preview
+const convertToBackgroundClass = (color: string) => {
+  if (!color || typeof color !== "string") {
+    return "bg-gray-200";
+  }
+
+  // If it's already a hex or rgba, return empty (will use inline style)
+  if (color.includes("rgba") || color.includes("rgb") || color.startsWith("#")) {
+    return "";
+  }
+
+  // Convert text-* to bg-* for preview
+  if (color.startsWith("text-")) {
+    return color.replace("text-", "bg-");
+  }
+
+  // If it's already bg-*, return as is
+  if (color.startsWith("bg-")) {
+    return color;
+  }
+
+  // Fallback
+  return color;
+};
+
 export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => {
   const { actions, query } = useEditor();
   const [pallets, setPallets] = useState<NamedColor[]>([]);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingName, setEditingName] = useState("");
   const [colorPicker, setColorPicker] = useRecoilState(ColorPickerAtom);
+
+  // Base palette colors that must always exist
+  const BASE_COLORS = ["Primary", "Secondary", "Accent", "Neutral", "Background", "Alternate Background", "Text", "Alternate Text"];
 
   useEffect(() => {
     if (isOpen) {
@@ -59,30 +87,66 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
       } else {
         // Empty - add defaults
         converted = [
-          { name: "Brand", color: "bg-blue-600" },
+          { name: "Primary", color: "bg-blue-500" },
+          { name: "Secondary", color: "bg-purple-500" },
           { name: "Accent", color: "bg-orange-500" },
-          { name: "Secondary", color: "bg-purple-600" },
+          { name: "Neutral", color: "bg-gray-500" },
+          { name: "Background", color: "bg-white" },
+          { name: "Alternate Background", color: "bg-gray-50" },
+          { name: "Text", color: "text-gray-900" },
+          { name: "Alternate Text", color: "text-gray-600" },
         ];
       }
 
       // Ensure we have at least the defaults
       if (converted.length === 0) {
         converted = [
-          { name: "Brand", color: "bg-blue-600" },
+          { name: "Primary", color: "bg-blue-500" },
+          { name: "Secondary", color: "bg-purple-500" },
           { name: "Accent", color: "bg-orange-500" },
-          { name: "Secondary", color: "bg-purple-600" },
+          { name: "Neutral", color: "bg-gray-500" },
+          { name: "Background", color: "bg-white" },
+          { name: "Alternate Background", color: "bg-gray-50" },
+          { name: "Text", color: "text-gray-900" },
+          { name: "Alternate Text", color: "text-gray-600" },
         ];
       }
 
       setPallets(converted);
+
+      // If we added defaults, save them to the ROOT_NODE
+      if (rawPallet.length === 0 && converted.length > 0) {
+        actions.setProp(ROOT_NODE, (props) => {
+          props.pallet = converted;
+        });
+      }
     }
   }, [isOpen, query]);
 
   const savePallets = (newPallets: NamedColor[]) => {
+    // Ensure base colors always exist
+    const baseColorDefaults = [
+      { name: "Primary", color: "bg-blue-500" },
+      { name: "Secondary", color: "bg-purple-500" },
+      { name: "Accent", color: "bg-orange-500" },
+      { name: "Neutral", color: "bg-gray-500" },
+      { name: "Background", color: "bg-white" },
+      { name: "Alternate Background", color: "bg-gray-50" },
+      { name: "Text", color: "text-gray-900" },
+      { name: "Alternate Text", color: "text-gray-600" },
+    ];
+
+    // Check if all base colors exist, if not add them
+    const missingBaseColors = baseColorDefaults.filter(
+      (base) => !newPallets.some((p) => p.name === base.name)
+    );
+
+    const finalPallets = [...missingBaseColors, ...newPallets];
+
     actions.setProp(ROOT_NODE, (props) => {
-      props.pallet = newPallets;
+      props.pallet = finalPallets;
     });
-    setPallets(newPallets);
+    setPallets(finalPallets);
   };
 
   const addPallet = () => {
@@ -94,6 +158,14 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
   };
 
   const removePallet = (index: number) => {
+    const colorToRemove = pallets[index];
+
+    // Prevent deletion of base colors
+    if (BASE_COLORS.includes(colorToRemove.name)) {
+      alert(`Cannot delete "${colorToRemove.name}" - it's a required base color.`);
+      return;
+    }
+
     const newPallets = pallets.filter((_, i) => i !== index);
     savePallets(newPallets);
   };
@@ -133,8 +205,16 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
   };
 
   const startEditingName = (index: number) => {
+    const colorName = pallets[index].name;
+
+    // Prevent editing of base color names
+    if (BASE_COLORS.includes(colorName)) {
+      alert(`Cannot rename "${colorName}" - it's a required base color.`);
+      return;
+    }
+
     setEditingIndex(index);
-    setEditingName(pallets[index].name);
+    setEditingName(colorName);
   };
 
   const saveNameEdit = (index: number) => {
@@ -184,7 +264,7 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto p-6">
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4">
               {pallets.map((pallet, index) => (
                 <div
                   key={index}
@@ -193,10 +273,7 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
                   {/* Color Preview & Input */}
                   <div className="flex-shrink-0 w-32">
                     <button
-                      className={`w-full h-12 rounded-md cursor-pointer border-2 border-gray-300 hover:border-primary-500 transition-colors ${typeof pallet.color === "string" && !pallet.color.includes("rgba") && !pallet.color.startsWith("#")
-                        ? pallet.color
-                        : ""
-                        }`}
+                      className={`w-full h-12 rounded-md cursor-pointer border-2 border-gray-300 hover:border-primary-500 transition-colors ${convertToBackgroundClass(pallet.color)}`}
                       style={getColorStyle(pallet.color)}
                       onClick={(e) => {
                         const rect = e.currentTarget.getBoundingClientRect();
@@ -271,12 +348,16 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
                         <span className="font-medium text-gray-900">
                           {String(pallet.name || "Unnamed")}
                         </span>
-                        <button
-                          onClick={() => startEditingName(index)}
-                          className="p-1 text-gray-500 hover:text-gray-700"
-                        >
-                          <TbEdit size={16} />
-                        </button>
+                        {BASE_COLORS.includes(pallet.name) ? (
+                          <TbLock size={16} className="text-gray-400" title="Base color (protected)" />
+                        ) : (
+                          <button
+                            onClick={() => startEditingName(index)}
+                            className="p-1 text-gray-500 hover:text-gray-700"
+                          >
+                            <TbEdit size={16} />
+                          </button>
+                        )}
                       </div>
                     )}
                     <div className="text-sm text-gray-500 mt-1 font-mono">
@@ -284,13 +365,15 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
                     </div>
                   </div>
 
-                  {/* Delete Button */}
-                  <button
-                    onClick={() => removePallet(index)}
-                    className="flex-shrink-0 p-2 text-red-600 hover:bg-red-50 rounded transition-colors"
-                  >
-                    <TbTrash />
-                  </button>
+                  {/* Delete Button - only show for non-base colors */}
+                  {!BASE_COLORS.includes(pallet.name) && (
+                    <button
+                      onClick={() => removePallet(index)}
+                      className="flex-shrink-0 p-2 text-red-600 hover:bg-red-50 rounded transition-colors"
+                    >
+                      <TbTrash />
+                    </button>
+                  )}
                 </div>
               ))}
             </div>

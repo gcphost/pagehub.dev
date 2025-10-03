@@ -36,6 +36,7 @@ export interface BaseStyleProps {
   textOverflow?: string;
   indent?: string;
   textDecoration?: string;
+  textAlign?: string;
   backgroundRepeat?: string;
   backgroundSize?: string;
   backgroundAttachment?: string;

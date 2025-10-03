@@ -1,6 +1,7 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { AnimatePresence, motion } from "framer-motion";
 import debounce from "lodash.debounce";
+import { useEffect, useRef, useState } from "react";
 import RenderNodeControl from "../RenderNodeControl";
 
 const EditableName = () => {
@@ -9,6 +10,30 @@ const EditableName = () => {
   }));
 
   const { actions } = useEditor();
+  const [isEditing, setIsEditing] = useState(false);
+  const editableRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isEditing && editableRef.current) {
+      editableRef.current.focus();
+      // Select all text when entering edit mode
+      const range = document.createRange();
+      range.selectNodeContents(editableRef.current);
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    }
+  }, [isEditing]);
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isEditing) {
+      setIsEditing(true);
+    }
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
 
   return (
     <div
@@ -17,10 +42,13 @@ const EditableName = () => {
       }
     >
       <div
-        className="px-2"
-        contentEditable={true}
+        ref={editableRef}
+        className={`px-2 ${isEditing ? 'cursor-text' : 'cursor-grab active:cursor-grabbing'}`}
+        contentEditable={isEditing}
         data-gramm="false"
         suppressContentEditableWarning={true}
+        onClick={handleClick}
+        onBlur={handleBlur}
         onInput={debounce((e) => {
           actions.setCustom(
             id,

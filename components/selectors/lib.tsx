@@ -15,13 +15,13 @@ export const RenderPattern = ({
   const inlayClass = props?.root?.backgroundGradient
     ? "flex w-full h-full"
     : `${ClassGenerator(
-        props,
-        view,
-        enabled,
-        [],
-        properties,
-        preview
-      )} flex w-full h-full`;
+      props,
+      view,
+      enabled,
+      [],
+      properties,
+      preview
+    )} flex w-full h-full`;
 
   if (inlayProps?.style?.backgroundImage) {
     return (
@@ -115,9 +115,9 @@ export const useIsInViewport = (
       const rect = element.getBoundingClientRect();
       setIsInViewport(
         rect.top >= 0 &&
-          rect.left >= 0 &&
-          rect.bottom <= scrollingParent.clientHeight &&
-          rect.right <= scrollingParent.clientWidth
+        rect.left >= 0 &&
+        rect.bottom <= scrollingParent.clientHeight &&
+        rect.right <= scrollingParent.clientWidth
       );
     }
   }, [element, scrollingParent]);

@@ -18,6 +18,7 @@ import { TbRectangle } from "react-icons/tb";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { applyBackgroundImage, motionIt, selectAfterAdding } from "utils/lib";
+import { usePalette } from "utils/PaletteContext";
 import {
   applyAnimation,
   ClassGene,
@@ -101,7 +102,13 @@ type ButtonArrayProp = {
   onClick?: any;
   background?: string;
   color?: string;
+  border?: string;
   iconOnly?: boolean;
+  root?: {
+    background?: string;
+    color?: string;
+    border?: string;
+  };
 };
 
 interface ButtonProp extends RootStyleProps, BaseStyleProps { }
@@ -159,6 +166,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
   const settings = useRecoilValue(SettingsAtom);
+  const palette = usePalette();
   const [selectedButton, setSelectedButton] =
     useRecoilState(SelectedButtonAtom);
 
@@ -167,7 +175,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   const defaultProp: any = {
     ref: (r) => connect(drag(r)),
     style: props.root?.style ? CSStoObj(props.root.style) || {} : {},
-    className: ClassGenerator(props, view, enabled),
+    className: ClassGenerator(props, view, enabled, [], [], preview, false, palette),
   };
 
   if (enabled) {
@@ -217,7 +225,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
     <div
       ref={(r: any) => connect(drag(r))}
       className={[
-        ...ClassGenerator({ ...props }, view, enabled, [], baseProps).split(
+        ...ClassGenerator({ ...props }, view, enabled, [], baseProps, preview, false, palette).split(
           " "
         ),
         ...mainClasses,
@@ -226,9 +234,42 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
         .join(" ")}
     >
       {props?.buttons?.map((but, key) => {
+        // Resolve palette references for per-button properties
+        const resolveButtonPalette = (value: string) => {
+          if (typeof value === "string" && value.includes("palette:")) {
+            const match = value.match(/^([a-z]+-)?palette:(.+)$/);
+            if (match) {
+              const prefixPart = match[1] || "";
+              const paletteName = match[2];
+              const paletteColor = palette.find((p) => p.name === paletteName);
+              if (paletteColor) {
+                let colorValue = paletteColor.color;
+                if (prefixPart && colorValue.startsWith(prefixPart)) {
+                  return colorValue;
+                }
+                if (prefixPart) {
+                  if (colorValue.includes("rgba") || colorValue.includes("rgb") || colorValue.startsWith("#")) {
+                    return `${prefixPart}[${colorValue}]`;
+                  } else {
+                    return `${prefixPart}${colorValue}`;
+                  }
+                }
+                return colorValue;
+              }
+            }
+          }
+          return value;
+        };
+
+        // Get button-specific styles from but.root if they exist
+        const buttonBg = but?.root?.background || but?.background || props.root?.background;
+        const buttonColor = but?.root?.color || but?.color || props.root.color;
+        const buttonBorder = but?.root?.border || but?.border || props.root?.border;
+
         const include = [
-          but?.background || props.root?.background,
-          but?.color || props.root.color,
+          resolveButtonPalette(buttonBg),
+          resolveButtonPalette(buttonColor),
+          resolveButtonPalette(buttonBorder),
           props?.mobile?.width,
           props?.desktop?.width ? `md:${props.desktop.width}` : null,
           props.iconGap,
@@ -248,13 +289,16 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
         ];
 
         const className = [
-          ...ClassGene(props.button, [], []),
+          ...ClassGene(props.button, [], [], "", false, palette),
           ...ClassGenerator(
             { ...props },
             view,
             enabled,
             inlayed ? [...inlayProps, ...baseProps] : baseProps,
-            []
+            [],
+            preview,
+            false,
+            palette
           ).split(" "),
           ...include,
         ]

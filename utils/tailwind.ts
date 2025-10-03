@@ -1144,18 +1144,10 @@ export const ClassGene = (
         if (paletteColor) {
           let colorValue = paletteColor.color;
 
-          console.log("Resolving palette:", {
-            input: value,
-            prefixPart,
-            paletteName,
-            paletteColorValue: colorValue,
-          });
-
           // If the palette color already has the same prefix, return as-is
           // e.g., if we want "bg-palette:Brand" and palette has "bg-blue-600"
           // we should return "bg-blue-600", not "bg-bg-blue-600"
           if (prefixPart && colorValue.startsWith(prefixPart)) {
-            console.log("Already has prefix, returning:", colorValue);
             return colorValue;
           }
 
@@ -1169,12 +1161,10 @@ export const ClassGene = (
             ) {
               // Wrap arbitrary values in brackets: bg-[rgba(...)]
               const result = `${prefixPart}[${colorValue}]`;
-              console.log("Adding prefix with brackets, returning:", result);
               return result;
             } else {
               // Regular Tailwind class: bg-blue-600
               const result = `${prefixPart}${colorValue}`;
-              console.log("Adding prefix, returning:", result);
               return result;
             }
           }

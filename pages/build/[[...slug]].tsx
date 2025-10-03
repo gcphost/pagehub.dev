@@ -32,8 +32,9 @@ import { Video } from "../../components/selectors/Video";
 import { useSetTenant } from "../../utils/tenantStore";
 import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
 
+
 function App({ data, slug, result, session, tenant, sessionToken }) {
-  data = lz.decompress(lz.decodeBase64(data));
+  data = data ? lz.decompress(lz.decodeBase64(data)) : null;
   const setTenant = useSetTenant();
   const setSessionToken = useSetRecoilState(SessionTokenAtom);
   // Use tenant prop directly to avoid delay from client-side store
@@ -60,6 +61,9 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
       console.error(e);
       data = null;
     }
+  } else {
+    // Ensure data is null, not empty string, for Frame to use JSX children
+    data = null;
   }
   const setUnsavedChanged = useSetRecoilState(UnsavedChangesAtom);
 
@@ -122,74 +126,122 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
           <Save result={result} />
 
           <Viewport>
-            <Frame data={data}>
-              <Element
-                canvas
-                type="background"
-                is={Background}
-                data-renderer={true}
-                custom={{ displayName: "Background" }}
-                pallet={[]}
-                root={{
-                  background: "bg-white",
-                  color: "text-black",
-                }}
-                mobile={{
-                  height: "h-full",
-                  width: "w-screen",
-                  gap: "gap-3",
-                  display: "flex",
-                  flexDirection: "flex-col",
-                  overflow: "overflow-auto",
-                }}
-                desktop={{}}
-              >
+            {data ? (
+              <Frame data={data} />
+            ) : (
+              <Frame>
                 <Element
                   canvas
-                  is={Container}
-                  type="page"
-                  canDelete={false}
-                  canEditName={true}
-                  isHomePage={true}
-                  root={{}}
+                  type="background"
+                  is={Background}
+                  data-renderer={true}
+                  custom={{ displayName: "Background" }}
+                  pallet={[
+                    { name: "Primary", color: "bg-blue-500" },
+                    { name: "Secondary", color: "bg-purple-500" },
+                    { name: "Accent", color: "bg-orange-500" },
+                    { name: "Neutral", color: "bg-gray-500" },
+                    { name: "Background", color: "bg-white" },
+                    { name: "Alternate Background", color: "bg-gray-50" },
+                    { name: "Text", color: "text-gray-900" },
+                    { name: "Alternate Text", color: "text-gray-600" },
+                  ]}
+                  root={{
+                    background: "bg-white",
+                    color: "text-black",
+                  }}
                   mobile={{
-                    mx: "mx-auto",
-                    display: "flex",
-                    justifyContent: "justify-start",
-                    alignItems: "items-center",
-                    flexDirection: "flex-col",
-                    width: "w-full",
+                    height: "h-full",
+                    width: "w-screen",
                     gap: "gap-3",
-                    py: "py-12",
+                    display: "flex",
+                    flexDirection: "flex-col",
+                    overflow: "overflow-auto",
                   }}
                   desktop={{}}
-                  custom={{ displayName: "Home Page" }}
                 >
+                  {/* Global Header/Nav */}
                   <Element
                     canvas
                     is={Container}
                     canDelete={true}
                     canEditName={true}
-                    root={{}}
+                    root={{
+                      background: "bg-palette:Background",
+                    }}
                     mobile={{
-                      py: "py-3",
-                      px: "px-3",
-                      mx: "mx-auto",
-
                       display: "flex",
-                      justifyContent: "justify-center",
+                      flexDirection: "flex-row",
+                      justifyContent: "justify-between",
                       alignItems: "items-center",
-                      flexDirection: "flex-col",
                       width: "w-full",
-                      gap: "gap-3",
+                      px: "px-6",
+                      py: "py-4",
+                      gap: "gap-4",
                     }}
                     desktop={{
-                      py: "py-12",
                       px: "px-12",
-                      flexDirection: "flex-row",
-                      alignItems: "items-start",
                     }}
-                    custom={{ displayName: "Content" }}
+                    custom={{ displayName: "Header" }}
+                  >
+                    <Element
+                      is={Text}
+                      canDelete={true}
+                      canEditName={true}
+                      root={{
+                        color: "text-palette:Primary",
+                      }}
+                      mobile={{
+                        fontSize: "text-2xl",
+                        fontWeight: "font-bold",
+                      }}
+                      desktop={{}}
+                      custom={{ displayName: "Logo" }}
+                      text="<p>YourBrand</p>"
+                    />
+                    <Element
+                      is={Button}
+                      canDelete={true}
+                      canEditName={true}
+                      root={{
+                        color: "text-palette:Alternate Text",
+                      }}
+                      mobile={{
+                        fontSize: "text-sm",
+                        gap: "gap-6",
+                      }}
+                      desktop={{}}
+                      custom={{ displayName: "Nav Links" }}
+                      buttons={[
+                        { text: "About", url: "#" },
+                        { text: "Services", url: "#" },
+                        { text: "Contact", url: "#" },
+                      ]}
+                    />
+                  </Element>
+
+                  {/* Home Page Container */}
+                  <Element
+                    canvas
+                    is={Container}
+                    type="page"
+                    canDelete={false}
+                    canEditName={true}
+                    isHomePage={true}
+                    root={{}}
+                    mobile={{
+                      display: "flex",
+                      flexDirection: "flex-col",
+                      justifyContent: "justify-center",
+                      alignItems: "items-center",
+                      width: "w-full",
+                      height: "h-screen",
+                      px: "px-6",
+                      py: "py-12",
+                      gap: "gap-6",
+                    }}
+                    desktop={{}}
+                    custom={{ displayName: "Home Page" }}
                   >
                     <Element
                       canvas
@@ -198,59 +250,162 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                       canEditName={true}
                       root={{}}
                       mobile={{
-                        py: "py-3",
-                        px: "px-3",
-                        mx: "mx-auto",
                         display: "flex",
-                        justifyContent: "justify-center",
-                        alignItems: "items-center",
                         flexDirection: "flex-col",
-                        width: "w-full",
-                        gap: "gap-3",
+                        alignItems: "items-center",
+                        gap: "gap-32",
+                        maxWidth: "max-w-4xl",
+                        px: "px-6",
+                        py: "py-12",
+
                       }}
                       desktop={{}}
-                      custom={{ displayName: "Left Container" }}
+                      custom={{ displayName: "Hero Content" }}
                     >
                       <Element
                         canvas
-                        is={Text}
+                        is={Container}
                         canDelete={true}
                         canEditName={true}
-                        text=""
                         root={{}}
                         mobile={{
-                          fontSize: "text-3xl",
-                          fontWeight: "font-bold",
+                          display: "flex",
+                          flexDirection: "flex-col",
+                          alignItems: "items-center",
+                          gap: "gap-4",
                         }}
                         desktop={{}}
-                        custom={{ displayName: "Header Text" }}
-                      />
+                        custom={{ displayName: "Hero Text" }}
+                      >
+                        <Element
+                          is={Text}
+                          canDelete={true}
+                          canEditName={true}
+                          root={{
+                            color: "text-palette:Text",
+                          }}
+                          mobile={{
+                            fontSize: "text-5xl",
+                            fontWeight: "font-bold",
+                            textAlign: "text-center",
+                          }}
+                          desktop={{
+                            fontSize: "text-6xl",
+                          }}
+                          custom={{ displayName: "Hero Title" }}
+                          text="<p>Welcome to Your New Website</p>"
+                        />
+                        <Element
+                          is={Text}
+                          canDelete={true}
+                          canEditName={true}
+                          root={{
+                            color: "text-palette:Alternate Text",
+                          }}
+                          mobile={{
+                            fontSize: "text-lg",
+                            textAlign: "text-center",
+                            maxWidth: "max-w-2xl",
+                          }}
+                          desktop={{}}
+                          custom={{ displayName: "Hero Subtitle" }}
+                          text="<p>Create beautiful pages with ease. Start building your dream website today.</p>"
+                        />
+                      </Element>
+                      <Element
+                        canvas
+                        is={Container}
+                        canDelete={true}
+                        canEditName={true}
+                        root={{}}
+                        mobile={{
+                          display: "flex",
+                          flexDirection: "flex-col",
+                          alignItems: "items-center",
+                          gap: "gap-4",
+                        }}
+                        desktop={{
+                          flexDirection: "flex-row",
+                        }}
+                        custom={{ displayName: "Hero Buttons" }}
+                      >
+                        <Element
+                          is={Button}
+                          canDelete={true}
+                          canEditName={true}
+                          root={{
+                            radius: "rounded-lg",
+                          }}
+                          mobile={{
+                            px: "px-8",
+                            py: "py-4",
+                            fontSize: "text-lg",
+                            fontWeight: "font-semibold",
+                            gap: "gap-4",
+                          }}
+                          desktop={{}}
+                          custom={{ displayName: "CTA Buttons" }}
+                          buttons={[
+                            {
+                              text: "Get Started",
+                              url: "#",
+                              background: "bg-palette:Primary",
+                              color: "text-white",
+                            },
+                            {
+                              text: "Learn More",
+                              url: "#",
+                              background: "bg-transparent",
+                              color: "text-palette:Primary",
+                            },
+                          ]}
+                        />
+                      </Element>
                     </Element>
 
+                  </Element>
+
+                  {/* Global Footer */}
+                  <Element
+                    canvas
+                    is={Container}
+                    canDelete={true}
+                    canEditName={true}
+                    root={{
+                      background: "bg-palette:Alternate Background",
+                    }}
+                    mobile={{
+                      display: "flex",
+                      flexDirection: "flex-col",
+                      justifyContent: "justify-center",
+                      alignItems: "items-center",
+                      width: "w-full",
+                      px: "px-6",
+                      py: "py-8",
+                      gap: "gap-4",
+                    }}
+                    desktop={{}}
+                    custom={{ displayName: "Footer" }}
+                  >
                     <Element
-                      canvas
-                      is={Container}
+                      is={Text}
                       canDelete={true}
                       canEditName={true}
-                      root={{}}
+                      root={{
+                        color: "text-palette:Alternate Text",
+                      }}
                       mobile={{
-                        py: "py-3",
-                        px: "px-3",
-                        mx: "mx-auto",
-                        display: "flex",
-                        justifyContent: "justify-center",
-                        alignItems: "items-center",
-                        flexDirection: "flex-col",
-                        width: "w-full",
-                        gap: "gap-3",
+                        fontSize: "text-sm",
+                        textAlign: "text-center",
                       }}
                       desktop={{}}
-                      custom={{ displayName: "Right Container" }}
+                      custom={{ displayName: "Footer Text" }}
+                      text="<p>© 2025 YourBrand. All rights reserved.</p>"
                     />
                   </Element>
                 </Element>
-              </Element>
-            </Frame>
+              </Frame>
+            )}
           </Viewport>
         </div>
       </Editor>
@@ -308,7 +463,9 @@ export async function getServerSideProps({ req, query }) {
 
       // Only use default template if no data parameter was provided and no webhook data
       if (!data) {
-        data = templates["blank"]?.content || "";
+        // templates is an array, not an object, so we can't access templates["blank"]
+        // Just leave data empty to use the JSX template in the Frame
+        data = "";
       }
     }
   } catch (e) {
@@ -349,7 +506,7 @@ export async function getServerSideProps({ req, query }) {
   return {
     props: {
       subdomain: tenant?.subdomain || null,
-      data: json ? lz.encodeBase64(lz.compress(json)) : null,
+      data: (json && json.trim()) ? lz.encodeBase64(lz.compress(json)) : null,
       slug: query?.slug?.length ? query.slug[0] : "",
       domain: process.env.DOMAIN,
       result,

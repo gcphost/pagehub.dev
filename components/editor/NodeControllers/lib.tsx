@@ -1,7 +1,13 @@
+import { useNode } from "@craftjs/core";
 import { useEffect, useState } from "react";
 
 export function useMousePosition(id, distance = 45, cref = null) {
-  const dom = cref || document.querySelector(`[node-id="${id}"]`);
+  // Get DOM from CraftJS if not provided
+  const { dom: craftDom } = useNode((node) => ({
+    dom: node.dom,
+  }));
+
+  const dom = cref || craftDom;
 
   const [isInTopOrLeft, setIsInTopOrLeft] = useState(false);
   const [isInBottomOrRight, setIsInBottomOrRight] = useState(false);
@@ -53,10 +59,16 @@ export function useMousePosition(id, distance = 45, cref = null) {
 }
 
 export function useIsMouseOver(id) {
-  const dom = document.querySelector(`[node-id="${id}"]`);
+  // Get DOM from CraftJS
+  const { dom } = useNode((node) => ({
+    dom: node.dom,
+  }));
+
   const [isMouseOver, setIsMouseOver] = useState(false);
 
   useEffect(() => {
+    if (!dom) return;
+
     const handleMouseOver = () => {
       setIsMouseOver(true);
     };

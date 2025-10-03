@@ -43,7 +43,16 @@ export interface ContainerProps extends BaseSelectorProps {
 
 const defaultProps: ContainerProps = {
   type: "background",
-  pallet: [],
+  pallet: [
+    { name: "Primary", color: "bg-blue-500" },
+    { name: "Secondary", color: "bg-purple-500" },
+    { name: "Accent", color: "bg-orange-500" },
+    { name: "Neutral", color: "bg-gray-500" },
+    { name: "Background", color: "bg-white" },
+    { name: "Alternate Background", color: "bg-gray-50" },
+    { name: "Text", color: "text-gray-900" },
+    { name: "Alternate Text", color: "text-gray-600" },
+  ],
   root: {},
   mobile: {
     width: "w-full",
