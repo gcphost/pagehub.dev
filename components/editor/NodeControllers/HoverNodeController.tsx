@@ -23,9 +23,10 @@ export const HoverNodeController = (props: {
   }));
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isHover && !isActive && (
         <RenderNodeControl
+          key={`${id}-hover-${isHover}`}
           position={position}
           align={align}
           alt={alt}

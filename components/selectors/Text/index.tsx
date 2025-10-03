@@ -121,8 +121,14 @@ if (text && typeof window !== "undefined") {
     prop["data-gramm"] = false;
     prop.suppressContentEditableWarning = true;
     prop.onClick = (e) => {
-      e.stopPropagation();
-      setIsEditing(true);
+      if (!isEditing) {
+        // First click: select the node (let event propagate)
+        actions.selectNode(id);
+        setTimeout(() => setIsEditing(true), 0);
+      } else {
+        // Already editing: stop propagation to avoid deselection
+        e.stopPropagation();
+      }
     };
     prop.onBlur = () => {
       setIsEditing(false);

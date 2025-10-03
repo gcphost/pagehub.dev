@@ -65,9 +65,10 @@ export const DragAdjustNodeController = (props: {
   const parentWidthRef = React.useRef<number | null>(null);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isActive && (
         <RenderNodeControl
+          key={`${id}-drag-${position}-${isActive}`}
           position={position}
           align={align}
           alt={alt}

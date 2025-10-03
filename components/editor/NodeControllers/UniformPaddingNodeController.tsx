@@ -121,9 +121,10 @@ export const UniformPaddingNodeController = () => {
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isActive && (
         <RenderNodeControl
+          key={`${id}-uniform-padding-${isActive}`}
           position="top"
           align="end"
           placement="start"

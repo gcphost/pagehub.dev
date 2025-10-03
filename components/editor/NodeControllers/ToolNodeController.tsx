@@ -18,9 +18,10 @@ export const ToolNodeController = (props: {
   }));
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isActive && (
         <RenderNodeControl
+          key={`${id}-${isActive}`}
           position={position}
           align={align}
           placement={placement}

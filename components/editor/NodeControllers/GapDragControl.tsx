@@ -291,8 +291,6 @@ export const GapDragControl = () => {
     };
   }, [dom, isSelected, isDragging, dragStartPos, gapHoverInfo, view, setProp]);
 
-  if ((!gapHoverInfo?.show && !isDragging) || !gapHoverInfo) return null;
-
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -312,41 +310,45 @@ export const GapDragControl = () => {
     });
   };
 
-  const control = (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
-        exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
-        style={{
-          position: "fixed",
-          left: gapHoverInfo.x,
-          top: gapHoverInfo.y,
-          transform: "translate(-50%, -50%)",
-          zIndex: 1000,
-          pointerEvents: "auto",
-        }}
-      >
-        <Tooltip content="Drag to adjust gap" placement="right">
-          <motion.button
-            whileHover={{
-              scale: 1.1,
-              transition: { duration: 0.2 },
-            }}
-            whileTap={{ scale: 0.9 }}
-            className={`drag-control group ${gapHoverInfo.direction === "horizontal" ? "w-8 h-2" : "w-2 h-8"
-              }`}
-            onMouseDown={handleMouseDown}
-            aria-label="Drag to adjust gap"
-          />
-        </Tooltip>
-      </motion.div>
-    </AnimatePresence>
-  );
+  const shouldShow = (gapHoverInfo?.show || isDragging) && gapHoverInfo;
 
   const container = document.querySelector('[data-container="true"]');
   if (!container) return null;
 
-  return ReactDOM.createPortal(control, container);
+  return ReactDOM.createPortal(
+    <AnimatePresence mode="wait">
+      {shouldShow && (
+        <motion.div
+          key={`gap-${id}-${gapHoverInfo.childIndex}`}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
+          exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
+          style={{
+            position: "fixed",
+            left: gapHoverInfo.x,
+            top: gapHoverInfo.y,
+            transform: "translate(-50%, -50%)",
+            zIndex: 1000,
+            pointerEvents: "auto",
+          }}
+        >
+          <Tooltip content="Drag to adjust gap" placement="right">
+            <motion.button
+              whileHover={{
+                scale: 1.1,
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{ scale: 0.9 }}
+              className={`drag-control group ${gapHoverInfo.direction === "horizontal" ? "w-8 h-2" : "w-2 h-8"
+                }`}
+              onMouseDown={handleMouseDown}
+              aria-label="Drag to adjust gap"
+            />
+          </Tooltip>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    container
+  );
 };
 
