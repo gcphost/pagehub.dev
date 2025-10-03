@@ -82,6 +82,11 @@ export const EnabledAtom = atom({
   default: true,
 });
 
+export const InitialLoadCompleteAtom = atom({
+  key: "initialLoadComplete",
+  default: false,
+});
+
 export const Viewport: React.FC<any> = ({ children }) => {
   const {
     enabled,
@@ -112,18 +117,72 @@ export const Viewport: React.FC<any> = ({ children }) => {
   }));
 
   const [ac, setAc] = useState(false);
+  const setInitialLoadComplete = useSetRecoilState(InitialLoadCompleteAtom);
 
   useEffect(() => {
     const active = query.getEvent("selected").first();
 
     if (!active && !ac) {
-      const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
+      // Smart selection: Find a meaningful starting point for the user
+      // Collect ALL matching nodes, then pick the highest priority one
+      const findAllNodesByDisplayName = (nodeId) => {
+        const node = query.node(nodeId).get();
+        if (!node) return [];
 
-      if (nl && nl.length >= 1) {
-        setTimeout(() => actions.selectNode(nl[0]), 200);
+        const matches = [];
+
+        // Check if this node matches
+        const displayName = node.data.custom?.displayName;
+        if (displayName) {
+          matches.push({ id: nodeId, displayName });
+        }
+
+        // Recursively search child nodes
+        if (node.data.nodes && node.data.nodes.length > 0) {
+          for (const childId of node.data.nodes) {
+            const childMatches = findAllNodesByDisplayName(childId);
+            matches.push(...childMatches);
+          }
+        }
+
+        return matches;
+      };
+
+      // Priority order: Hero Content > Home Page > Header > first child of Background
+      const targetNames = ["Hero Content", "Home Page", "Header"];
+      const allNodes = findAllNodesByDisplayName(ROOT_NODE);
+
+      // Find the highest priority match
+      let foundNode = null;
+      for (const targetName of targetNames) {
+        const match = allNodes.find(n => n.displayName === targetName);
+        if (match) {
+          foundNode = match.id;
+          break;
+        }
+      }
+
+      if (foundNode) {
+        setTimeout(() => {
+          actions.selectNode(foundNode);
+          // Mark initial load as complete after selection
+          setTimeout(() => setInitialLoadComplete(true), 100);
+        }, 200);
         setAc(true);
+      } else {
+        // Fallback to first child of ROOT_NODE if nothing meaningful found
+        const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
+        if (nl && nl.length >= 1) {
+          setTimeout(() => {
+            actions.selectNode(nl[0]);
+            // Mark initial load as complete after selection
+            setTimeout(() => setInitialLoadComplete(true), 100);
+          }, 200);
+          setAc(true);
+        }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [unsavedChanges, setUnsavedChanged] =

@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { Tooltip } from "../../layout/Tooltip";
 import RenderNodeControl from "../RenderNodeControl";
 import { ViewAtom } from "../Viewport";
+import { useElementColor } from "./lib";
 
 // Tailwind spacing values mapping (same as DragAdjustNodeController)
 const TAILWIND_SPACING_MAP = {
@@ -43,6 +44,9 @@ export const UniformPaddingNodeController = () => {
   const [dragging, setDragging] = useState(false);
   const [startY, setStartY] = useState(null);
   const [initialPadding, setInitialPadding] = useState(null);
+
+  // Get the current computed color from the DOM (same as border-current uses)
+  const elementColor = useElementColor(dom as HTMLElement, isActive);
 
   useEffect(() => {
     if (!dragging) return;
@@ -132,6 +136,7 @@ export const UniformPaddingNodeController = () => {
           className={
             "whitespace-nowrap items-center justify-center select-none fixed pointer-events-auto !top-[2px] !right-[2px]"
           }
+          style={elementColor ? { color: elementColor } : {}}
         >
           <Tooltip content="Drag to adjust all padding" placement="left">
             <motion.button
@@ -147,11 +152,11 @@ export const UniformPaddingNodeController = () => {
                 transition: { duration: 0.3 },
               }}
               whileTap={{ scale: 0.9 }}
-              className="drag-control w-8 h-8 flex items-center justify-center bg-transparent hover:bg-transparent"
+              className=" w-8 h-8 flex items-center justify-center "
               onMouseDown={handleMouseDown}
               aria-label="Drag to adjust uniform padding"
             >
-              <TbBorderCornerSquare className="w-8 h-8 text-gray-700 rotate-90" />
+              <TbBorderCornerSquare className="w-8 h-8 text-current rotate-90" />
             </motion.button>
           </Tooltip>
         </RenderNodeControl>

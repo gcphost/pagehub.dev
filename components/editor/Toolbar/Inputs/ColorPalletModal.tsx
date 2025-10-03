@@ -43,18 +43,18 @@ const convertToBackgroundClass = (color: string) => {
     return "";
   }
 
-  // Convert text-* to bg-* for preview
-  if (color.startsWith("text-")) {
-    return color.replace("text-", "bg-");
+  // Strip any existing prefix (for backward compatibility)
+  let cleanColor = color;
+  const prefixes = ["text-", "bg-", "border-", "ring-", "from-", "to-", "via-"];
+  for (const prefix of prefixes) {
+    if (cleanColor.startsWith(prefix)) {
+      cleanColor = cleanColor.substring(prefix.length);
+      break;
+    }
   }
 
-  // If it's already bg-*, return as is
-  if (color.startsWith("bg-")) {
-    return color;
-  }
-
-  // Fallback
-  return color;
+  // Add bg- prefix for preview
+  return `bg-${cleanColor}`;
 };
 
 export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => {
@@ -82,33 +82,33 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
           .filter((item) => item && typeof item === "object" && item.name)
           .map((item) => ({
             name: String(item.name),
-            color: String(item.color || "bg-gray-500"),
+            color: String(item.color || "gray-500"),
           }));
       } else {
         // Empty - add defaults
         converted = [
-          { name: "Primary", color: "bg-blue-500" },
-          { name: "Secondary", color: "bg-purple-500" },
-          { name: "Accent", color: "bg-orange-500" },
-          { name: "Neutral", color: "bg-gray-500" },
-          { name: "Background", color: "bg-white" },
-          { name: "Alternate Background", color: "bg-gray-50" },
-          { name: "Text", color: "text-gray-900" },
-          { name: "Alternate Text", color: "text-gray-600" },
+          { name: "Primary", color: "blue-500" },
+          { name: "Secondary", color: "purple-500" },
+          { name: "Accent", color: "orange-500" },
+          { name: "Neutral", color: "gray-500" },
+          { name: "Background", color: "white" },
+          { name: "Alternate Background", color: "gray-50" },
+          { name: "Text", color: "gray-900" },
+          { name: "Alternate Text", color: "gray-600" },
         ];
       }
 
       // Ensure we have at least the defaults
       if (converted.length === 0) {
         converted = [
-          { name: "Primary", color: "bg-blue-500" },
-          { name: "Secondary", color: "bg-purple-500" },
-          { name: "Accent", color: "bg-orange-500" },
-          { name: "Neutral", color: "bg-gray-500" },
-          { name: "Background", color: "bg-white" },
-          { name: "Alternate Background", color: "bg-gray-50" },
-          { name: "Text", color: "text-gray-900" },
-          { name: "Alternate Text", color: "text-gray-600" },
+          { name: "Primary", color: "blue-500" },
+          { name: "Secondary", color: "purple-500" },
+          { name: "Accent", color: "orange-500" },
+          { name: "Neutral", color: "gray-500" },
+          { name: "Background", color: "white" },
+          { name: "Alternate Background", color: "gray-50" },
+          { name: "Text", color: "gray-900" },
+          { name: "Alternate Text", color: "gray-600" },
         ];
       }
 
@@ -126,14 +126,14 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
   const savePallets = (newPallets: NamedColor[]) => {
     // Ensure base colors always exist
     const baseColorDefaults = [
-      { name: "Primary", color: "bg-blue-500" },
-      { name: "Secondary", color: "bg-purple-500" },
-      { name: "Accent", color: "bg-orange-500" },
-      { name: "Neutral", color: "bg-gray-500" },
-      { name: "Background", color: "bg-white" },
-      { name: "Alternate Background", color: "bg-gray-50" },
-      { name: "Text", color: "text-gray-900" },
-      { name: "Alternate Text", color: "text-gray-600" },
+      { name: "Primary", color: "blue-500" },
+      { name: "Secondary", color: "purple-500" },
+      { name: "Accent", color: "orange-500" },
+      { name: "Neutral", color: "gray-500" },
+      { name: "Background", color: "white" },
+      { name: "Alternate Background", color: "gray-50" },
+      { name: "Text", color: "gray-900" },
+      { name: "Alternate Text", color: "gray-600" },
     ];
 
     // Check if all base colors exist, if not add them
@@ -152,7 +152,7 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
   const addPallet = () => {
     const newPallets = [
       ...pallets,
-      { name: `Color ${pallets.length + 1}`, color: "bg-gray-500" },
+      { name: `Color ${pallets.length + 1}`, color: "gray-500" },
     ];
     savePallets(newPallets);
   };
@@ -300,7 +300,7 @@ export const ColorPalletModal = ({ isOpen, onClose }: ColorPalletModalProps) => 
 
                             updatePalletColor(index, String(pallet.color), String(val));
                           },
-                          showPallet: true,
+                          showPallet: false,
                           propKey: `pallet-${index}`,
                           e: {
                             top: rect.top,

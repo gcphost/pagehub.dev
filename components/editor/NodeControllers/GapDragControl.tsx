@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useRecoilValue } from "recoil";
 import { ViewAtom } from "../Viewport";
+import { useElementColor } from "./lib";
 
-const GAP_DETECTION_THRESHOLD = 30; // pixels - how close to gap center to trigger
+const GAP_DETECTION_THRESHOLD = 40; // pixels - circular radius around gap control to trigger
 
 // Convert pixel value to Tailwind gap class - snap to valid Tailwind values
 const pixelsToGapClass = (pixels: number): string => {
@@ -75,6 +76,9 @@ export const GapDragControl = () => {
 
   const { actions: { setProp } } = useNode();
   const view = useRecoilValue(ViewAtom);
+
+  // Get the current computed color from the DOM (same as border-current uses)
+  const elementColor = useElementColor(dom as HTMLElement, isSelected);
 
   const [gapHoverInfo, setGapHoverInfo] = useState<{
     show: boolean;
@@ -220,17 +224,27 @@ export const GapDragControl = () => {
             const gapCenter = (gapStart + gapEnd) / 2;
             const gapSize = Math.abs(gapEnd - gapStart);
 
-            // Check if mouse X is near the gap center and Y is within the container
+            // Get the vertical bounds of the two children that form this gap
+            const minTop = Math.min(child1.top, child2.top);
+            const maxBottom = Math.max(child1.bottom, child2.bottom);
+
+            // Calculate where the control would be positioned
+            const controlX = gapCenter;
+            const controlY = (minTop + maxBottom) / 2;
+
+            // Check if mouse is within circular radius of the control position
+            const distance = Math.sqrt(
+              Math.pow(e.clientX - controlX, 2) + Math.pow(e.clientY - controlY, 2)
+            );
+
             if (
-              Math.abs(e.clientX - gapCenter) < GAP_DETECTION_THRESHOLD &&
-              e.clientY >= rect.top &&
-              e.clientY <= rect.bottom &&
+              distance < GAP_DETECTION_THRESHOLD &&
               (gapSize >= 0 || Math.abs(gapEnd - gapStart) <= 50) // Allow showing for small or no gaps
             ) {
               setGapHoverInfo({
                 show: true,
-                x: gapCenter,
-                y: (child1.top + child1.bottom) / 2,
+                x: controlX,
+                y: controlY,
                 direction: "vertical",
                 currentGap: currentGapPx,
                 childIndex: i,
@@ -249,17 +263,27 @@ export const GapDragControl = () => {
             const gapCenter = (gapStart + gapEnd) / 2;
             const gapSize = Math.abs(gapEnd - gapStart);
 
-            // Check if mouse Y is near the gap center and X is within the container
+            // Get the horizontal bounds of the two children that form this gap
+            const minLeft = Math.min(child1.left, child2.left);
+            const maxRight = Math.max(child1.right, child2.right);
+
+            // Calculate where the control would be positioned
+            const controlX = (minLeft + maxRight) / 2;
+            const controlY = gapCenter;
+
+            // Check if mouse is within circular radius of the control position
+            const distance = Math.sqrt(
+              Math.pow(e.clientX - controlX, 2) + Math.pow(e.clientY - controlY, 2)
+            );
+
             if (
-              Math.abs(e.clientY - gapCenter) < GAP_DETECTION_THRESHOLD &&
-              e.clientX >= rect.left &&
-              e.clientX <= rect.right &&
+              distance < GAP_DETECTION_THRESHOLD &&
               (gapSize >= 0 || Math.abs(gapEnd - gapStart) <= 50) // Allow showing for small or no gaps
             ) {
               setGapHoverInfo({
                 show: true,
-                x: (child1.left + child1.right) / 2,
-                y: gapCenter,
+                x: controlX,
+                y: controlY,
                 direction: "horizontal",
                 currentGap: currentGapPx,
                 childIndex: i,
@@ -330,6 +354,7 @@ export const GapDragControl = () => {
             transform: "translate(-50%, -50%)",
             zIndex: 1000,
             pointerEvents: "auto",
+            color: elementColor || undefined,
           }}
         >
           <Tooltip content="Drag to adjust gap" placement="right">

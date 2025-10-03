@@ -39,19 +39,25 @@ export interface ContainerProps extends BaseSelectorProps {
   ico?: string;
   icoType?: string;
   icoContent?: string;
+  pageMedia?: Array<{
+    id: string;
+    type: string;
+    uploadedAt: number;
+    componentId?: string;
+  }>;
 }
 
 const defaultProps: ContainerProps = {
   type: "background",
   pallet: [
-    { name: "Primary", color: "bg-blue-500" },
-    { name: "Secondary", color: "bg-purple-500" },
-    { name: "Accent", color: "bg-orange-500" },
-    { name: "Neutral", color: "bg-gray-500" },
-    { name: "Background", color: "bg-white" },
-    { name: "Alternate Background", color: "bg-gray-50" },
-    { name: "Text", color: "text-gray-900" },
-    { name: "Alternate Text", color: "text-gray-600" },
+    { name: "Primary", color: "blue-500" },
+    { name: "Secondary", color: "purple-500" },
+    { name: "Accent", color: "orange-500" },
+    { name: "Neutral", color: "gray-500" },
+    { name: "Background", color: "white" },
+    { name: "Alternate Background", color: "gray-50" },
+    { name: "Text", color: "gray-900" },
+    { name: "Alternate Text", color: "gray-600" },
   ],
   root: {},
   mobile: {
@@ -64,6 +70,7 @@ const defaultProps: ContainerProps = {
   tablet: {},
   desktop: {},
   backgroundFetchPriority: "low",
+  pageMedia: [],
 };
 
 export const Background = (props: Partial<ContainerProps>) => {

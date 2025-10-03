@@ -7,7 +7,7 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
 import React, { useRef } from "react";
 import { TbCode } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -58,12 +58,15 @@ export const Embed = (props: EmbedProps) => {
     getClonedState(props, state)
   );
 
+  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
+
   useScrollToSelected(id, enabled);
   selectAfterAdding(
     actions.selectNode,
     useSetRecoilState(TabAtom),
     id,
-    enabled
+    enabled,
+    initialLoadComplete
   );
 
   const view = useRecoilValue(ViewAtom);

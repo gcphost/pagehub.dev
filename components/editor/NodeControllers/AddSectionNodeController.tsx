@@ -32,8 +32,9 @@ export const AddSectionNodeController = (props: { position; align }) => {
   const setActiveItem = useSetRecoilState(TbActiveItemAtom);
   const setSelectedNode = useSetRecoilState(SelectedNodeAtom);
 
-  const { parent } = useNode((node) => ({
+  const { parent, currentNodeType } = useNode((node) => ({
     parent: node.data.parent,
+    currentNodeType: node.data.props?.type,
   }));
 
   const { query, actions } = useEditor();
@@ -42,12 +43,14 @@ export const AddSectionNodeController = (props: { position; align }) => {
   const propType = parentNode?.data?.props?.type;
 
   let type = null;
+  // Only show "Add a Page" if this container itself is type="page"
+  if (currentNodeType === "page") type = "Page";
+  // For sections inside pages
   if (propType === "page") type = "Section";
-  if (propType === "background" || parent === ROOT_NODE) type = "Page";
 
   const setMenu = useSetRecoilState(ToolboxMenu);
 
-  // Only show if parent is a page or background (top-level containers)
+  // Only show if this is a page or inside a page container
   if (!type) return null;
 
   return (

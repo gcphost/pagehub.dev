@@ -137,14 +137,14 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                   data-renderer={true}
                   custom={{ displayName: "Background" }}
                   pallet={[
-                    { name: "Primary", color: "bg-blue-500" },
-                    { name: "Secondary", color: "bg-purple-500" },
-                    { name: "Accent", color: "bg-orange-500" },
-                    { name: "Neutral", color: "bg-gray-500" },
-                    { name: "Background", color: "bg-white" },
-                    { name: "Alternate Background", color: "bg-gray-50" },
-                    { name: "Text", color: "text-gray-900" },
-                    { name: "Alternate Text", color: "text-gray-600" },
+                    { name: "Primary", color: "blue-500" },
+                    { name: "Secondary", color: "purple-500" },
+                    { name: "Accent", color: "orange-500" },
+                    { name: "Neutral", color: "gray-500" },
+                    { name: "Background", color: "white" },
+                    { name: "Alternate Background", color: "gray-50" },
+                    { name: "Text", color: "gray-900" },
+                    { name: "Alternate Text", color: "gray-600" },
                   ]}
                   root={{
                     background: "bg-white",
@@ -153,7 +153,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                   mobile={{
                     height: "h-full",
                     width: "w-screen",
-                    gap: "gap-3",
                     display: "flex",
                     flexDirection: "flex-col",
                     overflow: "overflow-auto",
@@ -236,6 +235,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                       alignItems: "items-center",
                       width: "w-full",
                       height: "h-screen",
+                      overflow: "overflow-auto",
                       px: "px-6",
                       py: "py-12",
                       gap: "gap-6",

@@ -1144,11 +1144,22 @@ export const ClassGene = (
         if (paletteColor) {
           let colorValue = paletteColor.color;
 
-          // If the palette color already has the same prefix, return as-is
-          // e.g., if we want "bg-palette:Brand" and palette has "bg-blue-600"
-          // we should return "bg-blue-600", not "bg-bg-blue-600"
-          if (prefixPart && colorValue.startsWith(prefixPart)) {
-            return colorValue;
+          // Strip any existing prefix from the color value for backward compatibility
+          // Old data might have "bg-blue-500" but new data should be just "blue-500"
+          const prefixesToStrip = [
+            "bg-",
+            "text-",
+            "border-",
+            "ring-",
+            "from-",
+            "to-",
+            "via-",
+          ];
+          for (const stripPrefix of prefixesToStrip) {
+            if (colorValue.startsWith(stripPrefix)) {
+              colorValue = colorValue.substring(stripPrefix.length);
+              break;
+            }
           }
 
           // If it's a Tailwind class (like "blue-600"), add prefix normally

@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useEditor, useNode } from "@craftjs/core";
 import {
   DeleteMedia,
   GetSignedUrl,
@@ -9,6 +9,7 @@ import { TbAlertTriangle, TbUpload } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { getCdnUrl } from "utils/cdn";
+import { registerMediaWithBackground, unregisterMediaFromBackground } from "utils/lib";
 import Spinner from "../Helpers/Spinner";
 
 import { Wrap } from "../ToolbarStyle";
@@ -82,9 +83,12 @@ export const ImageUploadInput: any = ({
   const {
     actions: { setProp },
     nodeProps,
+    id: componentId,
   } = useNode((node) => ({
     nodeProps: node.data.props,
   }));
+
+  const { query, actions } = useEditor();
 
   const [errors, setErrors] = useState([]);
   const [value] = useState("");
@@ -112,7 +116,12 @@ export const ImageUploadInput: any = ({
     const _saved = [];
 
     if (files.length) {
-      await handleMediaDeletion(mediaId, settings);
+      // Unregister old media if it exists
+      if (mediaId) {
+        await handleMediaDeletion(mediaId, settings);
+        unregisterMediaFromBackground(query, actions, mediaId);
+      }
+
       const savedFiles = await uploadFiles(files, settings, setErrors);
       _saved.push(...savedFiles);
     }
@@ -126,6 +135,8 @@ export const ImageUploadInput: any = ({
     setTimeout(() => {
       _saved.forEach((id) => {
         updateNodeProps(setProp, false, true, propKey, typeKey, id);
+        // Register new media with Background
+        registerMediaWithBackground(query, actions, id, "cdn", componentId);
       });
     }, 500);
 

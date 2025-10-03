@@ -6,7 +6,7 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
 import Link from "next/link";
 import React from "react";
 import { FaFont } from "react-icons/fa";
@@ -67,6 +67,7 @@ export const Text = (props: Partial<TextProps>) => {
   const tab = useSetRecoilState(TabAtom);
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
+  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
   const palette = usePalette();
 
   const {
@@ -78,7 +79,7 @@ export const Text = (props: Partial<TextProps>) => {
   const [isEditing, setIsEditing] = React.useState(false);
 
   useScrollToSelected(id, enabled);
-  selectAfterAdding(actions.selectNode, tab, id, enabled);
+  selectAfterAdding(actions.selectNode, tab, id, enabled, initialLoadComplete);
 
   props = setClonedProps(props, query);
 

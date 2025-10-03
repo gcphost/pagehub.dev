@@ -6,7 +6,7 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { TabAtom } from "components/editor/Viewport";
+import { InitialLoadCompleteAtom, TabAtom } from "components/editor/Viewport";
 import { SaveSubmissions } from "components/editor/Viewport/lib";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -35,12 +35,15 @@ export const FormDrop = ({
     enabled: state.options.enabled,
   }));
 
+  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
+
   useScrollToSelected(id, enabled);
   selectAfterAdding(
     actions.selectNode,
     useSetRecoilState(TabAtom),
     id,
-    enabled
+    enabled,
+    initialLoadComplete
   );
 
   const [loaded, setLoaded] = useState(false);

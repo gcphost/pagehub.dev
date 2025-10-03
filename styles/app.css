@@ -8,7 +8,7 @@
 }
 
 .drag-control {
-  @apply !rounded-sm bg-gray-700 hover:bg-gray-800 cursor-move !border-0;
+  @apply !rounded-sm !bg-current cursor-move !border-0;
 }
 
 [role="tooltip"] {

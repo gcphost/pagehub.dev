@@ -138,8 +138,9 @@ export const ColorPickerDialog = () => {
 
   const { actions, query } = useEditor();
 
-  // Auto-show full picker if no palette colors exist
+  // Auto-show full picker if no palette colors exist OR if showPallet is false
   const hasPaletteColors = namedPalette.length > 0;
+  const shouldShowPalette = colorPicker.showPallet !== false && hasPaletteColors;
 
   useEffect(() => {
     const node = query.node(ROOT_NODE).get();
@@ -252,8 +253,8 @@ export const ColorPickerDialog = () => {
               </div>
 
               <div className="flex flex-row gap-1.5 items-center">
-                {/* Show picker toggle when palette colors exist */}
-                {hasPaletteColors && (
+                {/* Show picker toggle when palette colors exist and showPallet is true */}
+                {shouldShowPalette && (
                   <Tooltip content={showFullPicker ? "Show Page Colors" : "Show Color Picker"}>
                     <button
                       className="hover:text-gray-500 cursor-pointer flex items-center justify-center text-lg"
@@ -265,7 +266,7 @@ export const ColorPickerDialog = () => {
                 )}
 
                 {/* Only show save and dropper when full picker is visible */}
-                {(!hasPaletteColors || showFullPicker) && (
+                {(!shouldShowPalette || showFullPicker) && (
                   <>
                     {/* Hide save to pallet button when editing from the palette modal */}
                     {!colorPicker.propKey?.startsWith("pallet-") && (
@@ -296,20 +297,30 @@ export const ColorPickerDialog = () => {
           }
 
           {/* Named Palette Colors */}
-          {hasPaletteColors && !showFullPicker && (
+          {shouldShowPalette && !showFullPicker && (
             <div className="mx-3 mt-3 mb-2">
               <div className="text-xs font-medium text-gray-600 mb-2 uppercase tracking-wide">
                 <span>Page Colors</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {namedPalette.map((paletteColor, index) => {
-                  const isSelected =
-                    colorPicker.value === paletteColor.color ||
+                  // Check if current value is this palette color
+                  // Value could be "text-palette:Primary" or "bg-palette:Primary" etc
+                  const valueStr = typeof colorPicker.value === "string" ? colorPicker.value : "";
+                  const isPaletteRef = valueStr.includes("palette:");
+                  const isSelected = isPaletteRef
+                    ? valueStr.includes(`palette:${paletteColor.name}`)
+                    : colorPicker.value === paletteColor.color ||
                     (typeof colorPicker.value === "object" &&
                       colorPicker.value?.r &&
                       paletteColor.color === `rgba(${colorPicker.value.r},${colorPicker.value.g},${colorPicker.value.b},${colorPicker.value.a})`);
 
                   const isTailwindClass = !paletteColor.color.includes("rgba") && !paletteColor.color.startsWith("#");
+
+                  // For Tailwind classes, ensure they have bg- prefix for display
+                  const displayColor = isTailwindClass && !paletteColor.color.startsWith("bg-")
+                    ? `bg-${paletteColor.color}`
+                    : paletteColor.color;
 
                   return (
                     <button
@@ -322,7 +333,7 @@ export const ColorPickerDialog = () => {
                         }`}
                     >
                       <div
-                        className={`w-full h-8 rounded border-2 border-gray-200 ${isTailwindClass ? paletteColor.color : ""}`}
+                        className={`w-full h-8 rounded border-2 border-gray-200 ${isTailwindClass ? displayColor : ""}`}
                         style={{
                           backgroundColor: !isTailwindClass ? paletteColor.color : undefined
                         }}
@@ -337,8 +348,8 @@ export const ColorPickerDialog = () => {
             </div>
           )}
 
-          {/* Show color picker if no palette OR if toggle is enabled */}
-          {(!hasPaletteColors || showFullPicker) && (
+          {/* Show color picker if no palette OR if toggle is enabled OR if showPallet is false */}
+          {(!shouldShowPalette || showFullPicker) && (
             <>
               <div
                 className={`m-3 rounded-md overflow-hidden w-[${colorPicker?.e?.width - 40

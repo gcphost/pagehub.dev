@@ -9,7 +9,7 @@ import {
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import ClientIconLoader from "components/editor/Toolbar/Tools/ClientIconLoader";
-import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
 import { changeProp, getProp } from "components/editor/Viewport/lib";
 import debounce from "lodash.debounce";
 import Link from "next/link";
@@ -155,12 +155,15 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
     getClonedState(props, state)
   );
 
+  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
+
   useScrollToSelected(id, enabled);
   selectAfterAdding(
     actions.selectNode,
     useSetRecoilState(TabAtom),
     id,
-    enabled
+    enabled,
+    initialLoadComplete
   );
 
   const view = useRecoilValue(ViewAtom);

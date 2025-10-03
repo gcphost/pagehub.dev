@@ -461,12 +461,23 @@ export const useDefaultTab = (head, activeTab, setActiveTab) => {
   }, [head, activeTab]);
 };
 
-export const selectAfterAdding = (selectNode, setActiveTab, id, enabled) => {
+export const selectAfterAdding = (
+  selectNode,
+  setActiveTab,
+  id,
+  enabled,
+  initialLoadComplete
+) => {
   useEffect(() => {
     if (!id || !enabled) return;
 
+    // Only auto-select if initial load is complete (prevents selecting last element on page load)
+    // We check the value but don't watch it - we only want to react when id/enabled changes
+    if (!initialLoadComplete) return;
+
     selectNode(id);
     setActiveTab("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, enabled]);
 };
 
@@ -614,4 +625,142 @@ export const popupCenter = (url, title) => {
   );
 
   newWindow?.focus();
+};
+
+/**
+ * Media Management Utilities
+ * These functions help manage media uploads centrally in the Background component
+ */
+
+/**
+ * Register a media upload with the Background component
+ * @param query - Craft.js query object
+ * @param actions - Craft.js actions object
+ * @param mediaId - The ID of the uploaded media
+ * @param mediaType - The type of media (cdn, img, svg, etc)
+ * @param componentId - The ID of the component that owns this media
+ */
+export const registerMediaWithBackground = (
+  query: any,
+  actions: any,
+  mediaId: string,
+  mediaType: string = "cdn",
+  componentId?: string
+) => {
+  try {
+    const backgroundNode = query.node(ROOT_NODE).get();
+    if (!backgroundNode) return;
+
+    actions.setProp(ROOT_NODE, (props: any) => {
+      props.pageMedia = props.pageMedia || [];
+
+      // Check if media already exists
+      const exists = props.pageMedia.find((m: any) => m.id === mediaId);
+      if (exists) {
+        // Update existing entry
+        exists.componentId = componentId;
+        exists.type = mediaType;
+      } else {
+        // Add new entry
+        props.pageMedia.push({
+          id: mediaId,
+          type: mediaType,
+          uploadedAt: Date.now(),
+          componentId,
+        });
+      }
+    });
+  } catch (e) {
+    console.error("Failed to register media with Background:", e);
+  }
+};
+
+/**
+ * Unregister a media item from the Background component
+ * @param query - Craft.js query object
+ * @param actions - Craft.js actions object
+ * @param mediaId - The ID of the media to remove
+ */
+export const unregisterMediaFromBackground = (
+  query: any,
+  actions: any,
+  mediaId: string
+) => {
+  try {
+    const backgroundNode = query.node(ROOT_NODE).get();
+    if (!backgroundNode) return;
+
+    actions.setProp(ROOT_NODE, (props: any) => {
+      if (!props.pageMedia) return;
+      props.pageMedia = props.pageMedia.filter((m: any) => m.id !== mediaId);
+    });
+  } catch (e) {
+    console.error("Failed to unregister media from Background:", e);
+  }
+};
+
+/**
+ * Get all media registered in the Background component
+ * @param query - Craft.js query object
+ * @returns Array of media objects
+ */
+export const getPageMedia = (query: any) => {
+  try {
+    const backgroundNode = query.node(ROOT_NODE).get();
+    if (!backgroundNode) return [];
+    return backgroundNode.data.props.pageMedia || [];
+  } catch (e) {
+    console.error("Failed to get page media:", e);
+    return [];
+  }
+};
+
+/**
+ * Scan the page tree and sync media list with actual usage
+ * This is useful for cleanup - removes media entries that are no longer in use
+ * @param query - Craft.js query object
+ * @param actions - Craft.js actions object
+ */
+export const syncPageMedia = (query: any, actions: any) => {
+  try {
+    const nodes = query.getSerializedNodes();
+    const usedMediaIds = new Set<string>();
+
+    // Scan all nodes for media properties
+    Object.keys(nodes).forEach((nodeId) => {
+      const node = nodes[nodeId];
+      const props = node.props;
+
+      // Check common media property names
+      const mediaProps = [
+        "ico",
+        "image",
+        "videoId",
+        "backgroundImage",
+        "src",
+        "imageDesktop",
+        "imageTablet",
+        "imageMobile",
+      ];
+
+      mediaProps.forEach((propKey) => {
+        if (props[propKey] && typeof props[propKey] === "string") {
+          usedMediaIds.add(props[propKey]);
+        }
+      });
+    });
+
+    // Update Background to only include used media
+    actions.setProp(ROOT_NODE, (props: any) => {
+      if (!props.pageMedia) return;
+      props.pageMedia = props.pageMedia.filter((m: any) =>
+        usedMediaIds.has(m.id)
+      );
+    });
+
+    return Array.from(usedMediaIds);
+  } catch (e) {
+    console.error("Failed to sync page media:", e);
+    return [];
+  }
 };

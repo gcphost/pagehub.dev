@@ -24,6 +24,8 @@ const getAlignmentOptions = (direction, value) => {
   const horizontal = isHorizontal ? "items" : "justify";
   const vertical = isHorizontal ? "justify" : "items";
 
+  console.log({ isHorizontal, horizontal, vertical })
+
   if (isHorizontal) {
     return [
       {
@@ -150,8 +152,8 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         cols={direction === "horizontal"}
         wrap="control"
         options={options}
+        propType="class"
       />
-
       {direction == "horizontal" && (
         <FlexDirectionInput wrap="control" type="toggleNext" />
       )}

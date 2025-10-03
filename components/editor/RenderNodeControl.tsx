@@ -19,6 +19,7 @@ export const RenderNodeControl = ({
     align: "",
   },
   animate = {},
+  style = {},
   ...props
 }) => {
   const localRef = useRef(null);
@@ -210,7 +211,7 @@ export const RenderNodeControl = ({
       data-type="nodeControlBase"
       {...animate}
       className={`${className} absolute z-30`}
-      style={{}}
+      style={style}
       ref={ref}
       {...props}
       key={uuidv4()}
@@ -218,6 +219,7 @@ export const RenderNodeControl = ({
       <div
         style={{
           display,
+          ...style, // Inherit the color style to the inner div
         }}
         data-type="nodeControl"
         ref={localRef}

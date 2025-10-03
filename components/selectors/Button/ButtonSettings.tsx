@@ -134,24 +134,20 @@ export const ButtonSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Colors" full={2}>
+          <ToolbarSection title="Colors">
             <ColorInput
               propKey="color"
               label="Text Color"
               prefix="text"
               propType="root"
-              labelHide={true}
             />
 
-            <ToolbarSection>
-              <ColorInput
-                propKey="background"
-                label="Background Color"
-                prefix="bg"
-                propType="root"
-                labelHide={true}
-              />
-            </ToolbarSection>
+            <ColorInput
+              propKey="background"
+              label="Background Color"
+              prefix="bg"
+              propType="root"
+            />
           </ToolbarSection>
 
           <ToolbarSection title="Icon">
@@ -228,11 +224,10 @@ export const ButtonSettings = () => {
         <TabBody>
           <ClickItem />
 
-          <ToolbarSection title="Colors" full={2}>
+          <ToolbarSection title="Colors">
             <ColorInput
               propKey="background"
               label="Background"
-              labelHide={true}
               prefix="bg"
               index="hover"
               propType="component"
@@ -241,7 +236,6 @@ export const ButtonSettings = () => {
             <ColorInput
               propKey="color"
               label="Text"
-              labelHide={true}
               prefix="text"
               index="hover"
               propType="component"
@@ -250,7 +244,6 @@ export const ButtonSettings = () => {
             <ColorInput
               propKey="borderColor"
               label="Border"
-              labelHide={true}
               prefix="border"
               propType="root"
               index="hover"

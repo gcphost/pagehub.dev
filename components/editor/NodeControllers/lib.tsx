@@ -88,3 +88,32 @@ export function useIsMouseOver(id) {
 
   return isMouseOver;
 }
+
+/**
+ * Hook to get the computed color from the DOM element
+ * This matches the color used by border-current in the CSS
+ * Returns the color value to be used as inline style
+ */
+export function useElementColor(dom: HTMLElement | null, isActive: boolean) {
+  const [elementColor, setElementColor] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!dom || !isActive) {
+      setElementColor(null);
+      return;
+    }
+
+    const computedStyle = window.getComputedStyle(dom);
+    const color = computedStyle.color;
+
+    // Always use the computed color, even if it's black
+    if (color) {
+      setElementColor(color);
+    } else {
+      // Fallback to a neutral color if no color is computed
+      setElementColor('#9ca3af'); // gray-400
+    }
+  }, [dom, isActive]);
+
+  return elementColor;
+}

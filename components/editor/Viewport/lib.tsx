@@ -78,7 +78,7 @@ export const SaveSubmissions = async (
   }
 };
 
-export const DeleteMedia = async (mediaId, settings) => {
+export const DeleteMedia = async (mediaId, settings, query = null, actions = null) => {
   try {
     const res = await fetch("/api/files", {
       method: "DELETE",
@@ -91,6 +91,12 @@ export const DeleteMedia = async (mediaId, settings) => {
         _id: settings._id,
       }),
     });
+
+    // Also unregister from Background if query and actions are provided
+    if (query && actions && mediaId) {
+      const { unregisterMediaFromBackground } = await import("utils/lib");
+      unregisterMediaFromBackground(query, actions, mediaId);
+    }
 
     return res.json();
   } catch (e) {
@@ -401,10 +407,17 @@ export const deleteNode = async (query, actions, active, settings) => {
 
   actions.selectNode(theNew.id);
 
-  const { type, videoId } = node.data.props || {};
+  const { type, videoId, image, ico } = node.data.props || {};
 
+  // Clean up any media associated with this node
   if (type === "cdn" && videoId) {
-    DeleteMedia(videoId, settings);
+    DeleteMedia(videoId, settings, query, actions);
+  }
+  if (image) {
+    DeleteMedia(image, settings, query, actions);
+  }
+  if (ico) {
+    DeleteMedia(ico, settings, query, actions);
   }
 
   if (!query.node(selected).get()) return;

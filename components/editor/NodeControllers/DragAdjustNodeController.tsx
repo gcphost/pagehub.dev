@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import RenderNodeControl from "../RenderNodeControl";
 import { ViewAtom } from "../Viewport";
 import DragAdjust from "../Viewport/Toolbox/DragAdjust";
+import { useElementColor } from "./lib";
 
 // Tailwind spacing values mapping
 const TAILWIND_SPACING_MAP = {
@@ -64,6 +65,9 @@ export const DragAdjustNodeController = (props: {
   // Store parent width for grid calculations
   const parentWidthRef = React.useRef<number | null>(null);
 
+  // Get the current computed color from the DOM (same as border-current uses)
+  const elementColor = useElementColor(dom as HTMLElement, isActive);
+
   return (
     <AnimatePresence mode="wait">
       {isActive && (
@@ -78,9 +82,10 @@ export const DragAdjustNodeController = (props: {
           className={
             "whitespace-nowrap items-center justify-center select-none fixed pointer-events-auto"
           }
+          style={elementColor ? { color: elementColor } : {}}
         >
           <DragAdjust
-            className="btn"
+            className="text-base flex items-center justify-center"
             targetElement={dom}
             direction={direction}
             styleToUse={styleToUse}
