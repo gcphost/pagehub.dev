@@ -19,6 +19,7 @@ import { HoverNodeController } from "components/editor/NodeControllers/HoverNode
 import TextSettingsTopNodeTool from "components/editor/NodeControllers/Tools/TextSettingsTopNodeTool";
 import { changeProp } from "components/editor/Viewport/lib";
 import debounce from "lodash.debounce";
+import { usePalette } from "utils/PaletteContext";
 import { BaseSelectorProps } from "..";
 import { useScrollToSelected } from "../lib";
 import { TextSettings } from "./TextSettings";
@@ -67,6 +68,7 @@ export const Text = (props: Partial<TextProps>) => {
   const tab = useSetRecoilState(TabAtom);
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
+  const palette = usePalette();
 
   const {
     connectors: { connect, drag },
@@ -109,7 +111,7 @@ if (text && typeof window !== "undefined") {
 
   const prop: any = {
     ref: (r) => connect(drag(r)),
-    className: ClassGenerator(props, view, enabled, [], [], preview),
+    className: ClassGenerator(props, view, enabled, [], [], preview, false, palette),
   };
 
   if (enabled) {

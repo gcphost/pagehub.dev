@@ -19,6 +19,7 @@ import { TbContainer, TbNote } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { applyBackgroundImage, enableContext, motionIt } from "utils/lib";
+import { usePalette } from "utils/PaletteContext";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { EmptyState } from "../EmptyState";
@@ -61,6 +62,7 @@ export const Container = (props: Partial<ContainerProps>) => {
   const preview = useRecoilValue(PreviewAtom);
   const settings = useRecoilValue(SettingsAtom);
   const setSelectedNode = useSetRecoilState(SelectedNodeAtom);
+  const palette = usePalette();
 
   const {
     connectors: { connect, drag },
@@ -122,7 +124,9 @@ export const Container = (props: Partial<ContainerProps>) => {
     enabled,
     inlayed ? inlayProps : [],
     [],
-    preview
+    preview,
+    false,
+    palette
   );
 
   let prop: any = {

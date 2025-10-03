@@ -961,7 +961,8 @@ export const ClassGenerator = (
   exclude = [],
   only = [],
   preview = false,
-  debug = false
+  debug = false,
+  palette = []
 ): string => {
   const breakpoints = {
     sm: "mobile",
@@ -982,13 +983,27 @@ export const ClassGenerator = (
     });
 
     if (props.root.hover) {
-      const hover = ClassGene(props.root.hover, exclude, only, "hover:");
+      const hover = ClassGene(
+        props.root.hover,
+        exclude,
+        only,
+        "hover:",
+        false,
+        palette
+      );
       results.push(...hover);
     }
   }
 
   if (props.hover) {
-    const hover = ClassGene(props.hover, exclude, only, "hover:");
+    const hover = ClassGene(
+      props.hover,
+      exclude,
+      only,
+      "hover:",
+      false,
+      palette
+    );
     results.push(...hover);
   }
 
@@ -1009,7 +1024,8 @@ export const ClassGenerator = (
         exclude,
         only,
         _ !== "sm" ? `${_}:` : "",
-        debug
+        debug,
+        palette
       ).filter((_) => _ && _ !== " ")
     )
   );
@@ -1023,7 +1039,7 @@ export const ClassGenerator = (
         .map((_) => _p[_]);
 
   let res = [
-    ...ClassGene({ ...rootProps }, exclude, only),
+    ...ClassGene({ ...rootProps }, exclude, only, "", false, palette),
     ...bp,
     ...results,
     ...missingProps,
@@ -1111,9 +1127,65 @@ export const ClassGene = (
   exclude = [],
   only = [],
   prefix = "",
-  debug = false
+  debug = false,
+  palette = []
 ) => {
   debug && console.log(exclude, only, props);
+
+  // Helper to resolve palette references
+  const resolvePalette = (value: string) => {
+    if (typeof value === "string" && value.includes("palette:")) {
+      // Handle formats like "bg-palette:Brand" or "text-palette:Accent"
+      const match = value.match(/^([a-z]+-)?palette:(.+)$/);
+      if (match) {
+        const prefixPart = match[1] || ""; // e.g., "bg-" or "text-"
+        const paletteName = match[2]; // e.g., "Brand"
+        const paletteColor = palette.find((p) => p.name === paletteName);
+        if (paletteColor) {
+          let colorValue = paletteColor.color;
+
+          console.log("Resolving palette:", {
+            input: value,
+            prefixPart,
+            paletteName,
+            paletteColorValue: colorValue,
+          });
+
+          // If the palette color already has the same prefix, return as-is
+          // e.g., if we want "bg-palette:Brand" and palette has "bg-blue-600"
+          // we should return "bg-blue-600", not "bg-bg-blue-600"
+          if (prefixPart && colorValue.startsWith(prefixPart)) {
+            console.log("Already has prefix, returning:", colorValue);
+            return colorValue;
+          }
+
+          // If it's a Tailwind class (like "blue-600"), add prefix normally
+          // If it's rgba/hex, wrap in brackets for Tailwind arbitrary values
+          if (prefixPart) {
+            if (
+              colorValue.includes("rgba") ||
+              colorValue.includes("rgb") ||
+              colorValue.startsWith("#")
+            ) {
+              // Wrap arbitrary values in brackets: bg-[rgba(...)]
+              const result = `${prefixPart}[${colorValue}]`;
+              console.log("Adding prefix with brackets, returning:", result);
+              return result;
+            } else {
+              // Regular Tailwind class: bg-blue-600
+              const result = `${prefixPart}${colorValue}`;
+              console.log("Adding prefix, returning:", result);
+              return result;
+            }
+          }
+
+          return colorValue;
+        }
+      }
+    }
+    return value;
+  };
+
   const results = Object.keys(props)
     .filter((_) => classFilter.includes(_))
     .filter((_) => props[_] && !exclude.includes(_))
@@ -1131,6 +1203,7 @@ export const ClassGene = (
     .filter((_) => typeof _ === "string")
     .filter((_) => _ && _ !== " ")
     .filter((_) => _ && _ !== "")
+    .map((_) => resolvePalette(_)) // Resolve palette references here
     .map((_) => `${prefix}${_}`);
 
   if (only.length) return results;

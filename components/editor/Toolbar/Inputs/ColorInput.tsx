@@ -1,4 +1,4 @@
-import { useEditor, useNode } from "@craftjs/core";
+import { ROOT_NODE, useEditor, useNode } from "@craftjs/core";
 import { ViewAtom } from "components/editor/Viewport";
 import { changeProp, getProp } from "components/editor/Viewport/lib";
 import { getRect } from "components/editor/Viewport/useRect";
@@ -54,13 +54,49 @@ export const ColorInput = (__props: any) => {
 
   const value = getProp(__props, view, nodeProps) || "";
 
-  const [bg, cpVAl] = bgAndVal({ value, prefix });
+  // Get palette for resolving references
+  const palette = (() => {
+    try {
+      const rootNode = query.node(ROOT_NODE).get();
+      return rootNode?.data?.props?.pallet || [];
+    } catch {
+      return [];
+    }
+  })();
+
+  // Resolve palette references for display
+  const resolveValueForDisplay = (val: string) => {
+    if (val && val.includes("palette:")) {
+      const match = val.match(/palette:(.+)$/);
+      if (match) {
+        const paletteName = match[1];
+        const paletteColor = palette.find((p) => p.name === paletteName);
+        if (paletteColor) {
+          // The palette color might be a full Tailwind class (e.g., "bg-blue-600")
+          // or just a color value (e.g., "blue-600" or "#FF0000")
+          // If it already has the prefix, return as-is, otherwise add it
+          const colorValue = paletteColor.color;
+          if (prefix && !colorValue.startsWith(prefix)) {
+            return `${prefix}-${colorValue}`;
+          }
+          return colorValue;
+        }
+      }
+    }
+    return val;
+  };
+
+  const displayValue = resolveValueForDisplay(value);
+  const [bg, cpVAl] = bgAndVal({ value: displayValue, prefix });
 
   const changed = (data) => {
     let val = data.value;
 
     if (val) {
-      if (data.type === "hex") {
+      if (data.type === "palette") {
+        // Store palette reference with prefix (e.g., "bg-palette:Brand")
+        val = prefix ? `${prefix}-${data.value}` : data.value;
+      } else if (data.type === "hex") {
         val = prefix ? `${prefix}-[${val}]` : `${val}`;
       } else if (data.type === "rgb") {
         val = `rgba(${val.r},${val.g},${val.b},${val.a})`;

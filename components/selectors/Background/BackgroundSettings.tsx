@@ -3,7 +3,6 @@ import { ToolboxMenu } from "components/editor/RenderNode";
 import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
 import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
-import { ColorPalletInput } from "components/editor/Toolbar/Inputs/ColorPalletInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FileUploadInput } from "components/editor/Toolbar/Inputs/FileUploadInput";
 import { FlexInput } from "components/editor/Toolbar/Inputs/FlexInput";
@@ -69,8 +68,6 @@ export const BackgroundSettings = () => {
       <ToolbarWrapper head={head} foot="">
         {activeTab === "Background" && (
           <TabBody>
-            <ColorPalletInput />
-
             <ToolbarSection title="Fav Icon">
               <FileUploadInput
                 accept=".ico,.gif,.png"

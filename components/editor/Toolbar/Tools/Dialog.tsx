@@ -1,6 +1,7 @@
 import { ulVariants } from "components/editor/Viewport/ToolboxContextual";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { SideBarAtom } from "utils/lib";
 
@@ -14,6 +15,7 @@ export const Dialog = ({
   children = null,
   width = null,
   className = "",
+  zIndex = 1000,
   onSearch = (_, value) =>
     _.search(new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")) >
     -1,
@@ -33,27 +35,27 @@ export const Dialog = ({
   let style = {
     top: 0,
     left: 0,
-    zIndex: 1000,
+    zIndex: zIndex,
   } as any;
 
   if (rect) {
     style = {
       top: rect.bottom + 6,
       left: rect.left,
-      zIndex: 1000,
+      zIndex: zIndex,
     };
 
     if (style.top + height > window.innerHeight) {
       style = {
         bottom: 65,
         left: rect.left,
-        zIndex: 1000,
+        zIndex: zIndex,
       };
     } else if (style.top < 100) {
       style = {
         top: 150,
         left: rect.left,
-        zIndex: 1000,
+        zIndex: zIndex,
       };
     }
   }
@@ -118,7 +120,12 @@ export const Dialog = ({
     }
   }, [dialog.enabled, dialog.value, dialogName, ref, value]);
 
-  return (
+  // Don't render portal on server-side
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  return ReactDOM.createPortal(
     <AnimatePresence>
       {dialog.enabled && (
         <motion.div
@@ -215,6 +222,7 @@ export const Dialog = ({
           </div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };

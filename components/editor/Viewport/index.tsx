@@ -491,7 +491,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
     desktop: [
       enabled
-        ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen bg-gray-700 p-8`
+        ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen bg-gray-600 p-8`
         : "w-screen",
       enabled
         ? "w-full m-1 relative overflow-auto scrollbar-light bg-white border-2 border-primary-900 border-l-0"

@@ -17,15 +17,21 @@ import {
   isCssValid,
   isJsValid,
 } from "utils/lib";
+import { PaletteProvider } from "utils/PaletteContext";
 import { BaseSelectorProps } from "..";
 import { EmptyState } from "../EmptyState";
 import { RenderGradient, RenderPattern, hasInlay, inlayProps } from "../lib";
 import { BackgroundSettings } from "./BackgroundSettings";
 
+export interface NamedColor {
+  name: string;
+  color: string;
+}
+
 export interface ContainerProps extends BaseSelectorProps {
   activeTab?: number;
   "data-renderer"?: boolean;
-  pallet?: [];
+  pallet?: NamedColor[];
   header?: string;
   footer?: string;
   pageTitle?: string;
@@ -110,7 +116,9 @@ export const Background = (props: Partial<ContainerProps>) => {
       enabled,
       inlayed ? inlayProps : [],
       [],
-      preview
+      preview,
+      false,
+      props.pallet || []
     ),
   };
 
@@ -239,7 +247,7 @@ export const Background = (props: Partial<ContainerProps>) => {
   }, [props.footer]);
 
   prop.children = (
-    <>
+    <PaletteProvider palette={props.pallet || []}>
       <RenderPattern
         props={props}
         settings={settings}
@@ -258,7 +266,7 @@ export const Background = (props: Partial<ContainerProps>) => {
           {children || <EmptyState icon={<TbContainer />} />}
         </RenderGradient>
       </RenderPattern>
-    </>
+    </PaletteProvider>
   );
   applyBackgroundImage(prop, props, settings);
   applyAnimation(prop, props);

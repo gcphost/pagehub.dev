@@ -31,6 +31,7 @@ import {
   TbLogin,
   TbLogout,
   TbMenu2,
+  TbPalette,
   TbPlayerPlay,
   TbPlus,
   TbUpload,
@@ -48,6 +49,7 @@ import {
 } from "utils/lib";
 import { useTenant } from "utils/tenantStore";
 import { DeviceAtom, EnabledAtom, PreviewAtom, ViewAtom } from ".";
+import { ColorPalletModal } from "../Toolbar/Inputs/ColorPalletModal";
 import { AnimatedSaveButton } from "../Tools/AnimatedSaveButton";
 import { ComponentSettings } from "./ComponentSettings";
 import { DomainSettings } from "./DomainSettings";
@@ -109,6 +111,7 @@ export const Header = () => {
 
   const [showMenu, setShowMenu] = useRecoilState(MenuState);
   const [showMenuType, setShowMenuType] = useRecoilState(MenuItemState);
+  const [isColorPalletModalOpen, setIsColorPalletModalOpen] = useState(false);
 
   const setEnabled = useSetRecoilState(EnabledAtom);
 
@@ -554,6 +557,19 @@ export const Header = () => {
                     Pages
                   </button>
 
+                  <button
+                    onClick={() => {
+                      setIsColorPalletModalOpen(true);
+                      setShowMenu(false);
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbPalette />
+                    </div>
+                    <div className="">Color Palette</div>
+                  </button>
+
                   {settings?.name && (
                     <a
                       href={`https://${settings.name}.pagehub.dev`}
@@ -704,6 +720,11 @@ export const Header = () => {
           )}
         </nav>
       )}
+
+      <ColorPalletModal
+        isOpen={isColorPalletModalOpen}
+        onClose={() => setIsColorPalletModalOpen(false)}
+      />
     </>
   );
 };
