@@ -1,6 +1,7 @@
 import { useEditor } from "@craftjs/core";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { GapDragControl } from "./NodeControllers/GapDragControl";
 import { ProximityHover } from "./NodeControllers/ProximityHover";
 import { RenderNodeDataStates } from "./RenderNodeDataStates";
 import { RenderNodeInViewPort } from "./RenderNodeInViewPort";
@@ -23,6 +24,7 @@ export const RenderNodeNewer = ({ render }) => {
 
     <RenderNodeDataStates key="renderDataStates" />,
     <ProximityHover key="proximityHover" />,
+    <GapDragControl key="gapDragControl" />,
   ];
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { AutoTextSize } from "auto-text-size";
-import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
 import {
@@ -176,17 +175,18 @@ Text.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController
-          key="textNameController"
-          position="top"
-          align="end"
-          placement="start"
-          alt={{
-            position: "top",
-            align: "end",
-            placement: "start",
-          }}
-        />,
+        // Disabled: Name label in viewport
+        // <NameNodeController
+        //   key="textNameController"
+        //   position="top"
+        //   align="end"
+        //   placement="start"
+        //   alt={{
+        //     position: "top",
+        //     align: "end",
+        //     placement: "start",
+        //   }}
+        // />,
         <HoverNodeController
           key="textHoverController"
           position="top"

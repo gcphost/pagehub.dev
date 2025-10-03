@@ -7,6 +7,10 @@ export function useMousePosition(id, distance = 45, cref = null) {
   const [isInBottomOrRight, setIsInBottomOrRight] = useState(false);
   const [isInTopOrLeftOrBottomOrRight, setIsInTopOrLeftOrBottomOrRight] =
     useState(false);
+  const [isNearTop, setIsNearTop] = useState(false);
+  const [isNearBottom, setIsNearBottom] = useState(false);
+  const [isNearLeft, setIsNearLeft] = useState(false);
+  const [isNearRight, setIsNearRight] = useState(false);
 
   useEffect(() => {
     if (!dom) return;
@@ -21,6 +25,12 @@ export function useMousePosition(id, distance = 45, cref = null) {
       setIsInTopOrLeftOrBottomOrRight(
         clientX < left + distance || clientX > right - distance
       );
+
+      // Individual edge detection
+      setIsNearTop(Math.abs(clientY - top) <= distance);
+      setIsNearBottom(Math.abs(clientY - bottom) <= distance);
+      setIsNearLeft(Math.abs(clientX - left) <= distance);
+      setIsNearRight(Math.abs(clientX - right) <= distance);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -34,6 +44,10 @@ export function useMousePosition(id, distance = 45, cref = null) {
     isInTopOrLeft,
     isInBottomOrRight,
     isInTopOrLeftOrBottomOrRight,
+    isNearTop,
+    isNearBottom,
+    isNearLeft,
+    isNearRight,
     cref,
   };
 }

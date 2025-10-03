@@ -6,6 +6,7 @@ import { NameNodeController } from "components/editor/NodeControllers/NameNodeCo
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import ContainerSettingsNodeTool from "components/editor/NodeControllers/Tools/ContainerSettingsNodeTool";
 import ContainerSettingsTopNodeTool from "components/editor/NodeControllers/Tools/ContainerSettingsTopNodeTool";
+import { UniformPaddingNodeController } from "components/editor/NodeControllers/UniformPaddingNodeController";
 import { ToolboxMenu } from "components/editor/RenderNode";
 import {
   getClonedState,
@@ -345,6 +346,48 @@ Container.craft = {
           gridSnap={12}
           tooltip="Drag to adjust width"
         />,
+        // Padding controls (inside border)
+        <DragAdjustNodeController
+          key="paddingdrag1"
+          position="top"
+          align="middle"
+          direction="vertical"
+          propVar="pt"
+          styleToUse="paddingTop"
+          tooltip="Drag to adjust top padding"
+          isPadding={true}
+        />,
+        <DragAdjustNodeController
+          key="paddingdrag2"
+          position="bottom"
+          align="start"
+          direction="vertical"
+          propVar="pb"
+          styleToUse="paddingBottom"
+          tooltip="Drag to adjust bottom padding"
+          isPadding={true}
+        />,
+        <DragAdjustNodeController
+          key="paddingdrag3"
+          position="left"
+          align="middle"
+          direction="horizontal"
+          propVar="pl"
+          styleToUse="paddingLeft"
+          tooltip="Drag to adjust left padding"
+          isPadding={true}
+        />,
+        <DragAdjustNodeController
+          key="paddingdrag4"
+          position="right"
+          align="middle"
+          direction="horizontal"
+          propVar="pr"
+          styleToUse="paddingRight"
+          tooltip="Drag to adjust right padding"
+          isPadding={true}
+        />,
+        <UniformPaddingNodeController key="uniformpadding" />,
         <ToolNodeController
           position="top"
           align="middle"

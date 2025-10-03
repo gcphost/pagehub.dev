@@ -12,6 +12,7 @@ export const RenderNodeControl = ({
   align,
   placement = "start",
   hPlacement = "start",
+  isPadding = false,
   alt = {
     position: "",
     placement: "",
@@ -53,41 +54,67 @@ export const RenderNodeControl = ({
       ref.current.style.left = `-${right - gap}px`;
       ref.current.style.right = "";
 
+      if (align === "start" && isPadding) {
+        // For padding controls at the start, position 6px from left
+        ref.current.style.left = "6px";
+      }
+
       if (align === "middle") {
         ref.current.style.left = `calc(50% - ${rect.width / 2}px)`;
       }
 
       if (align === "end") {
         ref.current.style.left = "auto";
-        ref.current.style.right = `-${right}px`;
+        // For padding controls, position inside; for others, position outside
+        ref.current.style.right = isPadding ? "6px" : `-${right}px`;
       }
 
       let top = 0;
       if (placement === "middle") top = rect.height / 2;
       if (placement === "start") top = rect.height;
 
-      ref.current.style.top = `-${top}px`;
+      if (isPadding) {
+        // Position inside the border for padding controls
+        ref.current.style.top = position === "top" ? "6px" : "auto";
+        if (position === "bottom") {
+          ref.current.style.top = "auto";
+          ref.current.style.bottom = "6px";
+        }
+      } else {
+        // Position outside the border for margin/height/width controls
+        ref.current.style.top = `-${top}px`;
 
-      if (position === "bottom") {
-        let top = rect.height;
-        if (placement === "middle") top = rect.height / 2;
-        if (placement === "start") top = 0;
-        ref.current.style.top = "auto";
-        ref.current.style.bottom = `-${top}px`;
+        if (position === "bottom") {
+          let top = rect.height;
+          if (placement === "middle") top = rect.height / 2;
+          if (placement === "start") top = 0;
+          ref.current.style.top = "auto";
+          ref.current.style.bottom = `-${top}px`;
+        }
       }
     } else if (["left", "right"].includes(position)) {
       // align middle
       ref.current.style.top = `calc(50% - ${rect.height / 2}px)`;
       ref.current.style.bottom = "auto";
 
-      if (position === "left") {
-        // place left
-        ref.current.style.left = `-${rect.width}px`;
-        ref.current.style.right = "auto";
-      } else if (position === "right") {
-        // place right (offset a bit to the left for better centering)
-        ref.current.style.right = `-${rect.width - 4}px`;
-        ref.current.style.left = "auto";
+      if (isPadding) {
+        // Position inside the border for padding controls
+        if (position === "left") {
+          ref.current.style.left = "6px";
+          ref.current.style.right = "auto";
+        } else if (position === "right") {
+          ref.current.style.right = "6px";
+          ref.current.style.left = "auto";
+        }
+      } else {
+        // Position outside the border for margin/height/width controls
+        if (position === "left") {
+          ref.current.style.left = `-${rect.width}px`;
+          ref.current.style.right = "auto";
+        } else if (position === "right") {
+          ref.current.style.right = `-${rect.width - 4}px`;
+          ref.current.style.left = "auto";
+        }
       }
       localRef.current.style.display = "flex";
       return;
