@@ -13,7 +13,7 @@ const EditableName = () => {
   return (
     <div
       className={
-        "pointer-events-auto rounded-sm overflow-hidden border flex flex-row gap-3 bg-white/90 text-black !text-base !font-normal fontfamily-base"
+        "pointer-events-auto rounded-md overflow-hidden border flex flex-row gap-3 bg-white/90 text-black !text-base !font-normal fontfamily-base"
       }
     >
       <div
@@ -57,8 +57,8 @@ export const NameNodeController = (props: {
           alt={alt}
           placement={placement}
           className={`${position === "top" && align === "start" && placement === "end"
-              ? "m-1"
-              : ""
+            ? "m-1"
+            : ""
             } whitespace-nowrap fixed items-center justify-center select-none will-change-auto`}
         >
           <motion.div

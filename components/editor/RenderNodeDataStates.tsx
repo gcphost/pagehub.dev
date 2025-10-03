@@ -12,9 +12,32 @@ export const RenderNodeDataStates = () => {
     enabled: state.options.enabled,
   }));
 
-  const { isActive } = useEditor((_, query) => ({
-    isActive: query.getEvent("selected").contains(id),
-  }));
+  const { isActive, isAncestorOfSelected } = useEditor((_, query) => {
+    const selectedId = query.getEvent("selected").first();
+    const isActive = query.getEvent("selected").contains(id);
+
+    let isAncestorOfSelected = false;
+    if (selectedId && selectedId !== id) {
+      // Check if this node is an ancestor of the selected node
+      try {
+        const selectedNode = query.node(selectedId).get();
+        let currentParentId = selectedNode?.data?.parent;
+
+        while (currentParentId) {
+          if (currentParentId === id) {
+            isAncestorOfSelected = true;
+            break;
+          }
+          const parentNode = query.node(currentParentId).get();
+          currentParentId = parentNode?.data?.parent;
+        }
+      } catch (e) {
+        // Node not found or error traversing
+      }
+    }
+
+    return { isActive, isAncestorOfSelected };
+  });
 
   useEffect(() => {
     if (!dom) return;
@@ -28,10 +51,16 @@ export const RenderNodeDataStates = () => {
         dom.removeAttribute("data-selected");
       }
 
+      if (isAncestorOfSelected) {
+        dom.setAttribute("data-ancestor", "true");
+      } else {
+        dom.removeAttribute("data-ancestor");
+      }
+
       if (isHover) dom.setAttribute("data-hover", "true");
       else dom.removeAttribute("data-hover");
     }
-  }, [isActive, isHover, enabled, dom, name]);
+  }, [isActive, isHover, isAncestorOfSelected, enabled, dom, name]);
 
   return null;
 };

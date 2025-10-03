@@ -1,5 +1,7 @@
 import throttle from "lodash.throttle";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { ComponentsAtom } from "utils/lib";
 import { ButtonToolbox } from "./Toolbox/buttonComponents";
 import { DividerToolbox } from "./Toolbox/dividerComponents";
 import { EmbedToolbox } from "./Toolbox/embedComponents";
@@ -7,11 +9,12 @@ import { FormToolbox } from "./Toolbox/formComponents";
 import { FormElementToolbox } from "./Toolbox/formElement";
 import { ImageToolbox } from "./Toolbox/imageComponents";
 import { pageToolboxItems } from "./Toolbox/pageComponents";
+import { SavedComponentsToolbox } from "./Toolbox/savedComponents";
 import { sectionToolboxItems } from "./Toolbox/sectionComponents";
 import { TextToolbox } from "./Toolbox/textComponents";
 import { VideoToolbox } from "./Toolbox/videoComponents";
 
-const items = [
+const baseItems = [
   ...sectionToolboxItems,
   TextToolbox,
   ButtonToolbox,
@@ -26,8 +29,15 @@ const items = [
 ];
 
 export const ComponentSettings = () => {
-  const [list, setList] = useState(items);
+  const components = useRecoilValue(ComponentsAtom);
+  const [list, setList] = useState(baseItems);
   const [search, setSearch] = useState(null);
+
+  // Create dynamic items array with saved components
+  const items = useMemo(() => [
+    ...baseItems,
+    ...(components?.length ? [SavedComponentsToolbox(components)] : []),
+  ], [components]);
 
   const focusRef = useRef(null);
 
@@ -72,7 +82,7 @@ export const ComponentSettings = () => {
     }
 
     setList(items);
-  }, [search]);
+  }, [search, items]);
 
   return (
     <div className="px- flex flex-col gap-3">

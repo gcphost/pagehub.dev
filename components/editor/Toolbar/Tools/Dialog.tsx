@@ -73,12 +73,6 @@ export const Dialog = ({
     dialog.changed(value);
   };
 
-  const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      closed();
-    }
-  };
-
   const search = (e) => {
     setSearchValue(e.target.value);
 
@@ -92,12 +86,27 @@ export const Dialog = ({
   };
 
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        closed();
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closed();
+      }
+    };
+
     document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener("keydown", handleKeyDown, true);
 
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener("keydown", handleKeyDown, true);
     };
-  }, [dialog.enabled, handleClickOutside, ref]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dialog.enabled]);
 
   const refIe = useRef(null);
 

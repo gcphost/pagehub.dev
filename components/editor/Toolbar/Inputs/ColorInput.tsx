@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useEditor, useNode } from "@craftjs/core";
 import { ViewAtom } from "components/editor/Viewport";
 import { changeProp, getProp } from "components/editor/Viewport/lib";
 import { getRect } from "components/editor/Viewport/useRect";
@@ -34,18 +34,22 @@ export const ColorInput = (__props: any) => {
     propItemKey = "",
     propType = "class",
     showPallet = true,
-    onChange = () => {},
+    onChange = () => { },
     labelHide = false,
   } = __props;
 
   const [dialog, setDialog] = useRecoilState(ColorPickerAtom);
   const view = useRecoilValue(ViewAtom);
 
+  const { actions, query } = useEditor();
+
   const {
     actions: { setProp },
     nodeProps,
+    id,
   } = useNode((node) => ({
     nodeProps: node.data.props || {},
+    id: node.id,
   }));
 
   const value = getProp(__props, view, nodeProps) || "";
@@ -73,6 +77,9 @@ export const ColorInput = (__props: any) => {
       propType,
       value: val,
       setProp,
+      query,
+      actions,
+      nodeId: id,
     });
 
     onChange(cpVAl, val);

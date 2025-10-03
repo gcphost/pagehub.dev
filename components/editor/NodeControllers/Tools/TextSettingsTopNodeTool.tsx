@@ -1,4 +1,5 @@
 import { ToolbarItem } from "components/editor/Toolbar";
+import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
 import { NodeToolWrapper } from "components/editor/Tools/NodeDialog";
 import { textPresets } from "components/selectors/Text/TextSettings";
@@ -8,7 +9,7 @@ import { TbAlignCenter, TbAlignLeft } from "react-icons/tb";
 export function TextSettingsTopNodeTool() {
   return (
     <NodeToolWrapper
-      className="bg-primary-500 inside-shadow text-black rounded-t-md px-3"
+      className="bg-primary-500 inside-shadow text-black rounded-md px-3"
       animate={{
         initial: { opacity: 0 },
         animate: {
@@ -37,6 +38,16 @@ export function TextSettingsTopNodeTool() {
         },
       }}
     >
+      <div className="w-6 h-6 rounded-md overflow-hidden border-gray-500 border">
+        <ColorInput
+          propKey="color"
+          label=""
+          prefix="text"
+          propType="root"
+          labelHide={true}
+        />
+      </div>
+
       <PresetInput
         presets={textPresets}
         type="select"

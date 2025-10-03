@@ -29,12 +29,16 @@ export const GptInput = ({ autoFocus = false }) => {
   const {
     actions: { setProp },
     propValues,
+    id,
   } = useNode((node) => ({
     propValues: node.data.props,
+    id: node.id,
   }));
 
-  const { enabled } = useEditor((state) => ({
+  const { enabled, query, actions } = useEditor((state) => ({
     enabled: state.options.enabled,
+    query: state.query,
+    actions: state.actions,
   }));
 
   const cs = ClassGenerator(propValues, view, enabled, [], [], preview);
@@ -84,6 +88,9 @@ export const GptInput = ({ autoFocus = false }) => {
           setProp,
           view,
           propType: "root",
+          query,
+          actions,
+          nodeId: id,
         });
 
         return value;

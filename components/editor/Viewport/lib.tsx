@@ -272,18 +272,93 @@ interface PropType {
   index?: any;
   propType?: string;
   propItemKey?: string;
+  query?: any;
+  actions?: any;
+  nodeId?: string;
 }
 
+export const propagatePropsToClones = (
+  originalId,
+  propKey,
+  value,
+  view,
+  query,
+  actions,
+  index = null,
+  propItemKey = null
+) => {
+  try {
+    const original = query.node(originalId).get();
+    if (!original?.data?.props?.hasMany) return;
+
+    const clones = original.data.props.hasMany;
+
+    clones.forEach(cloneId => {
+      const clone = query.node(cloneId).get();
+      if (!clone) return;
+
+      // Check if this prop should propagate based on relationType
+      const cloneRelationType = clone.data.props.relationType;
+
+      if (cloneRelationType === 'style') {
+        // Only propagate style-related props (view-based styles)
+        const styleViews = ['root', 'mobile', 'tablet', 'desktop', 'hover'];
+        if (view !== 'component' && !styleViews.includes(view)) return;
+        if (view === 'component') return; // Don't propagate component props in style mode
+      }
+
+      // Apply the same change to clone
+      actions.setProp(cloneId, (props) => {
+        const setting =
+          view === "component"
+            ? props
+            : (props[view] = props[view] || {});
+
+        if (index >= 0 && propItemKey) {
+          setting[propKey] = setting[propKey] || {};
+          setting[propKey][index] = setting[propKey][index] || {};
+          setting[propKey][index][propItemKey] = value;
+          return;
+        }
+
+        if (index || index > 0) {
+          setting[index] = setting[index] || {};
+          setting[index][propKey] = value;
+          return;
+        }
+
+        setting[propKey] = value;
+      }, 0);
+    });
+  } catch (e) {
+    console.error('Error propagating props to clones:', e);
+  }
+};
+
 export const changeProp = (props: PropType, delay = 2000) => {
-  if (props.propType === "root") {
-    return setPropOnView({ ...props, view: "root" }, delay);
-  }
+  const view = props.propType === "root" ? "root" :
+    props.propType === "component" ? "component" :
+      props.view;
 
-  if (props.propType === "component") {
-    return setPropOnView({ ...props, view: "component" }, delay);
-  }
+  // Apply the change
+  setPropOnView({ ...props, view }, delay);
 
-  return setPropOnView(props, delay);
+  // Propagate to clones if query and actions are provided
+  if (props.query && props.actions && props.nodeId) {
+    const node = props.query.node(props.nodeId).get();
+    if (node?.data?.props?.hasMany?.length) {
+      propagatePropsToClones(
+        props.nodeId,
+        props.propKey,
+        props.value,
+        view,
+        props.query,
+        props.actions,
+        props.index,
+        props.propItemKey
+      );
+    }
+  }
 };
 
 export const removeHasManyRelation = (node, query, actions) => {
@@ -403,7 +478,7 @@ const fromEntries = (pairs) => {
   );
 };
 
-export const saveHandler = ({ query, id, component = null }) => {
+export const saveHandler = ({ query, id, component = null, actions = null }) => {
   const tree = query.node(id).toNodeTree();
   const nodePairs = Object.keys(tree.nodes).map((id) => [
     id,
@@ -413,9 +488,17 @@ export const saveHandler = ({ query, id, component = null }) => {
 
   const serializedNodesJSON = JSON.stringify(entries);
 
+  // Get the component name from the root node
+  const rootNode = query.node(tree.rootNodeId).get();
+  const componentName = rootNode?.data?.custom?.displayName ||
+    rootNode?.data?.displayName ||
+    rootNode?.data?.name ||
+    `Component ${Date.now()}`;
+
   const saveData = {
     rootNodeId: tree.rootNodeId,
     nodes: serializedNodesJSON,
+    name: componentName, // Add name for linking
   };
 
   // save to your database
@@ -426,6 +509,13 @@ export const saveHandler = ({ query, id, component = null }) => {
     const components = JSON.parse(localStorage.getItem("components")) || [];
     components.push(saveData);
     localStorage.setItem("components", JSON.stringify(components));
+
+    // Mark the original component on canvas with savedComponentName so clones can link to it
+    if (actions) {
+      actions.setProp(id, (prop) => {
+        prop.savedComponentName = componentName;
+      });
+    }
   } else localStorage.setItem("clipBoard", JSON.stringify(saveData));
 
   return saveData;
@@ -471,7 +561,7 @@ export const getNodeTree = ({ tree, query }) => {
   };
 };
 
-export const buildClonedTree = ({ tree, query, setProp }) => {
+export const buildClonedTree = ({ tree, query, setProp, createLinks = true }) => {
   const newNodes = {};
   const changeNodeId = (node: any, newParentId?: string) => {
     const newNodeId = getRandomId();
@@ -506,7 +596,8 @@ export const buildClonedTree = ({ tree, query, setProp }) => {
 
     newNodes[newNodeId] = freshNode;
 
-    if (query.node(oldid).get()) {
+    // Only create links if the original node exists in the current canvas
+    if (createLinks && query.node(oldid).get()) {
       setProp(oldid, (prop) => {
         prop.hasMany = prop.hasMany || [];
         prop.hasMany.push(newNodeId);
@@ -517,9 +608,14 @@ export const buildClonedTree = ({ tree, query, setProp }) => {
   };
 
   const rootNodeId = changeNodeId(tree.nodes[tree.rootNodeId]);
+
+  // Store the original root ID for later use (after tree is added to editor)
+  const originalRootId = tree.rootNodeId;
+
   return {
     rootNodeId,
     nodes: newNodes,
+    originalRootId: createLinks ? originalRootId : null, // Include original ID if linking
   };
 };
 export type Position = "top" | "bottom" | "left" | "right";

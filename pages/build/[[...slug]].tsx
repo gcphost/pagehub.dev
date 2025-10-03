@@ -21,6 +21,7 @@ import { RenderNodeNewer } from "components/editor/RenderNodeNewer";
 import { Toolbar } from "components/editor/Toolbar";
 
 import { UnsavedChangesAtom, Viewport } from "components/editor/Viewport";
+import { SavedComponentLoader } from "components/editor/Viewport/Toolbox/savedComponents";
 import { Form, FormDrop } from "components/selectors/Form";
 import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
 import { useEffect } from "react";
@@ -77,6 +78,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
     Image,
     Embed,
     Divider,
+    SavedComponentLoader,
   };
 
 

@@ -114,8 +114,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
   return (
     <NodeToolWrapper
       col={direction !== "horizontal"}
-      className={`bg-primary-500 inside-shadow text-black rounded-${direction == "horizontal" ? "t" : "l"
-        }-md ${direction == "horizontal" ? "px-3" : "py-3 px-1.5"}`}
+      className={`bg-primary-500 inside-shadow text-black rounded-md m-1 ${direction == "horizontal" ? "px-3" : "py-3 px-1.5"}`}
       animate={{
         initial: { opacity: 0 },
         animate: {

@@ -7,6 +7,10 @@
   @apply bg-gray-700 text-white;
 }
 
+.drag-control {
+  @apply !rounded-sm bg-gray-700 hover:bg-gray-800 cursor-move !border-0;
+}
+
 [role="tooltip"] {
   @apply pointer-events-none z-50 cursor-none;
 }
@@ -14,8 +18,6 @@
 [data-selected="true"],
 [data-hover="true"] {
   @apply relative cursor-pointer;
-  box-shadow: 0px 12px 44px -8px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0px 12px 44px -8px rgba(0, 0, 0, 0.2);
 }
 
 .shadow-10x {
@@ -43,25 +45,31 @@
 [data-enabled="true"]::before {
   content: " ";
   z-index: 1;
-  @apply border-current border-2 border-dotted w-full h-full absolute left-0 top-0 bottom-0 right-0  block  pointer-events-none;
+  @apply border-transparent w-full h-full absolute left-0 top-0 bottom-0 right-0  block  pointer-events-none;
 }
 
 [data-enabled="true"][data-hover="true"]::before {
   content: " ";
-  @apply border-black border-2 border-dashed w-full h-full absolute left-0 top-0 bottom-0 right-0  block  pointer-events-none;
+  @apply border-current border border-dashed w-full h-full absolute left-0 top-0 bottom-0 right-0  block  pointer-events-none;
 }
 
 [data-enabled="true"][data-selected="true"]::before {
   content: " ";
-  @apply border-current border-solid border-4 w-full h-full absolute left-0 top-0 bottom-0 right-0 pointer-events-none block  drop-shadow-2xl;
+  @apply border-current border-solid border-2 w-full h-full absolute left-0 top-0 bottom-0 right-0 pointer-events-none block;
+}
+
+[data-enabled="true"][data-ancestor="true"]::before {
+  content: " ";
+  @apply border-gray-400 border border-dotted w-full h-full absolute left-0 top-0 bottom-0 right-0 pointer-events-none block;
+  opacity: 0.5;
 }
 
 img[data-enabled="true"][data-hover="true"]::before {
-  @apply border-black border-2 border-dashed pointer-events-none;
+  @apply border-current border border-dashed pointer-events-none;
   border-style: inset;
 }
 img[data-enabled="true"][data-selected="true"] {
-  @apply border-black border-solid border-4 pointer-events-none   drop-shadow-2xl;
+  @apply border-current border-solid border-2 pointer-events-none;
   border-style: inset;
 }
 
@@ -87,19 +95,19 @@ iframe {
 }
 
 [data-active][data-direction="flex-col"][data-position="before"] {
-  @apply rounded-t-md  border-2 border-b-0;
+  @apply rounded-md  border-2 border-b-0;
 }
 
 [data-active][data-direction="flex-col"][data-position="after"] {
-  @apply rounded-b-md  border-2 border-t-0;
+  @apply rounded-md  border-2 border-t-0;
 }
 
 [data-active][data-direction="flex-row"][data-position="before"] {
-  @apply rounded-l-md border-2 border-r-0;
+  @apply rounded-md border-2 border-r-0;
 }
 
 [data-active][data-direction="flex-row"][data-position="after"] {
-  @apply rounded-r-md   border-2 border-l-0;
+  @apply rounded-md   border-2 border-l-0;
 }
 
 .fontfamily-base {
@@ -120,44 +128,52 @@ body {
   word-wrap: break-word;
 }
 
-.scrollbar::-webkit-scrollbar {
+.scrollbar::-webkit-scrollbar,
+.scrollbar *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-.scrollbar::-webkit-scrollbar-track {
+.scrollbar::-webkit-scrollbar-track,
+.scrollbar *::-webkit-scrollbar-track {
   border-radius: 8px;
   @apply bg-transparent;
 }
 
-.scrollbar::-webkit-scrollbar-thumb {
+.scrollbar::-webkit-scrollbar-thumb,
+.scrollbar *::-webkit-scrollbar-thumb {
   @apply bg-gray-800;
   border-radius: 3px;
   cursor: pointer;
 }
 
-.scrollbar::-webkit-scrollbar-thumb:hover {
+.scrollbar::-webkit-scrollbar-thumb:hover,
+.scrollbar *::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-800;
 }
 
-.scrollbar-light::-webkit-scrollbar {
+.scrollbar-light::-webkit-scrollbar,
+.scrollbar-light *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-.scrollbar-light::-webkit-scrollbar-track {
+.scrollbar-light::-webkit-scrollbar-track,
+.scrollbar-light *::-webkit-scrollbar-track {
+  @apply bg-gray-100;
   border-radius: 8px;
-  @apply bg-transparent;
 }
 
-.scrollbar-light::-webkit-scrollbar-thumb {
-  @apply bg-gray-700/90;
-  border-radius: 3px;
+.scrollbar-light::-webkit-scrollbar-thumb,
+.scrollbar-light *::-webkit-scrollbar-thumb {
+  @apply bg-gray-400;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-.scrollbar-light::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-600;
+.scrollbar-light::-webkit-scrollbar-thumb:hover,
+.scrollbar-light *::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
 }
 
 .disable-scrollbars::-webkit-scrollbar,

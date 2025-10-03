@@ -75,6 +75,8 @@ export const Text = (props: Partial<TextProps>) => {
     actions: { setProp },
   } = useNode();
 
+  const [isEditing, setIsEditing] = React.useState(false);
+
   useScrollToSelected(id, enabled);
   selectAfterAdding(actions.selectNode, tab, id, enabled);
 
@@ -116,9 +118,16 @@ if (text && typeof window !== "undefined") {
     prop["data-bounding-box"] = enabled;
     prop["data-empty-state"] = !text;
     prop["node-id"] = id;
-    prop.contentEditable = true;
+    prop.contentEditable = isEditing;
     prop["data-gramm"] = false;
     prop.suppressContentEditableWarning = true;
+    prop.onClick = (e) => {
+      e.stopPropagation();
+      setIsEditing(true);
+    };
+    prop.onBlur = () => {
+      setIsEditing(false);
+    };
     prop.onInput = debounce((e) => {
       changeProp({
         setProp,

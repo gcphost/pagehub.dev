@@ -157,11 +157,19 @@ function Dialog({ children, target, state, opener }: any): any {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      setIsOpen(false);
+    }
+  };
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener("keydown", handleKeyDown, true);
 
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener("keydown", handleKeyDown, true);
     };
   }, [dialogRef]);
 

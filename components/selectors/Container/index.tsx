@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { AddSectionNodeController } from "components/editor/NodeControllers/AddSectionNodeController";
 import { DragAdjustNodeController } from "components/editor/NodeControllers/DragAdjustNodeController";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
@@ -13,8 +14,7 @@ import {
 import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
 import { SelectedNodeAtom } from "components/editor/Viewport/Toolbox/lib";
 import React, { useEffect, useRef } from "react";
-import { CgArrowsV } from "react-icons/cg";
-import { TbArrowBarToDown, TbContainer, TbNote } from "react-icons/tb";
+import { TbContainer, TbNote } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { applyBackgroundImage, enableContext, motionIt } from "utils/lib";
@@ -302,12 +302,21 @@ Container.craft = {
         </ToolNodeController>,
       ];
 
+      const addControls = [
+        <AddSectionNodeController
+          key="containeraddbottom"
+          position="bottom"
+          align="middle"
+        />,
+      ];
+
       if (props.type === "page") {
-        return baseControls;
+        return [...baseControls, ...addControls];
       }
 
       return [
         ...baseControls,
+        ...addControls,
         <DragAdjustNodeController
           key="containerdrag1"
           position="top"
@@ -315,8 +324,7 @@ Container.craft = {
           direction="vertical"
           propVar="mt"
           styleToUse="marginTop"
-          name="Margin"
-          icon={<TbArrowBarToDown />}
+          tooltip="Drag to adjust margin"
         />,
         <DragAdjustNodeController
           key="containerdrag2"
@@ -325,8 +333,17 @@ Container.craft = {
           direction="vertical"
           propVar="height"
           styleToUse="height"
-          name="Height"
-          icon={<CgArrowsV />}
+          tooltip="Drag to adjust height"
+        />,
+        <DragAdjustNodeController
+          key="containerdrag3"
+          position="right"
+          align="middle"
+          direction="horizontal"
+          propVar="width"
+          styleToUse="width"
+          gridSnap={12}
+          tooltip="Drag to adjust width"
         />,
         <ToolNodeController
           position="top"

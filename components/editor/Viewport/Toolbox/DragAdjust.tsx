@@ -1,3 +1,4 @@
+import { Tooltip } from "components/layout/Tooltip";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -8,8 +9,10 @@ function DragAdjust({
   showButton = true,
   className = "",
   styleToUse = "marginTop",
-  children = null,
-  onChange = (value) => {},
+  tooltip = "",
+  onChange = (value) => { },
+  onDragStart = () => { },
+  onDragEnd = () => { },
 }) {
   const [dragging, setDragging] = useState(false);
   const [startX, setStartX] = useState(null);
@@ -28,7 +31,9 @@ function DragAdjust({
   });
 
   const handleMouseDown = (e) => {
+    if (!targetElement) return;
     e.preventDefault();
+    e.stopPropagation();
     setDragging(true);
     setStartX(e.clientX);
     setStartY(e.clientY);
@@ -36,13 +41,17 @@ function DragAdjust({
     if (direction === "vertical") {
       setInitialMarginTop(parseFloat(computedStyle[styleToUse]));
     } else if (direction === "horizontal") {
-      setInitialWidth(parseFloat(computedStyle.width));
+      setInitialWidth(parseFloat(computedStyle[styleToUse]));
     }
     targetRef.current = targetElement;
     document.body.style.cursor = "cursor-move";
+    if (onDragStart) onDragStart();
   };
 
   const handleMouseUp = () => {
+    if (dragging && onDragEnd) {
+      onDragEnd();
+    }
     setDragging(false);
     document.body.style.cursor = "auto";
   };
@@ -69,10 +78,10 @@ function DragAdjust({
     }
   };
 
-  return (
+  const button = (
     <motion.button
       whileHover={{
-        scale: 0.9,
+        scale: 1.1,
         transition: { duration: 0.2 },
       }}
       initial={{ opacity: 0, scale: 0 }}
@@ -86,13 +95,23 @@ function DragAdjust({
         scale: 0,
         transition: { duration: 0.3 },
       }}
-      whileTap={{ scale: 1 }}
-      className={`drag group flex flex-row gap-3 items-center p-1 rounded-sm border cursor-move ${className}`}
+      whileTap={{ scale: 0.9 }}
+      className={`drag-control group ${className} ${direction === "vertical" ? "w-8 h-2" : "w-2 h-8"
+        }`}
       onMouseDown={handleMouseDown}
-    >
-      {children}
-    </motion.button>
+      aria-label="Drag to adjust"
+    />
   );
+
+  if (tooltip) {
+    return (
+      <Tooltip content={tooltip} placement="right">
+        {button}
+      </Tooltip>
+    );
+  }
+
+  return button;
 }
 
 export default DragAdjust;

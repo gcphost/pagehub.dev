@@ -30,11 +30,10 @@ export const HoverNodeController = (props: {
           align={align}
           alt={alt}
           placement={placement || "start"}
-          className={`${
-            position === "top" && align === "start" && placement === "end"
-              ? "m-0.5"
-              : ""
-          } whitespace-nowrap fixed items-center justify-center select-none will-change-auto`}
+          className={`${position === "top" && align === "start" && placement === "end"
+            ? "m-0.5"
+            : ""
+            } whitespace-nowrap fixed items-center justify-center select-none will-change-auto`}
           animate={{
             initial: { opacity: 0 },
             animate: {
@@ -49,7 +48,7 @@ export const HoverNodeController = (props: {
         >
           <div
             className={
-              "px-2 border flex flex-row gap-3 bg-white text-black !text-base !font-normal fontfamily-base"
+              "px-2 border flex flex-row gap-3 bg-white text-black !text-base !font-normal fontfamily-base rounded-md"
             }
           >
             {name}

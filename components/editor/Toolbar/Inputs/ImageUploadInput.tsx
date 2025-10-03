@@ -8,6 +8,7 @@ import { useState } from "react";
 import { TbAlertTriangle, TbUpload } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
+import { getCdnUrl } from "utils/cdn";
 import Spinner from "../Helpers/Spinner";
 
 import { Wrap } from "../ToolbarStyle";
@@ -138,19 +139,35 @@ export const ImageUploadInput: any = ({
   if (saved) label = "Saved";
   if (errors.length) label = "Error";
 
+  const mediaId = nodeProps[propKey];
+  const hasUploadedImage = mediaId && nodeProps[typeKey] === "cdn";
+  const imageUrl = hasUploadedImage ? getCdnUrl(mediaId) : null;
+
+  if (hasUploadedImage && !loading && !saved) {
+    label = "Change Image";
+  }
+
   return (
     <Wrap props={props}>
       <label
         htmlFor="files"
         className={`flex gap-3 h-12 bg-primary-500 rounded-md btn text-base ${!enabled ? "opacity-50" : ""
-          }`}
+          } ${hasUploadedImage ? "relative overflow-hidden" : ""}`}
       >
-        <div className="">
-          {errors.length ? <TbAlertTriangle /> : null}
-          {!loading && !errors.length && <TbUpload />}
-          {loading && <Spinner />}
-        </div>{" "}
-        {label}
+        {hasUploadedImage && imageUrl && (
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-30"
+            style={{ backgroundImage: `url(${imageUrl})` }}
+          />
+        )}
+        <div className="relative z-10 flex gap-3">
+          <div className="">
+            {errors.length ? <TbAlertTriangle /> : null}
+            {!loading && !errors.length && <TbUpload />}
+            {loading && <Spinner />}
+          </div>{" "}
+          {label}
+        </div>
       </label>
       <input
         id="files"

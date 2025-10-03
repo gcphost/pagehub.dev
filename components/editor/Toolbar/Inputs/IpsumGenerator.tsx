@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useEditor, useNode } from "@craftjs/core";
 import { changeProp } from "components/editor/Viewport/lib";
 
 import { ViewAtom } from "components/editor/Viewport";
@@ -12,6 +12,7 @@ function capitalizeFirstLetter(string) {
 
 export const IpsumGenerator = ({ propKey, propType }) => {
   const view = useRecoilValue(ViewAtom);
+  const { actions, query } = useEditor();
 
   const lorem = new LoremIpsum({
     sentencesPerParagraph: {
@@ -27,8 +28,10 @@ export const IpsumGenerator = ({ propKey, propType }) => {
   const {
     actions: { setProp },
     propValues,
+    id,
   } = useNode((node) => ({
     propValues: node.data.props,
+    id: node.id,
   }));
 
   const save = (value) => {
@@ -38,6 +41,9 @@ export const IpsumGenerator = ({ propKey, propType }) => {
       setProp,
       view,
       propType,
+      query,
+      actions,
+      nodeId: id,
     });
   };
 

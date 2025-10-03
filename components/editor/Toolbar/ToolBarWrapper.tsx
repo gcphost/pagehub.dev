@@ -56,8 +56,8 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   );
 
   const handleSaveTemplate = useCallback(
-    (component = null) => saveHandler({ query, id, component }),
-    [id, query]
+    (component = null) => saveHandler({ query, id, component, actions }),
+    [id, query, actions]
   );
 
   const handleAdd = useCallback(() => {
@@ -92,7 +92,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
 
   const ref = useRef();
 
-  const canMake = !(components || [].find((_) => _.rootNodeId === id));
+  const canMake = !(components || []).find((_) => _.rootNodeId === id);
 
   const [showProps, setShowProps] = useState(false);
 
@@ -160,9 +160,8 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className={`cursor-pointer ${
-                isolate ? "text-white" : "text-gray-400"
-              } hover:text-white  rounded-md p-3`}
+              className={`cursor-pointer ${isolate ? "text-white" : "text-gray-400"
+                } hover:text-white  rounded-md p-3`}
             >
               {isolate ? <TbScaleOutlineOff /> : <TbScaleOutline />}
             </motion.div>

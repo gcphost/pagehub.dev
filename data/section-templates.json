@@ -1,0 +1,2954 @@
+{
+  "categories": [
+    { "id": "hero", "name": "Hero" },
+    { "id": "services", "name": "Services" },
+    { "id": "cta", "name": "Call To Action" },
+    { "id": "imageText", "name": "Image & Text" },
+    { "id": "texts", "name": "Texts" },
+    { "id": "pricing", "name": "Pricing & Menu" }
+  ],
+  "templates": {
+    "hero": [
+      {
+        "id": "hero-1",
+        "name": "Hero Center",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {},
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "justifyContent": "justify-center",
+              "alignItems": "items-center",
+              "width": "w-full",
+              "height": "h-screen",
+              "px": "px-6",
+              "py": "py-12",
+              "gap": "gap-6"
+            },
+            "desktop": {},
+            "custom": { "displayName": "Hero Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-5xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {
+                  "fontSize": "text-6xl"
+                },
+                "custom": { "displayName": "Hero Title" },
+                "text": "<p>The Catching Headline To Push Visitors To Take Action</p>"
+              }
+            },
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-lg",
+                  "textAlign": "text-center",
+                  "color": "text-gray-600",
+                  "maxWidth": "max-w-2xl"
+                },
+                "desktop": {},
+                "custom": { "displayName": "Hero Subtitle" },
+                "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod turpis vitae massa tristique.</p>"
+              }
+            },
+            {
+              "type": "Button",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-primary-500"
+                },
+                "mobile": {
+                  "px": "px-8",
+                  "py": "py-4",
+                  "fontSize": "text-lg",
+                  "fontWeight": "font-semibold",
+                  "color": "text-white",
+                  "radius": "rounded-lg",
+                  "gap": "gap-4"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Button" },
+                "buttons": [
+                  {
+                    "text": "Get Started",
+                    "url": "#"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "hero-2",
+        "name": "Hero with Background",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-gray-900"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "justifyContent": "justify-center",
+              "alignItems": "items-center",
+              "width": "w-full",
+              "height": "h-screen",
+              "px": "px-6",
+              "py": "py-12",
+              "gap": "gap-6"
+            },
+            "desktop": {},
+            "custom": { "displayName": "Hero Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-5xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-white"
+                },
+                "desktop": {
+                  "fontSize": "text-6xl"
+                },
+                "custom": { "displayName": "Hero Title" },
+                "text": "<p>Build Design For The Future</p>"
+              }
+            },
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-lg",
+                  "textAlign": "text-center",
+                  "color": "text-gray-300",
+                  "maxWidth": "max-w-2xl"
+                },
+                "desktop": {},
+                "custom": { "displayName": "Hero Subtitle" },
+                "text": "<p>We offer best in class UI/UX solutions to enhance your digital presence.</p>"
+              }
+            },
+            {
+              "type": "Button",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-white",
+                  "color": "text-gray-900"
+                },
+                "mobile": {
+                  "px": "px-8",
+                  "py": "py-4",
+                  "fontSize": "text-lg",
+                  "fontWeight": "font-semibold",
+                  "radius": "rounded-lg",
+                  "gap": "gap-4"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Button" },
+                "buttons": [
+                  {
+                    "text": "Learn More",
+                    "url": "#"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "hero-3",
+        "name": "Hero Split",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {},
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "height": "h-screen",
+              "gap": "gap-0"
+            },
+            "desktop": {
+              "flexDirection": "flex-row"
+            },
+            "custom": { "displayName": "Hero Section" }
+          },
+          "children": [
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-primary-500"
+                },
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "justifyContent": "justify-center",
+                  "alignItems": "items-center",
+                  "width": "w-full",
+                  "height": "h-full",
+                  "px": "px-6",
+                  "py": "py-12",
+                  "gap": "gap-6"
+                },
+                "desktop": {
+                  "width": "w-1/2"
+                },
+                "custom": { "displayName": "Hero Content" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-4xl",
+                      "fontWeight": "font-bold",
+                      "color": "text-white"
+                    },
+                    "desktop": {
+                      "fontSize": "text-5xl"
+                    },
+                    "custom": { "displayName": "Hero Title" },
+                    "text": "<p>Transform Your Business</p>"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-lg",
+                      "color": "text-white"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Hero Subtitle" },
+                    "text": "<p>Professional solutions tailored to your needs.</p>"
+                  }
+                },
+                {
+                  "type": "Button",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-white",
+                      "color": "text-primary-500"
+                    },
+                    "mobile": {
+                      "px": "px-8",
+                      "py": "py-3",
+                      "fontSize": "text-base",
+                      "fontWeight": "font-bold",
+                      "radius": "rounded-lg",
+                      "gap": "gap-4"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "CTA Button" },
+                    "buttons": [
+                      {
+                        "text": "Get Started",
+                        "url": "#"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-gray-100"
+                },
+                "mobile": {
+                  "display": "flex",
+                  "alignItems": "items-center",
+                  "justifyContent": "justify-center",
+                  "width": "w-full",
+                  "height": "h-full"
+                },
+                "desktop": {
+                  "width": "w-1/2"
+                },
+                "custom": { "displayName": "Hero Image" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-3xl",
+                      "fontWeight": "font-semibold",
+                      "color": "text-gray-400",
+                      "textAlign": "text-center"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Placeholder" },
+                    "text": "<p>Image Here</p>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "services": [
+      {
+        "id": "services-1",
+        "name": "Three Column Services",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {},
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-12",
+              "gap": "gap-12"
+            },
+            "desktop": {},
+            "custom": { "displayName": "Services Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-4xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {},
+                "custom": { "displayName": "Services Title" },
+                "text": "<p>Our Services</p>"
+              }
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-8"
+                },
+                "desktop": {
+                  "flexDirection": "flex-row"
+                },
+                "custom": { "displayName": "Services Grid" }
+              },
+              "children": [
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-3",
+                      "px": "px-6",
+                      "py": "py-6"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Service 1" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-2xl",
+                          "fontWeight": "font-semibold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Title" },
+                        "text": "<p>Design</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-base",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Description" },
+                        "text": "<p>Beautiful, modern designs that capture attention and convert visitors.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-3",
+                      "px": "px-6",
+                      "py": "py-6"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Service 2" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-2xl",
+                          "fontWeight": "font-semibold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Title" },
+                        "text": "<p>Development</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-base",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Description" },
+                        "text": "<p>Fast, scalable applications built with the latest technologies.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-3",
+                      "px": "px-6",
+                      "py": "py-6"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Service 3" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-2xl",
+                          "fontWeight": "font-semibold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Title" },
+                        "text": "<p>Marketing</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-base",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Description" },
+                        "text": "<p>Strategic marketing to grow your brand and reach your audience.</p>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "services-2",
+        "name": "Two Column Services",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-white"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-8"
+            },
+            "desktop": {
+              "px": "px-12",
+              "py": "py-20"
+            },
+            "custom": { "displayName": "Services Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-3xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {
+                  "fontSize": "text-4xl"
+                },
+                "custom": { "displayName": "Section Title" },
+                "text": "<p>Our Services</p>"
+              }
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-8"
+                },
+                "desktop": {
+                  "flexDirection": "flex-row"
+                },
+                "custom": { "displayName": "Services Grid" }
+              },
+              "children": [
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-gray-50"
+                    },
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "px": "px-6",
+                      "py": "py-8",
+                      "gap": "gap-4",
+                      "radius": "rounded-lg"
+                    },
+                    "desktop": {
+                      "width": "w-1/2"
+                    },
+                    "custom": { "displayName": "Service Card" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-2xl",
+                          "fontWeight": "font-bold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Title" },
+                        "text": "<p>Consulting</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-base",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Description" },
+                        "text": "<p>Expert guidance to help your business grow and succeed in today's competitive market.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-gray-50"
+                    },
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "px": "px-6",
+                      "py": "py-8",
+                      "gap": "gap-4",
+                      "radius": "rounded-lg"
+                    },
+                    "desktop": {
+                      "width": "w-1/2"
+                    },
+                    "custom": { "displayName": "Service Card" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-2xl",
+                          "fontWeight": "font-bold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Title" },
+                        "text": "<p>Development</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-base",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Service Description" },
+                        "text": "<p>Custom solutions tailored to your unique business requirements and goals.</p>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "cta": [
+      {
+        "id": "cta-1",
+        "name": "Simple CTA",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-primary-500"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "justifyContent": "justify-center",
+              "alignItems": "items-center",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-6"
+            },
+            "desktop": {},
+            "custom": { "displayName": "CTA Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-4xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-white"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Title" },
+                "text": "<p>Ready to Get Started?</p>"
+              }
+            },
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-lg",
+                  "textAlign": "text-center",
+                  "color": "text-white",
+                  "maxWidth": "max-w-2xl"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Subtitle" },
+                "text": "<p>Join thousands of satisfied customers and transform your business today.</p>"
+              }
+            },
+            {
+              "type": "Button",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-white",
+                  "color": "text-primary-500"
+                },
+                "mobile": {
+                  "px": "px-8",
+                  "py": "py-4",
+                  "fontSize": "text-lg",
+                  "fontWeight": "font-bold",
+                  "radius": "rounded-lg",
+                  "gap": "gap-4"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Button" },
+                "buttons": [
+                  {
+                    "text": "Get Started Now",
+                    "url": "#"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "cta-2",
+        "name": "CTA with Border",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "border": "border-4",
+              "borderColor": "border-primary-500"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "justifyContent": "justify-center",
+              "alignItems": "items-center",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-6"
+            },
+            "desktop": {},
+            "custom": { "displayName": "CTA Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-4xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Title" },
+                "text": "<p>Start Your Free Trial</p>"
+              }
+            },
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-lg",
+                  "textAlign": "text-center",
+                  "color": "text-gray-600",
+                  "maxWidth": "max-w-2xl"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Subtitle" },
+                "text": "<p>No credit card required. Cancel anytime.</p>"
+              }
+            },
+            {
+              "type": "Button",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-primary-500",
+                  "color": "text-white"
+                },
+                "mobile": {
+                  "px": "px-8",
+                  "py": "py-4",
+                  "fontSize": "text-lg",
+                  "fontWeight": "font-bold",
+                  "radius": "rounded-lg",
+                  "gap": "gap-4"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Button" },
+                "buttons": [
+                  {
+                    "text": "Start Free Trial",
+                    "url": "#"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "cta-2",
+        "name": "CTA with Background",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-gradient-to-r from-primary-500 to-primary-600"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "justifyContent": "justify-center",
+              "alignItems": "items-center",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-20",
+              "gap": "gap-6"
+            },
+            "desktop": {
+              "py": "py-24"
+            },
+            "custom": { "displayName": "CTA Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-4xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-white"
+                },
+                "desktop": {
+                  "fontSize": "text-5xl"
+                },
+                "custom": { "displayName": "CTA Title" },
+                "text": "<p>Ready to Get Started?</p>"
+              }
+            },
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-lg",
+                  "textAlign": "text-center",
+                  "color": "text-white"
+                },
+                "desktop": {
+                  "fontSize": "text-xl"
+                },
+                "custom": { "displayName": "CTA Description" },
+                "text": "<p>Join thousands of satisfied customers today.</p>"
+              }
+            },
+            {
+              "type": "Button",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-white",
+                  "color": "text-primary-500"
+                },
+                "mobile": {
+                  "px": "px-8",
+                  "py": "py-4",
+                  "fontSize": "text-lg",
+                  "fontWeight": "font-bold",
+                  "radius": "rounded-full",
+                  "gap": "gap-4"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Button" },
+                "buttons": [
+                  {
+                    "text": "Start Free Trial",
+                    "url": "#"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "cta-3",
+        "name": "CTA Side by Side",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-gray-100"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "justifyContent": "justify-between",
+              "alignItems": "items-center",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-8"
+            },
+            "desktop": {
+              "flexDirection": "flex-row",
+              "px": "px-12",
+              "py": "py-20"
+            },
+            "custom": { "displayName": "CTA Section" }
+          },
+          "children": [
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "gap": "gap-4",
+                  "width": "w-full"
+                },
+                "desktop": {
+                  "width": "w-2/3"
+                },
+                "custom": { "displayName": "CTA Content" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-3xl",
+                      "fontWeight": "font-bold",
+                      "color": "text-gray-900"
+                    },
+                    "desktop": {
+                      "fontSize": "text-4xl"
+                    },
+                    "custom": { "displayName": "CTA Title" },
+                    "text": "<p>Let's Build Something Great Together</p>"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-base",
+                      "color": "text-gray-600"
+                    },
+                    "desktop": {
+                      "fontSize": "text-lg"
+                    },
+                    "custom": { "displayName": "CTA Description" },
+                    "text": "<p>Get in touch with us to discuss your project and see how we can help.</p>"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "Button",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-primary-500",
+                  "color": "text-white"
+                },
+                "mobile": {
+                  "px": "px-8",
+                  "py": "py-4",
+                  "fontSize": "text-base",
+                  "fontWeight": "font-bold",
+                  "radius": "rounded-lg",
+                  "gap": "gap-4"
+                },
+                "desktop": {},
+                "custom": { "displayName": "CTA Button" },
+                "buttons": [
+                  {
+                    "text": "Contact Us",
+                    "url": "#"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "imageText": [
+      {
+        "id": "imagetext-1",
+        "name": "Image Left, Text Right",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {},
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-12",
+              "gap": "gap-8"
+            },
+            "desktop": {
+              "flexDirection": "flex-row",
+              "alignItems": "items-center"
+            },
+            "custom": { "displayName": "Image & Text Section" }
+          },
+          "children": [
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-gray-200"
+                },
+                "mobile": {
+                  "display": "flex",
+                  "alignItems": "items-center",
+                  "justifyContent": "justify-center",
+                  "width": "w-full",
+                  "height": "h-64"
+                },
+                "desktop": {
+                  "width": "w-1/2",
+                  "height": "h-96"
+                },
+                "custom": { "displayName": "Image Placeholder" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-2xl",
+                      "fontWeight": "font-semibold",
+                      "color": "text-gray-400",
+                      "textAlign": "text-center"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Placeholder Text" },
+                    "text": "<p>Image Coming Soon</p>"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-4",
+                  "px": "px-6"
+                },
+                "desktop": {
+                  "width": "w-1/2"
+                },
+                "custom": { "displayName": "Content" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-3xl",
+                      "fontWeight": "font-bold",
+                      "color": "text-gray-900"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Title" },
+                    "text": "<p>About Our Story</p>"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-base",
+                      "color": "text-gray-600"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Description" },
+                    "text": "<p>We've been serving our community for over 10 years, providing exceptional service and building lasting relationships with our customers.</p>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "imagetext-2",
+        "name": "Text Left, Image Right",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-white"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-8"
+            },
+            "desktop": {
+              "flexDirection": "flex-row",
+              "px": "px-12",
+              "py": "py-20",
+              "gap": "gap-12",
+              "alignItems": "items-center"
+            },
+            "custom": { "displayName": "Image & Text Section" }
+          },
+          "children": [
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-4"
+                },
+                "desktop": {
+                  "width": "w-1/2"
+                },
+                "custom": { "displayName": "Text Content" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-3xl",
+                      "fontWeight": "font-bold",
+                      "color": "text-gray-900"
+                    },
+                    "desktop": {
+                      "fontSize": "text-4xl"
+                    },
+                    "custom": { "displayName": "Section Title" },
+                    "text": "<p>Our Story</p>"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-base",
+                      "color": "text-gray-600"
+                    },
+                    "desktop": {
+                      "fontSize": "text-lg"
+                    },
+                    "custom": { "displayName": "Section Description" },
+                    "text": "<p>We've been helping businesses succeed for over a decade. Our team of experts brings together years of experience and innovative thinking.</p>"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {
+                  "background": "bg-gray-200"
+                },
+                "mobile": {
+                  "display": "flex",
+                  "alignItems": "items-center",
+                  "justifyContent": "justify-center",
+                  "width": "w-full",
+                  "height": "h-64"
+                },
+                "desktop": {
+                  "width": "w-1/2",
+                  "height": "h-96"
+                },
+                "custom": { "displayName": "Image Placeholder" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-2xl",
+                      "fontWeight": "font-semibold",
+                      "color": "text-gray-400",
+                      "textAlign": "text-center"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Placeholder Text" },
+                    "text": "<p>Image Coming Soon</p>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "texts": [
+      {
+        "id": "texts-1",
+        "name": "Centered Text Block",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {},
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "alignItems": "items-center",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-12",
+              "gap": "gap-6"
+            },
+            "desktop": {},
+            "custom": { "displayName": "Text Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-3xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900",
+                  "maxWidth": "max-w-3xl"
+                },
+                "desktop": {},
+                "custom": { "displayName": "Heading" },
+                "text": "<p>Welcome to Our Platform</p>"
+              }
+            },
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-lg",
+                  "textAlign": "text-center",
+                  "color": "text-gray-600",
+                  "maxWidth": "max-w-3xl"
+                },
+                "desktop": {},
+                "custom": { "displayName": "Paragraph" },
+                "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "texts-2",
+        "name": "Two Column Text",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {},
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-12",
+              "gap": "gap-8"
+            },
+            "desktop": {
+              "flexDirection": "flex-row"
+            },
+            "custom": { "displayName": "Two Column Text" }
+          },
+          "children": [
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-4"
+                },
+                "desktop": {
+                  "width": "w-1/2"
+                },
+                "custom": { "displayName": "Column 1" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-2xl",
+                      "fontWeight": "font-bold",
+                      "color": "text-gray-900"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Heading" },
+                    "text": "<p>Our Mission</p>"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-base",
+                      "color": "text-gray-600"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Text" },
+                    "text": "<p>To provide innovative solutions that empower businesses to succeed in the digital age.</p>"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-4"
+                },
+                "desktop": {
+                  "width": "w-1/2"
+                },
+                "custom": { "displayName": "Column 2" }
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-2xl",
+                      "fontWeight": "font-bold",
+                      "color": "text-gray-900"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Heading" },
+                    "text": "<p>Our Vision</p>"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "fontSize": "text-base",
+                      "color": "text-gray-600"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Text" },
+                    "text": "<p>A world where every business has access to the tools they need to thrive and grow.</p>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "texts-2",
+        "name": "Two Column Text",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-white"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-12"
+            },
+            "desktop": {
+              "px": "px-12",
+              "py": "py-20"
+            },
+            "custom": { "displayName": "Text Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-3xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {
+                  "fontSize": "text-4xl"
+                },
+                "custom": { "displayName": "Section Title" },
+                "text": "<p>Why Choose Us</p>"
+              }
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-8"
+                },
+                "desktop": {
+                  "flexDirection": "flex-row",
+                  "gap": "gap-12"
+                },
+                "custom": { "displayName": "Content Columns" }
+              },
+              "children": [
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-4"
+                    },
+                    "desktop": {
+                      "width": "w-1/2"
+                    },
+                    "custom": { "displayName": "Column 1" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-xl",
+                          "fontWeight": "font-semibold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Column Title" },
+                        "text": "<p>Experience</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-base",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Column Content" },
+                        "text": "<p>With years of industry experience, we understand what it takes to deliver exceptional results. Our track record speaks for itself.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-4"
+                    },
+                    "desktop": {
+                      "width": "w-1/2"
+                    },
+                    "custom": { "displayName": "Column 2" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-xl",
+                          "fontWeight": "font-semibold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Column Title" },
+                        "text": "<p>Innovation</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-base",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Column Content" },
+                        "text": "<p>We stay ahead of the curve with cutting-edge solutions and creative approaches to solve your business challenges.</p>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "texts-3",
+        "name": "Large Quote Block",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-gray-50"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "justifyContent": "justify-center",
+              "alignItems": "items-center",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-20",
+              "gap": "gap-6"
+            },
+            "desktop": {
+              "px": "px-16",
+              "py": "py-24"
+            },
+            "custom": { "displayName": "Quote Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-2xl",
+                  "fontWeight": "font-medium",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {
+                  "fontSize": "text-3xl"
+                },
+                "custom": { "displayName": "Quote" },
+                "text": "<p>\"This service has completely transformed the way we do business. Highly recommended!\"</p>"
+              }
+            },
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-base",
+                  "textAlign": "text-center",
+                  "color": "text-gray-600",
+                  "fontWeight": "font-semibold"
+                },
+                "desktop": {
+                  "fontSize": "text-lg"
+                },
+                "custom": { "displayName": "Attribution" },
+                "text": "<p>- Sarah Johnson, CEO</p>"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "pricing": [
+      {
+        "id": "pricing-1",
+        "name": "Three Column Pricing",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-gray-50"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-8"
+            },
+            "desktop": {
+              "px": "px-12",
+              "py": "py-20"
+            },
+            "custom": { "displayName": "Pricing Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-3xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {
+                  "fontSize": "text-4xl"
+                },
+                "custom": { "displayName": "Section Title" },
+                "text": "<p>Great Pricing</p>"
+              }
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-8"
+                },
+                "desktop": {
+                  "flexDirection": "flex-row",
+                  "gap": "gap-6"
+                },
+                "custom": { "displayName": "Pricing Cards" }
+              },
+              "children": [
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-white"
+                    },
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "px": "px-8",
+                      "py": "py-10",
+                      "gap": "gap-6",
+                      "radius": "rounded-xl"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Pricing Card" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-xl",
+                          "fontWeight": "font-semibold",
+                          "textAlign": "text-center",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Plan Name" },
+                        "text": "<p>Free</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-4xl",
+                          "fontWeight": "font-bold",
+                          "textAlign": "text-center",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Price" },
+                        "text": "<p>$0</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-sm",
+                          "textAlign": "text-center",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Description" },
+                        "text": "<p>Perfect for getting started with basic features and functionality.</p>"
+                      }
+                    },
+                    {
+                      "type": "Button",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-gray-100",
+                          "color": "text-gray-900"
+                        },
+                        "mobile": {
+                          "px": "px-6",
+                          "py": "py-3",
+                          "fontSize": "text-base",
+                          "fontWeight": "font-semibold",
+                          "radius": "rounded-lg",
+                          "gap": "gap-4",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "CTA Button" },
+                        "buttons": [
+                          {
+                            "text": "Get Started",
+                            "url": "#"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-primary-500"
+                    },
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "px": "px-8",
+                      "py": "py-10",
+                      "gap": "gap-6",
+                      "radius": "rounded-xl"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Pricing Card" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-xl",
+                          "fontWeight": "font-semibold",
+                          "textAlign": "text-center",
+                          "color": "text-white"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Plan Name" },
+                        "text": "<p>Pro</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-4xl",
+                          "fontWeight": "font-bold",
+                          "textAlign": "text-center",
+                          "color": "text-white"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Price" },
+                        "text": "<p>$29</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-sm",
+                          "textAlign": "text-center",
+                          "color": "text-white"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Description" },
+                        "text": "<p>Great for professionals who need advanced features and support.</p>"
+                      }
+                    },
+                    {
+                      "type": "Button",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-white",
+                          "color": "text-primary-500"
+                        },
+                        "mobile": {
+                          "px": "px-6",
+                          "py": "py-3",
+                          "fontSize": "text-base",
+                          "fontWeight": "font-semibold",
+                          "radius": "rounded-lg",
+                          "gap": "gap-4",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "CTA Button" },
+                        "buttons": [
+                          {
+                            "text": "Get Started",
+                            "url": "#"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-white"
+                    },
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "px": "px-8",
+                      "py": "py-10",
+                      "gap": "gap-6",
+                      "radius": "rounded-xl"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Pricing Card" }
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-xl",
+                          "fontWeight": "font-semibold",
+                          "textAlign": "text-center",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Plan Name" },
+                        "text": "<p>Enterprise</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-4xl",
+                          "fontWeight": "font-bold",
+                          "textAlign": "text-center",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Price" },
+                        "text": "<p>$79</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-sm",
+                          "textAlign": "text-center",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Description" },
+                        "text": "<p>For large teams that need custom solutions and dedicated support.</p>"
+                      }
+                    },
+                    {
+                      "type": "Button",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-gray-100",
+                          "color": "text-gray-900"
+                        },
+                        "mobile": {
+                          "px": "px-6",
+                          "py": "py-3",
+                          "fontSize": "text-base",
+                          "fontWeight": "font-semibold",
+                          "radius": "rounded-lg",
+                          "gap": "gap-4",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "CTA Button" },
+                        "buttons": [
+                          {
+                            "text": "Contact Sales",
+                            "url": "#"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "pricing-2",
+        "name": "Menu List",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-white"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-8"
+            },
+            "desktop": {
+              "px": "px-12",
+              "py": "py-20"
+            },
+            "custom": { "displayName": "Menu Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-3xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {
+                  "fontSize": "text-4xl"
+                },
+                "custom": { "displayName": "Section Title" },
+                "text": "<p>Our Menu</p>"
+              }
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-6"
+                },
+                "desktop": {
+                  "px": "px-20"
+                },
+                "custom": { "displayName": "Menu Items" }
+              },
+              "children": [
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-2",
+                      "py": "py-4"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Menu Item" }
+                  },
+                  "children": [
+                    {
+                      "type": "Container",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "display": "flex",
+                          "flexDirection": "flex-row",
+                          "justifyContent": "justify-between",
+                          "alignItems": "items-center",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Item Header" }
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-xl",
+                              "fontWeight": "font-semibold",
+                              "color": "text-gray-900"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Item Name" },
+                            "text": "<p>Signature Dish</p>"
+                          }
+                        },
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-xl",
+                              "fontWeight": "font-bold",
+                              "color": "text-primary-500"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Price" },
+                            "text": "<p>$25</p>"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-sm",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Description" },
+                        "text": "<p>A delicious blend of flavors crafted by our expert chefs.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-2",
+                      "py": "py-4"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Menu Item" }
+                  },
+                  "children": [
+                    {
+                      "type": "Container",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "display": "flex",
+                          "flexDirection": "flex-row",
+                          "justifyContent": "justify-between",
+                          "alignItems": "items-center",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Item Header" }
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-xl",
+                              "fontWeight": "font-semibold",
+                              "color": "text-gray-900"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Item Name" },
+                            "text": "<p>Chef's Special</p>"
+                          }
+                        },
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-xl",
+                              "fontWeight": "font-bold",
+                              "color": "text-primary-500"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Price" },
+                            "text": "<p>$32</p>"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-sm",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Description" },
+                        "text": "<p>Premium ingredients prepared with traditional techniques.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {},
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-2",
+                      "py": "py-4"
+                    },
+                    "desktop": {},
+                    "custom": { "displayName": "Menu Item" }
+                  },
+                  "children": [
+                    {
+                      "type": "Container",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "display": "flex",
+                          "flexDirection": "flex-row",
+                          "justifyContent": "justify-between",
+                          "alignItems": "items-center",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Item Header" }
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-xl",
+                              "fontWeight": "font-semibold",
+                              "color": "text-gray-900"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Item Name" },
+                            "text": "<p>Classic Favorite</p>"
+                          }
+                        },
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-xl",
+                              "fontWeight": "font-bold",
+                              "color": "text-primary-500"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Price" },
+                            "text": "<p>$18</p>"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-sm",
+                          "color": "text-gray-600"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Description" },
+                        "text": "<p>A timeless recipe that never goes out of style.</p>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "pricing-3",
+        "name": "Product Grid",
+        "structure": {
+          "type": "Container",
+          "props": {
+            "canDelete": true,
+            "canEditName": true,
+            "root": {
+              "background": "bg-white"
+            },
+            "mobile": {
+              "display": "flex",
+              "flexDirection": "flex-col",
+              "width": "w-full",
+              "px": "px-6",
+              "py": "py-16",
+              "gap": "gap-8"
+            },
+            "desktop": {
+              "px": "px-12",
+              "py": "py-20"
+            },
+            "custom": { "displayName": "Products Section" }
+          },
+          "children": [
+            {
+              "type": "Text",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "fontSize": "text-3xl",
+                  "fontWeight": "font-bold",
+                  "textAlign": "text-center",
+                  "color": "text-gray-900"
+                },
+                "desktop": {
+                  "fontSize": "text-4xl"
+                },
+                "custom": { "displayName": "Section Title" },
+                "text": "<p>Featured Products</p>"
+              }
+            },
+            {
+              "type": "Container",
+              "props": {
+                "canDelete": true,
+                "canEditName": true,
+                "root": {},
+                "mobile": {
+                  "display": "flex",
+                  "flexDirection": "flex-col",
+                  "width": "w-full",
+                  "gap": "gap-8"
+                },
+                "desktop": {
+                  "flexDirection": "flex-row",
+                  "gap": "gap-6"
+                },
+                "custom": { "displayName": "Product Grid" }
+              },
+              "children": [
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-white"
+                    },
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-4"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Product Card" }
+                  },
+                  "children": [
+                    {
+                      "type": "Container",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-gray-200"
+                        },
+                        "mobile": {
+                          "display": "flex",
+                          "alignItems": "items-center",
+                          "justifyContent": "justify-center",
+                          "width": "w-full",
+                          "height": "h-64",
+                          "radius": "rounded-lg"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Product Image" }
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-2xl",
+                              "fontWeight": "font-semibold",
+                              "color": "text-gray-400",
+                              "textAlign": "text-center"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Placeholder" },
+                            "text": "<p>Product Image</p>"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-xl",
+                          "fontWeight": "font-semibold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Product Name" },
+                        "text": "<p>Product Name</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-2xl",
+                          "fontWeight": "font-bold",
+                          "color": "text-primary-500"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Price" },
+                        "text": "<p>$99</p>"
+                      }
+                    },
+                    {
+                      "type": "Button",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-primary-500",
+                          "color": "text-white"
+                        },
+                        "mobile": {
+                          "px": "px-6",
+                          "py": "py-3",
+                          "fontSize": "text-base",
+                          "fontWeight": "font-semibold",
+                          "radius": "rounded-lg",
+                          "gap": "gap-4",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Add to Cart" },
+                        "buttons": [
+                          {
+                            "text": "Add to Cart",
+                            "url": "#"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-white"
+                    },
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-4"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Product Card" }
+                  },
+                  "children": [
+                    {
+                      "type": "Container",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-gray-200"
+                        },
+                        "mobile": {
+                          "display": "flex",
+                          "alignItems": "items-center",
+                          "justifyContent": "justify-center",
+                          "width": "w-full",
+                          "height": "h-64",
+                          "radius": "rounded-lg"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Product Image" }
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-2xl",
+                              "fontWeight": "font-semibold",
+                              "color": "text-gray-400",
+                              "textAlign": "text-center"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Placeholder" },
+                            "text": "<p>Product Image</p>"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-xl",
+                          "fontWeight": "font-semibold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Product Name" },
+                        "text": "<p>Product Name</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-2xl",
+                          "fontWeight": "font-bold",
+                          "color": "text-primary-500"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Price" },
+                        "text": "<p>$149</p>"
+                      }
+                    },
+                    {
+                      "type": "Button",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-primary-500",
+                          "color": "text-white"
+                        },
+                        "mobile": {
+                          "px": "px-6",
+                          "py": "py-3",
+                          "fontSize": "text-base",
+                          "fontWeight": "font-semibold",
+                          "radius": "rounded-lg",
+                          "gap": "gap-4",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Add to Cart" },
+                        "buttons": [
+                          {
+                            "text": "Add to Cart",
+                            "url": "#"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "props": {
+                    "canDelete": true,
+                    "canEditName": true,
+                    "root": {
+                      "background": "bg-white"
+                    },
+                    "mobile": {
+                      "display": "flex",
+                      "flexDirection": "flex-col",
+                      "width": "w-full",
+                      "gap": "gap-4"
+                    },
+                    "desktop": {
+                      "width": "w-1/3"
+                    },
+                    "custom": { "displayName": "Product Card" }
+                  },
+                  "children": [
+                    {
+                      "type": "Container",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-gray-200"
+                        },
+                        "mobile": {
+                          "display": "flex",
+                          "alignItems": "items-center",
+                          "justifyContent": "justify-center",
+                          "width": "w-full",
+                          "height": "h-64",
+                          "radius": "rounded-lg"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Product Image" }
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "canDelete": true,
+                            "canEditName": true,
+                            "root": {},
+                            "mobile": {
+                              "fontSize": "text-2xl",
+                              "fontWeight": "font-semibold",
+                              "color": "text-gray-400",
+                              "textAlign": "text-center"
+                            },
+                            "desktop": {},
+                            "custom": { "displayName": "Placeholder" },
+                            "text": "<p>Product Image</p>"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-xl",
+                          "fontWeight": "font-semibold",
+                          "color": "text-gray-900"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Product Name" },
+                        "text": "<p>Product Name</p>"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {},
+                        "mobile": {
+                          "fontSize": "text-2xl",
+                          "fontWeight": "font-bold",
+                          "color": "text-primary-500"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Price" },
+                        "text": "<p>$199</p>"
+                      }
+                    },
+                    {
+                      "type": "Button",
+                      "props": {
+                        "canDelete": true,
+                        "canEditName": true,
+                        "root": {
+                          "background": "bg-primary-500",
+                          "color": "text-white"
+                        },
+                        "mobile": {
+                          "px": "px-6",
+                          "py": "py-3",
+                          "fontSize": "text-base",
+                          "fontWeight": "font-semibold",
+                          "radius": "rounded-lg",
+                          "gap": "gap-4",
+                          "width": "w-full"
+                        },
+                        "desktop": {},
+                        "custom": { "displayName": "Add to Cart" },
+                        "buttons": [
+                          {
+                            "text": "Add to Cart",
+                            "url": "#"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

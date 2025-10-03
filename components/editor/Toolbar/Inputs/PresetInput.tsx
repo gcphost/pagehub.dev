@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useEditor, useNode } from "@craftjs/core";
 import { changeProp } from "components/editor/Viewport/lib";
 import { ToolbarItem } from "../ToolbarItem";
 
@@ -11,9 +11,12 @@ export const PresetInput = ({
   labelHide = false,
   wrap = "",
 }) => {
+  const { actions, query } = useEditor();
+
   const {
     actions: { setProp },
-  } = useNode(() => ({}));
+    id,
+  } = useNode((node) => ({ id: node.id }));
 
   return (
     <ToolbarItem
@@ -37,6 +40,9 @@ export const PresetInput = ({
               value: preset[view][_var],
               setProp,
               view,
+              query,
+              actions,
+              nodeId: id,
             })
           );
         });

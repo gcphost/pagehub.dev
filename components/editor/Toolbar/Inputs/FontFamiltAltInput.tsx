@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useEditor, useNode } from "@craftjs/core";
 import { changeProp } from "components/editor/Viewport/lib";
 import { getRect } from "components/editor/Viewport/useRect";
 import { useRef } from "react";
@@ -17,12 +17,15 @@ export const FontFamiltAltInput = ({
   propType = "class",
 }) => {
   const [dialog, setDialog] = useRecoilState(FontFamilyDialogAtom);
+  const { actions, query } = useEditor();
 
   const {
     actions: { setProp },
     nodeProps,
+    id,
   } = useNode((node) => ({
     nodeProps: node.data.props || {},
+    id: node.id,
   }));
 
   const value = nodeProps.root ? nodeProps.root[propKey] || "" : null;
@@ -35,6 +38,9 @@ export const FontFamiltAltInput = ({
       setProp,
       index,
       propItemKey,
+      query,
+      actions,
+      nodeId: id,
     });
   };
 

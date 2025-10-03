@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useEditor, useNode } from "@craftjs/core";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { ViewAtom } from "../Viewport";
@@ -300,9 +300,13 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
   const {
     actions: { setProp },
     nodeProps,
+    id,
   } = useNode((node) => ({
     nodeProps: node.data.props || {},
+    id: node.id,
   }));
+
+  const { query, actions } = useEditor();
 
   const { value, viewValue } = getPropFinalValue(__props, view, nodeProps);
 
@@ -316,6 +320,9 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
       onChange,
       propType,
       propItemKey,
+      query,
+      actions,
+      nodeId: id,
     });
   };
 

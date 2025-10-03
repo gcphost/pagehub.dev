@@ -368,6 +368,27 @@ export const Viewport: React.FC<any> = ({ children }) => {
       return;
     }
 
+    if (event.key === "Escape") {
+      event.preventDefault();
+
+      try {
+        const active = query.getEvent("selected").first();
+        if (active) {
+          // Get the background node (first child of ROOT_NODE)
+          const rootNode = query.node(ROOT_NODE).get();
+          const backgroundNodeId = rootNode?.data?.nodes?.[0];
+
+          if (backgroundNodeId) {
+            actions.selectNode(backgroundNodeId);
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      return;
+    }
+
     if (event.key === "Tab") {
       event.preventDefault();
 
@@ -470,10 +491,10 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
     desktop: [
       enabled
-        ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen bg-gray-200`
+        ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen bg-gray-700 p-8`
         : "w-screen",
       enabled
-        ? "w-full m-1 relative overflow-auto scrollbar-light bg-white"
+        ? "w-full m-1 relative overflow-auto scrollbar-light bg-white border-2 border-primary-900 border-l-0"
         : "w-screen h-screen overflow-show",
     ],
   };

@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useEditor, useNode } from "@craftjs/core";
 import { ViewAtom } from "components/editor/Viewport";
 import { changeProp } from "components/editor/Viewport/lib";
 import { RootClassGenProps } from "components/selectors";
@@ -188,10 +188,13 @@ export const ClassItem = ({
   const {
     actions: { setProp },
     nodeProps,
+    id,
   } = useNode((node) => ({
     nodeProps: node.data.props,
+    id: node.id,
   }));
 
+  const { query, actions } = useEditor();
   const propValue = (nodeProps || {})[propKey];
   const view = useRecoilValue(ViewAtom);
 
@@ -206,6 +209,9 @@ export const ClassItem = ({
         value: [],
         setProp,
         propType: "component",
+        query,
+        actions,
+        nodeId: id,
       });
     }
 
@@ -219,6 +225,9 @@ export const ClassItem = ({
           setProp,
           propType: "class",
           view,
+          query,
+          actions,
+          nodeId: id,
         });
       }
 
@@ -231,6 +240,9 @@ export const ClassItem = ({
         value: remaining.filter((_) => _),
         setProp,
         propType: "component",
+        query,
+        actions,
+        nodeId: id,
       });
     }
   };

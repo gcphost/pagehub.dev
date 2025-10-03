@@ -76,12 +76,19 @@ export const RenderNodeControl = ({
         ref.current.style.bottom = `-${top}px`;
       }
     } else if (["left", "right"].includes(position)) {
-      // aliugn middle
+      // align middle
       ref.current.style.top = `calc(50% - ${rect.height / 2}px)`;
       ref.current.style.bottom = "auto";
 
-      // place left
-      ref.current.style.left = `-${rect.width}px`;
+      if (position === "left") {
+        // place left
+        ref.current.style.left = `-${rect.width}px`;
+        ref.current.style.right = "auto";
+      } else if (position === "right") {
+        // place right (offset a bit to the left for better centering)
+        ref.current.style.right = `-${rect.width - 4}px`;
+        ref.current.style.left = "auto";
+      }
       localRef.current.style.display = "flex";
       return;
     }

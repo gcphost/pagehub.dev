@@ -10,12 +10,12 @@ export const DragAdjustNodeController = (props: {
   align;
   direction;
   propVar;
-  icon;
-  name;
   styleToUse;
   alt?: any;
+  gridSnap?: number;
+  tooltip?: string;
 }) => {
-  const { position, align, direction, propVar, icon, name, styleToUse, alt } =
+  const { position, align, direction, propVar, styleToUse, alt, gridSnap, tooltip } =
     props as any;
 
   const { id } = useNode();
@@ -50,19 +50,34 @@ export const DragAdjustNodeController = (props: {
             targetElement={dom}
             direction={direction}
             styleToUse={styleToUse}
+            tooltip={tooltip}
             onChange={(value) => {
               setProp((prop) => {
                 prop[view] = prop[view] || {};
-                prop[view][propVar] = `${propVar}-[${value}]`;
+
+                if (gridSnap) {
+                  // Convert pixel value to grid fraction
+                  const parent = dom?.parentElement;
+                  if (parent) {
+                    const parentWidth = parent.offsetWidth;
+                    const currentWidth = parseFloat(value);
+                    const percentage = (currentWidth / parentWidth) * 100;
+
+                    // Round to nearest grid fraction
+                    const gridFraction = Math.max(1, Math.min(gridSnap, Math.round((percentage / 100) * gridSnap)));
+
+                    prop[view][propVar] = `w-${gridFraction}/12`;
+                  }
+                } else {
+                  // Round pixel value to whole number
+                  const numericValue = parseFloat(value);
+                  const roundedValue = Math.round(numericValue);
+                  const unit = value.replace(/[0-9.-]/g, '');
+                  prop[view][propVar] = `${propVar}-[${roundedValue}${unit}]`;
+                }
               }, 200);
             }}
-          >
-            {icon}
-
-            <div className="hidden group-active:flex group-hover:flex group-hover:font-bold text-xs">
-              {name}
-            </div>
-          </DragAdjust>
+          />
         </RenderNodeControl>
       )}
     </AnimatePresence>
