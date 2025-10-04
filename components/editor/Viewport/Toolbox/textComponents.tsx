@@ -1,8 +1,8 @@
 import { LoremIpsum } from "lorem-ipsum";
 import { BsBodyText } from "react-icons/bs";
 import { MdShortText } from "react-icons/md";
-import { RenderToolComponent } from "./lib";
 import { Text } from "../../../selectors/Text";
+import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
@@ -38,11 +38,7 @@ export const RenderParagraphComponent = (props) => {
       {...props}
       tagName="p"
       text={text}
-      display={
-        <div className="flex flex-row gap-3 items-center border p-3 rounded-md w-full hover:bg-gray-100">
-          <BsBodyText /> Paragraph
-        </div>
-      }
+      display={<ToolboxItemDisplay icon={BsBodyText} label="Paragraph" />}
       custom={{ displayName: "Paragraph" }}
     />
   );
@@ -53,26 +49,18 @@ export const TextComponents = [
     key="1"
     mobile="text-3xl"
     desktop="text-3xl"
-    display={
-      <div className="flex flex-row gap-3 items-center border p-3 rounded-md w-full hover:bg-gray-100">
-        <MdShortText /> Title
-      </div>
-    }
+    display={<ToolboxItemDisplay icon={MdShortText} label="Title" />}
   />,
   <RenderTextComponent
     key="2"
     mobile="text-xl"
     desktop="text-xl"
-    display={
-      <div className="flex flex-row gap-3 items-center border p-3 rounded-md w-full hover:bg-gray-100">
-        <MdShortText /> Sub-title
-      </div>
-    }
+    display={<ToolboxItemDisplay icon={MdShortText} label="Sub-title" />}
   />,
   <RenderParagraphComponent
     key="2"
     element={Text}
-    // mobile={{ lineHeight: "leading-10" }}
+  // mobile={{ lineHeight: "leading-10" }}
   />,
 ];
 

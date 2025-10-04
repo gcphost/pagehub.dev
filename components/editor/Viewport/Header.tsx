@@ -12,7 +12,6 @@ import {
   TbArrowBackUp,
   TbArrowForwardUp,
   TbBoxModel2,
-  TbBrandOpenai,
   TbCode,
   TbDeviceDesktop,
   TbDeviceFloppy,
@@ -27,15 +26,16 @@ import {
   TbForms,
   TbLayoutSidebar,
   TbLayoutSidebarRight,
-  TbListDetails,
   TbLogin,
   TbLogout,
   TbMenu2,
   TbPalette,
+  TbPhoto,
   TbPlayerPlay,
   TbPlus,
+  TbSettings,
   TbUpload,
-  TbX,
+  TbX
 } from "react-icons/tb";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SessionTokenAtom, SettingsAtom } from "utils/atoms";
@@ -50,13 +50,14 @@ import {
 import { useTenant } from "utils/tenantStore";
 import { DeviceAtom, EnabledAtom, PreviewAtom, ViewAtom } from ".";
 import { ColorPalletModal } from "../Toolbar/Inputs/ColorPalletModal";
+import { MediaManagerModal } from "../Toolbar/Inputs/MediaManagerModal";
 import { AnimatedSaveButton } from "../Tools/AnimatedSaveButton";
 import { ComponentSettings } from "./ComponentSettings";
 import { DomainSettings } from "./DomainSettings";
 import { ExportModal } from "./ExportModal";
 import { ImportModal } from "./ImportModal";
-import { PageSettings } from "./PageSettings";
-import { PagesSettings } from "./PagesSettings";
+import { PageSelector } from "./PageSelector";
+import { SiteSettingsModal } from "./SiteSettingsModal";
 import { SaveToServer } from "./lib";
 
 export function useComponentVisible(initialIsVisible) {
@@ -112,6 +113,8 @@ export const Header = () => {
   const [showMenu, setShowMenu] = useRecoilState(MenuState);
   const [showMenuType, setShowMenuType] = useRecoilState(MenuItemState);
   const [isColorPalletModalOpen, setIsColorPalletModalOpen] = useState(false);
+  const [isMediaManagerModalOpen, setIsMediaManagerModalOpen] = useState(false);
+  const [isSiteSettingsModalOpen, setIsSiteSettingsModalOpen] = useState(false);
 
   const setEnabled = useSetRecoilState(EnabledAtom);
 
@@ -201,7 +204,7 @@ export const Header = () => {
     <>
       <header
         role="banner"
-        className="inside-shadow pointer-events-auto  bg-primary-900 text-black border-2 border-gray-700 items-center  flex flex-row-reverse justify-between"
+        className="inside-shadow pointer-events-auto  bg-primary-900 text-black items-center  flex flex-row-reverse justify-between"
         data-tutorial="header"
       >
         <Tooltip content="Add Component" placement="bottom" arrow={false}>
@@ -360,10 +363,15 @@ export const Header = () => {
               setShowMenu(!showMenu);
             }}
           >
-            <TbMenu2 />
+            {showMenu ? <TbX /> : <TbMenu2 />}
           </Item>
         </Tooltip>
       </header>
+
+      {/* Page Selector Bar - Below Header */}
+      <div className="pointer-events-auto bg-primary-900 border-b-2 border-gray-600 px-3 py-2">
+        <PageSelector className="w-full" />
+      </div>
 
       {showMenu && (
         <nav
@@ -372,18 +380,6 @@ export const Header = () => {
           aria-label="Editor menu"
           className="pointer-events-auto drop-shadow-2xl overflow-y-auto scrollbar bg-gray-700    gap-3 pt-3 flex flex-col text-white absolute w-full bottom-0 z-50 top-12"
         >
-          <button
-            onClick={() => setShowMenu(false)}
-            className="absolute right-3  "
-            aria-label="Close menu"
-          >
-            <div className="w-5 hover:text-white text-gray-400 cursor-pointer">
-              <Tooltip content="Close" arrow={false}>
-                <TbX />
-              </Tooltip>
-            </div>
-          </button>
-          <div className="p-1.5 w-full"></div>
 
           {showMenuType === "export" && <ExportModal />}
           {showMenuType === "import" && (
@@ -395,8 +391,7 @@ export const Header = () => {
           )}
           {showMenuType === "components" && <ComponentSettings />}
           {showMenuType === "domain" && <DomainSettings />}
-          {showMenuType === "page" && <PageSettings />}
-          {showMenuType === "pages" && <PagesSettings />}
+
           {showMenuType === "builds" && lsIds.length > 0 && (
             <>
               <div className="p-3 flex flex-col gap-6">
@@ -531,31 +526,9 @@ export const Header = () => {
                     </button>
                   ) : null}
 
-                  <button
-                    onClick={() => {
-                      setShowMenu(false);
-                      actions.selectNode(ROOT_NODE);
-                    }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                  >
-                    <div className="text-2xl">
-                      <TbBoxModel2 />
-                    </div>{" "}
-                    Background
-                  </button>
 
-                  <button
-                    onClick={() => {
-                      setShowMenu(true);
-                      setShowMenuType("pages");
-                    }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                  >
-                    <div className="text-2xl">
-                      <TbListDetails />
-                    </div>{" "}
-                    Pages
-                  </button>
+
+
 
                   <button
                     onClick={() => {
@@ -570,6 +543,32 @@ export const Header = () => {
                     <div className="">Color Palette</div>
                   </button>
 
+                  <button
+                    onClick={() => {
+                      setIsMediaManagerModalOpen(true);
+                      setShowMenu(false);
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbPhoto />
+                    </div>
+                    <div className="">Media Manager</div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setIsSiteSettingsModalOpen(true);
+                      setShowMenu(false);
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbSettings />
+                    </div>
+                    <div className="">Site Settings</div>
+                  </button>
+
                   {settings?.name && (
                     <a
                       href={`https://${settings.name}.pagehub.dev`}
@@ -582,6 +581,10 @@ export const Header = () => {
                       View Live Version
                     </a>
                   )}
+
+
+                  <hr className="border-b border-gray-500 " />
+
                   {settings?.draftId && (
                     <a
                       href={`https://${settings.draftId}.pagehub.dev`}
@@ -595,7 +598,7 @@ export const Header = () => {
                     </a>
                   )}
 
-                  <hr className="border-b border-gray-500 " />
+
                   <button
                     onClick={async () => {
                       //  return;
@@ -645,21 +648,6 @@ export const Header = () => {
                   </button>
 
                   <hr className="border-b border-gray-500 " />
-
-                  {settings && (
-                    <button
-                      onClick={() => {
-                        setShowMenuType("page");
-                        setShowMenu(true);
-                      }}
-                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                    >
-                      <div className="text-2xl">
-                        <TbBrandOpenai />
-                      </div>{" "}
-                      AI Settings
-                    </button>
-                  )}
 
                   {lsIds.length ? (
                     <button
@@ -724,6 +712,16 @@ export const Header = () => {
       <ColorPalletModal
         isOpen={isColorPalletModalOpen}
         onClose={() => setIsColorPalletModalOpen(false)}
+      />
+
+      <MediaManagerModal
+        isOpen={isMediaManagerModalOpen}
+        onClose={() => setIsMediaManagerModalOpen(false)}
+      />
+
+      <SiteSettingsModal
+        isOpen={isSiteSettingsModalOpen}
+        onClose={() => setIsSiteSettingsModalOpen(false)}
       />
     </>
   );

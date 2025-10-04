@@ -1,6 +1,6 @@
 import { TbBox } from "react-icons/tb";
 import { Container } from "../../../selectors/Container";
-import { RenderToolComponent } from "./lib";
+import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 
 const generate = require("boring-name-generator");
 
@@ -8,6 +8,7 @@ export const RenderPageComponent = ({ text }) => (
   <RenderToolComponent
     element={Container}
     type="page"
+    isHomePage={false}
     mobile={{
       mx: "mx-auto",
       display: "flex",
@@ -19,11 +20,7 @@ export const RenderPageComponent = ({ text }) => (
       py: "py-6",
       px: "px-3",
     }}
-    display={
-      <div className="flex flex-row gap-3 items-center border p-3 rounded-md w-full hover:bg-gray-100">
-        <TbBox /> Blank Page
-      </div>
-    }
+    display={<ToolboxItemDisplay icon={TbBox} label="Blank Page" />}
     custom={{ displayName: generate().spaced }}
   />
 );

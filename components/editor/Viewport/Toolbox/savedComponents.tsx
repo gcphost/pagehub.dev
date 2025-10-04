@@ -306,19 +306,20 @@ export const RenderSavedComponent = ({ componentData }) => {
       whileTap={{ scale: 0.9 }}
       ref={(ref: any) => ref && create(ref, tool)}
       onDoubleClick={handleDoubleClick}
-      className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100 cursor-move pointer-events-auto"
+      className="cursor-move pointer-events-auto w-full"
     >
-      <div className="flex flex-row gap-3 items-center">
-        <TbComponents /> {componentName}
+      <div className="flex flex-col items-center justify-center border p-3 rounded-md w-full hover:bg-gray-100 min-h-[80px] gap-2 pointer-events-none transition-colors relative">
+        <TbComponents className="text-2xl" />
+        <span className="text-xs text-center">{componentName}</span>
+        <button
+          onClick={handleDelete}
+          onMouseDown={(e) => e.stopPropagation()}
+          className="absolute top-1 right-1 text-red-500 hover:text-red-700 p-1 pointer-events-auto z-10"
+          aria-label="Delete component"
+        >
+          <TbTrash className="text-sm" />
+        </button>
       </div>
-      <button
-        onClick={handleDelete}
-        onMouseDown={(e) => e.stopPropagation()}
-        className="text-red-500 hover:text-red-700 p-1 pointer-events-auto"
-        aria-label="Delete component"
-      >
-        <TbTrash />
-      </button>
     </motion.div>
   );
 };

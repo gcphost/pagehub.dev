@@ -11,7 +11,7 @@ import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
 import { Image } from "components/selectors/Image";
 import { OnlyText, Text } from "components/selectors/Text";
 import { Video } from "components/selectors/Video";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { TbCode } from "react-icons/tb";
 import {
@@ -28,6 +28,7 @@ import {
   ScreenshotAtom,
   SideBarAtom,
   SideBarOpen,
+  isolatePageAlt,
 } from "utils/lib";
 import { DeviceOffline } from "../Toolbar/DeviceOffline";
 import {
@@ -118,6 +119,8 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
   const [ac, setAc] = useState(false);
   const setInitialLoadComplete = useSetRecoilState(InitialLoadCompleteAtom);
+  const nextRouter = useRouter();
+  const [isolate, setIsolate] = useRecoilState(IsolateAtom);
 
   useEffect(() => {
     const active = query.getEvent("selected").first();
@@ -185,6 +188,56 @@ export const Viewport: React.FC<any> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Handle URL-based page isolation
+  useEffect(() => {
+    const sluggit = require("slug");
+    const pathParts = nextRouter.asPath.split('/').filter(p => p && !p.startsWith('?'));
+
+    const root = query.node(ROOT_NODE).get();
+    if (!root) return;
+
+    // Check if there's a page slug in the URL (last part of the path)
+    if (pathParts.length >= 3) {
+      // Has page slug: /build/something/page-slug
+      const pageSlug = pathParts[pathParts.length - 1];
+
+      // Find the page that matches this slug
+      const matchingPage = root.data.nodes.find(nodeId => {
+        const node = query.node(nodeId).get();
+        if (node?.data?.props?.type === "page") {
+          const displayName = node.data.custom?.displayName;
+          const nodeSlug = sluggit(displayName, "-");
+          return nodeSlug === pageSlug;
+        }
+        return false;
+      });
+
+      if (matchingPage && matchingPage !== isolate) {
+        // Isolate the page found in the URL
+        setTimeout(() => {
+          isolatePageAlt(isolate, query, matchingPage, actions, setIsolate, true);
+        }, 500);
+      }
+    } else if (pathParts.length === 1 || pathParts.length === 2) {
+      // Base URL: /build or /build/something - show home page
+      // Find the page marked as home page
+      const homePageId = root.data.nodes.find(nodeId => {
+        const node = query.node(nodeId).get();
+        const isPage = node?.data?.props?.type === "page";
+        const isHomePage = node?.data?.props?.isHomePage;
+        return isPage && isHomePage;
+      });
+
+      if (homePageId && homePageId !== isolate) {
+        // Isolate the home page
+        setTimeout(() => {
+          isolatePageAlt(isolate, query, homePageId, actions, setIsolate, true);
+        }, 500);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextRouter.asPath]);
+
   const [unsavedChanges, setUnsavedChanged] =
     useRecoilState(UnsavedChangesAtom);
 
@@ -230,7 +283,21 @@ export const Viewport: React.FC<any> = ({ children }) => {
       return (e.returnValue = warningText);
     };
 
-    const handleBrowseAway = () => {
+    const handleBrowseAway = (url: string) => {
+      // Check if navigating within the same build context (just changing pages)
+      const currentPath = router.asPath;
+      const currentParts = currentPath.split('/').filter(p => p && !p.startsWith('?'));
+      const newParts = url.split('/').filter(p => p && !p.startsWith('?'));
+
+      // If both URLs are /build/[tenant]/... then it's just page navigation
+      if (currentParts.length >= 2 && newParts.length >= 2 &&
+        currentParts[0] === 'build' && newParts[0] === 'build' &&
+        currentParts[1] === newParts[1]) {
+        // Same build context, allow navigation without warning
+        return;
+      }
+
+      // Different context, show warning
       if (window.confirm(warningText)) return;
       router.events.emit("routeChangeError");
       // throw new Error("routeChange aborted.");
@@ -242,7 +309,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       window.removeEventListener("beforeunload", handleWindowClose);
       router.events.off("routeChangeStart", handleBrowseAway);
     };
-  }, [unsavedChanges]);
+  }, [unsavedChanges, router]);
 
   const {
     actions: { setProp },

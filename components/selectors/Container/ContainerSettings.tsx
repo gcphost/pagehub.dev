@@ -18,7 +18,6 @@ import { OrderInput } from "components/editor/Toolbar/Inputs/OrderInput";
 import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
 import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
-import SEOInput from "components/editor/Toolbar/Inputs/SEOInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SizeInput } from "components/editor/Toolbar/Inputs/SizeInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
@@ -297,7 +296,26 @@ export const ContainerSettings = () => {
         <OrderInput />
       </ToolbarSection>
 
-      {props.type === "page" && <SEOInput />}
+      {props.type === "page" && (
+        <ToolbarSection
+          title="Page Settings"
+        >
+          <button
+            onClick={() => {
+              // Find and trigger the page settings modal
+              // We'll dispatch a custom event that the PageSelector can listen to
+              const event = new CustomEvent('openPageSettings', { detail: { pageId: id } });
+              window.dispatchEvent(event);
+            }}
+            className="w-full px-4 py-3 btn"
+          >
+            <span>Edit Page Settings</span>
+          </button>
+          <p className="text-xs text-gray-500 mt-2">
+            Configure page name, URL, SEO, and social media settings.
+          </p>
+        </ToolbarSection>
+      )}
     </TabBody>
   );
 

@@ -1,16 +1,15 @@
 import { useEditor, useNode } from "@craftjs/core";
 import {
-  DeleteMedia,
   GetSignedUrl,
   SaveMedia,
 } from "components/editor/Viewport/lib";
 import { useState } from "react";
-import { TbAlertTriangle, TbUpload } from "react-icons/tb";
+import { TbAlertTriangle, TbPhoto, TbUpload } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
-import { getCdnUrl } from "utils/cdn";
-import { registerMediaWithBackground, unregisterMediaFromBackground } from "utils/lib";
+import { getMediaContent, registerMediaWithBackground } from "utils/lib";
 import Spinner from "../Helpers/Spinner";
+import { MediaManagerModal } from "./MediaManagerModal";
 
 import { Wrap } from "../ToolbarStyle";
 
@@ -63,12 +62,6 @@ const updateNodeProps = (
   }, 3000);
 };
 
-const handleMediaDeletion = async (mediaId, settings) => {
-  if (mediaId) {
-    await DeleteMedia(mediaId, settings);
-  }
-};
-
 export const ImageUploadInput: any = ({
   full = false,
   multiple = false,
@@ -95,6 +88,7 @@ export const ImageUploadInput: any = ({
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [enabled, setEnabled] = useState(true);
+  const [showMediaBrowser, setShowMediaBrowser] = useState(false);
 
   const settings = useRecoilValue(SettingsAtom);
 
@@ -110,17 +104,12 @@ export const ImageUploadInput: any = ({
 
     updateNodeProps(setProp, true, false);
 
-    const mediaId = nodeProps[propKey];
-
     const files = handleFileSelection(e, setErrors);
     const _saved = [];
 
     if (files.length) {
-      // Unregister old media if it exists
-      if (mediaId) {
-        await handleMediaDeletion(mediaId, settings);
-        unregisterMediaFromBackground(query, actions, mediaId);
-      }
+      // Note: We don't delete old media from the library anymore
+      // Media stays in the library until explicitly deleted via Media Manager
 
       const savedFiles = await uploadFiles(files, settings, setErrors);
       _saved.push(...savedFiles);
@@ -146,13 +135,34 @@ export const ImageUploadInput: any = ({
     }, 3000);
   };
 
+  const handleBrowseSelect = (selectedMediaId: string) => {
+    if (!selectedMediaId) return;
+
+    // Note: We don't unregister old media - it stays in the library
+    // Media is only removed via delete button in Media Manager
+
+    // Set the new media ID - metadata will be looked up at render time
+    setProp((_props) => {
+      _props[propKey] = selectedMediaId;
+      _props[typeKey] = "cdn";
+    });
+
+    // Register with background (if not already registered)
+    registerMediaWithBackground(query, actions, selectedMediaId, "reference", componentId);
+
+    setShowMediaBrowser(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
   if (loading) label = "Uploading";
   if (saved) label = "Saved";
   if (errors.length) label = "Error";
 
   const mediaId = nodeProps[propKey];
-  const hasUploadedImage = mediaId && nodeProps[typeKey] === "cdn";
-  const imageUrl = hasUploadedImage ? getCdnUrl(mediaId) : null;
+  const hasUploadedImage = !!mediaId;
+  // Use getMediaContent to handle both CDN and base64
+  const imageUrl = hasUploadedImage ? getMediaContent(query, mediaId) : null;
 
   if (hasUploadedImage && !loading && !saved) {
     label = "Change Image";
@@ -160,28 +170,42 @@ export const ImageUploadInput: any = ({
 
   return (
     <Wrap props={props}>
-      <label
-        htmlFor="files"
-        className={`flex gap-3 h-12 bg-primary-500 rounded-md btn text-base ${!enabled ? "opacity-50" : ""
-          } ${hasUploadedImage ? "relative overflow-hidden" : ""}`}
-      >
-        {hasUploadedImage && imageUrl && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-30"
-            style={{ backgroundImage: `url(${imageUrl})` }}
-          />
-        )}
-        <div className="relative z-10 flex gap-3">
-          <div className="">
-            {errors.length ? <TbAlertTriangle /> : null}
-            {!loading && !errors.length && <TbUpload />}
-            {loading && <Spinner />}
-          </div>{" "}
-          {label}
-        </div>
-      </label>
+      <div className="flex gap-2">
+        {/* Upload Button */}
+        <label
+          htmlFor={`files-${componentId}`}
+          className={`flex-1 flex gap-3 h-12 bg-primary-500 rounded-md btn text-base ${!enabled ? "opacity-50" : ""
+            } ${hasUploadedImage ? "relative overflow-hidden" : ""}`}
+        >
+          {hasUploadedImage && imageUrl && (
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-30"
+              style={{ backgroundImage: `url(${imageUrl})` }}
+            />
+          )}
+          <div className="relative z-10 flex gap-3">
+            <div className="">
+              {errors.length ? <TbAlertTriangle /> : null}
+              {!loading && !errors.length && <TbUpload />}
+              {loading && <Spinner />}
+            </div>{" "}
+            {label}
+          </div>
+        </label>
+
+        {/* Browse Button */}
+        <button
+          onClick={() => setShowMediaBrowser(true)}
+          className="h-12 px-4 btn transition-colors flex items-center gap-2"
+          title="Browse media library"
+        >
+          <TbPhoto />
+          Browse
+        </button>
+      </div>
+
       <input
-        id="files"
+        id={`files-${componentId}`}
         className="hidden"
         type="file"
         multiple={multiple}
@@ -197,6 +221,34 @@ export const ImageUploadInput: any = ({
           ))}
         </div>
       ) : null}
+
+      {/* Media Browser Modal */}
+      <MediaBrowserSelector
+        isOpen={showMediaBrowser}
+        onClose={() => setShowMediaBrowser(false)}
+        onSelect={handleBrowseSelect}
+      />
     </Wrap>
+  );
+};
+
+// Simplified media browser that wraps MediaManagerModal for selection
+const MediaBrowserSelector = ({ isOpen, onClose, onSelect }: {
+  isOpen: boolean;
+  onClose: () => void;
+  onSelect: (mediaId: string) => void;
+}) => {
+  const handleSelect = (mediaId: string) => {
+    onSelect(mediaId);
+    onClose();
+  };
+
+  return (
+    <MediaManagerModal
+      isOpen={isOpen}
+      onClose={onClose}
+      onSelect={handleSelect}
+      selectionMode={true}
+    />
   );
 };

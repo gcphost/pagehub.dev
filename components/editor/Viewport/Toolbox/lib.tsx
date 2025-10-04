@@ -1,6 +1,7 @@
 import { Element, ROOT_NODE, useEditor } from "@craftjs/core";
 
 import { motion } from "framer-motion";
+import { cloneElement, isValidElement, useState } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { TbActiveMenuAtom } from "../atoms";
 
@@ -75,6 +76,13 @@ export const AddElement = ({
   return false;
 };
 
+export const ToolboxItemDisplay = ({ icon: Icon, label, isDragging = false }) => (
+  <div className={`flex flex-col items-center justify-center border p-3 rounded-md w-full min-h-[80px] gap-2 pointer-events-none transition-colors ${isDragging ? 'bg-gray-100' : 'hover:bg-gray-100'}`}>
+    <Icon className="text-2xl" />
+    <span className="text-xs text-center">{label}</span>
+  </div>
+);
+
 export const RenderToolComponent = ({
   element,
   className = "",
@@ -92,6 +100,7 @@ export const RenderToolComponent = ({
 
   const selectedNode = useRecoilValue(SelectedNodeAtom);
   const setActiveMenu = useSetRecoilState(TbActiveMenuAtom);
+  const [isDragging, setIsDragging] = useState(false);
 
   const tool = (
     <Element
@@ -108,6 +117,11 @@ export const RenderToolComponent = ({
     ...Object.keys(props.root || {}).map((_) => props.root[_]),
   ].join(" ");
 
+  // Clone display element and inject isDragging prop if it's a React element
+  const displayWithProps = display && isValidElement(display)
+    ? cloneElement(display, { isDragging } as any)
+    : display;
+
   return (
     <motion.div
       whileHover={{
@@ -117,6 +131,10 @@ export const RenderToolComponent = ({
       whileTap={{ scale: 0.9 }}
       className={"cursor-move w-full pointer-events-auto"}
       ref={(ref: any) => create(ref, tool)}
+      onMouseDown={() => setIsDragging(true)}
+      onMouseUp={() => setIsDragging(false)}
+      onMouseLeave={() => setIsDragging(false)}
+
       onDoubleClick={() => {
         const props = {
           element: tool,
@@ -129,7 +147,7 @@ export const RenderToolComponent = ({
         AddElement(props);
       }}
     >
-      {renderer || <div className={" w-full"}>{display}</div>}
+      {renderer || <div className={" w-full"}>{displayWithProps}</div>}
     </motion.div>
   );
 };

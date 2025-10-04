@@ -24,8 +24,6 @@ const getAlignmentOptions = (direction, value) => {
   const horizontal = isHorizontal ? "items" : "justify";
   const vertical = isHorizontal ? "justify" : "items";
 
-  console.log({ isHorizontal, horizontal, vertical })
-
   if (isHorizontal) {
     return [
       {

@@ -1,3 +1,9 @@
+/**
+ * NOTE: This Toolbox component is deprecated and not currently used.
+ * Navigation and component management is now handled through the Header component.
+ * See: components/editor/Viewport/Header.tsx
+ */
+
 import { useEditor } from "@craftjs/core";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef } from "react";

@@ -1,12 +1,7 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { Tooltip } from "components/layout/Tooltip";
 import debounce from "lodash.debounce";
-import { TbExternalLink, TbExternalLinkOff } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
-import { SettingsAtom } from "utils/atoms";
 import { TabAtom } from "../Viewport";
-
-const slug = require("slug");
 
 export const ToolbarTitleEditor = () => {
   const { id, name, propValues } = useNode((node) => ({
@@ -19,14 +14,7 @@ export const ToolbarTitleEditor = () => {
   }));
 
   const { actions } = useEditor(() => ({}));
-  const settings = useRecoilValue(SettingsAtom);
   const title = useRecoilValue(TabAtom);
-
-  const baseUrl = settings?.draftId
-    ? `https://${settings.draftId}.pagehub.dev/`
-    : "";
-  const pageSlug = !propValues.isHomePage ? slug(name, "-") : "";
-  const newCode = `${baseUrl}${pageSlug}`;
 
   return (
     <div className="flex items-center gap-3 justify-between">
@@ -48,18 +36,6 @@ export const ToolbarTitleEditor = () => {
       )}
 
       <div className="text-xs whitespace-nowrap capitalize">{title}</div>
-
-      {propValues.type === "page" && (
-        <Tooltip
-          content="Open page in a new tab"
-          arrow={false}
-          placement="bottom"
-        >
-          <a className="text-gray-300 text-base" href={newCode} target="_blank">
-            {settings?.draftId ? <TbExternalLink /> : <TbExternalLinkOff />}
-          </a>
-        </Tooltip>
-      )}
     </div>
   );
 };

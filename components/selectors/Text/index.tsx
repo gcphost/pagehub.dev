@@ -8,10 +8,11 @@ import {
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { FaFont } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { motionIt, selectAfterAdding } from "utils/lib";
+import { motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
 
 import { applyAnimation, ClassGenerator } from "utils/tailwind";
 
@@ -64,6 +65,7 @@ export const Text = (props: Partial<TextProps>) => {
     getClonedState(props, state)
   );
 
+  const router = useRouter();
   const tab = useSetRecoilState(TabAtom);
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
@@ -122,6 +124,10 @@ if (text && typeof window !== "undefined") {
     prop.contentEditable = isEditing;
     prop["data-gramm"] = false;
     prop.suppressContentEditableWarning = true;
+    prop.style = {
+      ...(prop.style || {}),
+      cursor: isEditing ? "text" : "pointer",
+    };
     prop.onClick = (e) => {
       if (!isEditing) {
         // First click: select the node (let event propagate)
@@ -144,8 +150,11 @@ if (text && typeof window !== "undefined") {
       });
     }, 500);
   } else if (props.url && typeof props.url === "string") {
+    // Resolve page references to actual URLs
+    const resolvedUrl = resolvePageRef(props.url, query, router?.asPath);
+
     tagName = Link as any;
-    prop.href = props.url || "#";
+    prop.href = resolvedUrl || "#";
     prop.target = props.urlTarget;
     prop.onClick = (e) => {
       if (enabled) e.preventDefault();

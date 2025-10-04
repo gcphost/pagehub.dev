@@ -15,16 +15,35 @@ import { TextToolbox } from "./Toolbox/textComponents";
 import { VideoToolbox } from "./Toolbox/videoComponents";
 
 const baseItems = [
-  ...sectionToolboxItems,
-  TextToolbox,
-  ButtonToolbox,
-  ImageToolbox,
-  VideoToolbox,
-  FormToolbox,
-  FormElementToolbox,
-  DividerToolbox,
-  EmbedToolbox,
-  //  ListToolbox,
+  {
+    title: "Basic",
+    content: [
+      ...TextToolbox.content,
+      ...ButtonToolbox.content,
+      ...sectionToolboxItems[0].content, // Layout (Row, Column)
+      ...DividerToolbox.content,
+    ],
+  },
+  {
+    title: "Media",
+    content: [
+      ...ImageToolbox.content,
+      ...VideoToolbox.content,
+    ],
+  },
+  {
+    title: "Forms",
+    content: [
+      ...FormToolbox.content,
+      ...FormElementToolbox.content,
+    ],
+  },
+  {
+    title: "Advanced",
+    content: [
+      ...EmbedToolbox.content,
+    ],
+  },
   ...pageToolboxItems,
 ];
 
@@ -108,9 +127,9 @@ export const ComponentSettings = () => {
         <div key={k}>
           <div className="px-3 pb-3 font-bold">{a.title}</div>
 
-          <div className="bg-white text-black w-full flex flex-col gap-3 p-3">
+          <div className="bg-white text-black w-full grid grid-cols-3 gap-3 p-3">
             {a.content.map((item, kk) => (
-              <div className="w-full" key={kk}>
+              <div key={kk}>
                 {item}
               </div>
             ))}

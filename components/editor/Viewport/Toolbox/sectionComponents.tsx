@@ -1,8 +1,7 @@
 import { Element } from "@craftjs/core";
-import { Tooltip } from "components/layout/Tooltip";
-import { TbLayoutColumns, TbLayoutRows, TbQuestionMark } from "react-icons/tb";
+import { TbLayoutColumns, TbLayoutRows } from "react-icons/tb";
 import { Container } from "../../../selectors/Container";
-import { RenderToolComponent } from "./lib";
+import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 
 export const RenderSectionComponent = ({
   text = <></>,
@@ -69,19 +68,7 @@ export const sectionToolboxItems = [
     content: [
       <RenderSectionComponent
         key="row1"
-        text={
-          <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
-            <div className="flex flex-row gap-3 items-center">
-              <TbLayoutRows /> Row
-            </div>
-            <Tooltip
-              content="Rows allow you to place content horizontal across the layout."
-              placement="left"
-            >
-              <TbQuestionMark />
-            </Tooltip>
-          </div>
-        }
+        text={<ToolboxItemDisplay icon={TbLayoutRows} label="Row" />}
         mobile={{
           display: "flex",
           justifyContent: "justify-center",
@@ -98,19 +85,7 @@ export const sectionToolboxItems = [
 
       <RenderSectionComponent
         key="col"
-        text={
-          <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
-            <div className="flex flex-row gap-3 items-center">
-              <TbLayoutColumns /> Column
-            </div>
-            <Tooltip
-              content="Columns allow you to place content vertically across the layout."
-              placement="left"
-            >
-              <TbQuestionMark />
-            </Tooltip>
-          </div>
-        }
+        text={<ToolboxItemDisplay icon={TbLayoutColumns} label="Column" />}
         mobile={{
           display: "flex",
           justifyContent: "justify-center",

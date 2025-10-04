@@ -60,16 +60,13 @@ export const UniformPaddingNodeController = () => {
       // Snap to nearest Tailwind spacing
       const snappedPadding = snapToTailwindSpacing(newPadding);
 
-      // Apply immediately to DOM for visual feedback
-      (dom as HTMLElement).style.padding = `${snappedPadding}px`;
-
-      // Convert to Tailwind class
+      // Convert to Tailwind class and update props (no inline styles)
       const tailwindClass = pixelsToTailwindClass(snappedPadding);
 
       setProp((prop) => {
         prop[view] = prop[view] || {};
-        prop[view]["padding"] = tailwindClass;
-      });
+        prop[view]["p"] = tailwindClass;
+      }, 50);
     };
 
     const handleMouseUp = () => {

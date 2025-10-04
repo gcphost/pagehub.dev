@@ -140,8 +140,8 @@ function DragAdjust({
           newValue = snapToTailwindSpacing(newValue);
         }
 
-        targetRef.current.style[styleToUse] = `${newValue}${unit}`;
-        onChange(targetRef.current.style[styleToUse]);
+        // Only call onChange, don't set inline styles
+        onChange(`${newValue}${unit}`);
       } else if (direction === "horizontal") {
         let dragDistance = e.clientX - startX;
         // Reverse for right padding (drag left = increase)
@@ -153,8 +153,8 @@ function DragAdjust({
           newValue = snapToTailwindSpacing(newValue);
         }
 
-        targetRef.current.style[styleToUse] = `${newValue}${unit}`;
-        onChange(targetRef.current.style[styleToUse]);
+        // Only call onChange, don't set inline styles
+        onChange(`${newValue}${unit}`);
       }
     }
   };

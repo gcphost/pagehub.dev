@@ -204,6 +204,8 @@ background?: string;
   */
 
 export const TailwindStyles = {
+  m: [],
+  p: [],
   mx: [],
   my: [],
   px: [],
@@ -881,6 +883,8 @@ export const genColor = (size) => {
 };
 
 [
+  "m",
+  "p",
   "gap",
   "mx",
   "my",
@@ -1069,6 +1073,8 @@ export const classFilter = [
   "minWidth",
   "minHeight",
   "height",
+  "m",
+  "p",
   "px",
   "py",
   "mx",

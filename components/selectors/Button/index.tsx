@@ -13,11 +13,12 @@ import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "compone
 import { changeProp, getProp } from "components/editor/Viewport/lib";
 import debounce from "lodash.debounce";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { TbRectangle } from "react-icons/tb";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
-import { applyBackgroundImage, motionIt, selectAfterAdding } from "utils/lib";
+import { applyBackgroundImage, motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
 import {
   applyAnimation,
@@ -155,6 +156,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
     getClonedState(props, state)
   );
 
+  const router = useRouter();
   const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
 
   useScrollToSelected(id, enabled);
@@ -310,10 +312,15 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
 
         let prop: any = {};
 
-        let ele = but.url && typeof but.url === "string" ? Link : "button";
+        // Resolve page references to actual URLs
+        const resolvedUrl = but.url && typeof but.url === "string"
+          ? resolvePageRef(but.url, query, router?.asPath)
+          : but.url;
 
-        if (but.url && typeof but.url === "string") {
-          prop.href = but.url;
+        let ele = resolvedUrl && typeof resolvedUrl === "string" ? Link : "button";
+
+        if (resolvedUrl && typeof resolvedUrl === "string") {
+          prop.href = resolvedUrl;
         }
 
         if (enabled && ele === Link) ele = "span";

@@ -1,6 +1,6 @@
 import { TbCode } from "react-icons/tb";
 import { Embed } from "../../../selectors/Embed";
-import { RenderToolComponent } from "./lib";
+import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 
 export const RenderEmbedComponent = ({ display, ...props }) => (
   <RenderToolComponent
@@ -16,13 +16,7 @@ export const EmbedToolbox = {
   content: [
     <RenderEmbedComponent
       key="1"
-      display={
-        <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
-          <div className="flex flex-row gap-3 items-center">
-            <TbCode /> Embedded Code
-          </div>
-        </div>
-      }
+      display={<ToolboxItemDisplay icon={TbCode} label="Embedded Code" />}
       custom={{ displayName: "Embedded coded" }}
     />,
   ],

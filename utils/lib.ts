@@ -571,10 +571,81 @@ export const isolatePageAlt = (
       actions.setProp(_, (prop) => (prop.hidden = false));
     });
 
-  if (select) setTimeout(() => actions.selectNode(_active), 100);
+  if (select && _active) {
+    setTimeout(() => {
+      try {
+        const node = query.node(_active).get();
+        if (node) {
+          actions.selectNode(_active);
+        }
+      } catch (e) {
+        console.error("Error selecting node:", e);
+      }
+    }, 100);
+  }
 
   setIsolate(active);
   localStorage.setItem("isolated", active);
+};
+
+/**
+ * Resolves a page reference (ref:<pageId>) to an actual URL
+ * @param url - The URL which may be a page reference or a regular URL
+ * @param query - Craft.js query object to access nodes
+ * @param currentPath - Current router path (optional, for generating relative URLs)
+ * @returns Resolved URL string
+ */
+export const resolvePageRef = (
+  url: string,
+  query: any,
+  currentPath?: string
+): string => {
+  // If not a page reference, return as-is
+  if (!url || typeof url !== "string" || !url.startsWith("ref:")) {
+    return url;
+  }
+
+  try {
+    const sluggit = require("slug");
+    const pageId = url.replace("ref:", "");
+
+    // Get the page node
+    const pageNode = query.node(pageId).get();
+    if (!pageNode || pageNode.data?.props?.type !== "page") {
+      return "#"; // Invalid reference
+    }
+
+    const isHomePage = pageNode.data?.props?.isHomePage;
+    const displayName = pageNode.data?.custom?.displayName || "Untitled";
+
+    // Determine the base URL from current path
+    let baseUrl = "";
+    if (currentPath) {
+      const pathParts = currentPath
+        .split("/")
+        .filter((p) => p && !p.startsWith("?"));
+      // For editor: /build/[slug] -> /build/[slug]
+      // For static: /[slug] -> /[slug]
+      if (pathParts.length >= 2 && pathParts[0] === "build") {
+        baseUrl = `/${pathParts[0]}/${pathParts[1]}`;
+      } else if (pathParts.length >= 1) {
+        baseUrl = `/${pathParts[0]}`;
+      } else {
+        baseUrl = "";
+      }
+    }
+
+    // Generate the URL
+    if (isHomePage) {
+      return baseUrl || "/";
+    } else {
+      const pageSlug = sluggit(displayName, "-");
+      return baseUrl ? `${baseUrl}/${pageSlug}` : `/${pageSlug}`;
+    }
+  } catch (e) {
+    console.error("Error resolving page reference:", e);
+    return "#";
+  }
 };
 
 export const isCssValid = (code: string): boolean => {
@@ -712,6 +783,87 @@ export const getPageMedia = (query: any) => {
   } catch (e) {
     console.error("Failed to get page media:", e);
     return [];
+  }
+};
+
+/**
+ * Get media content by ID
+ * @param query - Craft.js query object
+ * @param mediaId - The ID of the media to retrieve
+ * @returns The media content (URL or base64) or null if not found
+ */
+export const getMediaContent = (query: any, mediaId: string): string | null => {
+  try {
+    if (!mediaId) return null;
+
+    const backgroundNode = query.node(ROOT_NODE).get();
+    if (!backgroundNode) return null;
+
+    const pageMedia = backgroundNode.data.props.pageMedia || [];
+    const media = pageMedia.find((m: any) => m.id === mediaId);
+
+    if (!media) {
+      // If not in media library, assume it's a CDN ID (for backwards compatibility)
+      return getCdnUrl(mediaId);
+    }
+
+    // If media was replaced, use the new cdnId, otherwise use the original id
+    const cdnId = media.cdnId || media.id;
+    return getCdnUrl(cdnId);
+  } catch (e) {
+    console.error("Failed to get media content:", e);
+    return null;
+  }
+};
+
+/**
+ * Get full media object by ID
+ * @param query - Craft.js query object
+ * @param mediaId - The ID of the media to retrieve
+ * @returns The full media object or null if not found
+ */
+export const getMediaById = (query: any, mediaId: string): any | null => {
+  try {
+    if (!mediaId) return null;
+
+    const backgroundNode = query.node(ROOT_NODE).get();
+    if (!backgroundNode) return null;
+
+    const pageMedia = backgroundNode.data.props.pageMedia || [];
+    return pageMedia.find((m: any) => m.id === mediaId) || null;
+  } catch (e) {
+    console.error("Failed to get media by ID:", e);
+    return null;
+  }
+};
+
+/**
+ * Update metadata for a specific media item
+ * @param query - Craft.js query object
+ * @param actions - Craft.js actions object
+ * @param mediaId - The ID of the media to update
+ * @param metadata - The metadata to update (alt, title, description)
+ */
+export const updateMediaMetadata = (
+  query: any,
+  actions: any,
+  mediaId: string,
+  metadata: { alt?: string; title?: string; description?: string }
+) => {
+  try {
+    actions.setProp(ROOT_NODE, (props: any) => {
+      if (!props.pageMedia) return;
+
+      const mediaItem = props.pageMedia.find((m: any) => m.id === mediaId);
+      if (mediaItem) {
+        mediaItem.metadata = {
+          ...mediaItem.metadata,
+          ...metadata,
+        };
+      }
+    });
+  } catch (e) {
+    console.error("Failed to update media metadata:", e);
   }
 };
 

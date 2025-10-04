@@ -1,6 +1,6 @@
 import { Button } from "components/selectors/Button";
 import { RxButton } from "react-icons/rx";
-import { RenderToolComponent } from "./lib";
+import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 
 export const RenderButtonComponent = ({ text = "Button", ...props }) => {
   const root = {
@@ -21,11 +21,7 @@ export const RenderButtonComponent = ({ text = "Button", ...props }) => {
 
   return (
     <RenderToolComponent
-      display={
-        <div className="flex flex-row gap-3 items-center border p-3 rounded-md w-full hover:bg-gray-100">
-          <RxButton /> {text}
-        </div>
-      }
+      display={<ToolboxItemDisplay icon={RxButton} label={text} />}
       iconPosition={props.iconPosition || "left"}
       buttons={[
         {

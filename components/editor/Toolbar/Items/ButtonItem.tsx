@@ -6,6 +6,7 @@ import { TbTrash } from "react-icons/tb";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ColorInput } from "../Inputs/ColorInput";
 import { IconDialogInput } from "../Inputs/IconDialogInput";
+import LinkSettingsInput from "../Inputs/LinkSettingsInput";
 
 import { ToolbarItem, ToolbarItemProps } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
@@ -67,18 +68,12 @@ const Input = ({ nodeProps, setProp }) => {
             ]}
           >
             <div className="flex flex-col gap-3">
-              <ToolbarSection full={1}>
-                <ToolbarItem
-                  propKey="buttons"
-                  propType="component"
-                  index={butKey}
-                  propItemKey="url"
-                  type="text"
-                  label="URL"
-                  placeholder="https://pagehub.dev"
-                  labelHide={true}
-                />
-              </ToolbarSection>
+              <LinkSettingsInput
+                propKey="buttons"
+                index={butKey}
+                showAnchor={false}
+                suggestedPageName={but.text}
+              />
 
               <ToolbarSection full={2}>
                 <IconDialogInput
@@ -115,7 +110,7 @@ const Input = ({ nodeProps, setProp }) => {
                 </ToolbarItem>
               </ToolbarSection>
 
-              <ToolbarSection full={2}>
+              <ToolbarSection full={1}>
                 <ColorInput
                   propKey="buttons"
                   propType="component"

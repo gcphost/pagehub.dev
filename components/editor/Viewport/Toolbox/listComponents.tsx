@@ -1,8 +1,7 @@
-import { Tooltip } from "components/layout/Tooltip";
 import { RiImageAddLine } from "react-icons/ri";
-import { TbListNumbers, TbQuestionMark } from "react-icons/tb";
+import { TbListNumbers } from "react-icons/tb";
 import { Image } from "../../../selectors/Image";
-import { RenderToolComponent } from "./lib";
+import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 import { RenderSectionComponent } from "./sectionComponents";
 
 export const RenderImageComponent = ({ text = "", display, ...props }) => (
@@ -29,36 +28,12 @@ export const ListToolbox = {
         overflow: "overflow-hidden",
       }}
       desktop={{ height: "h-auto" }}
-      display={
-        <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
-          <div className="flex flex-row gap-3 items-center">
-            <TbListNumbers /> Item List
-          </div>
-          <Tooltip
-            content="Inline images can go anywhere and will be displayed inline with the content."
-            placement="left"
-          >
-            <TbQuestionMark />
-          </Tooltip>
-        </div>
-      }
+      display={<ToolboxItemDisplay icon={TbListNumbers} label="Item List" />}
       custom={{ displayName: "Inline Image" }}
     />,
     <RenderSectionComponent
       key="image1"
-      display={
-        <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
-          <div className="flex flex-row gap-3 items-center">
-            <RiImageAddLine /> Background Image
-          </div>
-          <Tooltip
-            content="Background images are shown behind other content, these allow you to add additional components on top of the background."
-            placement="left"
-          >
-            <TbQuestionMark />
-          </Tooltip>
-        </div>
-      }
+      display={<ToolboxItemDisplay icon={RiImageAddLine} label="Background Image" />}
       mobile={{
         display: "flex",
         minHeight: "min-h-[120px]",

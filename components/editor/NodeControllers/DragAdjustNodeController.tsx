@@ -17,21 +17,32 @@ const TAILWIND_SPACING_MAP = {
   320: "80", 384: "96",
 };
 
+// Map full property names to Tailwind abbreviations
+const PROP_VAR_MAP = {
+  "height": "h",
+  "width": "w",
+  "margin": "m",
+  "padding": "p",
+};
+
 // Convert pixel value to Tailwind class
 const pixelsToTailwindClass = (pixels: number, propVar: string): string => {
   const isNegative = pixels < 0;
   const absoluteValue = Math.abs(pixels);
+
+  // Map propVar to Tailwind abbreviation if needed
+  const tailwindProp = PROP_VAR_MAP[propVar] || propVar;
 
   // Find exact match or use arbitrary value
   const tailwindValue = TAILWIND_SPACING_MAP[absoluteValue];
 
   if (tailwindValue) {
     const prefix = isNegative ? "-" : "";
-    return `${prefix}${propVar}-${tailwindValue}`;
+    return `${prefix}${tailwindProp}-${tailwindValue}`;
   }
 
   // Fallback to arbitrary value
-  return `${propVar}-[${pixels}px]`;
+  return `${tailwindProp}-[${pixels}px]`;
 };
 
 export const DragAdjustNodeController = (props: {
@@ -132,10 +143,12 @@ export const DragAdjustNodeController = (props: {
                     const tailwindClass = pixelsToTailwindClass(numericValue, propVar);
                     prop[view][propVar] = tailwindClass;
                   } else {
-                    prop[view][propVar] = `${propVar}-[${numericValue}${unit}]`;
+                    // Map propVar to Tailwind abbreviation for non-px units too
+                    const tailwindProp = PROP_VAR_MAP[propVar] || propVar;
+                    prop[view][propVar] = `${tailwindProp}-[${numericValue}${unit}]`;
                   }
                 }
-              }, 200);
+              }, 50);
             }}
           />
         </RenderNodeControl>

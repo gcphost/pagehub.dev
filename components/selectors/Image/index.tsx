@@ -76,6 +76,23 @@ export const Image = (props: ImageProps) => {
   props = setClonedProps(props, query);
   const ref = useRef(null);
 
+  // Look up metadata from media library at render time
+  let mediaMetadata = null;
+  if (videoId && type === "cdn") {
+    try {
+      const backgroundNode = query.node("ROOT").get();
+      if (backgroundNode) {
+        const pageMedia = backgroundNode.data.props.pageMedia || [];
+        const media = pageMedia.find((m: any) => m.id === videoId);
+        if (media?.metadata) {
+          mediaMetadata = media.metadata;
+        }
+      }
+    } catch (e) {
+      // Silent fail - just use props if lookup fails
+    }
+  }
+
   const prop: any = {
     ref: (r) => {
       ref.current = r;
@@ -98,11 +115,15 @@ export const Image = (props: ImageProps) => {
 
   prop.style = { ...prop.style, position: "relative" };
 
+  // Use metadata from media library, fallback to props
+  const altText = mediaMetadata?.alt || props.alt || mediaMetadata?.title || props.title || "";
+  const titleText = mediaMetadata?.title || props.title || "";
+
   const _imgProp: any = {
     loading: props.loading || "lazy",
-    alt: props.alt || props.title || "",
-    title: props.title || "",
-    role: !props.alt && !props.title ? "presentation" : undefined,
+    alt: altText,
+    title: titleText,
+    role: !altText && !titleText ? "presentation" : undefined,
     className: ClassGenerator(
       props,
       view,
@@ -186,7 +207,7 @@ export const Image = (props: ImageProps) => {
   if (props.url) {
     return React.createElement(ele, {
       ...prop,
-      "aria-label": props.alt || props.title || "Image link",
+      "aria-label": altText || titleText || "Image link",
     });
   }
 
