@@ -4,7 +4,7 @@
  * See: components/editor/Viewport/Header.tsx
  */
 
-import { useEditor } from "@craftjs/core";
+import { ROOT_NODE, useEditor } from "@craftjs/core";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
@@ -37,7 +37,7 @@ import {
 } from "./atoms";
 
 export const Toolbox = ({ userStyle = null }) => {
-  const { enabled } = useEditor((state) => ({
+  const { enabled, query } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
 
@@ -54,6 +54,29 @@ export const Toolbox = ({ userStyle = null }) => {
   const [activeSubItem, setActiveSubItem] = useRecoilState(TbActiveSubItemAtom);
 
   const ref = useRef(null);
+
+  // Load components from Background node
+  useEffect(() => {
+    if (!query || !enabled) return;
+
+    console.log('🔍 Loading saved components from Background node...');
+    try {
+      const rootNode = query.node(ROOT_NODE).get();
+      const backgroundId = rootNode?.data?.nodes?.[0];
+      console.log('📦 Background ID:', backgroundId);
+
+      if (backgroundId) {
+        const backgroundNode = query.node(backgroundId).get();
+        console.log('📦 Background node:', backgroundNode?.data?.props);
+        const savedComponents = backgroundNode?.data?.props?.savedComponents || [];
+        console.log('📦 Found saved components:', savedComponents.length);
+        console.log('📦 Components:', savedComponents);
+        setComponents(savedComponents);
+      }
+    } catch (e) {
+      console.error("❌ Error loading saved components:", e);
+    }
+  }, [query, enabled, setComponents]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

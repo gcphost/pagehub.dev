@@ -1,9 +1,8 @@
-import { Element, useEditor, useNode } from "@craftjs/core";
+import { Element, ROOT_NODE, useEditor, useNode } from "@craftjs/core";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef } from "react";
 import { TbComponents, TbTrash } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { removeComponentFromStorage } from "utils/craft";
 import { ComponentsAtom } from "utils/lib";
 import { buildClonedTree } from "../lib";
 import { SelectedNodeAtom } from "./lib";
@@ -293,8 +292,21 @@ export const RenderSavedComponent = ({ componentData }) => {
   const handleDelete = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    const components = JSON.parse(localStorage.getItem("components")) || [];
-    removeComponentFromStorage(componentData.rootNodeId, components, setComponents);
+
+    // Remove from Background node
+    const rootNode = query.node(ROOT_NODE).get();
+    const backgroundId = rootNode?.data?.nodes?.[0];
+
+    if (backgroundId) {
+      actions.setProp(backgroundId, (prop) => {
+        prop.savedComponents = (prop.savedComponents || []).filter(
+          c => c.rootNodeId !== componentData.rootNodeId
+        );
+      });
+
+      // Update the local state
+      setComponents(prev => prev.filter(c => c.rootNodeId !== componentData.rootNodeId));
+    }
   };
 
   return (

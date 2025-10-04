@@ -87,6 +87,7 @@ export const GapDragControl = () => {
     direction: "horizontal" | "vertical";
     currentGap: number;
     childIndex: number; // Track which gap (between child i and i+1)
+    gapRect?: { x: number; y: number; width: number; height: number }; // Full gap area for visualization
   } | null>(null);
 
   const [isDragging, setIsDragging] = useState(false);
@@ -153,6 +154,7 @@ export const GapDragControl = () => {
 
           let newX = gapHoverInfo.x;
           let newY = gapHoverInfo.y;
+          let newGapRect;
 
           if (gapHoverInfo.direction === "vertical") {
             // For row gaps (vertical control), update X position
@@ -162,6 +164,14 @@ export const GapDragControl = () => {
             const gapStart = leftChild.right;
             const gapEnd = rightChild.left;
             newX = (gapStart + gapEnd) / 2;
+
+            // Update gap rect for visual feedback
+            newGapRect = {
+              x: leftChild.right,
+              y: child1.top < child2.top ? child1.top : child2.top,
+              width: Math.max(1, rightChild.left - leftChild.right),
+              height: (child1.bottom > child2.bottom ? child1.bottom : child2.bottom) - (child1.top < child2.top ? child1.top : child2.top),
+            };
           } else {
             // For column gaps (horizontal control), update Y position
             const isReverse = flexDirection === "column-reverse";
@@ -170,12 +180,21 @@ export const GapDragControl = () => {
             const gapStart = topChild.bottom;
             const gapEnd = bottomChild.top;
             newY = (gapStart + gapEnd) / 2;
+
+            // Update gap rect for visual feedback
+            newGapRect = {
+              x: child1.left < child2.left ? child1.left : child2.left,
+              y: topChild.bottom,
+              width: (child1.right > child2.right ? child1.right : child2.right) - (child1.left < child2.left ? child1.left : child2.left),
+              height: Math.max(1, bottomChild.top - topChild.bottom),
+            };
           }
 
           setGapHoverInfo({
             ...gapHoverInfo,
             x: newX,
             y: newY,
+            gapRect: newGapRect,
           });
         }
 
@@ -207,6 +226,13 @@ export const GapDragControl = () => {
         // Parse current gap value
         const currentGapPx = parseFloat(styles.gap) || 0;
 
+        // Only show gap controls if there's an actual gap set (or very close to one)
+        // This prevents showing controls for natural spacing between elements
+        if (currentGapPx < 1 && styles.gap !== '0px') {
+          setGapHoverInfo(null);
+          return;
+        }
+
         // Check if mouse is hovering in gap areas between children
         for (let i = 0; i < children.length - 1; i++) {
           const child1 = children[i].getBoundingClientRect();
@@ -224,6 +250,13 @@ export const GapDragControl = () => {
             const gapCenter = (gapStart + gapEnd) / 2;
             const gapSize = Math.abs(gapEnd - gapStart);
 
+            // Skip if this gap is way off from the expected gap value (natural spacing, not flex gap)
+            // Allow some tolerance (±50%) for browser rounding
+            const gapTolerance = Math.max(20, currentGapPx * 0.5);
+            if (Math.abs(gapSize - currentGapPx) > gapTolerance) {
+              continue;
+            }
+
             // Get the vertical bounds of the two children that form this gap
             const minTop = Math.min(child1.top, child2.top);
             const maxBottom = Math.max(child1.bottom, child2.bottom);
@@ -237,10 +270,7 @@ export const GapDragControl = () => {
               Math.pow(e.clientX - controlX, 2) + Math.pow(e.clientY - controlY, 2)
             );
 
-            if (
-              distance < GAP_DETECTION_THRESHOLD &&
-              (gapSize >= 0 || Math.abs(gapEnd - gapStart) <= 50) // Allow showing for small or no gaps
-            ) {
+            if (distance < GAP_DETECTION_THRESHOLD) {
               setGapHoverInfo({
                 show: true,
                 x: controlX,
@@ -248,6 +278,12 @@ export const GapDragControl = () => {
                 direction: "vertical",
                 currentGap: currentGapPx,
                 childIndex: i,
+                gapRect: {
+                  x: gapStart,
+                  y: minTop,
+                  width: Math.max(1, gapSize), // Minimum 1px for visibility
+                  height: maxBottom - minTop,
+                },
               });
               return;
             }
@@ -263,6 +299,13 @@ export const GapDragControl = () => {
             const gapCenter = (gapStart + gapEnd) / 2;
             const gapSize = Math.abs(gapEnd - gapStart);
 
+            // Skip if this gap is way off from the expected gap value (natural spacing, not flex gap)
+            // Allow some tolerance (±50%) for browser rounding
+            const gapTolerance = Math.max(20, currentGapPx * 0.5);
+            if (Math.abs(gapSize - currentGapPx) > gapTolerance) {
+              continue;
+            }
+
             // Get the horizontal bounds of the two children that form this gap
             const minLeft = Math.min(child1.left, child2.left);
             const maxRight = Math.max(child1.right, child2.right);
@@ -276,10 +319,7 @@ export const GapDragControl = () => {
               Math.pow(e.clientX - controlX, 2) + Math.pow(e.clientY - controlY, 2)
             );
 
-            if (
-              distance < GAP_DETECTION_THRESHOLD &&
-              (gapSize >= 0 || Math.abs(gapEnd - gapStart) <= 50) // Allow showing for small or no gaps
-            ) {
+            if (distance < GAP_DETECTION_THRESHOLD) {
               setGapHoverInfo({
                 show: true,
                 x: controlX,
@@ -287,6 +327,12 @@ export const GapDragControl = () => {
                 direction: "horizontal",
                 currentGap: currentGapPx,
                 childIndex: i,
+                gapRect: {
+                  x: minLeft,
+                  y: gapStart,
+                  width: maxRight - minLeft,
+                  height: Math.max(1, gapSize), // Minimum 1px for visibility
+                },
               });
               return;
             }
@@ -342,40 +388,88 @@ export const GapDragControl = () => {
   return ReactDOM.createPortal(
     <AnimatePresence mode="wait">
       {shouldShow && (
-        <motion.div
-          key={`gap-${id}-${gapHoverInfo.childIndex}`}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
-          exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
-          style={{
-            position: "fixed",
-            left: gapHoverInfo.x,
-            top: gapHoverInfo.y,
-            transform: "translate(-50%, -50%)",
-            zIndex: 1000,
-            pointerEvents: "auto",
-            color: elementColor || undefined,
-          }}
-        >
-          <Tooltip content="Drag to adjust gap" placement="right">
-            <motion.button
-              whileHover={{
-                scale: 1.3,
-                transition: { duration: 0.2 },
-              }}
-              whileTap={{ scale: 1.3 }}
-              className={`drag-control group ${gapHoverInfo.direction === "horizontal" ? "w-8 h-2" : "w-2 h-8"
-                }`}
+        <>
+          {/* Gap area visualization overlay */}
+          {gapHoverInfo.gapRect && (
+            <motion.div
+              key={`gap-overlay-${id}-${gapHoverInfo.childIndex}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
               style={{
-                willChange: 'transform',
-                backfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'antialiased',
+                position: "fixed",
+                left: gapHoverInfo.gapRect.x,
+                top: gapHoverInfo.gapRect.y,
+                width: gapHoverInfo.gapRect.width,
+                height: gapHoverInfo.gapRect.height,
+                backgroundColor: "rgba(147, 176, 255, 0.35)", // Blue for gaps
+                border: "1px dashed rgba(147, 176, 255, 0.7)",
+                pointerEvents: "none",
+                zIndex: 9998,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-              onMouseDown={handleMouseDown}
-              aria-label="Drag to adjust gap"
-            />
-          </Tooltip>
-        </motion.div>
+            >
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.1, duration: 0.15 }}
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  color: "#1e40af",
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  padding: "2px 6px",
+                  borderRadius: "3px",
+                  border: "1px solid rgba(147, 176, 255, 0.7)",
+                  fontFamily: "system-ui, -apple-system, sans-serif",
+                  pointerEvents: "none",
+                  userSelect: "none",
+                }}
+              >
+                {Math.round(gapHoverInfo.currentGap)}px
+              </motion.span>
+            </motion.div>
+          )}
+
+          {/* Gap drag control button */}
+          <motion.div
+            key={`gap-${id}-${gapHoverInfo.childIndex}`}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
+            exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
+            style={{
+              position: "fixed",
+              left: gapHoverInfo.x,
+              top: gapHoverInfo.y,
+              transform: "translate(-50%, -50%)",
+              zIndex: 1000,
+              pointerEvents: "auto",
+              color: elementColor || undefined,
+            }}
+          >
+            <Tooltip content="Drag to adjust gap" placement="right">
+              <motion.button
+                whileHover={{
+                  scale: 1.3,
+                  transition: { duration: 0.2 },
+                }}
+                whileTap={{ scale: 1.3 }}
+                className={`drag-control group ${gapHoverInfo.direction === "horizontal" ? "w-8 h-2" : "w-2 h-8"
+                  }`}
+                style={{
+                  willChange: 'transform',
+                  backfaceVisibility: 'hidden',
+                  WebkitFontSmoothing: 'antialiased',
+                }}
+                onMouseDown={handleMouseDown}
+                aria-label="Drag to adjust gap"
+              />
+            </Tooltip>
+          </motion.div>
+        </>
       )}
     </AnimatePresence>,
     container

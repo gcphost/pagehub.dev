@@ -617,10 +617,10 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
     desktop: [
       enabled
-        ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen bg-gray-600 p-8`
+        ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen`
         : "w-screen",
       enabled
-        ? "w-full m-1 relative overflow-auto scrollbar-light bg-white border-2 border-primary-900 border-l-0"
+        ? "w-full m-1 relative overflow-auto scrollbar-light bg-white  border-l-0"
         : "w-screen h-screen overflow-show",
     ],
   };
@@ -687,6 +687,22 @@ export const Viewport: React.FC<any> = ({ children }) => {
           {children}
         </main>
       </div>
+
+      {/* SVG overlay for measurement lines */}
+      {enabled && (
+        <svg
+          id="measurement-lines-svg"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+            zIndex: 9997,
+          }}
+        />
+      )}
     </div>
   );
 };

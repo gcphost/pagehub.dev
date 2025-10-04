@@ -46,6 +46,11 @@ export interface ContainerProps extends BaseSelectorProps {
     uploadedAt: number;
     componentId?: string;
   }>;
+  savedComponents?: Array<{
+    rootNodeId: string;
+    nodes: string;
+    name: string;
+  }>;
 }
 
 const defaultProps: ContainerProps = {
@@ -72,6 +77,7 @@ const defaultProps: ContainerProps = {
   desktop: {},
   backgroundFetchPriority: "low",
   pageMedia: [],
+  savedComponents: [],
 };
 
 export const Background = (props: Partial<ContainerProps>) => {

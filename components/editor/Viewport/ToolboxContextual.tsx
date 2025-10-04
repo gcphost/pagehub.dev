@@ -1,4 +1,4 @@
-import { NodeTree, useEditor } from "@craftjs/core";
+import { NodeTree, ROOT_NODE, useEditor } from "@craftjs/core";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -20,7 +20,6 @@ import {
   TbTrash,
 } from "react-icons/tb";
 import { useRecoilState } from "recoil";
-import { removeComponentFromStorage } from "utils/craft";
 import { ComponentsAtom } from "utils/lib";
 import { ToolboxMenu } from "../RenderNode";
 import { AddElement, Tools } from "./Toolbox/lib";
@@ -390,11 +389,20 @@ export const ToolboxContexual = ({ userStyle = null }) => {
                             e.preventDefault();
                             e.stopPropagation();
 
-                            removeComponentFromStorage(
-                              _.rootNodeId,
-                              components,
-                              setComponents
-                            );
+                            // Remove from Background node
+                            const rootNode = query.node(ROOT_NODE).get();
+                            const backgroundId = rootNode?.data?.nodes?.[0];
+
+                            if (backgroundId) {
+                              actions.setProp(backgroundId, (prop) => {
+                                prop.savedComponents = (prop.savedComponents || []).filter(
+                                  c => c.rootNodeId !== _.rootNodeId
+                                );
+                              });
+
+                              // Update the local state
+                              setComponents(prev => prev.filter(c => c.rootNodeId !== _.rootNodeId));
+                            }
                           }}
                         >
                           <TbTrash />

@@ -1,3 +1,4 @@
+import { SpacingOverlay } from "components/editor/NodeControllers/SpacingOverlay";
 import { Tooltip } from "components/layout/Tooltip";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -86,11 +87,20 @@ function DragAdjust({
   // Right/Bottom padding should reverse (drag inward = increase)
   const shouldReverse = isPadding && (styleToUse === "paddingRight" || styleToUse === "paddingBottom");
   const [dragging, setDragging] = useState(false);
+  const [hovering, setHovering] = useState(false);
   const [startX, setStartX] = useState(null);
   const [startY, setStartY] = useState(null);
   const [initialMarginTop, setInitialMarginTop] = useState(null);
   const [initialWidth, setInitialWidth] = useState(null);
   const targetRef = useRef(null);
+
+  // Determine spacing type and position for overlay
+  const spacingType = isPadding ? "padding" : "margin";
+  const spacingPosition = styleToUse.includes("Top") ? "top"
+    : styleToUse.includes("Bottom") ? "bottom"
+      : styleToUse.includes("Left") ? "left"
+        : styleToUse.includes("Right") ? "right"
+          : "top";
 
   useEffect(() => {
     document.addEventListener("mousemove", handleMouseMove);
@@ -160,35 +170,45 @@ function DragAdjust({
   };
 
   const button = (
-    <motion.button
-      whileHover={{
-        scale: 1.3,
-        transition: { duration: 0.2 },
-      }}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{
-        opacity: 1,
-        scale: dragging ? 1.3 : 1,
-        transition: { delay: dragging ? 0 : 0.7, duration: 0.3 },
-      }}
-      exit={{
-        opacity: 0,
-        scale: 0,
-        transition: { duration: 0.3 },
-      }}
-      whileTap={{ scale: 1.3 }}
-      className={`drag-control group ${className} ${isPadding
-        ? direction === "vertical" ? "w-7 h-[3px]" : "w-[3px] h-7"
-        : direction === "vertical" ? "w-9 h-1.5" : "w-1.5 h-9"
-        }`}
-      style={{
-        willChange: 'transform',
-        backfaceVisibility: 'hidden',
-        WebkitFontSmoothing: 'antialiased',
-      }}
-      onMouseDown={handleMouseDown}
-      aria-label="Drag to adjust"
-    />
+    <>
+      <SpacingOverlay
+        targetElement={targetElement}
+        type={spacingType}
+        position={spacingPosition}
+        isActive={hovering || dragging}
+      />
+      <motion.button
+        whileHover={{
+          scale: 1.3,
+          transition: { duration: 0.2 },
+        }}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{
+          opacity: 1,
+          scale: dragging ? 1.3 : 1,
+          transition: { delay: dragging ? 0 : 0.7, duration: 0.3 },
+        }}
+        exit={{
+          opacity: 0,
+          scale: 0,
+          transition: { duration: 0.3 },
+        }}
+        whileTap={{ scale: 1.3 }}
+        className={`drag-control group ${className} ${isPadding
+          ? direction === "vertical" ? "w-7 h-[3px]" : "w-[3px] h-7"
+          : direction === "vertical" ? "w-9 h-1.5" : "w-1.5 h-9"
+          }`}
+        style={{
+          willChange: 'transform',
+          backfaceVisibility: 'hidden',
+          WebkitFontSmoothing: 'antialiased',
+        }}
+        onMouseDown={handleMouseDown}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+        aria-label="Drag to adjust"
+      />
+    </>
   );
 
   if (tooltip) {

@@ -41,6 +41,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SessionTokenAtom, SettingsAtom } from "utils/atoms";
 import { getAltView } from "utils/craft";
 import {
+  ComponentsAtom,
   LastctiveAtom,
   MenuItemState,
   MenuState,
@@ -111,6 +112,31 @@ export const Header = () => {
       canRedo: query.history.canRedo(),
     })
   );
+
+  const setComponents = useSetRecoilState(ComponentsAtom);
+
+  // Load saved components from Background node
+  useEffect(() => {
+    if (!query || !enabled) return;
+
+    console.log('🔍 Loading saved components from Background node...');
+    try {
+      const rootNode = query.node(ROOT_NODE).get();
+      const backgroundId = rootNode?.data?.nodes?.[0];
+      console.log('📦 Background ID:', backgroundId);
+
+      if (backgroundId) {
+        const backgroundNode = query.node(backgroundId).get();
+        console.log('📦 Background node props:', backgroundNode?.data?.props);
+        const savedComponents = backgroundNode?.data?.props?.savedComponents || [];
+        console.log('📦 Found saved components:', savedComponents.length);
+        console.log('📦 Components:', savedComponents);
+        setComponents(savedComponents);
+      }
+    } catch (e) {
+      console.error("❌ Error loading saved components:", e);
+    }
+  }, [query, enabled, setComponents]);
 
   const setActive = useSetRecoilState(LastctiveAtom);
   const [stateToLoad, setStateToLoad] = useState(null);

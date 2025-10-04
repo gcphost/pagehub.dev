@@ -34,6 +34,9 @@ export const RenderNodeControlInline = ({
     if (!ref.current || !alt.position) return;
 
     const checkViewport = () => {
+      // Guard against null ref (can happen if timeout fires after unmount)
+      if (!ref.current) return;
+
       const rect = ref.current.getBoundingClientRect();
       const viewportElement = document.getElementById("viewport");
       if (!viewportElement) return;

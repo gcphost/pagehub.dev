@@ -12,11 +12,10 @@ import { InlineRenderContext } from "./InlineRenderContext";
  */
 export const InlineToolsRenderer = ({ craftComponent, props: selectorProps }) => {
   const { id } = useNode();
-  const { enabled, query } = useEditor((state) => ({
+  const { enabled, isActive } = useEditor((state, query) => ({
     enabled: state.options.enabled,
+    isActive: query.getEvent("selected").contains(id),
   }));
-
-  const isActive = query.getEvent("selected").contains(id);
 
   // Don't render on server (SSR)
   const isClient = typeof window !== 'undefined';
@@ -47,8 +46,8 @@ export const InlineToolsRenderer = ({ craftComponent, props: selectorProps }) =>
         onMouseDown={(e) => {
           // Blur any focused contentEditable element when interacting with toolbar
           // This prevents spurious input events from DOM changes
-          if (document.activeElement && 
-              (document.activeElement as HTMLElement).contentEditable === 'true') {
+          if (document.activeElement &&
+            (document.activeElement as HTMLElement).contentEditable === 'true') {
             (document.activeElement as HTMLElement).blur();
           }
         }}

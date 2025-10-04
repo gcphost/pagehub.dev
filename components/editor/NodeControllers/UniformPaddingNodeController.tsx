@@ -7,6 +7,7 @@ import { Tooltip } from "../../layout/Tooltip";
 import RenderNodeControlInline from "../RenderNodeControlInline";
 import { ViewAtom } from "../Viewport";
 import { useElementColor } from "./lib";
+import { SpacingOverlay } from "./SpacingOverlay";
 
 // Tailwind spacing values mapping (same as DragAdjustNodeController)
 const TAILWIND_SPACING_MAP = {
@@ -42,6 +43,7 @@ export const UniformPaddingNodeController = () => {
   const view = useRecoilValue(ViewAtom);
 
   const [dragging, setDragging] = useState(false);
+  const [hovering, setHovering] = useState(false);
   const [startY, setStartY] = useState(null);
   const [initialPadding, setInitialPadding] = useState(null);
 
@@ -133,23 +135,43 @@ export const UniformPaddingNodeController = () => {
       className="whitespace-nowrap items-center justify-center select-none"
       style={elementColor ? { color: elementColor } : {}}
     >
-      <Tooltip content="Drag to adjust all padding" placement="left">
-        <motion.button
-          animate={{ scale: dragging ? 1.3 : 1 }}
-          whileHover={{ scale: 1.3 }}
-          whileTap={{ scale: 1.3 }}
-          className="w-8 h-8 flex items-center justify-center"
-          style={{
-            willChange: 'transform',
-            backfaceVisibility: 'hidden',
-            WebkitFontSmoothing: 'antialiased',
-          }}
-          onMouseDown={handleMouseDown}
-          aria-label="Drag to adjust uniform padding"
-        >
-          <TbBorderCornerSquare className="w-8 h-8 text-current rotate-90 pointer-events-none" />
-        </motion.button>
-      </Tooltip>
+      <>
+        <SpacingOverlay
+          targetElement={dom as HTMLElement}
+          type="padding"
+          position="all"
+          isActive={hovering || dragging}
+        />
+        <Tooltip content="Drag to adjust all padding" placement="left">
+          <motion.button
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: 1,
+              scale: dragging ? 1.3 : 1,
+              transition: { delay: dragging ? 0 : 0.7, duration: 0.3 },
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0,
+              transition: { duration: 0.3 },
+            }}
+            whileHover={{ scale: 1.3 }}
+            whileTap={{ scale: 1.3 }}
+            className="w-8 h-8 flex items-center justify-center"
+            style={{
+              willChange: 'transform',
+              backfaceVisibility: 'hidden',
+              WebkitFontSmoothing: 'antialiased',
+            }}
+            onMouseDown={handleMouseDown}
+            onMouseEnter={() => setHovering(true)}
+            onMouseLeave={() => setHovering(false)}
+            aria-label="Drag to adjust uniform padding"
+          >
+            <TbBorderCornerSquare className="w-8 h-8 text-current rotate-90 pointer-events-none" />
+          </motion.button>
+        </Tooltip>
+      </>
     </RenderNodeControlInline>
   );
 };

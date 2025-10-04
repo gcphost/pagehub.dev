@@ -519,15 +519,46 @@ export const saveHandler = ({ query, id, component = null, actions = null }) => 
   // assign component it came froms id.. then that new comp can see if we can mod or take settings..
 
   if (component) {
-    const components = JSON.parse(localStorage.getItem("components")) || [];
-    components.push(saveData);
-    localStorage.setItem("components", JSON.stringify(components));
-
-    // Mark the original component on canvas with savedComponentName so clones can link to it
+    // Save to Background props instead of localStorage
     if (actions) {
+      // Find the Background node (ROOT_NODE's first child is usually Background)
+      const rootNode = query.node(ROOT_NODE).get();
+      const backgroundId = rootNode?.data?.nodes?.[0];
+
+      if (backgroundId) {
+        console.log('💾 Saving component to Background:', componentName);
+        actions.setProp(backgroundId, (prop) => {
+          prop.savedComponents = prop.savedComponents || [];
+          // Check if component already exists (avoid duplicates)
+          if (!prop.savedComponents.find(c => c.rootNodeId === saveData.rootNodeId)) {
+            prop.savedComponents.push(saveData);
+            console.log('✅ Component saved! Total components:', prop.savedComponents.length);
+          } else {
+            console.log('⚠️ Component already exists, skipping');
+          }
+        });
+      }
+
+      // Mark the original component on canvas with savedComponentName so clones can link to it
       actions.setProp(id, (prop) => {
         prop.savedComponentName = componentName;
       });
+
+      // Verify serialization and trigger save
+      setTimeout(() => {
+        const serialized = query.serialize();
+        const parsed = JSON.parse(serialized);
+        const bgNode = parsed[backgroundId];
+        console.log('🔍 Background node savedComponents after save:', bgNode?.props?.savedComponents?.length || 0);
+
+        // Trigger a tracked change to force the onNodesChange callback
+        // This ensures auto-save captures the new savedComponents
+        actions.setProp(backgroundId, (prop) => {
+          // Touch a property to trigger change detection (this will be in history)
+          prop._lastComponentSave = Date.now();
+        });
+        console.log('🔔 Triggered change to force auto-save');
+      }, 100);
     }
   } else localStorage.setItem("clipBoard", JSON.stringify(saveData));
 
