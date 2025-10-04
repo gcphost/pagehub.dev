@@ -360,12 +360,17 @@ export const GapDragControl = () => {
           <Tooltip content="Drag to adjust gap" placement="right">
             <motion.button
               whileHover={{
-                scale: 1.1,
+                scale: 1.3,
                 transition: { duration: 0.2 },
               }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 1.3 }}
               className={`drag-control group ${gapHoverInfo.direction === "horizontal" ? "w-8 h-2" : "w-2 h-8"
                 }`}
+              style={{
+                willChange: 'transform',
+                backfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+              }}
               onMouseDown={handleMouseDown}
               aria-label="Drag to adjust gap"
             />

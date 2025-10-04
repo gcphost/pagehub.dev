@@ -32,6 +32,13 @@ import { RenderChildren } from "./Helpers/CloneHelper";
 import Tab from "./Tab";
 import { ToolbarTitleEditor } from "./ToolbarTitleEditor";
 
+// Anti-aliasing style for scale animations to prevent blurriness
+const scaleAnimationStyle = {
+  willChange: "transform" as const,
+  backfaceVisibility: "hidden" as const,
+  WebkitFontSmoothing: "antialiased" as const,
+};
+
 export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   const { query, actions } = useEditor();
   const [components, setComponents] = useRecoilState(ComponentsAtom);
@@ -138,6 +145,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
               }}
               whileTap={{ scale: 0.9 }}
               className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+              style={scaleAnimationStyle}
               onClick={() => {
                 actions.selectNode(parent);
               }}
@@ -162,6 +170,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
               whileTap={{ scale: 0.9 }}
               className={`cursor-pointer ${isolate ? "text-white" : "text-gray-400"
                 } hover:text-white  rounded-md p-3`}
+              style={scaleAnimationStyle}
             >
               {isolate ? <TbScaleOutlineOff /> : <TbScaleOutline />}
             </motion.div>
@@ -185,6 +194,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 }}
                 whileTap={{ scale: 0.9 }}
                 className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+                style={scaleAnimationStyle}
               >
                 {props.canDelete ? <TbTrash /> : <TbTrashOff />}
               </motion.div>
@@ -203,6 +213,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 }}
                 whileTap={{ scale: 0.9 }}
                 className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+                style={scaleAnimationStyle}
               >
                 <TbCopy />
               </motion.div>
@@ -224,6 +235,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 whileTap={{ scale: 0.9 }}
                 ref={ref}
                 className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+                style={scaleAnimationStyle}
               >
                 {canMake ? <TbComponents /> : <TbComponentsOff />}
               </motion.div>
@@ -246,6 +258,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
               }}
               whileTap={{ scale: 0.9 }}
               className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+              style={scaleAnimationStyle}
             >
               <TbX />
             </motion.div>

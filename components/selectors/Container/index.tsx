@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { AddSectionNodeController } from "components/editor/NodeControllers/AddSectionNodeController";
 import { DragAdjustNodeController } from "components/editor/NodeControllers/DragAdjustNodeController";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
@@ -14,7 +15,7 @@ import {
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
 import { SelectedNodeAtom } from "components/editor/Viewport/Toolbox/lib";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TbContainer, TbNote } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
@@ -84,6 +85,12 @@ export const Container = (props: Partial<ContainerProps>) => {
 
   props = setClonedProps(props, query, ["order"]);
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const { children } = props;
 
   const ref = useRef(null);
@@ -134,7 +141,11 @@ export const Container = (props: Partial<ContainerProps>) => {
       ref.current = r;
       connect(drag(r));
     },
-    style: props.root?.style ? CSStoObj(props.root.style) || {} : {},
+    style: {
+      ...(props.root?.style ? CSStoObj(props.root.style) || {} : {}),
+      // Add relative positioning in edit mode for inline controls
+      ...(enabled && props.type !== "page" ? { position: 'relative' } : {}),
+    },
     className,
     children: (
       <RenderPattern
@@ -240,6 +251,17 @@ export const Container = (props: Partial<ContainerProps>) => {
   let tagName = props?.type === "page" ? "article" : "div";
 
   if (props?.type === "form") tagName = "form";
+
+  // Add inline controls as children if in edit mode (skip for pages, after hydration)
+  if (enabled && props.type !== "page" && isMounted) {
+    const originalChildren = prop.children;
+    prop.children = (
+      <>
+        {originalChildren}
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Container} props={props} />
+      </>
+    );
+  }
 
   const container = React.createElement(motionIt(prop, tagName), prop);
 

@@ -42,6 +42,11 @@ export const AnimatedButton = ({ children, className = "", ariaLabel = "", ...pr
         stiffness: 500,
         damping: 20,
       }}
+      style={{
+        willChange: "transform",
+        backfaceVisibility: "hidden",
+        WebkitFontSmoothing: "antialiased",
+      }}
     >
       {children}
     </motion.button>

@@ -33,11 +33,17 @@ export const ToolbarDropdown = ({
       )}
 
       <select
-        className={`${
-          wrap || "input"
-        } active:outline-none focus:outline-none focus:border-transparent active:border-transparent`}
+        className={`${wrap || "input"
+          } active:outline-none focus:outline-none focus:border-transparent active:border-transparent`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onMouseDown={() => {
+          // Blur any focused contentEditable element BEFORE dropdown opens
+          const activeEl = document.activeElement as HTMLElement;
+          if (activeEl && activeEl.contentEditable === 'true') {
+            activeEl.blur();
+          }
+        }}
         aria-label={title || placeholder || "Select option"}
       >
         {children}

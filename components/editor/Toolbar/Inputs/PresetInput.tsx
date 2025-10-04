@@ -26,12 +26,25 @@ export const PresetInput = ({
       label={label}
       wrap={wrap}
       labelHide={labelHide || type !== "slider"}
-      valueLabels={presets.map((_) => _.var)}
+      valueLabels={presets.map((_) => _.title)}
       min={0}
       max={presets.length - 1}
       onChange={(c) => {
-        const preset = presets.find((_) => _.var === c);
+        const preset = presets.find((_) => _.var === c || _.title === c);
 
+        // Save the preset identifier so we know which one is selected
+        changeProp({
+          propKey,
+          value: preset?.var || c,
+          setProp,
+          propType,
+          view: propType === "root" ? "root" : undefined,
+          query,
+          actions,
+          nodeId: id,
+        });
+
+        // Apply all the preset properties
         ["root", "mobile", "desktop"].forEach((view) => {
           if (!preset || !preset.hasOwnProperty(view)) return;
           Object.keys(preset[view]).forEach((_var) =>

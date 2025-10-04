@@ -130,7 +130,15 @@ const Input = (__props, ref) => {
   }
 
   if (type === "slider") {
-    const currentValue = props?.valueLabels?.indexOf(value) || value || 0;
+    // Find the current index in valueLabels, or use value as index, default to 0
+    let currentValue = 0;
+    if (props?.valueLabels) {
+      const index = props.valueLabels.indexOf(value);
+      currentValue = index >= 0 ? index : (Number.isFinite(Number(value)) ? Number(value) : 0);
+    } else {
+      currentValue = Number(value) || 0;
+    }
+
     return (
       <BgWrap wrap={wrap}>
         <input
@@ -326,7 +334,20 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
     });
   };
 
-  const label = props.valueLabels?.[value] ?? value;
+  // Get the label: if value is an index, use valueLabels[index], 
+  // if value is a string in valueLabels array, use it directly,
+  // otherwise fallback to the value itself
+  let label = value;
+  if (props.valueLabels) {
+    const valueIndex = props.valueLabels.indexOf(value);
+    if (valueIndex >= 0) {
+      // Value is already in the array, use it
+      label = value;
+    } else if (Number.isFinite(Number(value)) && props.valueLabels[Number(value)]) {
+      // Value is an index number
+      label = props.valueLabels[Number(value)];
+    }
+  }
 
   return (
     <Wrap

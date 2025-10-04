@@ -1,5 +1,6 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { AutoTextSize } from "auto-text-size";
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
 import {
@@ -9,7 +10,7 @@ import {
 import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaFont } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
@@ -85,6 +86,13 @@ export const Text = (props: Partial<TextProps>) => {
 
   props = setClonedProps(props, query);
 
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   let { text, tagName } = props;
 
   /* -- throws hydration errors after react-quilljs update.
@@ -141,14 +149,46 @@ if (text && typeof window !== "undefined") {
     prop.onBlur = () => {
       setIsEditing(false);
     };
-    prop.onInput = debounce((e) => {
-      changeProp({
-        setProp,
-        propKey: "text",
-        propType: "component",
-        value: e.target.innerText,
-      });
-    }, 500);
+    prop.onInput = (e) => {
+      const newText = e.target.innerText;
+      const trimmedNew = newText?.trim();
+      const trimmedOld = text?.replace(/<[^>]*>/g, '').trim();
+
+      // Check if this looks like toolbar dropdown text (primary defense)
+      const isToolbarText = newText?.includes('Size\n') && newText?.includes('H1');
+
+      // Capture isEditing state immediately (not in debounced callback)
+      const wasEditing = isEditing;
+
+      // Reject toolbar text immediately (before debounce)
+      if (isToolbarText) {
+        return;
+      }
+
+      // Only continue if we were actually editing
+      if (!wasEditing) {
+        return;
+      }
+
+      if (trimmedNew === trimmedOld) {
+        return;
+      }
+
+      // Don't save empty input unless user is deliberately clearing
+      if (!trimmedNew && trimmedOld && e.inputType !== 'deleteContentBackward') {
+        return;
+      }
+
+      // Debounce only the actual save operation
+      debounce(() => {
+        changeProp({
+          setProp,
+          propKey: "text",
+          propType: "component",
+          value: newText,
+        });
+      }, 500)();
+    };
   } else if (props.url && typeof props.url === "string") {
     // Resolve page references to actual URLs
     const resolvedUrl = resolvePageRef(props.url, query, router?.asPath);
@@ -173,6 +213,34 @@ if (text && typeof window !== "undefined") {
     prop.children = t;
   } else if (text) {
     prop.dangerouslySetInnerHTML = { __html: text };
+  }
+
+  // Add inline tools renderer in edit mode (after hydration)
+  if (enabled && isMounted) {
+    prop.style = {
+      ...(prop.style || {}),
+      position: 'relative',
+    };
+
+    if (prop.dangerouslySetInnerHTML) {
+      // Can't use both dangerouslySetInnerHTML and children
+      const innerHTML = prop.dangerouslySetInnerHTML;
+      delete prop.dangerouslySetInnerHTML;
+      prop.children = (
+        <>
+          <span data-text-content="true" dangerouslySetInnerHTML={innerHTML} />
+          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props} />
+        </>
+      );
+    } else {
+      const originalChildren = prop.children;
+      prop.children = (
+        <>
+          <span data-text-content="true">{originalChildren}</span>
+          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props} />
+        </>
+      );
+    }
   }
 
   const final = applyAnimation({ ...prop, key: id }, props);

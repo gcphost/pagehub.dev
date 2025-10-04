@@ -30,6 +30,11 @@ export const Tab = ({ tabId, icon = null, title = "" }) => {
           transition: { duration: 0.2 },
         }}
         whileTap={{ scale: 0.9 }}
+        style={{
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+          WebkitFontSmoothing: "antialiased",
+        }}
       >
         {icon}
       </motion.div>

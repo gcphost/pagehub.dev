@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
@@ -8,7 +9,7 @@ import {
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TbCode } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { motionIt, selectAfterAdding } from "utils/lib";
@@ -75,6 +76,11 @@ export const Embed = (props: EmbedProps) => {
   const { videoId } = props;
 
   const ref = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   props = setClonedProps(props, query);
 
@@ -84,6 +90,7 @@ export const Embed = (props: EmbedProps) => {
       connect(drag(r));
     },
     className: ClassGenerator(props, view, enabled, [], [], preview),
+    style: enabled ? { position: 'relative' } : undefined,
     role: "region",
     "aria-label": props.title || "Embedded content",
   };
@@ -95,6 +102,29 @@ export const Embed = (props: EmbedProps) => {
     prop["data-bounding-box"] = enabled;
     prop["data-empty-state"] = !videoId;
     prop["node-id"] = id;
+  }
+
+  // Add inline tools renderer in edit mode (after hydration)
+  if (enabled && isMounted) {
+    // Handle dangerouslySetInnerHTML case
+    if (prop.dangerouslySetInnerHTML) {
+      const innerHTML = prop.dangerouslySetInnerHTML;
+      delete prop.dangerouslySetInnerHTML;
+      prop.children = (
+        <>
+          <div dangerouslySetInnerHTML={innerHTML} />
+          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Embed} props={props} />
+        </>
+      );
+    } else {
+      const originalChildren = prop.children;
+      prop.children = (
+        <>
+          {originalChildren}
+          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Embed} props={props} />
+        </>
+      );
+    }
   }
 
   return React.createElement(

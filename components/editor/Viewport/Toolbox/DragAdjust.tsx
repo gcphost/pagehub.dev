@@ -162,25 +162,30 @@ function DragAdjust({
   const button = (
     <motion.button
       whileHover={{
-        scale: 1.1,
+        scale: 1.3,
         transition: { duration: 0.2 },
       }}
       initial={{ opacity: 0, scale: 0 }}
       animate={{
         opacity: 1,
-        scale: 1,
-        transition: { delay: 0.7, duration: 0.3 },
+        scale: dragging ? 1.3 : 1,
+        transition: { delay: dragging ? 0 : 0.7, duration: 0.3 },
       }}
       exit={{
         opacity: 0,
         scale: 0,
         transition: { duration: 0.3 },
       }}
-      whileTap={{ scale: 0.9 }}
+      whileTap={{ scale: 1.3 }}
       className={`drag-control group ${className} ${isPadding
         ? direction === "vertical" ? "w-7 h-[3px]" : "w-[3px] h-7"
         : direction === "vertical" ? "w-9 h-1.5" : "w-1.5 h-9"
         }`}
+      style={{
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        WebkitFontSmoothing: 'antialiased',
+      }}
       onMouseDown={handleMouseDown}
       aria-label="Drag to adjust"
     />

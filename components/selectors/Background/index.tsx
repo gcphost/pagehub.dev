@@ -1,10 +1,11 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TbContainer } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import ContainerSettingsNodeTool from "components/editor/NodeControllers/Tools/ContainerSettingsNodeTool";
@@ -90,12 +91,17 @@ export const Background = (props: Partial<ContainerProps>) => {
   } = useNode();
 
   const ref = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   const view = useRecoilValue(ViewAtom);
   const device = useRecoilValue(DeviceAtom);
   const preview = useRecoilValue(PreviewAtom);
   const settings = useRecoilValue(SettingsAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const contexted = (e) => {
     if (!enabled || !enableContext) return;
@@ -125,7 +131,10 @@ export const Background = (props: Partial<ContainerProps>) => {
       ref.current = r;
       connect(drag(r));
     },
-    style: props.root?.style ? CSStoObj(props.root.style) || {} : {},
+    style: {
+      ...(props.root?.style ? CSStoObj(props.root.style) || {} : {}),
+      ...(enabled ? { position: 'relative' } : {}),
+    },
     className: ClassGenerator(
       props,
       view,
@@ -282,6 +291,9 @@ export const Background = (props: Partial<ContainerProps>) => {
           {children || <EmptyState icon={<TbContainer />} />}
         </RenderGradient>
       </RenderPattern>
+      {enabled && isMounted && (
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Background} props={props} />
+      )}
     </PaletteProvider>
   );
   applyBackgroundImage(prop, props, settings);

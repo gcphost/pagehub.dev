@@ -1,8 +1,7 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { AnimatePresence, motion } from "framer-motion";
 import debounce from "lodash.debounce";
 import { useEffect, useRef, useState } from "react";
-import RenderNodeControl from "../RenderNodeControl";
+import RenderNodeControlInline from "../RenderNodeControlInline";
 
 const EditableName = () => {
   const { name, id } = useNode((node) => ({
@@ -76,41 +75,18 @@ export const NameNodeController = (props: {
     isActive: query.getEvent("selected").contains(id),
   }));
 
+  if (!isActive) return null;
+
   return (
-    <AnimatePresence>
-      {isActive && (
-        <RenderNodeControl
-          position={position}
-          align={align}
-          alt={alt}
-          placement={placement}
-          className={`${position === "top" && align === "start" && placement === "end"
-            ? "m-1"
-            : ""
-            } whitespace-nowrap fixed items-center justify-center select-none will-change-auto`}
-        >
-          <motion.div
-            {...{
-              initial: {
-                opacity: 0,
-                width: 0,
-              },
-              animate: {
-                opacity: 1,
-                width: "unset",
-                transition: { ease: "easeOut", duration: 0.5 },
-              },
-              exit: {
-                opacity: 0,
-                width: 0,
-                transition: { ease: "easeOut", duration: 0.3 },
-              },
-            }}
-          >
-            <EditableName />
-          </motion.div>
-        </RenderNodeControl>
-      )}
-    </AnimatePresence>
+    <RenderNodeControlInline
+      key={`${id}-name`}
+      position={position}
+      align={align}
+      alt={alt}
+      placement={placement}
+      className={`${position === "top" && align === "start" && placement === "end" ? "m-1" : ""} whitespace-nowrap items-center justify-center select-none`}
+    >
+      <EditableName />
+    </RenderNodeControlInline>
   );
 };

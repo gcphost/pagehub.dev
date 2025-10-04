@@ -93,6 +93,11 @@ const Item = ({ onClick, children, disabled = false, className = "", ariaLabel =
       transition: { duration: 0.2 },
     }}
     whileTap={{ scale: 0.9 }}
+    style={{
+      willChange: "transform",
+      backfaceVisibility: "hidden",
+      WebkitFontSmoothing: "antialiased",
+    }}
   >
     {children}
   </motion.button>

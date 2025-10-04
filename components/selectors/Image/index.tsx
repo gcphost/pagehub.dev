@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import {
   getClonedState,
@@ -6,7 +7,7 @@ import {
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TbCheck, TbPhoto } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { getMedialUrl, motionIt } from "utils/lib";
@@ -74,6 +75,13 @@ export const Image = (props: ImageProps) => {
   const { videoId, content, type } = props;
 
   props = setClonedProps(props, query);
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const ref = useRef(null);
 
   // Look up metadata from media library at render time
@@ -200,6 +208,21 @@ export const Image = (props: ImageProps) => {
 
   if (type !== "svg" && !empty) {
     prop.children = Img;
+  }
+
+  // Add inline tools in edit mode (after hydration)
+  if (enabled && isMounted) {
+    const originalChildren = prop.children;
+    prop.children = (
+      <>
+        {originalChildren}
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Image} props={props} />
+      </>
+    );
+    prop.style = {
+      ...(prop.style || {}),
+      position: 'relative',
+    };
   }
 
   const ele = props.url ? Link : "div";

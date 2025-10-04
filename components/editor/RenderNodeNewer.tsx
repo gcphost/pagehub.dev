@@ -1,6 +1,5 @@
 import { useEditor } from "@craftjs/core";
 import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import { GapDragControl } from "./NodeControllers/GapDragControl";
 import { ProximityHover } from "./NodeControllers/ProximityHover";
 import { RenderNodeDataStates } from "./RenderNodeDataStates";
@@ -58,15 +57,33 @@ export const RenderNodeNewer = ({ render }) => {
 
   if (!enabled) return render;
 
+  // Keep essential non-portal components (like RenderNodeDataStates for hover states)
+  // Portal rendering disabled - using inline rendering in selectors instead
+  // Only render on client to avoid SSR issues
+  const isClient = typeof window !== 'undefined';
+
   return (
     <>
       {render}
-
-      {show &&
-        ReactDOM.createPortal(
-          nodeItems.map((tool: any, index) => ({ ...tool, key: index })),
-          document.querySelector('[data-container="true"]')
-        )}
+      {isClient && (
+        <>
+          <RenderNodeDataStates />
+          <ProximityHover />
+          <GapDragControl />
+        </>
+      )}
     </>
   );
+
+  // Old portal-based rendering (disabled):
+  // return (
+  //   <>
+  //     {render}
+  //     {show &&
+  //       ReactDOM.createPortal(
+  //         nodeItems.map((tool: any, index) => ({ ...tool, key: index })),
+  //         document.querySelector('[data-container="true"]')
+  //       )}
+  //   </>
+  // );
 };

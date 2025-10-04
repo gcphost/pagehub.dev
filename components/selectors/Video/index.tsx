@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
@@ -7,7 +8,7 @@ import {
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TbBrandYoutube } from "react-icons/tb";
 
 import { useRecoilValue } from "recoil";
@@ -59,6 +60,11 @@ export const Video = (props: VideoProps) => {
   props = setClonedProps(props, query);
 
   const ref = useRef();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const prop: any = {
     ref: (r) => {
@@ -68,6 +74,7 @@ export const Video = (props: VideoProps) => {
     className: "",
     role: "region",
     "aria-label": props.title || videoId ? `Video: ${props.title || videoId}` : "Video player",
+    style: enabled ? { position: 'relative' } : undefined,
     children: videoId ? (
       <YouTube
         className={ClassGenerator(props, view, enabled, [], [], preview)}
@@ -90,6 +97,17 @@ export const Video = (props: VideoProps) => {
     prop["data-empty-state"] = !videoId;
     prop["node-id"] = id;
     prop.onClick = (e) => e.preventDefault();
+  }
+
+  // Add inline tools renderer in edit mode (after hydration)
+  if (enabled && isMounted) {
+    const originalChildren = prop.children;
+    prop.children = (
+      <>
+        {originalChildren}
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Video} props={props} />
+      </>
+    );
   }
 
   return React.createElement(

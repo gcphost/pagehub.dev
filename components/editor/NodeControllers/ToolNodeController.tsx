@@ -1,6 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { AnimatePresence } from "framer-motion";
-import RenderNodeControl from "../RenderNodeControl";
+import RenderNodeControlInline from "../RenderNodeControlInline";
 
 export const ToolNodeController = (props: {
   position;
@@ -17,22 +16,18 @@ export const ToolNodeController = (props: {
     isActive: query.getEvent("selected").contains(id),
   }));
 
+  if (!isActive) return null;
+
   return (
-    <AnimatePresence mode="wait">
-      {isActive && (
-        <RenderNodeControl
-          key={`${id}-${isActive}`}
-          position={position}
-          align={align}
-          placement={placement}
-          alt={alt}
-          className={
-            "whitespace-nowrap fixed items-center justify-center select-none pointer-events-auto"
-          }
-        >
-          {children}
-        </RenderNodeControl>
-      )}
-    </AnimatePresence>
+    <RenderNodeControlInline
+      key={`${id}-tool`}
+      position={position}
+      align={align}
+      placement={placement}
+      alt={alt}
+      className="whitespace-nowrap items-center justify-center select-none"
+    >
+      {children}
+    </RenderNodeControlInline>
   );
 };

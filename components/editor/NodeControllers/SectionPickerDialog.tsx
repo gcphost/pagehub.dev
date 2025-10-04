@@ -107,6 +107,11 @@ export const SectionPickerDialog = ({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             className="bg-white rounded-lg shadow-2xl w-[90vw] max-w-6xl h-[80vh] flex flex-col overflow-hidden"
+            style={{
+              willChange: "transform",
+              backfaceVisibility: "hidden",
+              WebkitFontSmoothing: "antialiased",
+            }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
@@ -160,6 +165,11 @@ export const SectionPickerDialog = ({
                         onClose();
                       }}
                       className="group relative bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-primary-500 transition-all shadow-sm hover:shadow-md"
+                      style={{
+                        willChange: "transform",
+                        backfaceVisibility: "hidden",
+                        WebkitFontSmoothing: "antialiased",
+                      }}
                     >
                       {/* Preview */}
                       <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden flex items-center justify-center">

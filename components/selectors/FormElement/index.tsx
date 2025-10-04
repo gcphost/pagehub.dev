@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
@@ -7,7 +8,7 @@ import {
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { motionIt } from "utils/lib";
 
@@ -102,9 +103,16 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     id,
   } = useNode();
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const prop: any = {
     ref: (r) => connect(drag(r)),
     className: ClassGenerator(props, view, enabled, [], [], preview),
+    style: enabled ? { position: 'relative' } : undefined,
     type: props.type,
     placeholder: props.placeholder,
     name: props.name,
@@ -132,6 +140,17 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     prop["data-bounding-box"] = enabled;
     // prop["data-empty-state"] = !text;
     prop["node-id"] = id;
+  }
+
+  // Add inline tools renderer in edit mode (after hydration)
+  if (enabled && isMounted) {
+    const originalChildren = prop.children;
+    prop.children = (
+      <>
+        {originalChildren}
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={FormElement} props={props} />
+      </>
+    );
   }
 
   return React.createElement(

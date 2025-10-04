@@ -38,7 +38,7 @@ export function TextSettingsTopNodeTool() {
         },
       }}
     >
-      <div className="w-6 h-6 rounded-md overflow-hidden border-gray-500 border">
+      <div className="w-16 h-6 rounded-md overflow-hidden border-gray-500 border-1">
         <ColorInput
           propKey="color"
           label=""

@@ -11,6 +11,11 @@ export const MotionIcon = ({
     }}
     whileTap={{ scale: 0.9 }}
     className={className}
+    style={{
+      willChange: "transform",
+      backfaceVisibility: "hidden",
+      WebkitFontSmoothing: "antialiased",
+    }}
   >
     {children}
   </motion.div>

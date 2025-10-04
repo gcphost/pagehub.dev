@@ -1,5 +1,6 @@
 import { useEditor, useNode, UserComponent } from "@craftjs/core";
 
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
@@ -14,7 +15,7 @@ import { changeProp, getProp } from "components/editor/Viewport/lib";
 import debounce from "lodash.debounce";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TbRectangle } from "react-icons/tb";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
@@ -177,6 +178,12 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
 
   props = setClonedProps(props, query);
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const defaultProp: any = {
     ref: (r) => connect(drag(r)),
     style: props.root?.style ? CSStoObj(props.root.style) || {} : {},
@@ -237,7 +244,9 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       ]
         .filter((_) => _)
         .join(" ")}
+      style={enabled ? { position: 'relative' } : undefined}
     >
+      {enabled && isMounted && <InlineToolsRenderer key={`tools-${id}`} craftComponent={Button} props={props} />}
       {props?.buttons?.map((but, key) => {
         // Resolve palette references for per-button properties
         const resolveButtonPalette = (value: string) => {

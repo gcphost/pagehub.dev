@@ -128,7 +128,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
                 },
               },
               whileHover: { scale: 1.1, y: -5 },
-              whileTap: { scale: 0.9 },
+              whileTap: { scale: 1.1 },
             }}
           >
             <motion.button
@@ -136,6 +136,11 @@ export const AddSectionNodeController = (props: { position; align }) => {
               className={
                 "border btn text-white rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base"
               }
+              style={{
+                willChange: 'transform',
+                backfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+              }}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();

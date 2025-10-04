@@ -134,7 +134,11 @@ export const RenderToolComponent = ({
       onMouseDown={() => setIsDragging(true)}
       onMouseUp={() => setIsDragging(false)}
       onMouseLeave={() => setIsDragging(false)}
-
+      style={{
+        willChange: "transform",
+        backfaceVisibility: "hidden",
+        WebkitFontSmoothing: "antialiased",
+      }}
       onDoubleClick={() => {
         const props = {
           element: tool,

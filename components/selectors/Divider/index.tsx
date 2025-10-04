@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import {
@@ -6,7 +7,7 @@ import {
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { motionIt, selectAfterAdding } from "utils/lib";
 import { ClassGenerator, applyAnimation } from "utils/tailwind";
@@ -57,6 +58,11 @@ export const Divider = (props: DividerProps) => {
   const preview = useRecoilValue(PreviewAtom);
 
   const ref = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   props = setClonedProps(props, query);
 
@@ -66,12 +72,24 @@ export const Divider = (props: DividerProps) => {
       connect(drag(r));
     },
     className: ClassGenerator(props, view, enabled, [], [], preview),
+    style: enabled ? { position: 'relative' } : undefined,
   };
 
   if (enabled) {
     prop["data-bounding-box"] = enabled;
     prop["data-empty-state"] = false;
     prop["node-id"] = id;
+  }
+
+  // Add inline tools renderer in edit mode (after hydration)
+  if (enabled && isMounted) {
+    const originalChildren = prop.children;
+    prop.children = (
+      <>
+        {originalChildren}
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Divider} props={props} />
+      </>
+    );
   }
 
   return React.createElement(

@@ -1,10 +1,10 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { TbBorderCornerSquare } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { Tooltip } from "../../layout/Tooltip";
-import RenderNodeControl from "../RenderNodeControl";
+import RenderNodeControlInline from "../RenderNodeControlInline";
 import { ViewAtom } from "../Viewport";
 import { useElementColor } from "./lib";
 
@@ -121,44 +121,36 @@ export const UniformPaddingNodeController = () => {
     return closest;
   };
 
+  if (!isActive) return null;
+
   return (
-    <AnimatePresence mode="wait">
-      {isActive && (
-        <RenderNodeControl
-          key={`${id}-uniform-padding-${isActive}`}
-          position="top"
-          align="end"
-          placement="start"
-          isPadding={true}
-          className={
-            "whitespace-nowrap items-center justify-center select-none fixed pointer-events-auto !top-[2px] !right-[2px]"
-          }
-          style={elementColor ? { color: elementColor } : {}}
+    <RenderNodeControlInline
+      key={`${id}-uniform-padding`}
+      position="top"
+      align="end"
+      placement="start"
+      isPadding={true}
+      className="whitespace-nowrap items-center justify-center select-none"
+      style={elementColor ? { color: elementColor } : {}}
+    >
+      <Tooltip content="Drag to adjust all padding" placement="left">
+        <motion.button
+          animate={{ scale: dragging ? 1.3 : 1 }}
+          whileHover={{ scale: 1.3 }}
+          whileTap={{ scale: 1.3 }}
+          className="w-8 h-8 flex items-center justify-center"
+          style={{
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+            WebkitFontSmoothing: 'antialiased',
+          }}
+          onMouseDown={handleMouseDown}
+          aria-label="Drag to adjust uniform padding"
         >
-          <Tooltip content="Drag to adjust all padding" placement="left">
-            <motion.button
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transition: { delay: 0.7, duration: 0.3 },
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0,
-                transition: { duration: 0.3 },
-              }}
-              whileTap={{ scale: 0.9 }}
-              className=" w-8 h-8 flex items-center justify-center "
-              onMouseDown={handleMouseDown}
-              aria-label="Drag to adjust uniform padding"
-            >
-              <TbBorderCornerSquare className="w-8 h-8 text-current rotate-90" />
-            </motion.button>
-          </Tooltip>
-        </RenderNodeControl>
-      )}
-    </AnimatePresence>
+          <TbBorderCornerSquare className="w-8 h-8 text-current rotate-90 pointer-events-none" />
+        </motion.button>
+      </Tooltip>
+    </RenderNodeControlInline>
   );
 };
 

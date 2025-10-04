@@ -2,7 +2,9 @@ import { useEditor, useNode } from "@craftjs/core";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilValue } from "recoil";
+import { useIsInlineRender } from "../InlineRenderContext";
 import RenderNodeControl from "../RenderNodeControl";
+import RenderNodeControlInline from "../RenderNodeControlInline";
 import { ViewAtom } from "../Viewport";
 import DragAdjust from "../Viewport/Toolbox/DragAdjust";
 import { useElementColor } from "./lib";
@@ -72,6 +74,7 @@ export const DragAdjustNodeController = (props: {
   } = useNode();
 
   const view = useRecoilValue(ViewAtom);
+  const isInlineRender = useIsInlineRender();
 
   // Store parent width for grid calculations
   const parentWidthRef = React.useRef<number | null>(null);
@@ -79,20 +82,99 @@ export const DragAdjustNodeController = (props: {
   // Get the current computed color from the DOM (same as border-current uses)
   const elementColor = useElementColor(dom as HTMLElement, isActive);
 
+  // Choose which control component to use
+  const ControlComponent = isInlineRender ? RenderNodeControlInline : RenderNodeControl;
+  const controlClassName = isInlineRender
+    ? "whitespace-nowrap items-center justify-center select-none"
+    : "whitespace-nowrap items-center justify-center select-none fixed pointer-events-auto";
+
+  // For inline rendering, skip AnimatePresence - it causes issues without portals
+  if (isInlineRender && isActive) {
+    return (
+      <ControlComponent
+        key={`${id}-drag-${position}`}
+        position={position}
+        align={align}
+        alt={alt}
+        placement="middle"
+        hPlacement="start"
+        isPadding={isPadding}
+        className={controlClassName}
+        style={elementColor ? { color: elementColor } : {}}
+      >
+        <DragAdjust
+          className="text-base flex items-center justify-center"
+          targetElement={dom}
+          direction={direction}
+          styleToUse={styleToUse}
+          tooltip={tooltip}
+          isPadding={isPadding}
+          snapToTailwind={!gridSnap} // Disable snapping for width adjuster with grid snap
+          onDragStart={() => {
+            // Store parent width at drag start for consistent calculations
+            if (gridSnap && dom) {
+              const parent = (dom as HTMLElement)?.parentElement;
+              if (parent) {
+                parentWidthRef.current = parent.offsetWidth;
+              }
+            }
+          }}
+          onDragEnd={() => {
+            // Clear stored parent width
+            parentWidthRef.current = null;
+          }}
+          onChange={(value) => {
+            setProp((prop) => {
+              prop[view] = prop[view] || {};
+
+              if (gridSnap) {
+                // Convert pixel value to grid fraction (for width adjuster)
+                // Use stored parent width for consistent calculations
+                const parentWidth = parentWidthRef.current;
+                if (parentWidth) {
+                  const currentWidth = parseFloat(value);
+                  const percentage = (currentWidth / parentWidth) * 100;
+
+                  // Round to nearest grid fraction
+                  const gridFraction = Math.max(1, Math.min(gridSnap, Math.round((percentage / 100) * gridSnap)));
+
+                  prop[view][propVar] = `w-${gridFraction}/12`;
+                }
+              } else {
+                // Convert snapped pixel value to Tailwind class
+                const numericValue = parseFloat(value);
+                const unit = value.replace(/[0-9.-]/g, '');
+
+                if (unit === 'px') {
+                  // Convert to Tailwind spacing class
+                  const tailwindClass = pixelsToTailwindClass(numericValue, propVar);
+                  prop[view][propVar] = tailwindClass;
+                } else {
+                  // Map propVar to Tailwind abbreviation for non-px units too
+                  const tailwindProp = PROP_VAR_MAP[propVar] || propVar;
+                  prop[view][propVar] = `${tailwindProp}-[${numericValue}${unit}]`;
+                }
+              }
+            }, 50);
+          }}
+        />
+      </ControlComponent>
+    );
+  }
+
+  // Portal mode - use AnimatePresence
   return (
     <AnimatePresence mode="wait">
       {isActive && (
-        <RenderNodeControl
-          key={`${id}-drag-${position}-${isActive}`}
+        <ControlComponent
+          key={`${id}-drag-${position}`}
           position={position}
           align={align}
           alt={alt}
           placement="middle"
           hPlacement="start"
           isPadding={isPadding}
-          className={
-            "whitespace-nowrap items-center justify-center select-none fixed pointer-events-auto"
-          }
+          className={controlClassName}
           style={elementColor ? { color: elementColor } : {}}
         >
           <DragAdjust
@@ -151,7 +233,7 @@ export const DragAdjustNodeController = (props: {
               }, 50);
             }}
           />
-        </RenderNodeControl>
+        </ControlComponent>
       )}
     </AnimatePresence>
   );
