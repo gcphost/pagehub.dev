@@ -110,122 +110,71 @@ export const RenderNodeControlInline = ({
   }, [initialPosition, initialAlign, initialPlacement, alt]);
 
   // ============================================
-  // SPACING CONSTANTS - adjust these to tweak positioning
+  // SIMPLE BOUNDING BOX POSITIONING
   // ============================================
-  // 
-  // POSITIONING SYSTEM EXPLAINED:
-  // - position: which edge to attach to (top/bottom/left/right)
-  // - align: where along that edge (start/middle/end)
-  //   * For top/bottom: start=left, middle=center, end=right
-  //   * For left/right: start=top, middle=center, end=bottom
-  // - placement: offset direction (not currently used in inline version)
-  // - isPadding: whether control is inside (padding) or outside (margin/label)
-  //
-  const SPACING = {
-    // Distance from element border
-    INSIDE_PADDING: '6px',        // For padding controls (inside border)
-    OUTSIDE_MARGIN: '-44px',      // For labels/tools (outside border) - negative = outside
-    HORIZONTAL_INSET: '4px',      // Left/right positioning from edge
-  };
+  // - Outside: 2px outside the border
+  // - Inside: 2px inside the border
+  // - Use Tailwind classes for positioning
 
-  // Build position styles based on props
-  const positionStyles: any = {
-    position: 'absolute',
-    zIndex: 1000,
-  };
+  const classes = ['absolute', 'pointer-events-none', 'z-[1000]'];
 
-  // ============================================
-  // MAIN POSITION: Top/Bottom/Left/Right edge
-  // ============================================
+  // Edge positioning
   if (position === "top") {
     if (isPadding) {
-      // Padding controls: position inside, align to top
-      positionStyles.top = SPACING.INSIDE_PADDING;
+      classes.push('top-0.5', 'left-0', 'right-0'); // Inside top, 2px from edge
     } else {
-      // Labels/tools: position outside, align BOTTOM of control to top of element
-      positionStyles.bottom = '100%';
-      positionStyles.top = 'auto';
-      positionStyles.marginBottom = '4px'; // Small gap between control and element
+      classes.push('bottom-full', 'left-0', 'right-0', 'mb-0'); // Outside top, sits above
     }
   } else if (position === "bottom") {
     if (isPadding) {
-      // Padding controls: position inside, align to bottom
-      positionStyles.bottom = SPACING.INSIDE_PADDING;
+      classes.push('bottom-0.5', 'left-0', 'right-0'); // Inside bottom
     } else {
-      // Labels/tools: position outside, align TOP of control to bottom of element
-      positionStyles.top = '100%';
-      positionStyles.bottom = 'auto';
+      classes.push('top-full', 'left-0', 'right-0', 'mt-0'); // Outside bottom, sits below
     }
   } else if (position === "left") {
     if (isPadding) {
-      if (isOffScreen) {
-        positionStyles.left = '46px';
-      } else {
-        positionStyles.left = SPACING.INSIDE_PADDING;
-      }
+      classes.push('left-0.5', 'top-0', 'bottom-0'); // Inside left
     } else {
       if (isOffScreen) {
-        // If clipped, position inside the gray padding area
-        positionStyles.left = '2px';
-        positionStyles.right = 'auto';
+        classes.push('left-0.5', 'top-0', 'bottom-0'); // Clipped: move inside
       } else {
-        // Normal position outside to the left
-        positionStyles.right = '100%';
-        positionStyles.left = 'auto';
-        positionStyles.marginRight = '4px';
+        classes.push('right-full', 'top-0', 'bottom-0', 'mr-0'); // Outside left
       }
     }
   } else if (position === "right") {
     if (isPadding) {
-      positionStyles.right = SPACING.INSIDE_PADDING;
+      classes.push('right-0.5', 'top-0', 'bottom-0'); // Inside right
     } else {
       if (isOffScreen) {
-        // If clipped, position inside the gray padding area
-        positionStyles.right = '2px';
-        positionStyles.left = 'auto';
+        classes.push('right-0.5', 'top-0', 'bottom-0'); // Clipped: move inside
       } else {
-        // Normal position outside to the right
-        positionStyles.left = '100%';
-        positionStyles.right = 'auto';
-        positionStyles.marginLeft = '4px';
+        classes.push('left-full', 'top-0', 'bottom-0', 'ml-0'); // Outside right
       }
     }
   }
 
-  // ============================================
-  // ALIGNMENT: Positioning along the perpendicular axis
-  // ============================================
+  // Alignment using flex
   if (["top", "bottom"].includes(position)) {
-    // Horizontal alignment for elements on top/bottom edge
+    classes.push('flex', 'items-end'); // Items align to bottom (extend downward)
     if (align === "start") {
-      // LEFT side
-      positionStyles.left = SPACING.HORIZONTAL_INSET;
-      positionStyles.right = 'auto';
+      classes.push('justify-start');
+      if (!isPadding) classes.push(''); // Only add padding for outside controls
     } else if (align === "middle") {
-      // CENTER - use flex instead of transform to avoid conflicts with animations
-      positionStyles.left = 0;
-      positionStyles.right = 0;
-      positionStyles.display = 'flex';
-      positionStyles.justifyContent = 'center';
+      classes.push('justify-center');
     } else if (align === "end") {
-      // RIGHT side
-      positionStyles.right = SPACING.HORIZONTAL_INSET;
-      positionStyles.left = 'auto';
+      classes.push('justify-end');
+      if (!isPadding) classes.push(''); // Only add padding for outside controls
     }
   } else if (["left", "right"].includes(position)) {
-    // Vertical alignment for elements on left/right edge
+    classes.push('flex', 'flex-col');
     if (align === "start") {
-      // TOP
-      positionStyles.top = SPACING.HORIZONTAL_INSET;
+      classes.push('justify-start');
+      if (!isPadding) classes.push(''); // Only add padding for outside controls
     } else if (align === "middle") {
-      // CENTER - use flex instead of transform to avoid conflicts with animations
-      positionStyles.top = 0;
-      positionStyles.bottom = 0;
-      positionStyles.display = 'flex';
-      positionStyles.alignItems = 'center';
+      classes.push('justify-center');
     } else if (align === "end") {
-      // BOTTOM
-      positionStyles.bottom = SPACING.HORIZONTAL_INSET;
+      classes.push('justify-end');
+      if (!isPadding) classes.push(''); // Only add padding for outside controls
     }
   }
 
@@ -233,12 +182,9 @@ export const RenderNodeControlInline = ({
     <motion.div
       ref={ref}
       {...animate}
-      className={`${className}`}
+      className={`${classes.join(' ')} ${className}`}
       data-node-control="true"
       style={{
-        ...positionStyles,
-        // Wrapper has pointer-events-none, children must set pointer-events-auto themselves
-        pointerEvents: 'none',
         // Reset/lock styles to prevent inheritance from parent
         fontSize: '14px',
         fontFamily: 'system-ui, -apple-system, sans-serif',

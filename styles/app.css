@@ -8,7 +8,7 @@
 }
 
 .drag-control {
-  @apply !rounded-sm !bg-current cursor-move !border-0;
+  @apply !bg-current cursor-move !border-0;
 }
 
 /* Drag state styling - all handled with CSS */

@@ -4,7 +4,9 @@ import { FlexDirectionInput } from "components/editor/Toolbar/Inputs/FlexDirecti
 import { NodeToolWrapper } from "components/editor/Tools/NodeDialog";
 import { ViewAtom } from "components/editor/Viewport";
 import { getPropFinalValue } from "components/editor/Viewport/lib";
-import { AddElement, Tools } from "components/editor/Viewport/Toolbox/lib";
+import { AddElement } from "components/editor/Viewport/Toolbox/lib";
+import { Tooltip } from "components/layout/Tooltip";
+import { Container } from "components/selectors/Container";
 import {
   TbLayoutAlignBottom,
   TbLayoutAlignCenter,
@@ -13,7 +15,7 @@ import {
   TbLayoutAlignRight,
   TbLayoutAlignTop,
   TbPlus,
-  TbRowInsertTop,
+  TbRowInsertTop
 } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
@@ -154,70 +156,100 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
     >
       {direction === "horizontal" && (
         <div className="h-6 w-6 flex items-center justify-center">
-          <DeleteNodeButton
-            className="text-white"
-            title="Delete container"
-            titleDisabled="Cannot delete"
-            useSimpleDelete={false}
-          />
-        </div>
-      )}
-
-      <ToolbarItem
-        propKey={propKey}
-        type="toggleNext"
-        label=""
-        labelHide={true}
-        cols={direction === "horizontal"}
-        wrap="control"
-        options={options}
-        propType="class"
-      />
-      {direction == "horizontal" && (
-        <FlexDirectionInput wrap="control" type="toggleNext" />
-      )}
-
-      {match && (
-        <div className="h-6 w-6 flex items-center justify-center">
-          <button
-            className={`text-white ${direction == "horizontal" ? "-rotate-90" : ""
-              }`}
-            onClick={() => {
-              AddElement({
-                element: ["flex-row", "flex-row-reverse"].includes(value)
-                  ? Tools.columnContainer
-                  : Tools.rowContainer,
-                actions,
-                query,
-              });
-            }}
-          >
-            <TbRowInsertTop />
-          </button>
-        </div>
-      )}
-
-      {match && (
-        <div className="h-6 w-6 flex items-center justify-center">
-          <button
-            className={`text-white ${direction == "horizontal" ? "-rotate-90" : ""
-              }`}
-            onClick={() => {
-              setShowMenu(true);
-              setShowMenuType("components");
-            }}
-          >
-            <TbPlus />
-          </button>
+          <Tooltip content="Delete container">
+            <DeleteNodeButton
+              className="text-white hover:text-gray-200"
+              title="Delete container"
+              titleDisabled="Cannot delete"
+              useSimpleDelete={false}
+            />
+          </Tooltip>
         </div>
       )}
 
       {direction === "horizontal" && (
         <div className="h-6 w-6 flex items-center justify-center">
-          <DuplicateNodeButton
-            className="text-white"
-            title="Duplicate container"
+          <Tooltip content="Duplicate container">
+            <DuplicateNodeButton
+              className="text-white hover:text-gray-200"
+              title="Duplicate container"
+            />
+          </Tooltip>
+        </div>
+      )}
+
+
+      <Tooltip content={`Align items ${direction === "horizontal" ? "horizontally" : "vertically"}`}>
+        <div className="h-6 w-6 flex items-center justify-center">
+          <ToolbarItem
+            propKey={propKey}
+            type="toggleNext"
+            label=""
+            labelHide={true}
+            cols={direction === "horizontal"}
+            wrap="control"
+            options={options}
+            propType="class"
           />
+        </div>
+      </Tooltip>
+      {direction == "horizontal" && (
+        <div className="h-6 w-6 flex items-center justify-center">
+          <FlexDirectionInput wrap="control" type="toggleNext" />
+        </div>
+      )}
+
+      {match && (
+        <div className="h-6 w-6 flex items-center justify-center">
+          <Tooltip content={`Add ${["flex-row", "flex-row-reverse"].includes(value) ? "column" : "row"} container`}>
+            <button
+              className={`text-white hover:text-gray-200 ${direction == "horizontal" ? "-rotate-90" : ""
+                }`}
+              onClick={() => {
+                const isRow = ["flex-row", "flex-row-reverse"].includes(value);
+                AddElement({
+                  element: (
+                    <Container
+                      canDelete={true}
+                      mobile={{
+                        display: "flex",
+                        justifyContent: "justify-center",
+                        flexDirection: isRow ? "flex-col" : "flex-row",
+                        width: "w-full",
+                      }}
+                      desktop={{}}
+                      custom={{ displayName: isRow ? "Column" : "Row" }}
+                    />
+                  ),
+                  actions,
+                  query,
+                });
+              }}
+            >
+              <TbRowInsertTop />
+            </button>
+          </Tooltip>
+        </div>
+      )}
+
+
+
+
+
+      {match && (
+        <div className="h-6 w-6 flex items-center justify-center">
+          <Tooltip content="Add components">
+            <button
+              className={`text-white hover:text-gray-200 ${direction == "horizontal" ? "-rotate-90" : ""
+                }`}
+              onClick={() => {
+                setShowMenu(true);
+                setShowMenuType("components");
+              }}
+            >
+              <TbPlus />
+            </button>
+          </Tooltip>
         </div>
       )}
     </NodeToolWrapper>

@@ -16,11 +16,11 @@ export const DeleteNodeController = () => {
       key={`${id}-delete`}
       position="left"
       align="middle"
-      className="whitespace-nowrap items-center justify-center select-none"
+      className="whitespace-nowrap items-center select-none p-2"
     >
-      <div className="px-2 py-1 border flex items-center justify-center bg-white rounded-md !text-base !font-normal fontfamily-base">
+      <div className="p-2 flex items-center justify-center bg-gray-600 rounded-md !text-base !font-normal fontfamily-base">
         <DeleteNodeButton
-          className="text-red-500 hover:text-red-700 disabled:text-gray-400 disabled:cursor-not-allowed"
+          className="text-white hover:text-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
           useSimpleDelete={false}
         />
       </div>

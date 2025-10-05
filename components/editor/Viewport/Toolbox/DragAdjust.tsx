@@ -178,24 +178,9 @@ function DragAdjust({
         isActive={hovering || dragging}
       />
       <motion.button
-        whileHover={{
-          scale: 1.3,
-          transition: { duration: 0.2 },
-        }}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{
-          opacity: 1,
-          scale: dragging ? 1.3 : 1,
-          transition: { delay: dragging ? 0 : 0.7, duration: 0.3 },
-        }}
-        exit={{
-          opacity: 0,
-          scale: 0,
-          transition: { duration: 0.3 },
-        }}
-        whileTap={{ scale: 1.3 }}
+
         className={`drag-control group ${className} ${isPadding
-          ? direction === "vertical" ? "w-7 h-[3px]" : "w-[3px] h-7"
+          ? direction === "vertical" ? "w-7 h-[4px]" : "w-[4px] h-7"
           : direction === "vertical" ? "w-9 h-1.5" : "w-1.5 h-9"
           } pointer-events-auto`}
         style={{
@@ -213,7 +198,7 @@ function DragAdjust({
 
   if (tooltip) {
     return (
-      <Tooltip content={tooltip} placement="right">
+      <Tooltip content={tooltip} placement="bottom">
         {button}
       </Tooltip>
     );

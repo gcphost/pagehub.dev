@@ -84,7 +84,7 @@ export const NameNodeController = (props: {
       align={align}
       alt={alt}
       placement={placement}
-      className={`${position === "top" && align === "start" && placement === "end" ? "m-1" : ""} whitespace-nowrap items-center justify-center select-none`}
+      className={`${position === "top" && align === "start" && placement === "end" ? "m-1" : ""} whitespace-nowrap items-center select-none`}
     >
       <EditableName />
     </RenderNodeControlInline>

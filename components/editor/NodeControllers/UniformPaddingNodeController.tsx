@@ -1,7 +1,6 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { TbBorderCornerSquare } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { Tooltip } from "../../layout/Tooltip";
 import RenderNodeControlInline from "../RenderNodeControlInline";
@@ -129,10 +128,10 @@ export const UniformPaddingNodeController = () => {
     <RenderNodeControlInline
       key={`${id}-uniform-padding`}
       position="top"
-      align="end"
+      align="start"
       placement="start"
       isPadding={true}
-      className="whitespace-nowrap items-center justify-center select-none"
+      className="whitespace-nowrap items-center select-none"
       style={elementColor ? { color: elementColor } : {}}
     >
       <>
@@ -144,20 +143,8 @@ export const UniformPaddingNodeController = () => {
         />
         <Tooltip content="Drag to adjust all padding" placement="left">
           <motion.button
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{
-              opacity: 1,
-              scale: dragging ? 1.3 : 1,
-              transition: { delay: dragging ? 0 : 0.7, duration: 0.3 },
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0,
-              transition: { duration: 0.3 },
-            }}
-            whileHover={{ scale: 1.3 }}
-            whileTap={{ scale: 1.3 }}
-            className="w-8 h-8 flex items-center justify-center"
+
+            className="w-6 h-6 border-t-[4px] border-l-[5px] border-current pointer-events-auto cursor-move"
             style={{
               willChange: 'transform',
               backfaceVisibility: 'hidden',
@@ -168,7 +155,7 @@ export const UniformPaddingNodeController = () => {
             onMouseLeave={() => setHovering(false)}
             aria-label="Drag to adjust uniform padding"
           >
-            <TbBorderCornerSquare className="w-8 h-8 text-current rotate-90 pointer-events-none" />
+
           </motion.button>
         </Tooltip>
       </>

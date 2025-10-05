@@ -296,6 +296,7 @@ Container.craft = {
   displayName: "Container",
   rules: {
     canDrag: () => true,
+    canDelete: () => true,
     canMoveIn: (node, into) => canMoveIn(node, into),
     /*canMoveOut: (outgoingNodes, currentNode, helpers) => {
       // Check if this Container is inside a Form
@@ -386,7 +387,7 @@ Container.craft = {
         <DragAdjustNodeController
           key="containerdrag3"
           position="right"
-          align="middle"
+          align="end"
           direction="horizontal"
           propVar="width"
           styleToUse="width"

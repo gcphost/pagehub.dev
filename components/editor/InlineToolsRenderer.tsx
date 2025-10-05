@@ -59,20 +59,8 @@ export const InlineToolsRenderer = ({
 
   return (
     <InlineRenderContext.Provider value={true}>
-      <div
-        className="absolute inset-0 pointer-events-none"
-        contentEditable={false}
-        suppressContentEditableWarning={true}
-        data-node-control="true"
-        onMouseDown={(e) => {
-          // Blur any focused contentEditable element when interacting with toolbar
-          // This prevents spurious input events from DOM changes
-          if (document.activeElement &&
-            (document.activeElement as HTMLElement).contentEditable === 'true') {
-            (document.activeElement as HTMLElement).blur();
-          }
-        }}
-      >
+      {/* No wrapper - render controls as direct siblings */}
+      <>
         {/* Always visible children (if any) */}
         {showChildren && children}
 
@@ -82,7 +70,7 @@ export const InlineToolsRenderer = ({
             {tool}
           </React.Fragment>
         ))}
-      </div>
+      </>
     </InlineRenderContext.Provider>
   );
 };

@@ -85,8 +85,8 @@ export const DragAdjustNodeController = (props: {
   // Choose which control component to use
   const ControlComponent = isInlineRender ? RenderNodeControlInline : RenderNodeControl;
   const controlClassName = isInlineRender
-    ? "whitespace-nowrap items-center justify-center select-none"
-    : "whitespace-nowrap items-center justify-center select-none fixed pointer-events-auto";
+    ? "whitespace-nowrap items-center select-none"
+    : "whitespace-nowrap items-center select-none fixed pointer-events-auto";
 
   // For inline rendering, skip AnimatePresence - it causes issues without portals
   if (isInlineRender && isActive) {
@@ -103,7 +103,7 @@ export const DragAdjustNodeController = (props: {
         style={elementColor ? { color: elementColor } : {}}
       >
         <DragAdjust
-          className="text-base flex items-center justify-center"
+          className="text-base flex items-center"
           targetElement={dom}
           direction={direction}
           styleToUse={styleToUse}
@@ -178,7 +178,7 @@ export const DragAdjustNodeController = (props: {
           style={elementColor ? { color: elementColor } : {}}
         >
           <DragAdjust
-            className="text-base flex items-center justify-center"
+            className="text-base flex items-center"
             targetElement={dom}
             direction={direction}
             styleToUse={styleToUse}

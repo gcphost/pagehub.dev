@@ -14,7 +14,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
     options={[
       {
         label: (
-          <Tooltip content="none">
+          <Tooltip content="No flex direction">
             <TbClearAll />
           </Tooltip>
         ),
@@ -22,7 +22,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
       },
       {
         label: (
-          <Tooltip content="flex-row">
+          <Tooltip content="Row layout (horizontal)">
             <TbLayoutColumns />
           </Tooltip>
         ),
@@ -30,7 +30,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
       },
       {
         label: (
-          <Tooltip content="flex-col">
+          <Tooltip content="Column layout (vertical)">
             <TbLayoutRows />
           </Tooltip>
         ),
@@ -38,7 +38,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
       },
       {
         label: (
-          <Tooltip content="flex-row-reverse">
+          <Tooltip content="Reverse row layout">
             <TbLayoutColumns />
           </Tooltip>
         ),
@@ -46,7 +46,7 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
       },
       {
         label: (
-          <Tooltip content="flex-col-reverse">
+          <Tooltip content="Reverse column layout">
             <TbLayoutRows />
           </Tooltip>
         ),
