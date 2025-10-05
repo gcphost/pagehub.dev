@@ -3,7 +3,6 @@ import { useEditor, useNode, UserComponent } from "@craftjs/core";
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
-import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import ButtonSettingsNodeTool from "components/editor/NodeControllers/Tools/ButtonSettingsNodeTool";
 import {
@@ -459,12 +458,7 @@ Button.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController
-          position="top"
-          align="end"
-          placement="start"
-          key="buttonNameController"
-        />,
+
         <HoverNodeController
           key="buttonHoverController"
           position="top"

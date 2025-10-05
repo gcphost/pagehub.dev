@@ -19,17 +19,28 @@ const useOffScreenDetection = (ref, position) => {
       const rect = ref.current.getBoundingClientRect();
       const viewportRect = viewport.getBoundingClientRect();
 
-      if (position === "left") {
-        // Check if clipped on the left side of viewport
-        setIsOffScreen(rect.left < viewportRect.left);
-      } else if (position === "right") {
-        // Check if clipped on the right side of viewport
-        setIsOffScreen(rect.right > viewportRect.right);
+      if (position === "left" || position === "right") {
+        // For left/right, check if clipped horizontally OR vertically (top)
+        const clippedHorizontally = position === "left"
+          ? rect.left < viewportRect.left
+          : rect.right > viewportRect.right;
+        const clippedAtTop = rect.top < viewportRect.top;
+        setIsOffScreen(clippedHorizontally || clippedAtTop);
+      } else if (position === "top") {
+        // Check if clipped on the top side of viewport
+        setIsOffScreen(rect.top < viewportRect.top);
+      } else if (position === "bottom") {
+        // Check if clipped on the bottom side of viewport
+        setIsOffScreen(rect.bottom > viewportRect.bottom);
       }
     };
 
     // Check initially and on scroll/resize
-    checkPosition();
+    // Use requestAnimationFrame to wait for layout to complete
+    const rafId = requestAnimationFrame(() => {
+      checkPosition();
+    });
+
     const viewport = document.getElementById('viewport');
     if (viewport) {
       viewport.addEventListener('scroll', checkPosition);
@@ -37,6 +48,7 @@ const useOffScreenDetection = (ref, position) => {
     window.addEventListener('resize', checkPosition);
 
     return () => {
+      cancelAnimationFrame(rafId);
       if (viewport) {
         viewport.removeEventListener('scroll', checkPosition);
       }
@@ -73,12 +85,14 @@ export const RenderNodeControlInline = ({
 }) => {
   const ref = useRef(null);
   const [position, setPosition] = useState(initialPosition);
-  const isOffScreen = useOffScreenDetection(ref, position);
   const [align, setAlign] = useState(initialAlign);
   const [placement, setPlacement] = useState(initialPlacement);
 
+  // Use the alt positioning system (takes priority)
+  const isOffScreen = useOffScreenDetection(ref, position);
+
   useEffect(() => {
-    if (!ref.current || !alt.position) return;
+    if (!ref.current) return;
 
     const checkViewport = () => {
       // Guard against null ref (can happen if timeout fires after unmount)
@@ -91,6 +105,7 @@ export const RenderNodeControlInline = ({
       const viewportRect = viewportElement.getBoundingClientRect();
       const outOfViewport = rect.bottom > viewportRect.bottom || rect.top < viewportRect.top;
 
+      // If alt prop is provided, use it
       if (outOfViewport && alt.position) {
         setPosition(alt.position);
         if (alt.placement) setPlacement(alt.placement);
@@ -102,11 +117,12 @@ export const RenderNodeControlInline = ({
       }
     };
 
-    // Check initially and after a brief delay (for rendering)
-    checkViewport();
-    const timeout = setTimeout(checkViewport, 100);
+    // Use requestAnimationFrame to match the timing of isOffScreen detection
+    const rafId = requestAnimationFrame(() => {
+      checkViewport();
+    });
 
-    return () => clearTimeout(timeout);
+    return () => cancelAnimationFrame(rafId);
   }, [initialPosition, initialAlign, initialPlacement, alt]);
 
   // ============================================
@@ -123,20 +139,28 @@ export const RenderNodeControlInline = ({
     if (isPadding) {
       classes.push('top-0.5', 'left-0', 'right-0'); // Inside top, 2px from edge
     } else {
-      classes.push('bottom-full', 'left-0', 'right-0', 'mb-0'); // Outside top, sits above
+      if (isOffScreen) {
+        classes.push('top-full', 'left-0', 'right-0', 'mt-0'); // Clipped: flip to bottom
+      } else {
+        classes.push('bottom-full', 'left-0', 'right-0', 'mb-0'); // Outside top, sits above
+      }
     }
   } else if (position === "bottom") {
     if (isPadding) {
       classes.push('bottom-0.5', 'left-0', 'right-0'); // Inside bottom
     } else {
-      classes.push('top-full', 'left-0', 'right-0', 'mt-0'); // Outside bottom, sits below
+      if (isOffScreen) {
+        classes.push('bottom-full', 'left-0', 'right-0', 'mb-0'); // Clipped: flip to top
+      } else {
+        classes.push('top-full', 'left-0', 'right-0', 'mt-0'); // Outside bottom, sits below
+      }
     }
   } else if (position === "left") {
     if (isPadding) {
       classes.push('left-0.5', 'top-0', 'bottom-0'); // Inside left
     } else {
       if (isOffScreen) {
-        classes.push('left-0.5', 'top-0', 'bottom-0'); // Clipped: move inside
+        classes.push('left-0.5', 'top-0'); // Clipped: move inside, anchor to top only
       } else {
         classes.push('right-full', 'top-0', 'bottom-0', 'mr-0'); // Outside left
       }
@@ -146,7 +170,7 @@ export const RenderNodeControlInline = ({
       classes.push('right-0.5', 'top-0', 'bottom-0'); // Inside right
     } else {
       if (isOffScreen) {
-        classes.push('right-0.5', 'top-0', 'bottom-0'); // Clipped: move inside
+        classes.push('right-0.5', 'top-0'); // Clipped: move inside, anchor to top only
       } else {
         classes.push('left-full', 'top-0', 'bottom-0', 'ml-0'); // Outside right
       }
@@ -171,7 +195,12 @@ export const RenderNodeControlInline = ({
       classes.push('justify-start');
       if (!isPadding) classes.push(''); // Only add padding for outside controls
     } else if (align === "middle") {
-      classes.push('justify-center');
+      // If middle-aligned but would clip, align to start instead
+      if (isOffScreen) {
+        classes.push('justify-start');
+      } else {
+        classes.push('justify-center');
+      }
     } else if (align === "end") {
       classes.push('justify-end');
       if (!isPadding) classes.push(''); // Only add padding for outside controls

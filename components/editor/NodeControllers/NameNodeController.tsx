@@ -37,7 +37,7 @@ const EditableName = () => {
   return (
     <div
       className={
-        "pointer-events-auto rounded-md overflow-hidden border flex flex-row gap-3 bg-white/90 text-black !text-base !font-normal fontfamily-base"
+        "pointer-events-auto overflow-hidden border flex flex-row gap-3 bg-white/90 text-black !text-base !font-normal fontfamily-base border-current"
       }
     >
       <div
@@ -84,7 +84,7 @@ export const NameNodeController = (props: {
       align={align}
       alt={alt}
       placement={placement}
-      className={`${position === "top" && align === "start" && placement === "end" ? "m-1" : ""} whitespace-nowrap items-center select-none`}
+      className={`${position === "top" && align === "start" && placement === "end" ? "m-0" : ""} whitespace-nowrap items-center select-none`}
     >
       <EditableName />
     </RenderNodeControlInline>
