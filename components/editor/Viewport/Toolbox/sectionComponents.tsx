@@ -1,4 +1,3 @@
-import { Element } from "@craftjs/core";
 import { TbLayoutColumns, TbLayoutRows } from "react-icons/tb";
 import { Container } from "../../../selectors/Container";
 import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
@@ -15,54 +14,8 @@ export const RenderSectionComponent = ({
   />
 );
 
-const column = (displayName = "") => (
-  <Element
-    is={Container}
-    canvas
-    custom={{ displayName: displayName || "Column Container" }}
-    canDelete={true}
-    canEditName={true}
-    root={{}}
-    key={Date.toString()}
-    mobile={{
-      display: "flex",
-      justifyContent: "justify-center",
-      flexDirection: "flex-col",
-      width: "w-full",
-      gap: "gap-8",
-      py: "py-6",
-      px: "px-3",
-    }}
-    desktop={{ flexDirection: "flex-col" }}
-  />
-);
-
-const row = (displayName = "") => (
-  <Element
-    is={Container}
-    canvas
-    key={Date.toString()}
-    custom={{ displayName: displayName || "Row Container" }}
-    canDelete={true}
-    canEditName={true}
-    root={{}}
-    mobile={{
-      display: "flex",
-      justifyContent: "justify-center",
-      flexDirection: "flex-row",
-      width: "w-full",
-      gap: "gap-8",
-      py: "py-6",
-      px: "px-3",
-    }}
-  />
-);
 
 export const sectionToolboxItems = [
-  // {
-  //  title: "Sections",
-  //  content: [],
-  // },
   {
     title: "Layout",
     content: [
@@ -101,109 +54,4 @@ export const sectionToolboxItems = [
       />,
     ],
   },
-  /*
-  {
-    title: "Sections",
-    content: [
-      <RenderSectionComponent
-        key="hero"
-        text={
-          <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
-            <div className="flex flex-row gap-3 items-center">
-              <BsPostcard /> Hero
-            </div>
-            <Tooltip
-              content="A hero is a large, attention-grabbing banner or section at the top of a webpage."
-              placement="left"
-            >
-              <TbQuestionMark />
-            </Tooltip>
-          </div>
-        }
-        mobile={{
-          display: "flex",
-          minHeight: "min-h-[120px]",
-          justifyContent: "justify-center",
-          flexDirection: "flex-col",
-          width: "w-full",
-          gap: "gap-8",
-          backgroundSize: "bg-cover",
-          backgroundPosition: "bg-center",
-          alignItems: "items-center",
-          height: "h-96",
-          py: "py-6",
-          px: "px-3",
-        }}
-        desktop={{ flexDirection: "flex-row", height: "h-full" }}
-        type="heroContainer"
-        custom={{ displayName: "Hero" }}
-      />,
-      <RenderSectionComponent
-        key="card"
-        text={
-          <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
-            <div className="flex flex-row gap-3 items-center">
-              <AiOutlineIdcard /> Card
-            </div>
-            <Tooltip
-              content="A card is a compact, self-contained unit that displays information in a structured way."
-              placement="left"
-            >
-              <TbQuestionMark />
-            </Tooltip>
-          </div>
-        }
-        mobile={{
-          display: "flex",
-          minHeight: "min-h-[120px]",
-          justifyContent: "justify-center",
-          flexDirection: "flex-col",
-          width: "w-full",
-          gap: "gap-8",
-          backgroundSize: "bg-cover",
-          backgroundPosition: "bg-center",
-          alignItems: "items-center",
-          height: "h-96",
-          py: "py-6",
-          px: "px-3",
-        }}
-        desktop={{ flexDirection: "flex-row", height: "h-full" }}
-        type="cardContainer"
-        custom={{ displayName: "Card" }}
-      />,
-      <RenderSectionComponent
-        key="cta"
-        text={
-          <div className="flex flex-row gap-3 justify-between items-center border p-3 rounded-md w-full hover:bg-gray-100">
-            <div className="flex flex-row gap-3 items-center">
-              <AiOutlineAlert /> Call to Attention
-            </div>
-            <Tooltip
-              content="A call to action is a prompt that encourages users to take a specific action."
-              placement="left"
-            >
-              <TbQuestionMark />
-            </Tooltip>
-          </div>
-        }
-        mobile={{
-          display: "flex",
-          minHeight: "min-h-[120px]",
-          justifyContent: "justify-center",
-          flexDirection: "flex-col",
-          width: "w-full",
-          gap: "gap-8",
-          backgroundSize: "bg-cover",
-          backgroundPosition: "bg-center",
-          alignItems: "items-center",
-          height: "h-96",
-          py: "py-6",
-          px: "px-3",
-        }}
-        desktop={{ flexDirection: "flex-row", height: "h-full" }}
-        type="ctaContainer"
-        custom={{ displayName: "Call to Attention" }}
-      />,
-    ],
-  },*/
 ];

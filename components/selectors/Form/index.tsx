@@ -1,4 +1,5 @@
 import { Element, useEditor, useNode } from "@craftjs/core";
+import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
@@ -23,16 +24,18 @@ import { FormSettings } from "./FormSettings";
 
 export const FormDrop = ({
   children,
-  canDelete = false,
+  canDelete = true,
   action = "",
   method = "POST",
   submissions = [],
+  formType = "subscribe",
   ...props
 }) => {
-  const { id } = useNode();
+  const { id, connectors: { connect, drag } } = useNode();
 
-  const { actions, enabled } = useEditor((state) => ({
+  const { actions, enabled, query } = useEditor((state) => ({
     enabled: state.options.enabled,
+    ...getClonedState(props, state),
   }));
 
   const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
@@ -45,6 +48,8 @@ export const FormDrop = ({
     enabled,
     initialLoadComplete
   );
+
+  props = setClonedProps(props, query);
 
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,7 +69,7 @@ export const FormDrop = ({
   return (
     <Container
       {...props}
-      canDelete={false}
+      canDelete={canDelete}
       type="form"
       action={action}
       method={method}
@@ -107,8 +112,8 @@ export const FormDrop = ({
         }, 1000);
       }}
     >
-      {!loading && !loaded && !props.view && children}
-      {(loading || enabled || props.view === "loading") && (
+      {!loading && !loaded && (!enabled || !props.view || props.view === "") && children}
+      {(loading || (enabled && props.view === "loading")) && (
         <Element
           canvas
           id="loadingTextContainer"
@@ -140,7 +145,7 @@ export const FormDrop = ({
           />
         </Element>
       )}
-      {(loaded || enabled || props.view === "loaded") && (
+      {(loaded || (enabled && props.view === "loaded")) && (
         <Element
           canvas
           id="sentTextContainer"
@@ -177,9 +182,12 @@ export const FormDrop = ({
 };
 
 FormDrop.craft = {
-  // ...Container.craft,
-  canDelete: false,
+  ...Container.craft,
+  canDelete: true,
+  canDrag: () => true,
+
   rules: {
+    ...Container.craft.rules,
     canMoveIn: (nodes) =>
       nodes.every(
         (node) =>
@@ -193,99 +201,129 @@ FormDrop.craft = {
 };
 
 export const Form = (props: any) => {
-  const { query } = useEditor((state) => getClonedState(props, state));
+  const formType = props.formType || "subscribe";
 
-  props = setClonedProps(props, query);
+  // Base styles for form inputs
+  const inputBaseStyles = {
+    root: {
+      border: 'border',
+      borderColor: 'border-gray-300',
+      radius: 'rounded-md',
+      background: 'bg-white',
+      color: 'text-gray-900',
+    },
+    mobile: {
+      px: 'px-4',
+      py: 'py-2',
+      width: 'w-full',
+    },
+  };
 
   return (
-    <Container {...props}>
-      {
+    <FormDrop
+      canDelete={true}
+      formType={formType}
+      mobile={{
+        mx: "mx-auto",
+        display: "flex",
+        justifyContent: "justify-center",
+        flexDirection: "flex-col",
+        width: "w-full",
+        gap: "gap-3",
+      }}
+      desktop={{ flexDirection: "flex-col", alignItems: "items-center" }}
+      root={{}}
+      {...props}
+    >
+      <Element
+        canvas
+        id="formContainer"
+        is={Container}
+        canDelete={true}
+        canEditName={true}
+        mobile={{
+          display: "flex",
+          justifyContent: "justify-center",
+          flexDirection: "flex-col",
+          width: "w-3/4",
+          gap: "gap-3",
+          mx: "mx-auto",
+        }}
+        custom={{ displayName: "Fields" }}
+      >
         <Element
           canvas
-          is={FormDrop}
-          id="formDrop"
-          canDelete={false}
-          mobile={{
-            py: "py-3",
-            px: "px-3",
-            mx: "mx-auto",
-            display: "flex",
-            justifyContent: "justify-center",
-            flexDirection: "flex-col",
-            width: "w-full",
-            gap: "gap-3",
-          }}
-          desktop={{ flexDirection: "flex-col", alignItems: "items-center" }}
-          root={{}}
-        >
+          id="formLeadingText"
+          is={Text}
+          custom={{ displayName: "Leading Text" }}
+          canDelete={true}
+          canEditName={true}
+          text={formType === "subscribe" ? "Subscribe to our newsletter" : "Get in touch"}
+        />
+
+        {formType === "contact" && (
           <Element
             canvas
-            id="formContainer"
-            is={Container}
+            id="formNameInput"
+            is={FormElement}
+            custom={{ displayName: "Name Input" }}
+            type="text"
+            placeholder="Your name"
             canDelete={true}
             canEditName={true}
-            mobile={{
-              display: "flex",
-              justifyContent: "justify-center",
-              flexDirection: "flex-row",
-              width: "w-full",
-              gap: "gap-3",
-              px: "px-6",
-              py: "py-6",
-            }}
-            custom={{ displayName: "Form Container" }}
-          >
-            <Element
-              canvas
-              is={Container}
-              id="itemContainer"
-              canDelete={true}
-              canEditName={true}
-              mobile={{
-                display: "flex",
-                justifyContent: "justify-center",
-                flexDirection: "flex-col",
-                width: "w-full",
-                gap: "gap-3",
-                px: "px-6",
-                py: "py-6",
-              }}
-              custom={{ displayName: "Item Container" }}
-            >
-              <Element
-                canvas
-                is={Text}
-                custom={{ displayName: "Leading Text" }}
-                canDelete={true}
-                canEditName={true}
-              />
-
-              <Element
-                canvas
-                is={FormElement}
-                custom={{ displayName: "Email Input" }}
-                type="email"
-                placeholder="Email"
-                canDelete={true}
-                canEditName={true}
-                root={{ color: "text-black", background: "bg-white" }}
-                name="email"
-              />
-            </Element>
-          </Element>
-
-          <Element
-            canvas
-            is={Button}
-            custom={{ displayName: "Submit Button" }}
-            buttons={[{ type: "submit", text: "Submit" }]}
-            mobile={{ px: "px-6", py: "py-3" }}
-            canDelete={true}
-            canEditName={true}
+            {...inputBaseStyles}
+            name="name"
           />
-        </Element>
-      }
-    </Container>
+        )}
+
+        <Element
+          canvas
+          id="formEmailInput"
+          is={FormElement}
+          custom={{ displayName: "Email Input" }}
+          type="email"
+          placeholder="your@email.com"
+          canDelete={true}
+          canEditName={true}
+          {...inputBaseStyles}
+          name="email"
+        />
+
+        {formType === "contact" && (
+          <Element
+            canvas
+            id="formMessageInput"
+            is={FormElement}
+            custom={{ displayName: "Message Input" }}
+            type="textarea"
+            placeholder="Your message..."
+            canDelete={true}
+            canEditName={true}
+            {...inputBaseStyles}
+            name="message"
+          />
+        )}
+      </Element>
+
+      <Element
+        canvas
+        id="formSubmitButton"
+        is={Button}
+        custom={{ displayName: "Submit Button" }}
+        buttons={[{
+          type: "submit",
+          text: formType === "subscribe" ? "Subscribe" : "Send Message",
+          root: {
+            background: "palette:Brand",
+            color: "palette:BrandText",
+            border: "border",
+          }
+        }]}
+        mobile={{ px: "px-6", py: "py-3" }}
+        canDelete={true}
+        canEditName={true}
+      />
+    </FormDrop>
   );
 };
 
@@ -300,7 +338,10 @@ Form.craft = {
           node.data?.type !== "Form" && node.data?.props?.type !== "form"
       ),
   },
-  displayName: "Form Parent",
+  displayName: "Form",
+  related: {
+    toolbar: FormSettings,
+  },
   props: {
     tools: () => {
       const baseControls = [
@@ -322,6 +363,7 @@ Form.craft = {
           }}
         />,
 
+        <DeleteNodeController key="formDelete" />,
         <ToolNodeController
           position="bottom"
           align="start"

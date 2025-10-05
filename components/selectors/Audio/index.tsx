@@ -9,45 +9,39 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
 import React, { useEffect, useRef, useState } from "react";
-import { TbCode } from "react-icons/tb";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { motionIt, selectAfterAdding } from "utils/lib";
+import { TbMusic } from "react-icons/tb";
+
+import { useRecoilValue } from "recoil";
+import { motionIt } from "utils/lib";
 import { ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
-import { useScrollToSelected } from "../lib";
 
-import { EmbedSettings } from "./EmbedSettings";
+import { AudioSettings } from "./AudioSettings";
 
-const YoutubeDiv = `
-  width: 100%;
-  height: 100%;
-  > div {
-    height: 100%;
-  }
-  iframe {
-    pointer-events: ${(props) => (props.enabled ? "none" : "auto")};
-    // width:100%!important;
-    // height:100%!important;
-  }
-`;
-
-interface EmbedProps extends BaseSelectorProps {
-  videoId?: string;
+interface AudioProps extends BaseSelectorProps {
+  audioUrl?: string;
   title?: string;
+  controls?: boolean;
+  autoplay?: boolean;
+  loop?: boolean;
 }
 
-const defaultProps: EmbedProps = {
+const defaultProps: AudioProps = {
   root: {},
+  className: [],
   mobile: {},
   tablet: {},
   desktop: {},
+  controls: true,
+  autoplay: false,
+  loop: false,
   canDelete: true,
   canEditName: true,
 };
 
-export const Embed = (props: EmbedProps) => {
+export const Audio = (props: AudioProps) => {
   props = {
     ...defaultProps,
     ...props,
@@ -62,53 +56,55 @@ export const Embed = (props: EmbedProps) => {
     name: node.data.custom.displayName || node.data.displayName,
   }));
 
-  const { actions, query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
-
-  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
-
-  useScrollToSelected(id, enabled);
-  selectAfterAdding(
-    actions.selectNode,
-    useSetRecoilState(TabAtom),
-    id,
-    enabled,
-    initialLoadComplete
-  );
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
 
-  const { videoId } = props;
+  const { audioUrl, controls, autoplay, loop } = props;
 
-  const ref = useRef(null);
+  props = setClonedProps(props, query);
+
+  const ref = useRef();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  props = setClonedProps(props, query);
-
   const prop: any = {
     ref: (r) => {
       ref.current = r;
       connect(drag(r));
     },
-    className: ClassGenerator(props, view, enabled, [], [], preview),
-    style: enabled ? { position: 'relative' } : undefined,
+    className: "",
     role: "region",
-    "aria-label": props.title || "Embedded content",
+    "aria-label": props.title || audioUrl ? `Audio: ${props.title || audioUrl}` : "Audio player",
+    style: enabled ? { position: 'relative' } : undefined,
+    children: audioUrl ? (
+      <audio
+        className={ClassGenerator(props, view, enabled, [], [], preview)}
+        src={audioUrl}
+        controls={controls}
+        autoPlay={autoplay && !enabled}
+        loop={loop}
+        preload="metadata"
+        style={{ width: '100%' }}
+      >
+        Your browser does not support the audio element.
+      </audio>
+    ) : enabled ? (
+      <div className="w-full h-full flex items-center justify-center text-3xl min-h-[50px] border border-dashed border-gray-400 rounded">
+        <TbMusic aria-label="Audio icon" />
+      </div>
+    ) : null,
   };
 
-  if (videoId) prop.dangerouslySetInnerHTML = { __html: videoId || "" };
-
   if (enabled) {
-    if (!videoId) prop.children = <TbCode aria-label="Code icon" />;
     prop["data-bounding-box"] = enabled;
-    prop["data-empty-state"] = !videoId;
+    prop["data-empty-state"] = !audioUrl;
     prop["node-id"] = id;
+    prop.onClick = (e) => e.preventDefault();
   }
 
   // Add inline tools renderer in edit mode (after hydration)
@@ -117,25 +113,13 @@ export const Embed = (props: EmbedProps) => {
       ...(prop.style || {}),
       overflow: 'visible',
     };
-    // Handle dangerouslySetInnerHTML case
-    if (prop.dangerouslySetInnerHTML) {
-      const innerHTML = prop.dangerouslySetInnerHTML;
-      delete prop.dangerouslySetInnerHTML;
-      prop.children = (
-        <>
-          <div dangerouslySetInnerHTML={innerHTML} />
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Embed} props={props} />
-        </>
-      );
-    } else {
-      const originalChildren = prop.children;
-      prop.children = (
-        <>
-          {originalChildren}
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Embed} props={props} />
-        </>
-      );
-    }
+    const originalChildren = prop.children;
+    prop.children = (
+      <>
+        {originalChildren}
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Audio} props={props} />
+      </>
+    );
   }
 
   return React.createElement(
@@ -144,14 +128,10 @@ export const Embed = (props: EmbedProps) => {
   );
 };
 
-Embed.craft = {
-  displayName: "Embed",
-  rules: {
-    canDrag: () => true,
-    canMoveIn: () => false,
-  },
+Audio.craft = {
+  displayName: "Audio",
   related: {
-    toolbar: EmbedSettings,
+    toolbar: AudioSettings,
   },
   props: {
     tools: (props) => {
@@ -160,10 +140,10 @@ Embed.craft = {
           position="top"
           align="end"
           placement="start"
-          key="embedNameController"
+          key="audioNameController"
         />,
         <HoverNodeController
-          key="emebedHoverController"
+          key="audioHoverController"
           position="top"
           align="start"
           placement="end"
@@ -173,12 +153,11 @@ Embed.craft = {
             placement: "start",
           }}
         />,
-
-        <DeleteNodeController key="embedDelete" />,
+        <DeleteNodeController key="audioDelete" />,
         <ToolNodeController
           position="bottom"
           align="start"
-          key="embedSettingsController"
+          key="audioSettingsController"
         >
           <TextSettingsNodeTool />
         </ToolNodeController>,
@@ -188,3 +167,4 @@ Embed.craft = {
     },
   },
 };
+

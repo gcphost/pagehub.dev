@@ -11,6 +11,51 @@
   @apply !rounded-sm !bg-current cursor-move !border-0;
 }
 
+/* Drag state styling - all handled with CSS */
+[data-dragging="true"] {
+  opacity: 0.5 !important;
+}
+
+body[data-is-dragging="true"] {
+  cursor: grabbing !important;
+}
+
+body[data-is-dragging="true"] * {
+  cursor: grabbing !important;
+}
+
+/* Hide node controls during drag */
+body[data-is-dragging="true"] [data-node-control="true"] {
+  display: none !important;
+}
+
+/* Enhanced drop indicator styling */
+[class*="craft-indicator"],
+[data-craft-indicator] {
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.2),
+    0 0 12px rgba(59, 130, 246, 0.4) !important;
+  border-radius: 2px !important;
+  animation: pulse-drop-indicator 1.5s ease-in-out infinite;
+  transition: all 0.2s ease !important;
+}
+
+@keyframes pulse-drop-indicator {
+  0%,
+  100% {
+    opacity: 0.9;
+    box-shadow:
+      0 0 0 2px rgba(59, 130, 246, 0.2),
+      0 0 12px rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 3px rgba(59, 130, 246, 0.3),
+      0 0 16px rgba(59, 130, 246, 0.6);
+  }
+}
+
 [role="tooltip"] {
   @apply pointer-events-none z-50 cursor-none;
 }

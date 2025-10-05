@@ -1,5 +1,6 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
+import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import {
   getClonedState,
@@ -197,32 +198,57 @@ export const Image = (props: ImageProps) => {
     tagName = "img";
   }
 
-  const Img = React.createElement(motionIt(props, tagName), {
-    ...applyAnimation({ ..._imgProp, ...prop, key: id }, props),
-    ref: (r) => {
-      if (props.url) return;
-      ref.current = r;
-      connect(drag(r));
-    },
-  });
+  // Create the actual img/svg/div element
+  const createImgElement = (shouldConnectDrag: boolean) => {
+    return React.createElement(motionIt(props, tagName), {
+      ...applyAnimation({ ..._imgProp, key: `img-${id}` }, props),
+      ref: shouldConnectDrag ? (r) => {
+        if (props.url) return;
+        ref.current = r;
+        connect(drag(r));
+      } : undefined,
+    });
+  };
 
-  if (type !== "svg" && !empty) {
-    prop.children = Img;
-  }
-
-  // Add inline tools in edit mode (after hydration)
+  // If in edit mode with inline tools, wrap in container
   if (enabled && isMounted) {
-    const originalChildren = prop.children;
-    prop.children = (
-      <>
-        {originalChildren}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Image} props={props} />
-      </>
-    );
+    const Img = createImgElement(false); // Don't connect drag to img, connect to wrapper
+
+    if (type !== "svg" && !empty) {
+      prop.children = (
+        <>
+          {Img}
+          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Image} props={props} />
+        </>
+      );
+    } else {
+      prop.children = (
+        <>
+          {prop.children}
+          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Image} props={props} />
+        </>
+      );
+    }
+
     prop.style = {
       ...(prop.style || {}),
       position: 'relative',
+      // In edit mode, override overflow to visible so controls aren't clipped
+      overflow: 'visible',
     };
+
+    const ele = props.url ? Link : "div";
+    return React.createElement(ele, {
+      ...prop,
+      "aria-label": props.url ? (altText || titleText || "Image link") : undefined,
+    });
+  }
+
+  // Preview mode - simpler structure
+  const Img = createImgElement(true); // Connect drag to img directly
+
+  if (type !== "svg" && !empty) {
+    prop.children = Img;
   }
 
   const ele = props.url ? Link : "div";
@@ -255,6 +281,7 @@ Image.craft = {
           placement="end"
           key="image-1"
         />,
+        <DeleteNodeController key="imageDelete" />,
       ];
 
       return [...baseControls];

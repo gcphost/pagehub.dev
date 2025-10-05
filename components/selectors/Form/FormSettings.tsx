@@ -91,7 +91,20 @@ export const FormSettings = () => {
 
     return (
       <TabBody>
-        <p>Select the parent component to adjust the form layout.</p>
+        <ToolbarSection title="View State" help="Toggle between form states to design each one">
+          <ToolbarItem
+            propKey="view"
+            propType="component"
+            type="select"
+            label="Current View"
+            labelHide={true}
+          >
+            <option value="">Default (Form)</option>
+            <option value="loading">Loading State</option>
+            <option value="loaded">Submitted State</option>
+          </ToolbarItem>
+        </ToolbarSection>
+
         <ToolbarSection title="Form Settings" help={help}>
           <ToolbarItem
             propKey="formName"
@@ -236,7 +249,7 @@ export const FormSettings = () => {
           <TabBody>
             <ClassNameInput />
 
-            <ToolbarSection title="Display" onClick={() => {}} enabled={true}>
+            <ToolbarSection title="Display" onClick={() => { }} enabled={true}>
               <DisplayInput />
             </ToolbarSection>
           </TabBody>
@@ -244,16 +257,16 @@ export const FormSettings = () => {
       )}
       {activeTab === "Animations" && (
         <TabBody>
-          <p className="p-3">
-            Animations are not available for this component.
-          </p>
+          <ToolbarSection title="Animations">
+            <p className="text-sm text-gray-600">Animation settings will be available soon.</p>
+          </ToolbarSection>
         </TabBody>
       )}
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <p className="p-3">
-            Hover settings are not available for this component.
-          </p>
+          <ToolbarSection title="Hover & Click">
+            <p className="text-sm text-gray-600">Hover and click settings will be available soon.</p>
+          </ToolbarSection>
         </TabBody>
       )}
     </TableBodyStyleControl>

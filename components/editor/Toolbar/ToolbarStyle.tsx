@@ -26,7 +26,7 @@ const Labler = ({
   propItemKey = null,
   wrap = null,
 }) => {
-  if ((!props.label && props.labelHide) || wrap) return null;
+  if ((!props?.label && props?.labelHide) || wrap) return null;
 
   return (
     <h4
@@ -34,17 +34,17 @@ const Labler = ({
         } gap-3 h-6 flex justify-between`}
     >
       <div className="flex gap-1.5 items-center">
-        {props.label}
+        {props?.label}
         <div className="text-gray-500 hover:text-white hidden">
           <TbInfoCircle />
         </div>
       </div>
 
-      {!props.labelHide && (
+      {!props?.labelHide && (
         <ToolbarLabel
           lab={lab}
-          prefix={props.labelPrefix}
-          suffix={props.labelSuffix}
+          prefix={props?.labelPrefix}
+          suffix={props?.labelSuffix}
           viewValue={viewValue}
           propType={propType}
           propKey={propKey}

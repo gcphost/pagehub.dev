@@ -3,11 +3,9 @@ import { ToolbarItem } from "components/editor/Toolbar";
 import { FlexDirectionInput } from "components/editor/Toolbar/Inputs/FlexDirectionInput";
 import { NodeToolWrapper } from "components/editor/Tools/NodeDialog";
 import { ViewAtom } from "components/editor/Viewport";
-import { addHandler, buildClonedTree, deleteNode, getPropFinalValue, saveHandler } from "components/editor/Viewport/lib";
+import { getPropFinalValue } from "components/editor/Viewport/lib";
 import { AddElement, Tools } from "components/editor/Viewport/Toolbox/lib";
-import { useCallback } from "react";
 import {
-  TbCopy,
   TbLayoutAlignBottom,
   TbLayoutAlignCenter,
   TbLayoutAlignLeft,
@@ -16,12 +14,12 @@ import {
   TbLayoutAlignTop,
   TbPlus,
   TbRowInsertTop,
-  TbTrash,
-  TbTrashOff,
 } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { MenuItemState, MenuState } from "utils/lib";
+import { DeleteNodeButton } from "./DeleteNodeButton";
+import { DuplicateNodeButton } from "./DuplicateNodeButton";
 
 // Helper function to get alignment options based on direction and value
 const getAlignmentOptions = (direction, value) => {
@@ -92,10 +90,9 @@ const determinePropKey = (direction, value) => {
 export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
   const view = useRecoilValue(ViewAtom);
   const settings = useRecoilValue(SettingsAtom);
-  const { nodeProps, id, canDelete } = useNode((node) => ({
+  const { nodeProps, id } = useNode((node) => ({
     nodeProps: node.data.props || {},
     id: node.id,
-    canDelete: node.data.props?.canDelete,
   }));
 
   const { value } = getPropFinalValue(
@@ -123,50 +120,6 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
     (direction !== "horizontal" &&
       ["flex-col", "flex-col-reverse"].includes(value));
 
-  const getCloneTree = useCallback(
-    (tree) => buildClonedTree({ tree, query, setProp }),
-    [query, setProp]
-  );
-
-  const handleSaveTemplate = useCallback(
-    () => saveHandler({ query, id, component: null, actions }),
-    [id, query, actions]
-  );
-
-  const handleAdd = useCallback(() => {
-    addHandler({
-      actions,
-      query,
-      getCloneTree,
-      id,
-      setProp,
-    });
-  }, [actions, getCloneTree, id, query, setProp]);
-
-  const handleDuplicate = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    try {
-      handleSaveTemplate();
-      handleAdd();
-    } catch (e) {
-      console.error(e);
-    }
-  }, [handleSaveTemplate, handleAdd]);
-
-  const handleDelete = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!canDelete) return;
-
-    try {
-      deleteNode(query, actions, id, settings);
-    } catch (e) {
-      console.error(e);
-    }
-  }, [canDelete, query, actions, id, settings]);
 
   return (
     <NodeToolWrapper
@@ -201,14 +154,12 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
     >
       {direction === "horizontal" && (
         <div className="h-6 w-6 flex items-center justify-center">
-          <button
+          <DeleteNodeButton
             className="text-white"
-            onClick={handleDelete}
-            title={canDelete ? "Delete container" : "Cannot delete"}
-            disabled={!canDelete}
-          >
-            {canDelete ? <TbTrash /> : <TbTrashOff />}
-          </button>
+            title="Delete container"
+            titleDisabled="Cannot delete"
+            useSimpleDelete={false}
+          />
         </div>
       )}
 
@@ -263,13 +214,10 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
 
       {direction === "horizontal" && (
         <div className="h-6 w-6 flex items-center justify-center">
-          <button
+          <DuplicateNodeButton
             className="text-white"
-            onClick={handleDuplicate}
             title="Duplicate container"
-          >
-            <TbCopy />
-          </button>
+          />
         </div>
       )}
     </NodeToolWrapper>

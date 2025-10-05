@@ -302,6 +302,15 @@ export const Background = (props: Partial<ContainerProps>) => {
       )}
     </PaletteProvider>
   );
+
+  // In edit mode with inline tools, set overflow: visible so controls aren't clipped
+  if (enabled && isMounted) {
+    prop.style = {
+      ...(prop.style || {}),
+      overflow: 'visible',
+    };
+  }
+
   applyBackgroundImage(prop, props, settings);
   applyAnimation(prop, props);
 

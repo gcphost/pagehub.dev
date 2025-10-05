@@ -135,10 +135,24 @@ const Input = ({ nodeProps, setProp }) => {
 
       <button
         className="btn p-3 w-full"
-        onClick={() => {
+        onClick={async () => {
           const _buttons = [...buttons];
 
-          _buttons.push({ text: "Button" });
+          // Fetch default icon SVG
+          const defaultIconPath = "/icons/fa/solid/star.svg";
+          let iconSvg = "";
+          try {
+            const response = await fetch(defaultIconPath);
+            iconSvg = await response.text();
+          } catch (error) {
+            console.error("Failed to load default icon:", error);
+          }
+
+          _buttons.push({
+            text: "Button",
+            icon: iconSvg,
+            iconOnly: true
+          });
 
           setAccordion(buttons.length - 1);
 

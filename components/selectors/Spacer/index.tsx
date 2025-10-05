@@ -1,6 +1,7 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
+import { DragAdjustNodeController } from "components/editor/NodeControllers/DragAdjustNodeController";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import {
@@ -14,22 +15,28 @@ import { motionIt, selectAfterAdding } from "utils/lib";
 import { ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { useScrollToSelected } from "../lib";
-import { DividerSettings } from "./DividerSettings";
+import { SpacerSettings } from "./SpacerSettings";
 
-interface DividerProps extends BaseSelectorProps {
-  url?: string;
+interface SpacerProps extends BaseSelectorProps {
+  height?: string;
+  width?: string;
   showName?: string;
 }
 
-const defaultProps: DividerProps = {
+const defaultProps: SpacerProps = {
   className: [],
-  root: {},
-  mobile: {},
+  root: {
+    background: 'bg-transparent',
+  },
+  mobile: {
+    py: 'py-8', // Default height
+    width: 'w-full', // Default width
+  },
   tablet: {},
   desktop: {},
 };
 
-export const Divider = (props: DividerProps) => {
+export const Spacer = (props: SpacerProps) => {
   props = {
     ...defaultProps,
     ...props,
@@ -67,82 +74,75 @@ export const Divider = (props: DividerProps) => {
 
   props = setClonedProps(props, query);
 
-  // If in edit mode and mounted, wrap hr in a minimal container with inline tools
+  // If in edit mode and mounted, wrap div in a container with inline tools
   if (enabled && isMounted) {
     const containerProp: any = {
       ref: (r) => {
         ref.current = r;
         connect(drag(r));
       },
-      // Copy width and alignment classes to wrapper so it has same dimensions as hr
       className: ClassGenerator(props, view, enabled, [], [], preview),
       style: {
         position: 'relative',
-        // In edit mode, override overflow to visible so controls aren't clipped
         overflow: 'visible',
+        minHeight: '20px', // Minimum height so it's always visible
+        border: '1px dashed #ccc', // Dashed border to show it's a spacer
+        borderRadius: '4px',
       },
       "data-bounding-box": enabled,
       "data-empty-state": false,
       "node-id": id,
     };
 
-    // Hr inside gets minimal styling
-    const hrProp: any = {
-      className: '', // No classes needed, wrapper handles it
-    };
-
-    const hr = React.createElement(
-      motionIt(props, "hr"),
-      applyAnimation({ ...hrProp, key: `hr-${id}` }, props)
+    const spacerDiv = React.createElement(
+      motionIt(props, "div"),
+      applyAnimation({
+        key: `spacer-${id}`,
+        style: { minHeight: '20px' }
+      }, props)
     );
 
     return (
       <div {...containerProp}>
-        {hr}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Divider} props={props} />
+        {spacerDiv}
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Spacer} props={props} />
       </div>
     );
   }
 
-  const hrProp: any = {
-    className: ClassGenerator(props, view, enabled, [], [], preview),
-  };
-
-  const hr = React.createElement(
-    motionIt(props, "hr"),
-    applyAnimation({ ...hrProp, key: `hr-${id}` }, props)
-  );
-
-  // In preview mode, just connect to the hr directly
-  const prop: any = {
+  // In preview mode, just render the spacer div
+  const spacerProp: any = {
     ref: (r) => {
       ref.current = r;
       connect(drag(r));
     },
     className: ClassGenerator(props, view, enabled, [], [], preview),
-    style: enabled ? { position: 'relative' } : undefined,
+    style: {
+      minHeight: '20px',
+      ...(enabled ? { position: 'relative' } : {}),
+    },
   };
 
   if (enabled) {
-    prop["data-bounding-box"] = enabled;
-    prop["data-empty-state"] = false;
-    prop["node-id"] = id;
+    spacerProp["data-bounding-box"] = enabled;
+    spacerProp["data-empty-state"] = false;
+    spacerProp["node-id"] = id;
   }
 
   return React.createElement(
-    motionIt(props, "hr"),
-    applyAnimation({ ...prop, key: id }, props)
+    motionIt(props, "div"),
+    applyAnimation({ ...spacerProp, key: id }, props)
   );
 };
 
-Divider.craft = {
-  displayName: "Divider",
+Spacer.craft = {
+  displayName: "Spacer",
   rules: {
     canDrag: () => true,
     canMoveIn: () => false,
   },
   related: {
-    toolbar: DividerSettings,
+    toolbar: SpacerSettings,
   },
   props: {
     tools: (props) => {
@@ -159,7 +159,28 @@ Divider.craft = {
             placement: "start",
           }}
         />,
-        <DeleteNodeController key="dividerDelete" />,
+        <DeleteNodeController key="spacerDelete" />,
+        // Height drag control
+        <DragAdjustNodeController
+          key="spacerHeight"
+          position="bottom"
+          align="end"
+          direction="vertical"
+          propVar="height"
+          styleToUse="height"
+          tooltip="Drag to adjust height"
+        />,
+        // Width drag control
+        <DragAdjustNodeController
+          key="spacerWidth"
+          position="right"
+          align="middle"
+          direction="horizontal"
+          propVar="width"
+          styleToUse="width"
+          gridSnap={12}
+          tooltip="Drag to adjust width"
+        />,
       ];
 
       return [...baseControls];

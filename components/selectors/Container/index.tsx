@@ -250,10 +250,17 @@ export const Container = (props: Partial<ContainerProps>) => {
 
   let tagName = props?.type === "page" ? "article" : "div";
 
-  if (props?.type === "form") tagName = "form";
+  if (props?.type === "form") {
+    // Render as div in edit mode for better drag support, form in preview mode
+    tagName = enabled ? "div" : "form";
+  }
 
   // Add inline controls as children if in edit mode (skip for pages, after hydration)
   if (enabled && props.type !== "page" && isMounted) {
+    prop.style = {
+      ...(prop.style || {}),
+      overflow: 'visible',
+    };
     const originalChildren = prop.children;
     prop.children = (
       <>
@@ -285,6 +292,19 @@ Container.craft = {
   rules: {
     canDrag: () => true,
     canMoveIn: (node, into) => canMoveIn(node, into),
+    /*canMoveOut: (outgoingNodes, currentNode, helpers) => {
+      // Check if this Container is inside a Form
+      const nodeData = helpers.query.node(currentNode.id).get();
+      const parent = nodeData.parent;
+      if (parent) {
+        const parentNode = helpers.query.node(parent).get();
+        // Only prevent moving out if parent is FormDrop (the actual form)
+        if (parentNode.data.type === "FormDrop") {
+          return false;
+        }
+      }
+      return true; // Allow moving out for all other containers
+    }, buggy but we gotta stop forms fromb eing messuspable*/
   },
   related: {
     toolbar: ContainerSettings,

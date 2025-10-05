@@ -18,8 +18,8 @@ export const VideoToolbox = {
         display: "flex",
         overflow: "overflow-hidden",
       }}
-      text={<ToolboxItemDisplay icon={TbVideo} label="Youtube Video" />}
-      custom={{ displayName: "Youtube Video" }}
+      text={<ToolboxItemDisplay icon={TbVideo} label="Video" />}
+      custom={{ displayName: "Video" }}
     />,
   ],
 };

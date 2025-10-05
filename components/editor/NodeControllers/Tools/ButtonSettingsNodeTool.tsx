@@ -1,15 +1,13 @@
 import { NodeToolWrapper } from "components/editor/Tools/NodeDialog";
-import { ColorInput } from "../../Toolbar/Inputs/ColorInput";
-import { AnimatedTooltipButton } from "../../Tools/AnimatedButton";
 import OpenSettingsDialogNodeTool from "./OpenSettingsDialogNodeTool";
 
 export function ButtonSettingsNodeTool() {
   return (
     <NodeToolWrapper>
-      <AnimatedTooltipButton
+      { /* <AnimatedTooltipButton
         content="Color"
         placement="bottom"
-        className="w-8 h-8 rounded-full overflow-hidden  border-gray-500 border"
+        className="w-6 h-6 rounded-md overflow-hidden border-gray-500 border-1"
       >
         <ColorInput
           propKey="color"
@@ -23,7 +21,7 @@ export function ButtonSettingsNodeTool() {
       <AnimatedTooltipButton
         content="Background Color"
         placement="bottom"
-        className="w-8 h-8 rounded-full overflow-hidden  border-gray-500 border"
+        className="w-6 h-6 rounded-md overflow-hidden border-gray-500 border-1"
       >
         <ColorInput
           propKey="background"
@@ -33,6 +31,7 @@ export function ButtonSettingsNodeTool() {
           labelHide={true}
         />
       </AnimatedTooltipButton>
+      */}
       <OpenSettingsDialogNodeTool />
     </NodeToolWrapper>
   );

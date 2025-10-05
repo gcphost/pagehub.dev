@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { SettingsAtom } from "utils/atoms";
 import { waitForFonts } from "utils/fontLoader";
+import { Audio } from "../components/selectors/Audio";
 import { Button, OnlyButtons } from "../components/selectors/Button";
 import { Image } from "../components/selectors/Image";
 import { Video } from "../components/selectors/Video";
@@ -152,6 +153,7 @@ function App({ subdomain, data, meta, seo }) {
       OnlyButtons,
       Button,
       Video,
+      Audio,
       Image,
       Embed,
       Divider,

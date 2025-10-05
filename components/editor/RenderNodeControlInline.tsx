@@ -2,6 +2,50 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 /**
+ * Hook to detect if element is clipped outside the viewport container
+ */
+const useOffScreenDetection = (ref, position) => {
+  const [isOffScreen, setIsOffScreen] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const checkPosition = () => {
+      const viewport = document.getElementById('viewport');
+      if (!viewport) return;
+
+      const rect = ref.current.getBoundingClientRect();
+      const viewportRect = viewport.getBoundingClientRect();
+
+      if (position === "left") {
+        // Check if clipped on the left side of viewport
+        setIsOffScreen(rect.left < viewportRect.left);
+      } else if (position === "right") {
+        // Check if clipped on the right side of viewport
+        setIsOffScreen(rect.right > viewportRect.right);
+      }
+    };
+
+    // Check initially and on scroll/resize
+    checkPosition();
+    const viewport = document.getElementById('viewport');
+    if (viewport) {
+      viewport.addEventListener('scroll', checkPosition);
+    }
+    window.addEventListener('resize', checkPosition);
+
+    return () => {
+      if (viewport) {
+        viewport.removeEventListener('scroll', checkPosition);
+      }
+      window.removeEventListener('resize', checkPosition);
+    };
+  }, [ref, position]);
+
+  return isOffScreen;
+};
+
+/**
  * RenderNodeControlInline - Simplified version of RenderNodeControl
  * that uses CSS positioning instead of calculating positions.
  * 
@@ -27,6 +71,7 @@ export const RenderNodeControlInline = ({
 }) => {
   const ref = useRef(null);
   const [position, setPosition] = useState(initialPosition);
+  const isOffScreen = useOffScreenDetection(ref, position);
   const [align, setAlign] = useState(initialAlign);
   const [placement, setPlacement] = useState(initialPlacement);
 
@@ -112,19 +157,37 @@ export const RenderNodeControlInline = ({
     }
   } else if (position === "left") {
     if (isPadding) {
-      positionStyles.left = SPACING.INSIDE_PADDING;
+      if (isOffScreen) {
+        positionStyles.left = '46px';
+      } else {
+        positionStyles.left = SPACING.INSIDE_PADDING;
+      }
     } else {
-      positionStyles.right = '100%';
-      positionStyles.left = 'auto';
-      positionStyles.marginRight = '4px';
+      if (isOffScreen) {
+        // If clipped, position inside the gray padding area
+        positionStyles.left = '2px';
+        positionStyles.right = 'auto';
+      } else {
+        // Normal position outside to the left
+        positionStyles.right = '100%';
+        positionStyles.left = 'auto';
+        positionStyles.marginRight = '4px';
+      }
     }
   } else if (position === "right") {
     if (isPadding) {
       positionStyles.right = SPACING.INSIDE_PADDING;
     } else {
-      positionStyles.left = '100%';
-      positionStyles.right = 'auto';
-      positionStyles.marginLeft = '4px';
+      if (isOffScreen) {
+        // If clipped, position inside the gray padding area
+        positionStyles.right = '2px';
+        positionStyles.left = 'auto';
+      } else {
+        // Normal position outside to the right
+        positionStyles.left = '100%';
+        positionStyles.right = 'auto';
+        positionStyles.marginLeft = '4px';
+      }
     }
   }
 
@@ -166,6 +229,7 @@ export const RenderNodeControlInline = ({
       ref={ref}
       {...animate}
       className={`${className} pointer-events-auto`}
+      data-node-control="true"
       style={{
         ...positionStyles,
         // Reset/lock styles to prevent inheritance from parent

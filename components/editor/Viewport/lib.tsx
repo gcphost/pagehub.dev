@@ -399,6 +399,12 @@ export const deleteNode = async (query, actions, active, settings) => {
 
   removeHasManyRelation(node, query, actions);
 
+  // Check if node has a parent (not a root node)
+  if (!node.data.parent) {
+    console.warn("Cannot delete root node:", selected);
+    return;
+  }
+
   const theParent = query.node(node.data.parent).get();
   const index = theParent.data.nodes.indexOf(active);
 

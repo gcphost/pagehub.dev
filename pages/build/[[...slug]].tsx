@@ -1,4 +1,5 @@
 import { Editor, Element, Frame } from "@craftjs/core";
+import CustomEventHandlers from "components/editor/CustomEventHandlers";
 import { ColorPickerDialog } from "components/editor/Toolbar/Tools/ColorPickerDialog";
 import { FontFamilyDialog } from "components/editor/Toolbar/Tools/FontFamilyDialog";
 import { IconDialogDialog } from "components/editor/Toolbar/Tools/IconDialog";
@@ -8,6 +9,7 @@ import { Background } from "components/selectors/Background";
 import { Container } from "components/selectors/Container";
 import { Divider } from "components/selectors/Divider";
 import { Embed } from "components/selectors/Embed";
+import { Spacer } from "components/selectors/Spacer";
 import { OnlyText, Text } from "components/selectors/Text";
 import debounce from "lodash.debounce";
 import lz from "lzutf8";
@@ -30,6 +32,7 @@ import { Form, FormDrop } from "components/selectors/Form";
 import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
 import { useEffect } from "react";
 import { Save } from "../../components/Save";
+import { Audio } from "../../components/selectors/Audio";
 import { Button, OnlyButtons } from "../../components/selectors/Button";
 import { Image } from "../../components/selectors/Image";
 import { Video } from "../../components/selectors/Video";
@@ -84,9 +87,11 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
     OnlyButtons,
     Button,
     Video,
+    Audio,
     Image,
     Embed,
     Divider,
+    Spacer,
     SavedComponentLoader,
   };
 
@@ -106,6 +111,11 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
         resolver={editorComponents}
         enabled={true}
         onRender={RenderNodeNewer}
+        handlers={(store) => new CustomEventHandlers({
+          store,
+          isMultiSelectEnabled: () => false,
+          removeHoverOnMouseleave: true
+        })}
         indicator={{
           success: "currentColor",
           error: "rgb(153 27 27)",

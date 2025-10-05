@@ -20,6 +20,7 @@ import { SettingsAtom } from "utils/atoms";
 import dbConnect from "utils/dbConnect";
 import { waitForFonts } from "utils/fontLoader";
 import { loadTenantByDomain, runTenantWebhook } from "utils/tenantUtils";
+import { Audio } from "../../components/selectors/Audio";
 import { Button, OnlyButtons } from "../../components/selectors/Button";
 import { Image } from "../../components/selectors/Image";
 import { Video } from "../../components/selectors/Video";
@@ -154,6 +155,7 @@ function App({ subdomain, data, meta, seo }) {
       OnlyButtons,
       Button,
       Video,
+      Audio,
       Image,
       Embed,
       Divider,

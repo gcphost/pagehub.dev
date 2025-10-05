@@ -20,7 +20,7 @@ export const ProximityHover = () => {
 
     let rafId: number;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const checkProximity = (e: MouseEvent | DragEvent) => {
       if (rafId) cancelAnimationFrame(rafId);
 
       rafId = requestAnimationFrame(() => {
@@ -45,10 +45,13 @@ export const ProximityHover = () => {
       });
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
+    // Listen to both mousemove (normal) and dragover (during drag)
+    document.addEventListener("mousemove", checkProximity as EventListener);
+    document.addEventListener("dragover", checkProximity as EventListener);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mousemove", checkProximity as EventListener);
+      document.removeEventListener("dragover", checkProximity as EventListener);
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, [dom, isContainer]);

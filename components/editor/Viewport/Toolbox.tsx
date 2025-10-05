@@ -20,6 +20,7 @@ import {
   iconVariants,
   subMenuItemVariants,
 } from "./Toolbox/animations";
+import { AudioToolbox } from "./Toolbox/audioComponents";
 import { ButtonToolbox } from "./Toolbox/buttonComponents";
 import { DividerToolbox } from "./Toolbox/dividerComponents";
 import { EmbedToolbox } from "./Toolbox/embedComponents";
@@ -28,6 +29,7 @@ import { FormElementToolbox } from "./Toolbox/formElement";
 import { ImageToolbox } from "./Toolbox/imageComponents";
 import { pageToolboxItems } from "./Toolbox/pageComponents";
 import { sectionToolboxItems } from "./Toolbox/sectionComponents";
+import { SpacerToolbox } from "./Toolbox/spacerComponents";
 import { textToolboxItems } from "./Toolbox/textComponents";
 import { VideoToolbox } from "./Toolbox/videoComponents";
 import {
@@ -123,9 +125,11 @@ export const Toolbox = ({ userStyle = null }) => {
         ButtonToolbox,
         ImageToolbox,
         VideoToolbox,
+        AudioToolbox,
         FormToolbox,
         FormElementToolbox,
         DividerToolbox,
+        SpacerToolbox,
         EmbedToolbox,
       ],
     },

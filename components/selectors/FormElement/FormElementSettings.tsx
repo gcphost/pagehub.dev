@@ -1,6 +1,3 @@
-import { TabBody } from "components/editor/Toolbar/Tab";
-import { BiPaint } from "react-icons/bi";
-
 import { useEditor } from "@craftjs/core";
 import { ToolboxMenu } from "components/editor/RenderNode";
 import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
@@ -18,8 +15,11 @@ import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SpacingInput } from "components/editor/Toolbar/Inputs/SpacingInput";
 import { TypeInput } from "components/editor/Toolbar/Inputs/TypeInput";
+import { SelectOptionsItem } from "components/editor/Toolbar/Items/SelectOptionsItem";
+import { TabBody } from "components/editor/Toolbar/Tab";
 import { TabAtom } from "components/editor/Viewport";
 import { useEffect } from "react";
+import { BiPaint } from "react-icons/bi";
 import { BsInputCursorText } from "react-icons/bs";
 import { MdStyle } from "react-icons/md";
 import { TbBoxPadding, TbMouse, TbPlayerPlay } from "react-icons/tb";
@@ -33,7 +33,11 @@ export const FormElementSettings = () => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
 
-  useEffect(() => setMenu({ enabled: false }), []);
+  // Get the current field type using query instead of useNode
+  const selected = query.getEvent("selected").first();
+  const fieldType = selected ? query.node(selected).get().data.props?.type || "" : "";
+
+  useEffect(() => setMenu({ enabled: false }), [setMenu]);
 
   const head = [
     {
@@ -91,6 +95,24 @@ export const FormElementSettings = () => {
           <IpsumGenerator propKey="placeholder" propType="component" />
         </ToolbarSection>
       </ToolbarSection>
+
+      {fieldType === "select" && (
+        <ToolbarSection
+          title="Select Options"
+          help="Manage options for select dropdowns"
+        >
+          <SelectOptionsItem
+            propKey="options"
+            propType="component"
+            type="custom"
+            label="Options"
+            labelHide={false}
+          />
+        </ToolbarSection>
+      )}
+
+
+
       <ToolbarSection
         title="Field Type"
         help="Each type will produce a different input, the most common are text, textarea, and email."
@@ -107,6 +129,104 @@ export const FormElementSettings = () => {
           ))}
         </ToolbarItem>
       </ToolbarSection>
+
+      <ToolbarSection
+        title="Field Properties"
+        help="Additional properties for form elements"
+        full={2}
+      >
+        <ToolbarItem
+          propKey="required"
+          propType="component"
+          type="checkbox"
+          label="Required"
+          labelHide={true}
+        />
+        <ToolbarItem
+          propKey="disabled"
+          propType="component"
+          type="checkbox"
+          label="Disabled"
+          labelHide={true}
+        />
+        <ToolbarItem
+          propKey="readOnly"
+          propType="component"
+          type="checkbox"
+          label="Read Only"
+          labelHide={true}
+        />
+      </ToolbarSection>
+
+      {fieldType === "textarea" && (
+        <ToolbarSection
+          title="Textarea Settings"
+          help="Settings specific to textarea elements"
+        >
+          <ToolbarItem
+            propKey="rows"
+            propType="component"
+            type="number"
+            label="Rows"
+            labelHide={true}
+            placeholder="4"
+            min={1}
+            max={20}
+          />
+          <ToolbarItem
+            propKey="cols"
+            propType="component"
+            type="number"
+            label="Columns"
+            labelHide={true}
+            placeholder="50"
+            min={1}
+            max={200}
+          />
+        </ToolbarSection>
+      )}
+
+      {["number", "range", "date", "datetime-local", "time", "month", "week"].includes(fieldType) && (
+        <ToolbarSection
+          title="Input Settings"
+          help="Settings for input elements"
+        >
+          <ToolbarItem
+            propKey="min"
+            propType="component"
+            type="text"
+            label="Min Value"
+            labelHide={true}
+            placeholder="Minimum value"
+          />
+          <ToolbarItem
+            propKey="max"
+            propType="component"
+            type="text"
+            label="Max Value"
+            labelHide={true}
+            placeholder="Maximum value"
+          />
+          <ToolbarItem
+            propKey="step"
+            propType="component"
+            type="text"
+            label="Step"
+            labelHide={true}
+            placeholder="Step value"
+          />
+          <ToolbarItem
+            propKey="pattern"
+            propType="component"
+            type="text"
+            label="Pattern"
+            labelHide={true}
+            placeholder="Regex pattern"
+          />
+        </ToolbarSection>
+      )}
+
+
     </TabBody>
   );
 

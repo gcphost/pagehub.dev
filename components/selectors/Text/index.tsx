@@ -1,6 +1,7 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { AutoTextSize } from "auto-text-size";
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
+import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
 import {
@@ -220,6 +221,7 @@ if (text && typeof window !== "undefined") {
     prop.style = {
       ...(prop.style || {}),
       position: 'relative',
+      overflow: 'visible',
     };
 
     if (prop.dangerouslySetInnerHTML) {
@@ -268,7 +270,7 @@ Text.craft = {
         //   placement="start"
         //   alt={{
         //     position: "top",
-        //     align: "end",
+        //     align="end",
         //     placement: "start",
         //   }}
         // />,
@@ -285,6 +287,7 @@ Text.craft = {
         //   }}
         // />,
 
+        <DeleteNodeController key="textDelete" />,
         <ToolNodeController position="bottom" align="start" key="textSettings">
           <TextSettingsNodeTool />
         </ToolNodeController>,

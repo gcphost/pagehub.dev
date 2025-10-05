@@ -2,6 +2,7 @@ import throttle from "lodash.throttle";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { ComponentsAtom } from "utils/lib";
+import { AudioToolbox } from "./Toolbox/audioComponents";
 import { ButtonToolbox } from "./Toolbox/buttonComponents";
 import { DividerToolbox } from "./Toolbox/dividerComponents";
 import { EmbedToolbox } from "./Toolbox/embedComponents";
@@ -11,6 +12,7 @@ import { ImageToolbox } from "./Toolbox/imageComponents";
 import { pageToolboxItems } from "./Toolbox/pageComponents";
 import { SavedComponentsToolbox } from "./Toolbox/savedComponents";
 import { sectionToolboxItems } from "./Toolbox/sectionComponents";
+import { SpacerToolbox } from "./Toolbox/spacerComponents";
 import { TextToolbox } from "./Toolbox/textComponents";
 import { VideoToolbox } from "./Toolbox/videoComponents";
 
@@ -20,8 +22,10 @@ const baseItems = [
     content: [
       ...TextToolbox.content,
       ...ButtonToolbox.content,
-      ...sectionToolboxItems[0].content, // Layout (Row, Column)
       ...DividerToolbox.content,
+      ...SpacerToolbox.content,
+      ...sectionToolboxItems[0].content, // always last
+
     ],
   },
   {
@@ -29,6 +33,7 @@ const baseItems = [
     content: [
       ...ImageToolbox.content,
       ...VideoToolbox.content,
+      ...AudioToolbox.content,
     ],
   },
   {

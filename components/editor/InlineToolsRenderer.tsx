@@ -53,6 +53,7 @@ export const InlineToolsRenderer = ({ craftComponent, props: selectorProps }) =>
         }}
         style={{
           zIndex: 9999,
+          overflow: 'visible', // Allow controls to position outside the element
           // Reset styles to prevent inheritance
           fontSize: '14px',
           fontFamily: 'system-ui, -apple-system, sans-serif',

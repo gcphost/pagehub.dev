@@ -600,7 +600,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
     desktop: [
       enabled
-        ? "flex h-screen overflow-hidden flex-row w-full bg-gray-200 w-screen absolute top-0 left-0 right-0 bottom-0"
+        ? "flex h-screen overflow-hidden flex-row w-full w-screen absolute top-0 left-0 right-0 bottom-0"
         : "",
       enabled ? "w-full overflow-hidden" : "w-screen h-screen overflow-auto",
     ],
@@ -609,7 +609,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
   let viewClasses = {
     mobile: [
       `flex h-screen overflow-hidden flex-row mx-auto w-${enabled ? "[380px]" : "screen"
-      } mx-auto bg-gray-200`,
+      } mx-auto `,
       enabled
         ? "w-full my-6 rounded-lg overflow-auto scrollbar-light bg-white"
         : "w-screen h-screen overflow-auto",
@@ -620,7 +620,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
         ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen`
         : "w-screen",
       enabled
-        ? "w-full m-1 relative overflow-auto scrollbar-light bg-white  border-l-0"
+        ? "w-full m-1 relative overflow-auto scrollbar-light bg-white"
         : "w-screen h-screen overflow-show",
     ],
   };
@@ -641,8 +641,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
   return (
     <div
       data-container={true}
-      className={`flex h-screen overflow-hidden flex-row w-full ${enabled && "bg-gray-200"
-        }`}
+      className={`flex h-screen overflow-visible flex-row w-full px-4`}
     >
       {!enabled && !screenshot && (
         <div className="absolute right-12 top-12 z-50">

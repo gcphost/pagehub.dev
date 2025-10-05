@@ -28,6 +28,7 @@ export const inputTypes = [
   "datetime-local",
   "radio",
   "checkbox",
+  "select",
   "reset",
   "hidden",
   "color",
@@ -71,18 +72,47 @@ export interface FormElementProps extends BaseSelectorProps {
   placeholder?: string;
   name?: string;
   required?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  rows?: number;
+  cols?: number;
+  min?: string;
+  max?: string;
+  step?: string;
+  pattern?: string;
+  options?: Array<{ value: string; label: string; disabled?: boolean }>;
   invalid?: boolean;
 }
 
 const defaultProps: FormElementProps = {
-  root: {},
+  root: {
+    border: 'border',
+    borderColor: 'border-gray-300',
+    radius: 'rounded-md',
+    background: 'bg-white',
+    color: 'text-gray-900',
+  },
+  mobile: {
+    px: 'px-4',
+    py: 'py-2',
+    width: 'w-full',
+  },
   tablet: {},
-  mobile: {},
   desktop: {},
   canDelete: true,
   type: "",
   placeholder: "",
   name: "",
+  required: false,
+  disabled: false,
+  readOnly: false,
+  rows: 4,
+  cols: 50,
+  min: "",
+  max: "",
+  step: "",
+  pattern: "",
+  options: [],
 };
 
 export const FormElement = (props: Partial<FormElementProps>) => {
@@ -116,6 +146,15 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     type: props.type,
     placeholder: props.placeholder,
     name: props.name,
+    disabled: props.disabled,
+    readOnly: props.readOnly,
+    rows: props.rows,
+    cols: props.cols,
+    min: props.min,
+    max: props.max,
+    step: props.step,
+    pattern: props.pattern,
+    defaultValue: "", // Add defaultValue to make it uncontrolled
     "aria-label": props.placeholder || props.name || `${props.type || 'text'} input`,
     ...(props.type === "email" && { "aria-describedby": "email-desc" }),
     ...(props.type === "tel" && { "aria-describedby": "tel-desc" }),
@@ -142,21 +181,71 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     prop["node-id"] = id;
   }
 
-  // Add inline tools renderer in edit mode (after hydration)
+  const tagName = prop.type === "textarea" ? "textarea" : prop.type === "select" ? "select" : "input";
+
+  // If in edit mode and mounted, wrap in a container with inline tools
+  // Input elements are void elements and can't have children
   if (enabled && isMounted) {
-    const originalChildren = prop.children;
-    prop.children = (
-      <>
-        {originalChildren}
+    // Remove ref from prop since we'll apply it to the wrapper instead
+    const { ref: _, ...formElementProp } = prop;
+
+    // For select elements, add options as children
+    let children = undefined;
+    if (tagName === "select" && props.options) {
+      children = props.options.map((option, index) =>
+        React.createElement("option", {
+          key: index,
+          value: option.value,
+          disabled: option.disabled
+        }, option.label)
+      );
+    }
+
+    const formElement = React.createElement(
+      motionIt(props, tagName),
+      applyAnimation({ ...formElementProp, key: `formelement-${id}-${tagName}`, children }, props)
+    );
+
+    const containerProp: any = {
+      ref: (r) => connect(drag(r)),
+      style: {
+        position: 'relative',
+        overflow: 'visible',
+        display: 'inline-block', // Maintain inline nature of form elements
+        width: '100%', // Take full width like the input would
+      },
+      "data-bounding-box": enabled,
+      "data-empty-state": false,
+      "node-id": id,
+    };
+
+    return (
+      <div {...containerProp}>
+        {formElement}
         <InlineToolsRenderer key={`tools-${id}`} craftComponent={FormElement} props={props} />
-      </>
+      </div>
     );
   }
 
-  return React.createElement(
-    motionIt(props, prop.type === "textarea" ? "textarea" : "input"),
-    applyAnimation({ ...prop, key: id }, props)
+  // Create the form element with ref for preview mode
+  // For select elements, add options as children
+  let children = undefined;
+  if (tagName === "select" && props.options) {
+    children = props.options.map((option, index) =>
+      React.createElement("option", {
+        key: index,
+        value: option.value,
+        disabled: option.disabled
+      }, option.label)
+    );
+  }
+
+  const formElement = React.createElement(
+    motionIt(props, tagName),
+    applyAnimation({ ...prop, key: `${id}-${tagName}`, children }, props)
   );
+
+  return formElement;
 };
 
 FormElement.craft = {

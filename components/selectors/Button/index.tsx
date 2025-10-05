@@ -1,6 +1,7 @@
 import { useEditor, useNode, UserComponent } from "@craftjs/core";
 
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
+import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
@@ -140,6 +141,8 @@ const defaultProps: ButtonProps = {
   className: [],
   root: {},
   mobile: {},
+  canDelete: true,
+  canEditName: true,
 };
 
 export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
@@ -244,7 +247,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       ]
         .filter((_) => _)
         .join(" ")}
-      style={enabled ? { position: 'relative' } : undefined}
+      style={enabled ? { position: 'relative', overflow: 'visible' } : undefined}
     >
       {enabled && isMounted && <InlineToolsRenderer key={`tools-${id}`} craftComponent={Button} props={props} />}
       {props?.buttons?.map((but, key) => {
@@ -474,8 +477,9 @@ Button.craft = {
           }}
         />,
 
+        <DeleteNodeController key="buttonDelete" />,
         <ToolNodeController
-          position="bottom"
+          position="top"
           align="start"
           key="buttonSettingsController"
         >

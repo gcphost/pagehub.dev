@@ -1,5 +1,7 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
+import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
+import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
@@ -37,6 +39,8 @@ const defaultProps: VideoProps = {
   mobile: {},
   tablet: {},
   desktop: {},
+  canDelete: true,
+  canEditName: true,
 };
 
 export const Video = (props: VideoProps) => {
@@ -49,6 +53,10 @@ export const Video = (props: VideoProps) => {
     connectors: { connect, drag },
     id,
   } = useNode();
+
+  const { name } = useNode((node) => ({
+    name: node.data.custom.displayName || node.data.displayName,
+  }));
 
   const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
@@ -101,6 +109,10 @@ export const Video = (props: VideoProps) => {
 
   // Add inline tools renderer in edit mode (after hydration)
   if (enabled && isMounted) {
+    prop.style = {
+      ...(prop.style || {}),
+      overflow: 'visible',
+    };
     const originalChildren = prop.children;
     prop.children = (
       <>
@@ -130,7 +142,18 @@ Video.craft = {
           placement="start"
           key="videoNameController"
         />,
-
+        <HoverNodeController
+          key="videoHoverController"
+          position="top"
+          align="start"
+          placement="end"
+          alt={{
+            position: "bottom",
+            align: "start",
+            placement: "start",
+          }}
+        />,
+        <DeleteNodeController key="videoDelete" />,
         <ToolNodeController
           position="bottom"
           align="start"
