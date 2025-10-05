@@ -11,6 +11,8 @@ const useOffScreenDetection = (ref, position) => {
     if (!ref.current) return;
 
     const checkPosition = () => {
+      if (!ref.current) return;
+
       const viewport = document.getElementById('viewport');
       if (!viewport) return;
 
@@ -153,7 +155,6 @@ export const RenderNodeControlInline = ({
       // Labels/tools: position outside, align TOP of control to bottom of element
       positionStyles.top = '100%';
       positionStyles.bottom = 'auto';
-      positionStyles.marginTop = '4px'; // Small gap between control and element
     }
   } else if (position === "left") {
     if (isPadding) {
@@ -201,9 +202,11 @@ export const RenderNodeControlInline = ({
       positionStyles.left = SPACING.HORIZONTAL_INSET;
       positionStyles.right = 'auto';
     } else if (align === "middle") {
-      // CENTER
-      positionStyles.left = '50%';
-      positionStyles.transform = 'translateX(-50%)';
+      // CENTER - use flex instead of transform to avoid conflicts with animations
+      positionStyles.left = 0;
+      positionStyles.right = 0;
+      positionStyles.display = 'flex';
+      positionStyles.justifyContent = 'center';
     } else if (align === "end") {
       // RIGHT side
       positionStyles.right = SPACING.HORIZONTAL_INSET;
@@ -215,9 +218,11 @@ export const RenderNodeControlInline = ({
       // TOP
       positionStyles.top = SPACING.HORIZONTAL_INSET;
     } else if (align === "middle") {
-      // CENTER
-      positionStyles.top = '50%';
-      positionStyles.transform = 'translateY(-50%)';
+      // CENTER - use flex instead of transform to avoid conflicts with animations
+      positionStyles.top = 0;
+      positionStyles.bottom = 0;
+      positionStyles.display = 'flex';
+      positionStyles.alignItems = 'center';
     } else if (align === "end") {
       // BOTTOM
       positionStyles.bottom = SPACING.HORIZONTAL_INSET;
@@ -228,10 +233,12 @@ export const RenderNodeControlInline = ({
     <motion.div
       ref={ref}
       {...animate}
-      className={`${className} pointer-events-auto`}
+      className={`${className}`}
       data-node-control="true"
       style={{
         ...positionStyles,
+        // Wrapper has pointer-events-none, children must set pointer-events-auto themselves
+        pointerEvents: 'none',
         // Reset/lock styles to prevent inheritance from parent
         fontSize: '14px',
         fontFamily: 'system-ui, -apple-system, sans-serif',

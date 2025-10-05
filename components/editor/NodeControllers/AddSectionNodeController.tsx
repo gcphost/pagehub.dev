@@ -3,11 +3,10 @@ import { Container } from "components/selectors/Container";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { TbPlus } from "react-icons/tb";
-import { useSetRecoilState } from "recoil";
-import { ToolboxMenu } from "../RenderNode";
+import { useIsInlineRender } from "../InlineRenderContext";
 import RenderNodeControl from "../RenderNodeControl";
-import { TbActiveItemAtom, TbActiveMenuAtom } from "../Viewport/atoms";
-import { AddElement, SelectedNodeAtom } from "../Viewport/Toolbox/lib";
+import RenderNodeControlInline from "../RenderNodeControlInline";
+import { AddElement } from "../Viewport/Toolbox/lib";
 import { useMousePosition } from "./lib";
 import { SectionPickerDialog } from "./SectionPickerDialog";
 
@@ -28,9 +27,10 @@ export const AddSectionNodeController = (props: { position; align }) => {
 
   const [showSectionPicker, setShowSectionPicker] = useState(false);
 
-  const setActiveMenu = useSetRecoilState(TbActiveMenuAtom);
-  const setActiveItem = useSetRecoilState(TbActiveItemAtom);
-  const setSelectedNode = useSetRecoilState(SelectedNodeAtom);
+  // Detect if we're being rendered inline (directly as child) vs through tools
+  const isInlineRender = useIsInlineRender();
+  const ControlComponent = isInlineRender ? RenderNodeControlInline : RenderNodeControl;
+
 
   const { parent, currentNodeType } = useNode((node) => ({
     parent: node.data.parent,
@@ -47,8 +47,6 @@ export const AddSectionNodeController = (props: { position; align }) => {
   if (currentNodeType === "page") type = "Page";
   // For sections inside pages
   if (propType === "page") type = "Section";
-
-  const setMenu = useSetRecoilState(ToolboxMenu);
 
   // Only show if this is a page or inside a page container
   if (!type) return null;
@@ -94,12 +92,14 @@ export const AddSectionNodeController = (props: { position; align }) => {
       {/* Button only shows when hovering near bottom */}
       {isHover && isInBottomOrRight && (
         <AnimatePresence>
-          <RenderNodeControl
+          <ControlComponent
             position={position}
             placement="middle"
             align={align}
             className={
-              "whitespace-nowrap fixed items-center justify-center select-none cursor-pointer pointer-events-auto"
+              isInlineRender
+                ? "whitespace-nowrap items-center justify-center select-none cursor-pointer pointer-events-auto"
+                : "whitespace-nowrap fixed items-center justify-center select-none cursor-pointer pointer-events-auto"
             }
             animate={{
               initial: { opacity: 0, y: 2 },
@@ -134,7 +134,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
             <motion.button
               ref={ref}
               className={
-                "border btn text-white rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base"
+                "border btn text-white rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base pointer-events-auto"
               }
               style={{
                 willChange: 'transform',
@@ -207,7 +207,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
             >
               <TbPlus /> Add {type}
             </motion.button>
-          </RenderNodeControl>
+          </ControlComponent>
         </AnimatePresence>
       )}
     </>

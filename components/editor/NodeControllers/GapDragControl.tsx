@@ -141,6 +141,8 @@ export const GapDragControl = () => {
         // Update the control position to follow the gap center - use locked childIndex
         const children = Array.from(dom.children).filter((child) => {
           const el = child as HTMLElement;
+          // Skip node controls (they have data-node-control attribute)
+          if (el.hasAttribute && el.hasAttribute('data-node-control')) return false;
           return el.offsetParent !== null || el.tagName === 'BODY';
         }) as HTMLElement[];
 
@@ -206,9 +208,11 @@ export const GapDragControl = () => {
 
       rafId = requestAnimationFrame(() => {
         const rect = dom.getBoundingClientRect();
-        // Filter out non-visible children (like portals, scripts, etc)
+        // Filter out non-visible children (like portals, scripts, etc) and node controls
         const children = Array.from(dom.children).filter((child) => {
           const el = child as HTMLElement;
+          // Skip node controls (they have data-node-control attribute)
+          if (el.hasAttribute && el.hasAttribute('data-node-control')) return false;
           return el.offsetParent !== null || el.tagName === 'BODY';
         }) as HTMLElement[];
 
@@ -389,7 +393,7 @@ export const GapDragControl = () => {
     <AnimatePresence mode="wait">
       {shouldShow && (
         <>
-          {/* Gap area visualization overlay */}
+          {/* Gap area visualization overlay with centered button */}
           {gapHoverInfo.gapRect && (
             <motion.div
               key={`gap-overlay-${id}-${gapHoverInfo.childIndex}`}
@@ -397,78 +401,48 @@ export const GapDragControl = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
+              className="fixed flex items-center justify-center border border-dashed border-blue-300/70 bg-blue-300/35"
               style={{
-                position: "fixed",
                 left: gapHoverInfo.gapRect.x,
                 top: gapHoverInfo.gapRect.y,
                 width: gapHoverInfo.gapRect.width,
                 height: gapHoverInfo.gapRect.height,
-                backgroundColor: "rgba(147, 176, 255, 0.35)", // Blue for gaps
-                border: "1px dashed rgba(147, 176, 255, 0.7)",
-                pointerEvents: "none",
                 zIndex: 9998,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
               }}
             >
+              {/* Drag button - centered via flex */}
+              <Tooltip content="Drag to adjust gap" placement="right">
+                <motion.button
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
+                  exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
+                  whileHover={{ scale: 1.3, transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 1.3 }}
+                  className={`drag-control ${gapHoverInfo.direction === "horizontal" ? "w-8 h-2" : "w-2 h-8"}`}
+                  style={{
+                    pointerEvents: "auto",
+                    color: elementColor || undefined,
+                    willChange: 'transform',
+                    backfaceVisibility: 'hidden',
+                    WebkitFontSmoothing: 'antialiased',
+                  }}
+                  onMouseDown={handleMouseDown}
+                  aria-label="Drag to adjust gap"
+                />
+              </Tooltip>
+
+              {/* Pixel count - positioned absolute at right edge, vertically centered */}
               <motion.span
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.1, duration: 0.15 }}
-                style={{
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  color: "#1e40af",
-                  backgroundColor: "rgba(255, 255, 255, 0.9)",
-                  padding: "2px 6px",
-                  borderRadius: "3px",
-                  border: "1px solid rgba(147, 176, 255, 0.7)",
-                  fontFamily: "system-ui, -apple-system, sans-serif",
-                  pointerEvents: "none",
-                  userSelect: "none",
-                }}
+                className="absolute right-1 text-xs font-semibold text-blue-900 bg-white/90 border-blue-300/70 px-1.5 py-0.5 rounded border pointer-events-none select-none font-sans"
+                style={{ top: '50%', transform: 'translateY(-50%)' }}
               >
                 {Math.round(gapHoverInfo.currentGap)}px
               </motion.span>
             </motion.div>
           )}
-
-          {/* Gap drag control button */}
-          <motion.div
-            key={`gap-${id}-${gapHoverInfo.childIndex}`}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
-            exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
-            style={{
-              position: "fixed",
-              left: gapHoverInfo.x,
-              top: gapHoverInfo.y,
-              transform: "translate(-50%, -50%)",
-              zIndex: 1000,
-              pointerEvents: "auto",
-              color: elementColor || undefined,
-            }}
-          >
-            <Tooltip content="Drag to adjust gap" placement="right">
-              <motion.button
-                whileHover={{
-                  scale: 1.3,
-                  transition: { duration: 0.2 },
-                }}
-                whileTap={{ scale: 1.3 }}
-                className={`drag-control group ${gapHoverInfo.direction === "horizontal" ? "w-8 h-2" : "w-2 h-8"
-                  }`}
-                style={{
-                  willChange: 'transform',
-                  backfaceVisibility: 'hidden',
-                  WebkitFontSmoothing: 'antialiased',
-                }}
-                onMouseDown={handleMouseDown}
-                aria-label="Drag to adjust gap"
-              />
-            </Tooltip>
-          </motion.div>
         </>
       )}
     </AnimatePresence>,

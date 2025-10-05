@@ -270,21 +270,21 @@ export const ContainerSettings = () => {
         <ToolbarSection full={2}>
           <PresetInput
             presets={presetWidth}
-            label="Preset Width"
+            label="Width"
             type="slider"
           />
 
           <PresetInput
             presets={presetMaxWidth}
             propKey="presetMaxWidth"
-            label="Preset Max Width"
+            label="Max Width"
             type="slider"
           />
         </ToolbarSection>
         <PresetInput
           presets={presetPadding}
           propKey="presetPadding"
-          label="Preset Padding"
+          label="Padding"
           type="slider"
         />
       </ToolbarSection>

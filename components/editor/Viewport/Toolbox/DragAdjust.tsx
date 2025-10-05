@@ -197,7 +197,7 @@ function DragAdjust({
         className={`drag-control group ${className} ${isPadding
           ? direction === "vertical" ? "w-7 h-[3px]" : "w-[3px] h-7"
           : direction === "vertical" ? "w-9 h-1.5" : "w-1.5 h-9"
-          }`}
+          } pointer-events-auto`}
         style={{
           willChange: 'transform',
           backfaceVisibility: 'hidden',

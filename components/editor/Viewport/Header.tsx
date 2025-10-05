@@ -558,7 +558,18 @@ export const Header = () => {
                   ) : null}
 
 
-
+                  <button
+                    onClick={() => {
+                      setIsMediaManagerModalOpen(true);
+                      setShowMenu(false);
+                    }}
+                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                  >
+                    <div className="text-2xl">
+                      <TbPhoto />
+                    </div>
+                    <div className="">Media Manager</div>
+                  </button>
 
 
                   <button
@@ -574,18 +585,7 @@ export const Header = () => {
                     <div className="">Color Palette</div>
                   </button>
 
-                  <button
-                    onClick={() => {
-                      setIsMediaManagerModalOpen(true);
-                      setShowMenu(false);
-                    }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
-                  >
-                    <div className="text-2xl">
-                      <TbPhoto />
-                    </div>
-                    <div className="">Media Manager</div>
-                  </button>
+
 
                   <button
                     onClick={() => {

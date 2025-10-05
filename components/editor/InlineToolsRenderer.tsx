@@ -7,10 +7,25 @@ import { InlineRenderContext } from "./InlineRenderContext";
  * instead of using portals. This eliminates position calculation lag.
  * 
  * Usage in selectors:
- * const toolsRenderer = <InlineToolsRenderer craftComponent={Container} props={props} />
- * Then include {toolsRenderer} as a child of your element
+ * 1. With craft config (requires selection):
+ *    <InlineToolsRenderer craftComponent={Container} props={props} />
+ * 
+ * 2. Always visible with custom children:
+ *    <InlineToolsRenderer alwaysVisible>
+ *      <AddSectionNodeController position="bottom" align="middle" />
+ *    </InlineToolsRenderer>
  */
-export const InlineToolsRenderer = ({ craftComponent, props: selectorProps }) => {
+export const InlineToolsRenderer = ({
+  craftComponent,
+  props: selectorProps,
+  alwaysVisible = false,
+  children
+}: {
+  craftComponent?: any;
+  props?: any;
+  alwaysVisible?: boolean;
+  children?: React.ReactNode;
+}) => {
   const { id } = useNode();
   const { enabled, isActive } = useEditor((state, query) => ({
     enabled: state.options.enabled,
@@ -28,12 +43,17 @@ export const InlineToolsRenderer = ({ craftComponent, props: selectorProps }) =>
     [craftComponent, selectorProps]
   );
 
-  // Don't render if not in edit mode, not selected, or on server
-  if (!enabled || !isClient || !isActive) {
+  // Don't render if not in edit mode or on server
+  if (!enabled || !isClient) {
     return null;
   }
 
-  if (tools.length === 0) {
+  // Determine what to show based on selection state
+  const showTools = isActive && tools.length > 0;
+  const showChildren = alwaysVisible || isActive;
+
+  // Don't render if nothing to show
+  if (!showTools && !showChildren) {
     return null;
   }
 
@@ -43,6 +63,7 @@ export const InlineToolsRenderer = ({ craftComponent, props: selectorProps }) =>
         className="absolute inset-0 pointer-events-none"
         contentEditable={false}
         suppressContentEditableWarning={true}
+        data-node-control="true"
         onMouseDown={(e) => {
           // Blur any focused contentEditable element when interacting with toolbar
           // This prevents spurious input events from DOM changes
@@ -51,21 +72,12 @@ export const InlineToolsRenderer = ({ craftComponent, props: selectorProps }) =>
             (document.activeElement as HTMLElement).blur();
           }
         }}
-        style={{
-          zIndex: 9999,
-          overflow: 'visible', // Allow controls to position outside the element
-          // Reset styles to prevent inheritance
-          fontSize: '14px',
-          fontFamily: 'system-ui, -apple-system, sans-serif',
-          fontWeight: 'normal',
-          lineHeight: 'normal',
-          letterSpacing: 'normal',
-          textTransform: 'none',
-          textDecoration: 'none',
-          color: '#000',
-        }}
       >
-        {tools.map((tool, index) => (
+        {/* Always visible children (if any) */}
+        {showChildren && children}
+
+        {/* Selection-required tools */}
+        {showTools && tools.map((tool, index) => (
           <React.Fragment key={`inline-tool-${index}`}>
             {tool}
           </React.Fragment>

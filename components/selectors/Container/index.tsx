@@ -265,7 +265,12 @@ export const Container = (props: Partial<ContainerProps>) => {
     prop.children = (
       <>
         {originalChildren}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Container} props={props} />
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Container} props={props} alwaysVisible>
+          <AddSectionNodeController
+            position="bottom"
+            align="middle"
+          />
+        </InlineToolsRenderer>
       </>
     );
   }
@@ -350,11 +355,7 @@ Container.craft = {
       ];
 
       const addControls = [
-        <AddSectionNodeController
-          key="containeraddbottom"
-          position="bottom"
-          align="middle"
-        />,
+
       ];
 
       if (props.type === "page") {
