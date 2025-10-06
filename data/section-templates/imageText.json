@@ -1,0 +1,262 @@
+{
+  "id": "imageText",
+  "name": "Content Blocks",
+  "templates": [
+    {
+      "id": "imagetext-1",
+      "name": "Image Left, Text Right",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {},
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-28",
+            "justifyContent": "justify-center",
+            "alignItems": "items-center"
+          },
+          "desktop": {
+            "flexDirection": "flex-row",
+            "alignItems": "items-center"
+          },
+          "custom": {
+            "displayName": "Image & Text Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-8"
+              },
+              "desktop": {
+                "flexDirection": "flex-row",
+                "alignItems": "items-center"
+              },
+              "custom": {
+                "displayName": "Image & Text Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Image",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "width": "w-full",
+                    "height": "h-64",
+                    "objectFit": "object-cover",
+                    "radius": "rounded-lg"
+                  },
+                  "desktop": {
+                    "width": "w-1/2",
+                    "height": "h-96"
+                  },
+                  "custom": {
+                    "displayName": "Image"
+                  },
+                  "type": "cdn",
+                  "loading": "lazy",
+                  "fetchPriority": "low",
+                  "alt": "Image"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "width": "w-full",
+                    "gap": "gap-4",
+                    "px": "px-6"
+                  },
+                  "desktop": {
+                    "width": "w-1/2"
+                  },
+                  "custom": {
+                    "displayName": "Content"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-3xl",
+                        "fontWeight": "font-bold"
+                      },
+                      "desktop": {},
+                      "custom": {
+                        "displayName": "Title"
+                      },
+                      "text": "<p>About {{company.name}}</p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "desktop": {},
+                      "custom": {
+                        "displayName": "Description"
+                      },
+                      "text": "<p>{{company.name}} has been serving {{company.location}} with exceptional {{company.type}} services.</p>"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "imagetext-2",
+      "name": "Text Left, Image Right",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-white"
+          },
+          "mobile": {
+            "display": "flex",
+            "flexDirection": "flex-col",
+            "width": "w-full",
+            "px": "px-6",
+            "py": "py-32",
+            "gap": "gap-8"
+          },
+          "desktop": {
+            "flexDirection": "flex-row",
+            "px": "px-12",
+            "py": "py-28",
+            "gap": "gap-12",
+            "alignItems": "items-center"
+          },
+          "custom": {
+            "displayName": "Image & Text Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "width": "w-full",
+                "gap": "gap-4",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6"
+              },
+              "desktop": {
+                "width": "w-1/2",
+                "flexDirection": "flex-row",
+                "alignItems": "items-center"
+              },
+              "custom": {
+                "displayName": "Text Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold"
+                  },
+                  "desktop": {
+                    "fontSize": "text-4xl"
+                  },
+                  "custom": {
+                    "displayName": "Section Title"
+                  },
+                  "text": "<p>{{company.name}}'s Story</p>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-base"
+                  },
+                  "desktop": {
+                    "fontSize": "text-lg"
+                  },
+                  "custom": {
+                    "displayName": "Section Description"
+                  },
+                  "text": "<p>Based in {{company.location}}, {{company.name}} has been helping businesses succeed with our {{company.type}} expertise.</p>"
+                }
+              }
+            ]
+          },
+          {
+            "type": "Image",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "width": "w-full",
+                "height": "h-64",
+                "objectFit": "object-cover",
+                "radius": "rounded-lg"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Image"
+              },
+              "type": "cdn",
+              "loading": "lazy",
+              "fetchPriority": "low",
+              "alt": "Image"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

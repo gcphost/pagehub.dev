@@ -9,7 +9,8 @@
     "clean": "rimraf lib .next out dist",
     "analyze": "cross-env ANALYZE=true next build",
     "update": "ncu -u",
-    "create-test-tenant": "node scripts/create-test-tenant.js"
+    "create-test-tenant": "node scripts/create-test-tenant.js",
+    "build-templates": "node scripts/build-templates.js"
   },
   "browserslist": [
     "chrome >= 93",

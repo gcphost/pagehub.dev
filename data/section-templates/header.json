@@ -1,0 +1,439 @@
+{
+  "id": "header",
+  "name": "Header",
+  "templates": [
+    {
+      "id": "header-1",
+      "name": "Simple Header",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-white",
+            "borderBottom": "border-b",
+            "borderColor": "border-gray-200"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-4",
+            "justifyContent": "justify-center"
+          },
+          "custom": {
+            "displayName": "Header Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-row",
+                "alignItems": "items-center",
+                "justifyContent": "justify-between",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6"
+              },
+              "custom": {
+                "displayName": "Header Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-2xl",
+                    "fontWeight": "font-bold"
+                  },
+                  "custom": {
+                    "displayName": "Logo"
+                  },
+                  "text": "<p>{{company.name}}</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-row",
+                    "gap": "gap-6",
+                    "alignItems": "items-center"
+                  },
+                  "custom": {
+                    "displayName": "Navigation"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">Home</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">About</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">Services</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">Contact</a></p>"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "header-2",
+      "name": "Header with CTA",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-palette:Primary"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-4",
+            "justifyContent": "justify-center"
+          },
+          "custom": {
+            "displayName": "Header Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-row",
+                "alignItems": "items-center",
+                "justifyContent": "justify-between",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6"
+              },
+              "custom": {
+                "displayName": "Header Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-2xl",
+                    "fontWeight": "font-bold",
+                    "color": "text-white"
+                  },
+                  "custom": {
+                    "displayName": "Logo"
+                  },
+                  "text": "<p>{{company.name}}</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-row",
+                    "gap": "gap-6",
+                    "alignItems": "items-center"
+                  },
+                  "custom": {
+                    "displayName": "Navigation"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base",
+                        "color": "text-white"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">Home</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base",
+                        "color": "text-white"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">Services</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {},
+                      "custom": {
+                        "displayName": "CTA Button"
+                      },
+                      "buttons": [
+                        {
+                          "text": "Get Started",
+                          "url": "#",
+                          "style": {
+                            "background": "bg-white",
+                            "color": "text-palette:Primary",
+                            "px": "px-6",
+                            "py": "py-2",
+                            "radius": "rounded-lg",
+                            "fontWeight": "font-semibold"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "header-3",
+      "name": "Centered Logo Header",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-white",
+            "borderBottom": "border-b",
+            "borderColor": "border-gray-200"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-6",
+            "justifyContent": "justify-center"
+          },
+          "custom": {
+            "displayName": "Header Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-4"
+              },
+              "custom": {
+                "displayName": "Header Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "custom": {
+                    "displayName": "Logo"
+                  },
+                  "text": "<p>{{company.name}}</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-row",
+                    "gap": "gap-6",
+                    "alignItems": "items-center"
+                  },
+                  "custom": {
+                    "displayName": "Navigation"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">Home</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">About</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">Services</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base"
+                      },
+                      "custom": {
+                        "displayName": "Nav Link"
+                      },
+                      "text": "<p><a href=\"#\">Contact</a></p>"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

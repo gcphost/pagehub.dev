@@ -1,0 +1,1232 @@
+{
+  "id": "pricing",
+  "name": "Pricing & Plans",
+  "templates": [
+    {
+      "id": "pricing-1",
+      "name": "Three Column Pricing",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-palette:Alternate Background"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-32",
+            "justifyContent": "justify-center",
+            "alignItems": "items-center"
+          },
+          "desktop": {
+            "px": "px-12",
+            "py": "py-20"
+          },
+          "custom": {
+            "displayName": "Pricing Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-8"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Pricing Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {
+                    "fontSize": "text-4xl"
+                  },
+                  "custom": {
+                    "displayName": "Section Title"
+                  },
+                  "text": "<p>Great Pricing</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "width": "w-full",
+                    "gap": "gap-8"
+                  },
+                  "desktop": {
+                    "flexDirection": "flex-row",
+                    "gap": "gap-6"
+                  },
+                  "custom": {
+                    "displayName": "Pricing Cards"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-white"
+                      },
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "px": "px-8",
+                        "py": "py-10",
+                        "gap": "gap-6",
+                        "radius": "rounded-xl"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Pricing Card"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Plan Name"
+                          },
+                          "text": "<p>Free</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-4xl",
+                            "fontWeight": "font-bold",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Price"
+                          },
+                          "text": "<p>$0</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-sm",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Description"
+                          },
+                          "text": "<p>Perfect for getting started with basic features and functionality.</p>"
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "background": "bg-gray-100",
+                            "color": "text-palette:Text"
+                          },
+                          "mobile": {
+                            "px": "px-6",
+                            "py": "py-3",
+                            "fontSize": "text-base",
+                            "fontWeight": "font-semibold",
+                            "radius": "rounded-lg",
+                            "gap": "gap-4",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "CTA Button"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Get Started",
+                              "url": "#"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-palette:Primary"
+                      },
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "px": "px-8",
+                        "py": "py-10",
+                        "gap": "gap-6",
+                        "radius": "rounded-xl"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Pricing Card"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Plan Name"
+                          },
+                          "text": "<p>Pro</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-4xl",
+                            "fontWeight": "font-bold",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Price"
+                          },
+                          "text": "<p>$29</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-sm",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Description"
+                          },
+                          "text": "<p>Great for professionals who need advanced features and support.</p>"
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "background": "bg-white",
+                            "color": "text-primary-500"
+                          },
+                          "mobile": {
+                            "px": "px-6",
+                            "py": "py-3",
+                            "fontSize": "text-base",
+                            "fontWeight": "font-semibold",
+                            "radius": "rounded-lg",
+                            "gap": "gap-4",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "CTA Button"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Get Started",
+                              "url": "#"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-white"
+                      },
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "px": "px-8",
+                        "py": "py-10",
+                        "gap": "gap-6",
+                        "radius": "rounded-xl"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Pricing Card"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Plan Name"
+                          },
+                          "text": "<p>Enterprise</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-4xl",
+                            "fontWeight": "font-bold",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Price"
+                          },
+                          "text": "<p>$79</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-sm",
+                            "textAlign": "text-center"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Description"
+                          },
+                          "text": "<p>For large teams that need custom solutions and dedicated support.</p>"
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "background": "bg-gray-100",
+                            "color": "text-palette:Text"
+                          },
+                          "mobile": {
+                            "px": "px-6",
+                            "py": "py-3",
+                            "fontSize": "text-base",
+                            "fontWeight": "font-semibold",
+                            "radius": "rounded-lg",
+                            "gap": "gap-4",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "CTA Button"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Contact {{company.name}}",
+                              "url": "mailto:{{company.email}}"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pricing-2",
+      "name": "Menu List",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-white"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-32",
+            "justifyContent": "justify-center",
+            "alignItems": "items-center"
+          },
+          "desktop": {
+            "px": "px-12",
+            "py": "py-20"
+          },
+          "custom": {
+            "displayName": "Menu Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-8"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Menu Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {
+                    "fontSize": "text-4xl"
+                  },
+                  "custom": {
+                    "displayName": "Section Title"
+                  },
+                  "text": "<p>Our Menu</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "width": "w-full",
+                    "gap": "gap-6"
+                  },
+                  "desktop": {
+                    "px": "px-20"
+                  },
+                  "custom": {
+                    "displayName": "Menu Items"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-2",
+                        "py": "py-4"
+                      },
+                      "desktop": {},
+                      "custom": {
+                        "displayName": "Menu Item"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "display": "flex",
+                            "flexDirection": "flex-row",
+                            "justifyContent": "justify-between",
+                            "alignItems": "items-center",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Item Header"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Text",
+                            "props": {
+                              "canDelete": true,
+                              "canEditName": true,
+                              "root": {},
+                              "mobile": {
+                                "fontSize": "text-xl",
+                                "fontWeight": "font-semibold"
+                              },
+                              "desktop": {},
+                              "custom": {
+                                "displayName": "Item Name"
+                              },
+                              "text": "<p>Signature Dish</p>"
+                            }
+                          },
+                          {
+                            "type": "Text",
+                            "props": {
+                              "canDelete": true,
+                              "canEditName": true,
+                              "root": {},
+                              "mobile": {
+                                "fontSize": "text-xl",
+                                "fontWeight": "font-bold"
+                              },
+                              "desktop": {},
+                              "custom": {
+                                "displayName": "Price"
+                              },
+                              "text": "<p>$25</p>"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-sm"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Description"
+                          },
+                          "text": "<p>A delicious blend of flavors crafted by our expert chefs.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-2",
+                        "py": "py-4"
+                      },
+                      "desktop": {},
+                      "custom": {
+                        "displayName": "Menu Item"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "display": "flex",
+                            "flexDirection": "flex-row",
+                            "justifyContent": "justify-between",
+                            "alignItems": "items-center",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Item Header"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Text",
+                            "props": {
+                              "canDelete": true,
+                              "canEditName": true,
+                              "root": {},
+                              "mobile": {
+                                "fontSize": "text-xl",
+                                "fontWeight": "font-semibold"
+                              },
+                              "desktop": {},
+                              "custom": {
+                                "displayName": "Item Name"
+                              },
+                              "text": "<p>Chef's Special</p>"
+                            }
+                          },
+                          {
+                            "type": "Text",
+                            "props": {
+                              "canDelete": true,
+                              "canEditName": true,
+                              "root": {},
+                              "mobile": {
+                                "fontSize": "text-xl",
+                                "fontWeight": "font-bold"
+                              },
+                              "desktop": {},
+                              "custom": {
+                                "displayName": "Price"
+                              },
+                              "text": "<p>$32</p>"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-sm"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Description"
+                          },
+                          "text": "<p>Premium ingredients prepared with traditional techniques.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-2",
+                        "py": "py-4"
+                      },
+                      "desktop": {},
+                      "custom": {
+                        "displayName": "Menu Item"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "display": "flex",
+                            "flexDirection": "flex-row",
+                            "justifyContent": "justify-between",
+                            "alignItems": "items-center",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Item Header"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Text",
+                            "props": {
+                              "canDelete": true,
+                              "canEditName": true,
+                              "root": {},
+                              "mobile": {
+                                "fontSize": "text-xl",
+                                "fontWeight": "font-semibold"
+                              },
+                              "desktop": {},
+                              "custom": {
+                                "displayName": "Item Name"
+                              },
+                              "text": "<p>Classic Favorite</p>"
+                            }
+                          },
+                          {
+                            "type": "Text",
+                            "props": {
+                              "canDelete": true,
+                              "canEditName": true,
+                              "root": {},
+                              "mobile": {
+                                "fontSize": "text-xl",
+                                "fontWeight": "font-bold"
+                              },
+                              "desktop": {},
+                              "custom": {
+                                "displayName": "Price"
+                              },
+                              "text": "<p>$18</p>"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-sm"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Description"
+                          },
+                          "text": "<p>A timeless recipe that never goes out of style.</p>"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pricing-3",
+      "name": "Product Grid",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-white"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-32",
+            "justifyContent": "justify-center",
+            "alignItems": "items-center"
+          },
+          "desktop": {
+            "px": "px-12",
+            "py": "py-20"
+          },
+          "custom": {
+            "displayName": "Products Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-8"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Products Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {
+                    "fontSize": "text-4xl"
+                  },
+                  "custom": {
+                    "displayName": "Section Title"
+                  },
+                  "text": "<p>Featured Products</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "width": "w-full",
+                    "gap": "gap-8"
+                  },
+                  "desktop": {
+                    "flexDirection": "flex-row",
+                    "gap": "gap-6"
+                  },
+                  "custom": {
+                    "displayName": "Product Grid"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-white"
+                      },
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-4"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Product Card"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Image",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "width": "w-full",
+                            "height": "h-64",
+                            "objectFit": "object-cover",
+                            "radius": "rounded-lg"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Product Image"
+                          },
+                          "type": "cdn",
+                          "loading": "lazy",
+                          "fetchPriority": "low",
+                          "alt": "Image"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Product Name"
+                          },
+                          "text": "<p>Product Name</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-2xl",
+                            "fontWeight": "font-bold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Price"
+                          },
+                          "text": "<p>$99</p>"
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "background": "bg-palette:Primary",
+                            "color": "text-white"
+                          },
+                          "mobile": {
+                            "px": "px-6",
+                            "py": "py-3",
+                            "fontSize": "text-base",
+                            "fontWeight": "font-semibold",
+                            "radius": "rounded-lg",
+                            "gap": "gap-4",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Add to Cart"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Add to Cart",
+                              "url": "#"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-white"
+                      },
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-4"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Product Card"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Image",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "width": "w-full",
+                            "height": "h-64",
+                            "objectFit": "object-cover",
+                            "radius": "rounded-lg"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Product Image"
+                          },
+                          "type": "cdn",
+                          "loading": "lazy",
+                          "fetchPriority": "low",
+                          "alt": "Image"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Product Name"
+                          },
+                          "text": "<p>Product Name</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-2xl",
+                            "fontWeight": "font-bold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Price"
+                          },
+                          "text": "<p>$149</p>"
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "background": "bg-palette:Primary",
+                            "color": "text-white"
+                          },
+                          "mobile": {
+                            "px": "px-6",
+                            "py": "py-3",
+                            "fontSize": "text-base",
+                            "fontWeight": "font-semibold",
+                            "radius": "rounded-lg",
+                            "gap": "gap-4",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Add to Cart"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Add to Cart",
+                              "url": "#"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-white"
+                      },
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-4"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Product Card"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Image",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "width": "w-full",
+                            "height": "h-64",
+                            "objectFit": "object-cover",
+                            "radius": "rounded-lg"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Product Image"
+                          },
+                          "type": "cdn",
+                          "loading": "lazy",
+                          "fetchPriority": "low",
+                          "alt": "Image"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Product Name"
+                          },
+                          "text": "<p>Product Name</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-2xl",
+                            "fontWeight": "font-bold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Price"
+                          },
+                          "text": "<p>$199</p>"
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "background": "bg-palette:Primary",
+                            "color": "text-white"
+                          },
+                          "mobile": {
+                            "px": "px-6",
+                            "py": "py-3",
+                            "fontSize": "text-base",
+                            "fontWeight": "font-semibold",
+                            "radius": "rounded-lg",
+                            "gap": "gap-4",
+                            "width": "w-full"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Add to Cart"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Add to Cart",
+                              "url": "#"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

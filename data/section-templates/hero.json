@@ -1,0 +1,390 @@
+{
+  "id": "hero",
+  "name": "Landing Sections",
+  "templates": [
+    {
+      "id": "hero-1",
+      "name": "Hero Center",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {},
+          "mobile": {
+            "display": "flex",
+            "justifyContent": "justify-center",
+            "alignItems": "items-center",
+            "width": "w-full",
+            "py": "py-28",
+            "minHeight": "min-h-screen"
+          },
+          "desktop": {},
+          "custom": {
+            "displayName": "Hero Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-6"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Hero Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-5xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {
+                    "fontSize": "text-6xl"
+                  },
+                  "custom": {
+                    "displayName": "Hero Title"
+                  },
+                  "text": "<p>Welcome to {{company.name}}</p>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-lg",
+                    "textAlign": "text-center",
+                    "maxWidth": "max-w-2xl"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "Hero Subtitle"
+                  },
+                  "text": "<p>Professional {{company.type}} services in {{company.location}}</p>"
+                }
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "background": "bg-palette:Primary"
+                  },
+                  "mobile": {
+                    "px": "px-8",
+                    "py": "py-4",
+                    "fontSize": "text-lg",
+                    "fontWeight": "font-semibold",
+                    "color": "text-white",
+                    "radius": "rounded-lg",
+                    "gap": "gap-4"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Button"
+                  },
+                  "buttons": [
+                    {
+                      "text": "Get Started",
+                      "url": "#"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "hero-2",
+      "name": "Hero with Background",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-palette:Primary"
+          },
+          "mobile": {
+            "display": "flex",
+            "justifyContent": "justify-center",
+            "alignItems": "items-center",
+            "width": "w-full",
+            "py": "py-28",
+            "minHeight": "min-h-screen"
+          },
+          "desktop": {},
+          "custom": {
+            "displayName": "Hero Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-6"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Hero Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-5xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center",
+                    "color": "text-white"
+                  },
+                  "desktop": {
+                    "fontSize": "text-6xl"
+                  },
+                  "custom": {
+                    "displayName": "Hero Title"
+                  },
+                  "text": "<p>Transform Your Business with {{company.name}}</p>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-lg",
+                    "textAlign": "text-center",
+                    "maxWidth": "max-w-2xl",
+                    "color": "text-white"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "Hero Subtitle"
+                  },
+                  "text": "<p>We offer best in class UI/UX solutions to enhance your digital presence.</p>"
+                }
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "background": "bg-palette:Background"
+                  },
+                  "mobile": {
+                    "px": "px-8",
+                    "py": "py-4",
+                    "fontSize": "text-lg",
+                    "fontWeight": "font-semibold",
+                    "color": "text-palette:Primary",
+                    "radius": "rounded-lg",
+                    "gap": "gap-4"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Button"
+                  },
+                  "buttons": [
+                    {
+                      "text": "Learn More",
+                      "url": "#"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "hero-3",
+      "name": "Hero Split",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {},
+          "mobile": {
+            "display": "flex",
+            "flexDirection": "flex-col",
+            "width": "w-full",
+            "height": "h-screen",
+            "gap": "gap-0"
+          },
+          "desktop": {
+            "flexDirection": "flex-row"
+          },
+          "custom": {
+            "displayName": "Hero Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {
+                "background": "bg-palette:Primary"
+              },
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "justifyContent": "justify-center",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "height": "h-full",
+                "px": "px-6",
+                "py": "py-28",
+                "gap": "gap-6",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto"
+              },
+              "desktop": {
+                "width": "w-1/2"
+              },
+              "custom": {
+                "displayName": "Hero Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-4xl",
+                    "fontWeight": "font-bold",
+                    "color": "text-white"
+                  },
+                  "desktop": {
+                    "fontSize": "text-5xl"
+                  },
+                  "custom": {
+                    "displayName": "Hero Title"
+                  },
+                  "text": "<p>{{company.name}} - Your Partner in Success</p>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-lg",
+                    "color": "text-white"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "Hero Subtitle"
+                  },
+                  "text": "<p>Professional solutions tailored to your needs.</p>"
+                }
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "background": "bg-white",
+                    "color": "text-primary-500"
+                  },
+                  "mobile": {
+                    "px": "px-8",
+                    "py": "py-3",
+                    "fontSize": "text-base",
+                    "fontWeight": "font-bold",
+                    "radius": "rounded-lg",
+                    "gap": "gap-4"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Button"
+                  },
+                  "buttons": [
+                    {
+                      "text": "Get Started",
+                      "url": "#"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "Image",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "width": "w-full",
+                "height": "h-64",
+                "objectFit": "object-cover",
+                "radius": "rounded-lg"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Hero Image"
+              },
+              "type": "cdn",
+              "loading": "lazy",
+              "fetchPriority": "low",
+              "alt": "Image"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

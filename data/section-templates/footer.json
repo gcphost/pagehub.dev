@@ -1,0 +1,741 @@
+{
+  "id": "footer",
+  "name": "Footer",
+  "templates": [
+    {
+      "id": "footer-1",
+      "name": "Simple Footer",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-gray-900"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-8",
+            "justifyContent": "justify-center"
+          },
+          "custom": {
+            "displayName": "Footer Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-4"
+              },
+              "custom": {
+                "displayName": "Footer Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "custom": {
+                    "displayName": "Company Name"
+                  },
+                  "text": "<p>{{company.name}}</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-row",
+                    "gap": "gap-4",
+                    "alignItems": "items-center"
+                  },
+                  "custom": {
+                    "displayName": "Footer Links"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Footer Link"
+                      },
+                      "text": "<p><a href=\"#\">Privacy</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Footer Link"
+                      },
+                      "text": "<p><a href=\"#\">Terms</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Footer Link"
+                      },
+                      "text": "<p><a href=\"#\">Contact</a></p>"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-sm",
+                    "textAlign": "text-center"
+                  },
+                  "custom": {
+                    "displayName": "Copyright"
+                  },
+                  "text": "<p>© {{year}} {{company.name}}. All rights reserved.</p>"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "footer-2",
+      "name": "Multi-Column Footer",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-gray-900"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-28",
+            "justifyContent": "justify-center"
+          },
+          "custom": {
+            "displayName": "Footer Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-8"
+              },
+              "desktop": {
+                "flexDirection": "flex-row",
+                "justifyContent": "justify-between"
+              },
+              "custom": {
+                "displayName": "Footer Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "gap": "gap-4"
+                  },
+                  "desktop": {
+                    "width": "w-1/3"
+                  },
+                  "custom": {
+                    "displayName": "Company Column"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-xl",
+                        "fontWeight": "font-bold"
+                      },
+                      "custom": {
+                        "displayName": "Company Name"
+                      },
+                      "text": "<p>{{company.name}}</p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Company Info"
+                      },
+                      "text": "<p>{{company.address}}</p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Phone"
+                      },
+                      "text": "<p>{{company.phone}}</p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Email"
+                      },
+                      "text": "<p><a href=\"mailto:{{company.email}}\">{{company.email}}</a></p>"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "gap": "gap-3"
+                  },
+                  "custom": {
+                    "displayName": "Quick Links"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base",
+                        "fontWeight": "font-semibold"
+                      },
+                      "custom": {
+                        "displayName": "Column Title"
+                      },
+                      "text": "<p>Quick Links</p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Link"
+                      },
+                      "text": "<p><a href=\"#\">Home</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Link"
+                      },
+                      "text": "<p><a href=\"#\">About</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Link"
+                      },
+                      "text": "<p><a href=\"#\">Services</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Link"
+                      },
+                      "text": "<p><a href=\"#\">Contact</a></p>"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "gap": "gap-3"
+                  },
+                  "custom": {
+                    "displayName": "Legal"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-base",
+                        "fontWeight": "font-semibold"
+                      },
+                      "custom": {
+                        "displayName": "Column Title"
+                      },
+                      "text": "<p>Legal</p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Link"
+                      },
+                      "text": "<p><a href=\"#\">Privacy Policy</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Link"
+                      },
+                      "text": "<p><a href=\"#\">Terms of Service</a></p>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm"
+                      },
+                      "custom": {
+                        "displayName": "Copyright"
+                      },
+                      "text": "<p>© {{year}} {{company.name}}</p>"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "footer-3",
+      "name": "Footer with Social",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-palette:Primary"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-10",
+            "justifyContent": "justify-center"
+          },
+          "custom": {
+            "displayName": "Footer Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-6"
+              },
+              "custom": {
+                "displayName": "Footer Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "alignItems": "items-center",
+                    "gap": "gap-4",
+                    "width": "w-full"
+                  },
+                  "desktop": {
+                    "flexDirection": "flex-row",
+                    "justifyContent": "justify-between"
+                  },
+                  "custom": {
+                    "displayName": "Top Row"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-2xl",
+                        "fontWeight": "font-bold",
+                        "color": "text-white"
+                      },
+                      "custom": {
+                        "displayName": "Company Name"
+                      },
+                      "text": "<p>{{company.name}}</p>"
+                    }
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-row",
+                        "gap": "gap-4",
+                        "alignItems": "items-center"
+                      },
+                      "custom": {
+                        "displayName": "Social Links"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {},
+                          "custom": {
+                            "displayName": "Social Button"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Facebook",
+                              "url": "#",
+                              "style": {
+                                "background": "bg-white",
+                                "color": "text-palette:Primary",
+                                "px": "px-4",
+                                "py": "py-2",
+                                "radius": "rounded-lg",
+                                "fontSize": "text-sm"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {},
+                          "custom": {
+                            "displayName": "Social Button"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Twitter",
+                              "url": "#",
+                              "style": {
+                                "background": "bg-white",
+                                "color": "text-palette:Primary",
+                                "px": "px-4",
+                                "py": "py-2",
+                                "radius": "rounded-lg",
+                                "fontSize": "text-sm"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {},
+                          "custom": {
+                            "displayName": "Social Button"
+                          },
+                          "buttons": [
+                            {
+                              "text": "Instagram",
+                              "url": "#",
+                              "style": {
+                                "background": "bg-white",
+                                "color": "text-palette:Primary",
+                                "px": "px-4",
+                                "py": "py-2",
+                                "radius": "rounded-lg",
+                                "fontSize": "text-sm"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "borderTop": "border-t",
+                    "borderColor": "border-white border-opacity-20"
+                  },
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "alignItems": "items-center",
+                    "gap": "gap-3",
+                    "pt": "pt-6",
+                    "width": "w-full"
+                  },
+                  "desktop": {
+                    "flexDirection": "flex-row",
+                    "justifyContent": "justify-between"
+                  },
+                  "custom": {
+                    "displayName": "Bottom Row"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "fontSize": "text-sm",
+                        "textAlign": "text-center",
+                        "color": "text-white"
+                      },
+                      "desktop": {
+                        "textAlign": "text-left"
+                      },
+                      "custom": {
+                        "displayName": "Copyright"
+                      },
+                      "text": "<p>© {{year}} {{company.name}}. All rights reserved.</p>"
+                    }
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-row",
+                        "gap": "gap-4"
+                      },
+                      "custom": {
+                        "displayName": "Legal Links"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-sm",
+                            "color": "text-white"
+                          },
+                          "custom": {
+                            "displayName": "Link"
+                          },
+                          "text": "<p><a href=\"#\">Privacy</a></p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-sm",
+                            "color": "text-white"
+                          },
+                          "custom": {
+                            "displayName": "Link"
+                          },
+                          "text": "<p><a href=\"#\">Terms</a></p>"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

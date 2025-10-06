@@ -1,0 +1,484 @@
+{
+  "id": "cta",
+  "name": "Call To Action",
+  "templates": [
+    {
+      "id": "cta-1",
+      "name": "Simple CTA",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-palette:Primary"
+          },
+          "mobile": {
+            "display": "flex",
+            "justifyContent": "justify-center",
+            "width": "w-full",
+            "py": "py-16"
+          },
+          "desktop": {},
+          "custom": {
+            "displayName": "CTA Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-6"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "CTA Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-4xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center",
+                    "color": "text-white"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Title"
+                  },
+                  "text": "<p>Ready to Work with {{company.name}}?</p>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-lg",
+                    "textAlign": "text-center",
+                    "maxWidth": "max-w-2xl",
+                    "color": "text-white"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Subtitle"
+                  },
+                  "text": "<p>Contact us at {{company.email}} or call {{company.phone}} to get started.</p>"
+                }
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "background": "bg-white",
+                    "color": "text-primary-500"
+                  },
+                  "mobile": {
+                    "px": "px-8",
+                    "py": "py-4",
+                    "fontSize": "text-lg",
+                    "fontWeight": "font-bold",
+                    "radius": "rounded-lg",
+                    "gap": "gap-4"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Button"
+                  },
+                  "buttons": [
+                    {
+                      "text": "Get Started Now",
+                      "url": "#"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "cta-2",
+      "name": "CTA with Border",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "border": "border-4",
+            "borderColor": "border-primary-500"
+          },
+          "mobile": {
+            "display": "flex",
+            "justifyContent": "justify-center",
+            "width": "w-full",
+            "py": "py-16"
+          },
+          "desktop": {},
+          "custom": {
+            "displayName": "CTA Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-6"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "CTA Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-4xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Title"
+                  },
+                  "text": "<p>Get Started with {{company.name}}</p>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-lg",
+                    "textAlign": "text-center",
+                    "maxWidth": "max-w-2xl"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Subtitle"
+                  },
+                  "text": "<p>Contact us at {{company.email}} - Located in {{company.location}}</p>"
+                }
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "background": "bg-palette:Primary",
+                    "color": "text-white"
+                  },
+                  "mobile": {
+                    "px": "px-8",
+                    "py": "py-4",
+                    "fontSize": "text-lg",
+                    "fontWeight": "font-bold",
+                    "radius": "rounded-lg",
+                    "gap": "gap-4"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Button"
+                  },
+                  "buttons": [
+                    {
+                      "text": "Start Free Trial",
+                      "url": "#"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "cta-2",
+      "name": "CTA with Background",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-gradient-to-r from-primary-500 to-primary-600"
+          },
+          "mobile": {
+            "display": "flex",
+            "justifyContent": "justify-center",
+            "width": "w-full",
+            "py": "py-20"
+          },
+          "desktop": {
+            "py": "py-24"
+          },
+          "custom": {
+            "displayName": "CTA Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-6"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "CTA Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-4xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {
+                    "fontSize": "text-5xl"
+                  },
+                  "custom": {
+                    "displayName": "CTA Title"
+                  },
+                  "text": "<p>Contact {{company.name}} Today</p>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-lg",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {
+                    "fontSize": "text-xl"
+                  },
+                  "custom": {
+                    "displayName": "CTA Description"
+                  },
+                  "text": "<p>Call {{company.phone}} or visit us at {{company.address}}</p>"
+                }
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "background": "bg-white",
+                    "color": "text-primary-500"
+                  },
+                  "mobile": {
+                    "px": "px-8",
+                    "py": "py-4",
+                    "fontSize": "text-lg",
+                    "fontWeight": "font-bold",
+                    "radius": "rounded-full",
+                    "gap": "gap-4"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "CTA Button"
+                  },
+                  "buttons": [
+                    {
+                      "text": "Start Free Trial",
+                      "url": "#"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "cta-3",
+      "name": "CTA Side by Side",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-gray-100"
+          },
+          "mobile": {
+            "display": "flex",
+            "flexDirection": "flex-col",
+            "justifyContent": "justify-between",
+            "alignItems": "items-center",
+            "width": "w-full",
+            "px": "px-6",
+            "py": "py-32",
+            "gap": "gap-8"
+          },
+          "desktop": {
+            "flexDirection": "flex-row",
+            "px": "px-12",
+            "py": "py-20"
+          },
+          "custom": {
+            "displayName": "CTA Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "gap": "gap-4",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6"
+              },
+              "desktop": {
+                "width": "w-2/3"
+              },
+              "custom": {
+                "displayName": "CTA Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold"
+                  },
+                  "desktop": {
+                    "fontSize": "text-4xl"
+                  },
+                  "custom": {
+                    "displayName": "CTA Title"
+                  },
+                  "text": "<p>Let's Build Something Great with {{company.name}}</p>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-base"
+                  },
+                  "desktop": {
+                    "fontSize": "text-lg"
+                  },
+                  "custom": {
+                    "displayName": "CTA Description"
+                  },
+                  "text": "<p>Contact us at {{company.email}} or {{company.phone}} to discuss your project.</p>"
+                }
+              }
+            ]
+          },
+          {
+            "type": "Button",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {
+                "background": "bg-palette:Primary",
+                "color": "text-white"
+              },
+              "mobile": {
+                "px": "px-8",
+                "py": "py-4",
+                "fontSize": "text-base",
+                "fontWeight": "font-bold",
+                "radius": "rounded-lg",
+                "gap": "gap-4"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "CTA Button"
+              },
+              "buttons": [
+                {
+                  "text": "Email {{company.email}}",
+                  "url": "mailto:{{company.email}}"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,792 @@
+{
+  "id": "team",
+  "name": "Team & Testimonials",
+  "templates": [
+    {
+      "id": "team-1",
+      "name": "Team Grid",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "root": {
+            "py": "py-24",
+            "bg": "bg-white"
+          },
+          "custom": {
+            "displayName": "Team Grid"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "root": {
+                "maxWidth": "max-w-6xl"
+              },
+              "custom": {
+                "displayName": "Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "textAlign": "text-center",
+                    "marginBottom": "mb-16"
+                  },
+                  "custom": {
+                    "displayName": "Header"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "fontSize": "text-4xl",
+                        "fontWeight": "font-bold",
+                        "marginBottom": "mb-4"
+                      },
+                      "custom": {
+                        "displayName": "Title"
+                      },
+                      "text": "<h2>Meet Our Team</h2>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "fontSize": "text-lg",
+                        "color": "text-gray-600"
+                      },
+                      "custom": {
+                        "displayName": "Description"
+                      },
+                      "text": "<p>The talented people behind our success.</p>"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "display": "grid",
+                    "gap": "gap-8",
+                    "gridTemplateColumns": "grid-cols-1"
+                  },
+                  "tablet": {
+                    "gridTemplateColumns": "grid-cols-2"
+                  },
+                  "desktop": {
+                    "gridTemplateColumns": "grid-cols-3"
+                  },
+                  "custom": {
+                    "displayName": "Team Grid"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "root": {
+                        "textAlign": "text-center"
+                      },
+                      "custom": {
+                        "displayName": "Team Member 1"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "root": {
+                            "width": "w-32",
+                            "height": "h-32",
+                            "bg": "bg-gray-200",
+                            "radius": "rounded-full",
+                            "margin": "mx-auto mb-4",
+                            "display": "flex",
+                            "alignItems": "items-center",
+                            "justifyContent": "justify-center"
+                          },
+                          "custom": {
+                            "displayName": "Avatar"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Text",
+                            "props": {
+                              "root": {
+                                "fontSize": "text-2xl",
+                                "color": "text-gray-500"
+                              },
+                              "custom": {
+                                "displayName": "Avatar Icon"
+                              },
+                              "text": "👤"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold",
+                            "marginBottom": "mb-2"
+                          },
+                          "custom": {
+                            "displayName": "Name"
+                          },
+                          "text": "<h3>John Doe</h3>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "color": "text-gray-600",
+                            "marginBottom": "mb-4"
+                          },
+                          "custom": {
+                            "displayName": "Role"
+                          },
+                          "text": "<p>CEO & Founder</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-sm",
+                            "color": "text-gray-500"
+                          },
+                          "custom": {
+                            "displayName": "Bio"
+                          },
+                          "text": "<p>Passionate about building great products that make a difference.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "root": {
+                        "textAlign": "text-center"
+                      },
+                      "custom": {
+                        "displayName": "Team Member 2"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "root": {
+                            "width": "w-32",
+                            "height": "h-32",
+                            "bg": "bg-gray-200",
+                            "radius": "rounded-full",
+                            "margin": "mx-auto mb-4",
+                            "display": "flex",
+                            "alignItems": "items-center",
+                            "justifyContent": "justify-center"
+                          },
+                          "custom": {
+                            "displayName": "Avatar"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Text",
+                            "props": {
+                              "root": {
+                                "fontSize": "text-2xl",
+                                "color": "text-gray-500"
+                              },
+                              "custom": {
+                                "displayName": "Avatar Icon"
+                              },
+                              "text": "👩"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold",
+                            "marginBottom": "mb-2"
+                          },
+                          "custom": {
+                            "displayName": "Name"
+                          },
+                          "text": "<h3>Jane Smith</h3>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "color": "text-gray-600",
+                            "marginBottom": "mb-4"
+                          },
+                          "custom": {
+                            "displayName": "Role"
+                          },
+                          "text": "<p>CTO</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-sm",
+                            "color": "text-gray-500"
+                          },
+                          "custom": {
+                            "displayName": "Bio"
+                          },
+                          "text": "<p>Technical leader with 10+ years of experience in software development.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "root": {
+                        "textAlign": "text-center"
+                      },
+                      "custom": {
+                        "displayName": "Team Member 3"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "root": {
+                            "width": "w-32",
+                            "height": "h-32",
+                            "bg": "bg-gray-200",
+                            "radius": "rounded-full",
+                            "margin": "mx-auto mb-4",
+                            "display": "flex",
+                            "alignItems": "items-center",
+                            "justifyContent": "justify-center"
+                          },
+                          "custom": {
+                            "displayName": "Avatar"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Text",
+                            "props": {
+                              "root": {
+                                "fontSize": "text-2xl",
+                                "color": "text-gray-500"
+                              },
+                              "custom": {
+                                "displayName": "Avatar Icon"
+                              },
+                              "text": "👨"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-xl",
+                            "fontWeight": "font-semibold",
+                            "marginBottom": "mb-2"
+                          },
+                          "custom": {
+                            "displayName": "Name"
+                          },
+                          "text": "<h3>Mike Johnson</h3>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "color": "text-gray-600",
+                            "marginBottom": "mb-4"
+                          },
+                          "custom": {
+                            "displayName": "Role"
+                          },
+                          "text": "<p>Head of Design</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-sm",
+                            "color": "text-gray-500"
+                          },
+                          "custom": {
+                            "displayName": "Bio"
+                          },
+                          "text": "<p>Creative designer focused on user experience and beautiful interfaces.</p>"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "team-2",
+      "name": "Testimonials",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "root": {
+            "py": "py-24",
+            "bg": "bg-gray-50"
+          },
+          "custom": {
+            "displayName": "Testimonials"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "root": {
+                "maxWidth": "max-w-6xl"
+              },
+              "custom": {
+                "displayName": "Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "textAlign": "text-center",
+                    "marginBottom": "mb-16"
+                  },
+                  "custom": {
+                    "displayName": "Header"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "fontSize": "text-4xl",
+                        "fontWeight": "font-bold",
+                        "marginBottom": "mb-4"
+                      },
+                      "custom": {
+                        "displayName": "Title"
+                      },
+                      "text": "<h2>What Our Clients Say</h2>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "fontSize": "text-lg",
+                        "color": "text-gray-600"
+                      },
+                      "custom": {
+                        "displayName": "Description"
+                      },
+                      "text": "<p>Don't just take our word for it - hear from our satisfied customers.</p>"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "display": "grid",
+                    "gap": "gap-8",
+                    "gridTemplateColumns": "grid-cols-1"
+                  },
+                  "desktop": {
+                    "gridTemplateColumns": "grid-cols-3"
+                  },
+                  "custom": {
+                    "displayName": "Testimonials Grid"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "root": {
+                        "bg": "bg-white",
+                        "padding": "p-8",
+                        "radius": "rounded-lg",
+                        "shadow": "shadow-md"
+                      },
+                      "custom": {
+                        "displayName": "Testimonial 1"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-lg",
+                            "color": "text-gray-700",
+                            "marginBottom": "mb-6",
+                            "fontStyle": "italic"
+                          },
+                          "custom": {
+                            "displayName": "Quote"
+                          },
+                          "text": "<p>\"This service has completely transformed our business. The results speak for themselves.\"</p>"
+                        }
+                      },
+                      {
+                        "type": "Container",
+                        "props": {
+                          "root": {
+                            "display": "flex",
+                            "alignItems": "items-center",
+                            "gap": "gap-4"
+                          },
+                          "custom": {
+                            "displayName": "Author"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Container",
+                            "props": {
+                              "root": {
+                                "width": "w-12",
+                                "height": "h-12",
+                                "bg": "bg-gray-200",
+                                "radius": "rounded-full",
+                                "display": "flex",
+                                "alignItems": "items-center",
+                                "justifyContent": "justify-center"
+                              },
+                              "custom": {
+                                "displayName": "Avatar"
+                              }
+                            },
+                            "children": [
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontSize": "text-lg",
+                                    "color": "text-gray-500"
+                                  },
+                                  "custom": {
+                                    "displayName": "Avatar Icon"
+                                  },
+                                  "text": "👤"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Container",
+                            "props": {
+                              "root": {},
+                              "custom": {
+                                "displayName": "Author Info"
+                              }
+                            },
+                            "children": [
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontWeight": "font-semibold",
+                                    "marginBottom": "mb-1"
+                                  },
+                                  "custom": {
+                                    "displayName": "Name"
+                                  },
+                                  "text": "<p>Sarah Wilson</p>"
+                                }
+                              },
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontSize": "text-sm",
+                                    "color": "text-gray-500"
+                                  },
+                                  "custom": {
+                                    "displayName": "Company"
+                                  },
+                                  "text": "<p>CEO, TechCorp</p>"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "root": {
+                        "bg": "bg-white",
+                        "padding": "p-8",
+                        "radius": "rounded-lg",
+                        "shadow": "shadow-md"
+                      },
+                      "custom": {
+                        "displayName": "Testimonial 2"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-lg",
+                            "color": "text-gray-700",
+                            "marginBottom": "mb-6",
+                            "fontStyle": "italic"
+                          },
+                          "custom": {
+                            "displayName": "Quote"
+                          },
+                          "text": "<p>\"Outstanding support and incredible results. Highly recommended!\"</p>"
+                        }
+                      },
+                      {
+                        "type": "Container",
+                        "props": {
+                          "root": {
+                            "display": "flex",
+                            "alignItems": "items-center",
+                            "gap": "gap-4"
+                          },
+                          "custom": {
+                            "displayName": "Author"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Container",
+                            "props": {
+                              "root": {
+                                "width": "w-12",
+                                "height": "h-12",
+                                "bg": "bg-gray-200",
+                                "radius": "rounded-full",
+                                "display": "flex",
+                                "alignItems": "items-center",
+                                "justifyContent": "justify-center"
+                              },
+                              "custom": {
+                                "displayName": "Avatar"
+                              }
+                            },
+                            "children": [
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontSize": "text-lg",
+                                    "color": "text-gray-500"
+                                  },
+                                  "custom": {
+                                    "displayName": "Avatar Icon"
+                                  },
+                                  "text": "👩"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Container",
+                            "props": {
+                              "root": {},
+                              "custom": {
+                                "displayName": "Author Info"
+                              }
+                            },
+                            "children": [
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontWeight": "font-semibold",
+                                    "marginBottom": "mb-1"
+                                  },
+                                  "custom": {
+                                    "displayName": "Name"
+                                  },
+                                  "text": "<p>David Chen</p>"
+                                }
+                              },
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontSize": "text-sm",
+                                    "color": "text-gray-500"
+                                  },
+                                  "custom": {
+                                    "displayName": "Company"
+                                  },
+                                  "text": "<p>Founder, StartupXYZ</p>"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "root": {
+                        "bg": "bg-white",
+                        "padding": "p-8",
+                        "radius": "rounded-lg",
+                        "shadow": "shadow-md"
+                      },
+                      "custom": {
+                        "displayName": "Testimonial 3"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "fontSize": "text-lg",
+                            "color": "text-gray-700",
+                            "marginBottom": "mb-6",
+                            "fontStyle": "italic"
+                          },
+                          "custom": {
+                            "displayName": "Quote"
+                          },
+                          "text": "<p>\"The best investment we've made for our company. ROI was immediate.\"</p>"
+                        }
+                      },
+                      {
+                        "type": "Container",
+                        "props": {
+                          "root": {
+                            "display": "flex",
+                            "alignItems": "items-center",
+                            "gap": "gap-4"
+                          },
+                          "custom": {
+                            "displayName": "Author"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "Container",
+                            "props": {
+                              "root": {
+                                "width": "w-12",
+                                "height": "h-12",
+                                "bg": "bg-gray-200",
+                                "radius": "rounded-full",
+                                "display": "flex",
+                                "alignItems": "items-center",
+                                "justifyContent": "justify-center"
+                              },
+                              "custom": {
+                                "displayName": "Avatar"
+                              }
+                            },
+                            "children": [
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontSize": "text-lg",
+                                    "color": "text-gray-500"
+                                  },
+                                  "custom": {
+                                    "displayName": "Avatar Icon"
+                                  },
+                                  "text": "👨"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Container",
+                            "props": {
+                              "root": {},
+                              "custom": {
+                                "displayName": "Author Info"
+                              }
+                            },
+                            "children": [
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontWeight": "font-semibold",
+                                    "marginBottom": "mb-1"
+                                  },
+                                  "custom": {
+                                    "displayName": "Name"
+                                  },
+                                  "text": "<p>Emily Rodriguez</p>"
+                                }
+                              },
+                              {
+                                "type": "Text",
+                                "props": {
+                                  "root": {
+                                    "fontSize": "text-sm",
+                                    "color": "text-gray-500"
+                                  },
+                                  "custom": {
+                                    "displayName": "Company"
+                                  },
+                                  "text": "<p>Marketing Director, GrowthCo</p>"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

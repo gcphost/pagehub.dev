@@ -1,0 +1,842 @@
+{
+  "id": "services",
+  "name": "Features & Services",
+  "templates": [
+    {
+      "id": "services-1",
+      "name": "Three Column Services",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {},
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-28",
+            "justifyContent": "justify-center",
+            "alignItems": "items-center"
+          },
+          "desktop": {},
+          "custom": {
+            "displayName": "Services Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-12"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Services Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-4xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {},
+                  "custom": {
+                    "displayName": "Services Title"
+                  },
+                  "text": "<p>{{company.name}} Services</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "width": "w-full",
+                    "gap": "gap-8"
+                  },
+                  "desktop": {
+                    "flexDirection": "flex-row"
+                  },
+                  "custom": {
+                    "displayName": "Services Grid"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-3",
+                        "px": "px-6",
+                        "py": "py-6"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Service 1"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-2xl",
+                            "fontWeight": "font-semibold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Title"
+                          },
+                          "text": "<p>Design</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-base"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Description"
+                          },
+                          "text": "<p>Beautiful, modern designs that capture attention and convert visitors.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-3",
+                        "px": "px-6",
+                        "py": "py-6"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Service 2"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-2xl",
+                            "fontWeight": "font-semibold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Title"
+                          },
+                          "text": "<p>Development</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-base"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Description"
+                          },
+                          "text": "<p>Fast, scalable applications built with the latest technologies.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {},
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "gap": "gap-3",
+                        "px": "px-6",
+                        "py": "py-6"
+                      },
+                      "desktop": {
+                        "width": "w-1/3"
+                      },
+                      "custom": {
+                        "displayName": "Service 3"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-2xl",
+                            "fontWeight": "font-semibold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Title"
+                          },
+                          "text": "<p>Marketing</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-base"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Description"
+                          },
+                          "text": "<p>Strategic marketing to grow your brand and reach your audience.</p>"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "services-2",
+      "name": "Two Column Services",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-white"
+          },
+          "mobile": {
+            "display": "flex",
+            "width": "w-full",
+            "py": "py-32",
+            "justifyContent": "justify-center",
+            "alignItems": "items-center"
+          },
+          "desktop": {
+            "px": "px-12",
+            "py": "py-20"
+          },
+          "custom": {
+            "displayName": "Services Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {},
+              "mobile": {
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "alignItems": "items-center",
+                "width": "w-full",
+                "maxWidth": "max-w-7xl",
+                "mx": "mx-auto",
+                "px": "px-6",
+                "gap": "gap-8"
+              },
+              "desktop": {},
+              "custom": {
+                "displayName": "Services Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold",
+                    "textAlign": "text-center"
+                  },
+                  "desktop": {
+                    "fontSize": "text-4xl"
+                  },
+                  "custom": {
+                    "displayName": "Section Title"
+                  },
+                  "text": "<p>Our Services</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "width": "w-full",
+                    "gap": "gap-8"
+                  },
+                  "desktop": {
+                    "flexDirection": "flex-row"
+                  },
+                  "custom": {
+                    "displayName": "Services Grid"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-palette:Alternate Background"
+                      },
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "px": "px-6",
+                        "py": "py-8",
+                        "gap": "gap-4",
+                        "radius": "rounded-lg"
+                      },
+                      "desktop": {
+                        "width": "w-1/2"
+                      },
+                      "custom": {
+                        "displayName": "Service Card"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-2xl",
+                            "fontWeight": "font-bold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Title"
+                          },
+                          "text": "<p>Consulting</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-base"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Description"
+                          },
+                          "text": "<p>Expert guidance to help your business grow and succeed in today's competitive market.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-palette:Alternate Background"
+                      },
+                      "mobile": {
+                        "display": "flex",
+                        "flexDirection": "flex-col",
+                        "width": "w-full",
+                        "px": "px-6",
+                        "py": "py-8",
+                        "gap": "gap-4",
+                        "radius": "rounded-lg"
+                      },
+                      "desktop": {
+                        "width": "w-1/2"
+                      },
+                      "custom": {
+                        "displayName": "Service Card"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-2xl",
+                            "fontWeight": "font-bold"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Title"
+                          },
+                          "text": "<p>Development</p>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {},
+                          "mobile": {
+                            "fontSize": "text-base"
+                          },
+                          "desktop": {},
+                          "custom": {
+                            "displayName": "Service Description"
+                          },
+                          "text": "<p>Custom solutions tailored to your unique business requirements and goals.</p>"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "services-3",
+      "name": "Three Steps Section",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "canDelete": true,
+          "canEditName": true,
+          "root": {
+            "background": "bg-white",
+            "padding": "py-16"
+          },
+          "mobile": {
+            "padding": "px-4"
+          },
+          "desktop": {
+            "padding": "px-6"
+          },
+          "custom": {
+            "displayName": "Three Steps Section"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "canDelete": true,
+              "canEditName": true,
+              "root": {
+                "maxWidth": "max-w-7xl",
+                "margin": "mx-auto"
+              },
+              "mobile": {
+                "padding": "px-4"
+              },
+              "desktop": {
+                "padding": "px-6"
+              },
+              "custom": {
+                "displayName": "Content Container"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "textAlign": "text-center",
+                    "margin": "mb-4"
+                  },
+                  "mobile": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold"
+                  },
+                  "desktop": {
+                    "fontSize": "text-4xl",
+                    "fontWeight": "font-bold"
+                  },
+                  "custom": {
+                    "displayName": "Main Title"
+                  },
+                  "text": "<h1>Three Steps to Mobile Freedom</h1>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {
+                    "textAlign": "text-center",
+                    "margin": "mb-12",
+                    "color": "text-gray-600"
+                  },
+                  "mobile": {
+                    "fontSize": "text-base"
+                  },
+                  "desktop": {
+                    "fontSize": "text-lg"
+                  },
+                  "custom": {
+                    "displayName": "Subtitle"
+                  },
+                  "text": "<p>Skip the contracts, keep your phone, and get connected your way, wherever you are, in just a few simple steps.</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "flexDirection": "flex-col",
+                    "gap": "gap-8",
+                    "mb": "mb-8"
+                  },
+                  "desktop": {
+                    "display": "flex",
+                    "flexDirection": "flex-row",
+                    "gap": "gap-8",
+                    "mb": "mb-12"
+                  },
+                  "custom": {
+                    "displayName": "Steps Container"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "flex": "flex-1"
+                      },
+                      "mobile": {
+                        "padding": "px-4"
+                      },
+                      "desktop": {
+                        "padding": "px-6"
+                      },
+                      "custom": {
+                        "displayName": "Step 1"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "margin": "mb-4",
+                            "color": "text-green-600",
+                            "fontWeight": "font-bold"
+                          },
+                          "mobile": {
+                            "fontSize": "text-lg"
+                          },
+                          "desktop": {
+                            "fontSize": "text-xl"
+                          },
+                          "custom": {
+                            "displayName": "Step 1 Title"
+                          },
+                          "text": "<h3>1. Build Your Plan</h3>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "color": "text-gray-600"
+                          },
+                          "mobile": {
+                            "fontSize": "text-sm"
+                          },
+                          "desktop": {
+                            "fontSize": "text-base"
+                          },
+                          "custom": {
+                            "displayName": "Step 1 Description"
+                          },
+                          "text": "<p>Only want talk and text? Great. Need data for scrolling? Go for it. Pick what works for you and leave the rest behind.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "flex": "flex-1"
+                      },
+                      "mobile": {
+                        "padding": "px-4"
+                      },
+                      "desktop": {
+                        "padding": "px-6"
+                      },
+                      "custom": {
+                        "displayName": "Step 2"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "margin": "mb-4",
+                            "color": "text-green-600",
+                            "fontWeight": "font-bold"
+                          },
+                          "mobile": {
+                            "fontSize": "text-lg"
+                          },
+                          "desktop": {
+                            "fontSize": "text-xl"
+                          },
+                          "custom": {
+                            "displayName": "Step 2 Title"
+                          },
+                          "text": "<h3>2. Activate in Minutes</h3>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "color": "text-gray-600"
+                          },
+                          "mobile": {
+                            "fontSize": "text-sm"
+                          },
+                          "desktop": {
+                            "fontSize": "text-base"
+                          },
+                          "custom": {
+                            "displayName": "Step 2 Description"
+                          },
+                          "text": "<p>Choose an eSIM for instant setup or get a SIM card shipped to you. Either way, you'll be up and running in no time.</p>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "flex": "flex-1"
+                      },
+                      "mobile": {
+                        "padding": "px-4"
+                      },
+                      "desktop": {
+                        "padding": "px-6"
+                      },
+                      "custom": {
+                        "displayName": "Step 3"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "margin": "mb-4",
+                            "color": "text-green-600",
+                            "fontWeight": "font-bold"
+                          },
+                          "mobile": {
+                            "fontSize": "text-lg"
+                          },
+                          "desktop": {
+                            "fontSize": "text-xl"
+                          },
+                          "custom": {
+                            "displayName": "Step 3 Title"
+                          },
+                          "text": "<h3>3. Do Your Thing</h3>"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "canDelete": true,
+                          "canEditName": true,
+                          "root": {
+                            "color": "text-gray-600"
+                          },
+                          "mobile": {
+                            "fontSize": "text-sm"
+                          },
+                          "desktop": {
+                            "fontSize": "text-base"
+                          },
+                          "custom": {
+                            "displayName": "Step 3 Description"
+                          },
+                          "text": "<p>Traveling? Wi-Fi only? Daily scrolling? Your plan keeps up with you, not the other way around.</p>"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "canDelete": true,
+                  "canEditName": true,
+                  "root": {},
+                  "mobile": {
+                    "display": "flex",
+                    "justifyContent": "justify-center",
+                    "alignItems": "items-center"
+                  },
+                  "desktop": {
+                    "display": "flex",
+                    "justifyContent": "justify-center",
+                    "alignItems": "items-center"
+                  },
+                  "custom": {
+                    "displayName": "Button Container"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Button",
+                    "props": {
+                      "canDelete": true,
+                      "canEditName": true,
+                      "root": {
+                        "background": "bg-green-500",
+                        "color": "text-white",
+                        "radius": "rounded-lg",
+                        "shadow": "shadow-md"
+                      },
+                      "mobile": {
+                        "px": "px-6",
+                        "py": "py-3",
+                        "fontSize": "text-base",
+                        "fontWeight": "font-semibold"
+                      },
+                      "desktop": {
+                        "px": "px-8",
+                        "py": "py-4",
+                        "fontSize": "text-lg",
+                        "fontWeight": "font-semibold"
+                      },
+                      "custom": {
+                        "displayName": "CTA Button"
+                      },
+                      "text": "Get Started in Minutes",
+                      "url": "#"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

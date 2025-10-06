@@ -1,0 +1,247 @@
+{
+  "id": "video",
+  "name": "Video",
+  "templates": [
+    {
+      "id": "video-1",
+      "name": "Video Hero",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "root": {
+            "py": "py-32",
+            "bg": "bg-gray-900",
+            "alignItems": "items-center",
+            "justifyContent": "justify-center"
+          },
+          "custom": {
+            "displayName": "Video Hero"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "root": {
+                "maxWidth": "max-w-4xl",
+                "textAlign": "text-center"
+              },
+              "custom": {
+                "displayName": "Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "root": {
+                    "fontSize": "text-5xl",
+                    "fontWeight": "font-bold",
+                    "color": "text-white",
+                    "marginBottom": "mb-6"
+                  },
+                  "custom": {
+                    "displayName": "Title"
+                  },
+                  "text": "<h1>Watch Our Story</h1>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "root": {
+                    "fontSize": "text-xl",
+                    "color": "text-gray-300",
+                    "marginBottom": "mb-8"
+                  },
+                  "custom": {
+                    "displayName": "Description"
+                  },
+                  "text": "<p>Discover how we're changing the world, one video at a time.</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "width": "w-full",
+                    "maxWidth": "max-w-2xl",
+                    "margin": "mx-auto",
+                    "bg": "bg-black",
+                    "radius": "rounded-lg",
+                    "overflow": "overflow-hidden",
+                    "height": "h-96"
+                  },
+                  "custom": {
+                    "displayName": "Video Container"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "display": "flex",
+                        "alignItems": "items-center",
+                        "justifyContent": "justify-center",
+                        "height": "h-full",
+                        "color": "text-white",
+                        "fontSize": "text-2xl"
+                      },
+                      "custom": {
+                        "displayName": "Video Placeholder"
+                      },
+                      "text": "<div>🎥 Video Player</div>"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "video-2",
+      "name": "Video with Text",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "root": {
+            "py": "py-24",
+            "bg": "bg-white"
+          },
+          "custom": {
+            "displayName": "Video with Text"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "root": {
+                "maxWidth": "max-w-6xl",
+                "display": "flex",
+                "flexDirection": "flex-col",
+                "gap": "gap-12",
+                "alignItems": "items-center"
+              },
+              "desktop": {
+                "flexDirection": "flex-row",
+                "alignItems": "items-center"
+              },
+              "custom": {
+                "displayName": "Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "width": "w-full",
+                    "flex": "flex-1"
+                  },
+                  "custom": {
+                    "displayName": "Video Section"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "root": {
+                        "bg": "bg-gray-100",
+                        "radius": "rounded-lg",
+                        "height": "h-80",
+                        "display": "flex",
+                        "alignItems": "items-center",
+                        "justifyContent": "justify-center"
+                      },
+                      "custom": {
+                        "displayName": "Video Placeholder"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "color": "text-gray-500",
+                            "fontSize": "text-xl"
+                          },
+                          "custom": {
+                            "displayName": "Play Icon"
+                          },
+                          "text": "<div>▶️ Video</div>"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "width": "w-full",
+                    "flex": "flex-1"
+                  },
+                  "custom": {
+                    "displayName": "Text Section"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "fontSize": "text-3xl",
+                        "fontWeight": "font-bold",
+                        "marginBottom": "mb-4"
+                      },
+                      "custom": {
+                        "displayName": "Title"
+                      },
+                      "text": "<h2>See It In Action</h2>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "fontSize": "text-lg",
+                        "color": "text-gray-600",
+                        "marginBottom": "mb-6"
+                      },
+                      "custom": {
+                        "displayName": "Description"
+                      },
+                      "text": "<p>Watch our product demo to see how easy it is to get started and achieve your goals.</p>"
+                    }
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "root": {
+                        "bg": "bg-blue-600",
+                        "color": "text-white",
+                        "padding": "px-6 py-3",
+                        "radius": "rounded-md",
+                        "fontWeight": "font-semibold"
+                      },
+                      "custom": {
+                        "displayName": "CTA Button"
+                      },
+                      "text": "Get Started"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

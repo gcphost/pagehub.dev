@@ -1,0 +1,294 @@
+{
+  "id": "optin",
+  "name": "Opt-in & Contact",
+  "templates": [
+    {
+      "id": "optin-1",
+      "name": "Newsletter Signup",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "root": {
+            "py": "py-20",
+            "bg": "bg-blue-600"
+          },
+          "custom": {
+            "displayName": "Newsletter Signup"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "root": {
+                "maxWidth": "max-w-2xl",
+                "textAlign": "text-center"
+              },
+              "custom": {
+                "displayName": "Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "root": {
+                    "fontSize": "text-3xl",
+                    "fontWeight": "font-bold",
+                    "color": "text-white",
+                    "marginBottom": "mb-4"
+                  },
+                  "custom": {
+                    "displayName": "Title"
+                  },
+                  "text": "<h2>Stay Updated</h2>"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "root": {
+                    "fontSize": "text-lg",
+                    "color": "text-blue-100",
+                    "marginBottom": "mb-8"
+                  },
+                  "custom": {
+                    "displayName": "Description"
+                  },
+                  "text": "<p>Get the latest news and updates delivered to your inbox.</p>"
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "display": "flex",
+                    "gap": "gap-4",
+                    "flexDirection": "flex-col"
+                  },
+                  "desktop": {
+                    "flexDirection": "flex-row"
+                  },
+                  "custom": {
+                    "displayName": "Form"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "flex": "flex-1",
+                        "bg": "bg-white",
+                        "padding": "px-4 py-3",
+                        "radius": "rounded-md",
+                        "color": "text-gray-500"
+                      },
+                      "custom": {
+                        "displayName": "Email Input"
+                      },
+                      "text": "<input type=\"email\" placeholder=\"Enter your email\" class=\"w-full border-none outline-none\" />"
+                    }
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "root": {
+                        "bg": "bg-white",
+                        "color": "text-blue-600",
+                        "padding": "px-8 py-3",
+                        "radius": "rounded-md",
+                        "fontWeight": "font-semibold",
+                        "width": "w-full"
+                      },
+                      "desktop": {
+                        "width": "w-auto"
+                      },
+                      "custom": {
+                        "displayName": "Subscribe Button"
+                      },
+                      "text": "Subscribe"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "optin-2",
+      "name": "Contact Form",
+      "structure": {
+        "type": "Container",
+        "props": {
+          "root": {
+            "py": "py-24",
+            "bg": "bg-gray-50"
+          },
+          "custom": {
+            "displayName": "Contact Form"
+          }
+        },
+        "children": [
+          {
+            "type": "Container",
+            "props": {
+              "root": {
+                "maxWidth": "max-w-4xl"
+              },
+              "custom": {
+                "displayName": "Content"
+              }
+            },
+            "children": [
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "textAlign": "text-center",
+                    "marginBottom": "mb-12"
+                  },
+                  "custom": {
+                    "displayName": "Header"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "fontSize": "text-4xl",
+                        "fontWeight": "font-bold",
+                        "marginBottom": "mb-4"
+                      },
+                      "custom": {
+                        "displayName": "Title"
+                      },
+                      "text": "<h2>Get In Touch</h2>"
+                    }
+                  },
+                  {
+                    "type": "Text",
+                    "props": {
+                      "root": {
+                        "fontSize": "text-lg",
+                        "color": "text-gray-600"
+                      },
+                      "custom": {
+                        "displayName": "Description"
+                      },
+                      "text": "<p>Have a question or want to work together? We'd love to hear from you.</p>"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "root": {
+                    "bg": "bg-white",
+                    "padding": "p-8",
+                    "radius": "rounded-lg",
+                    "shadow": "shadow-lg"
+                  },
+                  "custom": {
+                    "displayName": "Form Container"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "root": {
+                        "display": "grid",
+                        "gap": "gap-6",
+                        "gridTemplateColumns": "grid-cols-1"
+                      },
+                      "desktop": {
+                        "gridTemplateColumns": "grid-cols-2"
+                      },
+                      "custom": {
+                        "displayName": "Form Fields"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "bg": "bg-gray-50",
+                            "padding": "p-4",
+                            "radius": "rounded-md",
+                            "color": "text-gray-500"
+                          },
+                          "custom": {
+                            "displayName": "Name Field"
+                          },
+                          "text": "<input type=\"text\" placeholder=\"Your Name\" class=\"w-full border-none outline-none bg-transparent\" />"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "bg": "bg-gray-50",
+                            "padding": "p-4",
+                            "radius": "rounded-md",
+                            "color": "text-gray-500"
+                          },
+                          "custom": {
+                            "displayName": "Email Field"
+                          },
+                          "text": "<input type=\"email\" placeholder=\"Your Email\" class=\"w-full border-none outline-none bg-transparent\" />"
+                        }
+                      },
+                      {
+                        "type": "Text",
+                        "props": {
+                          "root": {
+                            "bg": "bg-gray-50",
+                            "padding": "p-4",
+                            "radius": "rounded-md",
+                            "color": "text-gray-500",
+                            "gridColumn": "col-span-1"
+                          },
+                          "desktop": {
+                            "gridColumn": "col-span-2"
+                          },
+                          "custom": {
+                            "displayName": "Message Field"
+                          },
+                          "text": "<textarea placeholder=\"Your Message\" rows=\"4\" class=\"w-full border-none outline-none bg-transparent resize-none\"></textarea>"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "root": {
+                        "bg": "bg-blue-600",
+                        "color": "text-white",
+                        "padding": "px-8 py-3",
+                        "radius": "rounded-md",
+                        "fontWeight": "font-semibold",
+                        "marginTop": "mt-6",
+                        "width": "w-full"
+                      },
+                      "custom": {
+                        "displayName": "Submit Button"
+                      },
+                      "text": "Send Message"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
