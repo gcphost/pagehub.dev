@@ -2,61 +2,34 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Hook to detect if element is clipped outside the viewport container
+ * Check if element is clipped outside the viewport container
+ * Returns true immediately without state management
  */
-const useOffScreenDetection = (ref, position) => {
-  const [isOffScreen, setIsOffScreen] = useState(false);
+const checkIfOffScreen = (ref, position) => {
+  if (!ref.current) return false;
 
-  useEffect(() => {
-    if (!ref.current) return;
+  const viewport = document.getElementById('viewport');
+  if (!viewport) return false;
 
-    const checkPosition = () => {
-      if (!ref.current) return;
+  const rect = ref.current.getBoundingClientRect();
+  const viewportRect = viewport.getBoundingClientRect();
 
-      const viewport = document.getElementById('viewport');
-      if (!viewport) return;
+  if (position === "left" || position === "right") {
+    // For left/right, check if clipped horizontally OR vertically (top)
+    const clippedHorizontally = position === "left"
+      ? rect.left < viewportRect.left
+      : rect.right > viewportRect.right;
+    const clippedAtTop = rect.top < viewportRect.top;
+    return clippedHorizontally || clippedAtTop;
+  } else if (position === "top") {
+    // Check if clipped on the top side of viewport
+    return rect.top < viewportRect.top;
+  } else if (position === "bottom") {
+    // Check if clipped on the bottom side of viewport
+    return rect.bottom > viewportRect.bottom;
+  }
 
-      const rect = ref.current.getBoundingClientRect();
-      const viewportRect = viewport.getBoundingClientRect();
-
-      if (position === "left" || position === "right") {
-        // For left/right, check if clipped horizontally OR vertically (top)
-        const clippedHorizontally = position === "left"
-          ? rect.left < viewportRect.left
-          : rect.right > viewportRect.right;
-        const clippedAtTop = rect.top < viewportRect.top;
-        setIsOffScreen(clippedHorizontally || clippedAtTop);
-      } else if (position === "top") {
-        // Check if clipped on the top side of viewport
-        setIsOffScreen(rect.top < viewportRect.top);
-      } else if (position === "bottom") {
-        // Check if clipped on the bottom side of viewport
-        setIsOffScreen(rect.bottom > viewportRect.bottom);
-      }
-    };
-
-    // Check initially and on scroll/resize
-    // Use requestAnimationFrame to wait for layout to complete
-    const rafId = requestAnimationFrame(() => {
-      checkPosition();
-    });
-
-    const viewport = document.getElementById('viewport');
-    if (viewport) {
-      viewport.addEventListener('scroll', checkPosition);
-    }
-    window.addEventListener('resize', checkPosition);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      if (viewport) {
-        viewport.removeEventListener('scroll', checkPosition);
-      }
-      window.removeEventListener('resize', checkPosition);
-    };
-  }, [ref, position]);
-
-  return isOffScreen;
+  return false;
 };
 
 /**
@@ -88,11 +61,13 @@ export const RenderNodeControlInline = ({
   const [align, setAlign] = useState(initialAlign);
   const [placement, setPlacement] = useState(initialPlacement);
 
-  // Use the alt positioning system (takes priority)
-  const isOffScreen = useOffScreenDetection(ref, position);
+  // Check if off-screen (like RenderNodeControl does it - inline, no state)
+  const isOffScreen = checkIfOffScreen(ref, position);
 
   useEffect(() => {
     if (!ref.current) return;
+
+    let scrollTimeout;
 
     const checkViewport = () => {
       // Guard against null ref (can happen if timeout fires after unmount)
@@ -117,12 +92,35 @@ export const RenderNodeControlInline = ({
       }
     };
 
-    // Use requestAnimationFrame to match the timing of isOffScreen detection
-    const rafId = requestAnimationFrame(() => {
-      checkViewport();
-    });
+    const handleScroll = () => {
+      // Clear existing timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
 
-    return () => cancelAnimationFrame(rafId);
+      // Set new timeout - only update position after scroll stops for 500ms
+      scrollTimeout = setTimeout(() => {
+        checkViewport();
+      }, 200);
+    };
+
+    // Check immediately on mount
+    checkViewport();
+
+    // Listen for scroll events with debounce
+    const viewportElement = document.getElementById("viewport");
+    if (viewportElement) {
+      viewportElement.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      if (viewportElement) {
+        viewportElement.removeEventListener('scroll', handleScroll);
+      }
+    };
   }, [initialPosition, initialAlign, initialPlacement, alt]);
 
   // ============================================
@@ -234,4 +232,5 @@ export const RenderNodeControlInline = ({
 };
 
 export default RenderNodeControlInline;
+
 

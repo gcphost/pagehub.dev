@@ -14,6 +14,7 @@ import {
   TbLayoutAlignMiddle,
   TbLayoutAlignRight,
   TbLayoutAlignTop,
+  TbNavigation,
   TbPlus,
   TbRowInsertTop
 } from "react-icons/tb";
@@ -22,6 +23,7 @@ import { SettingsAtom } from "utils/atoms";
 import { MenuItemState, MenuState } from "utils/lib";
 import { DeleteNodeButton } from "./DeleteNodeButton";
 import { DuplicateNodeButton } from "./DuplicateNodeButton";
+import SelectParentNodeTool from "./SelectParentNodeTool";
 
 // Helper function to get alignment options based on direction and value
 const getAlignmentOptions = (direction, value) => {
@@ -154,6 +156,18 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         },
       }}
     >
+
+      {direction == "horizontal" && (
+        <>
+
+
+          <Tooltip content="Select Navigation" className="border-r border-gray-700 pr-2">
+            <SelectParentNodeTool parentType="Nav" icon={<TbNavigation />}>
+            </SelectParentNodeTool>
+          </Tooltip>
+        </>
+      )}
+
       {direction === "horizontal" && (
         <div className="h-6 w-6 flex items-center justify-center">
           <Tooltip content="Delete container">
@@ -161,7 +175,6 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
               className="text-white hover:text-gray-200"
               title="Delete container"
               titleDisabled="Cannot delete"
-              useSimpleDelete={false}
             />
           </Tooltip>
         </div>
@@ -194,10 +207,18 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         </div>
       </Tooltip>
       {direction == "horizontal" && (
-        <div className="h-6 w-6 flex items-center justify-center">
-          <FlexDirectionInput wrap="control" type="toggleNext" />
-        </div>
+        <>
+          <div className="h-6 w-6 flex items-center justify-center">
+            <FlexDirectionInput wrap="control" type="toggleNext" />
+          </div>
+
+
+        </>
       )}
+
+
+
+
 
       {match && (
         <div className="h-6 w-6 flex items-center justify-center">

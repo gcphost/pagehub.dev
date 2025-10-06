@@ -356,6 +356,8 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
       viewValue={viewValue}
       propType={propType}
       propKey={propKey}
+      index={index}
+      propItemKey={propItemKey}
       wrap={wrap}
     >
       <Input

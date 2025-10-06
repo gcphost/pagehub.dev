@@ -97,7 +97,6 @@ export const Embed = (props: EmbedProps) => {
       connect(drag(r));
     },
     className: ClassGenerator(props, view, enabled, [], [], preview),
-    style: enabled ? { position: 'relative' } : undefined,
     role: "region",
     "aria-label": props.title || "Embedded content",
   };

@@ -99,9 +99,6 @@ const createPage = async (req) => {
     "draft",
     "title",
     "description",
-    "company",
-    "companyType",
-    "companyLocation",
   ].forEach((_) => {
     const value = req.body[_];
 

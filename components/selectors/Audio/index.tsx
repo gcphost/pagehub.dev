@@ -80,7 +80,6 @@ export const Audio = (props: AudioProps) => {
     className: "",
     role: "region",
     "aria-label": props.title || audioUrl ? `Audio: ${props.title || audioUrl}` : "Audio player",
-    style: enabled ? { position: 'relative' } : undefined,
     children: audioUrl ? (
       <audio
         className={ClassGenerator(props, view, enabled, [], [], preview)}

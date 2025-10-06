@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { motion } from "framer-motion";
 import RenderNodeControlInline from "../RenderNodeControlInline";
 import { DeleteNodeButton } from "./Tools/DeleteNodeButton";
 
@@ -16,14 +17,36 @@ export const DeleteNodeController = () => {
       key={`${id}-delete`}
       position="left"
       align="middle"
-      className="whitespace-nowrap items-center select-none p-2"
+      className="whitespace-nowrap items-center select-none pointer-events-auto"
     >
-      <div className="p-2 flex items-center justify-center bg-gray-600 rounded-md !text-base !font-normal fontfamily-base">
+      <motion.div initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: 0.5,
+            duration: 0.5,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            mass: 0.5,
+          },
+        }}
+        exit={{
+          opacity: 0,
+          transition: {
+            delay: 0.2,
+            duration: 0.3,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            mass: 0.5,
+          },
+        }} className="p-1.5 flex items-center justify-center bg-gray-600 rounded-md !text-base !font-normal fontfamily-base m-1">
         <DeleteNodeButton
-          className="text-white hover:text-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
-          useSimpleDelete={false}
+          className="text-white hover:text-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-sm"
         />
-      </div>
+      </motion.div>
     </RenderNodeControlInline>
   );
 };

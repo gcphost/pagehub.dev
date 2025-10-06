@@ -4,9 +4,16 @@ import { useEffect, useState } from "react";
 const HOVER_MARGIN = 60; // pixels
 
 export const ProximityHover = () => {
-  const { id, dom, isContainer } = useNode((node) => ({
+  const { id, dom, isInteractiveElement } = useNode((node) => ({
     dom: node.dom,
-    isContainer: node.data.name === "Container" || node.data.displayName === "Container",
+    isInteractiveElement:
+      node.data.name === "Container" || node.data.displayName === "Container" ||
+      node.data.name === "Button" || node.data.displayName === "Button" ||
+      node.data.name === "Text" || node.data.displayName === "Text" ||
+      node.data.name === "Image" || node.data.displayName === "Image" ||
+      node.data.name === "Nav" || node.data.displayName === "Nav" ||
+      node.data.name === "Header" || node.data.displayName === "Header" ||
+      node.data.name === "Footer" || node.data.displayName === "Footer",
   }));
 
   const { isSelected } = useEditor((_, query) => ({
@@ -16,7 +23,7 @@ export const ProximityHover = () => {
   const [isProximityHover, setIsProximityHover] = useState(false);
 
   useEffect(() => {
-    if (!dom || !isContainer) return;
+    if (!dom || !isInteractiveElement) return;
 
     let rafId: number;
 
@@ -54,11 +61,11 @@ export const ProximityHover = () => {
       document.removeEventListener("dragover", checkProximity as EventListener);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [dom, isContainer]);
+  }, [dom, isInteractiveElement]);
 
   // Apply hover attribute based on proximity (but not if selected)
   useEffect(() => {
-    if (!dom || !isContainer || isSelected) return;
+    if (!dom || !isInteractiveElement || isSelected) return;
 
     if (isProximityHover) {
       dom.setAttribute("data-hover", "true");
@@ -69,7 +76,7 @@ export const ProximityHover = () => {
         dom.removeAttribute("data-hover");
       }
     }
-  }, [isProximityHover, dom, isSelected, isContainer]);
+  }, [isProximityHover, dom, isSelected, isInteractiveElement]);
 
   return null;
 };

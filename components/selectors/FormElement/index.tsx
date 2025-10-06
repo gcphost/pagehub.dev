@@ -142,7 +142,6 @@ export const FormElement = (props: Partial<FormElementProps>) => {
   const prop: any = {
     ref: (r) => connect(drag(r)),
     className: ClassGenerator(props, view, enabled, [], [], preview),
-    style: enabled ? { position: 'relative' } : undefined,
     type: props.type,
     placeholder: props.placeholder,
     name: props.name,
@@ -209,8 +208,7 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     const containerProp: any = {
       ref: (r) => connect(drag(r)),
       style: {
-        position: 'relative',
-        overflow: 'visible',
+
         display: 'inline-block', // Maintain inline nature of form elements
         width: '100%', // Take full width like the input would
       },

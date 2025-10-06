@@ -38,7 +38,7 @@ export const MarginInput = ({ propKey = "margin" }) => (
         </>
       }
     >
-      <ToolbarSection full={4}>
+      <ToolbarSection full={2}>
         <ToolbarItem
           propKey="mt"
           type="slider"

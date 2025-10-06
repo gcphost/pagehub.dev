@@ -83,12 +83,11 @@ export const SpacerSettings = () => {
 
   const TBBody = () => (
     <TableBodyStyleControl
-      presets={presets}
       head={head}
       activeTab={activeTab}
-      setActiveTab={setActiveTab}
       query={query}
       actions={actions}
+      tab={<MainTab />}
     >
       <MainTab />
     </TableBodyStyleControl>

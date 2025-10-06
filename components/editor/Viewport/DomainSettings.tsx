@@ -319,7 +319,7 @@ export const DomainSettings = () => {
         )}
 
         {publishType === "draft" && (
-          <div>
+          <div className="select-text">
             This page will be viewable at{" "}
             <strong>
               {settings.draftId}

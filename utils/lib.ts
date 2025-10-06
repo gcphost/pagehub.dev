@@ -394,9 +394,13 @@ export const applyBackgroundImage = (
 };
 
 export const getFontFromComp = (props: BaseSelectorProps) => {
-  if (!props.root.fontFamily) return;
+  const fontFamily = props.root?.fontFamily;
+  if (!fontFamily) {
+    return;
+  }
 
-  let href = `https://fonts.googleapis.com/css2?family=${props.root.fontFamily[0].replace(
+  const fontName = Array.isArray(fontFamily) ? fontFamily[0] : fontFamily;
+  let href = `https://fonts.googleapis.com/css2?family=${fontName.replace(
     / +/g,
     "+"
   )}`;
@@ -407,12 +411,34 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
     ),
   ].filter((_) => _);
 
-  if (!weights.length) {
-    weights.push("400");
+  // Convert Tailwind font weights to numeric values
+  const weightMap = {
+    "font-thin": "100",
+    "font-extralight": "200",
+    "font-light": "300",
+    "font-normal": "400",
+    "font-medium": "500",
+    "font-semibold": "600",
+    "font-bold": "700",
+    "font-extrabold": "800",
+    "font-black": "900",
+  };
+
+  const numericWeights = weights
+    .map((weight) => {
+      if (typeof weight === "string" && weight.startsWith("font-")) {
+        return weightMap[weight] || "400";
+      }
+      return weight;
+    })
+    .filter((_) => _);
+
+  if (!numericWeights.length) {
+    numericWeights.push("400");
   }
 
   // Use CSS2 API with proper weight syntax
-  href += `:wght@${weights.join(";")}`;
+  href += `:wght@${numericWeights.join(";")}`;
 
   // Use font-display=swap for better UX (shows fallback immediately, swaps when ready)
   href += "&display=swap";

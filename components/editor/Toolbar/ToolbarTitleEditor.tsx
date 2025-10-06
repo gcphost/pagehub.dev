@@ -18,14 +18,18 @@ export const ToolbarTitleEditor = () => {
 
   return (
     <div className="flex items-center gap-3 justify-between">
-      {!propValues.canEditName && <div>{name}</div>}
+      {!propValues.canEditName && (
+        <div className="truncate max-w-xs" title={name}>
+          {name}
+        </div>
+      )}
 
       {propValues.canEditName && (
         <input
           type="text"
           defaultValue={name}
           placeholder={name}
-          className="bg-transparent border-0 w-full rounded-md font-bold text-2xl p-0 focus:ring-0 hover:bg-gray-500/10 capitalize"
+          className="bg-transparent border-0 w-full rounded-md font-bold text-2xl p-0 focus:ring-0 hover:bg-gray-500/10 capitalize truncate"
           onChange={debounce((e) => {
             actions.setCustom(
               id,

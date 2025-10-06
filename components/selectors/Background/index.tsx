@@ -139,7 +139,6 @@ export const Background = (props: Partial<ContainerProps>) => {
     },
     style: {
       ...(props.root?.style ? CSStoObj(props.root.style) || {} : {}),
-      ...(enabled ? { position: 'relative' } : {}),
     },
     className: ClassGenerator(
       props,

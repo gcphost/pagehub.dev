@@ -5,6 +5,7 @@ import {
   TBWrap,
   TableBodyStyleControl,
 } from "components/editor/Toolbar/Helpers/SettingsHelper";
+import { AccessibilityInput } from "components/editor/Toolbar/Inputs/AccessibilityInput";
 import { AlignItemsInput } from "components/editor/Toolbar/Inputs/AlignItemsInput";
 import { AnchorInput } from "components/editor/Toolbar/Inputs/AnchorInput";
 import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
@@ -26,7 +27,7 @@ import { TabAtom } from "components/editor/Viewport";
 import { useState } from "react";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
-import { TbBoxPadding, TbForms, TbMouse, TbPlayerPlay } from "react-icons/tb";
+import { TbAccessible, TbBoxPadding, TbForms, TbMouse, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { useDefaultTab } from "utils/lib";
@@ -62,6 +63,10 @@ export const FormSettings = () => {
     {
       title: "Animations",
       icon: <TbPlayerPlay />,
+    },
+    {
+      title: "Accessibility",
+      icon: <TbAccessible />,
     },
     {
       title: "Style",
@@ -262,6 +267,8 @@ export const FormSettings = () => {
           </ToolbarSection>
         </TabBody>
       )}
+
+      {activeTab === "Accessibility" && <AccessibilityInput />}
       {activeTab === "Hover & Click" && (
         <TabBody>
           <ToolbarSection title="Hover & Click">

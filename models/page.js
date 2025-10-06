@@ -19,9 +19,6 @@ export const PageSchema = new mongoose.Schema(
     draft: String,
     title: String,
     description: String,
-    company: String,
-    companyType: String,
-    companyLocation: String,
     users: [
       {
         type: String,

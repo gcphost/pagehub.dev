@@ -9,8 +9,8 @@ import {
   TbClearAll,
   TbSettings,
 } from "react-icons/tb";
-import { ToolbarItem } from "../ToolbarItem";
 import { ItemAdvanceToggle } from "../Helpers/ItemSelector";
+import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
 import { FontFamilyInput } from "./FontFamilyInput";
 import { TailwindInput } from "./TailwindInput";
@@ -53,7 +53,8 @@ export const FontInput = () => (
         min={0}
         valueLabels={TailwindStyles.fontWeight}
       />
-
+    </ToolbarSection>
+    <ToolbarSection full={1}>
       <ToolbarItem
         propKey="lineHeight"
         type="slider"

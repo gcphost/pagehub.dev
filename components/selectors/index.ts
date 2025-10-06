@@ -22,6 +22,7 @@ export interface BaseStyleProps {
   mt?: string;
   mr?: string;
   mb?: string;
+  marginTop?: string;
   pl?: string;
   pr?: string;
   pt?: string;
@@ -45,6 +46,12 @@ export interface BaseStyleProps {
   overflow?: string;
   cursor?: string;
   position?: string;
+  inset?: string;
+  top?: string;
+  right?: string;
+  bottom?: string;
+  left?: string;
+  zIndex?: string;
 }
 
 export const RootClassGenProps = [

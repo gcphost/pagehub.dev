@@ -248,8 +248,6 @@ export const ColorPickerDialog = () => {
                 >
                   <TbX />
                 </button>
-
-
               </div>
 
               <div className="flex flex-row gap-1.5 items-center">
@@ -264,6 +262,8 @@ export const ColorPickerDialog = () => {
                     </button>
                   </Tooltip>
                 )}
+
+
 
                 {/* Only show save and dropper when full picker is visible */}
                 {(!shouldShowPalette || showFullPicker) && (
@@ -298,54 +298,64 @@ export const ColorPickerDialog = () => {
 
           {/* Named Palette Colors */}
           {shouldShowPalette && !showFullPicker && (
-            <div className="mx-3 mt-3 mb-2">
-              <div className="text-xs font-medium text-gray-600 mb-2 uppercase tracking-wide">
-                <span>Page Colors</span>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                {namedPalette.map((paletteColor, index) => {
-                  // Check if current value is this palette color
-                  // Value could be "text-palette:Primary" or "bg-palette:Primary" etc
-                  const valueStr = typeof colorPicker.value === "string" ? colorPicker.value : "";
-                  const isPaletteRef = valueStr.includes("palette:");
-                  const isSelected = isPaletteRef
-                    ? valueStr.includes(`palette:${paletteColor.name}`)
-                    : colorPicker.value === paletteColor.color ||
+
+
+            <div className="px-3 grid grid-cols-3 gap-2">
+              {namedPalette.map((paletteColor, index) => {
+                // Check if current value is this palette color
+                // Value could be "text-palette:Primary" or "bg-palette:Primary" etc
+                const valueStr = typeof colorPicker.value === "string" ? colorPicker.value : "";
+                const isPaletteRef = valueStr.includes("palette:");
+
+                // More robust palette matching - extract palette name from value
+                let isSelected = false;
+                if (isPaletteRef) {
+                  // Extract the palette name from strings like "text-palette:Alternate Text"
+                  const match = valueStr.match(/palette:(.+)$/);
+                  if (match) {
+                    const extractedName = match[1].trim();
+                    const paletteName = paletteColor.name.trim();
+                    isSelected = extractedName === paletteName;
+                  }
+                } else {
+                  // Direct color value comparison
+                  isSelected = colorPicker.value === paletteColor.color ||
                     (typeof colorPicker.value === "object" &&
                       colorPicker.value?.r &&
                       paletteColor.color === `rgba(${colorPicker.value.r},${colorPicker.value.g},${colorPicker.value.b},${colorPicker.value.a})`);
+                }
 
-                  const isTailwindClass = !paletteColor.color.includes("rgba") && !paletteColor.color.startsWith("#");
+                const isTailwindClass = !paletteColor.color.includes("rgba") && !paletteColor.color.startsWith("#");
 
-                  // For Tailwind classes, ensure they have bg- prefix for display
-                  const displayColor = isTailwindClass && !paletteColor.color.startsWith("bg-")
-                    ? `bg-${paletteColor.color}`
-                    : paletteColor.color;
+                // For Tailwind classes, ensure they have bg- prefix for display
+                const displayColor = isTailwindClass && !paletteColor.color.startsWith("bg-")
+                  ? `bg-${paletteColor.color}`
+                  : paletteColor.color;
 
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        // Store the palette reference, not the color value
-                        changed({ type: "palette", value: `palette:${paletteColor.name}` });
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      // Store the palette reference, not the color value
+                      changed({ type: "palette", value: `palette:${paletteColor.name}` });
+                    }}
+                    className={`flex flex-col items-center gap-1.5 p-2 rounded-md hover:bg-gray-50 transition-colors ${isSelected ? "ring-2 ring-primary-500 bg-primary-50" : ""
+                      }`}
+                  >
+                    <div
+                      className={`w-full h-8 rounded border-2 border-gray-200 ${isTailwindClass ? displayColor : ""}`}
+                      style={{
+                        backgroundColor: !isTailwindClass ? paletteColor.color : undefined
                       }}
-                      className={`flex flex-col items-center gap-1.5 p-2 rounded-md hover:bg-gray-50 transition-colors ${isSelected ? "ring-2 ring-primary-500 bg-primary-50" : ""
-                        }`}
-                    >
-                      <div
-                        className={`w-full h-8 rounded border-2 border-gray-200 ${isTailwindClass ? displayColor : ""}`}
-                        style={{
-                          backgroundColor: !isTailwindClass ? paletteColor.color : undefined
-                        }}
-                      />
-                      <span className="text-xs text-gray-700 font-medium truncate w-full text-center">
-                        {paletteColor.name}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+                    />
+                    <span className="text-xs text-gray-700 font-medium truncate w-full text-center">
+                      {paletteColor.name}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
+
           )}
 
           {/* Show color picker if no palette OR if toggle is enabled OR if showPallet is false */}

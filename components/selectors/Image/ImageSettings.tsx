@@ -5,6 +5,7 @@ import {
   TableBodyStyleControl,
   TBWrap,
 } from "components/editor/Toolbar/Helpers/SettingsHelper";
+import { AccessibilityInput } from "components/editor/Toolbar/Inputs/AccessibilityInput";
 import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInput";
 import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
@@ -18,7 +19,7 @@ import { TabAtom } from "components/editor/Viewport";
 import { useEffect } from "react";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
-import { TbBoxPadding, TbMouse, TbPhoto, TbPlayerPlay } from "react-icons/tb";
+import { TbAccessible, TbBoxPadding, TbMouse, TbPhoto, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
 import { TailwindStyles } from "utils/tailwind";
@@ -51,6 +52,10 @@ export const ImageSettings = () => {
     {
       title: "Animations",
       icon: <TbPlayerPlay />,
+    },
+    {
+      title: "Accessibility",
+      icon: <TbAccessible />,
     },
     {
       title: "Style",
@@ -168,6 +173,8 @@ export const ImageSettings = () => {
           <AnimationsInput />
         </TabBody>
       )}
+
+      {activeTab === "Accessibility" && <AccessibilityInput />}
 
       {activeTab === "Hover & Click" && (
         <TabBody>

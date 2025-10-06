@@ -41,14 +41,15 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
           setHeaderCode(props.header || "");
           setFooterCode(props.footer || "");
 
-          // Load branding settings from ROOT_NODE
-          setCompanyName(props.company || "");
-          setCompanyType(props.companyType || "");
-          setCompanyLocation(props.companyLocation || "");
-          setCompanyAddress(props.companyAddress || "");
-          setCompanyPhone(props.companyPhone || "");
-          setCompanyEmail(props.companyEmail || "");
-          setCompanyWebsite(props.companyWebsite || "");
+          // Load company settings from ROOT_NODE
+          const company = props.company || {};
+          setCompanyName(company.name || "");
+          setCompanyType(company.type || "");
+          setCompanyLocation(company.location || "");
+          setCompanyAddress(company.address || "");
+          setCompanyPhone(company.phone || "");
+          setCompanyEmail(company.email || "");
+          setCompanyWebsite(company.website || "");
         }
       } catch (e) {
         console.error("Error loading site settings:", e);
@@ -68,14 +69,16 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
         props.header = headerCode;
         props.footer = footerCode;
 
-        // Branding settings
-        props.company = companyName;
-        props.companyType = companyType;
-        props.companyLocation = companyLocation;
-        props.companyAddress = companyAddress;
-        props.companyPhone = companyPhone;
-        props.companyEmail = companyEmail;
-        props.companyWebsite = companyWebsite;
+        // Company settings as nested object
+        props.company = {
+          name: companyName,
+          type: companyType,
+          location: companyLocation,
+          address: companyAddress,
+          phone: companyPhone,
+          email: companyEmail,
+          website: companyWebsite,
+        };
       });
 
       onClose();
@@ -212,6 +215,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                   <p className="text-sm text-gray-500">
                     Your company details for branding and customization
                   </p>
+
                 </div>
 
                 <div>
@@ -305,6 +309,17 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
                     placeholder="https://www.company.com"
                   />
+                </div>
+
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+                  <p className="text-xs text-blue-800">
+                    <strong>💡 Tip:</strong> Use variables in your text and buttons like{" "}
+                    <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{company.name}}"}</code>,{" "}
+                    <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{company.email}}"}</code>,{" "}
+                    <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{company.phone}}"}</code>, or{" "}
+                    <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{year}}"}</code>{" "}
+                    to automatically display these values throughout your site.
+                  </p>
                 </div>
               </div>
             )}

@@ -1,7 +1,7 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { Tooltip } from "components/layout/Tooltip";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { useRecoilValue } from "recoil";
 import { ViewAtom } from "../Viewport";
@@ -93,6 +93,17 @@ export const GapDragControl = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartPos, setDragStartPos] = useState<{ x: number; y: number; initialGap: number; childIndex: number } | null>(null);
 
+  // Use refs to avoid stale closures in event handlers
+  const isDraggingRef = useRef(false);
+  const dragStartPosRef = useRef(dragStartPos);
+  const gapHoverInfoRef = useRef(gapHoverInfo);
+  const dragTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Update refs when state changes
+  isDraggingRef.current = isDragging;
+  dragStartPosRef.current = dragStartPos;
+  gapHoverInfoRef.current = gapHoverInfo;
+
   useEffect(() => {
     if (!dom || !isSelected) return;
 
@@ -108,12 +119,12 @@ export const GapDragControl = () => {
       if (rafId) cancelAnimationFrame(rafId);
 
       // Handle dragging - lock to the specific gap we started dragging
-      if (isDragging && dragStartPos && gapHoverInfo) {
-        const distance = gapHoverInfo.direction === "vertical"
-          ? e.clientX - dragStartPos.x
-          : e.clientY - dragStartPos.y;
+      if (isDraggingRef.current && dragStartPosRef.current && gapHoverInfoRef.current) {
+        const distance = gapHoverInfoRef.current.direction === "vertical"
+          ? e.clientX - dragStartPosRef.current.x
+          : e.clientY - dragStartPosRef.current.y;
 
-        const newGapPx = Math.max(0, dragStartPos.initialGap + distance);
+        const newGapPx = Math.max(0, dragStartPosRef.current.initialGap + distance);
 
         document.body.style.cursor = "move";
 
@@ -147,18 +158,18 @@ export const GapDragControl = () => {
         }) as HTMLElement[];
 
         // Use the locked child index from when we started dragging
-        const lockedIndex = dragStartPos.childIndex;
+        const lockedIndex = dragStartPosRef.current.childIndex;
         if (children.length > lockedIndex + 1) {
           const styles = window.getComputedStyle(dom);
           const flexDirection = styles.flexDirection;
           const child1 = children[lockedIndex].getBoundingClientRect();
           const child2 = children[lockedIndex + 1].getBoundingClientRect();
 
-          let newX = gapHoverInfo.x;
-          let newY = gapHoverInfo.y;
+          let newX = gapHoverInfoRef.current.x;
+          let newY = gapHoverInfoRef.current.y;
           let newGapRect;
 
-          if (gapHoverInfo.direction === "vertical") {
+          if (gapHoverInfoRef.current.direction === "vertical") {
             // For row gaps (vertical control), update X position
             const isReverse = flexDirection === "row-reverse";
             const leftChild = isReverse ? child2 : child1;
@@ -196,6 +207,7 @@ export const GapDragControl = () => {
             ...gapHoverInfo,
             x: newX,
             y: newY,
+            currentGap: snappedPx,
             gapRect: newGapRect,
           });
         }
@@ -204,7 +216,7 @@ export const GapDragControl = () => {
       }
 
       // Don't update hover detection while dragging
-      if (isDragging) return;
+      if (isDraggingRef.current) return;
 
       rafId = requestAnimationFrame(() => {
         const rect = dom.getBoundingClientRect();
@@ -227,8 +239,15 @@ export const GapDragControl = () => {
         const isRow = flexDirection === "row" || flexDirection === "row-reverse";
         const isColumn = flexDirection === "column" || flexDirection === "column-reverse";
 
-        // Parse current gap value
-        const currentGapPx = parseFloat(styles.gap) || 0;
+        // Parse current gap value - handle both gap and gap-x/gap-y
+        let currentGapPx = 0;
+        const gapValue = styles.gap;
+        if (gapValue && gapValue !== 'normal' && gapValue !== '0px') {
+          const parsed = parseFloat(gapValue);
+          if (!isNaN(parsed)) {
+            currentGapPx = parsed;
+          }
+        }
 
         // Only show gap controls if there's an actual gap set (or very close to one)
         // This prevents showing controls for natural spacing between elements
@@ -348,22 +367,47 @@ export const GapDragControl = () => {
     };
 
     const handleMouseUp = () => {
-      if (isDragging) {
+      if (isDraggingRef.current) {
         setIsDragging(false);
         setDragStartPos(null);
         document.body.style.cursor = "auto";
+
+        // Force cleanup of any lingering state
+        setGapHoverInfo(null);
       }
     };
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mouseup", handleMouseUp); // Backup listener
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mouseup", handleMouseUp); // Cleanup backup listener
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [dom, isSelected, isDragging, dragStartPos, gapHoverInfo, view, setProp]);
+  }, [dom, isSelected, view, setProp]);
+
+  // Cleanup effect to ensure gap control is hidden when component unmounts or node is deselected
+  useEffect(() => {
+    if (!isSelected) {
+      setGapHoverInfo(null);
+      setIsDragging(false);
+      setDragStartPos(null);
+      document.body.style.cursor = "auto";
+    }
+  }, [isSelected]);
+
+  // Cleanup effect on unmount
+  useEffect(() => {
+    return () => {
+      setGapHoverInfo(null);
+      setIsDragging(false);
+      setDragStartPos(null);
+      document.body.style.cursor = "auto";
+    };
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -439,7 +483,7 @@ export const GapDragControl = () => {
                 className="absolute right-1 text-xs font-semibold text-blue-900 bg-white/90 border-blue-300/70 px-1.5 py-0.5 rounded border pointer-events-none select-none font-sans"
                 style={{ top: '50%', transform: 'translateY(-50%)' }}
               >
-                {Math.round(gapHoverInfo.currentGap)}px
+                {isNaN(gapHoverInfo.currentGap) ? '0' : Math.round(gapHoverInfo.currentGap)}px
               </motion.span>
             </motion.div>
           )}

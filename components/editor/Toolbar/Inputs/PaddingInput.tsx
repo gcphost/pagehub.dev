@@ -53,7 +53,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
           </>
         }
       >
-        <ToolbarSection full={4}>
+        <ToolbarSection full={2}>
           <ToolbarItem
             propKey="pt"
             type="slider"
@@ -91,7 +91,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
 
       {view === "mobile" &&
         TailwindStyles.px.indexOf(propValues[view]?.px) >
-          TailwindStyles.px.indexOf("px-3") && (
+        TailwindStyles.px.indexOf("px-3") && (
           <ToolbarSection>
             <div className="flex gap-3 items-center text-xs text-gray-300">
               <TbInfoSquare /> Padding may be too large for mobile.

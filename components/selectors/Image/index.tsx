@@ -48,7 +48,7 @@ interface ImageProps extends BaseSelectorProps {
 }
 
 const defaultProps: ImageProps = {
-  type: "img",
+  type: "cdn",
   className: [],
   root: {},
   mobile: {},
@@ -122,7 +122,6 @@ export const Image = (props: ImageProps) => {
     )}`,
   };
 
-  prop.style = { ...prop.style, position: "relative" };
 
   // Use metadata from media library, fallback to props
   const altText = mediaMetadata?.alt || props.alt || mediaMetadata?.title || props.title || "";
@@ -138,7 +137,7 @@ export const Image = (props: ImageProps) => {
       view,
       enabled,
       [],
-      ["objectFit", "ojectPosition", "radius", "width", "height"],
+      ["objectFit", "objectPosition", "radius"],
       preview
     ),
     // width: "100",
@@ -230,12 +229,7 @@ export const Image = (props: ImageProps) => {
       );
     }
 
-    prop.style = {
-      ...(prop.style || {}),
-      position: 'relative',
-      // In edit mode, override overflow to visible so controls aren't clipped
-      overflow: 'visible',
-    };
+
 
     const ele = props.url ? Link : "div";
     return React.createElement(ele, {

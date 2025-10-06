@@ -37,6 +37,7 @@ import {
   buildClonedTree,
   deleteNode,
 } from "./lib";
+import { ViewportMeta } from "./ViewportMeta";
 
 export const PreviewAtom = atom({
   key: "preview",
@@ -122,72 +123,6 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const nextRouter = useRouter();
   const [isolate, setIsolate] = useRecoilState(IsolateAtom);
 
-  useEffect(() => {
-    const active = query.getEvent("selected").first();
-
-    if (!active && !ac) {
-      // Smart selection: Find a meaningful starting point for the user
-      // Collect ALL matching nodes, then pick the highest priority one
-      const findAllNodesByDisplayName = (nodeId) => {
-        const node = query.node(nodeId).get();
-        if (!node) return [];
-
-        const matches = [];
-
-        // Check if this node matches
-        const displayName = node.data.custom?.displayName;
-        if (displayName) {
-          matches.push({ id: nodeId, displayName });
-        }
-
-        // Recursively search child nodes
-        if (node.data.nodes && node.data.nodes.length > 0) {
-          for (const childId of node.data.nodes) {
-            const childMatches = findAllNodesByDisplayName(childId);
-            matches.push(...childMatches);
-          }
-        }
-
-        return matches;
-      };
-
-      // Priority order: Hero Content > Home Page > Header > first child of Background
-      const targetNames = ["Hero Content", "Home Page", "Header"];
-      const allNodes = findAllNodesByDisplayName(ROOT_NODE);
-
-      // Find the highest priority match
-      let foundNode = null;
-      for (const targetName of targetNames) {
-        const match = allNodes.find(n => n.displayName === targetName);
-        if (match) {
-          foundNode = match.id;
-          break;
-        }
-      }
-
-      if (foundNode) {
-        setTimeout(() => {
-          actions.selectNode(foundNode);
-          // Mark initial load as complete after selection
-          setTimeout(() => setInitialLoadComplete(true), 100);
-        }, 200);
-        setAc(true);
-      } else {
-        // Fallback to first child of ROOT_NODE if nothing meaningful found
-        const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
-        if (nl && nl.length >= 1) {
-          setTimeout(() => {
-            actions.selectNode(nl[0]);
-            // Mark initial load as complete after selection
-            setTimeout(() => setInitialLoadComplete(true), 100);
-          }, 200);
-          setAc(true);
-        }
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Handle URL-based page isolation
   useEffect(() => {
     const sluggit = require("slug");
@@ -237,6 +172,77 @@ export const Viewport: React.FC<any> = ({ children }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextRouter.asPath]);
+
+  // Select default node after page isolation completes
+  useEffect(() => {
+    const active = query.getEvent("selected").first();
+
+    if (!active && !ac) {
+      // Wait a bit for page isolation to complete
+      setTimeout(() => {
+        // Check if ROOT_NODE exists before trying to select
+        const rootNode = query.node(ROOT_NODE).get();
+        if (!rootNode || !rootNode.data) {
+          return;
+        }
+
+        // Smart selection: Find a meaningful starting point for the user
+        const findAllNodesByDisplayName = (nodeId) => {
+          const node = query.node(nodeId).get();
+          if (!node) return [];
+
+          const matches = [];
+
+          // Check if this node matches
+          const displayName = node.data.custom?.displayName;
+          if (displayName) {
+            matches.push({ id: nodeId, displayName });
+          }
+
+          // Recursively search child nodes
+          if (node.data.nodes && node.data.nodes.length > 0) {
+            for (const childId of node.data.nodes) {
+              const childMatches = findAllNodesByDisplayName(childId);
+              matches.push(...childMatches);
+            }
+          }
+
+          return matches;
+        };
+
+        // Priority order: Hero Content > Home Page > Header > first child of Background
+        const targetNames = ["Hero Content", "Home Page", "Header"];
+        const allNodes = findAllNodesByDisplayName(ROOT_NODE);
+
+        // Find the highest priority match
+        let foundNode = null;
+        for (const targetName of targetNames) {
+          const match = allNodes.find(n => n.displayName === targetName);
+          if (match) {
+            foundNode = match.id;
+            break;
+          }
+        }
+
+        if (foundNode) {
+          actions.selectNode(foundNode);
+          // Mark initial load as complete after selection
+          setTimeout(() => setInitialLoadComplete(true), 100);
+          setAc(true);
+        } else {
+          // Fallback to first child of ROOT_NODE if nothing meaningful found
+          const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
+          if (nl && nl.length >= 1) {
+            actions.selectNode(nl[0]);
+            // Mark initial load as complete after selection
+            setTimeout(() => setInitialLoadComplete(true), 100);
+            setAc(true);
+          }
+        }
+      }, 700); // Wait for page isolation to complete
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isolate]);
 
   const [unsavedChanges, setUnsavedChanged] =
     useRecoilState(UnsavedChangesAtom);
@@ -595,7 +601,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const deviceClasses = {
     mobile: [
       "mx-auto flex z-2 transition overflow-hidden mt-32 mx-auto w-full md:w-[380px] mb-32 px-2 py-6 rounded-2xl bg-gray-700 border-4 border-gray-800 drop-shadow-2xl",
-      "w-full h-full flex overflow-auto rounded-xl border-4 border-gray-900 disable-scrollbars",
+      "w-full h-full flex overflow-auto rounded-xl border-4 border-gray-900 disable-scrollbars relative",
     ],
 
     desktop: [
@@ -611,8 +617,8 @@ export const Viewport: React.FC<any> = ({ children }) => {
       `flex h-screen overflow-hidden flex-row mx-auto w-${enabled ? "[380px]" : "screen"
       } mx-auto `,
       enabled
-        ? "w-full my-6 rounded-lg overflow-auto scrollbar-light bg-white"
-        : "w-screen h-screen overflow-auto",
+        ? "w-full my-6 rounded-lg overflow-scroll scrollbar-light bg-white relative"
+        : "w-screen h-screen overflow-auto relative",
     ],
 
     desktop: [
@@ -620,8 +626,8 @@ export const Viewport: React.FC<any> = ({ children }) => {
         ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen`
         : "w-screen",
       enabled
-        ? "w-full m-1 relative overflow-auto scrollbar-light bg-white"
-        : "w-screen h-screen overflow-show",
+        ? "w-full m-1 relative scrollbar-light bg-white overflow-scroll"
+        : "w-screen h-screen overflow-show relative",
     ],
   };
 
@@ -639,69 +645,72 @@ export const Viewport: React.FC<any> = ({ children }) => {
   }, []);
 
   return (
-    <div
-      data-container={true}
-      className={`flex h-screen overflow-visible flex-row w-full px-4`}
-    >
-      {!enabled && !screenshot && (
-        <div className="absolute right-12 top-12 z-50">
-          <Tooltip content="Edit" placement="bottom" arrow={false}>
-            <button
-              className="p-4 btn text-2xl bg-primary-500/90 cursor-pointer select-none rounded-md text-white"
-              aria-label="Edit page"
-              onClick={() =>
-                setOptions((options) => {
-                  options.enabled = true;
-                  setPreview(false);
-                  setTimeout(() => {
-                    if (!lastActive) return;
+    <>
+      <ViewportMeta />
+      <div
+        data-container={true}
+        className={`flex h-screen overflow-visible flex-row w-full`}
+      >
+        {!enabled && !screenshot && (
+          <div className="absolute right-12 top-12 z-50">
+            <Tooltip content="Edit" placement="bottom" arrow={false}>
+              <button
+                className="p-4 btn text-2xl bg-primary-500/90 cursor-pointer select-none rounded-md text-white"
+                aria-label="Edit page"
+                onClick={() =>
+                  setOptions((options) => {
+                    options.enabled = true;
+                    setPreview(false);
+                    setTimeout(() => {
+                      if (!lastActive) return;
 
-                    const node = query.node(lastActive).get();
-                    if (node) actions.selectNode(lastActive);
-                  }, 0);
-                })
-              }
-            >
-              <TbCode />
-            </button>
-          </Tooltip>
+                      const node = query.node(lastActive).get();
+                      if (node) actions.selectNode(lastActive);
+                    }, 0);
+                  })
+                }
+              >
+                <TbCode />
+              </button>
+            </Tooltip>
+          </div>
+        )}
+
+        {enabled && !online && <DeviceOffline />}
+
+        <div className={activeClass[0]}>
+          <main
+            id="viewport"
+            role="main"
+            aria-label="Page canvas"
+            onKeyDown={handleKeyDown}
+            data-isolated={!!isolated}
+            tabIndex={0}
+            className={activeClass[1]}
+            ref={(ref: any) =>
+              connectors.select(connectors.hover(ref, null), null)
+            }
+          >
+            {children}
+          </main>
         </div>
-      )}
 
-      {enabled && !online && <DeviceOffline />}
-
-      <div className={activeClass[0]}>
-        <main
-          id="viewport"
-          role="main"
-          aria-label="Page canvas"
-          onKeyDown={handleKeyDown}
-          data-isolated={!!isolated}
-          tabIndex={0}
-          className={activeClass[1]}
-          ref={(ref: any) =>
-            connectors.select(connectors.hover(ref, null), null)
-          }
-        >
-          {children}
-        </main>
+        {/* SVG overlay for measurement lines */}
+        {enabled && (
+          <svg
+            id="measurement-lines-svg"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none',
+              zIndex: 9997,
+            }}
+          />
+        )}
       </div>
-
-      {/* SVG overlay for measurement lines */}
-      {enabled && (
-        <svg
-          id="measurement-lines-svg"
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none',
-            zIndex: 9997,
-          }}
-        />
-      )}
-    </div>
+    </>
   );
 };

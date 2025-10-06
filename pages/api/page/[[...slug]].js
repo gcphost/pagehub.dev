@@ -202,9 +202,6 @@ export default async function api(req, res) {
       submissions: pageById.submissions || [],
       domain: pageById.domain || "",
       domainData: data || null,
-      company: pageById.company || null,
-      companyType: pageById.companyType || null,
-      companyLocation: pageById.companyLocation || null,
     });
   } catch (e) {
     return res.status(500).json(e);

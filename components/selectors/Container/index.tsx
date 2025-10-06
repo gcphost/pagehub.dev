@@ -18,6 +18,7 @@ import { SelectedNodeAtom } from "components/editor/Viewport/Toolbox/lib";
 import React, { useEffect, useRef, useState } from "react";
 import { TbContainer, TbNote } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { mergeAccessibilityProps } from "utils/accessibility";
 import { SettingsAtom } from "utils/atoms";
 import { applyBackgroundImage, enableContext, motionIt } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
@@ -38,6 +39,10 @@ export interface ContainerProps extends BaseSelectorProps {
   id?: any;
   role?: string;
   "aria-label"?: string;
+
+  clickType?: string;
+  clickValue?: string;
+  clickDirection?: string;
 }
 
 const defaultProps: ContainerProps = {
@@ -144,7 +149,7 @@ export const Container = (props: Partial<ContainerProps>) => {
     style: {
       ...(props.root?.style ? CSStoObj(props.root.style) || {} : {}),
       // Add relative positioning in edit mode for inline controls
-      ...(enabled && props.type !== "page" ? { position: 'relative' } : {}),
+      //  ...(enabled && props.type !== "page" ? { position: 'relative' } : {}),
     },
     className,
     children: (
@@ -179,6 +184,64 @@ export const Container = (props: Partial<ContainerProps>) => {
 
       if (!enabled) {
         window.open(props.url, props.urlTarget);
+      }
+    };
+  }
+
+  // Add click control functionality (like buttons)
+  if (props.clickType && props.clickValue) {
+    const existingOnClick = prop.onClick;
+
+    prop.onMouseEnter = () => {
+      if (enabled) return;
+
+      const element = document.getElementById(props.clickValue);
+      if (!element) return;
+
+      if (props.clickType === "hover" && props.clickValue) {
+        element.classList.remove("hidden");
+      }
+    };
+
+    prop.onMouseLeave = () => {
+      if (enabled) return;
+
+      const element = document.getElementById(props.clickValue);
+      if (!element) return;
+
+      if (props.clickType === "hover" && props.clickValue) {
+        element.classList.add("hidden");
+      }
+    };
+
+    prop.onClick = (e) => {
+      if (enabled) return;
+
+      // If there's an existing onClick (like for URL), call it first
+      if (existingOnClick) {
+        existingOnClick(e);
+      }
+
+      if (props.clickType === "click" && props.clickValue) {
+        const element = document.getElementById(props.clickValue);
+        if (!element) return;
+
+        if (props.clickDirection === "show") {
+          element.classList.remove("hidden");
+          return;
+        }
+
+        if (props.clickDirection === "hide") {
+          element.classList.add("hidden");
+          return;
+        }
+
+        // Toggle
+        if (element.classList.contains("hidden")) {
+          element.classList.remove("hidden");
+        } else {
+          element.classList.add("hidden");
+        }
       }
     };
   }
@@ -243,10 +306,10 @@ export const Container = (props: Partial<ContainerProps>) => {
 
   if (props.anchor) prop.id = props.anchor;
 
-  prop = {
+  prop = mergeAccessibilityProps({
     ...applyBackgroundImage(prop, props, settings),
     ...applyAnimation({ ...prop, key: id }, props),
-  };
+  }, props);
 
   let tagName = props?.type === "page" ? "article" : "div";
 
@@ -259,7 +322,7 @@ export const Container = (props: Partial<ContainerProps>) => {
   if (enabled && props.type !== "page" && isMounted) {
     prop.style = {
       ...(prop.style || {}),
-      overflow: 'visible',
+      overflow: 'visible', // ok so TO-DO ... this  lilll ookkkll ... 
     };
     const originalChildren = prop.children;
     prop.children = (

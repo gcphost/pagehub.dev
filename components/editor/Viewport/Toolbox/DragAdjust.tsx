@@ -178,7 +178,30 @@ function DragAdjust({
         isActive={hovering || dragging}
       />
       <motion.button
-
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: 0.5,
+            duration: 0.5,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            mass: 0.5,
+          },
+        }}
+        exit={{
+          opacity: 0,
+          transition: {
+            delay: 0.2,
+            duration: 0.3,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            mass: 0.5,
+          },
+        }}
         className={`drag-control group ${className} ${isPadding
           ? direction === "vertical" ? "w-7 h-[4px]" : "w-[4px] h-7"
           : direction === "vertical" ? "w-9 h-1.5" : "w-1.5 h-9"

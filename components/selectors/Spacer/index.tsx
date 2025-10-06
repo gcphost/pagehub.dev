@@ -83,8 +83,6 @@ export const Spacer = (props: SpacerProps) => {
       },
       className: ClassGenerator(props, view, enabled, [], [], preview),
       style: {
-        position: 'relative',
-        overflow: 'visible',
         minHeight: '20px', // Minimum height so it's always visible
         border: '1px dashed #ccc', // Dashed border to show it's a spacer
         borderRadius: '4px',
@@ -119,7 +117,6 @@ export const Spacer = (props: SpacerProps) => {
     className: ClassGenerator(props, view, enabled, [], [], preview),
     style: {
       minHeight: '20px',
-      ...(enabled ? { position: 'relative' } : {}),
     },
   };
 

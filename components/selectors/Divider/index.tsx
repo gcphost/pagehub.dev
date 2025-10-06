@@ -76,11 +76,6 @@ export const Divider = (props: DividerProps) => {
       },
       // Copy width and alignment classes to wrapper so it has same dimensions as hr
       className: ClassGenerator(props, view, enabled, [], [], preview),
-      style: {
-        position: 'relative',
-        // In edit mode, override overflow to visible so controls aren't clipped
-        overflow: 'visible',
-      },
       "data-bounding-box": enabled,
       "data-empty-state": false,
       "node-id": id,
@@ -120,7 +115,6 @@ export const Divider = (props: DividerProps) => {
       connect(drag(r));
     },
     className: ClassGenerator(props, view, enabled, [], [], preview),
-    style: enabled ? { position: 'relative' } : undefined,
   };
 
   if (enabled) {

@@ -16,12 +16,13 @@ import { FaFont } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
 
+import { getFontFromComp } from "utils/lib";
 import { applyAnimation, ClassGenerator } from "utils/tailwind";
 
 import TextSettingsTopNodeTool from "components/editor/NodeControllers/Tools/TextSettingsTopNodeTool";
 import { changeProp } from "components/editor/Viewport/lib";
-import debounce from "lodash.debounce";
 import { usePalette } from "utils/PaletteContext";
+import { replaceVariables } from "utils/variables";
 import { BaseSelectorProps } from "..";
 import { useScrollToSelected } from "../lib";
 import { TextSettings } from "./TextSettings";
@@ -82,6 +83,18 @@ export const Text = (props: Partial<TextProps>) => {
 
   const [isEditing, setIsEditing] = React.useState(false);
 
+  // Check if this node is selected
+  const { isActive } = useEditor((_, query) => ({
+    isActive: query.getEvent("selected").contains(id),
+  }));
+
+  // Clear editing mode when node is deselected
+  useEffect(() => {
+    if (!isActive && isEditing) {
+      setIsEditing(false);
+    }
+  }, [isActive, isEditing]);
+
   useScrollToSelected(id, enabled);
   selectAfterAdding(actions.selectNode, tab, id, enabled, initialLoadComplete);
 
@@ -94,7 +107,41 @@ export const Text = (props: Partial<TextProps>) => {
     setIsMounted(true);
   }, []);
 
+  // Load fonts when component mounts
+  useEffect(() => {
+    getFontFromComp(props);
+  }, [props]);
+
   let { text, tagName } = props;
+
+  // Handler for inner span blur - save text changes and exit edit mode
+  const handleTextBlur = (e) => {
+    // Exit edit mode
+    setIsEditing(false);
+
+    // Check if element is being deleted - if so, don't save
+    if (e.target.getAttribute('data-deleting') === 'true') {
+      return;
+    }
+
+    // Save the current text value immediately on blur
+    const newText = e.target.innerText;
+    const trimmedNew = newText?.trim();
+    const trimmedOld = text?.replace(/<[^>]*>/g, '').trim();
+
+    // Only save if content has changed
+    if (trimmedNew !== trimmedOld) {
+      changeProp({
+        setProp,
+        propKey: "text",
+        propType: "component",
+        value: newText,
+      });
+    }
+  };
+
+  // Replace variables in text (only show raw text when actively editing)
+  const processedText = (!enabled || preview || !isEditing) ? replaceVariables(text, query) : text;
 
   /* -- throws hydration errors after react-quilljs update.
 
@@ -130,66 +177,9 @@ if (text && typeof window !== "undefined") {
     prop["data-bounding-box"] = enabled;
     prop["data-empty-state"] = !text;
     prop["node-id"] = id;
-    prop.contentEditable = isEditing;
+    // Don't set contentEditable on outer wrapper - it goes on inner span
     prop["data-gramm"] = false;
     prop.suppressContentEditableWarning = true;
-    prop.style = {
-      ...(prop.style || {}),
-      cursor: isEditing ? "text" : "pointer",
-    };
-    prop.onClick = (e) => {
-      if (!isEditing) {
-        // First click: select the node (let event propagate)
-        actions.selectNode(id);
-        setTimeout(() => setIsEditing(true), 0);
-      } else {
-        // Already editing: stop propagation to avoid deselection
-        e.stopPropagation();
-      }
-    };
-    prop.onBlur = () => {
-      setIsEditing(false);
-    };
-    prop.onInput = (e) => {
-      const newText = e.target.innerText;
-      const trimmedNew = newText?.trim();
-      const trimmedOld = text?.replace(/<[^>]*>/g, '').trim();
-
-      // Check if this looks like toolbar dropdown text (primary defense)
-      const isToolbarText = newText?.includes('Size\n') && newText?.includes('H1');
-
-      // Capture isEditing state immediately (not in debounced callback)
-      const wasEditing = isEditing;
-
-      // Reject toolbar text immediately (before debounce)
-      if (isToolbarText) {
-        return;
-      }
-
-      // Only continue if we were actually editing
-      if (!wasEditing) {
-        return;
-      }
-
-      if (trimmedNew === trimmedOld) {
-        return;
-      }
-
-      // Don't save empty input unless user is deliberately clearing
-      if (!trimmedNew && trimmedOld && e.inputType !== 'deleteContentBackward') {
-        return;
-      }
-
-      // Debounce only the actual save operation
-      debounce(() => {
-        changeProp({
-          setProp,
-          propKey: "text",
-          propType: "component",
-          value: newText,
-        });
-      }, 500)();
-    };
   } else if (props.url && typeof props.url === "string") {
     // Resolve page references to actual URLs
     const resolvedUrl = resolvePageRef(props.url, query, router?.asPath);
@@ -208,21 +198,17 @@ if (text && typeof window !== "undefined") {
       <AutoTextSize
         style={{ margin: "0 auto" }}
         as={props.url ? Link : "div"}
-        dangerouslySetInnerHTML={{ __html: text }}
+        dangerouslySetInnerHTML={{ __html: processedText }}
       />
     ) as any;
     prop.children = t;
   } else if (text) {
-    prop.dangerouslySetInnerHTML = { __html: text };
+    prop.dangerouslySetInnerHTML = { __html: processedText };
   }
 
   // Add inline tools renderer in edit mode (after hydration)
   if (enabled && isMounted) {
-    prop.style = {
-      ...(prop.style || {}),
-      position: 'relative',
-      overflow: 'visible',
-    };
+
 
     if (prop.dangerouslySetInnerHTML) {
       // Can't use both dangerouslySetInnerHTML and children
@@ -230,7 +216,21 @@ if (text && typeof window !== "undefined") {
       delete prop.dangerouslySetInnerHTML;
       prop.children = (
         <>
-          <span data-text-content="true" dangerouslySetInnerHTML={innerHTML} />
+          <span
+            contentEditable={isEditing}
+            suppressContentEditableWarning={true}
+            onBlur={handleTextBlur}
+            onMouseDown={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isActive && !isEditing) {
+                setIsEditing(true);
+              }
+            }}
+            className={`block w-full min-h-inherit transition-all duration-1000 ease-in-out ${isEditing ? 'cursor-text' : 'cursor-pointer'}`}
+            dangerouslySetInnerHTML={innerHTML}
+          />
           <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props} />
         </>
       );
@@ -238,14 +238,29 @@ if (text && typeof window !== "undefined") {
       const originalChildren = prop.children;
       prop.children = (
         <>
-          <span data-text-content="true">{originalChildren}</span>
+          <span
+            contentEditable={isEditing}
+            suppressContentEditableWarning={true}
+            onBlur={handleTextBlur}
+            onMouseDown={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isActive && !isEditing) {
+                setIsEditing(true);
+              }
+            }}
+            className={`block w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text' : 'cursor-pointer'}`}
+          >
+            {originalChildren}
+          </span>
           <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props} />
         </>
       );
     }
   }
 
-  const final = applyAnimation({ ...prop, key: id }, props);
+  const final = applyAnimation({ ...prop, key: `${id}` }, props);
 
   return React.createElement(motionIt(props, tagName || "div"), final);
 };

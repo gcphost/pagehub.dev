@@ -20,8 +20,9 @@ import { siteDescription, siteTitle } from "utils/lib";
 import { templates } from "utils/templates";
 
 // Custom template data - set to null to use default JSX template
-let CUSTOM_TEMPLATE_DATA = "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"
-//CUSTOM_TEMPLATE_DATA = ''
+let CUSTOM_TEMPLATE_DATA = "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"
+
+CUSTOM_TEMPLATE_DATA = ''
 
 import { RenderNodeNewer } from "components/editor/RenderNodeNewer";
 import { Toolbar } from "components/editor/Toolbar";
@@ -34,7 +35,10 @@ import { useEffect } from "react";
 import { Save } from "../../components/Save";
 import { Audio } from "../../components/selectors/Audio";
 import { Button, OnlyButtons } from "../../components/selectors/Button";
+import { Footer } from "../../components/selectors/Footer";
+import { Header } from "../../components/selectors/Header";
 import { Image } from "../../components/selectors/Image";
+import { Nav, OnlyNavItems } from "../../components/selectors/Nav";
 import { Video } from "../../components/selectors/Video";
 import { useSetTenant } from "../../utils/tenantStore";
 import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
@@ -86,12 +90,16 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
     FormElement,
     OnlyButtons,
     Button,
+    OnlyNavItems,
+    Nav,
     Video,
     Audio,
     Image,
     Embed,
     Divider,
     Spacer,
+    Header,
+    Footer,
     SavedComponentLoader,
   };
 
@@ -162,7 +170,8 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                     { name: "Alternate Text", color: "gray-600" },
                   ]}
                   root={{
-
+                    background: "bg-palette:Background",
+                    color: "text-palette:Text",
                   }}
                   mobile={{
 
@@ -172,61 +181,71 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                   {/* Global Header/Nav */}
                   <Element
                     canvas
-                    is={Container}
-                    canDelete={true}
-                    canEditName={true}
-                    root={{
-                      background: "bg-palette:Background",
-                    }}
-                    mobile={{
-                      display: "flex",
-                      flexDirection: "flex-row",
-                      justifyContent: "justify-between",
-                      alignItems: "items-center",
-                      width: "w-full",
-                      px: "px-6",
-                      py: "py-4",
-                      gap: "gap-4",
-                    }}
-                    desktop={{
-                      px: "px-12",
-                    }}
-                    custom={{ displayName: "Header" }}
+                    is={Header}
+                    type="header"
+                    canDelete={false}
+                    canEditName={false}
                   >
                     <Element
-                      is={Text}
+                      canvas
+                      is={Container}
                       canDelete={true}
                       canEditName={true}
                       root={{
-                        color: "text-palette:Primary",
+                        background: "bg-palette:Background",
+                        color: "text-palette:Text",
                       }}
                       mobile={{
-                        fontSize: "text-2xl",
-                        fontWeight: "font-bold",
+                        display: "flex",
+                        flexDirection: "flex-row",
+                        justifyContent: "justify-between",
+                        alignItems: "items-center",
+                        width: "w-full",
+                        px: "px-6",
+                        py: "py-4",
+                        gap: "gap-4",
                       }}
-                      desktop={{}}
-                      custom={{ displayName: "Logo" }}
-                      text="<p>YourBrand</p>"
-                    />
-                    <Element
-                      is={Button}
-                      canDelete={true}
-                      canEditName={true}
-                      root={{
-                        color: "text-palette:Alternate Text",
+                      desktop={{
+                        px: "px-12",
                       }}
-                      mobile={{
-                        fontSize: "text-sm",
-                        gap: "gap-6",
-                      }}
-                      desktop={{}}
-                      custom={{ displayName: "Nav Links" }}
-                      buttons={[
-                        { text: "About", url: "#" },
-                        { text: "Services", url: "#" },
-                        { text: "Contact", url: "#" },
-                      ]}
-                    />
+                      custom={{ displayName: "Header Content" }}
+                    >
+                      <Element
+                        is={Text}
+                        canDelete={true}
+                        canEditName={true}
+                        root={{
+                          color: "text-palette:Primary",
+                        }}
+                        mobile={{
+                          fontSize: "text-2xl",
+                          fontWeight: "font-bold",
+                        }}
+                        desktop={{}}
+                        custom={{ displayName: "Logo" }}
+                        text="<p>{{company.name}}</p>"
+                      />
+                      <Element
+                        is={Nav}
+                        canDelete={true}
+                        canEditName={true}
+                        root={{
+                          color: "text-palette:Alternate Text",
+                        }}
+                        mobile={{
+                          fontSize: "text-sm",
+                          gap: "gap-6",
+                        }}
+                        desktop={{}}
+                        custom={{ displayName: "Navigation" }}
+                        enableMobileNav={true}
+                        navItems={[
+                          { text: "About", url: "#" },
+                          { text: "Services", url: "#" },
+                          { text: "Contact", url: "#" },
+                        ]}
+                      />
+                    </Element>
                   </Element>
 
                   {/* Home Page Container */}
@@ -237,20 +256,22 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                     canDelete={false}
                     canEditName={true}
                     isHomePage={true}
-                    root={{}}
+                    root={{
+                      background: "bg-palette:Background",
+                      color: "text-palette:Text",
+                    }}
                     mobile={{
                       display: "flex",
                       flexDirection: "flex-col",
                       justifyContent: "justify-center",
                       alignItems: "items-center",
                       width: "w-full",
-                      px: "px-6",
-                      py: "py-12",
                       gap: "gap-6",
                     }}
                     desktop={{}}
                     custom={{ displayName: "Home Page" }}
                   >
+
                     <Element
                       canvas
                       is={Container}
@@ -261,15 +282,14 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         display: "flex",
                         flexDirection: "flex-col",
                         alignItems: "items-center",
-                        gap: "gap-32",
-                        maxWidth: "max-w-4xl",
-                        px: "px-6",
-                        py: "py-12",
-
+                        justifyContent: "justify-center",
+                        width: "w-full",
+                        minHeight: "min-h-screen",
                       }}
                       desktop={{}}
-                      custom={{ displayName: "Hero Content" }}
+                      custom={{ displayName: "Hero Section" }}
                     >
+
                       <Element
                         canvas
                         is={Container}
@@ -280,63 +300,65 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           display: "flex",
                           flexDirection: "flex-col",
                           alignItems: "items-center",
-                          gap: "gap-4",
+                          gap: "gap-32",
+                          maxWidth: "max-w-4xl",
+                          px: "px-6",
+                          py: "py-12",
                         }}
-                        desktop={{}}
-                        custom={{ displayName: "Hero Text" }}
+                        desktop={{ marginTop: "-mt-28", }}
+                        custom={{ displayName: "Hero Content" }}
                       >
                         <Element
-                          is={Text}
+                          canvas
+                          is={Container}
                           canDelete={true}
                           canEditName={true}
-                          root={{
-                            color: "text-palette:Text",
-                          }}
+                          root={{}}
                           mobile={{
-                            fontSize: "text-5xl",
-                            fontWeight: "font-bold",
-                            textAlign: "text-center",
-                          }}
-                          desktop={{
-                            fontSize: "text-6xl",
-                          }}
-                          custom={{ displayName: "Hero Title" }}
-                          text="<p>Welcome to Your New Website</p>"
-                        />
-                        <Element
-                          is={Text}
-                          canDelete={true}
-                          canEditName={true}
-                          root={{
-                            color: "text-palette:Alternate Text",
-                          }}
-                          mobile={{
-                            fontSize: "text-lg",
-                            textAlign: "text-center",
-                            maxWidth: "max-w-2xl",
+                            display: "flex",
+                            flexDirection: "flex-col",
+                            alignItems: "items-center",
+                            gap: "gap-4",
                           }}
                           desktop={{}}
-                          custom={{ displayName: "Hero Subtitle" }}
-                          text="<p>Create beautiful pages with ease. Start building your dream website today.</p>"
-                        />
-                      </Element>
-                      <Element
-                        canvas
-                        is={Container}
-                        canDelete={true}
-                        canEditName={true}
-                        root={{}}
-                        mobile={{
-                          display: "flex",
-                          flexDirection: "flex-col",
-                          alignItems: "items-center",
-                          gap: "gap-4",
-                        }}
-                        desktop={{
-                          flexDirection: "flex-row",
-                        }}
-                        custom={{ displayName: "Hero Buttons" }}
-                      >
+                          custom={{ displayName: "Hero Text" }}
+                        >
+                          <Element
+                            is={Text}
+                            canDelete={true}
+                            canEditName={true}
+                            root={{
+                              color: "text-palette:Text",
+                            }}
+                            mobile={{
+                              fontSize: "text-5xl",
+                              fontWeight: "font-bold",
+                              textAlign: "text-center",
+                            }}
+                            desktop={{
+                              fontSize: "text-6xl",
+                            }}
+                            custom={{ displayName: "Hero Title" }}
+                            text="<p>Welcome to {{company.name}}</p>"
+                          />
+                          <Element
+                            is={Text}
+                            canDelete={true}
+                            canEditName={true}
+                            root={{
+                              color: "text-palette:Alternate Text",
+                            }}
+                            mobile={{
+                              fontSize: "text-lg",
+                              textAlign: "text-center",
+                              maxWidth: "max-w-2xl",
+                            }}
+                            desktop={{}}
+                            custom={{ displayName: "Hero Subtitle" }}
+                            text="<p>Professional {{company.type}} services in {{company.location}}</p>"
+                          />
+                        </Element>
+
                         <Element
                           is={Button}
                           canDelete={true}
@@ -350,9 +372,10 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             fontSize: "text-lg",
                             fontWeight: "font-semibold",
                             gap: "gap-4",
+                            flexDirection: "flex-col",
                           }}
-                          desktop={{}}
-                          custom={{ displayName: "CTA Buttons" }}
+                          desktop={{ flexDirection: "flex-row", }}
+                          custom={{ displayName: "Hero Buttons" }}
                           buttons={[
                             {
                               text: "Get Started",
@@ -369,47 +392,55 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           ]}
                         />
                       </Element>
-                    </Element>
 
+                    </Element>
                   </Element>
 
                   {/* Global Footer */}
                   <Element
                     canvas
-                    is={Container}
-                    canDelete={true}
-                    canEditName={true}
-                    root={{
-                      background: "bg-palette:Alternate Background",
-                    }}
-                    mobile={{
-                      display: "flex",
-                      flexDirection: "flex-col",
-                      justifyContent: "justify-center",
-                      alignItems: "items-center",
-                      width: "w-full",
-                      px: "px-6",
-                      py: "py-8",
-                      gap: "gap-4",
-                    }}
-                    desktop={{}}
-                    custom={{ displayName: "Footer" }}
+                    is={Footer}
+                    type="footer"
+                    canDelete={false}
+                    canEditName={false}
                   >
                     <Element
-                      is={Text}
+                      canvas
+                      is={Container}
                       canDelete={true}
                       canEditName={true}
                       root={{
-                        color: "text-palette:Alternate Text",
+                        background: "bg-palette:Alternate Background",
                       }}
                       mobile={{
-                        fontSize: "text-sm",
-                        textAlign: "text-center",
+                        display: "flex",
+                        flexDirection: "flex-col",
+                        justifyContent: "justify-center",
+                        alignItems: "items-center",
+                        width: "w-full",
+                        px: "px-6",
+                        py: "py-8",
+                        gap: "gap-4",
                       }}
                       desktop={{}}
-                      custom={{ displayName: "Footer Text" }}
-                      text="<p>© 2025 YourBrand. All rights reserved.</p>"
-                    />
+                      custom={{ displayName: "Footer Content" }}
+                    >
+                      <Element
+                        is={Text}
+                        canDelete={true}
+                        canEditName={true}
+                        root={{
+                          color: "text-palette:Alternate Text",
+                        }}
+                        mobile={{
+                          fontSize: "text-sm",
+                          textAlign: "text-center",
+                        }}
+                        desktop={{}}
+                        custom={{ displayName: "Footer Text" }}
+                        text="<p>© {{year}} {{company.name}} All rights reserved.</p>"
+                      />
+                    </Element>
                   </Element>
                 </Element>
               </Frame>

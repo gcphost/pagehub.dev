@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { TbRectangle } from "react-icons/tb";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { mergeAccessibilityProps } from "utils/accessibility";
 import { SettingsAtom } from "utils/atoms";
 import { applyBackgroundImage, motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
@@ -27,6 +28,7 @@ import {
   ClassGenerator,
   CSStoObj,
 } from "utils/tailwind";
+import { replaceVariables } from "utils/variables";
 import { BaseSelectorProps, BaseStyleProps, RootStyleProps } from "..";
 import {
   hasInlay,
@@ -36,7 +38,7 @@ import {
 } from "../lib";
 import { ButtonSettings, SelectedButtonAtom } from "./ButtonSettings";
 
-const EditableName = ({ but, ikey, enabled }) => {
+const EditableName = ({ but, ikey, enabled, query, preview }) => {
   const {
     actions: { setProp },
     nodeProps,
@@ -52,7 +54,10 @@ const EditableName = ({ but, ikey, enabled }) => {
     nodeProps
   );
 
-  if (!enabled) return <span className="flex-1">{but.text}</span>;
+  // Replace variables in button text (only in preview/published mode, not while editing)
+  const displayText = (!enabled || preview) ? replaceVariables(but.text, query) : but.text;
+
+  if (!enabled) return <span className="flex-1">{displayText}</span>;
 
   return (
     <span
@@ -106,6 +111,9 @@ type ButtonArrayProp = {
   color?: string;
   border?: string;
   iconOnly?: boolean;
+  clickType?: string;
+  clickDirection?: string;
+  clickValue?: string;
   root?: {
     background?: string;
     color?: string;
@@ -246,7 +254,6 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       ]
         .filter((_) => _)
         .join(" ")}
-      style={enabled ? { position: 'relative', overflow: 'visible' } : undefined}
     >
       {enabled && isMounted && <InlineToolsRenderer key={`tools-${id}`} craftComponent={Button} props={props} />}
       {props?.buttons?.map((but, key) => {
@@ -338,7 +345,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
 
         const element: any = motionIt(props, ele);
 
-        prop = {
+        prop = mergeAccessibilityProps({
           ...prop,
           key,
           type: but.type || "button",
@@ -348,10 +355,14 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
             if (enabled) {
               return;
             }
-            const element = document.getElementById(props.clickValue);
+            // Use click settings from the button object first, fallback to props
+            const clickType = but.clickType || props.clickType;
+            const clickValue = but.clickValue || props.clickValue;
+
+            const element = document.getElementById(clickValue);
 
             if (!element) return;
-            if (props.clickType === "hover" && props.clickValue) {
+            if (clickType === "hover" && clickValue) {
               element.classList.remove("hidden");
             }
           },
@@ -359,10 +370,14 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
             if (enabled) {
               return;
             }
-            const element = document.getElementById(props.clickValue);
+            // Use click settings from the button object first, fallback to props
+            const clickType = but.clickType || props.clickType;
+            const clickValue = but.clickValue || props.clickValue;
+
+            const element = document.getElementById(clickValue);
 
             if (!element) return;
-            if (props.clickType === "hover" && props.clickValue) {
+            if (clickType === "hover" && clickValue) {
               element.classList.add("hidden");
             }
           },
@@ -374,22 +389,74 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
               return;
             }
 
-            if (props.clickType === "click" && props.clickValue) {
+            // Use click settings from the button object first, fallback to props
+            const clickType = but.clickType || props.clickType;
+            const clickDirection = but.clickDirection || props.clickDirection;
+            const clickValue = but.clickValue || props.clickValue;
+
+            if (clickType === "click" && clickValue) {
               // e.preventDefault();
-              const element = document.getElementById(props.clickValue);
+              const element = document.getElementById(clickValue);
 
               if (!element) return;
 
-              if (props.clickDirection === "show") {
+              if (clickDirection === "show") {
                 element.classList.remove("hidden");
                 return;
               }
 
-              if (props.clickDirection === "hide") {
+              if (clickDirection === "hide") {
                 element.classList.add("hidden");
                 return;
               }
 
+              if (element.classList.contains("hidden")) {
+                element.classList.remove("hidden");
+              } else {
+                element.classList.add("hidden");
+              }
+            }
+          },
+
+          onDoubleClick: (e) => {
+            if (!enabled) return; // Only execute in edit mode
+
+            // Use click settings from the button object first, fallback to props
+            const clickType = but.clickType || props.clickType;
+            const clickDirection = but.clickDirection || props.clickDirection;
+            const clickValue = but.clickValue || props.clickValue;
+
+            if (clickType === "click" && clickValue) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const element = document.getElementById(clickValue);
+
+              if (!element) {
+                console.warn(`Element with id "${clickValue}" not found`);
+                return;
+              }
+
+              if (clickDirection === "show") {
+                element.classList.remove("hidden");
+                return;
+              }
+
+              if (clickDirection === "hide") {
+                element.classList.add("hidden");
+                return;
+              }
+
+              if (clickDirection === "toggle") {
+                if (element.classList.contains("hidden")) {
+                  element.classList.remove("hidden");
+                } else {
+                  element.classList.add("hidden");
+                }
+                return;
+              }
+
+              // Default to toggle behavior if no specific direction
               if (element.classList.contains("hidden")) {
                 element.classList.remove("hidden");
               } else {
@@ -416,14 +483,14 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
                 properties={inlayProps}
                 preview={preview}
               >
-                {but.icon && props.iconPosition === "left" && (
+                {but.icon && (!props.iconPosition || props.iconPosition === "left") && (
                   <span className={butClass.join(" ")}>
                     <ClientIconLoader value={but.icon} />
                   </span>
                 )}
 
                 {!but.iconOnly && (
-                  <EditableName but={but} ikey={key} enabled={enabled} />
+                  <EditableName but={but} ikey={key} enabled={enabled} query={query} preview={preview} />
                 )}
 
                 {but.icon && props.iconPosition === "right" && (
@@ -434,7 +501,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
               </RenderGradient>
             </RenderPattern>
           ),
-        };
+        }, props);
 
         prop = {
           ...applyAnimation(prop, props),

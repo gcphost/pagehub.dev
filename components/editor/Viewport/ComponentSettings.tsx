@@ -9,6 +9,7 @@ import { EmbedToolbox } from "./Toolbox/embedComponents";
 import { FormToolbox } from "./Toolbox/formComponents";
 import { FormElementToolbox } from "./Toolbox/formElement";
 import { ImageToolbox } from "./Toolbox/imageComponents";
+import { NavToolbox } from "./Toolbox/navComponents";
 import { pageToolboxItems } from "./Toolbox/pageComponents";
 import { SavedComponentsToolbox } from "./Toolbox/savedComponents";
 import { sectionToolboxItems } from "./Toolbox/sectionComponents";
@@ -26,6 +27,12 @@ const baseItems = [
       ...SpacerToolbox.content,
       ...sectionToolboxItems[0].content, // always last
 
+    ],
+  },
+  {
+    title: "Navigation",
+    content: [
+      ...NavToolbox.content,
     ],
   },
   {

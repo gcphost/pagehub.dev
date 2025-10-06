@@ -183,6 +183,10 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
               content={props.canDelete ? "Delete" : "Unable to delete"}
               onClick={(e: React.MouseEvent) => {
                 e.stopPropagation();
+                // Blur any active contentEditable element to exit edit mode
+                if (document.activeElement instanceof HTMLElement) {
+                  document.activeElement.blur();
+                }
                 if (props.canDelete)
                   deleteNode(query, actions, active, settings);
               }}

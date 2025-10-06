@@ -3,6 +3,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile Preview Simulation - Override Tailwind responsive classes */
+.mobile-preview .md\:hidden {
+  display: none !important;
+}
+
+.mobile-preview .md\:flex {
+  display: none !important;
+}
+
+.mobile-preview .md\:block {
+  display: none !important;
+}
+
+/* Show elements that should be visible on mobile */
+.mobile-preview .block.md\:hidden {
+  display: block !important;
+}
+
+.mobile-preview .flex.md\:hidden {
+  display: flex !important;
+}
+
 .tb {
   @apply bg-gray-700 text-white;
 }
@@ -62,8 +84,10 @@ body[data-is-dragging="true"] [data-node-control="true"] {
 
 [data-selected="true"],
 [data-hover="true"] {
-  @apply relative cursor-pointer;
+  @apply cursor-pointer;
 }
+
+/* No longer need relative positioning with outline system */
 
 .shadow-10x {
   box-shadow: 0px 12px 44px -8px rgba(0, 0, 0, 0.2);
@@ -80,42 +104,43 @@ body[data-is-dragging="true"] [data-node-control="true"] {
 }
 
 [data-enabled="true"] {
-  @apply relative;
 }
 
 [data-lastpass-icon-root] {
   display: none;
 }
 
-[data-enabled="true"]::before {
-  content: " ";
-  z-index: 1;
-  @apply border-transparent w-full h-full absolute left-0 top-0 bottom-0 right-0  block  pointer-events-none;
+/* New outline-based system - no positioning required */
+[data-enabled="true"][data-hover="true"] {
+  outline: 1px dashed currentColor !important;
+  outline-offset: 1px;
 }
 
-[data-enabled="true"][data-hover="true"]::before {
-  content: " ";
-  @apply border-current border border-dashed w-full h-full absolute left-0 top-0 bottom-0 right-0  block  pointer-events-none;
+[data-enabled="true"][data-hover="true"]:not(:hover) {
+  outline: 1px dotted currentColor !important;
+  outline-offset: 1px;
 }
 
-[data-enabled="true"][data-selected="true"]::before {
-  content: " ";
-  @apply border-current border-solid border-2 w-full h-full absolute left-0 top-0 bottom-0 right-0 pointer-events-none block;
+[data-enabled="true"][data-selected="true"] {
+  @apply relative;
+  outline: 1px solid currentColor !important;
+  outline-offset: 1px;
 }
 
-[data-enabled="true"][data-ancestor="true"]::before {
-  content: " ";
-  @apply border-gray-400 border border-dotted w-full h-full absolute left-0 top-0 bottom-0 right-0 pointer-events-none block;
-  opacity: 0.5;
+[data-enabled="true"][data-ancestor="true"] {
+  outline: 1px dotted rgb(156 163 175) !important;
+  outline-offset: 1px;
 }
 
-img[data-enabled="true"][data-hover="true"]::before {
-  @apply border-current border border-dashed pointer-events-none;
-  border-style: inset;
+/* Image-specific outline styles */
+img[data-enabled="true"][data-hover="true"] {
+  outline: 1px dashed currentColor !important;
+  outline-offset: 1px;
 }
+
 img[data-enabled="true"][data-selected="true"] {
-  @apply border-current border-solid border-2 pointer-events-none;
-  border-style: inset;
+  outline: 2px solid currentColor !important;
+  outline-offset: 1px;
 }
 
 [data-bounding-box="true"]:not([data-border="true"]) {

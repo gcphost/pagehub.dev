@@ -82,7 +82,6 @@ export const Video = (props: VideoProps) => {
     className: "",
     role: "region",
     "aria-label": props.title || videoId ? `Video: ${props.title || videoId}` : "Video player",
-    style: enabled ? { position: 'relative' } : undefined,
     children: videoId ? (
       <YouTube
         className={ClassGenerator(props, view, enabled, [], [], preview)}

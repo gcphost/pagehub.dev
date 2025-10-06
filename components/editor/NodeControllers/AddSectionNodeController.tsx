@@ -96,6 +96,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
             position={position}
             placement="middle"
             align={align}
+            isPadding={true}
             className={
               isInlineRender
                 ? "whitespace-nowrap items-center justify-center select-none cursor-pointer pointer-events-auto"

@@ -20,6 +20,8 @@ export default function DisplaySettingsInput() {
       <ToolbarSection title="Overflow">
         <OverflowInput />
       </ToolbarSection>
+
+
       <ToolbarSection title="ID" help="This can be used for Hover & Click">
         <ToolbarItem
           propKey="id"

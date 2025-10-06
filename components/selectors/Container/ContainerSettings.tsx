@@ -5,15 +5,18 @@ import {
   TBWrap,
   TableBodyStyleControl,
 } from "components/editor/Toolbar/Helpers/SettingsHelper";
+import { AccessibilityInput } from "components/editor/Toolbar/Inputs/AccessibilityInput";
 import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
 import { BackgroundSettingsInput } from "components/editor/Toolbar/Inputs/BackgroundSettingsInput";
 import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
+import ClickItem from "components/editor/Toolbar/Inputs/ClickItem";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import { ContainerTypeInput } from "components/editor/Toolbar/Inputs/ContainerTypeInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FlexInput } from "components/editor/Toolbar/Inputs/FlexInput";
 import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
 import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
+import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { OrderInput } from "components/editor/Toolbar/Inputs/OrderInput";
 import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
@@ -26,6 +29,7 @@ import { TabAtom } from "components/editor/Viewport";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
 import {
+  TbAccessible,
   TbBoxPadding,
   TbContainer,
   TbMouse,
@@ -66,6 +70,10 @@ export const ContainerSettings = () => {
     {
       title: "Animations",
       icon: <TbPlayerPlay />,
+    },
+    {
+      title: "Accessibility",
+      icon: <TbAccessible />,
     },
     {
       title: "Style",
@@ -408,6 +416,11 @@ export const ContainerSettings = () => {
           <MarginInput />
 
           <PaddingInput />
+
+          <ToolbarSection title="Opacity">
+            <OpacityInput label="" propKey="opacity" />
+          </ToolbarSection>
+          '
         </TabBody>
       )}
       {activeTab === "Style" && (
@@ -424,9 +437,42 @@ export const ContainerSettings = () => {
           </p>
         </TabBody>
       )}
+
+      {activeTab === "Accessibility" && <AccessibilityInput />}
       {activeTab === "Hover & Click" && (
         <TabBody>
+          <ClickItem />
           <LinkSettingsInput />
+
+          <ToolbarSection title="Colors">
+            <ColorInput
+              propKey="background"
+              label="Background"
+              prefix="bg"
+              index="hover"
+              propType="component"
+            />
+
+            <ColorInput
+              propKey="color"
+              label="Text"
+              prefix="text"
+              index="hover"
+              propType="component"
+            />
+
+            <ColorInput
+              propKey="borderColor"
+              label="Border"
+              prefix="border"
+              propType="root"
+              index="hover"
+            />
+          </ToolbarSection>
+
+          <ToolbarSection title="Opacity">
+            <OpacityInput label="" propKey="opacity" index="hover" />
+          </ToolbarSection>
         </TabBody>
       )}
     </TableBodyStyleControl>

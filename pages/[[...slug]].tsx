@@ -11,6 +11,7 @@ import { Container } from "components/selectors/Container";
 import { Divider } from "components/selectors/Divider";
 import { Form, FormDrop } from "components/selectors/Form";
 import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
+import { RenderGradient, RenderPattern } from "components/selectors/lib";
 import { OnlyText, Text } from "components/selectors/Text";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
@@ -19,7 +20,10 @@ import { SettingsAtom } from "utils/atoms";
 import { waitForFonts } from "utils/fontLoader";
 import { Audio } from "../components/selectors/Audio";
 import { Button, OnlyButtons } from "../components/selectors/Button";
+import { Footer } from "../components/selectors/Footer";
+import { Header } from "../components/selectors/Header";
 import { Image } from "../components/selectors/Image";
+import { Nav, OnlyNavItems } from "../components/selectors/Nav";
 import { Video } from "../components/selectors/Video";
 import dbConnect from "../utils/dbConnect";
 import { loadTenantByDomain, loadTenantSettings } from "../utils/tenantUtils";
@@ -152,11 +156,17 @@ function App({ subdomain, data, meta, seo }) {
       FormDrop,
       OnlyButtons,
       Button,
+      OnlyNavItems,
+      Nav,
       Video,
       Audio,
       Image,
       Embed,
       Divider,
+      Header,
+      Footer,
+      RenderPattern,
+      RenderGradient,
     };
 
     const {

@@ -9,7 +9,7 @@ interface DeleteNodeButtonProps {
   iconSize?: number;
   title?: string;
   titleDisabled?: string;
-  useSimpleDelete?: boolean; // If true, uses actions.delete() instead of deleteNode()
+  useSimpleDelete?: boolean;
 }
 
 export const DeleteNodeButton = ({
@@ -32,15 +32,25 @@ export const DeleteNodeButton = ({
 
     if (!canDelete) return;
 
-    try {
-      if (useSimpleDelete) {
-        actions.delete(id);
-      } else {
-        deleteNode(query, actions, id, settings);
-      }
-    } catch (error) {
-      console.error("Error deleting node:", error);
+    // Mark element as being deleted BEFORE blurring
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement && activeElement.isContentEditable) {
+      activeElement.setAttribute('data-deleting', 'true');
+      activeElement.blur();
     }
+
+    // Small delay to let blur complete
+    setTimeout(() => {
+      try {
+        if (useSimpleDelete) {
+          actions.delete(id);
+        } else {
+          deleteNode(query, actions, id, settings);
+        }
+      } catch (error) {
+        console.error("Error deleting node:", error);
+      }
+    }, 10);
   };
 
   return (

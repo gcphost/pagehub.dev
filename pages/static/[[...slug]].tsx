@@ -22,7 +22,10 @@ import { waitForFonts } from "utils/fontLoader";
 import { loadTenantByDomain, runTenantWebhook } from "utils/tenantUtils";
 import { Audio } from "../../components/selectors/Audio";
 import { Button, OnlyButtons } from "../../components/selectors/Button";
+import { Footer } from "../../components/selectors/Footer";
+import { Header } from "../../components/selectors/Header";
 import { Image } from "../../components/selectors/Image";
+import { Nav, OnlyNavItems } from "../../components/selectors/Nav";
 import { Video } from "../../components/selectors/Video";
 import Page from "../../models/page";
 import Tenant from "../../models/tenant.model";
@@ -154,11 +157,15 @@ function App({ subdomain, data, meta, seo }) {
       FormDrop,
       OnlyButtons,
       Button,
+      OnlyNavItems,
+      Nav,
       Video,
       Audio,
       Image,
       Embed,
       Divider,
+      Header,
+      Footer,
     };
 
     const {

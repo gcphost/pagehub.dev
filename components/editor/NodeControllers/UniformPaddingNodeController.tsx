@@ -143,7 +143,32 @@ export const UniformPaddingNodeController = () => {
         />
         <Tooltip content="Drag to adjust all padding" placement="left">
           <motion.button
-
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              transition: {
+                delay: 0.5,
+                duration: 0.5,
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                mass: 0.5,
+              },
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                delay: 0.2,
+                duration: 0.3,
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                mass: 0.5,
+              },
+            }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 1.1 }}
             className="w-6 h-6 border-t-[4px] border-l-[5px] border-current pointer-events-auto cursor-move"
             style={{
               willChange: 'transform',
