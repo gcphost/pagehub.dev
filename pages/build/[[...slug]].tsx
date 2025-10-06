@@ -34,7 +34,8 @@ import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
 import { useEffect } from "react";
 import { Save } from "../../components/Save";
 import { Audio } from "../../components/selectors/Audio";
-import { Button, OnlyButtons } from "../../components/selectors/Button";
+import { Button } from "../../components/selectors/Button";
+import { ButtonList } from "../../components/selectors/ButtonList";
 import { Footer } from "../../components/selectors/Footer";
 import { Header } from "../../components/selectors/Header";
 import { Image } from "../../components/selectors/Image";
@@ -88,8 +89,8 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
     Form,
     FormDrop,
     FormElement,
-    OnlyButtons,
     Button,
+    ButtonList,
     OnlyNavItems,
     Nav,
     Video,
@@ -360,37 +361,76 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         </Element>
 
                         <Element
-                          is={Button}
+                          canvas
+                          is={ButtonList}
                           canDelete={true}
                           canEditName={true}
                           root={{
-                            radius: "rounded-lg",
+
                           }}
                           mobile={{
-                            px: "px-8",
-                            py: "py-4",
-                            fontSize: "text-lg",
-                            fontWeight: "font-semibold",
+                            display: "flex",
                             gap: "gap-4",
                             flexDirection: "flex-col",
+                            width: "w-full",
+                            justifyContent: "justify-center",
+                            alignItems: "items-center",
                           }}
                           desktop={{ flexDirection: "flex-row", }}
                           custom={{ displayName: "Hero Buttons" }}
-                          buttons={[
-                            {
-                              text: "Get Started",
-                              url: "#",
+                        >
+                          <Element
+                            is={Button}
+                            canDelete={true}
+                            canEditName={true}
+                            root={{
                               background: "bg-palette:Primary",
                               color: "text-white",
-                            },
-                            {
-                              text: "Learn More",
-                              url: "#",
+                              radius: "rounded-lg",
+                            }}
+                            mobile={{
+                              px: "px-8",
+                              py: "py-4",
+                              fontSize: "text-lg",
+                              fontWeight: "font-semibold",
+                              textAlign: "text-center",
+                              display: "flex",
+                              justifyContent: "justify-center",
+                              alignItems: "items-center",
+                              gap: "gap-4",
+                            }}
+                            custom={{ displayName: "Get Started Button" }}
+                            text="Get Started"
+                            url="#"
+                          />
+                          <Element
+                            is={Button}
+                            canDelete={true}
+                            canEditName={true}
+                            root={{
                               background: "bg-transparent",
                               color: "text-palette:Primary",
-                            },
-                          ]}
-                        />
+                              radius: "rounded-lg",
+                              border: "border",
+                              borderColor: "border-palette:Primary",
+
+                            }}
+                            mobile={{
+                              px: "px-8",
+                              py: "py-4",
+                              fontSize: "text-lg",
+                              fontWeight: "font-semibold",
+                              textAlign: "text-center",
+                              display: "flex",
+                              justifyContent: "justify-center",
+                              alignItems: "items-center",
+                              gap: "gap-4",
+                            }}
+                            custom={{ displayName: "Learn More Button" }}
+                            text="Learn More"
+                            url="#"
+                          />
+                        </Element>
                       </Element>
 
                     </Element>

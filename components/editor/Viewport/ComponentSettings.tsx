@@ -9,13 +9,19 @@ import { EmbedToolbox } from "./Toolbox/embedComponents";
 import { FormToolbox } from "./Toolbox/formComponents";
 import { FormElementToolbox } from "./Toolbox/formElement";
 import { ImageToolbox } from "./Toolbox/imageComponents";
-import { NavToolbox } from "./Toolbox/navComponents";
+// Removed direct import to avoid circular dependency - loaded dynamically below
 import { pageToolboxItems } from "./Toolbox/pageComponents";
 import { SavedComponentsToolbox } from "./Toolbox/savedComponents";
 import { sectionToolboxItems } from "./Toolbox/sectionComponents";
 import { SpacerToolbox } from "./Toolbox/spacerComponents";
 import { TextToolbox } from "./Toolbox/textComponents";
 import { VideoToolbox } from "./Toolbox/videoComponents";
+
+// Dynamically load NavToolbox to avoid circular dependency
+let NavToolbox: any = { content: [] };
+import("./Toolbox/navComponents").then(module => {
+  NavToolbox = module.NavToolbox;
+});
 
 const baseItems = [
   {
@@ -31,9 +37,9 @@ const baseItems = [
   },
   {
     title: "Navigation",
-    content: [
-      ...NavToolbox.content,
-    ],
+    get content() {
+      return NavToolbox.content || [];
+    },
   },
   {
     title: "Media",

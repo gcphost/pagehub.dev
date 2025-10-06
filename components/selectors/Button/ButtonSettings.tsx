@@ -9,11 +9,12 @@ import { AccessibilityInput } from "components/editor/Toolbar/Inputs/Accessibili
 import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInput";
 import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
 import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
-import { ButtonInput } from "components/editor/Toolbar/Inputs/ButtonInput";
 import ClickItem from "components/editor/Toolbar/Inputs/ClickItem";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
+import { IconDialogInput } from "components/editor/Toolbar/Inputs/IconDialogInput";
+import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
 import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
@@ -45,7 +46,7 @@ export const ButtonSettings = () => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
 
-  useEffect(() => setMenu({ enabled: false }), []);
+  useEffect(() => setMenu({ enabled: false }), [setMenu]);
 
   const head = [
     {
@@ -82,25 +83,60 @@ export const ButtonSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <ToolbarSection>
+      <ToolbarSection title="Button Content">
         <ToolbarItem
-          propKey="flexDirection"
+          propKey="text"
+          type="text"
+          label="Text"
+          propType="component"
+        />
+      </ToolbarSection>
+
+      <LinkSettingsInput
+        propKey="url"
+        showAnchor={false}
+      />
+
+      <ToolbarSection title="Button Type">
+        <ToolbarItem
+          propKey="type"
           type="select"
-          labelHide={true}
-          label="Container Type"
-          cols={true}
+          label="Type"
+          propType="component"
         >
-          <option value="">None</option>
-
-          <option value="flex-col">Column</option>
-          <option value="flex-row">Row</option>
-
-          <option value="flex-col-reverse">Reverse Column</option>
-          <option value="flex-row-reverse">Reverse Row</option>
+          <option value="button">Button</option>
+          <option value="submit">Submit</option>
         </ToolbarItem>
       </ToolbarSection>
-      <ToolbarSection>
-        <ButtonInput />
+
+      <ToolbarSection title="Icon" full={2}>
+        <IconDialogInput
+          propKey="icon"
+          propType="component"
+          label="Icon"
+        />
+        <ToolbarItem
+          propKey="iconOnly"
+          type="checkbox"
+          label="Icon Only"
+          propType="component"
+          on={true}
+          labelHide
+        />
+      </ToolbarSection>
+
+      <ToolbarSection title="Icon Settings">
+        <ToolbarItem
+          propKey="iconPosition"
+          type="select"
+          label="Icon Position"
+          propType="component"
+        >
+          <option value="left">Left</option>
+          <option value="right">Right</option>
+          <option value="top">Top</option>
+          <option value="bottom">Bottom</option>
+        </ToolbarItem>
       </ToolbarSection>
     </TabBody>
   );

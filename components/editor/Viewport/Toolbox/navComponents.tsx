@@ -1,5 +1,15 @@
+import { Element } from "@craftjs/core";
+import { Button } from "components/selectors/Button";
+import { ButtonList } from "components/selectors/ButtonList";
 import { Nav } from "components/selectors/Nav";
-import { TbNavigation } from "react-icons/tb";
+import {
+  TbBrandTwitter,
+  TbDeviceMobile,
+  TbLayoutNavbar,
+  TbMinus,
+  TbPalette,
+  TbPill
+} from "react-icons/tb";
 import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 
 // Social media icons
@@ -11,7 +21,7 @@ const socialIcons = {
   youtube: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
 };
 
-export const RenderNavComponent = ({ text = "Nav", navStyle = "regular", ...props }) => {
+export const RenderNavComponent = ({ text = "Nav", navStyle = "regular", icon, ...props }) => {
   const root = {
     ...(props.root || {}),
   };
@@ -24,7 +34,7 @@ export const RenderNavComponent = ({ text = "Nav", navStyle = "regular", ...prop
 
   return (
     <RenderToolComponent
-      display={<ToolboxItemDisplay icon={TbNavigation} label={text} />}
+      display={<ToolboxItemDisplay icon={icon || TbDeviceMobile} label={text} />}
       iconPosition={props.iconPosition || "left"}
       navItems={props.navItems || [
         {
@@ -51,10 +61,11 @@ export const NavToolbox = {
   title: "Navigation",
   content: [
     <RenderNavComponent
-      text="Regular Nav"
+      text="Mobile Nav"
       key="1"
-      custom={{ displayName: "Regular Nav" }}
+      custom={{ displayName: "Mobile Nav" }}
       navStyle="regular"
+      icon={TbDeviceMobile}
       root={{
         background: "bg-white",
         border: "border",
@@ -63,123 +74,416 @@ export const NavToolbox = {
         px: "px-4",
         py: "py-2"
       }}
-      hamburgerIcon={{
-        name: "Menu",
-        icon: "TbMenu2",
-        category: "tabler"
-      }}
+      enableMobileNav={true}
     />,
-    <RenderNavComponent
-      text="Social Nav"
-      key="2"
+    <RenderToolComponent
+      display={<ToolboxItemDisplay icon={TbPalette} label="Colorful Nav" />}
+      element={ButtonList}
+      custom={{ displayName: "Colorful Nav" }}
+      root={{
+        background: "bg-gradient-to-r from-blue-500 to-purple-600",
+        radius: "rounded-xl",
+        px: "px-6",
+        py: "py-3"
+      }}
+      mobile={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-4"
+      }}
+      desktop={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-4"
+      }}
+    >
+      <Element
+        is={Button}
+        custom={{ displayName: "Home" }}
+        text="Home"
+        url="#"
+        root={{
+          background: "bg-white",
+          color: "text-blue-600",
+          radius: "rounded-lg",
+          shadow: "shadow-md"
+        }}
+        mobile={{
+          px: "px-4",
+          py: "py-2"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "About" }}
+        text="About"
+        url="#"
+        root={{
+          background: "bg-white",
+          color: "text-purple-600",
+          radius: "rounded-lg",
+          shadow: "shadow-md"
+        }}
+        mobile={{
+          px: "px-4",
+          py: "py-2"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Services" }}
+        text="Services"
+        url="#"
+        root={{
+          background: "bg-white",
+          color: "text-pink-600",
+          radius: "rounded-lg",
+          shadow: "shadow-md"
+        }}
+        mobile={{
+          px: "px-4",
+          py: "py-2"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Contact" }}
+        text="Contact"
+        url="#"
+        root={{
+          background: "bg-white",
+          color: "text-indigo-600",
+          radius: "rounded-lg",
+          shadow: "shadow-md"
+        }}
+        mobile={{
+          px: "px-4",
+          py: "py-2"
+        }}
+      />
+    </RenderToolComponent>,
+    <RenderToolComponent
+      display={<ToolboxItemDisplay icon={TbBrandTwitter} label="Social Nav" />}
+      element={ButtonList}
       custom={{ displayName: "Social Nav" }}
-      navStyle="social"
-      navItems={[
-        {
-          text: "Twitter",
-          icon: socialIcons.twitter,
-          iconOnly: true,
-          url: "#",
-        },
-        {
-          text: "Facebook",
-          icon: socialIcons.facebook,
-          iconOnly: true,
-          url: "#",
-        },
-        {
-          text: "Instagram",
-          icon: socialIcons.instagram,
-          iconOnly: true,
-          url: "#",
-        },
-        {
-          text: "LinkedIn",
-          icon: socialIcons.linkedin,
-          iconOnly: true,
-          url: "#",
-        },
-      ]}
       root={{
         background: "bg-gray-50",
         radius: "rounded-lg",
         px: "px-4",
         py: "py-2"
       }}
-      enableMobileNav={true}
-      hamburgerIcon={{
-        name: "Menu",
-        icon: "TbMenu2",
-        category: "tabler"
+      mobile={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-4"
       }}
-    />,
-    <RenderNavComponent
-      text="Minimal Nav"
-      key="3"
+      desktop={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-4"
+      }}
+    >
+      <Element
+        is={Button}
+        custom={{ displayName: "Twitter" }}
+        text="Twitter"
+        icon={socialIcons.twitter}
+        iconOnly={true}
+        url="#"
+        root={{
+          background: "bg-blue-500",
+          color: "text-white",
+          radius: "rounded-lg"
+        }}
+        mobile={{
+          px: "px-3",
+          py: "py-3"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Facebook" }}
+        text="Facebook"
+        icon={socialIcons.facebook}
+        iconOnly={true}
+        url="#"
+        root={{
+          background: "bg-blue-600",
+          color: "text-white",
+          radius: "rounded-lg"
+        }}
+        mobile={{
+          px: "px-3",
+          py: "py-3"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Instagram" }}
+        text="Instagram"
+        icon={socialIcons.instagram}
+        iconOnly={true}
+        url="#"
+        root={{
+          background: "bg-gradient-to-r from-purple-500 to-pink-500",
+          color: "text-white",
+          radius: "rounded-lg"
+        }}
+        mobile={{
+          px: "px-3",
+          py: "py-3"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "LinkedIn" }}
+        text="LinkedIn"
+        icon={socialIcons.linkedin}
+        iconOnly={true}
+        url="#"
+        root={{
+          background: "bg-blue-700",
+          color: "text-white",
+          radius: "rounded-lg"
+        }}
+        mobile={{
+          px: "px-3",
+          py: "py-3"
+        }}
+      />
+    </RenderToolComponent>,
+    <RenderToolComponent
+      display={<ToolboxItemDisplay icon={TbMinus} label="Plain Nav" />}
+      element={ButtonList}
+      custom={{ displayName: "Plain Nav" }}
+      root={{
+        background: "bg-gray-100",
+        radius: "rounded-md",
+        px: "px-3",
+        py: "py-2"
+      }}
+      mobile={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-3"
+      }}
+      desktop={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-3"
+      }}
+    >
+      <Element
+        is={Button}
+        custom={{ displayName: "Home" }}
+        text="Home"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-600"
+        }}
+        mobile={{
+          px: "px-2",
+          py: "py-1"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "About" }}
+        text="About"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-600"
+        }}
+        mobile={{
+          px: "px-2",
+          py: "py-1"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Services" }}
+        text="Services"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-600"
+        }}
+        mobile={{
+          px: "px-2",
+          py: "py-1"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Contact" }}
+        text="Contact"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-600"
+        }}
+        mobile={{
+          px: "px-2",
+          py: "py-1"
+        }}
+      />
+    </RenderToolComponent>,
+    <RenderToolComponent
+      display={<ToolboxItemDisplay icon={TbLayoutNavbar} label="Minimal Nav" />}
+      element={ButtonList}
       custom={{ displayName: "Minimal Nav" }}
-      navStyle="minimal"
-      navItems={[
-        {
-          text: "Home",
-          url: "#",
-        },
-        {
-          text: "About",
-          url: "#",
-        },
-        {
-          text: "Services",
-          url: "#",
-        },
-        {
-          text: "Contact",
-          url: "#",
-        },
-      ]}
       root={{
         background: "bg-transparent",
         px: "px-2",
         py: "py-1"
       }}
-      enableMobileNav={true}
-      hamburgerIcon={{
-        name: "Menu",
-        icon: "TbMenu2",
-        category: "tabler"
+      mobile={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-4"
       }}
-    />,
-    <RenderNavComponent
-      text="Pill Nav"
-      key="4"
+      desktop={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-4"
+      }}
+    >
+      <Element
+        is={Button}
+        custom={{ displayName: "Home" }}
+        text="Home"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-700"
+        }}
+        mobile={{
+          px: "px-2",
+          py: "py-1"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "About" }}
+        text="About"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-700"
+        }}
+        mobile={{
+          px: "px-2",
+          py: "py-1"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Services" }}
+        text="Services"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-700"
+        }}
+        mobile={{
+          px: "px-2",
+          py: "py-1"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Contact" }}
+        text="Contact"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-700"
+        }}
+        mobile={{
+          px: "px-2",
+          py: "py-1"
+        }}
+      />
+    </RenderToolComponent>,
+    <RenderToolComponent
+      display={<ToolboxItemDisplay icon={TbPill} label="Pill Nav" />}
+      element={ButtonList}
       custom={{ displayName: "Pill Nav" }}
-      navStyle="pill"
-      navItems={[
-        {
-          text: "Home",
-          url: "#",
-        },
-        {
-          text: "About",
-          url: "#",
-        },
-        {
-          text: "Contact",
-          url: "#",
-        },
-      ]}
       root={{
         background: "bg-gray-100",
         radius: "rounded-full",
         px: "px-2",
         py: "py-1"
       }}
-      enableMobileNav={true}
-      hamburgerIcon={{
-        name: "Menu",
-        icon: "TbMenu2",
-        category: "tabler"
+      mobile={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-1"
       }}
-    />,
+      desktop={{
+        display: "flex",
+        flexDirection: "flex-row",
+        alignItems: "items-center",
+        gap: "gap-1"
+      }}
+    >
+      <Element
+        is={Button}
+        custom={{ displayName: "Home" }}
+        text="Home"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-700",
+          radius: "rounded-full"
+        }}
+        mobile={{
+          px: "px-3",
+          py: "py-1"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "About" }}
+        text="About"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-700",
+          radius: "rounded-full"
+        }}
+        mobile={{
+          px: "px-3",
+          py: "py-1"
+        }}
+      />
+      <Element
+        is={Button}
+        custom={{ displayName: "Contact" }}
+        text="Contact"
+        url="#"
+        root={{
+          background: "bg-transparent",
+          color: "text-gray-700",
+          radius: "rounded-full"
+        }}
+        mobile={{
+          px: "px-3",
+          py: "py-1"
+        }}
+      />
+    </RenderToolComponent>,
   ],
   classes: {
     content: "p-3 grid grid-cols-2 gap-3",

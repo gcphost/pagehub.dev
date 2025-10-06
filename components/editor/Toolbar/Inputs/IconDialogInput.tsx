@@ -42,7 +42,13 @@ export const IconDialogInput = ({
     });
   };
 
-  const value = nodeProps[propKey][index][propItemKey] || "";
+  // Handle both array access (navItems[0].icon) and direct access (icon)
+  let value = "";
+  if (index !== null && propItemKey) {
+    value = nodeProps[propKey]?.[index]?.[propItemKey] || "";
+  } else {
+    value = nodeProps[propKey] || "";
+  }
 
   const ref = useRef(null);
 

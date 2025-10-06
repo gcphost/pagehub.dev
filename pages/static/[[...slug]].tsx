@@ -21,7 +21,8 @@ import dbConnect from "utils/dbConnect";
 import { waitForFonts } from "utils/fontLoader";
 import { loadTenantByDomain, runTenantWebhook } from "utils/tenantUtils";
 import { Audio } from "../../components/selectors/Audio";
-import { Button, OnlyButtons } from "../../components/selectors/Button";
+import { Button } from "../../components/selectors/Button";
+import { ButtonList } from "../../components/selectors/ButtonList";
 import { Footer } from "../../components/selectors/Footer";
 import { Header } from "../../components/selectors/Header";
 import { Image } from "../../components/selectors/Image";
@@ -155,8 +156,8 @@ function App({ subdomain, data, meta, seo }) {
       Form,
       FormElement,
       FormDrop,
-      OnlyButtons,
       Button,
+      ButtonList,
       OnlyNavItems,
       Nav,
       Video,

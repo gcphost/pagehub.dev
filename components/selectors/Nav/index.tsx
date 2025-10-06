@@ -4,6 +4,7 @@ import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import ContainerSettingsNodeTool from "components/editor/NodeControllers/Tools/ContainerSettingsNodeTool";
+import ContainerSettingsTopNodeTool from "components/editor/NodeControllers/Tools/ContainerSettingsTopNodeTool";
 import {
   getClonedState,
   setClonedProps,
@@ -23,13 +24,13 @@ import { applyBackgroundImage, motionIt, resolvePageRef, selectAfterAdding } fro
 import { usePalette } from "utils/PaletteContext";
 import {
   applyAnimation,
-  ClassGene,
   ClassGenerator,
   CSStoObj,
 } from "utils/tailwind";
 import { replaceVariables } from "utils/variables";
 import { BaseSelectorProps, BaseStyleProps, RootStyleProps } from "..";
 import { Button } from "../Button";
+import { ButtonList } from "../ButtonList";
 import { Container } from "../Container";
 import {
   hasInlay,
@@ -105,6 +106,7 @@ type NavItemArrayProp = {
   type?: string;
   text: string;
   icon?: string;
+  iconPosition?: string;
   url?: string;
   onClick?: any;
   background?: string;
@@ -299,7 +301,7 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
     ];
 
     const className = [
-      ...ClassGene(props.navItem, [], [], "", false, palette),
+      ...ClassGenerator(props.navItem, "root", enabled, [], [], preview, false, palette),
       ...ClassGenerator(
         { ...props },
         "root",
@@ -457,19 +459,10 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
         <Element
           canvas
           id={`desktop-nav`}
-          is={Button}
+          is={ButtonList}
           custom={{ displayName: "Desktop Nav" }}
           canDelete={false}
           canEditName={false}
-          buttons={props?.navItems?.map(navItem => ({
-            text: navItem.text,
-            url: navItem.url,
-            icon: navItem.icon,
-            iconOnly: navItem.iconOnly,
-            clickType: props.clickType,
-            clickDirection: props.clickDirection,
-            clickValue: props.clickValue
-          }))}
           mobile={{
             display: "hidden",
             flexDirection: "flex-row",
@@ -483,7 +476,31 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
             display: "flex",
             alignItems: "items-center"
           }}
-        />
+        >
+          {props?.navItems?.map((navItem, index) => (
+            <Element
+              key={`nav-item-${index}`}
+              is={Button}
+              custom={{ displayName: navItem.text || `Nav Item ${index + 1}` }}
+              canDelete={true}
+              canEditName={true}
+              text={navItem.text}
+              url={navItem.url}
+              icon={navItem.icon}
+              iconOnly={navItem.iconOnly}
+              iconPosition={navItem.iconPosition || "left"}
+              clickType={props.clickType}
+              clickDirection={props.clickDirection}
+              clickValue={props.clickValue}
+              root={{
+                background: navItem.background,
+                color: navItem.color,
+                border: navItem.border,
+                ...navItem.root,
+              }}
+            />
+          ))}
+        </Element>
 
         {/* Mobile Hamburger Button */}
         {props.enableMobileNav && (
@@ -497,14 +514,10 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
             clickType="click"
             clickDirection="toggle"
             clickValue={`mobile-nav-${id}`}
-            buttons={[
-              {
-                text: "",
-                url: "",
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>`,
-                iconOnly: true
-              }
-            ]}
+            text=""
+            url=""
+            icon={`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>`}
+            iconOnly={true}
             root={{
               background: "bg-transparent",
               border: "border-0"
@@ -551,7 +564,6 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
             bgOpacity: "bg-opacity-50"
           }}
         >
-
           {/* Mobile Nav Panel Container */}
           <Element
             canvas
@@ -614,13 +626,8 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
                 clickType="click"
                 clickDirection="hide"
                 clickValue={`mobile-nav-${id}`}
-                buttons={[
-                  {
-                    text: "×",
-                    url: "",
-                    icon: ""
-                  }
-                ]}
+                text="×"
+                url=""
                 root={{
                   background: "bg-transparent",
                   border: "border-0"
@@ -651,19 +658,10 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
               <Element
                 canvas
                 id={`mobile-nav-items`}
-                is={Button}
+                is={ButtonList}
                 custom={{ displayName: "Mobile Nav Items" }}
                 canDelete={false}
                 canEditName={false}
-                buttons={props?.navItems?.map(navItem => ({
-                  text: navItem.text,
-                  url: navItem.url,
-                  icon: navItem.icon,
-                  iconOnly: navItem.iconOnly,
-                  clickType: props.clickType,
-                  clickDirection: props.clickDirection,
-                  clickValue: props.clickValue
-                }))}
                 root={{
                   background: "bg-transparent",
                   border: "border-0",
@@ -676,7 +674,32 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
                   gap: "space-y-2",
                   width: "w-full"
                 }}
-              />
+              >
+                {props?.navItems?.map((navItem, index) => (
+                  <Element
+                    key={`mobile-nav-item-${index}`}
+                    is={Button}
+                    custom={{ displayName: navItem.text || `Mobile Nav Item ${index + 1}` }}
+                    canDelete={true}
+                    canEditName={true}
+                    text={navItem.text}
+                    url={navItem.url}
+                    icon={navItem.icon}
+                    iconOnly={navItem.iconOnly}
+                    iconPosition={navItem.iconPosition || "left"}
+                    clickType={props.clickType}
+                    clickDirection={props.clickDirection}
+                    clickValue={props.clickValue}
+                    root={{
+                      background: navItem.background || "bg-transparent",
+                      color: navItem.color || "text-gray-700",
+                      border: navItem.border || "border-0",
+                      radius: "rounded-md",
+                      ...navItem.root,
+                    }}
+                  />
+                ))}
+              </Element>
             </Element>
           </Element>
 
@@ -723,6 +746,14 @@ Nav.craft = {
         >
           <ContainerSettingsNodeTool />
         </ToolNodeController>,
+        <ToolNodeController
+          position="left"
+          align="middle"
+          placement="middle"
+          key="containercontroller2"
+        >
+          <ContainerSettingsTopNodeTool direction="vertical" />
+        </ToolNodeController>
       ];
 
       return [...baseControls];

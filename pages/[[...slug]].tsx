@@ -19,7 +19,8 @@ import { useEffect } from "react";
 import { SettingsAtom } from "utils/atoms";
 import { waitForFonts } from "utils/fontLoader";
 import { Audio } from "../components/selectors/Audio";
-import { Button, OnlyButtons } from "../components/selectors/Button";
+import { Button } from "../components/selectors/Button";
+import { ButtonList } from "../components/selectors/ButtonList";
 import { Footer } from "../components/selectors/Footer";
 import { Header } from "../components/selectors/Header";
 import { Image } from "../components/selectors/Image";
@@ -154,8 +155,8 @@ function App({ subdomain, data, meta, seo }) {
       Form,
       FormElement,
       FormDrop,
-      OnlyButtons,
       Button,
+      ButtonList,
       OnlyNavItems,
       Nav,
       Video,

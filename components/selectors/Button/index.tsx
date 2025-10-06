@@ -1,155 +1,57 @@
 import { useEditor, useNode, UserComponent } from "@craftjs/core";
-
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
-import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
-import ButtonSettingsNodeTool from "components/editor/NodeControllers/Tools/ButtonSettingsNodeTool";
 import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import ClientIconLoader from "components/editor/Toolbar/Tools/ClientIconLoader";
 import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
-import { changeProp, getProp } from "components/editor/Viewport/lib";
-import debounce from "lodash.debounce";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { TbRectangle } from "react-icons/tb";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { mergeAccessibilityProps } from "utils/accessibility";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
-import { applyBackgroundImage, motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
+import { motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
 import {
   applyAnimation,
-  ClassGene,
-  ClassGenerator,
-  CSStoObj,
+  ClassGenerator
 } from "utils/tailwind";
-import { replaceVariables } from "utils/variables";
-import { BaseSelectorProps, BaseStyleProps, RootStyleProps } from "..";
-import {
-  hasInlay,
-  RenderGradient,
-  RenderPattern,
-  useScrollToSelected,
-} from "../lib";
-import { ButtonSettings, SelectedButtonAtom } from "./ButtonSettings";
-
-const EditableName = ({ but, ikey, enabled, query, preview }) => {
-  const {
-    actions: { setProp },
-    nodeProps,
-  } = useNode((node) => ({
-    nodeProps: node.data.props,
-  }));
-
-  const view = useRecoilValue(ViewAtom);
-
-  const buttons = getProp(
-    { propKey: "buttons", propType: "component" },
-    view,
-    nodeProps
-  );
-
-  // Replace variables in button text (only in preview/published mode, not while editing)
-  const displayText = (!enabled || preview) ? replaceVariables(but.text, query) : but.text;
-
-  if (!enabled) return <span className="flex-1">{displayText}</span>;
-
-  return (
-    <span
-      className="flex-1 cursor-text"
-      contentEditable={true}
-      suppressContentEditableWarning={true}
-      role="textbox"
-      aria-label="Edit button text"
-      onInput={debounce((e) => {
-        const _buttons = [...buttons];
-        _buttons[ikey] = { ..._buttons[ikey] };
-        _buttons[ikey].text = e.target.innerText;
-
-        changeProp({
-          setProp,
-          propKey: "buttons",
-          propType: "component",
-          value: _buttons,
-        });
-      }, 500)}
-    >
-      {but.text}
-    </span>
-  );
-};
-
-export const OnlyButtons = ({ children, ...props }) => {
-  const {
-    connectors: { connect },
-  }: any = useNode();
-  return (
-    <div title="only-buttons" ref={connect} className="" {...props}>
-      {children}
-    </div>
-  );
-};
-
-OnlyButtons.craft = {
-  rules: {
-    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === "Button"),
-  },
-};
-
-type ButtonArrayProp = {
-  type?: string;
-  text: string;
-  icon?: string;
-  url?: string;
-  onClick?: any;
-  background?: string;
-  color?: string;
-  border?: string;
-  iconOnly?: boolean;
-  clickType?: string;
-  clickDirection?: string;
-  clickValue?: string;
-  root?: {
-    background?: string;
-    color?: string;
-    border?: string;
-  };
-};
-
-interface ButtonProp extends RootStyleProps, BaseStyleProps { }
+import { BaseSelectorProps } from "..";
+import { useScrollToSelected } from "../lib";
+import { ButtonSettings } from "./ButtonSettings";
 
 interface ButtonProps extends BaseSelectorProps {
-  flex?: string;
   text?: string;
-  textComponent?: any;
-  activeTab?: number;
-  buttons?: ButtonArrayProp[];
+  icon?: string;
+  url?: string;
+  type?: string;
+  iconOnly?: boolean;
   iconPosition?: string;
   iconSize?: string;
   iconFontSize?: string;
   iconColor?: string;
   iconGap?: string;
   iconShadow?: string;
-  button?: ButtonProp;
   clickType?: string;
   clickValue?: string;
   clickDirection?: string;
 }
 
 const defaultProps: ButtonProps = {
-  tablet: {},
-  button: {},
-  buttons: [],
   className: [],
   root: {},
   mobile: {},
+  tablet: {},
+  desktop: {},
   canDelete: true,
   canEditName: true,
+  text: "Button",
+  type: "button",
+  iconPosition: "left",
+  iconSize: "w-6 h-6",
+  iconGap: "gap-2",
 };
 
 export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
@@ -167,24 +69,13 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
     getClonedState(props, state)
   );
 
-  const router = useRouter();
-  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
-
-  useScrollToSelected(id, enabled);
-  selectAfterAdding(
-    actions.selectNode,
-    useSetRecoilState(TabAtom),
-    id,
-    enabled,
-    initialLoadComplete
-  );
-
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
-  const settings = useRecoilValue(SettingsAtom);
   const palette = usePalette();
-  const [selectedButton, setSelectedButton] =
-    useRecoilState(SelectedButtonAtom);
+  const settings = useRecoilValue(SettingsAtom);
+  const router = useRouter();
+  const tab = useSetRecoilState(TabAtom);
+  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
 
   props = setClonedProps(props, query);
 
@@ -194,330 +85,193 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
     setIsMounted(true);
   }, []);
 
-  const defaultProp: any = {
-    ref: (r) => connect(drag(r)),
-    style: props.root?.style ? CSStoObj(props.root.style) || {} : {},
-    className: ClassGenerator(props, view, enabled, [], [], preview, false, palette),
-  };
-
-  if (enabled) {
-    if (!props?.buttons?.length) defaultProp.children = <TbRectangle />;
-    if (props?.root?.border || props.root?.borderColor || props.root?.radius) {
-      defaultProp["data-border"] = true;
-    }
-    defaultProp["data-bounding-box"] = enabled;
-    defaultProp["data-empty-state"] = !props?.buttons?.length;
-  }
-
-  if (!props?.buttons?.length) {
-    return React.createElement(
-      motionIt(props, "div"),
-      applyAnimation(defaultProp, props)
-    );
-  }
-
-  const inlayed = hasInlay(props);
-
-  const inlayProps = [
-    "backgroundGradient",
-    "backgroundGradientTo",
-    "backgroundGradientFrom",
-    "px",
-    "py",
-    "alignItems",
-    "textAlign",
-    "backgroundRepeat",
-    "backgroundSize",
-    "backgroundAttachment",
-    "backgroundOrigin",
-    "backgroundPosition",
-    "background",
-  ];
-
-  const mainClasses = ["flex", "w-"];
+  useScrollToSelected(id, enabled);
+  selectAfterAdding(actions.selectNode, tab, id, enabled, initialLoadComplete);
 
   const baseProps = [
-    "flexDirection",
-    "alignItems",
-    "justifyContent",
-    "gap",
-    "display",
+    "flex",
+    "items-center",
+    "justify-center",
+    "cursor-pointer",
+    "transition-colors",
+    "duration-200",
   ];
-  return (
-    <div
-      ref={(r: any) => connect(drag(r))}
-      className={[
-        ...ClassGenerator({ ...props }, view, enabled, [], baseProps, preview, false, palette).split(
-          " "
-        ),
-        ...mainClasses,
-      ]
-        .filter((_) => _)
-        .join(" ")}
-    >
-      {enabled && isMounted && <InlineToolsRenderer key={`tools-${id}`} craftComponent={Button} props={props} />}
-      {props?.buttons?.map((but, key) => {
-        // Resolve palette references for per-button properties
-        const resolveButtonPalette = (value: string) => {
-          if (typeof value === "string" && value.includes("palette:")) {
-            const match = value.match(/^([a-z]+-)?palette:(.+)$/);
-            if (match) {
-              const prefixPart = match[1] || "";
-              const paletteName = match[2];
-              const paletteColor = palette.find((p) => p.name === paletteName);
-              if (paletteColor) {
-                let colorValue = paletteColor.color;
-                if (prefixPart && colorValue.startsWith(prefixPart)) {
-                  return colorValue;
-                }
-                if (prefixPart) {
-                  if (colorValue.includes("rgba") || colorValue.includes("rgb") || colorValue.startsWith("#")) {
-                    return `${prefixPart}[${colorValue}]`;
-                  } else {
-                    return `${prefixPart}${colorValue}`;
-                  }
-                }
-                return colorValue;
-              }
-            }
-          }
-          return value;
-        };
 
-        // Get button-specific styles from but.root if they exist
-        const buttonBg = but?.root?.background || but?.background || props.root?.background;
-        const buttonColor = but?.root?.color || but?.color || props.root.color;
-        const buttonBorder = but?.root?.border || but?.border || props.root?.border;
+  const inlayProps = [
+    "flex",
+    "items-center",
+    "justify-center",
+  ];
 
-        const include = [
-          resolveButtonPalette(buttonBg),
-          resolveButtonPalette(buttonColor),
-          resolveButtonPalette(buttonBorder),
-          props?.mobile?.width,
-          props?.desktop?.width ? `md:${props.desktop.width}` : null,
-          props.iconGap,
-          "overflow-hidden",
-          "flex",
-          "items-center",
-        ];
+  const include = [
+    "flex",
+    "items-center",
+    "justify-center",
+    "cursor-pointer",
+    "transition-colors",
+    "duration-200",
+  ];
 
-        const butClass = [
-          props.iconSize
-            ? `${props.iconSize} h-${props.iconSize.split("w-")[1]}`
-            : "w-6 h-6",
-          props.iconColor,
-          props.iconShadow,
-          "flex",
-          "items-center",
-        ];
+  const prop: any = {
+    ref: (r) => connect(drag(r)),
+    className: ClassGenerator(
+      props,
+      view,
+      enabled,
+      [],
+      [],
+      preview,
+      false,
+      palette
+    ),
+  };
 
-        const className = [
-          ...ClassGene(props.button, [], [], "", false, palette),
-          ...ClassGenerator(
-            { ...props },
-            view,
-            enabled,
-            inlayed ? [...inlayProps, ...baseProps] : baseProps,
-            [],
-            preview,
-            false,
-            palette
-          ).split(" "),
-          ...include,
-        ]
-          .filter((_) => _)
-          .join(" ");
+  // Resolve page references to actual URLs
+  const resolvedUrl = props.url && typeof props.url === "string"
+    ? resolvePageRef(props.url, query, router?.asPath)
+    : props.url;
 
-        let prop: any = {};
+  let ele = resolvedUrl && typeof resolvedUrl === "string" ? Link : props.type || "button";
 
-        // Resolve page references to actual URLs
-        const resolvedUrl = but.url && typeof but.url === "string"
-          ? resolvePageRef(but.url, query, router?.asPath)
-          : but.url;
+  if (resolvedUrl && typeof resolvedUrl === "string") {
+    prop.href = resolvedUrl;
+  }
 
-        let ele = resolvedUrl && typeof resolvedUrl === "string" ? Link : "button";
+  if (enabled && ele === Link) ele = "span";
 
-        if (resolvedUrl && typeof resolvedUrl === "string") {
-          prop.href = resolvedUrl;
+  // Handle click actions
+  const handleClick = () => {
+    if (enabled) {
+      return;
+    }
+
+    if (props.clickType === "click" && props.clickDirection && props.clickValue) {
+      const element = document.getElementById(props.clickValue);
+      if (element) {
+        if (props.clickDirection === "show") {
+          element.style.display = "block";
+        } else if (props.clickDirection === "hide") {
+          element.style.display = "none";
+        } else if (props.clickDirection === "toggle") {
+          element.style.display = element.style.display === "none" ? "block" : "none";
         }
+      }
+    }
+  };
 
-        if (enabled && ele === Link) ele = "span";
+  const handleMouseEnter = () => {
+    if (enabled) {
+      return;
+    }
 
-        const element: any = motionIt(props, ele);
+    if (props.clickType === "hover" && props.clickDirection && props.clickValue) {
+      const element = document.getElementById(props.clickValue);
+      if (element) {
+        if (props.clickDirection === "show") {
+          element.style.display = "block";
+        } else if (props.clickDirection === "hide") {
+          element.style.display = "none";
+        } else if (props.clickDirection === "toggle") {
+          element.style.display = element.style.display === "none" ? "block" : "none";
+        }
+      }
+    }
+  };
 
-        prop = mergeAccessibilityProps({
-          ...prop,
-          key,
-          type: but.type || "button",
-          "aria-label": but.text || `Button ${key + 1}`,
-          ...(but.iconOnly && but.text ? { "aria-label": but.text } : {}),
-          onMouseEnter: () => {
-            if (enabled) {
-              return;
-            }
-            // Use click settings from the button object first, fallback to props
-            const clickType = but.clickType || props.clickType;
-            const clickValue = but.clickValue || props.clickValue;
+  const handleMouseLeave = () => {
+    if (enabled) {
+      return;
+    }
 
-            const element = document.getElementById(clickValue);
+    if (props.clickType === "hover" && props.clickDirection && props.clickValue) {
+      const element = document.getElementById(props.clickValue);
+      if (element) {
+        if (props.clickDirection === "show") {
+          element.style.display = "none";
+        } else if (props.clickDirection === "hide") {
+          element.style.display = "block";
+        }
+        // For toggle, we don't revert on mouse leave
+      }
+    }
+  };
 
-            if (!element) return;
-            if (clickType === "hover" && clickValue) {
-              element.classList.remove("hidden");
-            }
-          },
-          onMouseLeave: () => {
-            if (enabled) {
-              return;
-            }
-            // Use click settings from the button object first, fallback to props
-            const clickType = but.clickType || props.clickType;
-            const clickValue = but.clickValue || props.clickValue;
+  const handleDoubleClick = () => {
+    if (enabled && props.clickType === "click" && props.clickDirection && props.clickValue) {
+      const element = document.getElementById(props.clickValue);
+      if (element) {
+        if (props.clickDirection === "show") {
+          element.style.display = "block";
+        } else if (props.clickDirection === "hide") {
+          element.style.display = "none";
+        } else if (props.clickDirection === "toggle") {
+          element.style.display = element.style.display === "none" ? "block" : "none";
+        }
+      }
+    }
+  };
 
-            const element = document.getElementById(clickValue);
+  prop.onClick = handleClick;
+  prop.onMouseEnter = handleMouseEnter;
+  prop.onMouseLeave = handleMouseLeave;
+  prop.onDoubleClick = handleDoubleClick;
 
-            if (!element) return;
-            if (clickType === "hover" && clickValue) {
-              element.classList.add("hidden");
-            }
-          },
+  if (enabled) {
+    prop["data-bounding-box"] = enabled;
+    prop["node-id"] = id;
+  }
 
-          onClick: (e) => {
-            if (enabled) {
-              setSelectedButton(key);
-              // e.preventDefault();
-              return;
-            }
+  const iconClass = [
+    props.iconSize || "w-6 h-6",
+    props.iconColor || "fill-current",
+    props.iconShadow,
+    "flex",
+    "items-center",
+  ];
 
-            // Use click settings from the button object first, fallback to props
-            const clickType = but.clickType || props.clickType;
-            const clickDirection = but.clickDirection || props.clickDirection;
-            const clickValue = but.clickValue || props.clickValue;
+  const content = (
+    <>
+      {enabled && isMounted && (
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Button} props={props} />
+      )}
 
-            if (clickType === "click" && clickValue) {
-              // e.preventDefault();
-              const element = document.getElementById(clickValue);
+      {props.icon && props.iconPosition === "left" && (
 
-              if (!element) return;
+        <div className={iconClass.join(" ")} dangerouslySetInnerHTML={{ __html: props.icon }} />
 
-              if (clickDirection === "show") {
-                element.classList.remove("hidden");
-                return;
-              }
+      )}
 
-              if (clickDirection === "hide") {
-                element.classList.add("hidden");
-                return;
-              }
+      {!props.iconOnly && props.text && (
+        <span className="flex items-center">
+          {props.text}
+        </span>
+      )}
 
-              if (element.classList.contains("hidden")) {
-                element.classList.remove("hidden");
-              } else {
-                element.classList.add("hidden");
-              }
-            }
-          },
+      {props.icon && props.iconPosition === "right" && (
 
-          onDoubleClick: (e) => {
-            if (!enabled) return; // Only execute in edit mode
+        <div className={iconClass.join(" ")} dangerouslySetInnerHTML={{ __html: props.icon }} />
 
-            // Use click settings from the button object first, fallback to props
-            const clickType = but.clickType || props.clickType;
-            const clickDirection = but.clickDirection || props.clickDirection;
-            const clickValue = but.clickValue || props.clickValue;
-
-            if (clickType === "click" && clickValue) {
-              e.preventDefault();
-              e.stopPropagation();
-
-              const element = document.getElementById(clickValue);
-
-              if (!element) {
-                console.warn(`Element with id "${clickValue}" not found`);
-                return;
-              }
-
-              if (clickDirection === "show") {
-                element.classList.remove("hidden");
-                return;
-              }
-
-              if (clickDirection === "hide") {
-                element.classList.add("hidden");
-                return;
-              }
-
-              if (clickDirection === "toggle") {
-                if (element.classList.contains("hidden")) {
-                  element.classList.remove("hidden");
-                } else {
-                  element.classList.add("hidden");
-                }
-                return;
-              }
-
-              // Default to toggle behavior if no specific direction
-              if (element.classList.contains("hidden")) {
-                element.classList.remove("hidden");
-              } else {
-                element.classList.add("hidden");
-              }
-            }
-          },
-          ...applyBackgroundImage({}, props, settings),
-          // style: {},
-          className,
-          children: (
-            <RenderPattern
-              props={props}
-              settings={settings}
-              view={view}
-              enabled={enabled}
-              properties={{}}
-              preview={preview}
-            >
-              <RenderGradient
-                props={props}
-                view={view}
-                enabled={enabled}
-                properties={inlayProps}
-                preview={preview}
-              >
-                {but.icon && (!props.iconPosition || props.iconPosition === "left") && (
-                  <span className={butClass.join(" ")}>
-                    <ClientIconLoader value={but.icon} />
-                  </span>
-                )}
-
-                {!but.iconOnly && (
-                  <EditableName but={but} ikey={key} enabled={enabled} query={query} preview={preview} />
-                )}
-
-                {but.icon && props.iconPosition === "right" && (
-                  <span className={butClass.join(" ")}>
-                    <ClientIconLoader value={but.icon} />
-                  </span>
-                )}
-              </RenderGradient>
-            </RenderPattern>
-          ),
-        }, props);
-
-        prop = {
-          ...applyAnimation(prop, props),
-        };
-
-        return React.createElement(element, prop);
-      })}
-    </div>
+      )}
+    </>
   );
+
+  prop.children = content;
+
+  if (enabled) {
+    prop["data-bounding-box"] = enabled;
+    prop["node-id"] = id;
+  }
+
+  const final = applyAnimation({ ...prop, key: `${id}` }, props);
+
+  return React.createElement(motionIt(props, ele), final);
 };
 
 Button.craft = {
   displayName: "Button",
   rules: {
     canDrag: () => true,
-    canMoveIn: () => false,
+    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === "Button"),
   },
   related: {
     toolbar: ButtonSettings,
@@ -539,13 +293,6 @@ Button.craft = {
         />,
 
         <DeleteNodeController key="buttonDelete" />,
-        <ToolNodeController
-          position="top"
-          align="start"
-          key="buttonSettingsController"
-        >
-          <ButtonSettingsNodeTool />
-        </ToolNodeController>,
       ];
 
       return [...baseControls];
