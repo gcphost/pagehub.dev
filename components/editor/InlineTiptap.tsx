@@ -49,7 +49,7 @@ export const InlineTiptap = ({
     },
     editorProps: {
       attributes: {
-        class: `prose prose-sm max-w-none focus:outline-none min-h-[1.5em] ${className}`,
+        class: ` focus:outline-none w-full h-full ${className}`,
       },
     },
   });
@@ -73,8 +73,8 @@ export const InlineTiptap = ({
   }
 
   return (
-    <div className="w-full">
-      <EditorContent editor={editor} />
-    </div>
+
+    <EditorContent editor={editor} />
+
   );
 };

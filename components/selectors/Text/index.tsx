@@ -32,7 +32,6 @@ import { getFontFromComp } from "utils/lib";
 import { applyAnimation, ClassGenerator } from "utils/tailwind";
 
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
-import TextSettingsTopNodeTool from "components/editor/NodeControllers/Tools/TextSettingsTopNodeTool";
 import { TiptapProvider } from "components/editor/TiptapContext";
 import { TiptapToolbar } from "components/editor/Tools/TiptapToolbar";
 import { changeProp } from "components/editor/Viewport/lib";
@@ -190,7 +189,6 @@ export const Text = (props: Partial<TextProps>) => {
     },
     editorProps: {
       attributes: {
-        class: 'prose prose-sm max-w-none focus:outline-none min-h-[1.5em]',
       },
     },
   }, [enabled, isEditing]); // Only recreate when enabled or editing state changes
@@ -252,65 +250,34 @@ export const Text = (props: Partial<TextProps>) => {
 
   // Add inline tools renderer in edit mode (after hydration)
   if (enabled && isMounted) {
-    if (prop.dangerouslySetInnerHTML) {
-      // Can't use both dangerouslySetInnerHTML and children
-      const innerHTML = prop.dangerouslySetInnerHTML;
-      delete prop.dangerouslySetInnerHTML;
-      prop.children = (
-        <>
-          <div
-            onMouseDown={(e) => e.stopPropagation()}
-            onMouseUp={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (isActive && !isEditing) {
-                setIsEditing(true);
-              }
-            }}
-            className={`w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text' : 'cursor-pointer'} ${!isEditing ? 'hover:bg-blue-50 hover:bg-opacity-30' : ''}`}
-          >
-            {tiptapEditor ? (
-              <EditorContent editor={tiptapEditor} />
-            ) : (
-              <div className="text-gray-400 italic">Loading editor...</div>
-            )}
-          </div>
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props}>
-            <TiptapProvider editor={tiptapEditor}>
-              <TiptapToolbar editor={tiptapEditor} />
-            </TiptapProvider>
-          </InlineToolsRenderer>
-        </>
-      );
-    } else {
-      const originalChildren = prop.children;
-      prop.children = (
-        <>
-          <div
-            onMouseDown={(e) => e.stopPropagation()}
-            onMouseUp={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (isActive && !isEditing) {
-                setIsEditing(true);
-              }
-            }}
-            className={`w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text' : 'cursor-pointer'} ${!isEditing ? 'hover:bg-blue-50 hover:bg-opacity-30' : ''}`}
-          >
-            {tiptapEditor ? (
-              <EditorContent editor={tiptapEditor} />
-            ) : (
-              <div className="text-gray-400 italic">Loading editor...</div>
-            )}
-          </div>
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props}>
-            <TiptapProvider editor={tiptapEditor}>
-              <TiptapToolbar editor={tiptapEditor} />
-            </TiptapProvider>
-          </InlineToolsRenderer>
-        </>
-      );
-    }
+
+    prop.children = (
+      <>
+        <div
+          onMouseDown={(e) => e.stopPropagation()}
+          onMouseUp={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (isActive && !isEditing) {
+              setIsEditing(true);
+            }
+          }}
+          className={`w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text relative' : 'cursor-pointer'}`}
+        >
+          {tiptapEditor ? (
+            <EditorContent editor={tiptapEditor} />
+          ) : (
+            <div className="text-gray-400 italic">Loading editor...</div>
+          )}
+        </div>
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props}>
+          <TiptapProvider editor={tiptapEditor}>
+            <TiptapToolbar editor={tiptapEditor} />
+          </TiptapProvider>
+        </InlineToolsRenderer>
+      </>
+    );
+
   }
 
   const final = applyAnimation({ ...prop, key: `${id}` }, props);
@@ -359,14 +326,7 @@ Text.craft = {
         <ToolNodeController position="bottom" align="start" key="textSettings">
           <TextSettingsNodeTool />
         </ToolNodeController>,
-        <ToolNodeController
-          position="top"
-          align="middle"
-          placement="start"
-          key="textTopSettings"
-        >
-          <TextSettingsTopNodeTool />
-        </ToolNodeController>,
+
       ];
 
       return [...baseControls];

@@ -26,6 +26,7 @@ import { useRecoilState } from 'recoil';
 import { getStyleSheets } from 'utils/lib';
 import { fonts } from 'utils/tailwind';
 import { ColorPickerAtom, ColorPickerDialog } from '../Toolbar/Tools/ColorPickerDialog';
+import { TextSettingsDropdown } from './TextSettingsDropdown';
 
 interface TiptapToolbarProps {
   editor: Editor | null;
@@ -180,9 +181,14 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   };
 
   return (
-    <div className="absolute max-w-[470px]">
+    <div className="absolute w-full max-w-[470px]  z-[9999] ">
       <div className={className}>
 
+        {/* Text Settings Dropdown */}
+        <TextSettingsDropdown />
+
+        {/* Divider */}
+        <div className="w-px h-6 bg-gray-600 mx-1" />
 
         {/* Alignment and Lists Dropdown */}
         <div className="relative">
@@ -492,78 +498,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
         <div className="w-full bg-gray-100 border border-gray-300 rounded shadow-lg z-50 p-4">
           <div className="flex gap-8 h-64">
 
-            {/* Headings Dropdown */}
-            <div className="relative">
-              <Tooltip content="Headings" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-                <button
-                  onClick={handleButtonClick(() => {
-                    setShowHeadings(!showHeadings);
-                    setShowTextFormatting(false);
-                    setShowAlignmentLists(false);
-                    // setShowFontOptions(false);
-                    setShowMoreOptions(false);
-                  })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white flex items-center gap-1 ${showHeadings ? 'bg-gray-700 text-white' : ''}`}
-                >
-                  <span className="text-xs">Normal</span>
-                  <MdMoreVert className="w-3 h-3" />
-                </button>
-              </Tooltip>
-              {showHeadings && (
-                <div className="absolute top-0 left-0 mt-1 bg-gray-800 border border-gray-600 rounded shadow-lg z-50 p-2 min-w-32">
-                  <button
-                    onClick={handleButtonClick(() => {
-                      editor.chain().focus().setParagraph().run();
-                      setShowHeadings(false);
-                    })}
-                    className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('paragraph') ? 'bg-gray-700 text-white' : ''}`}
-                    title="Normal Text"
-                  >
-                    Normal
-                  </button>
-                  <button
-                    onClick={handleButtonClick(() => {
-                      editor.chain().focus().toggleHeading({ level: 1 }).run();
-                      setShowHeadings(false);
-                    })}
-                    className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 1 }) ? 'bg-gray-700 text-white' : ''}`}
-                    title="Heading 1"
-                  >
-                    Heading 1
-                  </button>
-                  <button
-                    onClick={handleButtonClick(() => {
-                      editor.chain().focus().toggleHeading({ level: 2 }).run();
-                      setShowHeadings(false);
-                    })}
-                    className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 2 }) ? 'bg-gray-700 text-white' : ''}`}
-                    title="Heading 2"
-                  >
-                    Heading 2
-                  </button>
-                  <button
-                    onClick={handleButtonClick(() => {
-                      editor.chain().focus().toggleHeading({ level: 3 }).run();
-                      setShowHeadings(false);
-                    })}
-                    className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 3 }) ? 'bg-gray-700 text-white' : ''}`}
-                    title="Heading 3"
-                  >
-                    Heading 3
-                  </button>
-                  <button
-                    onClick={handleButtonClick(() => {
-                      editor.chain().focus().toggleHeading({ level: 4 }).run();
-                      setShowHeadings(false);
-                    })}
-                    className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 4 }) ? 'bg-gray-700 text-white' : ''}`}
-                    title="Heading 4"
-                  >
-                    Heading 4
-                  </button>
-                </div>
-              )}
-            </div>
+
 
 
             {/* Font Family Section */}
@@ -600,6 +535,81 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
 
             {/* Font Size Section */}
             <div className="flex-shrink-0 w-32 flex flex-col">
+              {/* Headings Dropdown */}
+              <div className="relative">
+                <Tooltip content="Headings" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
+                  <button
+                    onClick={handleButtonClick(() => {
+                      setShowHeadings(!showHeadings);
+                      setShowTextFormatting(false);
+                      setShowAlignmentLists(false);
+                      // setShowFontOptions(false);
+                      setShowMoreOptions(false);
+                    })}
+                    className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white flex items-center gap-1 ${showHeadings ? 'bg-gray-700 text-white' : ''}`}
+                  >
+                    <span className="text-xs">Normal</span>
+                    <MdMoreVert className="w-3 h-3" />
+                  </button>
+                </Tooltip>
+                {showHeadings && (
+                  <div className="absolute top-0 left-0 mt-1 bg-gray-800 border border-gray-600 rounded shadow-lg z-50 p-2 min-w-32">
+                    <button
+                      onClick={handleButtonClick(() => {
+                        editor.chain().focus().setParagraph().run();
+                        setShowHeadings(false);
+                      })}
+                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('paragraph') ? 'bg-gray-700 text-white' : ''}`}
+                      title="Normal Text"
+                    >
+                      Normal
+                    </button>
+                    <button
+                      onClick={handleButtonClick(() => {
+                        editor.chain().focus().toggleHeading({ level: 1 }).run();
+                        setShowHeadings(false);
+                      })}
+                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 1 }) ? 'bg-gray-700 text-white' : ''}`}
+                      title="Heading 1"
+                    >
+                      Heading 1
+                    </button>
+                    <button
+                      onClick={handleButtonClick(() => {
+                        editor.chain().focus().toggleHeading({ level: 2 }).run();
+                        setShowHeadings(false);
+                      })}
+                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 2 }) ? 'bg-gray-700 text-white' : ''}`}
+                      title="Heading 2"
+                    >
+                      Heading 2
+                    </button>
+                    <button
+                      onClick={handleButtonClick(() => {
+                        editor.chain().focus().toggleHeading({ level: 3 }).run();
+                        setShowHeadings(false);
+                      })}
+                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 3 }) ? 'bg-gray-700 text-white' : ''}`}
+                      title="Heading 3"
+                    >
+                      Heading 3
+                    </button>
+                    <button
+                      onClick={handleButtonClick(() => {
+                        editor.chain().focus().toggleHeading({ level: 4 }).run();
+                        setShowHeadings(false);
+                      })}
+                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 4 }) ? 'bg-gray-700 text-white' : ''}`}
+                      title="Heading 4"
+                    >
+                      Heading 4
+                    </button>
+                  </div>
+                )}
+              </div>
+
+
+
               <div className="p-1.5 mb-3 flex justify-between">
                 {/* Background Color */}
                 <div className="relative">
