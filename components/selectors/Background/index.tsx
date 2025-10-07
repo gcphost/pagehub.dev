@@ -4,6 +4,7 @@ import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import React, { useEffect, useRef, useState } from "react";
 import { TbContainer } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { DEFAULT_PALETTE, DEFAULT_STYLE_GUIDE } from "utils/defaults";
 
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
@@ -33,6 +34,32 @@ export interface ContainerProps extends BaseSelectorProps {
   activeTab?: number;
   "data-renderer"?: boolean;
   pallet?: NamedColor[];
+  styleGuide?: {
+    borderRadius?: string;
+    buttonPadding?: string;
+    containerSpacing?: string;
+    sectionGap?: string;
+    containerGap?: string;
+    contentWidth?: string;
+    headingFont?: string;
+    headingFontFamily?: string;
+    bodyFont?: string;
+    bodyFontFamily?: string;
+    shadowStyle?: string;
+    inputBorderWidth?: string;
+    inputBorderColor?: string;
+    inputBorderRadius?: string;
+    inputPadding?: string;
+    inputBgColor?: string;
+    inputTextColor?: string;
+    inputPlaceholderColor?: string;
+    inputFocusRing?: string;
+    inputFocusRingColor?: string;
+    linkColor?: string;
+    linkHoverColor?: string;
+    linkUnderline?: string;
+    linkUnderlineOffset?: string;
+  };
   header?: string;
   footer?: string;
   pageTitle?: string;
@@ -55,16 +82,8 @@ export interface ContainerProps extends BaseSelectorProps {
 
 const defaultProps: ContainerProps = {
   type: "background",
-  pallet: [
-    { name: "Primary", color: "blue-500" },
-    { name: "Secondary", color: "purple-500" },
-    { name: "Accent", color: "orange-500" },
-    { name: "Neutral", color: "gray-500" },
-    { name: "Background", color: "white" },
-    { name: "Alternate Background", color: "gray-50" },
-    { name: "Text", color: "gray-900" },
-    { name: "Alternate Text", color: "gray-600" },
-  ],
+  pallet: DEFAULT_PALETTE,
+  styleGuide: DEFAULT_STYLE_GUIDE,
   root: {},
   mobile: {
     width: "w-full",
@@ -87,7 +106,7 @@ export const Background = (props: Partial<ContainerProps>) => {
   };
   const { children } = props;
 
-  const { actions, enabled } = useEditor((state) => ({
+  const { actions, enabled, query } = useEditor((state, query) => ({
     enabled: state.options.enabled,
   }));
 
@@ -148,7 +167,8 @@ export const Background = (props: Partial<ContainerProps>) => {
       [],
       preview,
       false,
-      props.pallet || []
+      props.pallet || [],
+      query
     ),
   };
 
@@ -276,6 +296,84 @@ export const Background = (props: Partial<ContainerProps>) => {
     };
   }, [props.footer]);
 
+  // Inject global link styles into head
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const head = document.getElementsByTagName("HEAD")[0];
+    const styleId = "pagehub-link-styles";
+
+    // Remove existing style tag if present
+    const existingStyle = document.getElementById(styleId);
+    if (existingStyle) {
+      head.removeChild(existingStyle);
+    }
+
+    // Generate and inject new styles if styleGuide exists
+    if (props.styleGuide) {
+      const resolveLinkColor = (colorValue: string | undefined): string => {
+        if (!colorValue) return 'inherit';
+
+        // If it's a palette reference, resolve it
+        if (colorValue.startsWith('palette:')) {
+          const paletteName = colorValue.replace('palette:', '');
+          const paletteColor = (props.pallet || []).find((p) => p.name === paletteName);
+          if (paletteColor) {
+            // Recursively resolve in case the palette color is also a reference
+            return resolveLinkColor(paletteColor.color);
+          }
+        }
+
+        // If it's a Tailwind color like "blue-500", convert to CSS
+        if (colorValue.includes('-') && !colorValue.startsWith('#') && !colorValue.startsWith('rgb')) {
+          // Map common Tailwind colors to CSS
+          const colorMap: { [key: string]: string } = {
+            'blue-500': '#3b82f6',
+            'purple-500': '#a855f7',
+            'orange-500': '#f97316',
+            'gray-500': '#6b7280',
+            'gray-900': '#111827',
+            'gray-50': '#f9fafb',
+            'gray-600': '#4b5563',
+            'white': '#ffffff',
+            'black': '#000000',
+          };
+          return colorMap[colorValue] || colorValue;
+        }
+
+        return colorValue;
+      };
+
+      // Scope styles to the viewport in edit mode, or globally in preview/published mode
+      const selector = enabled ? 'main[data-renderer="true"] a:not([class*="no-style"])' : 'a:not([class*="no-style"])';
+
+      const linkStyles = `
+        ${selector} {
+          color: ${resolveLinkColor(props.styleGuide.linkColor)};
+          ${props.styleGuide.linkUnderline === 'underline' ? 'text-decoration: underline;' : props.styleGuide.linkUnderline === 'no-underline' ? 'text-decoration: none;' : ''};
+          ${props.styleGuide.linkUnderlineOffset && props.styleGuide.linkUnderlineOffset !== 'underline-offset-auto' ? `text-underline-offset: ${props.styleGuide.linkUnderlineOffset.replace('underline-offset-', '')}px;` : ''};
+          transition: color 150ms ease-in-out;
+        }
+        ${selector}:hover {
+          color: ${resolveLinkColor(props.styleGuide.linkHoverColor)};
+          ${props.styleGuide.linkUnderline === 'hover:underline' ? 'text-decoration: underline;' : ''};
+        }
+      `;
+
+      const style = document.createElement("style");
+      style.id = styleId;
+      style.textContent = linkStyles;
+      head.appendChild(style);
+    }
+
+    return () => {
+      const styleToRemove = document.getElementById(styleId);
+      if (styleToRemove) {
+        head.removeChild(styleToRemove);
+      }
+    };
+  }, [props.styleGuide, props.pallet]);
+
   prop.children = (
     <PaletteProvider palette={props.pallet || []}>
       <RenderPattern
@@ -285,6 +383,7 @@ export const Background = (props: Partial<ContainerProps>) => {
         enabled={enabled}
         properties={inlayProps}
         preview={preview}
+        query={query}
       >
         <RenderGradient
           props={props}
@@ -292,6 +391,7 @@ export const Background = (props: Partial<ContainerProps>) => {
           enabled={enabled}
           properties={inlayProps}
           preview={preview}
+          query={query}
         >
           {children || <EmptyState icon={<TbContainer />} />}
         </RenderGradient>

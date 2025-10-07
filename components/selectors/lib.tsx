@@ -10,18 +10,20 @@ export const RenderPattern = ({
   enabled,
   properties,
   preview,
+  query,
 }) => {
   const inlayProps = applyPattern({}, props, settings);
-  const inlayClass = props?.root?.backgroundGradient
-    ? "flex w-full h-full"
-    : `${ClassGenerator(
-      props,
-      view,
-      enabled,
-      [],
-      properties,
-      preview
-    )} flex w-full h-full`;
+  const inlayClass = `${ClassGenerator(
+    props,
+    view,
+    enabled,
+    [],
+    properties,
+    preview,
+    false,
+    [],
+    query
+  )} flex flex-col flex-1 w-full`;
 
   if (inlayProps?.style?.backgroundImage) {
     return (
@@ -41,6 +43,7 @@ export const RenderGradient = ({
   enabled,
   properties,
   preview,
+  query,
 }) => {
   if (props?.backgroundImage && props?.root?.backgroundGradient) {
     const inlayClass = `${ClassGenerator(
@@ -49,8 +52,11 @@ export const RenderGradient = ({
       enabled,
       [],
       properties,
-      preview
-    )} flex w-full h-full`;
+      preview,
+      false,
+      [],
+      query
+    )} flex flex-row flex-1 w-full`;
 
     return <div className={inlayClass}>{children}</div>;
   }

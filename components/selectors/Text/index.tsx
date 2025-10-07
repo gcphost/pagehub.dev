@@ -143,33 +143,10 @@ export const Text = (props: Partial<TextProps>) => {
   // Replace variables in text (only show raw text when actively editing)
   const processedText = (!enabled || preview || !isEditing) ? replaceVariables(text, query) : text;
 
-  /* -- throws hydration errors after react-quilljs update.
-
-if (text && typeof window !== "undefined") {
-    const doc = new DOMParser().parseFromString(text, "text/html");
-    const a = doc.getElementsByTagName("p");
-
-    if (a.length) {
-      const b = [];
-
-      for (const d in a) {
-        const res = a[d].innerHTML;
-        b.push(res);
-      }
-
-      const c = b.filter((_) => _).map((_) => (_ === "<br>" ? "" : _));
-
-      if (b.length) {
-        text = c.join("<br>");
-      }
-
-      if (text === "<br>") text = "";
-    }
-  }]*/
 
   const prop: any = {
     ref: (r) => connect(drag(r)),
-    className: ClassGenerator(props, view, enabled, [], [], preview, false, palette),
+    className: ClassGenerator(props, view, enabled, [], [], preview, false, palette, query),
   };
 
   if (enabled) {

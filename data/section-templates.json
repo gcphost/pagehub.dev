@@ -81,10 +81,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-6"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -97,10 +97,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-4xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center",
                       "color": "text-white"
                     },
@@ -116,9 +118,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-lg",
+                      "fontWeight": "style:bodyFont",
                       "textAlign": "text-center",
                       "maxWidth": "max-w-2xl",
                       "color": "text-white"
@@ -137,26 +142,23 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-white",
-                      "color": "text-primary-500"
+                      "color": "text-palette:Primary",
+                      "radius": "style:borderRadius",
+                      "shadow": "style:shadowStyle",
+                      "fontFamily": "style:headingFontFamily"
                     },
                     "mobile": {
-                      "px": "px-8",
-                      "py": "py-4",
+                      "p": "style:buttonPadding",
                       "fontSize": "text-lg",
-                      "fontWeight": "font-bold",
-                      "radius": "rounded-lg",
+                      "fontWeight": "style:headingFont",
                       "gap": "gap-4"
                     },
                     "desktop": {},
                     "custom": {
                       "displayName": "CTA Button"
                     },
-                    "buttons": [
-                      {
-                        "text": "Get Started Now",
-                        "url": "#"
-                      }
-                    ]
+                    "text": "Get Started Now",
+                    "url": "#"
                   }
                 }
               ]
@@ -199,10 +201,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-6"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -215,10 +217,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-4xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {},
@@ -233,9 +237,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-lg",
+                      "fontWeight": "style:bodyFont",
                       "textAlign": "text-center",
                       "maxWidth": "max-w-2xl"
                     },
@@ -253,26 +260,23 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-palette:Primary",
-                      "color": "text-white"
+                      "color": "text-white",
+                      "radius": "style:borderRadius",
+                      "shadow": "style:shadowStyle",
+                      "fontFamily": "style:headingFontFamily"
                     },
                     "mobile": {
-                      "px": "px-8",
-                      "py": "py-4",
+                      "p": "style:buttonPadding",
                       "fontSize": "text-lg",
-                      "fontWeight": "font-bold",
-                      "radius": "rounded-lg",
+                      "fontWeight": "style:headingFont",
                       "gap": "gap-4"
                     },
                     "desktop": {},
                     "custom": {
                       "displayName": "CTA Button"
                     },
-                    "buttons": [
-                      {
-                        "text": "Start Free Trial",
-                        "url": "#"
-                      }
-                    ]
+                    "text": "Start Free Trial",
+                    "url": "#"
                   }
                 }
               ]
@@ -316,10 +320,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-6"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -332,10 +336,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-4xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {
@@ -355,6 +361,7 @@
                     "root": {},
                     "mobile": {
                       "fontSize": "text-lg",
+                      "fontWeight": "style:bodyFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {
@@ -373,26 +380,23 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-white",
-                      "color": "text-primary-500"
+                      "color": "text-palette:Primary",
+                      "radius": "rounded-full",
+                      "shadow": "style:shadowStyle",
+                      "fontFamily": "style:headingFontFamily"
                     },
                     "mobile": {
-                      "px": "px-8",
-                      "py": "py-4",
+                      "p": "style:buttonPadding",
                       "fontSize": "text-lg",
-                      "fontWeight": "font-bold",
-                      "radius": "rounded-full",
+                      "fontWeight": "style:headingFont",
                       "gap": "gap-4"
                     },
                     "desktop": {},
                     "custom": {
                       "displayName": "CTA Button"
                     },
-                    "buttons": [
-                      {
-                        "text": "Start Free Trial",
-                        "url": "#"
-                      }
-                    ]
+                    "text": "Start Free Trial",
+                    "url": "#"
                   }
                 }
               ]
@@ -417,9 +421,8 @@
               "justifyContent": "justify-between",
               "alignItems": "items-center",
               "width": "w-full",
-              "px": "px-6",
-              "py": "py-32",
-              "gap": "gap-8"
+              "gap": "style:containerGap",
+              "p": "style:containerSpacing"
             },
             "desktop": {
               "flexDirection": "flex-row",
@@ -440,9 +443,9 @@
                 "mobile": {
                   "display": "flex",
                   "flexDirection": "flex-col",
-                  "gap": "gap-4",
+                  "gap": "style:containerGap",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6"
                 },
@@ -459,10 +462,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold"
+                      "fontWeight": "style:headingFont"
                     },
                     "desktop": {
                       "fontSize": "text-4xl"
@@ -480,7 +485,8 @@
                     "canEditName": true,
                     "root": {},
                     "mobile": {
-                      "fontSize": "text-base"
+                      "fontSize": "text-base",
+                      "fontWeight": "style:bodyFont"
                     },
                     "desktop": {
                       "fontSize": "text-lg"
@@ -500,26 +506,23 @@
                 "canEditName": true,
                 "root": {
                   "background": "bg-palette:Primary",
-                  "color": "text-white"
+                  "color": "text-white",
+                  "radius": "style:borderRadius",
+                  "shadow": "style:shadowStyle",
+                  "fontFamily": "style:headingFontFamily"
                 },
                 "mobile": {
-                  "px": "px-8",
-                  "py": "py-4",
+                  "p": "style:buttonPadding",
                   "fontSize": "text-base",
-                  "fontWeight": "font-bold",
-                  "radius": "rounded-lg",
+                  "fontWeight": "style:headingFont",
                   "gap": "gap-4"
                 },
                 "desktop": {},
                 "custom": {
                   "displayName": "CTA Button"
                 },
-                "buttons": [
-                  {
-                    "text": "Email {{company.email}}",
-                    "url": "mailto:{{company.email}}"
-                  }
-                ]
+                "text": "Email {{company.email}}",
+                "url": "mailto:{{company.email}}"
               }
             }
           ]
@@ -560,10 +563,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-4"
+                  "gap": "style:containerGap"
                 },
                 "custom": {
                   "displayName": "Footer Content"
@@ -596,7 +599,7 @@
                     "mobile": {
                       "display": "flex",
                       "flexDirection": "flex-row",
-                      "gap": "gap-4",
+                      "gap": "style:containerGap",
                       "alignItems": "items-center"
                     },
                     "custom": {
@@ -704,10 +707,10 @@
                   "display": "flex",
                   "flexDirection": "flex-col",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-8"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {
                   "flexDirection": "flex-row",
@@ -727,7 +730,7 @@
                     "mobile": {
                       "display": "flex",
                       "flexDirection": "flex-col",
-                      "gap": "gap-4"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "width": "w-1/3"
@@ -809,7 +812,7 @@
                     "mobile": {
                       "display": "flex",
                       "flexDirection": "flex-col",
-                      "gap": "gap-3"
+                      "gap": "style:containerGap"
                     },
                     "custom": {
                       "displayName": "Quick Links"
@@ -821,10 +824,12 @@
                       "props": {
                         "canDelete": true,
                         "canEditName": true,
-                        "root": {},
+                        "root": {
+                          "fontFamily": "style:headingFontFamily"
+                        },
                         "mobile": {
                           "fontSize": "text-base",
-                          "fontWeight": "font-semibold"
+                          "fontWeight": "style:headingFont"
                         },
                         "custom": {
                           "displayName": "Column Title"
@@ -903,7 +908,7 @@
                     "mobile": {
                       "display": "flex",
                       "flexDirection": "flex-col",
-                      "gap": "gap-3"
+                      "gap": "style:containerGap"
                     },
                     "custom": {
                       "displayName": "Legal"
@@ -915,10 +920,12 @@
                       "props": {
                         "canDelete": true,
                         "canEditName": true,
-                        "root": {},
+                        "root": {
+                          "fontFamily": "style:headingFontFamily"
+                        },
                         "mobile": {
                           "fontSize": "text-base",
-                          "fontWeight": "font-semibold"
+                          "fontWeight": "style:headingFont"
                         },
                         "custom": {
                           "displayName": "Column Title"
@@ -1011,10 +1018,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-6"
+                  "gap": "style:containerGap"
                 },
                 "custom": {
                   "displayName": "Footer Content"
@@ -1031,7 +1038,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "alignItems": "items-center",
-                      "gap": "gap-4",
+                      "gap": "style:containerGap",
                       "width": "w-full"
                     },
                     "desktop": {
@@ -1069,7 +1076,7 @@
                         "mobile": {
                           "display": "flex",
                           "flexDirection": "flex-row",
-                          "gap": "gap-4",
+                          "gap": "style:containerGap",
                           "alignItems": "items-center"
                         },
                         "custom": {
@@ -1082,25 +1089,16 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
+                            },
                             "mobile": {},
                             "custom": {
                               "displayName": "Social Button"
                             },
-                            "buttons": [
-                              {
-                                "text": "Facebook",
-                                "url": "#",
-                                "style": {
-                                  "background": "bg-white",
-                                  "color": "text-palette:Primary",
-                                  "px": "px-4",
-                                  "py": "py-2",
-                                  "radius": "rounded-lg",
-                                  "fontSize": "text-sm"
-                                }
-                              }
-                            ]
+                            "text": "Facebook",
+                            "url": "#"
                           }
                         },
                         {
@@ -1108,25 +1106,16 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
+                            },
                             "mobile": {},
                             "custom": {
                               "displayName": "Social Button"
                             },
-                            "buttons": [
-                              {
-                                "text": "Twitter",
-                                "url": "#",
-                                "style": {
-                                  "background": "bg-white",
-                                  "color": "text-palette:Primary",
-                                  "px": "px-4",
-                                  "py": "py-2",
-                                  "radius": "rounded-lg",
-                                  "fontSize": "text-sm"
-                                }
-                              }
-                            ]
+                            "text": "Twitter",
+                            "url": "#"
                           }
                         },
                         {
@@ -1134,25 +1123,16 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
+                            },
                             "mobile": {},
                             "custom": {
                               "displayName": "Social Button"
                             },
-                            "buttons": [
-                              {
-                                "text": "Instagram",
-                                "url": "#",
-                                "style": {
-                                  "background": "bg-white",
-                                  "color": "text-palette:Primary",
-                                  "px": "px-4",
-                                  "py": "py-2",
-                                  "radius": "rounded-lg",
-                                  "fontSize": "text-sm"
-                                }
-                              }
-                            ]
+                            "text": "Instagram",
+                            "url": "#"
                           }
                         }
                       ]
@@ -1172,7 +1152,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "alignItems": "items-center",
-                      "gap": "gap-3",
+                      "gap": "style:containerGap",
                       "pt": "pt-6",
                       "width": "w-full"
                     },
@@ -1214,7 +1194,7 @@
                         "mobile": {
                           "display": "flex",
                           "flexDirection": "flex-row",
-                          "gap": "gap-4"
+                          "gap": "style:containerGap"
                         },
                         "custom": {
                           "displayName": "Legal Links"
@@ -1300,7 +1280,7 @@
                   "alignItems": "items-center",
                   "justifyContent": "justify-between",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6"
                 },
@@ -1334,7 +1314,7 @@
                     "mobile": {
                       "display": "flex",
                       "flexDirection": "flex-row",
-                      "gap": "gap-6",
+                      "gap": "style:containerGap",
                       "alignItems": "items-center"
                     },
                     "custom": {
@@ -1443,7 +1423,7 @@
                   "alignItems": "items-center",
                   "justifyContent": "justify-between",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6"
                 },
@@ -1478,7 +1458,7 @@
                     "mobile": {
                       "display": "flex",
                       "flexDirection": "flex-row",
-                      "gap": "gap-6",
+                      "gap": "style:containerGap",
                       "alignItems": "items-center"
                     },
                     "custom": {
@@ -1523,25 +1503,16 @@
                       "props": {
                         "canDelete": true,
                         "canEditName": true,
-                        "root": {},
+                        "root": {
+                          "fontFamily": "style:headingFontFamily",
+                          "shadow": "style:shadowStyle"
+                        },
                         "mobile": {},
                         "custom": {
                           "displayName": "CTA Button"
                         },
-                        "buttons": [
-                          {
-                            "text": "Get Started",
-                            "url": "#",
-                            "style": {
-                              "background": "bg-white",
-                              "color": "text-palette:Primary",
-                              "px": "px-6",
-                              "py": "py-2",
-                              "radius": "rounded-lg",
-                              "fontWeight": "font-semibold"
-                            }
-                          }
-                        ]
+                        "text": "Get Started",
+                        "url": "#"
                       }
                     }
                   ]
@@ -1586,10 +1557,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-4"
+                  "gap": "style:containerGap"
                 },
                 "custom": {
                   "displayName": "Header Content"
@@ -1601,10 +1572,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "custom": {
@@ -1622,7 +1595,7 @@
                     "mobile": {
                       "display": "flex",
                       "flexDirection": "flex-row",
-                      "gap": "gap-6",
+                      "gap": "style:containerGap",
                       "alignItems": "items-center"
                     },
                     "custom": {
@@ -1733,10 +1706,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-6"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -1749,10 +1722,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-5xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {
@@ -1769,7 +1744,9 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-lg",
                       "textAlign": "text-center",
@@ -1788,27 +1765,24 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "background": "bg-palette:Primary"
+                      "background": "bg-palette:Primary",
+                      "fontFamily": "style:headingFontFamily"
                     },
                     "mobile": {
-                      "px": "px-8",
-                      "py": "py-4",
+                      "p": "style:buttonPadding",
                       "fontSize": "text-lg",
-                      "fontWeight": "font-semibold",
+                      "fontWeight": "style:headingFont",
                       "color": "text-white",
-                      "radius": "rounded-lg",
-                      "gap": "gap-4"
+                      "radius": "style:borderRadius",
+                      "gap": "gap-4",
+                      "shadow": "style:shadowStyle"
                     },
                     "desktop": {},
                     "custom": {
                       "displayName": "CTA Button"
                     },
-                    "buttons": [
-                      {
-                        "text": "Get Started",
-                        "url": "#"
-                      }
-                    ]
+                    "text": "Get Started",
+                    "url": "#"
                   }
                 }
               ]
@@ -1852,10 +1826,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-6"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -1868,10 +1842,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-5xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center",
                       "color": "text-white"
                     },
@@ -1889,7 +1865,9 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-lg",
                       "textAlign": "text-center",
@@ -1909,27 +1887,24 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "background": "bg-palette:Background"
+                      "background": "bg-palette:Background",
+                      "fontFamily": "style:headingFontFamily",
+                      "shadow": "style:shadowStyle"
                     },
                     "mobile": {
-                      "px": "px-8",
-                      "py": "py-4",
                       "fontSize": "text-lg",
-                      "fontWeight": "font-semibold",
+                      "fontWeight": "style:headingFont",
                       "color": "text-palette:Primary",
-                      "radius": "rounded-lg",
-                      "gap": "gap-4"
+                      "radius": "style:borderRadius",
+                      "gap": "gap-4",
+                      "p": "style:buttonPadding"
                     },
                     "desktop": {},
                     "custom": {
                       "displayName": "CTA Button"
                     },
-                    "buttons": [
-                      {
-                        "text": "Learn More",
-                        "url": "#"
-                      }
-                    ]
+                    "text": "Learn More",
+                    "url": "#"
                   }
                 }
               ]
@@ -1976,11 +1951,10 @@
                   "alignItems": "items-center",
                   "width": "w-full",
                   "height": "h-full",
-                  "px": "px-6",
-                  "py": "py-28",
-                  "gap": "gap-6",
-                  "maxWidth": "max-w-7xl",
-                  "mx": "mx-auto"
+                  "gap": "style:containerGap",
+                  "maxWidth": "style:contentWidth",
+                  "mx": "mx-auto",
+                  "p": "style:containerSpacing"
                 },
                 "desktop": {
                   "width": "w-1/2"
@@ -1995,10 +1969,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-4xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "color": "text-white"
                     },
                     "desktop": {
@@ -2015,7 +1991,9 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-lg",
                       "color": "text-white"
@@ -2034,26 +2012,23 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-white",
-                      "color": "text-primary-500"
+                      "color": "text-palette:Primary",
+                      "fontFamily": "style:headingFontFamily",
+                      "shadow": "style:shadowStyle"
                     },
                     "mobile": {
-                      "px": "px-8",
-                      "py": "py-3",
                       "fontSize": "text-base",
-                      "fontWeight": "font-bold",
-                      "radius": "rounded-lg",
-                      "gap": "gap-4"
+                      "fontWeight": "style:headingFont",
+                      "radius": "style:borderRadius",
+                      "gap": "gap-4",
+                      "p": "style:buttonPadding"
                     },
                     "desktop": {},
                     "custom": {
                       "displayName": "CTA Button"
                     },
-                    "buttons": [
-                      {
-                        "text": "Get Started",
-                        "url": "#"
-                      }
-                    ]
+                    "text": "Get Started",
+                    "url": "#"
                   }
                 }
               ]
@@ -2121,10 +2096,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-8"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {
                   "flexDirection": "flex-row",
@@ -2170,7 +2145,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-4",
+                      "gap": "style:containerGap",
                       "px": "px-6"
                     },
                     "desktop": {
@@ -2186,10 +2161,12 @@
                       "props": {
                         "canDelete": true,
                         "canEditName": true,
-                        "root": {},
+                        "root": {
+                          "fontFamily": "style:headingFontFamily"
+                        },
                         "mobile": {
                           "fontSize": "text-3xl",
-                          "fontWeight": "font-bold"
+                          "fontWeight": "style:headingFont"
                         },
                         "desktop": {},
                         "custom": {
@@ -2236,9 +2213,8 @@
               "display": "flex",
               "flexDirection": "flex-col",
               "width": "w-full",
-              "px": "px-6",
-              "py": "py-32",
-              "gap": "gap-8"
+              "gap": "style:containerGap",
+              "p": "style:containerSpacing"
             },
             "desktop": {
               "flexDirection": "flex-row",
@@ -2262,8 +2238,8 @@
                   "display": "flex",
                   "flexDirection": "flex-col",
                   "width": "w-full",
-                  "gap": "gap-4",
-                  "maxWidth": "max-w-7xl",
+                  "gap": "style:containerGap",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6"
                 },
@@ -2282,10 +2258,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold"
+                      "fontWeight": "style:headingFont"
                     },
                     "desktop": {
                       "fontSize": "text-4xl"
@@ -2377,7 +2355,8 @@
                       "fontSize": "text-3xl",
                       "fontWeight": "font-bold",
                       "color": "text-white",
-                      "marginBottom": "mb-4"
+                      "marginBottom": "mb-4",
+                      "fontFamily": "style:headingFontFamily"
                     },
                     "custom": {
                       "displayName": "Title"
@@ -2438,9 +2417,11 @@
                           "bg": "bg-white",
                           "color": "text-blue-600",
                           "padding": "px-8 py-3",
-                          "radius": "rounded-md",
+                          "radius": "style:borderRadius",
                           "fontWeight": "font-semibold",
-                          "width": "w-full"
+                          "width": "w-full",
+                          "fontFamily": "style:headingFontFamily",
+                          "shadow": "style:shadowStyle"
                         },
                         "desktop": {
                           "width": "w-auto"
@@ -2502,7 +2483,8 @@
                         "root": {
                           "fontSize": "text-4xl",
                           "fontWeight": "font-bold",
-                          "marginBottom": "mb-4"
+                          "marginBottom": "mb-4",
+                          "fontFamily": "style:headingFontFamily"
                         },
                         "custom": {
                           "displayName": "Title"
@@ -2613,10 +2595,12 @@
                           "bg": "bg-blue-600",
                           "color": "text-white",
                           "padding": "px-8 py-3",
-                          "radius": "rounded-md",
+                          "radius": "style:borderRadius",
                           "fontWeight": "font-semibold",
                           "marginTop": "mt-6",
-                          "width": "w-full"
+                          "width": "w-full",
+                          "fontFamily": "style:headingFontFamily",
+                          "shadow": "style:shadowStyle"
                         },
                         "custom": {
                           "displayName": "Submit Button"
@@ -2671,10 +2655,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-8"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -2687,10 +2671,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {
@@ -2712,7 +2698,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-8"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "flexDirection": "flex-row",
@@ -2735,10 +2721,9 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "px": "px-8",
-                          "py": "py-10",
-                          "gap": "gap-6",
-                          "radius": "rounded-xl"
+                          "gap": "style:containerGap",
+                          "radius": "rounded-xl",
+                          "p": "style:containerSpacing"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -2771,10 +2756,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-4xl",
-                              "fontWeight": "font-bold",
+                              "fontWeight": "style:headingFont",
                               "textAlign": "text-center"
                             },
                             "desktop": {},
@@ -2808,27 +2795,24 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-gray-100",
-                              "color": "text-palette:Text"
+                              "color": "text-palette:Text",
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
                             },
                             "mobile": {
-                              "px": "px-6",
-                              "py": "py-3",
                               "fontSize": "text-base",
-                              "fontWeight": "font-semibold",
-                              "radius": "rounded-lg",
+                              "fontWeight": "style:headingFont",
+                              "radius": "style:borderRadius",
                               "gap": "gap-4",
-                              "width": "w-full"
+                              "width": "w-full",
+                              "p": "style:buttonPadding"
                             },
                             "desktop": {},
                             "custom": {
                               "displayName": "CTA Button"
                             },
-                            "buttons": [
-                              {
-                                "text": "Get Started",
-                                "url": "#"
-                              }
-                            ]
+                            "text": "Get Started",
+                            "url": "#"
                           }
                         }
                       ]
@@ -2845,10 +2829,9 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "px": "px-8",
-                          "py": "py-10",
-                          "gap": "gap-6",
-                          "radius": "rounded-xl"
+                          "gap": "style:containerGap",
+                          "radius": "rounded-xl",
+                          "p": "style:containerSpacing"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -2881,10 +2864,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-4xl",
-                              "fontWeight": "font-bold",
+                              "fontWeight": "style:headingFont",
                               "textAlign": "text-center"
                             },
                             "desktop": {},
@@ -2918,27 +2903,24 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-white",
-                              "color": "text-primary-500"
+                              "color": "text-palette:Primary",
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
                             },
                             "mobile": {
-                              "px": "px-6",
-                              "py": "py-3",
                               "fontSize": "text-base",
-                              "fontWeight": "font-semibold",
-                              "radius": "rounded-lg",
+                              "fontWeight": "style:headingFont",
+                              "radius": "style:borderRadius",
                               "gap": "gap-4",
-                              "width": "w-full"
+                              "width": "w-full",
+                              "p": "style:buttonPadding"
                             },
                             "desktop": {},
                             "custom": {
                               "displayName": "CTA Button"
                             },
-                            "buttons": [
-                              {
-                                "text": "Get Started",
-                                "url": "#"
-                              }
-                            ]
+                            "text": "Get Started",
+                            "url": "#"
                           }
                         }
                       ]
@@ -2955,10 +2937,9 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "px": "px-8",
-                          "py": "py-10",
-                          "gap": "gap-6",
-                          "radius": "rounded-xl"
+                          "gap": "style:containerGap",
+                          "radius": "rounded-xl",
+                          "p": "style:containerSpacing"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -2991,10 +2972,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-4xl",
-                              "fontWeight": "font-bold",
+                              "fontWeight": "style:headingFont",
                               "textAlign": "text-center"
                             },
                             "desktop": {},
@@ -3028,27 +3011,24 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-gray-100",
-                              "color": "text-palette:Text"
+                              "color": "text-palette:Text",
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
                             },
                             "mobile": {
-                              "px": "px-6",
-                              "py": "py-3",
                               "fontSize": "text-base",
-                              "fontWeight": "font-semibold",
-                              "radius": "rounded-lg",
+                              "fontWeight": "style:headingFont",
+                              "radius": "style:borderRadius",
                               "gap": "gap-4",
-                              "width": "w-full"
+                              "width": "w-full",
+                              "p": "style:buttonPadding"
                             },
                             "desktop": {},
                             "custom": {
                               "displayName": "CTA Button"
                             },
-                            "buttons": [
-                              {
-                                "text": "Contact {{company.name}}",
-                                "url": "mailto:{{company.email}}"
-                              }
-                            ]
+                            "text": "Contact {{company.name}}",
+                            "url": "mailto:{{company.email}}"
                           }
                         }
                       ]
@@ -3098,10 +3078,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-8"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -3114,10 +3094,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {
@@ -3139,7 +3121,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-6"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "px": "px-20"
@@ -3159,7 +3141,7 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-2",
+                          "gap": "style:containerGap",
                           "py": "py-4"
                         },
                         "desktop": {},
@@ -3251,7 +3233,7 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-2",
+                          "gap": "style:containerGap",
                           "py": "py-4"
                         },
                         "desktop": {},
@@ -3343,7 +3325,7 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-2",
+                          "gap": "style:containerGap",
                           "py": "py-4"
                         },
                         "desktop": {},
@@ -3470,10 +3452,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-8"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -3486,10 +3468,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {
@@ -3511,7 +3495,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-8"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "flexDirection": "flex-row",
@@ -3534,7 +3518,7 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-4"
+                          "gap": "style:containerGap"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -3607,27 +3591,24 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-palette:Primary",
-                              "color": "text-white"
+                              "color": "text-white",
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
                             },
                             "mobile": {
-                              "px": "px-6",
-                              "py": "py-3",
                               "fontSize": "text-base",
-                              "fontWeight": "font-semibold",
-                              "radius": "rounded-lg",
+                              "fontWeight": "style:headingFont",
+                              "radius": "style:borderRadius",
                               "gap": "gap-4",
-                              "width": "w-full"
+                              "width": "w-full",
+                              "p": "style:buttonPadding"
                             },
                             "desktop": {},
                             "custom": {
                               "displayName": "Add to Cart"
                             },
-                            "buttons": [
-                              {
-                                "text": "Add to Cart",
-                                "url": "#"
-                              }
-                            ]
+                            "text": "Add to Cart",
+                            "url": "#"
                           }
                         }
                       ]
@@ -3644,7 +3625,7 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-4"
+                          "gap": "style:containerGap"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -3717,27 +3698,24 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-palette:Primary",
-                              "color": "text-white"
+                              "color": "text-white",
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
                             },
                             "mobile": {
-                              "px": "px-6",
-                              "py": "py-3",
                               "fontSize": "text-base",
-                              "fontWeight": "font-semibold",
-                              "radius": "rounded-lg",
+                              "fontWeight": "style:headingFont",
+                              "radius": "style:borderRadius",
                               "gap": "gap-4",
-                              "width": "w-full"
+                              "width": "w-full",
+                              "p": "style:buttonPadding"
                             },
                             "desktop": {},
                             "custom": {
                               "displayName": "Add to Cart"
                             },
-                            "buttons": [
-                              {
-                                "text": "Add to Cart",
-                                "url": "#"
-                              }
-                            ]
+                            "text": "Add to Cart",
+                            "url": "#"
                           }
                         }
                       ]
@@ -3754,7 +3732,7 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-4"
+                          "gap": "style:containerGap"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -3827,27 +3805,24 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-palette:Primary",
-                              "color": "text-white"
+                              "color": "text-white",
+                              "fontFamily": "style:headingFontFamily",
+                              "shadow": "style:shadowStyle"
                             },
                             "mobile": {
-                              "px": "px-6",
-                              "py": "py-3",
                               "fontSize": "text-base",
-                              "fontWeight": "font-semibold",
-                              "radius": "rounded-lg",
+                              "fontWeight": "style:headingFont",
+                              "radius": "style:borderRadius",
                               "gap": "gap-4",
-                              "width": "w-full"
+                              "width": "w-full",
+                              "p": "style:buttonPadding"
                             },
                             "desktop": {},
                             "custom": {
                               "displayName": "Add to Cart"
                             },
-                            "buttons": [
-                              {
-                                "text": "Add to Cart",
-                                "url": "#"
-                              }
-                            ]
+                            "text": "Add to Cart",
+                            "url": "#"
                           }
                         }
                       ]
@@ -3894,10 +3869,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-12"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -3910,10 +3885,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-4xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {},
@@ -3933,7 +3910,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-8"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "flexDirection": "flex-row"
@@ -3953,9 +3930,8 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-3",
-                          "px": "px-6",
-                          "py": "py-6"
+                          "gap": "style:containerGap",
+                          "p": "style:containerSpacing"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -3970,10 +3946,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-2xl",
-                              "fontWeight": "font-semibold"
+                              "fontWeight": "style:headingFont"
                             },
                             "desktop": {},
                             "custom": {
@@ -4010,9 +3988,8 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-3",
-                          "px": "px-6",
-                          "py": "py-6"
+                          "gap": "style:containerGap",
+                          "p": "style:containerSpacing"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -4027,10 +4004,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-2xl",
-                              "fontWeight": "font-semibold"
+                              "fontWeight": "style:headingFont"
                             },
                             "desktop": {},
                             "custom": {
@@ -4067,9 +4046,8 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-3",
-                          "px": "px-6",
-                          "py": "py-6"
+                          "gap": "style:containerGap",
+                          "p": "style:containerSpacing"
                         },
                         "desktop": {
                           "width": "w-1/3"
@@ -4084,10 +4062,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-2xl",
-                              "fontWeight": "font-semibold"
+                              "fontWeight": "style:headingFont"
                             },
                             "desktop": {},
                             "custom": {
@@ -4159,10 +4139,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-8"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -4175,10 +4155,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {
@@ -4200,7 +4182,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-8"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "flexDirection": "flex-row"
@@ -4222,10 +4204,9 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "px": "px-6",
-                          "py": "py-8",
-                          "gap": "gap-4",
-                          "radius": "rounded-lg"
+                          "gap": "style:containerGap",
+                          "radius": "rounded-lg",
+                          "p": "style:containerSpacing"
                         },
                         "desktop": {
                           "width": "w-1/2"
@@ -4240,10 +4221,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-2xl",
-                              "fontWeight": "font-bold"
+                              "fontWeight": "style:headingFont"
                             },
                             "desktop": {},
                             "custom": {
@@ -4282,10 +4265,9 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "px": "px-6",
-                          "py": "py-8",
-                          "gap": "gap-4",
-                          "radius": "rounded-lg"
+                          "gap": "style:containerGap",
+                          "radius": "rounded-lg",
+                          "p": "style:containerSpacing"
                         },
                         "desktop": {
                           "width": "w-1/2"
@@ -4300,10 +4282,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-2xl",
-                              "fontWeight": "font-bold"
+                              "fontWeight": "style:headingFont"
                             },
                             "desktop": {},
                             "custom": {
@@ -4387,11 +4371,12 @@
                     "canEditName": true,
                     "root": {
                       "textAlign": "text-center",
-                      "margin": "mb-4"
+                      "margin": "mb-4",
+                      "fontFamily": "style:headingFontFamily"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold"
+                      "fontWeight": "style:headingFont"
                     },
                     "desktop": {
                       "fontSize": "text-4xl",
@@ -4411,7 +4396,8 @@
                     "root": {
                       "textAlign": "text-center",
                       "margin": "mb-12",
-                      "color": "text-gray-600"
+                      "color": "text-gray-600",
+                      "fontFamily": "style:headingFontFamily"
                     },
                     "mobile": {
                       "fontSize": "text-base"
@@ -4434,7 +4420,7 @@
                     "mobile": {
                       "display": "flex",
                       "flexDirection": "flex-col",
-                      "gap": "gap-8",
+                      "gap": "style:containerGap",
                       "mb": "mb-8"
                     },
                     "desktop": {
@@ -4475,7 +4461,8 @@
                             "root": {
                               "margin": "mb-4",
                               "color": "text-green-600",
-                              "fontWeight": "font-bold"
+                              "fontWeight": "font-bold",
+                              "fontFamily": "style:headingFontFamily"
                             },
                             "mobile": {
                               "fontSize": "text-lg"
@@ -4538,7 +4525,8 @@
                             "root": {
                               "margin": "mb-4",
                               "color": "text-green-600",
-                              "fontWeight": "font-bold"
+                              "fontWeight": "font-bold",
+                              "fontFamily": "style:headingFontFamily"
                             },
                             "mobile": {
                               "fontSize": "text-lg"
@@ -4601,7 +4589,8 @@
                             "root": {
                               "margin": "mb-4",
                               "color": "text-green-600",
-                              "fontWeight": "font-bold"
+                              "fontWeight": "font-bold",
+                              "fontFamily": "style:headingFontFamily"
                             },
                             "mobile": {
                               "fontSize": "text-lg"
@@ -4668,14 +4657,14 @@
                         "root": {
                           "background": "bg-green-500",
                           "color": "text-white",
-                          "radius": "rounded-lg",
-                          "shadow": "shadow-md"
+                          "radius": "style:borderRadius",
+                          "shadow": "shadow-md",
+                          "fontFamily": "style:headingFontFamily"
                         },
                         "mobile": {
-                          "px": "px-6",
-                          "py": "py-3",
                           "fontSize": "text-base",
-                          "fontWeight": "font-semibold"
+                          "fontWeight": "style:headingFont",
+                          "p": "style:buttonPadding"
                         },
                         "desktop": {
                           "px": "px-8",
@@ -4743,7 +4732,8 @@
                         "root": {
                           "fontSize": "text-4xl",
                           "fontWeight": "font-bold",
-                          "marginBottom": "mb-4"
+                          "marginBottom": "mb-4",
+                          "fontFamily": "style:headingFontFamily"
                         },
                         "custom": {
                           "displayName": "Title"
@@ -5094,7 +5084,8 @@
                         "root": {
                           "fontSize": "text-4xl",
                           "fontWeight": "font-bold",
-                          "marginBottom": "mb-4"
+                          "marginBottom": "mb-4",
+                          "fontFamily": "style:headingFontFamily"
                         },
                         "custom": {
                           "displayName": "Title"
@@ -5520,10 +5511,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-6"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -5536,10 +5527,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center",
                       "maxWidth": "max-w-3xl"
                     },
@@ -5608,10 +5601,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-8"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -5629,7 +5622,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-4"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "width": "w-1/2"
@@ -5644,10 +5637,12 @@
                       "props": {
                         "canDelete": true,
                         "canEditName": true,
-                        "root": {},
+                        "root": {
+                          "fontFamily": "style:headingFontFamily"
+                        },
                         "mobile": {
                           "fontSize": "text-2xl",
-                          "fontWeight": "font-bold"
+                          "fontWeight": "style:headingFont"
                         },
                         "desktop": {},
                         "custom": {
@@ -5684,7 +5679,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-4"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "width": "w-1/2"
@@ -5699,10 +5694,12 @@
                       "props": {
                         "canDelete": true,
                         "canEditName": true,
-                        "root": {},
+                        "root": {
+                          "fontFamily": "style:headingFontFamily"
+                        },
                         "mobile": {
                           "fontSize": "text-2xl",
-                          "fontWeight": "font-bold"
+                          "fontWeight": "style:headingFont"
                         },
                         "desktop": {},
                         "custom": {
@@ -5772,10 +5769,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-12"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -5788,10 +5785,12 @@
                   "props": {
                     "canDelete": true,
                     "canEditName": true,
-                    "root": {},
+                    "root": {
+                      "fontFamily": "style:headingFontFamily"
+                    },
                     "mobile": {
                       "fontSize": "text-3xl",
-                      "fontWeight": "font-bold",
+                      "fontWeight": "style:headingFont",
                       "textAlign": "text-center"
                     },
                     "desktop": {
@@ -5813,7 +5812,7 @@
                       "display": "flex",
                       "flexDirection": "flex-col",
                       "width": "w-full",
-                      "gap": "gap-8"
+                      "gap": "style:containerGap"
                     },
                     "desktop": {
                       "flexDirection": "flex-row",
@@ -5834,7 +5833,7 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-4"
+                          "gap": "style:containerGap"
                         },
                         "desktop": {
                           "width": "w-1/2"
@@ -5849,10 +5848,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-xl",
-                              "fontWeight": "font-semibold"
+                              "fontWeight": "style:headingFont"
                             },
                             "desktop": {},
                             "custom": {
@@ -5889,7 +5890,7 @@
                           "display": "flex",
                           "flexDirection": "flex-col",
                           "width": "w-full",
-                          "gap": "gap-4"
+                          "gap": "style:containerGap"
                         },
                         "desktop": {
                           "width": "w-1/2"
@@ -5904,10 +5905,12 @@
                           "props": {
                             "canDelete": true,
                             "canEditName": true,
-                            "root": {},
+                            "root": {
+                              "fontFamily": "style:headingFontFamily"
+                            },
                             "mobile": {
                               "fontSize": "text-xl",
-                              "fontWeight": "font-semibold"
+                              "fontWeight": "style:headingFont"
                             },
                             "desktop": {},
                             "custom": {
@@ -5978,10 +5981,10 @@
                   "flexDirection": "flex-col",
                   "alignItems": "items-center",
                   "width": "w-full",
-                  "maxWidth": "max-w-7xl",
+                  "maxWidth": "style:contentWidth",
                   "mx": "mx-auto",
                   "px": "px-6",
-                  "gap": "gap-6"
+                  "gap": "style:containerGap"
                 },
                 "desktop": {},
                 "custom": {
@@ -6072,7 +6075,8 @@
                       "fontSize": "text-5xl",
                       "fontWeight": "font-bold",
                       "color": "text-white",
-                      "marginBottom": "mb-6"
+                      "marginBottom": "mb-6",
+                      "fontFamily": "style:headingFontFamily"
                     },
                     "custom": {
                       "displayName": "Title"
@@ -6232,7 +6236,8 @@
                         "root": {
                           "fontSize": "text-3xl",
                           "fontWeight": "font-bold",
-                          "marginBottom": "mb-4"
+                          "marginBottom": "mb-4",
+                          "fontFamily": "style:headingFontFamily"
                         },
                         "custom": {
                           "displayName": "Title"
@@ -6261,8 +6266,10 @@
                           "bg": "bg-blue-600",
                           "color": "text-white",
                           "padding": "px-6 py-3",
-                          "radius": "rounded-md",
-                          "fontWeight": "font-semibold"
+                          "radius": "style:borderRadius",
+                          "fontWeight": "font-semibold",
+                          "fontFamily": "style:headingFontFamily",
+                          "shadow": "style:shadowStyle"
                         },
                         "custom": {
                           "displayName": "CTA Button"

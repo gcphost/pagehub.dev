@@ -57,29 +57,45 @@ export const IconDialogInput = ({
   return (
     <Wrap
       props={{ label, labelHide: true }}
-      lab={value?.name}
+      lab={value}
       propType={propType}
       propKey={propKey}
     >
-      <button
-        ref={ref}
-        title={value?.name}
-        onClick={(e) => {
-          setDialog({
-            enabled: true,
-            value,
-            prefix,
-            propKey,
-            changed,
-            e: getRect(ref.current),
-          });
-        }}
-        className="input"
-      >
-        <div className="pointer-events-none flex gap-3 items-center w-6 h-6 fill-white mx-auto">
-          <ClientIconLoader value={value} />
-        </div>
-      </button>
+      <div className="relative">
+        <button
+          ref={ref}
+          title={value}
+          onClick={(e) => {
+            setDialog({
+              enabled: true,
+              value,
+              prefix,
+              propKey,
+              changed,
+              e: getRect(ref.current),
+            });
+          }}
+          className="input"
+        >
+          <div className="pointer-events-none flex gap-3 items-center w-6 h-6 fill-white mx-auto">
+            <ClientIconLoader value={value} />
+          </div>
+        </button>
+
+        {/* Clear button - only show when icon is set */}
+        {value && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              changed("");
+            }}
+            className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold"
+            title="Clear icon"
+          >
+            ×
+          </button>
+        )}
+      </div>
     </Wrap>
   );
 };

@@ -138,7 +138,8 @@ export const Container = (props: Partial<ContainerProps>) => {
     [],
     preview,
     false,
-    palette
+    palette,
+    query
   );
 
   let prop: any = {
@@ -160,6 +161,7 @@ export const Container = (props: Partial<ContainerProps>) => {
         enabled={enabled}
         properties={inlayProps}
         preview={preview}
+        query={query}
       >
         <RenderGradient
           props={props}
@@ -167,6 +169,7 @@ export const Container = (props: Partial<ContainerProps>) => {
           enabled={enabled}
           properties={inlayProps}
           preview={preview}
+          query={query}
         >
           {children || (
             <EmptyState

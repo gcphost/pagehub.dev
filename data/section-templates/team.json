@@ -46,7 +46,8 @@
                       "root": {
                         "fontSize": "text-4xl",
                         "fontWeight": "font-bold",
-                        "marginBottom": "mb-4"
+                        "marginBottom": "mb-4",
+                        "fontFamily": "style:headingFontFamily"
                       },
                       "custom": {
                         "displayName": "Title"
@@ -397,7 +398,8 @@
                       "root": {
                         "fontSize": "text-4xl",
                         "fontWeight": "font-bold",
-                        "marginBottom": "mb-4"
+                        "marginBottom": "mb-4",
+                        "fontFamily": "style:headingFontFamily"
                       },
                       "custom": {
                         "displayName": "Title"

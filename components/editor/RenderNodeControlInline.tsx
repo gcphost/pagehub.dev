@@ -130,7 +130,7 @@ export const RenderNodeControlInline = ({
   // - Inside: 2px inside the border
   // - Use Tailwind classes for positioning
 
-  const classes = ['absolute', 'pointer-events-none', 'z-[1000]'];
+  const classes = ['absolute', 'pointer-events-none', 'z-50'];
 
   // Edge positioning
   if (position === "top") {

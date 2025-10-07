@@ -7,7 +7,6 @@ import {
   TbDeviceMobile,
   TbLayoutNavbar,
   TbMinus,
-  TbPalette,
   TbPill
 } from "react-icons/tb";
 import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
@@ -70,107 +69,21 @@ export const NavToolbox = {
         background: "bg-white",
         border: "border",
         borderColor: "border-gray-200",
-        radius: "rounded-lg",
+        radius: "style:borderRadius",
         px: "px-4",
         py: "py-2"
       }}
       enableMobileNav={true}
     />,
+
     <RenderToolComponent
-      display={<ToolboxItemDisplay icon={TbPalette} label="Colorful Nav" />}
-      element={ButtonList}
-      custom={{ displayName: "Colorful Nav" }}
-      root={{
-        background: "bg-gradient-to-r from-blue-500 to-purple-600",
-        radius: "rounded-xl",
-        px: "px-6",
-        py: "py-3"
-      }}
-      mobile={{
-        display: "flex",
-        flexDirection: "flex-row",
-        alignItems: "items-center",
-        gap: "gap-4"
-      }}
-      desktop={{
-        display: "flex",
-        flexDirection: "flex-row",
-        alignItems: "items-center",
-        gap: "gap-4"
-      }}
-    >
-      <Element
-        is={Button}
-        custom={{ displayName: "Home" }}
-        text="Home"
-        url="#"
-        root={{
-          background: "bg-white",
-          color: "text-blue-600",
-          radius: "rounded-lg",
-          shadow: "shadow-md"
-        }}
-        mobile={{
-          px: "px-4",
-          py: "py-2"
-        }}
-      />
-      <Element
-        is={Button}
-        custom={{ displayName: "About" }}
-        text="About"
-        url="#"
-        root={{
-          background: "bg-white",
-          color: "text-purple-600",
-          radius: "rounded-lg",
-          shadow: "shadow-md"
-        }}
-        mobile={{
-          px: "px-4",
-          py: "py-2"
-        }}
-      />
-      <Element
-        is={Button}
-        custom={{ displayName: "Services" }}
-        text="Services"
-        url="#"
-        root={{
-          background: "bg-white",
-          color: "text-pink-600",
-          radius: "rounded-lg",
-          shadow: "shadow-md"
-        }}
-        mobile={{
-          px: "px-4",
-          py: "py-2"
-        }}
-      />
-      <Element
-        is={Button}
-        custom={{ displayName: "Contact" }}
-        text="Contact"
-        url="#"
-        root={{
-          background: "bg-white",
-          color: "text-indigo-600",
-          radius: "rounded-lg",
-          shadow: "shadow-md"
-        }}
-        mobile={{
-          px: "px-4",
-          py: "py-2"
-        }}
-      />
-    </RenderToolComponent>,
-    <RenderToolComponent
+      key="social-nav"
       display={<ToolboxItemDisplay icon={TbBrandTwitter} label="Social Nav" />}
       element={ButtonList}
       custom={{ displayName: "Social Nav" }}
       root={{
         background: "bg-gray-50",
-        radius: "rounded-lg",
+        radius: "style:borderRadius",
         px: "px-4",
         py: "py-2"
       }}
@@ -197,11 +110,12 @@ export const NavToolbox = {
         root={{
           background: "bg-blue-500",
           color: "text-white",
-          radius: "rounded-lg"
+          radius: "style:borderRadius",
+          fontFamily: "style:headingFontFamily",
+          shadow: "style:shadowStyle"
         }}
         mobile={{
-          px: "px-3",
-          py: "py-3"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -214,11 +128,12 @@ export const NavToolbox = {
         root={{
           background: "bg-blue-600",
           color: "text-white",
-          radius: "rounded-lg"
+          radius: "style:borderRadius",
+          fontFamily: "style:headingFontFamily",
+          shadow: "style:shadowStyle"
         }}
         mobile={{
-          px: "px-3",
-          py: "py-3"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -231,11 +146,12 @@ export const NavToolbox = {
         root={{
           background: "bg-gradient-to-r from-purple-500 to-pink-500",
           color: "text-white",
-          radius: "rounded-lg"
+          radius: "style:borderRadius",
+          fontFamily: "style:headingFontFamily",
+          shadow: "style:shadowStyle"
         }}
         mobile={{
-          px: "px-3",
-          py: "py-3"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -248,21 +164,23 @@ export const NavToolbox = {
         root={{
           background: "bg-blue-700",
           color: "text-white",
-          radius: "rounded-lg"
+          radius: "style:borderRadius",
+          fontFamily: "style:headingFontFamily",
+          shadow: "style:shadowStyle"
         }}
         mobile={{
-          px: "px-3",
-          py: "py-3"
+          p: "style:buttonPadding"
         }}
       />
     </RenderToolComponent>,
     <RenderToolComponent
+      key="plain-nav"
       display={<ToolboxItemDisplay icon={TbMinus} label="Plain Nav" />}
       element={ButtonList}
       custom={{ displayName: "Plain Nav" }}
       root={{
         background: "bg-gray-100",
-        radius: "rounded-md",
+        radius: "style:borderRadius",
         px: "px-3",
         py: "py-2"
       }}
@@ -286,11 +204,11 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-transparent",
-          color: "text-gray-600"
+          color: "text-gray-600",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-2",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -300,11 +218,11 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-transparent",
-          color: "text-gray-600"
+          color: "text-gray-600",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-2",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -314,11 +232,11 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-transparent",
-          color: "text-gray-600"
+          color: "text-gray-600",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-2",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -328,15 +246,16 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-transparent",
-          color: "text-gray-600"
+          color: "text-gray-600",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-2",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
     </RenderToolComponent>,
     <RenderToolComponent
+      key="minimal-nav"
       display={<ToolboxItemDisplay icon={TbLayoutNavbar} label="Minimal Nav" />}
       element={ButtonList}
       custom={{ displayName: "Minimal Nav" }}
@@ -365,11 +284,11 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-transparent",
-          color: "text-gray-700"
+          color: "text-gray-700",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-2",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -379,11 +298,11 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-transparent",
-          color: "text-gray-700"
+          color: "text-gray-700",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-2",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -393,11 +312,11 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-transparent",
-          color: "text-gray-700"
+          color: "text-gray-700",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-2",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -407,15 +326,16 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-transparent",
-          color: "text-gray-700"
+          color: "text-gray-700",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-2",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
     </RenderToolComponent>,
     <RenderToolComponent
+      key="pill-nav"
       display={<ToolboxItemDisplay icon={TbPill} label="Pill Nav" />}
       element={ButtonList}
       custom={{ displayName: "Pill Nav" }}
@@ -424,6 +344,8 @@ export const NavToolbox = {
         radius: "rounded-full",
         px: "px-2",
         py: "py-1"
+        ,
+        shadow: "style:shadowStyle"
       }}
       mobile={{
         display: "flex",
@@ -446,11 +368,11 @@ export const NavToolbox = {
         root={{
           background: "bg-transparent",
           color: "text-gray-700",
-          radius: "rounded-full"
+          radius: "rounded-full",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-3",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -461,11 +383,11 @@ export const NavToolbox = {
         root={{
           background: "bg-transparent",
           color: "text-gray-700",
-          radius: "rounded-full"
+          radius: "rounded-full",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-3",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
       <Element
@@ -476,11 +398,11 @@ export const NavToolbox = {
         root={{
           background: "bg-transparent",
           color: "text-gray-700",
-          radius: "rounded-full"
+          radius: "rounded-full",
+          fontFamily: "style:headingFontFamily"
         }}
         mobile={{
-          px: "px-3",
-          py: "py-1"
+          p: "style:buttonPadding"
         }}
       />
     </RenderToolComponent>,

@@ -22,7 +22,7 @@ export const DuplicateNodeButton = ({
   } = useEditor();
 
   const getCloneTree = useCallback(
-    (tree) => buildClonedTree({ tree, query, setProp }),
+    (tree) => buildClonedTree({ tree, query, setProp, createLinks: false }),
     [query, setProp]
   );
 

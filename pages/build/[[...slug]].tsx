@@ -16,6 +16,7 @@ import lz from "lzutf8";
 import { NextSeo } from "next-seo";
 import { useSetRecoilState } from "recoil";
 import { SessionTokenAtom } from "utils/atoms";
+import { DEFAULT_PALETTE, DEFAULT_STYLE_GUIDE } from "utils/defaults";
 import { siteDescription, siteTitle } from "utils/lib";
 import { templates } from "utils/templates";
 
@@ -160,22 +161,15 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                   is={Background}
                   data-renderer={true}
                   custom={{ displayName: "Background" }}
-                  pallet={[
-                    { name: "Primary", color: "blue-500" },
-                    { name: "Secondary", color: "purple-500" },
-                    { name: "Accent", color: "orange-500" },
-                    { name: "Neutral", color: "gray-500" },
-                    { name: "Background", color: "white" },
-                    { name: "Alternate Background", color: "gray-50" },
-                    { name: "Text", color: "gray-900" },
-                    { name: "Alternate Text", color: "gray-600" },
-                  ]}
+                  pallet={DEFAULT_PALETTE}
+                  styleGuide={DEFAULT_STYLE_GUIDE}
                   root={{
                     background: "bg-palette:Background",
                     color: "text-palette:Text",
+                    fontFamily: "style:bodyFontFamily",
                   }}
                   mobile={{
-
+                    fontWeight: "style:bodyFont",
                   }}
                   desktop={{}}
                 >
@@ -202,8 +196,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         justifyContent: "justify-between",
                         alignItems: "items-center",
                         width: "w-full",
-                        px: "px-6",
-                        py: "py-4",
+                        p: "style:containerSpacing",
                         gap: "gap-4",
                       }}
                       desktop={{
@@ -217,10 +210,11 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         canEditName={true}
                         root={{
                           color: "text-palette:Primary",
+                          fontFamily: "style:headingFontFamily",
                         }}
                         mobile={{
                           fontSize: "text-2xl",
-                          fontWeight: "font-bold",
+                          fontWeight: "style:headingFont",
                         }}
                         desktop={{}}
                         custom={{ displayName: "Logo" }}
@@ -231,7 +225,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         canDelete={true}
                         canEditName={true}
                         root={{
-                          color: "text-palette:Alternate Text",
                         }}
                         mobile={{
                           fontSize: "text-sm",
@@ -267,7 +260,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                       justifyContent: "justify-center",
                       alignItems: "items-center",
                       width: "w-full",
-                      gap: "gap-6",
+                      gap: "style:sectionGap",
                     }}
                     desktop={{}}
                     custom={{ displayName: "Home Page" }}
@@ -301,8 +294,8 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           display: "flex",
                           flexDirection: "flex-col",
                           alignItems: "items-center",
-                          gap: "gap-32",
-                          maxWidth: "max-w-4xl",
+                          gap: "style:sectionGap",
+                          maxWidth: "style:contentWidth",
                           px: "px-6",
                           py: "py-12",
                         }}
@@ -319,7 +312,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             display: "flex",
                             flexDirection: "flex-col",
                             alignItems: "items-center",
-                            gap: "gap-4",
+                            gap: "style:containerGap",
                           }}
                           desktop={{}}
                           custom={{ displayName: "Hero Text" }}
@@ -329,11 +322,11 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             canDelete={true}
                             canEditName={true}
                             root={{
-                              color: "text-palette:Text",
+                              fontFamily: "style:headingFontFamily",
                             }}
                             mobile={{
                               fontSize: "text-5xl",
-                              fontWeight: "font-bold",
+                              fontWeight: "style:headingFont",
                               textAlign: "text-center",
                             }}
                             desktop={{
@@ -347,7 +340,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             canDelete={true}
                             canEditName={true}
                             root={{
-                              color: "text-palette:Alternate Text",
                             }}
                             mobile={{
                               fontSize: "text-lg",
@@ -370,11 +362,12 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           }}
                           mobile={{
                             display: "flex",
-                            gap: "gap-4",
+                            gap: "style:containerGap",
                             flexDirection: "flex-col",
                             width: "w-full",
                             justifyContent: "justify-center",
                             alignItems: "items-center",
+                            fontSize: "text-lg",
                           }}
                           desktop={{ flexDirection: "flex-row", }}
                           custom={{ displayName: "Hero Buttons" }}
@@ -386,13 +379,13 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             root={{
                               background: "bg-palette:Primary",
                               color: "text-white",
-                              radius: "rounded-lg",
+                              radius: "style:borderRadius",
+                              shadow: "style:shadowStyle",
+                              fontFamily: "style:headingFontFamily",
                             }}
                             mobile={{
-                              px: "px-8",
-                              py: "py-4",
-                              fontSize: "text-lg",
-                              fontWeight: "font-semibold",
+                              p: "style:buttonPadding",
+                              fontWeight: "style:headingFont",
                               textAlign: "text-center",
                               display: "flex",
                               justifyContent: "justify-center",
@@ -410,16 +403,14 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             root={{
                               background: "bg-transparent",
                               color: "text-palette:Primary",
-                              radius: "rounded-lg",
+                              radius: "style:borderRadius",
                               border: "border",
                               borderColor: "border-palette:Primary",
-
+                              fontFamily: "style:headingFontFamily",
                             }}
                             mobile={{
-                              px: "px-8",
-                              py: "py-4",
-                              fontSize: "text-lg",
-                              fontWeight: "font-semibold",
+                              p: "style:buttonPadding",
+                              fontWeight: "style:headingFont",
                               textAlign: "text-center",
                               display: "flex",
                               justifyContent: "justify-center",
@@ -458,9 +449,8 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         justifyContent: "justify-center",
                         alignItems: "items-center",
                         width: "w-full",
-                        px: "px-6",
-                        py: "py-8",
-                        gap: "gap-4",
+                        p: "style:containerSpacing",
+                        gap: "style:containerGap",
                       }}
                       desktop={{}}
                       custom={{ displayName: "Footer Content" }}

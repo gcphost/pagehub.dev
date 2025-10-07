@@ -255,21 +255,7 @@ export const NavSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <ToolbarSection>
-        <ToolbarItem
-          propKey="flexDirection"
-          propType="component"
-          type="select"
-          label="Container Type"
-          cols={true}
-        >
-          <option value="">None</option>
-          <option value="flex-col">Column</option>
-          <option value="flex-row">Row</option>
-          <option value="flex-col-reverse">Reverse Column</option>
-          <option value="flex-row-reverse">Reverse Row</option>
-        </ToolbarItem>
-      </ToolbarSection>
+
 
       <ToolbarSection title="Mobile Navigation">
         <ToolbarItem
@@ -281,9 +267,7 @@ export const NavSettings = () => {
         />
       </ToolbarSection>
 
-      <ToolbarSection>
-        <NavItem propKey="navItems" type="navItemAdd" labelHide={true} label="" />
-      </ToolbarSection>
+
     </TabBody>
   );
 

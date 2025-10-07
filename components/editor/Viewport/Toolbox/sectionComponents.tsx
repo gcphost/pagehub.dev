@@ -27,10 +27,9 @@ export const sectionToolboxItems = [
           justifyContent: "justify-center",
           flexDirection: "flex-row",
           width: "w-full",
-          gap: "gap-8",
+          gap: "style:containerGap",
           height: "h-auto",
-          py: "py-6",
-          px: "px-3",
+          p: "style:containerSpacing",
         }}
         desktop={{}}
         custom={{ displayName: "Row" }}
@@ -44,10 +43,9 @@ export const sectionToolboxItems = [
           justifyContent: "justify-center",
           flexDirection: "flex-col",
           width: "w-full",
-          gap: "gap-8",
+          gap: "style:containerGap",
           height: "h-auto",
-          py: "py-6",
-          px: "px-3",
+          p: "style:containerSpacing",
         }}
         desktop={{}}
         custom={{ displayName: "Column" }}

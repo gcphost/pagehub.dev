@@ -2,7 +2,7 @@ import { NodeTree, useEditor } from "@craftjs/core";
 import { ROOT_NODE } from "@craftjs/utils";
 import { Tooltip } from "components/layout/Tooltip";
 import { Background } from "components/selectors/Background";
-import { Button, OnlyButtons } from "components/selectors/Button";
+import { Button } from "components/selectors/Button";
 import { Container } from "components/selectors/Container";
 import { Divider } from "components/selectors/Divider";
 import { Embed } from "components/selectors/Embed";
@@ -117,6 +117,21 @@ export const Viewport: React.FC<any> = ({ children }) => {
     canUndo: query.history.canUndo(),
     canRedo: query.history.canRedo(),
   }));
+
+
+
+  // TO-DO: what is this ? bad? lazy AI
+  // Expose query to window for style guide resolution
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      (window as any).__CRAFT_EDITOR__ = { query };
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        delete (window as any).__CRAFT_EDITOR__;
+      }
+    };
+  }, [query]);
 
   const [ac, setAc] = useState(false);
   const setInitialLoadComplete = useSetRecoilState(InitialLoadCompleteAtom);
@@ -392,7 +407,6 @@ export const Viewport: React.FC<any> = ({ children }) => {
         Form,
         FormDrop,
         FormElement,
-        OnlyButtons,
         Button,
         Video,
         Image,

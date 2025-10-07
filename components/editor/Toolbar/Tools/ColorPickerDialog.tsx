@@ -300,7 +300,7 @@ export const ColorPickerDialog = () => {
           {shouldShowPalette && !showFullPicker && (
 
 
-            <div className="px-3 grid grid-cols-3 gap-2">
+            <div className="px-3 grid grid-cols-3 gap-2 border max-h-64 overflow-y-auto">
               {namedPalette.map((paletteColor, index) => {
                 // Check if current value is this palette color
                 // Value could be "text-palette:Primary" or "bg-palette:Primary" etc

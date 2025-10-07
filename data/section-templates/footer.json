@@ -35,10 +35,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "max-w-7xl",
+                "maxWidth": "style:contentWidth",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "gap-4"
+                "gap": "style:containerGap"
               },
               "custom": {
                 "displayName": "Footer Content"
@@ -71,7 +71,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-row",
-                    "gap": "gap-4",
+                    "gap": "style:containerGap",
                     "alignItems": "items-center"
                   },
                   "custom": {
@@ -179,10 +179,10 @@
                 "display": "flex",
                 "flexDirection": "flex-col",
                 "width": "w-full",
-                "maxWidth": "max-w-7xl",
+                "maxWidth": "style:contentWidth",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "gap-8"
+                "gap": "style:containerGap"
               },
               "desktop": {
                 "flexDirection": "flex-row",
@@ -202,7 +202,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-col",
-                    "gap": "gap-4"
+                    "gap": "style:containerGap"
                   },
                   "desktop": {
                     "width": "w-1/3"
@@ -284,7 +284,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-col",
-                    "gap": "gap-3"
+                    "gap": "style:containerGap"
                   },
                   "custom": {
                     "displayName": "Quick Links"
@@ -296,10 +296,12 @@
                     "props": {
                       "canDelete": true,
                       "canEditName": true,
-                      "root": {},
+                      "root": {
+                        "fontFamily": "style:headingFontFamily"
+                      },
                       "mobile": {
                         "fontSize": "text-base",
-                        "fontWeight": "font-semibold"
+                        "fontWeight": "style:headingFont"
                       },
                       "custom": {
                         "displayName": "Column Title"
@@ -378,7 +380,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-col",
-                    "gap": "gap-3"
+                    "gap": "style:containerGap"
                   },
                   "custom": {
                     "displayName": "Legal"
@@ -390,10 +392,12 @@
                     "props": {
                       "canDelete": true,
                       "canEditName": true,
-                      "root": {},
+                      "root": {
+                        "fontFamily": "style:headingFontFamily"
+                      },
                       "mobile": {
                         "fontSize": "text-base",
-                        "fontWeight": "font-semibold"
+                        "fontWeight": "style:headingFont"
                       },
                       "custom": {
                         "displayName": "Column Title"
@@ -486,10 +490,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "max-w-7xl",
+                "maxWidth": "style:contentWidth",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "gap-6"
+                "gap": "style:containerGap"
               },
               "custom": {
                 "displayName": "Footer Content"
@@ -506,7 +510,7 @@
                     "display": "flex",
                     "flexDirection": "flex-col",
                     "alignItems": "items-center",
-                    "gap": "gap-4",
+                    "gap": "style:containerGap",
                     "width": "w-full"
                   },
                   "desktop": {
@@ -544,7 +548,7 @@
                       "mobile": {
                         "display": "flex",
                         "flexDirection": "flex-row",
-                        "gap": "gap-4",
+                        "gap": "style:containerGap",
                         "alignItems": "items-center"
                       },
                       "custom": {
@@ -557,25 +561,16 @@
                         "props": {
                           "canDelete": true,
                           "canEditName": true,
-                          "root": {},
+                          "root": {
+                            "fontFamily": "style:headingFontFamily",
+                            "shadow": "style:shadowStyle"
+                          },
                           "mobile": {},
                           "custom": {
                             "displayName": "Social Button"
                           },
-                          "buttons": [
-                            {
-                              "text": "Facebook",
-                              "url": "#",
-                              "style": {
-                                "background": "bg-white",
-                                "color": "text-palette:Primary",
-                                "px": "px-4",
-                                "py": "py-2",
-                                "radius": "rounded-lg",
-                                "fontSize": "text-sm"
-                              }
-                            }
-                          ]
+                          "text": "Facebook",
+                          "url": "#"
                         }
                       },
                       {
@@ -583,25 +578,16 @@
                         "props": {
                           "canDelete": true,
                           "canEditName": true,
-                          "root": {},
+                          "root": {
+                            "fontFamily": "style:headingFontFamily",
+                            "shadow": "style:shadowStyle"
+                          },
                           "mobile": {},
                           "custom": {
                             "displayName": "Social Button"
                           },
-                          "buttons": [
-                            {
-                              "text": "Twitter",
-                              "url": "#",
-                              "style": {
-                                "background": "bg-white",
-                                "color": "text-palette:Primary",
-                                "px": "px-4",
-                                "py": "py-2",
-                                "radius": "rounded-lg",
-                                "fontSize": "text-sm"
-                              }
-                            }
-                          ]
+                          "text": "Twitter",
+                          "url": "#"
                         }
                       },
                       {
@@ -609,25 +595,16 @@
                         "props": {
                           "canDelete": true,
                           "canEditName": true,
-                          "root": {},
+                          "root": {
+                            "fontFamily": "style:headingFontFamily",
+                            "shadow": "style:shadowStyle"
+                          },
                           "mobile": {},
                           "custom": {
                             "displayName": "Social Button"
                           },
-                          "buttons": [
-                            {
-                              "text": "Instagram",
-                              "url": "#",
-                              "style": {
-                                "background": "bg-white",
-                                "color": "text-palette:Primary",
-                                "px": "px-4",
-                                "py": "py-2",
-                                "radius": "rounded-lg",
-                                "fontSize": "text-sm"
-                              }
-                            }
-                          ]
+                          "text": "Instagram",
+                          "url": "#"
                         }
                       }
                     ]
@@ -647,7 +624,7 @@
                     "display": "flex",
                     "flexDirection": "flex-col",
                     "alignItems": "items-center",
-                    "gap": "gap-3",
+                    "gap": "style:containerGap",
                     "pt": "pt-6",
                     "width": "w-full"
                   },
@@ -689,7 +666,7 @@
                       "mobile": {
                         "display": "flex",
                         "flexDirection": "flex-row",
-                        "gap": "gap-4"
+                        "gap": "style:containerGap"
                       },
                       "custom": {
                         "displayName": "Legal Links"

@@ -38,7 +38,7 @@
                 "alignItems": "items-center",
                 "justifyContent": "justify-between",
                 "width": "w-full",
-                "maxWidth": "max-w-7xl",
+                "maxWidth": "style:contentWidth",
                 "mx": "mx-auto",
                 "px": "px-6"
               },
@@ -72,7 +72,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-row",
-                    "gap": "gap-6",
+                    "gap": "style:containerGap",
                     "alignItems": "items-center"
                   },
                   "custom": {
@@ -181,7 +181,7 @@
                 "alignItems": "items-center",
                 "justifyContent": "justify-between",
                 "width": "w-full",
-                "maxWidth": "max-w-7xl",
+                "maxWidth": "style:contentWidth",
                 "mx": "mx-auto",
                 "px": "px-6"
               },
@@ -216,7 +216,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-row",
-                    "gap": "gap-6",
+                    "gap": "style:containerGap",
                     "alignItems": "items-center"
                   },
                   "custom": {
@@ -261,25 +261,16 @@
                     "props": {
                       "canDelete": true,
                       "canEditName": true,
-                      "root": {},
+                      "root": {
+                        "fontFamily": "style:headingFontFamily",
+                        "shadow": "style:shadowStyle"
+                      },
                       "mobile": {},
                       "custom": {
                         "displayName": "CTA Button"
                       },
-                      "buttons": [
-                        {
-                          "text": "Get Started",
-                          "url": "#",
-                          "style": {
-                            "background": "bg-white",
-                            "color": "text-palette:Primary",
-                            "px": "px-6",
-                            "py": "py-2",
-                            "radius": "rounded-lg",
-                            "fontWeight": "font-semibold"
-                          }
-                        }
-                      ]
+                      "text": "Get Started",
+                      "url": "#"
                     }
                   }
                 ]
@@ -324,10 +315,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "max-w-7xl",
+                "maxWidth": "style:contentWidth",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "gap-4"
+                "gap": "style:containerGap"
               },
               "custom": {
                 "displayName": "Header Content"
@@ -339,10 +330,12 @@
                 "props": {
                   "canDelete": true,
                   "canEditName": true,
-                  "root": {},
+                  "root": {
+                    "fontFamily": "style:headingFontFamily"
+                  },
                   "mobile": {
                     "fontSize": "text-3xl",
-                    "fontWeight": "font-bold",
+                    "fontWeight": "style:headingFont",
                     "textAlign": "text-center"
                   },
                   "custom": {
@@ -360,7 +353,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-row",
-                    "gap": "gap-6",
+                    "gap": "style:containerGap",
                     "alignItems": "items-center"
                   },
                   "custom": {

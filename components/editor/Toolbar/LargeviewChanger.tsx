@@ -15,18 +15,16 @@ export const LargeviewChanger = () => {
 
   return (
     <button
-      className={`fixed bottom-4 w-auto ${
-        sideBarLeft ? "left-[360px]" : "right-[360px]"
-      } flex items-center justify-center z-10 cursor-pointer select-none`}
+      className={`fixed bottom-4 w-auto ${sideBarLeft ? "left-[360px]" : "right-[360px]"
+        } flex items-center justify-center z-10 cursor-pointer select-none`}
       onClick={() => {
         setView(altView);
         setDevice(false);
       }}
     >
       <div
-        className={` ${
-          view === "mobile" ? "bg-green-500" : "bg-yellow-500"
-        } p-3  rounded-md  text-gray-900 text-xs border border-gray-900/50 opacity-80 hover:opacity-100 inside-shadow-light`}
+        className={` ${view === "mobile" ? "bg-green-500" : "bg-yellow-500"
+          } p-3  rounded-md  text-gray-900 text-xs border border-gray-900/50 opacity-80 hover:opacity-100 inside-shadow-light`}
       >
         Editing: <span className="font-bold">{view}</span>
       </div>

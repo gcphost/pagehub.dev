@@ -36,10 +36,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "max-w-7xl",
+                "maxWidth": "style:contentWidth",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "gap-6"
+                "gap": "style:containerGap"
               },
               "desktop": {},
               "custom": {
@@ -52,10 +52,12 @@
                 "props": {
                   "canDelete": true,
                   "canEditName": true,
-                  "root": {},
+                  "root": {
+                    "fontFamily": "style:headingFontFamily"
+                  },
                   "mobile": {
                     "fontSize": "text-5xl",
-                    "fontWeight": "font-bold",
+                    "fontWeight": "style:headingFont",
                     "textAlign": "text-center"
                   },
                   "desktop": {
@@ -72,7 +74,9 @@
                 "props": {
                   "canDelete": true,
                   "canEditName": true,
-                  "root": {},
+                  "root": {
+                    "fontFamily": "style:headingFontFamily"
+                  },
                   "mobile": {
                     "fontSize": "text-lg",
                     "textAlign": "text-center",
@@ -91,27 +95,24 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "background": "bg-palette:Primary"
+                    "background": "bg-palette:Primary",
+                    "fontFamily": "style:headingFontFamily"
                   },
                   "mobile": {
-                    "px": "px-8",
-                    "py": "py-4",
+                    "p": "style:buttonPadding",
                     "fontSize": "text-lg",
-                    "fontWeight": "font-semibold",
+                    "fontWeight": "style:headingFont",
                     "color": "text-white",
-                    "radius": "rounded-lg",
-                    "gap": "gap-4"
+                    "radius": "style:borderRadius",
+                    "gap": "gap-4",
+                    "shadow": "style:shadowStyle"
                   },
                   "desktop": {},
                   "custom": {
                     "displayName": "CTA Button"
                   },
-                  "buttons": [
-                    {
-                      "text": "Get Started",
-                      "url": "#"
-                    }
-                  ]
+                  "text": "Get Started",
+                  "url": "#"
                 }
               }
             ]
@@ -155,10 +156,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "max-w-7xl",
+                "maxWidth": "style:contentWidth",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "gap-6"
+                "gap": "style:containerGap"
               },
               "desktop": {},
               "custom": {
@@ -171,10 +172,12 @@
                 "props": {
                   "canDelete": true,
                   "canEditName": true,
-                  "root": {},
+                  "root": {
+                    "fontFamily": "style:headingFontFamily"
+                  },
                   "mobile": {
                     "fontSize": "text-5xl",
-                    "fontWeight": "font-bold",
+                    "fontWeight": "style:headingFont",
                     "textAlign": "text-center",
                     "color": "text-white"
                   },
@@ -192,7 +195,9 @@
                 "props": {
                   "canDelete": true,
                   "canEditName": true,
-                  "root": {},
+                  "root": {
+                    "fontFamily": "style:headingFontFamily"
+                  },
                   "mobile": {
                     "fontSize": "text-lg",
                     "textAlign": "text-center",
@@ -212,27 +217,24 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "background": "bg-palette:Background"
+                    "background": "bg-palette:Background",
+                    "fontFamily": "style:headingFontFamily",
+                    "shadow": "style:shadowStyle"
                   },
                   "mobile": {
-                    "px": "px-8",
-                    "py": "py-4",
                     "fontSize": "text-lg",
-                    "fontWeight": "font-semibold",
+                    "fontWeight": "style:headingFont",
                     "color": "text-palette:Primary",
-                    "radius": "rounded-lg",
-                    "gap": "gap-4"
+                    "radius": "style:borderRadius",
+                    "gap": "gap-4",
+                    "p": "style:buttonPadding"
                   },
                   "desktop": {},
                   "custom": {
                     "displayName": "CTA Button"
                   },
-                  "buttons": [
-                    {
-                      "text": "Learn More",
-                      "url": "#"
-                    }
-                  ]
+                  "text": "Learn More",
+                  "url": "#"
                 }
               }
             ]
@@ -279,11 +281,10 @@
                 "alignItems": "items-center",
                 "width": "w-full",
                 "height": "h-full",
-                "px": "px-6",
-                "py": "py-28",
-                "gap": "gap-6",
-                "maxWidth": "max-w-7xl",
-                "mx": "mx-auto"
+                "gap": "style:containerGap",
+                "maxWidth": "style:contentWidth",
+                "mx": "mx-auto",
+                "p": "style:containerSpacing"
               },
               "desktop": {
                 "width": "w-1/2"
@@ -298,10 +299,12 @@
                 "props": {
                   "canDelete": true,
                   "canEditName": true,
-                  "root": {},
+                  "root": {
+                    "fontFamily": "style:headingFontFamily"
+                  },
                   "mobile": {
                     "fontSize": "text-4xl",
-                    "fontWeight": "font-bold",
+                    "fontWeight": "style:headingFont",
                     "color": "text-white"
                   },
                   "desktop": {
@@ -318,7 +321,9 @@
                 "props": {
                   "canDelete": true,
                   "canEditName": true,
-                  "root": {},
+                  "root": {
+                    "fontFamily": "style:headingFontFamily"
+                  },
                   "mobile": {
                     "fontSize": "text-lg",
                     "color": "text-white"
@@ -337,26 +342,23 @@
                   "canEditName": true,
                   "root": {
                     "background": "bg-white",
-                    "color": "text-primary-500"
+                    "color": "text-palette:Primary",
+                    "fontFamily": "style:headingFontFamily",
+                    "shadow": "style:shadowStyle"
                   },
                   "mobile": {
-                    "px": "px-8",
-                    "py": "py-3",
                     "fontSize": "text-base",
-                    "fontWeight": "font-bold",
-                    "radius": "rounded-lg",
-                    "gap": "gap-4"
+                    "fontWeight": "style:headingFont",
+                    "radius": "style:borderRadius",
+                    "gap": "gap-4",
+                    "p": "style:buttonPadding"
                   },
                   "desktop": {},
                   "custom": {
                     "displayName": "CTA Button"
                   },
-                  "buttons": [
-                    {
-                      "text": "Get Started",
-                      "url": "#"
-                    }
-                  ]
+                  "text": "Get Started",
+                  "url": "#"
                 }
               }
             ]

@@ -18,8 +18,7 @@ export const RenderButtonComponent = ({ text = "Button", display = null, ...prop
     flexDirection: "flex-col",
     alignItems: "text-center",
     gap: "gap-8",
-    px: "px-12",
-    py: "py-6",
+    p: "style:buttonPadding",
     width: "w-auto",
     display: "flex",
     cursor: "cursor-pointer",
@@ -83,13 +82,13 @@ export const ButtonToolbox = {
       text="Button"
       key="1"
       custom={{ displayName: "Button" }}
-      root={{ border: "border", borderColor: "border-gray-500", radius: "rounded-lg" }}
+      root={{ border: "border", borderColor: "border-gray-500", radius: "style:borderRadius" }}
     />,
     <RenderButtonListComponent
       text="Button List"
       key="2"
       custom={{ displayName: "Button List" }}
-      root={{ border: "border", borderColor: "border-gray-500", radius: "rounded-lg" }}
+      root={{ border: "border", borderColor: "border-gray-500", radius: "style:borderRadius" }}
     />,
     <RenderButtonComponent
       text="Icon"

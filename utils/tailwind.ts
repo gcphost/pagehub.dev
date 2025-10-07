@@ -1394,6 +1394,35 @@ export const StyleGuide = [
   },
 ];
 
+// Helper to resolve style guide references like style:borderRadius
+const resolveStyleGuide = (value: string, query: any): string => {
+  if (typeof value === "string" && value.startsWith("style:")) {
+    try {
+      const { ROOT_NODE } = require("@craftjs/core");
+
+      // If query is not provided, try to get it from the editor context
+      let actualQuery = query;
+      if (
+        !actualQuery &&
+        typeof window !== "undefined" &&
+        (window as any).__CRAFT_EDITOR__
+      ) {
+        actualQuery = (window as any).__CRAFT_EDITOR__.query;
+      }
+
+      const root = actualQuery?.node(ROOT_NODE).get();
+      if (root && root.data.props.styleGuide) {
+        const styleProp = value.replace("style:", "").trim();
+        const styleValue = root.data.props.styleGuide[styleProp];
+        return styleValue || value;
+      }
+    } catch (e) {
+      // Silently fail - return original value
+    }
+  }
+  return value;
+};
+
 export const ClassGenerator = (
   props,
   view,
@@ -1402,7 +1431,8 @@ export const ClassGenerator = (
   only = [],
   preview = false,
   debug = false,
-  palette = []
+  palette = [],
+  query = null
 ): string => {
   const breakpoints = {
     sm: "mobile",
@@ -1418,7 +1448,7 @@ export const ClassGenerator = (
 
   if (props.root) {
     RootClassGenProps.forEach((_) => {
-      if (_ === "hover") return;
+      if (_ === "hover" || _ === "focus" || _ === "placeholderColor") return;
       rootProps[_] = props.root[_];
     });
 
@@ -1429,9 +1459,77 @@ export const ClassGenerator = (
         only,
         "hover:",
         false,
-        palette
+        palette,
+        query
       );
       results.push(...hover);
+    }
+
+    if (props.root.focus) {
+      const focus = ClassGene(
+        props.root.focus,
+        exclude,
+        only,
+        "focus:",
+        false,
+        palette,
+        query
+      );
+      results.push(...focus);
+    }
+
+    if (props.root.placeholderColor) {
+      // Handle placeholder color specially - resolve palette and style guide references
+      let placeholderValue = props.root.placeholderColor;
+
+      // Strip any prefix from the value first (e.g., "placeholder-style:..." -> "style:...")
+      const prefixMatch = placeholderValue.match(
+        /^([a-z]+-)(style:|palette:)(.+)$/
+      );
+      if (prefixMatch) {
+        // Remove the prefix, we'll add "placeholder:" later
+        placeholderValue = `${prefixMatch[2]}${prefixMatch[3]}`;
+      }
+
+      // Resolve style guide reference first
+      if (
+        typeof placeholderValue === "string" &&
+        placeholderValue.includes("style:")
+      ) {
+        placeholderValue = resolveStyleGuide(placeholderValue, query);
+      }
+
+      // Resolve palette reference
+      if (
+        typeof placeholderValue === "string" &&
+        placeholderValue.includes("palette:")
+      ) {
+        const match = placeholderValue.match(/^([a-z]+-)?palette:(.+)$/);
+        if (match) {
+          const prefixPart = match[1] || "";
+          const paletteName = match[2];
+          const paletteColor = palette.find((p) => p.name === paletteName);
+          if (paletteColor) {
+            let colorValue = paletteColor.color;
+            const prefixesToStrip = [
+              "bg-",
+              "text-",
+              "border-",
+              "ring-",
+              "placeholder-",
+            ];
+            for (const stripPrefix of prefixesToStrip) {
+              if (colorValue.startsWith(stripPrefix)) {
+                colorValue = colorValue.substring(stripPrefix.length);
+                break;
+              }
+            }
+            placeholderValue = colorValue;
+          }
+        }
+      }
+
+      results.push(`placeholder:${placeholderValue}`);
     }
   }
 
@@ -1442,9 +1540,36 @@ export const ClassGenerator = (
       only,
       "hover:",
       false,
-      palette
+      palette,
+      query
     );
     results.push(...hover);
+  }
+
+  if (props.focus) {
+    const focus = ClassGene(
+      props.focus,
+      exclude,
+      only,
+      "focus:",
+      false,
+      palette,
+      query
+    );
+    results.push(...focus);
+  }
+
+  if (props.placeholder) {
+    const placeholder = ClassGene(
+      props.placeholder,
+      exclude,
+      only,
+      "placeholder:",
+      false,
+      palette,
+      query
+    );
+    results.push(...placeholder);
   }
 
   if (props.className) {
@@ -1465,7 +1590,8 @@ export const ClassGenerator = (
         only,
         _ !== "sm" ? `${_}:` : "",
         debug,
-        palette
+        palette,
+        query
       ).filter((_) => _ && _ !== " ")
     )
   );
@@ -1479,7 +1605,7 @@ export const ClassGenerator = (
         .map((_) => _p[_]);
 
   let res = [
-    ...ClassGene({ ...rootProps }, exclude, only, "", false, palette),
+    ...ClassGene({ ...rootProps }, exclude, only, "", false, palette, query),
     ...bp,
     ...results,
     ...missingProps,
@@ -1569,6 +1695,9 @@ export const classFilter = [
   "bottom",
   "left",
   "zIndex",
+  "ring",
+  "ringColor",
+  "outline",
 ];
 
 export const ClassGene = (
@@ -1577,7 +1706,8 @@ export const ClassGene = (
   only = [],
   prefix = "",
   debug = false,
-  palette = []
+  palette = [],
+  query = null
 ) => {
   debug && console.log(exclude, only, props);
 
@@ -1653,14 +1783,59 @@ export const ClassGene = (
     .filter((_) => typeof _ === "string")
     .filter((_) => _ && _ !== " ")
     .filter((_) => _ && _ !== "")
-    .map((_) => resolvePalette(_)) // Resolve palette references here
+    .map((_) => {
+      // Handle all style/palette references - with or without prefix
+      if (
+        typeof _ === "string" &&
+        (_.includes("style:") || _.includes("palette:"))
+      ) {
+        // Extract prefix (if any), reference type, and name
+        // Matches: "bg-palette:Primary", "style:inputBorderWidth", "border-style:inputBorderColor"
+        const match = _.match(/^([a-z]+-)?(?:(style|palette):)(.+)$/);
+        if (match) {
+          const prefixPart = match[1] || ""; // e.g., "bg-", "text-", "border-", or empty
+          const refType = match[2]; // "style" or "palette"
+          const refName = match[3]; // e.g., "inputBgColor", "Primary"
+
+          let resolvedValue;
+
+          if (refType === "palette") {
+            // Resolve palette reference
+            resolvedValue = resolvePalette(`palette:${refName}`);
+          } else {
+            // Resolve style guide reference
+            resolvedValue = resolveStyleGuide(`style:${refName}`, query);
+
+            // If the resolved value is a palette reference, resolve it too
+            if (resolvedValue.includes("palette:")) {
+              const paletteResolved = resolvePalette(resolvedValue);
+              resolvedValue = paletteResolved;
+            }
+          }
+
+          const finalValue = `${prefixPart}${resolvedValue}`;
+
+          // Add the prefix back to the resolved value
+          return finalValue;
+        }
+      }
+      return _;
+    })
+    .map((_) => resolvePalette(_)) // Resolve any remaining palette references
+    .map((_) => resolveStyleGuide(_, query)) // Resolve any remaining style guide references
     .map((_) => `${prefix}${_}`);
 
   if (only.length) return results;
   // .filter((_) => AllStyles.includes(_));
 
   if (props.border) {
-    const split = props.border.split("-");
+    // Resolve style guide reference if present
+    let borderValue = props.border;
+    if (typeof borderValue === "string" && borderValue.includes("style:")) {
+      borderValue = resolveStyleGuide(borderValue, query);
+    }
+
+    const split = borderValue.split("-");
     let deleteBorder = false;
 
     const setBorder = (bord) => {
@@ -1673,7 +1848,7 @@ export const ClassGene = (
     if (props.borderTop) setBorder(`border-t-${split[1]}`);
     if (props.borderBottom) setBorder(`border-b-${split[1]}`);
 
-    if (!deleteBorder) results.push(props.border);
+    if (!deleteBorder) results.push(borderValue);
   }
 
   const res = results.filter((_) => _);
@@ -1774,8 +1949,19 @@ export const applyAnimation = (prop: any = {}, props: BaseSelectorProps) => {
   prop.style = { ...prop.style, ...style };
 
   if (_root?.fontFamily) {
-    prop.style.fontFamily = _root.fontFamily;
-    getFontFromComp(props);
+    // Resolve style guide reference if present (pass null for query, will be handled internally)
+    const resolvedFontFamily = resolveStyleGuide(_root.fontFamily, null);
+    prop.style.fontFamily = resolvedFontFamily;
+
+    // Create a copy of props with resolved fontFamily for font loading
+    const resolvedProps = {
+      ...props,
+      root: {
+        ...props.root,
+        fontFamily: resolvedFontFamily,
+      },
+    };
+    getFontFromComp(resolvedProps);
   }
 
   if (!_root?.animation || !animations[_root.animation]) {

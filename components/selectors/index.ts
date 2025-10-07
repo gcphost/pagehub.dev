@@ -103,6 +103,13 @@ export interface RootStyleProps {
   preset?: string;
   presetPadding?: string;
   presetMaxWidth?: string;
+  placeholderColor?: string;
+  focus?: {
+    ring?: string;
+    ringColor?: string;
+    outline?: string;
+  };
+  hover?: any;
   hover?: {
     border?: string;
     borderColor?: string;

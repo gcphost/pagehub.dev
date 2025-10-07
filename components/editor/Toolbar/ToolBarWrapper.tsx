@@ -58,7 +58,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   const active = id;
 
   const getCloneTree = useCallback(
-    (tree: NodeTree) => buildClonedTree({ tree, query, setProp }),
+    (tree: NodeTree) => buildClonedTree({ tree, query, setProp, createLinks: false }),
     [query, setProp]
   );
 

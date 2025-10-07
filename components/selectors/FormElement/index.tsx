@@ -13,6 +13,7 @@ import { useRecoilValue } from "recoil";
 import { motionIt } from "utils/lib";
 
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
+import { usePalette } from "utils/PaletteContext";
 import { applyAnimation, ClassGenerator } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { FormElementSettings } from "./FormElementSettings";
@@ -86,15 +87,20 @@ export interface FormElementProps extends BaseSelectorProps {
 
 const defaultProps: FormElementProps = {
   root: {
-    border: 'border',
-    borderColor: 'border-gray-300',
-    radius: 'rounded-md',
-    background: 'bg-white',
-    color: 'text-gray-900',
+    border: 'style:inputBorderWidth',
+    borderColor: 'border-style:inputBorderColor',
+    radius: 'style:inputBorderRadius',
+    background: 'bg-style:inputBgColor',
+    color: 'text-style:inputTextColor',
+    placeholderColor: 'placeholder-style:inputPlaceholderColor',
+    focus: {
+      ring: 'style:inputFocusRing',
+      ringColor: 'ring-style:inputFocusRingColor',
+      outline: 'outline-none',
+    },
   },
   mobile: {
-    px: 'px-4',
-    py: 'py-2',
+    p: 'style:inputPadding',
     width: 'w-full',
   },
   tablet: {},
@@ -113,7 +119,7 @@ const defaultProps: FormElementProps = {
   step: "",
   pattern: "",
   options: [],
-};
+} as any;
 
 export const FormElement = (props: Partial<FormElementProps>) => {
   props = {
@@ -127,6 +133,7 @@ export const FormElement = (props: Partial<FormElementProps>) => {
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
+  const palette = usePalette();
 
   const {
     connectors: { connect, drag },
@@ -141,7 +148,7 @@ export const FormElement = (props: Partial<FormElementProps>) => {
 
   const prop: any = {
     ref: (r) => connect(drag(r)),
-    className: ClassGenerator(props, view, enabled, [], [], preview),
+    className: ClassGenerator(props, view, enabled, [], [], preview, false, palette, query),
     type: props.type,
     placeholder: props.placeholder,
     name: props.name,

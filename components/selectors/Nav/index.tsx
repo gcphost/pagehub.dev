@@ -197,7 +197,7 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
   const defaultProp: any = {
     ref: (r) => connect(drag(r)),
     style: props.root?.style ? CSStoObj(props.root.style) || {} : {},
-    className: ClassGenerator(props, "root", enabled, [], [], preview, false, palette),
+    className: ClassGenerator(props, "root", enabled, [], [], preview, false, palette, query),
   };
 
   if (enabled) {
@@ -301,7 +301,7 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
     ];
 
     const className = [
-      ...ClassGenerator(props.navItem, "root", enabled, [], [], preview, false, palette),
+      ...ClassGenerator(props.navItem, "root", enabled, [], [], preview, false, palette, query),
       ...ClassGenerator(
         { ...props },
         "root",
@@ -310,7 +310,8 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
         [],
         preview,
         false,
-        palette
+        palette,
+        query
       ).split(" "),
       ...include,
     ]
@@ -444,7 +445,7 @@ export const Nav: UserComponent<NavProps> = (props: NavProps) => {
       <div
         ref={(r: any) => connect(drag(r))}
         className={[
-          ...ClassGenerator({ ...props }, "root", enabled, [], baseProps, preview, false, palette).split(
+          ...ClassGenerator({ ...props }, "root", enabled, [], baseProps, preview, false, palette, query).split(
             " "
           ),
           ...mainClasses,

@@ -122,7 +122,8 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       [],
       preview,
       false,
-      palette
+      palette,
+      query
     ),
   };
 

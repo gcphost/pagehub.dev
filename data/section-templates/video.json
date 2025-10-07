@@ -38,7 +38,8 @@
                     "fontSize": "text-5xl",
                     "fontWeight": "font-bold",
                     "color": "text-white",
-                    "marginBottom": "mb-6"
+                    "marginBottom": "mb-6",
+                    "fontFamily": "style:headingFontFamily"
                   },
                   "custom": {
                     "displayName": "Title"
@@ -198,7 +199,8 @@
                       "root": {
                         "fontSize": "text-3xl",
                         "fontWeight": "font-bold",
-                        "marginBottom": "mb-4"
+                        "marginBottom": "mb-4",
+                        "fontFamily": "style:headingFontFamily"
                       },
                       "custom": {
                         "displayName": "Title"
@@ -227,8 +229,10 @@
                         "bg": "bg-blue-600",
                         "color": "text-white",
                         "padding": "px-6 py-3",
-                        "radius": "rounded-md",
-                        "fontWeight": "font-semibold"
+                        "radius": "style:borderRadius",
+                        "fontWeight": "font-semibold",
+                        "fontFamily": "style:headingFontFamily",
+                        "shadow": "style:shadowStyle"
                       },
                       "custom": {
                         "displayName": "CTA Button"

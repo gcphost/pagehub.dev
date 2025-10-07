@@ -12,18 +12,23 @@ export const RenderFormElementComponent = ({ text, ...props }) => (
   />
 );
 
-// Base styles for all form elements
+// Base styles for all form elements - using style guide
 const formElementBaseStyles = {
   root: {
-    border: 'border',
-    borderColor: 'border-gray-300',
-    radius: 'rounded-md',
-    background: 'bg-white',
-    color: 'text-gray-900',
+    border: 'style:inputBorderWidth',
+    borderColor: 'border-style:inputBorderColor',
+    radius: 'style:inputBorderRadius',
+    background: 'bg-style:inputBgColor',
+    color: 'text-style:inputTextColor',
+    placeholderColor: 'placeholder-style:inputPlaceholderColor',
+    focus: {
+      ring: 'style:inputFocusRing',
+      ringColor: 'ring-style:inputFocusRingColor',
+      outline: 'outline-none',
+    },
   },
   mobile: {
-    px: 'px-4',
-    py: 'py-2',
+    p: 'style:inputPadding',
     width: 'w-full',
   },
 };

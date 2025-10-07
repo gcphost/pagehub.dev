@@ -25,4 +25,10 @@ const SignInPage = () => {
   );
 };
 
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
+
 export default SignInPage;

@@ -50,16 +50,16 @@ import {
 } from "utils/lib";
 import { useTenant } from "utils/tenantStore";
 import { DeviceAtom, EnabledAtom, PreviewAtom, ViewAtom } from ".";
-import { ColorPalletModal } from "../Toolbar/Inputs/ColorPalletModal";
 import { MediaManagerModal } from "../Toolbar/Inputs/MediaManagerModal";
 import { AnimatedSaveButton } from "../Tools/AnimatedSaveButton";
 import { ComponentSettings } from "./ComponentSettings";
+import { DesignSystemPanel } from "./DesignSystemPanel";
 import { DomainSettings } from "./DomainSettings";
 import { ExportModal } from "./ExportModal";
 import { ImportModal } from "./ImportModal";
+import { SaveToServer } from "./lib";
 import { PageSelector } from "./PageSelector";
 import { SiteSettingsModal } from "./SiteSettingsModal";
-import { SaveToServer } from "./lib";
 
 export function useComponentVisible(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] =
@@ -137,9 +137,9 @@ export const Header = () => {
 
   const [showMenu, setShowMenu] = useRecoilState(MenuState);
   const [showMenuType, setShowMenuType] = useRecoilState(MenuItemState);
-  const [isColorPalletModalOpen, setIsColorPalletModalOpen] = useState(false);
   const [isMediaManagerModalOpen, setIsMediaManagerModalOpen] = useState(false);
   const [isSiteSettingsModalOpen, setIsSiteSettingsModalOpen] = useState(false);
+  const [isDesignSystemPanelOpen, setIsDesignSystemPanelOpen] = useState(false);
 
   const setEnabled = useSetRecoilState(EnabledAtom);
 
@@ -568,7 +568,7 @@ export const Header = () => {
 
                   <button
                     onClick={() => {
-                      setIsColorPalletModalOpen(true);
+                      setIsDesignSystemPanelOpen(true);
                       setShowMenu(false);
                     }}
                     className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
@@ -576,7 +576,7 @@ export const Header = () => {
                     <div className="text-2xl">
                       <TbPalette />
                     </div>
-                    <div className="">Color Palette</div>
+                    <div className="">Design System</div>
                   </button>
 
 
@@ -734,11 +734,6 @@ export const Header = () => {
         </nav>
       )}
 
-      <ColorPalletModal
-        isOpen={isColorPalletModalOpen}
-        onClose={() => setIsColorPalletModalOpen(false)}
-      />
-
       <MediaManagerModal
         isOpen={isMediaManagerModalOpen}
         onClose={() => setIsMediaManagerModalOpen(false)}
@@ -747,6 +742,11 @@ export const Header = () => {
       <SiteSettingsModal
         isOpen={isSiteSettingsModalOpen}
         onClose={() => setIsSiteSettingsModalOpen(false)}
+      />
+
+      <DesignSystemPanel
+        isOpen={isDesignSystemPanelOpen}
+        onClose={() => setIsDesignSystemPanelOpen(false)}
       />
     </>
   );

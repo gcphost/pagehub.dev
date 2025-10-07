@@ -203,18 +203,23 @@ FormDrop.craft = {
 export const Form = (props: any) => {
   const formType = props.formType || "subscribe";
 
-  // Base styles for form inputs
+  // Base styles for form inputs - using style guide
   const inputBaseStyles = {
     root: {
-      border: 'border',
-      borderColor: 'border-gray-300',
-      radius: 'rounded-md',
-      background: 'bg-white',
-      color: 'text-gray-900',
+      border: 'style:inputBorderWidth',
+      borderColor: 'border-style:inputBorderColor',
+      radius: 'style:inputBorderRadius',
+      background: 'bg-style:inputBgColor',
+      color: 'text-style:inputTextColor',
+      placeholderColor: 'placeholder-style:inputPlaceholderColor',
+      focus: {
+        ring: 'style:inputFocusRing',
+        ringColor: 'ring-style:inputFocusRingColor',
+        outline: 'outline-none',
+      },
     },
     mobile: {
-      px: 'px-4',
-      py: 'py-2',
+      p: 'style:inputPadding',
       width: 'w-full',
     },
   };
@@ -245,7 +250,7 @@ export const Form = (props: any) => {
           display: "flex",
           justifyContent: "justify-center",
           flexDirection: "flex-col",
-          width: "w-3/4",
+          width: "w-full",
           gap: "gap-3",
           mx: "mx-auto",
         }}
@@ -310,15 +315,13 @@ export const Form = (props: any) => {
         id="formSubmitButton"
         is={Button}
         custom={{ displayName: "Submit Button" }}
-        buttons={[{
-          type: "submit",
-          text: formType === "subscribe" ? "Subscribe" : "Send Message",
-          root: {
-            background: "palette:Brand",
-            color: "palette:BrandText",
-            border: "border",
-          }
-        }]}
+        type="submit"
+        text={formType === "subscribe" ? "Subscribe" : "Send Message"}
+        root={{
+          background: "palette:Brand",
+          color: "palette:BrandText",
+          border: "border",
+        }}
         mobile={{ px: "px-6", py: "py-3" }}
         canDelete={true}
         canEditName={true}
