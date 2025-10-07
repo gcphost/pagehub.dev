@@ -193,7 +193,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   };
 
   return (
-    <div className="absolute w-[380px] z-[9999]">
+    <div className="absolute w-fit z-[9999]">
       <div className="h-10 mt-2 flex items-center justify-center flex-row z-50 gap-0 pointer-events-auto tool-bg">
 
 
@@ -235,7 +235,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
 
 
 
-        <div className="border-l border-gray-500 flex gap-1 ml-2 pl-2" >
+        <div className="border-l border-gray-500 flex gap-1 pl-2" >
           {/* Alignment and Lists Dropdown */}
           <div className=" group">
             <Tooltip content="Alignment & Lists" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
@@ -251,7 +251,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('left').run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive({ textAlign: 'left' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive({ textAlign: 'left' }) ? 'bg-gray-700 text-white' : ''}`}
                   title="Align Left"
                 >
                   <MdFormatAlignLeft className="w-4 h-4 mx-auto" />
@@ -260,7 +260,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('center').run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive({ textAlign: 'center' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive({ textAlign: 'center' }) ? 'bg-gray-700 text-white' : ''}`}
                   title="Align Center"
                 >
                   <MdFormatAlignCenter className="w-4 h-4 mx-auto" />
@@ -269,7 +269,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('right').run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive({ textAlign: 'right' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive({ textAlign: 'right' }) ? 'bg-gray-700 text-white' : ''}`}
                   title="Align Right"
                 >
                   <MdFormatAlignRight className="w-4 h-4 mx-auto" />
@@ -279,7 +279,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleBulletList().run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('bulletList') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('bulletList') ? 'bg-gray-700 text-white' : ''}`}
                   title="Bullet List"
                 >
                   <MdFormatListBulleted className="w-4 h-4 mx-auto" />
@@ -288,7 +288,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleOrderedList().run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('orderedList') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('orderedList') ? 'bg-gray-700 text-white' : ''}`}
                   title="Numbered List"
                 >
                   <MdFormatListNumbered className="w-4 h-4 mx-auto" />
@@ -298,7 +298,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().liftListItem('listItem').run();
                   })}
-                  className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                  className="tool-button"
                   title="Decrease Indent"
                 >
                   <MdFormatIndentIncrease className="w-4 h-4 mx-auto rotate-180" />
@@ -307,7 +307,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().sinkListItem('listItem').run();
                   })}
-                  className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                  className="tool-button"
                   title="Increase Indent"
                 >
                   <MdFormatIndentIncrease className="w-4 h-4 mx-auto" />
@@ -331,7 +331,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleBold().run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('bold') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('bold') ? 'bg-gray-700 text-white' : ''}`}
                   title="Bold"
                 >
                   <MdFormatBold className="w-4 h-4 mx-auto" />
@@ -340,7 +340,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleItalic().run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('italic') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('italic') ? 'bg-gray-700 text-white' : ''}`}
                   title="Italic"
                 >
                   <MdFormatItalic className="w-4 h-4 mx-auto" />
@@ -350,7 +350,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleUnderline().run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('underline') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('underline') ? 'bg-gray-700 text-white' : ''}`}
                   title="Underline"
                 >
                   <MdFormatUnderlined className="w-4 h-4 mx-auto" />
@@ -359,7 +359,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleStrike().run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('strike') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('strike') ? 'bg-gray-700 text-white' : ''}`}
                   title="Strikethrough"
                 >
                   <MdFormatStrikethrough className="w-4 h-4 mx-auto" />
@@ -369,7 +369,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleSuperscript().run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('superscript') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('superscript') ? 'bg-gray-700 text-white' : ''}`}
                   title="Superscript"
                 >
                   <MdSuperscript className="w-4 h-4 mx-auto" />
@@ -378,7 +378,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleSubscript().run();
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('subscript') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('subscript') ? 'bg-gray-700 text-white' : ''}`}
                   title="Subscript"
                 >
                   <MdSubscript className="w-4 h-4 mx-auto" />
@@ -539,7 +539,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
 
         </div>
 
-        <div className="border-l border-gray-500 flex gap-1 ml-2 pl-2" >
+        <div className="border-l border-gray-500 flex gap-1 pl-2" >
           {/* Image and Link */}
           <Tooltip content="Insert Image" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
             <button
@@ -549,7 +549,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   editor.chain().focus().setImage({ src: url }).run();
                 }
               })}
-              className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+              className="tool-button"
             >
               <MdImage className="w-4 h-4" />
             </button>
@@ -563,21 +563,21 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   editor.chain().focus().setLink({ href: url }).run();
                 }
               })}
-              className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+              className="tool-button"
             >
               <MdLink className="w-4 h-4" />
             </button>
           </Tooltip>
         </div>
 
-        <div className="border-l border-gray-500 flex gap-1 ml-2 pl-2" >
+        <div className="border-l border-gray-500 flex gap-1 pl-2" >
           {/* Clear Formatting */}
           <Tooltip content="Clear Formatting" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
             <button
               onClick={handleButtonClick(() => {
                 editor.chain().focus().clearNodes().unsetAllMarks().run();
               })}
-              className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+              className="tool-button"
             >
               <TbEraser className="w-4 h-4" />
             </button>

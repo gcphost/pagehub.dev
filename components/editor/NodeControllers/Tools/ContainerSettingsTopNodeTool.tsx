@@ -161,10 +161,10 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         <>
 
 
-          <Tooltip content="Select Navigation" className="border-r border-gray-700 pr-2">
-            <SelectParentNodeTool parentType="Nav" icon={<TbNavigation />}>
-            </SelectParentNodeTool>
-          </Tooltip>
+
+          <SelectParentNodeTool parentType="Nav" icon={<Tooltip content="Select Navigation" className="border-r border-gray-700 pr-2"><TbNavigation /></Tooltip>}>
+          </SelectParentNodeTool>
+
         </>
       )}
 
@@ -218,36 +218,36 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
 
 
       {match && (
-        <div className="tool-button">
-          <Tooltip content={`Add ${["flex-row", "flex-row-reverse"].includes(value) ? "column" : "row"} container`}>
-            <button
-              className={`text-white hover:text-gray-200 ${direction == "horizontal" ? "-rotate-90" : ""
-                }`}
-              onClick={() => {
-                const isRow = ["flex-row", "flex-row-reverse"].includes(value);
-                AddElement({
-                  element: (
-                    <Container
-                      canDelete={true}
-                      mobile={{
-                        display: "flex",
-                        justifyContent: "justify-center",
-                        flexDirection: isRow ? "flex-col" : "flex-row",
-                        width: "w-full",
-                      }}
-                      desktop={{}}
-                      custom={{ displayName: isRow ? "Column" : "Row" }}
-                    />
-                  ),
-                  actions,
-                  query,
-                });
-              }}
-            >
-              <TbRowInsertTop />
-            </button>
-          </Tooltip>
-        </div>
+
+        <Tooltip content={`Add ${["flex-row", "flex-row-reverse"].includes(value) ? "column" : "row"} container`}>
+          <button
+            className={`tool-button ${direction == "horizontal" ? "-rotate-90" : ""
+              }`}
+            onClick={() => {
+              const isRow = ["flex-row", "flex-row-reverse"].includes(value);
+              AddElement({
+                element: (
+                  <Container
+                    canDelete={true}
+                    mobile={{
+                      display: "flex",
+                      justifyContent: "justify-center",
+                      flexDirection: isRow ? "flex-col" : "flex-row",
+                      width: "w-full",
+                    }}
+                    desktop={{}}
+                    custom={{ displayName: isRow ? "Column" : "Row" }}
+                  />
+                ),
+                actions,
+                query,
+              });
+            }}
+          >
+            <TbRowInsertTop />
+          </button>
+        </Tooltip>
+
       )}
 
 
@@ -255,20 +255,18 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
 
 
       {match && (
-        <div className="tool-button">
-          <Tooltip content="Add components">
-            <button
-              className={`text-white hover:text-gray-200 ${direction == "horizontal" ? "-rotate-90" : ""
-                }`}
-              onClick={() => {
-                setShowMenu(true);
-                setShowMenuType("components");
-              }}
-            >
-              <TbPlus />
-            </button>
-          </Tooltip>
-        </div>
+        <Tooltip content="Add components">
+          <button
+            className={`tool-button ${direction == "horizontal" ? "-rotate-90" : ""
+              }`}
+            onClick={() => {
+              setShowMenu(true);
+              setShowMenuType("components");
+            }}
+          >
+            <TbPlus />
+          </button>
+        </Tooltip>
       )}
     </NodeToolWrapper>
   );
