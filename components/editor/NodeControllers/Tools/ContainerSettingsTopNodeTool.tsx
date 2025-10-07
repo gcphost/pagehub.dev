@@ -128,7 +128,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
   return (
     <NodeToolWrapper
       col={direction !== "horizontal"}
-      className={`bg-primary-500 inside-shadow text-black rounded-md m-1 ${direction == "horizontal" ? "px-3" : "py-3 px-1.5"}`}
+      className={`tool-bg m-1`}
       animate={{
         initial: { opacity: 0 },
         animate: {
@@ -169,30 +169,28 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
       )}
 
       {direction === "horizontal" && (
-        <div className="h-6 w-6 flex items-center justify-center">
-          <Tooltip content="Delete container">
-            <DeleteNodeButton
-              className="text-white hover:text-gray-200"
-              title="Delete container"
-              titleDisabled="Cannot delete"
-            />
-          </Tooltip>
-        </div>
+
+        <Tooltip content="Delete container">
+          <DeleteNodeButton
+            title="Delete container"
+            titleDisabled="Cannot delete"
+            className="tool-button"
+          />
+        </Tooltip>
+
       )}
 
       {direction === "horizontal" && (
-        <div className="h-6 w-6 flex items-center justify-center">
-          <Tooltip content="Duplicate">
-            <DuplicateNodeButton
-              className="text-white hover:text-gray-200"
-            />
-          </Tooltip>
-        </div>
+        <Tooltip content="Duplicate">
+          <DuplicateNodeButton
+            className="tool-button"
+          />
+        </Tooltip>
       )}
 
 
       <Tooltip content={`Align items ${direction === "horizontal" ? "horizontally" : "vertically"}`}>
-        <div className="h-6 w-6 flex items-center justify-center">
+        <div className="tool-button">
           <ToolbarItem
             propKey={propKey}
             type="toggleNext"
@@ -207,7 +205,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
       </Tooltip>
       {direction == "horizontal" && (
         <>
-          <div className="h-6 w-6 flex items-center justify-center">
+          <div className="tool-button">
             <FlexDirectionInput wrap="control" type="toggleNext" />
           </div>
 
@@ -220,7 +218,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
 
 
       {match && (
-        <div className="h-6 w-6 flex items-center justify-center">
+        <div className="tool-button">
           <Tooltip content={`Add ${["flex-row", "flex-row-reverse"].includes(value) ? "column" : "row"} container`}>
             <button
               className={`text-white hover:text-gray-200 ${direction == "horizontal" ? "-rotate-90" : ""
@@ -257,7 +255,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
 
 
       {match && (
-        <div className="h-6 w-6 flex items-center justify-center">
+        <div className="tool-button">
           <Tooltip content="Add components">
             <button
               className={`text-white hover:text-gray-200 ${direction == "horizontal" ? "-rotate-90" : ""

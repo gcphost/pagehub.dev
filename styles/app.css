@@ -1350,3 +1350,15 @@ ul {
 [contenteditable="true"] {
   outline: none;
 }
+
+.tool-bg {
+  @apply bg-primary-500 inside-shadow text-white rounded-md p-1.5 text-sm font-normal leading-normal tracking-normal flex items-center justify-center;
+}
+
+.tool-button {
+  @apply text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 flex items-center justify-center border gap-1 p-1.5;
+}
+
+.tool-button * {
+  @apply !p-0 !m-0;
+}

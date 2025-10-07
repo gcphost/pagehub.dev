@@ -7,7 +7,6 @@ import {
   MdFormatAlignLeft,
   MdFormatAlignRight,
   MdFormatBold,
-  MdFormatColorFill,
   MdFormatIndentIncrease,
   MdFormatItalic,
   MdFormatLineSpacing,
@@ -17,14 +16,15 @@ import {
   MdFormatUnderlined,
   MdImage,
   MdLink,
-  MdMoreVert,
   MdSubscript,
   MdSuperscript
 } from 'react-icons/md';
-import { TbEraser } from 'react-icons/tb';
+import { TbChevronDown, TbEraser } from 'react-icons/tb';
 import { useRecoilState } from 'recoil';
 import { getStyleSheets } from 'utils/lib';
+import { isPaletteReference, paletteToCSSVar } from 'utils/palette';
 import { fonts } from 'utils/tailwind';
+import { DeleteNodeButton } from '../NodeControllers/Tools/DeleteNodeButton';
 import { ColorPickerAtom, ColorPickerDialog } from '../Toolbar/Tools/ColorPickerDialog';
 import { TextSettingsDropdown } from './TextSettingsDropdown';
 
@@ -35,7 +35,7 @@ interface TiptapToolbarProps {
 
 export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   editor,
-  className = "mt-2  flex items-center justify-center flex-row z-50 gap-0  pointer-events-auto bg-primary-500 inside-shadow text-white rounded-md p-1.5"
+  className = ""
 }) => {
   const [showTextFormatting, setShowTextFormatting] = useState(false);
   const [showFontOptions, setShowFontOptions] = useState(false);
@@ -137,6 +137,12 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
             } else {
               colorValue = String(value);
             }
+
+            // Convert palette references to CSS variables
+            if (isPaletteReference(colorValue)) {
+              colorValue = paletteToCSSVar(colorValue);
+            }
+
             editor.chain().focus().setHighlight({ color: colorValue }).run();
           }
         },
@@ -170,6 +176,12 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
             } else {
               colorValue = String(value);
             }
+
+            // Convert palette references to CSS variables
+            if (isPaletteReference(colorValue)) {
+              colorValue = paletteToCSSVar(colorValue);
+            }
+
             editor.chain().focus().setColor(colorValue).run();
           }
         },
@@ -181,41 +193,65 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   };
 
   return (
-    <div className="absolute w-full max-w-[470px]  z-[9999] ">
-      <div className={className}>
+    <div className="absolute w-[380px] z-[9999]">
+      <div className="h-10 mt-2 flex items-center justify-center flex-row z-50 gap-0 pointer-events-auto tool-bg">
 
-        {/* Text Settings Dropdown */}
-        <TextSettingsDropdown />
 
-        {/* Divider */}
-        <div className="w-px h-6 bg-gray-600 mx-1" />
-
-        {/* Alignment and Lists Dropdown */}
-        <div className="relative">
-          <Tooltip content="Alignment & Lists" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
+        {/* More Options Dropdown */}
+        <div className="group">
+          <Tooltip content="More Options" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
             <button
-              onClick={handleButtonClick(() => {
-                setShowAlignmentLists(!showAlignmentLists);
-                setShowTextFormatting(false);
-                setShowFontOptions(false);
-                setShowHeadings(false);
-                setShowMoreOptions(false);
-              })}
-              className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white flex items-center gap-1 ${showAlignmentLists ? 'bg-gray-700 text-white' : ''}`}
+              className="tool-button"
             >
-              <MdFormatAlignLeft className="w-4 h-4" />
-              <MdMoreVert className="w-3 h-3" />
+              <TbChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
             </button>
           </Tooltip>
-          {showAlignmentLists && (
-            <div className="absolute top-full left-0 mt-1 bg-gray-800 border border-gray-600 rounded shadow-lg z-50 p-2 min-w-48">
-              <div className="grid grid-cols-3 gap-1 mb-2">
+          <div className="absolute w-fit left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-3 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div className="space-y-2">
+              {/* Horizontal Rule */}
+              <button
+                onClick={handleButtonClick(() => {
+                  editor.chain().focus().setHorizontalRule().run();
+                })}
+                className="w-full px-3 py-2 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 flex items-center gap-2"
+                title="Horizontal Rule"
+              >
+                <MdFormatLineSpacing className="w-4 h-4" />
+                <span>Horizontal Rule</span>
+              </button>
+
+              {/* Divider */}
+              <div className="border-t border-gray-600 my-2" />
+
+              {/* Text Settings Dropdown */}
+              <TextSettingsDropdown />
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+        <div className="border-l border-gray-500 flex gap-1 ml-2 pl-2" >
+          {/* Alignment and Lists Dropdown */}
+          <div className=" group">
+            <Tooltip content="Alignment & Lists" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
+              <button
+                className="tool-button"
+              >
+                <MdFormatAlignLeft className="w-4 h-4" />
+              </button>
+            </Tooltip>
+            <div className="absolute w-fit left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-2 pb-0 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="flex gap-1 mb-2">
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('left').run();
-                    setShowAlignmentLists(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive({ textAlign: 'left' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive({ textAlign: 'left' }) ? 'bg-gray-700 text-white' : ''}`}
                   title="Align Left"
                 >
                   <MdFormatAlignLeft className="w-4 h-4 mx-auto" />
@@ -223,9 +259,8 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('center').run();
-                    setShowAlignmentLists(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive({ textAlign: 'center' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive({ textAlign: 'center' }) ? 'bg-gray-700 text-white' : ''}`}
                   title="Align Center"
                 >
                   <MdFormatAlignCenter className="w-4 h-4 mx-auto" />
@@ -233,21 +268,18 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('right').run();
-                    setShowAlignmentLists(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive({ textAlign: 'right' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive({ textAlign: 'right' }) ? 'bg-gray-700 text-white' : ''}`}
                   title="Align Right"
                 >
                   <MdFormatAlignRight className="w-4 h-4 mx-auto" />
                 </button>
-              </div>
-              <div className="grid grid-cols-2 gap-1 mb-2">
+
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleBulletList().run();
-                    setShowAlignmentLists(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive('bulletList') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('bulletList') ? 'bg-gray-700 text-white' : ''}`}
                   title="Bullet List"
                 >
                   <MdFormatListBulleted className="w-4 h-4 mx-auto" />
@@ -255,21 +287,18 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleOrderedList().run();
-                    setShowAlignmentLists(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive('orderedList') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('orderedList') ? 'bg-gray-700 text-white' : ''}`}
                   title="Numbered List"
                 >
                   <MdFormatListNumbered className="w-4 h-4 mx-auto" />
                 </button>
-              </div>
-              <div className="grid grid-cols-2 gap-1">
+
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().liftListItem('listItem').run();
-                    setShowAlignmentLists(false);
                   })}
-                  className="px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white"
+                  className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
                   title="Decrease Indent"
                 >
                   <MdFormatIndentIncrease className="w-4 h-4 mx-auto rotate-180" />
@@ -277,47 +306,32 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().sinkListItem('listItem').run();
-                    setShowAlignmentLists(false);
                   })}
-                  className="px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white"
+                  className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
                   title="Increase Indent"
                 >
                   <MdFormatIndentIncrease className="w-4 h-4 mx-auto" />
                 </button>
               </div>
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* Divider */}
-        <div className="w-px h-6 bg-gray-600 mx-1" />
-
-        {/* Text Formatting Dropdown */}
-        <div className="relative">
-          <Tooltip content="Text Formatting" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-            <button
-              onClick={handleButtonClick(() => {
-                setShowTextFormatting(!showTextFormatting);
-                setShowAlignmentLists(false);
-                setShowFontOptions(false);
-                setShowHeadings(false);
-                setShowMoreOptions(false);
-              })}
-              className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white flex items-center gap-1 ${showTextFormatting ? 'bg-gray-700 text-white' : ''}`}
-            >
-              <MdFormatBold className="w-4 h-4" />
-              <MdMoreVert className="w-3 h-3" />
-            </button>
-          </Tooltip>
-          {showTextFormatting && (
-            <div className="absolute top-full left-0 mt-1 bg-gray-800 border border-gray-600 rounded shadow-lg z-50 p-2 min-w-32">
-              <div className="grid grid-cols-2 gap-1 mb-2">
+          {/* Text Formatting Dropdown */}
+          <div className="group">
+            <Tooltip content="Text Formatting" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
+              <button
+                className="tool-button"
+              >
+                <MdFormatBold className="w-4 h-4" />
+              </button>
+            </Tooltip>
+            <div className="absolute w-fit left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-2 pb-0 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="flex gap-1 mb-2">
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleBold().run();
-                    setShowTextFormatting(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive('bold') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('bold') ? 'bg-gray-700 text-white' : ''}`}
                   title="Bold"
                 >
                   <MdFormatBold className="w-4 h-4 mx-auto" />
@@ -325,21 +339,18 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleItalic().run();
-                    setShowTextFormatting(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive('italic') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('italic') ? 'bg-gray-700 text-white' : ''}`}
                   title="Italic"
                 >
                   <MdFormatItalic className="w-4 h-4 mx-auto" />
                 </button>
-              </div>
-              <div className="grid grid-cols-2 gap-1 mb-2">
+
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleUnderline().run();
-                    setShowTextFormatting(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive('underline') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('underline') ? 'bg-gray-700 text-white' : ''}`}
                   title="Underline"
                 >
                   <MdFormatUnderlined className="w-4 h-4 mx-auto" />
@@ -347,21 +358,18 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleStrike().run();
-                    setShowTextFormatting(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive('strike') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('strike') ? 'bg-gray-700 text-white' : ''}`}
                   title="Strikethrough"
                 >
                   <MdFormatStrikethrough className="w-4 h-4 mx-auto" />
                 </button>
-              </div>
-              <div className="grid grid-cols-2 gap-1 mb-2">
+
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleSuperscript().run();
-                    setShowTextFormatting(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive('superscript') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('superscript') ? 'bg-gray-700 text-white' : ''}`}
                   title="Superscript"
                 >
                   <MdSuperscript className="w-4 h-4 mx-auto" />
@@ -369,299 +377,222 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleSubscript().run();
-                    setShowTextFormatting(false);
                   })}
-                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white ${editor.isActive('subscript') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 ${editor.isActive('subscript') ? 'bg-gray-700 text-white' : ''}`}
                   title="Subscript"
                 >
                   <MdSubscript className="w-4 h-4 mx-auto" />
                 </button>
               </div>
             </div>
-          )}
-        </div>
-
-        {/* Divider */}
-        <div className="w-px h-6 bg-gray-600 mx-1" />
-
-        {/* Font Options Dropdown */}
-        <div className="relative">
-          <Tooltip content="Font Options" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-            <button
-              onClick={handleButtonClick(() => {
-                setShowFontOptions(!showFontOptions);
-                setShowTextFormatting(false);
-                setShowAlignmentLists(false);
-                setShowHeadings(false);
-                setShowMoreOptions(false);
-                if (showFontOptions) {
-                  setFontSearchTerm('');
-                }
-              })}
-              className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white flex items-center gap-1 ${showFontOptions ? 'bg-gray-700 text-white' : ''}`}
-            >
-              <MdFontDownload className="w-4 h-4" />
-              <span className="text-xs">Font</span>
-              <MdMoreVert className="w-3 h-3" />
-            </button>
-          </Tooltip>
-
-        </div>
-
-        {/* Divider */}
-        <div className="w-px h-6 bg-gray-600 mx-1" />
+          </div>
 
 
-
-        {/* Divider */}
-        <div className="w-px h-6 bg-gray-600 mx-1" />
-
-        {/* More Options Dropdown */}
-        <div className="relative">
-          <Tooltip content="More Options" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-            <button
-              onClick={handleButtonClick(() => {
-                setShowMoreOptions(!showMoreOptions);
-                setShowTextFormatting(false);
-                setShowAlignmentLists(false);
-                setShowFontOptions(false);
-                setShowHeadings(false);
-              })}
-              className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white flex items-center gap-1 ${showMoreOptions ? 'bg-gray-700 text-white' : ''}`}
-            >
-              <MdMoreVert className="w-4 h-4" />
-            </button>
-          </Tooltip>
-          {showMoreOptions && (
-            <div className="absolute top-full left-0 mt-1 bg-gray-800 border border-gray-600 rounded shadow-lg z-50 p-2 min-w-32">
+          {/* Font Options Dropdown */}
+          <div className=" group">
+            <Tooltip content="Font Options" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
               <button
-                onClick={handleButtonClick(() => {
-                  editor.chain().focus().setHorizontalRule().run();
-                  setShowMoreOptions(false);
-                })}
-                className="w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white flex items-center gap-1"
-                title="Horizontal Rule"
+                className="tool-button"
               >
-                <MdFormatLineSpacing className="w-4 h-4" />
-                <span>Horizontal Rule</span>
+                <MdFontDownload className="w-4 h-4" />
+                <span className="text-xs">Font</span>
+                <TbChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
               </button>
-            </div>
-          )}
-        </div>
-
-        {/* Divider */}
-        <div className="w-px h-6 bg-gray-600 mx-1" />
-
-        {/* Image and Link */}
-        <Tooltip content="Insert Image" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-          <button
-            onClick={handleButtonClick(() => {
-              const url = window.prompt('Enter image URL:');
-              if (url) {
-                editor.chain().focus().setImage({ src: url }).run();
-              }
-            })}
-            className="px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white"
-          >
-            <MdImage className="w-4 h-4" />
-          </button>
-        </Tooltip>
-
-        <Tooltip content="Insert Link" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-          <button
-            onClick={handleButtonClick(() => {
-              const url = window.prompt('Enter URL:');
-              if (url) {
-                editor.chain().focus().setLink({ href: url }).run();
-              }
-            })}
-            className="px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white"
-          >
-            <MdLink className="w-4 h-4" />
-          </button>
-        </Tooltip>
-
-        {/* Clear Formatting */}
-        <Tooltip content="Clear Formatting" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-          <button
-            onClick={handleButtonClick(() => {
-              editor.chain().focus().clearNodes().unsetAllMarks().run();
-            })}
-            className="px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white"
-          >
-            <TbEraser className="w-4 h-4" />
-          </button>
-        </Tooltip>
-      </div>
-
-      {showFontOptions && (
-        <div className="w-full bg-gray-100 border border-gray-300 rounded shadow-lg z-50 p-4">
-          <div className="flex gap-8 h-64">
-
-
-
-
-            {/* Font Family Section */}
-            <div className="flex-1 flex flex-col">
-              <div className="mb-4">
-                <input
-                  type="text"
-                  placeholder="Search fonts..."
-                  value={fontSearchTerm}
-                  onChange={(e) => setFontSearchTerm(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  onClick={(e) => e.stopPropagation()}
-                />
-              </div>
-              <div className="flex-1 overflow-y-auto border border-gray-200 rounded-lg bg-white">
-                <div className="grid grid-cols-2 gap-0">
-                  {filteredFonts.map((font) => (
-                    <button
-                      key={font}
-                      onClick={handleButtonClick(() => {
-                        editor.chain().focus().setFontFamily(font).run();
-                        setShowFontOptions(false);
-                        setFontSearchTerm('');
-                      })}
-                      className="w-full px-4 py-3 text-left text-sm hover:bg-blue-50 hover:text-blue-700 border-b border-gray-100 last:border-b-0 transition-colors"
-                      style={{ fontFamily: font }}
-                    >
-                      {font}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Font Size Section */}
-            <div className="flex-shrink-0 w-32 flex flex-col">
-              {/* Headings Dropdown */}
-              <div className="relative">
-                <Tooltip content="Headings" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-                  <button
-                    onClick={handleButtonClick(() => {
-                      setShowHeadings(!showHeadings);
-                      setShowTextFormatting(false);
-                      setShowAlignmentLists(false);
-                      // setShowFontOptions(false);
-                      setShowMoreOptions(false);
-                    })}
-                    className={`px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white flex items-center gap-1 ${showHeadings ? 'bg-gray-700 text-white' : ''}`}
-                  >
-                    <span className="text-xs">Normal</span>
-                    <MdMoreVert className="w-3 h-3" />
-                  </button>
-                </Tooltip>
-                {showHeadings && (
-                  <div className="absolute top-0 left-0 mt-1 bg-gray-800 border border-gray-600 rounded shadow-lg z-50 p-2 min-w-32">
-                    <button
-                      onClick={handleButtonClick(() => {
-                        editor.chain().focus().setParagraph().run();
-                        setShowHeadings(false);
-                      })}
-                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('paragraph') ? 'bg-gray-700 text-white' : ''}`}
-                      title="Normal Text"
-                    >
-                      Normal
-                    </button>
-                    <button
-                      onClick={handleButtonClick(() => {
-                        editor.chain().focus().toggleHeading({ level: 1 }).run();
-                        setShowHeadings(false);
-                      })}
-                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 1 }) ? 'bg-gray-700 text-white' : ''}`}
-                      title="Heading 1"
-                    >
-                      Heading 1
-                    </button>
-                    <button
-                      onClick={handleButtonClick(() => {
-                        editor.chain().focus().toggleHeading({ level: 2 }).run();
-                        setShowHeadings(false);
-                      })}
-                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 2 }) ? 'bg-gray-700 text-white' : ''}`}
-                      title="Heading 2"
-                    >
-                      Heading 2
-                    </button>
-                    <button
-                      onClick={handleButtonClick(() => {
-                        editor.chain().focus().toggleHeading({ level: 3 }).run();
-                        setShowHeadings(false);
-                      })}
-                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 3 }) ? 'bg-gray-700 text-white' : ''}`}
-                      title="Heading 3"
-                    >
-                      Heading 3
-                    </button>
-                    <button
-                      onClick={handleButtonClick(() => {
-                        editor.chain().focus().toggleHeading({ level: 4 }).run();
-                        setShowHeadings(false);
-                      })}
-                      className={`w-full px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white text-left ${editor.isActive('heading', { level: 4 }) ? 'bg-gray-700 text-white' : ''}`}
-                      title="Heading 4"
-                    >
-                      Heading 4
-                    </button>
+            </Tooltip>
+            <div className="absolute right-0 left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-2 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="flex gap-8 h-64">
+                {/* Font Family Section */}
+                <div className="flex-1 flex flex-col">
+                  <div className="mb-4">
+                    <input
+                      type="text"
+                      placeholder="Search fonts..."
+                      value={fontSearchTerm}
+                      onChange={(e) => setFontSearchTerm(e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-500 rounded-lg bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    />
                   </div>
-                )}
-              </div>
-
-
-
-              <div className="p-1.5 mb-3 flex justify-between">
-                {/* Background Color */}
-                <div className="relative">
-                  <Tooltip content="Background Color" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-                    <button
-                      ref={backgroundColorButtonRef}
-                      onClick={handleButtonClick(openBackgroundColorPicker)}
-                      className="px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white"
-                    >
-                      <MdFormatColorFill className="w-4 h-4" />
-                    </button>
-                  </Tooltip>
+                  <div className="flex-1 overflow-y-auto border border-gray-600 rounded-lg bg-gray-800">
+                    <div className="grid grid-cols-1 gap-0">
+                      {filteredFonts.map((font) => (
+                        <button
+                          key={font}
+                          onClick={handleButtonClick(() => {
+                            editor.chain().focus().setFontFamily(font).run();
+                            setFontSearchTerm('');
+                          })}
+                          className="w-full px-4 py-3 text-left text-sm hover:bg-gray-700 hover:text-white text-gray-300 border-b border-gray-700 last:border-b-0 transition-colors"
+                          style={{ fontFamily: font }}
+                        >
+                          {font}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Foreground Color */}
-                <div className="relative">
-                  <Tooltip content="Text Color" placement="bottom" tooltipClassName="!text-xs !px-2 !py-1">
-                    <button
-                      ref={foregroundColorButtonRef}
-                      onClick={handleButtonClick(openForegroundColorPicker)}
-                      className="px-2 py-1 text-sm rounded hover:bg-gray-700 text-gray-300 hover:text-white"
-                    >
-                      <MdFormatColorFill className="w-4 h-4" />
-                    </button>
-                  </Tooltip>
-                </div>
-              </div>
+                {/* Font Size Section */}
+                <div className="flex-shrink-0 w-32 flex flex-col">
+                  {/* Headings Dropdown */}
+                  <div className="mb-3">
+                    <div className="relative">
+                      <select
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value === 'paragraph') {
+                            editor.chain().focus().setParagraph().run();
+                          } else {
+                            const level = parseInt(value.replace('heading', '')) as 1 | 2 | 3 | 4 | 5 | 6;
+                            editor.chain().focus().toggleHeading({ level }).run();
+                          }
+                        }}
+                        value={
+                          editor.isActive('paragraph') ? 'paragraph' :
+                            editor.isActive('heading', { level: 1 }) ? 'heading1' :
+                              editor.isActive('heading', { level: 2 }) ? 'heading2' :
+                                editor.isActive('heading', { level: 3 }) ? 'heading3' :
+                                  editor.isActive('heading', { level: 4 }) ? 'heading4' :
+                                    'paragraph'
+                        }
+                        className="w-full px-3 py-2 text-sm border border-gray-500 rounded-lg bg-gray-800 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      >
+                        <option value="paragraph">Normal Text</option>
+                        <option value="heading1">Heading 1</option>
+                        <option value="heading2">Heading 2</option>
+                        <option value="heading3">Heading 3</option>
+                        <option value="heading4">Heading 4</option>
+                      </select>
+                    </div>
+                  </div>
 
-              <div className="flex-1 overflow-y-auto border border-gray-200 rounded-lg bg-white">
-                <div className="grid grid-cols-1 gap-0">
-                  {fontSizes.map((size) => (
-                    <button
-                      key={size.class}
-                      onClick={handleButtonClick(() => {
-                        editor.chain().focus().setFontSize(size.value).run();
-                        setShowFontOptions(false);
-                      })}
-                      className={`w-full px-3 py-2 text-left text-xs hover:bg-blue-50 hover:text-blue-700 border-b border-gray-100 last:border-b-0 transition-colors ${size.class}`}
-                      title={`${size.class} (${size.value})`}
-                    >
-                      {size.label}
-                    </button>
-                  ))}
+                  {/* Font Size Adjuster */}
+                  <div className="mb-3">
+                    <div className="text-xs text-gray-400 mb-2">Font Size</div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={handleButtonClick(() => {
+                          editor.chain().focus().setFontSize('12px').run();
+                        })}
+                        className="px-2 py-1 text-xs rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                        title="Small"
+                      >
+                        S
+                      </button>
+                      <button
+                        onClick={handleButtonClick(() => {
+                          editor.chain().focus().setFontSize('16px').run();
+                        })}
+                        className="px-2 py-1 text-xs rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                        title="Medium"
+                      >
+                        M
+                      </button>
+                      <button
+                        onClick={handleButtonClick(() => {
+                          editor.chain().focus().setFontSize('20px').run();
+                        })}
+                        className="px-2 py-1 text-xs rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                        title="Large"
+                      >
+                        L
+                      </button>
+                      <button
+                        onClick={handleButtonClick(() => {
+                          editor.chain().focus().setFontSize('24px').run();
+                        })}
+                        className="px-2 py-1 text-xs rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                        title="Extra Large"
+                      >
+                        XL
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="p-1.5 mb-3 space-y-3">
+                    {/* Background Color */}
+                    <div>
+                      <div className="text-xs text-gray-400 mb-2">Background Color</div>
+                      <button
+                        ref={backgroundColorButtonRef}
+                        onClick={handleButtonClick(openBackgroundColorPicker)}
+                        className="w-full h-8 rounded border-2 border-gray-500 hover:border-gray-400 transition-colors"
+                        style={{ backgroundColor: editor.getAttributes('highlight').color || '#ffffff' }}
+                      />
+                    </div>
+
+                    {/* Text Color */}
+                    <div>
+                      <div className="text-xs text-gray-400 mb-2">Text Color</div>
+                      <button
+                        ref={foregroundColorButtonRef}
+                        onClick={handleButtonClick(openForegroundColorPicker)}
+                        className="w-full h-8 rounded border-2 border-gray-500 hover:border-gray-400 transition-colors"
+                        style={{ backgroundColor: editor.getAttributes('textStyle').color || '#000000' }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
-      )}
+
+        <div className="border-l border-gray-500 flex gap-1 ml-2 pl-2" >
+          {/* Image and Link */}
+          <Tooltip content="Insert Image" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
+            <button
+              onClick={handleButtonClick(() => {
+                const url = window.prompt('Enter image URL:');
+                if (url) {
+                  editor.chain().focus().setImage({ src: url }).run();
+                }
+              })}
+              className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+            >
+              <MdImage className="w-4 h-4" />
+            </button>
+          </Tooltip>
+
+          <Tooltip content="Insert Link" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
+            <button
+              onClick={handleButtonClick(() => {
+                const url = window.prompt('Enter URL:');
+                if (url) {
+                  editor.chain().focus().setLink({ href: url }).run();
+                }
+              })}
+              className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+            >
+              <MdLink className="w-4 h-4" />
+            </button>
+          </Tooltip>
+        </div>
+
+        <div className="border-l border-gray-500 flex gap-1 ml-2 pl-2" >
+          {/* Clear Formatting */}
+          <Tooltip content="Clear Formatting" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
+            <button
+              onClick={handleButtonClick(() => {
+                editor.chain().focus().clearNodes().unsetAllMarks().run();
+              })}
+              className="px-2 py-1 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+            >
+              <TbEraser className="w-4 h-4" />
+            </button>
+          </Tooltip>
+
+
+          <DeleteNodeButton
+            className="tool-button"
+            iconSize={14}
+          />
+        </div>
+      </div>
 
       {/* Color Picker Dialog */}
       <ColorPickerDialog />
-    </div>
+    </div >
   );
 };

@@ -13,7 +13,6 @@ import { TextStyle } from '@tiptap/extension-text-style';
 import { EditorContent, useEditor as useTiptapEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { AutoTextSize } from "auto-text-size";
-import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
 import {
@@ -322,7 +321,6 @@ Text.craft = {
         //   }}
         // />,
 
-        <DeleteNodeController key="textDelete" />,
         <ToolNodeController position="bottom" align="start" key="textSettings">
           <TextSettingsNodeTool />
         </ToolNodeController>,

@@ -10,7 +10,7 @@ interface DuplicateNodeButtonProps {
 
 export const DuplicateNodeButton = ({
   className = "text-white",
-  iconSize = 16,
+  iconSize = 14,
 }: DuplicateNodeButtonProps) => {
   const { id } = useNode();
 
@@ -56,7 +56,7 @@ export const DuplicateNodeButton = ({
       className={className}
       onClick={handleDuplicate}
     >
-      <TbCopy size={iconSize} />
+      <TbCopy />
     </button>
   );
 };

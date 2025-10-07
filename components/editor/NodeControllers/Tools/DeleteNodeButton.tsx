@@ -14,7 +14,7 @@ interface DeleteNodeButtonProps {
 
 export const DeleteNodeButton = ({
   className = "text-white",
-  iconSize = 16,
+  iconSize = 14,
   title = "Delete",
   titleDisabled = "Cannot delete",
   useSimpleDelete = false,
@@ -60,7 +60,7 @@ export const DeleteNodeButton = ({
       title={canDelete ? title : titleDisabled}
       disabled={!canDelete}
     >
-      {canDelete ? <TbTrash size={iconSize} /> : <TbTrashOff size={iconSize} />}
+      {canDelete ? <TbTrash /> : <TbTrashOff />}
     </button>
   );
 };
