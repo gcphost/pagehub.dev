@@ -9,7 +9,7 @@
         "type": "Container",
         "props": {
           "root": {
-            "background": "bg-palette:Primary"
+            "background": "bg-[var(--ph-primary)]"
           },
           "custom": {
             "displayName": "Newsletter Signup"
@@ -29,7 +29,7 @@
                 "displayName": "Content"
               },
               "mobile": {
-                "maxWidth": "style:contentWidth"
+                "maxWidth": "max-w-7xl"
               }
             },
             "children": [
@@ -38,15 +38,15 @@
                 "props": {
                   "root": {
                     "fontSize": "text-3xl",
-                    "color": "text-palette:Primary Text",
-                    "fontFamily": "style:headingFontFamily"
+                    "color": "text-[var(--ph-primary--text)]",
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "custom": {
                     "displayName": "Title"
                   },
                   "text": "<h2>Stay Updated</h2>",
                   "mobile": {
-                    "fontWeight": "style:headingFont",
+                    "fontWeight": "font-bold",
                     "mb": "mb-4"
                   }
                 }
@@ -56,7 +56,7 @@
                 "props": {
                   "root": {
                     "fontSize": "text-lg",
-                    "color": "text-palette:Primary Text"
+                    "color": "text-[var(--ph-primary--text)]"
                   },
                   "custom": {
                     "displayName": "Description"
@@ -97,7 +97,7 @@
         "type": "Container",
         "props": {
           "root": {
-            "background": "bg-palette:Alternate Background"
+            "background": "bg-[var(--ph-alternate--background)]"
           },
           "custom": {
             "displayName": "Contact Form Section"
@@ -117,7 +117,7 @@
                 "displayName": "Content"
               },
               "mobile": {
-                "maxWidth": "style:contentWidth"
+                "maxWidth": "max-w-7xl"
               }
             },
             "children": [
@@ -140,14 +140,14 @@
                     "props": {
                       "root": {
                         "fontSize": "text-4xl",
-                        "fontFamily": "style:headingFontFamily"
+                        "fontFamily": "Open Sans, sans-serif"
                       },
                       "custom": {
                         "displayName": "Title"
                       },
                       "text": "<h2>Get In Touch</h2>",
                       "mobile": {
-                        "fontWeight": "style:headingFont",
+                        "fontWeight": "font-bold",
                         "mb": "mb-4"
                       }
                     }
@@ -157,7 +157,7 @@
                     "props": {
                       "root": {
                         "fontSize": "text-lg",
-                        "color": "text-palette:Alternate Text"
+                        "color": "text-[var(--ph-alternate--text)]"
                       },
                       "custom": {
                         "displayName": "Description"
@@ -171,15 +171,15 @@
                 "type": "Container",
                 "props": {
                   "root": {
-                    "background": "bg-palette:Background",
-                    "radius": "style:borderRadius",
-                    "shadow": "style:shadowStyle"
+                    "background": "bg-[var(--ph-background)]",
+                    "radius": "rounded-lg",
+                    "shadow": "shadow-lg"
                   },
                   "custom": {
                     "displayName": "Form Container"
                   },
                   "mobile": {
-                    "p": "style:containerSpacing"
+                    "p": "p-8"
                   }
                 },
                 "children": [

@@ -142,12 +142,11 @@ export const GapDragControl = () => {
           "gap-60": 240, "gap-64": 256, "gap-72": 288, "gap-80": 320, "gap-96": 384,
         };
         const snappedPx = tailwindGapToPx[gapClass] || newGapPx;
-        dom.style.gap = `${snappedPx}px`;
 
         setProp((prop) => {
           prop[view] = prop[view] || {};
           prop[view].gap = gapClass;
-        }, 200);
+        }, 300);
 
         // Update the control position to follow the gap center - use locked childIndex
         const children = Array.from(dom.children).filter((child) => {

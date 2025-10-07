@@ -18,7 +18,7 @@ export const RenderButtonComponent = ({ text = "Button", display = null, ...prop
     flexDirection: "flex-col",
     alignItems: "text-center",
     gap: "gap-8",
-    p: "style:buttonPadding",
+    p: "px-6 py-3",
     width: "w-auto",
     display: "flex",
     cursor: "cursor-pointer",
@@ -46,7 +46,7 @@ export const RenderButtonListComponent = ({ text = "Button List", ...props }) =>
 
   const mobile = {
     ...(props.mobile || {}),
-    flexDirection: "flex-row",
+    flexDirection: "flex-col",
     alignItems: "items-center",
     justifyContent: "justify-start",
     gap: "gap-2",
@@ -54,6 +54,14 @@ export const RenderButtonListComponent = ({ text = "Button List", ...props }) =>
     py: "py-2",
     width: "w-auto",
     display: "flex",
+  };
+
+  const desktop = {
+    ...(props.desktop || {}),
+    flexDirection: "flex-row",
+    alignItems: "items-center",
+    justifyContent: "justify-start",
+    gap: "gap-2",
   };
 
   return (
@@ -69,6 +77,7 @@ export const RenderButtonListComponent = ({ text = "Button List", ...props }) =>
       ]}
       root={root}
       mobile={mobile}
+      desktop={desktop}
       element={ButtonList}
       custom={props.custom}
     />
@@ -82,13 +91,13 @@ export const ButtonToolbox = {
       text="Button"
       key="1"
       custom={{ displayName: "Button" }}
-      root={{ border: "border", borderColor: "border-gray-500", radius: "style:borderRadius" }}
+      root={{ border: "border", borderColor: "border-gray-500", radius: "rounded-lg" }}
     />,
     <RenderButtonListComponent
       text="Button List"
       key="2"
       custom={{ displayName: "Button List" }}
-      root={{ border: "border", borderColor: "border-gray-500", radius: "style:borderRadius" }}
+      root={{ border: "border", borderColor: "border-gray-500", radius: "rounded-lg" }}
     />,
     <RenderButtonComponent
       text="Icon"

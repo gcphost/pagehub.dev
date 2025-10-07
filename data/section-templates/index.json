@@ -136,7 +136,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "background": "bg-palette:Primary"
+                      "background": "bg-[var(--ph-primary)]"
                     },
                     "mobile": {
                       "px": "px-8",
@@ -173,7 +173,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-palette:Primary"
+              "background": "bg-[var(--ph-primary)]"
             },
             "mobile": {
               "display": "flex",
@@ -257,14 +257,14 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "background": "bg-palette:Background"
+                      "background": "bg-[var(--ph-background)]"
                     },
                     "mobile": {
                       "px": "px-8",
                       "py": "py-4",
                       "fontSize": "text-lg",
                       "fontWeight": "font-semibold",
-                      "color": "text-palette:Primary",
+                      "color": "text-[var(--ph-primary)]",
                       "radius": "rounded-lg",
                       "gap": "gap-4"
                     },
@@ -315,7 +315,7 @@
                 "canDelete": true,
                 "canEditName": true,
                 "root": {
-                  "background": "bg-palette:Primary"
+                  "background": "bg-[var(--ph-primary)]"
                 },
                 "mobile": {
                   "display": "flex",
@@ -788,7 +788,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "background": "bg-palette:Alternate Background"
+                          "background": "bg-[var(--ph-alternate--background)]"
                         },
                         "mobile": {
                           "display": "flex",
@@ -848,7 +848,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "background": "bg-palette:Alternate Background"
+                          "background": "bg-[var(--ph-alternate--background)]"
                         },
                         "mobile": {
                           "display": "flex",
@@ -920,7 +920,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-palette:Primary"
+              "background": "bg-[var(--ph-primary)]"
             },
             "mobile": {
               "display": "flex",
@@ -1116,7 +1116,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "background": "bg-palette:Primary",
+                      "background": "bg-[var(--ph-primary)]",
                       "color": "text-white"
                     },
                     "mobile": {
@@ -1363,7 +1363,7 @@
                 "canDelete": true,
                 "canEditName": true,
                 "root": {
-                  "background": "bg-palette:Primary",
+                  "background": "bg-[var(--ph-primary)]",
                   "color": "text-white"
                 },
                 "mobile": {
@@ -2112,7 +2112,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-palette:Alternate Background"
+              "background": "bg-[var(--ph-alternate--background)]"
             },
             "mobile": {
               "display": "flex",
@@ -2207,7 +2207,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-palette:Alternate Background"
+              "background": "bg-[var(--ph-alternate--background)]"
             },
             "mobile": {
               "display": "flex",
@@ -2373,7 +2373,7 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-gray-100",
-                              "color": "text-palette:Text"
+                              "color": "text-[var(--ph-text)]"
                             },
                             "mobile": {
                               "px": "px-6",
@@ -2404,7 +2404,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "background": "bg-palette:Primary"
+                          "background": "bg-[var(--ph-primary)]"
                         },
                         "mobile": {
                           "display": "flex",
@@ -2593,7 +2593,7 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-gray-100",
-                              "color": "text-palette:Text"
+                              "color": "text-[var(--ph-text)]"
                             },
                             "mobile": {
                               "px": "px-6",
@@ -3171,7 +3171,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "background": "bg-palette:Primary",
+                              "background": "bg-[var(--ph-primary)]",
                               "color": "text-white"
                             },
                             "mobile": {
@@ -3281,7 +3281,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "background": "bg-palette:Primary",
+                              "background": "bg-[var(--ph-primary)]",
                               "color": "text-white"
                             },
                             "mobile": {
@@ -3391,7 +3391,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "background": "bg-palette:Primary",
+                              "background": "bg-[var(--ph-primary)]",
                               "color": "text-white"
                             },
                             "mobile": {
@@ -3580,7 +3580,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-palette:Primary"
+              "background": "bg-[var(--ph-primary)]"
             },
             "mobile": {
               "display": "flex",
@@ -3696,7 +3696,7 @@
                             "url": "#",
                             "style": {
                               "background": "bg-white",
-                              "color": "text-palette:Primary",
+                              "color": "text-[var(--ph-primary)]",
                               "px": "px-6",
                               "py": "py-2",
                               "radius": "rounded-lg",
@@ -4321,7 +4321,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-palette:Primary"
+              "background": "bg-[var(--ph-primary)]"
             },
             "mobile": {
               "display": "flex",
@@ -4427,7 +4427,7 @@
                                 "url": "#",
                                 "style": {
                                   "background": "bg-white",
-                                  "color": "text-palette:Primary",
+                                  "color": "text-[var(--ph-primary)]",
                                   "px": "px-4",
                                   "py": "py-2",
                                   "radius": "rounded-lg",
@@ -4453,7 +4453,7 @@
                                 "url": "#",
                                 "style": {
                                   "background": "bg-white",
-                                  "color": "text-palette:Primary",
+                                  "color": "text-[var(--ph-primary)]",
                                   "px": "px-4",
                                   "py": "py-2",
                                   "radius": "rounded-lg",
@@ -4479,7 +4479,7 @@
                                 "url": "#",
                                 "style": {
                                   "background": "bg-white",
-                                  "color": "text-palette:Primary",
+                                  "color": "text-[var(--ph-primary)]",
                                   "px": "px-4",
                                   "py": "py-2",
                                   "radius": "rounded-lg",

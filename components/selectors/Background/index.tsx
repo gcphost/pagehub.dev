@@ -1,10 +1,11 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
+import { CSStoObj, ClassGenerator, applyAnimation, clearClassCache } from "utils/tailwind";
 
 import React, { useEffect, useRef, useState } from "react";
 import { TbContainer } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { DEFAULT_PALETTE, DEFAULT_STYLE_GUIDE } from "utils/defaults";
+import { injectDesignSystemVars } from "utils/designSystemVars";
 
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
@@ -37,7 +38,7 @@ export interface ContainerProps extends BaseSelectorProps {
   styleGuide?: {
     borderRadius?: string;
     buttonPadding?: string;
-    containerSpacing?: string;
+    containerPadding?: string;
     sectionGap?: string;
     containerGap?: string;
     contentWidth?: string;
@@ -373,6 +374,22 @@ export const Background = (props: Partial<ContainerProps>) => {
       }
     };
   }, [props.styleGuide, props.pallet]);
+
+  // Clear class generation cache when palette or style guide changes
+  useEffect(() => {
+    clearClassCache();
+  }, [props.pallet, props.styleGuide]);
+
+  // Inject design system CSS variables
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // Inject CSS variables for palette and style guide
+    injectDesignSystemVars({
+      palette: props.pallet || DEFAULT_PALETTE,
+      styleGuide: props.styleGuide || DEFAULT_STYLE_GUIDE,
+    });
+  }, [props.pallet, props.styleGuide]);
 
   prop.children = (
     <PaletteProvider palette={props.pallet || []}>

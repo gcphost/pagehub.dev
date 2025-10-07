@@ -38,7 +38,7 @@
                 "alignItems": "items-center",
                 "justifyContent": "justify-between",
                 "width": "w-full",
-                "maxWidth": "style:contentWidth",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6"
               },
@@ -72,7 +72,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-row",
-                    "gap": "style:containerGap",
+                    "gap": "gap-6",
                     "alignItems": "items-center"
                   },
                   "custom": {
@@ -156,7 +156,7 @@
           "canDelete": true,
           "canEditName": true,
           "root": {
-            "background": "bg-palette:Primary"
+            "background": "bg-[var(--ph-primary)]"
           },
           "mobile": {
             "display": "flex",
@@ -181,7 +181,7 @@
                 "alignItems": "items-center",
                 "justifyContent": "justify-between",
                 "width": "w-full",
-                "maxWidth": "style:contentWidth",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6"
               },
@@ -216,7 +216,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-row",
-                    "gap": "style:containerGap",
+                    "gap": "gap-6",
                     "alignItems": "items-center"
                   },
                   "custom": {
@@ -262,8 +262,8 @@
                       "canDelete": true,
                       "canEditName": true,
                       "root": {
-                        "fontFamily": "style:headingFontFamily",
-                        "shadow": "style:shadowStyle"
+                        "fontFamily": "Open Sans, sans-serif",
+                        "shadow": "shadow-lg"
                       },
                       "mobile": {},
                       "custom": {
@@ -315,10 +315,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "style:contentWidth",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "style:containerGap"
+                "gap": "gap-6"
               },
               "custom": {
                 "displayName": "Header Content"
@@ -331,11 +331,11 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "style:headingFontFamily"
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
                     "fontSize": "text-3xl",
-                    "fontWeight": "style:headingFont",
+                    "fontWeight": "font-bold",
                     "textAlign": "text-center"
                   },
                   "custom": {
@@ -353,7 +353,7 @@
                   "mobile": {
                     "display": "flex",
                     "flexDirection": "flex-row",
-                    "gap": "style:containerGap",
+                    "gap": "gap-6",
                     "alignItems": "items-center"
                   },
                   "custom": {

@@ -51,19 +51,34 @@ export const ButtonListSettings = () => {
 
   useEffect(() => setMenu({ enabled: false }), [setMenu]);
 
-  // Get child Button nodes
+  // Get child Button nodes (excluding hamburger buttons)
   const { childButtons } = useEditor((_, query) => {
     try {
       const node = query.node(id).get();
-      const buttons = node.data.nodes.map(childId => {
-        const childNode = query.node(childId).get();
-        return {
-          id: childId,
-          text: childNode.data.props.text || "Button",
-          url: childNode.data.props.url || "",
-          props: childNode.data.props,
-        };
-      });
+      const buttons = node.data.nodes
+        .map(childId => {
+          try {
+            const childNode = query.node(childId).get();
+
+            // Only include actual Button components
+            if (childNode.data.name !== 'Button') return null;
+
+            // Exclude hamburger/mobile menu buttons
+            const isHamburger = childNode.data.props?.clickValue?.includes('mobile-menu');
+            if (isHamburger) return null;
+
+            return {
+              id: childId,
+              text: childNode.data.props.text || "Button",
+              url: childNode.data.props.url || "",
+              props: childNode.data.props,
+            };
+          } catch (e) {
+            return null;
+          }
+        })
+        .filter(Boolean); // Remove nulls
+
       return { childButtons: buttons };
     } catch (e) {
       return { childButtons: [] };

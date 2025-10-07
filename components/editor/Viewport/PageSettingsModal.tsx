@@ -18,6 +18,7 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
   const [pageName, setPageName] = useState("");
   const [pageSlug, setPageSlug] = useState("");
   const [isHomePage, setIsHomePage] = useState(false);
+  const [is404Page, setIs404Page] = useState(false);
   const [autoSlug, setAutoSlug] = useState(true);
 
   // UI State
@@ -56,6 +57,7 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
 
           setPageName(custom?.displayName || "Untitled Page");
           setIsHomePage(props.isHomePage || false);
+          setIs404Page(props.is404Page || false);
 
           // Generate slug from display name
           const generatedSlug = sluggit(custom?.displayName || "untitled-page", "-");
@@ -101,6 +103,7 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
       // Update all props
       actions.setProp(pageId, (props) => {
         props.isHomePage = isHomePage;
+        props.is404Page = is404Page;
 
         // SEO
         props.pageTitle = pageTitle;
@@ -259,6 +262,25 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
                   >
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isHomePage ? "translate-x-6" : "translate-x-1"
+                        }`}
+                    />
+                  </button>
+                </div>
+
+                {/* 404 Page Toggle */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div>
+                    <div className="text-sm font-medium text-gray-900">404 Page</div>
+                    <div className="text-xs text-gray-500 mt-1">Show when route not found</div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIs404Page(!is404Page)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${is404Page ? "bg-primary-600" : "bg-gray-300"
+                      }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${is404Page ? "translate-x-6" : "translate-x-1"
                         }`}
                     />
                   </button>

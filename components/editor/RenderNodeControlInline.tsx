@@ -135,42 +135,42 @@ export const RenderNodeControlInline = ({
   // Edge positioning
   if (position === "top") {
     if (isPadding) {
-      classes.push('top-0.5', 'left-0', 'right-0'); // Inside top, 2px from edge
+      classes.push('-top-0.5', 'left-0', 'right-0'); // Inside top, 2px from edge
     } else {
       if (isOffScreen) {
         classes.push('top-full', 'left-0', 'right-0', 'mt-0'); // Clipped: flip to bottom
       } else {
-        classes.push('bottom-full', 'left-0', 'right-0', 'mb-0'); // Outside top, sits above
+        classes.push('bottom-full', 'left-0', 'right-0', 'mb-0.5'); // Outside top, sits above
       }
     }
   } else if (position === "bottom") {
     if (isPadding) {
-      classes.push('bottom-0.5', 'left-0', 'right-0'); // Inside bottom
+      classes.push('-bottom-0.5', 'left-0', 'right-0'); // Inside bottom
     } else {
       if (isOffScreen) {
         classes.push('bottom-full', 'left-0', 'right-0', 'mb-0'); // Clipped: flip to top
       } else {
-        classes.push('top-full', 'left-0', 'right-0', 'mt-0'); // Outside bottom, sits below
+        classes.push('top-full', '-left-0', 'right-0', 'mt-0.5'); // Outside bottom, sits below
       }
     }
   } else if (position === "left") {
     if (isPadding) {
-      classes.push('left-0.5', 'top-0', 'bottom-0'); // Inside left
+      classes.push('-left-0.5', 'top-0', 'bottom-0'); // Inside left
     } else {
       if (isOffScreen) {
-        classes.push('left-0.5', 'top-0'); // Clipped: move inside, anchor to top only
+        classes.push('-left-0.5', 'top-0'); // Clipped: move inside, anchor to top only
       } else {
-        classes.push('right-full', 'top-0', 'bottom-0', 'mr-0'); // Outside left
+        classes.push('right-full', 'top-0', 'bottom-0', 'mr-0.5'); // Outside left
       }
     }
   } else if (position === "right") {
     if (isPadding) {
-      classes.push('right-0.5', 'top-0', 'bottom-0'); // Inside right
+      classes.push('-right-0.5', 'top-0', 'bottom-0'); // Inside right
     } else {
       if (isOffScreen) {
         classes.push('right-0.5', 'top-0'); // Clipped: move inside, anchor to top only
       } else {
-        classes.push('left-full', 'top-0', 'bottom-0', 'ml-0'); // Outside right
+        classes.push('left-full', 'top-0', 'bottom-0', 'ml-0.5'); // Outside right
       }
     }
   }

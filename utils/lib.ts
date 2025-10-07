@@ -393,23 +393,127 @@ export const applyBackgroundImage = (
   return prop;
 };
 
+// Global font collection to avoid duplicate Google Fonts requests
+const fontCollection = new Map<string, Set<string>>();
+let isLoadingFonts = false;
+
+export const collectFont = (fontFamily: string, fontWeight: string) => {
+  if (!fontFamily || fontFamily.startsWith("style:")) {
+    return;
+  }
+
+  if (!fontCollection.has(fontFamily)) {
+    fontCollection.set(fontFamily, new Set());
+  }
+
+  const weights = fontCollection.get(fontFamily)!;
+  weights.add(fontWeight);
+};
+
+export const generateCombinedFontURL = () => {
+  if (fontCollection.size === 0) {
+    return null;
+  }
+
+  const fontParams = Array.from(fontCollection.entries())
+    .map(([fontFamily, weights]) => {
+      const weightStr = Array.from(weights).join(";");
+      return `family=${fontFamily.replace(/ +/g, "+")}:wght@${weightStr}`;
+    })
+    .join("&");
+
+  return `https://fonts.googleapis.com/css2?${fontParams}&display=swap`;
+};
+
+export const clearFontCollection = () => {
+  fontCollection.clear();
+};
+
+export const loadCombinedFonts = () => {
+  // Prevent multiple simultaneous font loading
+  if (isLoadingFonts) {
+    return;
+  }
+
+  const fontURL = generateCombinedFontURL();
+  if (!fontURL) {
+    return;
+  }
+
+  // Check if this exact font URL is already loaded
+  const existingLink = document.querySelector(`link[href="${fontURL}"]`);
+  if (existingLink) {
+    return;
+  }
+
+  isLoadingFonts = true;
+
+  // Create and append the combined font link
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = fontURL;
+  link.as = "style";
+
+  // Reset flag after link is added
+  link.onload = () => {
+    isLoadingFonts = false;
+  };
+
+  document.head.appendChild(link);
+
+  // Clear the collection after loading
+  clearFontCollection();
+};
 export const getFontFromComp = (props: BaseSelectorProps) => {
   const fontFamily = props.root?.fontFamily;
   if (!fontFamily) {
     return;
   }
 
-  const fontName = Array.isArray(fontFamily) ? fontFamily[0] : fontFamily;
-  let href = `https://fonts.googleapis.com/css2?family=${fontName.replace(
-    / +/g,
-    "+"
-  )}`;
+  let fontName = Array.isArray(fontFamily) ? fontFamily[0] : fontFamily;
+
+  // Resolve style: references to actual font names
+  if (typeof fontName === "string" && fontName.startsWith("style:")) {
+    const styleProp = fontName.replace("style:", "").trim();
+    // Try to get the resolved value from the style guide
+    try {
+      const { DEFAULT_STYLE_GUIDE } = require("./defaults");
+      const resolvedFont = DEFAULT_STYLE_GUIDE[styleProp];
+      if (resolvedFont && !resolvedFont.startsWith("style:")) {
+        fontName = resolvedFont;
+      } else {
+        // If still unresolved, skip this font
+        return;
+      }
+    } catch (e) {
+      // If we can't resolve it, skip this font
+      return;
+    }
+  }
 
   const weights = [
     ...new Set(
       ["desktop", "mobile", "tablet"].map((_) => (props[_] || {}).fontWeight)
     ),
   ].filter((_) => _);
+
+  // Resolve style: references in font weights
+  const resolvedWeights = weights.map((weight) => {
+    if (typeof weight === "string" && weight.startsWith("style:")) {
+      const styleProp = weight.replace("style:", "").trim();
+      try {
+        const { DEFAULT_STYLE_GUIDE } = require("./defaults");
+        const resolvedWeight = DEFAULT_STYLE_GUIDE[styleProp];
+        if (resolvedWeight && !resolvedWeight.startsWith("style:")) {
+          return resolvedWeight;
+        }
+      } catch (e) {
+        // If we can't resolve it, use default
+      }
+      return "font-normal"; // Default fallback
+    }
+    return weight;
+  });
 
   // Convert Tailwind font weights to numeric values
   const weightMap = {
@@ -424,7 +528,7 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
     "font-black": "900",
   };
 
-  const numericWeights = weights
+  const numericWeights = resolvedWeights
     .map((weight) => {
       if (typeof weight === "string" && weight.startsWith("font-")) {
         return weightMap[weight] || "400";
@@ -437,33 +541,10 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
     numericWeights.push("400");
   }
 
-  // Use CSS2 API with proper weight syntax
-  href += `:wght@${numericWeights.join(";")}`;
-
-  // Use font-display=swap for better UX (shows fallback immediately, swaps when ready)
-  href += "&display=swap";
-
-  const filtered = getStyleSheets();
-
-  if (filtered.includes(href)) {
-    return;
-  }
-
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  const head = document.getElementsByTagName("HEAD")[0];
-
-  const link = document.createElement("link");
-
-  link.rel = "stylesheet";
-  link.href = href;
-
-  // Add preload hint for faster font loading
-  link.as = "style";
-
-  head.appendChild(link);
+  // Collect fonts instead of immediately loading them
+  numericWeights.forEach((weight) => {
+    collectFont(fontName, weight);
+  });
 };
 
 export const autoOpenMenu = (menu, setMenu, id, node) => {

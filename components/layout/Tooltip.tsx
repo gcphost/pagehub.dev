@@ -8,6 +8,7 @@ export const Tooltip = ({
   arrow = false,
   placement = "top" as any,
   className = "",
+  tooltipClassName = "",
   tipStyle = {},
   onClick = (e?: React.MouseEvent) => { },
   key = "" as any,
@@ -45,7 +46,11 @@ export const Tooltip = ({
         {children}
       </div>
       {isVisible && (
-        <ReactTooltip id={id} classNameArrow="hidden" className="max-w-[220px]" />
+        <ReactTooltip
+          id={id}
+          classNameArrow="hidden"
+          className={`max-w-[220px] ${tooltipClassName}`}
+        />
       )}
     </>
   );

@@ -109,7 +109,6 @@ export interface RootStyleProps {
     ringColor?: string;
     outline?: string;
   };
-  hover?: any;
   hover?: {
     border?: string;
     borderColor?: string;

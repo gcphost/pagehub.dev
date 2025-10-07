@@ -63,18 +63,14 @@ export const parseContent = (content, slug) => {
     }
   }
 
-  if (onlyPage) {
-    const k = pageData[onlyPage].key;
+  // Helper function to process page and return data
+  const processPage = (pageKey, defaultTitle = null, defaultDescription = null) => {
+    const k = pageData[pageKey].key;
     const props = da[k];
 
     // Basic SEO
-    seo.title =
-      props.props.pageTitle ||
-      props.pageTitle ||
-      props?.custom?.displayName ||
-      null;
-    seo.description =
-      props.props.pageDescription || props.pageDescription || null;
+    seo.title = props.props.pageTitle || props.pageTitle || props?.custom?.displayName || defaultTitle;
+    seo.description = props.props.pageDescription || props.pageDescription || defaultDescription;
     seo.keywords = props.props.pageKeywords || null;
     seo.author = props.props.pageAuthor || null;
 
@@ -94,21 +90,31 @@ export const parseContent = (content, slug) => {
     seo.robots = props.props.robots || null;
     seo.themeColor = props.props.themeColor || null;
 
-    console.log('k', k)
-
+    // Hide all other pages
     Object.keys(da).forEach((_) => {
-      console.log('check', da[_]?.props?.type, _, k)
       if (da[_]?.props?.type === "page" && _ !== k) {
         da[_].props.isHidden = true;
         da[_].hidden = true;
       }
     });
 
-    console.log("final", da)
-
     data = JSON.stringify(da);
     return { data: lz.encodeBase64(lz.compress(data)), seo };
+  };
+
+  if (onlyPage) {
+    return processPage(onlyPage);
   }
+
+  // If no page found, look for a 404 page
+  const notFoundPage = Object.keys(pageData).find(
+    (_) => pageData[_].data?.props?.is404Page === true
+  );
+
+  if (notFoundPage) {
+    return processPage(notFoundPage, "Page Not Found", "The page you're looking for doesn't exist.");
+  }
+
   console.error("404");
 };
 

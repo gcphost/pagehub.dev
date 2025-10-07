@@ -16,30 +16,36 @@ export const DEFAULT_PALETTE = [
 
 // Default style guide values - single source of truth
 export const DEFAULT_STYLE_GUIDE = {
-  borderRadius: "rounded-lg",
-  buttonPadding: "px-6 py-3",
-  containerSpacing: "p-8",
-  sectionGap: "gap-16",
-  containerGap: "gap-6",
-  contentWidth: "max-w-7xl",
-  headingFont: "font-bold",
-  headingFontFamily: "Open Sans, sans-serif",
-  bodyFont: "font-normal",
-  bodyFontFamily: "Open Sans, sans-serif",
-  shadowStyle: "shadow-lg",
-  // Form inputs
-  inputBorderWidth: "border",
+  // Spacing & Layout - using CSS values for CSS vars
+  borderRadius: "0.5rem", // rounded-lg = 0.5rem
+  buttonPadding: "1.5rem 0.75rem", // Large button padding (x y format)
+  containerPadding: "2rem 2rem", // Large container padding (x y format)
+  sectionGap: "4rem", // Large section gap
+  containerGap: "1.5rem", // Medium container gap
+  contentWidth: "80rem", // 2XL content width
+
+  // Typography - using CSS values for CSS vars
+  headingFont: "700", // font-bold = 700
+  headingFontFamily: "Open Sans",
+  bodyFont: "400", // font-normal = 400
+  bodyFontFamily: "Open Sans",
+  shadowStyle:
+    "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)", // shadow-lg
+
+  // Form inputs - mixed approach
+  inputBorderWidth: "1px", // CSS value for CSS var
   inputBorderColor: "palette:Neutral",
-  inputBorderRadius: "rounded-md",
-  inputPadding: "px-4 py-2",
+  inputBorderRadius: "0.375rem", // CSS value for CSS var (rounded-md = 0.375rem)
+  inputPadding: "1rem 1rem", // CSS value for CSS var (px-4 py-2)
   inputBgColor: "white",
   inputTextColor: "gray-900",
   inputPlaceholderColor: "gray-400",
-  inputFocusRing: "ring-2",
+  inputFocusRing: "2px", // CSS value for CSS var
   inputFocusRingColor: "palette:Primary",
-  // Links
+
+  // Links - colors only
   linkColor: "palette:Primary",
   linkHoverColor: "palette:Secondary",
-  linkUnderline: "no-underline",
-  linkUnderlineOffset: "underline-offset-2",
+  linkUnderline: "no-underline", // Tailwind class
+  linkUnderlineOffset: "underline-offset-2", // Tailwind class
 };

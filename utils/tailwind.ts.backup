@@ -1,8 +1,7 @@
 import { BaseSelectorProps, RootClassGenProps } from "components/selectors";
 import parse from "style-to-object";
 import colors from "tailwindcss/lib/public/colors";
-import { toCSSVarName } from "./designSystemVars";
-import { getFontFromComp, loadCombinedFonts } from "./lib";
+import { getFontFromComp } from "./lib";
 
 const funkyFonts = [
   ["Orbitron"],
@@ -1395,111 +1394,7 @@ export const StyleGuide = [
   },
 ];
 
-// LRU Cache for ClassGenerator results
-class LRUCache {
-  private cache: Map<string, { value: string; timestamp: number }>;
-  private maxSize: number;
-
-  constructor(maxSize = 1000) {
-    this.cache = new Map();
-    this.maxSize = maxSize;
-  }
-
-  get(key: string): string | undefined {
-    const item = this.cache.get(key);
-    if (!item) return undefined;
-
-    // Move to end (most recently used)
-    this.cache.delete(key);
-    this.cache.set(key, item);
-    return item.value;
-  }
-
-  set(key: string, value: string): void {
-    // Remove oldest if at capacity
-    if (this.cache.size >= this.maxSize) {
-      const firstKey = this.cache.keys().next().value;
-      this.cache.delete(firstKey);
-    }
-
-    this.cache.set(key, { value, timestamp: Date.now() });
-  }
-
-  clear(): void {
-    this.cache.clear();
-  }
-
-  get size(): number {
-    return this.cache.size;
-  }
-}
-
-// Global cache instance
-const classGeneratorCache = new LRUCache(1000);
-
-// Clear cache when palette or style guide changes (called from Background component)
-export const clearClassCache = () => {
-  classGeneratorCache.clear();
-};
-
-// Helper to create a stable cache key
-const createCacheKey = (
-  props: any,
-  view: string,
-  enabled: boolean,
-  exclude: string[],
-  only: string[],
-  preview: boolean,
-  paletteHash: string
-): string => {
-  // Create a minimal, stable representation
-  const key = {
-    // Only include props that affect class generation
-    root: props.root,
-    mobile: props.mobile,
-    tablet: props.tablet,
-    desktop: props.desktop,
-    hover: props.hover,
-    focus: props.focus,
-    placeholder: props.placeholder,
-    className: props.className,
-    url: props.url,
-    onClick: props.onClick,
-    view,
-    enabled,
-    exclude: exclude.sort().join(","),
-    only: only.sort().join(","),
-    preview,
-    palette: paletteHash,
-  };
-
-  return JSON.stringify(key);
-};
-
-// Helper to create a hash of the palette for cache key
-const hashPalette = (palette: any[]): string => {
-  if (!palette || palette.length === 0) return "empty";
-  // Create a simple hash of palette names and colors
-  return palette.map((p) => `${p.name}:${p.color}`).join("|");
-};
-
-// Helper to convert palette array to Map for O(1) lookups
-const createPaletteMap = (palette: any[]): Map<string, string> => {
-  const map = new Map<string, string>();
-  if (!palette) return map;
-
-  for (const item of palette) {
-    if (item && item.name && item.color) {
-      map.set(item.name, item.color);
-    }
-  }
-
-  return map;
-};
-
-// Helper to resolve style guide references
-// For color values -> CSS variables: "style:inputBorderColor" -> "var(--ph-input-border-color)"
-// For utility classes -> direct values: "style:borderRadius" -> "rounded-lg"
+// Helper to resolve style guide references like style:borderRadius
 const resolveStyleGuide = (value: string, query: any): string => {
   if (typeof value === "string" && value.startsWith("style:")) {
     try {
@@ -1519,31 +1414,6 @@ const resolveStyleGuide = (value: string, query: any): string => {
       if (root && root.data.props.styleGuide) {
         const styleProp = value.replace("style:", "").trim();
         const styleValue = root.data.props.styleGuide[styleProp];
-
-        // Use CSS variables for actual CSS values (not Tailwind utility classes)
-        const cssVarProps = [
-          // Colors
-          "inputBorderColor",
-          "inputBgColor",
-          "inputTextColor",
-          "inputPlaceholderColor",
-          "inputFocusRingColor",
-          "linkColor",
-          "linkHoverColor",
-          // Sizes & measurements
-          "inputBorderWidth",
-          "inputBorderRadius",
-          "inputPadding",
-          "inputFocusRing",
-        ];
-
-        if (cssVarProps.includes(styleProp)) {
-          // For colors, return CSS variable reference
-          const varName = toCSSVarName(styleProp);
-          return `var(--ph-${varName})`;
-        }
-
-        // For everything else (utility classes), return the actual value
         return styleValue || value;
       }
     } catch (e) {
@@ -1564,26 +1434,6 @@ export const ClassGenerator = (
   palette = [],
   query = null
 ): string => {
-  // Check cache first
-  const paletteHash = hashPalette(palette);
-  const cacheKey = createCacheKey(
-    props,
-    view,
-    enabled,
-    exclude,
-    only,
-    preview,
-    paletteHash
-  );
-  const cached = classGeneratorCache.get(cacheKey);
-
-  if (cached !== undefined) {
-    return cached;
-  }
-
-  // Cache miss - generate classes
-  // Convert palette to Map for O(1) lookups
-  const paletteMap = createPaletteMap(palette);
   const breakpoints = {
     sm: "mobile",
     md: "desktop",
@@ -1609,7 +1459,7 @@ export const ClassGenerator = (
         only,
         "hover:",
         false,
-        paletteMap,
+        palette,
         query
       );
       results.push(...hover);
@@ -1622,7 +1472,7 @@ export const ClassGenerator = (
         only,
         "focus:",
         false,
-        paletteMap,
+        palette,
         query
       );
       results.push(...focus);
@@ -1658,9 +1508,9 @@ export const ClassGenerator = (
         if (match) {
           const prefixPart = match[1] || "";
           const paletteName = match[2];
-          const paletteColor = paletteMap.get(paletteName);
+          const paletteColor = palette.find((p) => p.name === paletteName);
           if (paletteColor) {
-            let colorValue = paletteColor;
+            let colorValue = paletteColor.color;
             const prefixesToStrip = [
               "bg-",
               "text-",
@@ -1690,7 +1540,7 @@ export const ClassGenerator = (
       only,
       "hover:",
       false,
-      paletteMap,
+      palette,
       query
     );
     results.push(...hover);
@@ -1703,7 +1553,7 @@ export const ClassGenerator = (
       only,
       "focus:",
       false,
-      paletteMap,
+      palette,
       query
     );
     results.push(...focus);
@@ -1716,7 +1566,7 @@ export const ClassGenerator = (
       only,
       "placeholder:",
       false,
-      paletteMap,
+      palette,
       query
     );
     results.push(...placeholder);
@@ -1740,7 +1590,7 @@ export const ClassGenerator = (
         only,
         _ !== "sm" ? `${_}:` : "",
         debug,
-        paletteMap,
+        palette,
         query
       ).filter((_) => _ && _ !== " ")
     )
@@ -1755,7 +1605,7 @@ export const ClassGenerator = (
         .map((_) => _p[_]);
 
   let res = [
-    ...ClassGene({ ...rootProps }, exclude, only, "", false, paletteMap, query),
+    ...ClassGene({ ...rootProps }, exclude, only, "", false, palette, query),
     ...bp,
     ...results,
     ...missingProps,
@@ -1766,9 +1616,6 @@ export const ClassGenerator = (
       res = res.replace("absolute", "relative").replace("inset-0", "");
     }
   }
-
-  // Store in cache before returning
-  classGeneratorCache.set(cacheKey, res);
 
   return res;
 };
@@ -1859,92 +1706,124 @@ export const ClassGene = (
   only = [],
   prefix = "",
   debug = false,
-  paletteMap: Map<string, string> = new Map(),
+  palette = [],
   query = null
 ) => {
   debug && console.log(exclude, only, props);
 
-  // Pre-compiled regex patterns for better performance
-  const STYLE_PALETTE_REGEX = /^([a-z]+-)?(?:(style|palette):)(.+)$/;
-  const PALETTE_REGEX = /^([a-z]+-)?palette:(.+)$/;
-
-  // Helper to resolve palette references to CSS variables
-  // "bg-palette:Primary" -> "bg-[var(--ph-primary)]"
-  // "palette:Primary" -> "var(--ph-primary)"
+  // Helper to resolve palette references
   const resolvePalette = (value: string) => {
     if (typeof value === "string" && value.includes("palette:")) {
       // Handle formats like "bg-palette:Brand" or "text-palette:Accent"
-      const match = value.match(PALETTE_REGEX);
+      const match = value.match(/^([a-z]+-)?palette:(.+)$/);
       if (match) {
         const prefixPart = match[1] || ""; // e.g., "bg-" or "text-"
         const paletteName = match[2]; // e.g., "Brand"
+        const paletteColor = palette.find((p) => p.name === paletteName);
+        if (paletteColor) {
+          let colorValue = paletteColor.color;
 
-        // Convert palette name to CSS variable name
-        const varName = toCSSVarName(paletteName);
-        const cssVar = `var(--ph-${varName})`;
+          // Strip any existing prefix from the color value for backward compatibility
+          // Old data might have "bg-blue-500" but new data should be just "blue-500"
+          const prefixesToStrip = [
+            "bg-",
+            "text-",
+            "border-",
+            "ring-",
+            "from-",
+            "to-",
+            "via-",
+          ];
+          for (const stripPrefix of prefixesToStrip) {
+            if (colorValue.startsWith(stripPrefix)) {
+              colorValue = colorValue.substring(stripPrefix.length);
+              break;
+            }
+          }
 
-        // Return with Tailwind arbitrary value syntax if there's a prefix
-        if (prefixPart) {
-          return `${prefixPart}[${cssVar}]`;
+          // If it's a Tailwind class (like "blue-600"), add prefix normally
+          // If it's rgba/hex, wrap in brackets for Tailwind arbitrary values
+          if (prefixPart) {
+            if (
+              colorValue.includes("rgba") ||
+              colorValue.includes("rgb") ||
+              colorValue.startsWith("#")
+            ) {
+              // Wrap arbitrary values in brackets: bg-[rgba(...)]
+              const result = `${prefixPart}[${colorValue}]`;
+              return result;
+            } else {
+              // Regular Tailwind class: bg-blue-600
+              const result = `${prefixPart}${colorValue}`;
+              return result;
+            }
+          }
+
+          return colorValue;
         }
-
-        return cssVar;
       }
     }
     return value;
   };
 
-  // Optimized: Single-pass reduce instead of multiple filter/map chains
-  const results = Object.keys(props).reduce((acc, key) => {
-    // Early exits for performance
-    if (!classFilter.includes(key)) return acc;
-    if (!props[key] || exclude.includes(key)) return acc;
-    if (only.length && !only.includes(key)) return acc;
+  const results = Object.keys(props)
+    .filter((_) => classFilter.includes(_))
+    .filter((_) => props[_] && !exclude.includes(_))
+    .filter((_) => {
+      if (!only.length) {
+        return _;
+      }
 
-    let value = props[key];
+      const exists = only.includes(_);
 
-    // Type and value checks
-    if (["true", "false", true, false].includes(value)) return acc;
-    if (typeof value !== "string") return acc;
-    if (!value || value === " " || value === "") return acc;
+      return exists;
+    })
+    .map((i) => props[i])
+    .filter((_) => !["true", "false", true, false].includes(_))
+    .filter((_) => typeof _ === "string")
+    .filter((_) => _ && _ !== " ")
+    .filter((_) => _ && _ !== "")
+    .map((_) => {
+      // Handle all style/palette references - with or without prefix
+      if (
+        typeof _ === "string" &&
+        (_.includes("style:") || _.includes("palette:"))
+      ) {
+        // Extract prefix (if any), reference type, and name
+        // Matches: "bg-palette:Primary", "style:inputBorderWidth", "border-style:inputBorderColor"
+        const match = _.match(/^([a-z]+-)?(?:(style|palette):)(.+)$/);
+        if (match) {
+          const prefixPart = match[1] || ""; // e.g., "bg-", "text-", "border-", or empty
+          const refType = match[2]; // "style" or "palette"
+          const refName = match[3]; // e.g., "inputBgColor", "Primary"
 
-    // Handle style/palette references with pre-compiled regex
-    if (value.includes("style:") || value.includes("palette:")) {
-      const match = value.match(STYLE_PALETTE_REGEX);
-      if (match) {
-        const prefixPart = match[1] || "";
-        const refType = match[2];
-        const refName = match[3];
+          let resolvedValue;
 
-        let resolvedValue;
+          if (refType === "palette") {
+            // Resolve palette reference
+            resolvedValue = resolvePalette(`palette:${refName}`);
+          } else {
+            // Resolve style guide reference
+            resolvedValue = resolveStyleGuide(`style:${refName}`, query);
 
-        if (refType === "palette") {
-          resolvedValue = resolvePalette(`palette:${refName}`);
-        } else {
-          resolvedValue = resolveStyleGuide(`style:${refName}`, query);
-          // Nested palette resolution
-          if (resolvedValue.includes("palette:")) {
-            resolvedValue = resolvePalette(resolvedValue);
+            // If the resolved value is a palette reference, resolve it too
+            if (resolvedValue.includes("palette:")) {
+              const paletteResolved = resolvePalette(resolvedValue);
+              resolvedValue = paletteResolved;
+            }
           }
-        }
 
-        // If we have a prefix and the resolved value is a CSS variable, wrap in brackets
-        if (prefixPart && resolvedValue.startsWith("var(--")) {
-          value = `${prefixPart}[${resolvedValue}]`;
-        } else {
-          value = `${prefixPart}${resolvedValue}`;
+          const finalValue = `${prefixPart}${resolvedValue}`;
+
+          // Add the prefix back to the resolved value
+          return finalValue;
         }
       }
-    } else {
-      // Resolve any remaining references
-      value = resolvePalette(value);
-      value = resolveStyleGuide(value, query);
-    }
-
-    // Add prefix and push to results
-    acc.push(`${prefix}${value}`);
-    return acc;
-  }, []);
+      return _;
+    })
+    .map((_) => resolvePalette(_)) // Resolve any remaining palette references
+    .map((_) => resolveStyleGuide(_, query)) // Resolve any remaining style guide references
+    .map((_) => `${prefix}${_}`);
 
   if (only.length) return results;
   // .filter((_) => AllStyles.includes(_));
@@ -2090,9 +1969,6 @@ export const applyAnimation = (prop: any = {}, props: BaseSelectorProps) => {
   }
 
   prop = { ...prop, ...animations[_root.animation] };
-
-  // Load all collected fonts in a single request
-  loadCombinedFonts();
 
   return prop;
 };

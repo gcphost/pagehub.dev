@@ -26,7 +26,6 @@ import { ButtonList } from "../../components/selectors/ButtonList";
 import { Footer } from "../../components/selectors/Footer";
 import { Header } from "../../components/selectors/Header";
 import { Image } from "../../components/selectors/Image";
-import { Nav, OnlyNavItems } from "../../components/selectors/Nav";
 import { Video } from "../../components/selectors/Video";
 import Page from "../../models/page";
 import Tenant from "../../models/tenant.model";
@@ -158,8 +157,6 @@ function App({ subdomain, data, meta, seo }) {
       FormDrop,
       Button,
       ButtonList,
-      OnlyNavItems,
-      Nav,
       Video,
       Audio,
       Image,

@@ -1,7 +1,7 @@
 import { Element } from "@craftjs/core";
 import { Button } from "components/selectors/Button";
 import { ButtonList } from "components/selectors/ButtonList";
-import { Nav } from "components/selectors/Nav";
+import { Container } from "components/selectors/Container";
 import {
   TbBrandTwitter,
   TbDeviceMobile,
@@ -20,61 +20,214 @@ const socialIcons = {
   youtube: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
 };
 
-export const RenderNavComponent = ({ text = "Nav", navStyle = "regular", icon, ...props }) => {
-  const root = {
-    ...(props.root || {}),
-  };
-
-  const mobile = {
-    ...(props.mobile || {}),
-    flexDirection: "flex-row",
-    alignItems: "items-center",
-  };
-
-  return (
-    <RenderToolComponent
-      display={<ToolboxItemDisplay icon={icon || TbDeviceMobile} label={text} />}
-      iconPosition={props.iconPosition || "left"}
-      navItems={props.navItems || [
-        {
-          text: "Home",
-        },
-        {
-          text: "About",
-        },
-        {
-          text: "Contact",
-        },
-      ]}
-      navStyle={navStyle}
-      root={root}
-      mobile={mobile}
-      element={Nav}
-      custom={props.custom}
-      enableMobileNav={props.enableMobileNav}
-    />
-  );
-};
-
 export const NavToolbox = {
   title: "Navigation",
   content: [
-    <RenderNavComponent
-      text="Mobile Nav"
-      key="1"
-      custom={{ displayName: "Mobile Nav" }}
-      navStyle="regular"
-      icon={TbDeviceMobile}
+    <RenderToolComponent
+      key="mobile-menu"
+      display={<ToolboxItemDisplay icon={TbDeviceMobile} label="Mobile Menu" />}
+      element={ButtonList}
+      custom={{ displayName: "Mobile Menu" }}
       root={{
-        background: "bg-white",
-        border: "border",
-        borderColor: "border-gray-200",
-        radius: "style:borderRadius",
-        px: "px-4",
-        py: "py-2"
       }}
-      enableMobileNav={true}
-    />,
+      mobile={{
+        display: "flex",
+        justifyContent: "justify-between",
+        alignItems: "items-center",
+        gap: "gap-2"
+      }}
+    >
+      <Element
+        is={Button}
+        custom={{ displayName: "Home" }}
+        text="Home"
+        url="#"
+        root={{
+        }}
+        mobile={{
+          p: "p-[var(--ph-button-padding)]",
+          display: "hidden"
+        }}
+        desktop={{
+          display: "block"
+        }}
+      />
+
+      <Element
+        is={Button}
+        custom={{ displayName: "About Us" }}
+        text="About Us"
+        url="#"
+        root={{
+        }}
+        mobile={{
+          p: "p-[var(--ph-button-padding)]",
+          display: "hidden"
+        }}
+        desktop={{
+          display: "block"
+        }}
+      />
+
+      <Element
+        is={Button}
+        custom={{ displayName: "Contact us" }}
+        text="Contact us"
+        url="#"
+        root={{
+        }}
+        mobile={{
+          p: "p-[var(--ph-button-padding)]",
+          display: "hidden"
+        }}
+        desktop={{
+          display: "block"
+        }}
+      />
+
+      {/* Hamburger Button */}
+      <Button
+        text="Hamburger Button"
+        url=""
+        clickType="click"
+        clickDirection="show"
+        clickValue="mobile-menu"
+        icon={`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>`}
+        iconOnly={true}
+        root={{
+
+          border: "border-0"
+        }}
+        mobile={{
+          display: "block",
+          p: "p-2"
+        }}
+        desktop={{
+          display: "hidden"
+        }}
+      />
+
+      {/* Mobile Navigation Overlay */}
+      <Element
+        canvas
+        id={`mobile-menu`}
+        is={Container}
+        custom={{ displayName: "Mobile Menu Overlay" }}
+        canDelete={false}
+        canEditName={false}
+        root={{
+          background: "bg-black",
+          bgOpacity: "bg-opacity-50",
+        }}
+        mobile={{
+          display: "hidden",
+          position: "absolute",
+          height: "h-full",
+          width: "w-full",
+          top: "top-0",
+          left: "left-0",
+          right: "right-0",
+          bottom: "bottom-0",
+          zIndex: "z-50"
+        }}
+        desktop={{
+          display: "hidden",
+        }}
+        clickType="click"
+        clickDirection="close"
+        clickValue={`mobile-menu`}
+      >
+        <Element
+          canvas
+          id={`mobile-menu-panel`}
+          is={Container}
+          custom={{ displayName: "Mobile Menu Panel" }}
+          canDelete={false}
+          canEditName={false}
+          root={{
+            background: "bg-white",
+            shadow: "shadow-xl",
+          }}
+          mobile={{
+            position: "absolute",
+            height: "h-full",
+            width: "w-80",
+            maxWidth: "max-w-sm",
+            transform: "transform"
+          }}
+          clickType="click"
+          clickDirection="stop"
+        >
+
+
+          {/* Mobile Nav Header */}
+          <Element
+            canvas
+            id={`mobile-menu-header`}
+            is={Container}
+            custom={{ displayName: "Mobile Nav Header" }}
+            canDelete={false}
+            canEditName={false}
+            root={{
+              borderBottom: "border-b"
+            }}
+            mobile={{
+              display: "flex",
+              alignItems: "items-center",
+              justifyContent: "justify-between",
+              p: "p-4"
+            }}
+          >
+
+
+            <Element
+              canvas
+              id={`mobile-menu-close`}
+              is={Button}
+              custom={{ displayName: "Mobile Nav Close" }}
+              canDelete={false}
+              canEditName={false}
+              clickType="click"
+              clickDirection="hide"
+              clickValue={`mobile-menu`}
+              text="×"
+              url=""
+              root={{
+
+                border: "border-0"
+              }}
+              mobile={{
+                p: "p-2",
+                fontSize: "text-xl",
+                fontWeight: "font-bold"
+              }}
+            />
+          </Element>
+
+
+
+          {/* Mobile Navigation Items - Uses ButtonList */}
+          <Element
+            canvas
+            id={`mobile-menu-items`}
+            is={ButtonList}
+            custom={{ displayName: "Mobile Navigation" }}
+            canDelete={false}
+            canEditName={false}
+            root={{
+
+              border: "border-0",
+            }}
+            mobile={{
+              display: "flex",
+              flexDirection: "flex-col",
+              gap: "gap-2",
+              width: "w-full",
+            }}
+          />
+        </Element>
+      </Element>
+    </RenderToolComponent>,
 
     <RenderToolComponent
       key="social-nav"
@@ -83,7 +236,7 @@ export const NavToolbox = {
       custom={{ displayName: "Social Nav" }}
       root={{
         background: "bg-gray-50",
-        radius: "style:borderRadius",
+        radius: "rounded-lg",
         px: "px-4",
         py: "py-2"
       }}
@@ -110,12 +263,12 @@ export const NavToolbox = {
         root={{
           background: "bg-blue-500",
           color: "text-white",
-          radius: "style:borderRadius",
-          fontFamily: "style:headingFontFamily",
-          shadow: "style:shadowStyle"
+          radius: "rounded-lg",
+
+          shadow: "shadow-lg"
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -128,12 +281,12 @@ export const NavToolbox = {
         root={{
           background: "bg-blue-600",
           color: "text-white",
-          radius: "style:borderRadius",
-          fontFamily: "style:headingFontFamily",
-          shadow: "style:shadowStyle"
+          radius: "rounded-lg",
+
+          shadow: "shadow-lg"
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -146,12 +299,12 @@ export const NavToolbox = {
         root={{
           background: "bg-gradient-to-r from-purple-500 to-pink-500",
           color: "text-white",
-          radius: "style:borderRadius",
-          fontFamily: "style:headingFontFamily",
-          shadow: "style:shadowStyle"
+          radius: "rounded-lg",
+
+          shadow: "shadow-lg"
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -164,12 +317,12 @@ export const NavToolbox = {
         root={{
           background: "bg-blue-700",
           color: "text-white",
-          radius: "style:borderRadius",
-          fontFamily: "style:headingFontFamily",
-          shadow: "style:shadowStyle"
+          radius: "rounded-lg",
+
+          shadow: "shadow-lg"
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
     </RenderToolComponent>,
@@ -180,7 +333,7 @@ export const NavToolbox = {
       custom={{ displayName: "Plain Nav" }}
       root={{
         background: "bg-gray-100",
-        radius: "style:borderRadius",
+        radius: "rounded-lg",
         px: "px-3",
         py: "py-2"
       }}
@@ -203,12 +356,12 @@ export const NavToolbox = {
         text="Home"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-600",
-          fontFamily: "style:headingFontFamily"
+
+
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -217,12 +370,12 @@ export const NavToolbox = {
         text="About"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-600",
-          fontFamily: "style:headingFontFamily"
+
+
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -231,12 +384,12 @@ export const NavToolbox = {
         text="Services"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-600",
-          fontFamily: "style:headingFontFamily"
+
+
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -245,12 +398,12 @@ export const NavToolbox = {
         text="Contact"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-600",
-          fontFamily: "style:headingFontFamily"
+
+
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
     </RenderToolComponent>,
@@ -260,7 +413,7 @@ export const NavToolbox = {
       element={ButtonList}
       custom={{ displayName: "Minimal Nav" }}
       root={{
-        background: "bg-transparent",
+
         px: "px-2",
         py: "py-1"
       }}
@@ -283,12 +436,12 @@ export const NavToolbox = {
         text="Home"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-700",
-          fontFamily: "style:headingFontFamily"
+
+
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -297,12 +450,12 @@ export const NavToolbox = {
         text="About"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-700",
-          fontFamily: "style:headingFontFamily"
+
+
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -311,12 +464,12 @@ export const NavToolbox = {
         text="Services"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-700",
-          fontFamily: "style:headingFontFamily"
+
+
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -325,12 +478,12 @@ export const NavToolbox = {
         text="Contact"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-700",
-          fontFamily: "style:headingFontFamily"
+
+
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
     </RenderToolComponent>,
@@ -345,7 +498,7 @@ export const NavToolbox = {
         px: "px-2",
         py: "py-1"
         ,
-        shadow: "style:shadowStyle"
+        shadow: "shadow-lg"
       }}
       mobile={{
         display: "flex",
@@ -366,13 +519,13 @@ export const NavToolbox = {
         text="Home"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-700",
+
+
           radius: "rounded-full",
-          fontFamily: "style:headingFontFamily"
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -381,13 +534,13 @@ export const NavToolbox = {
         text="About"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-700",
+
+
           radius: "rounded-full",
-          fontFamily: "style:headingFontFamily"
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
       <Element
@@ -396,13 +549,13 @@ export const NavToolbox = {
         text="Contact"
         url="#"
         root={{
-          background: "bg-transparent",
-          color: "text-gray-700",
+
+
           radius: "rounded-full",
-          fontFamily: "style:headingFontFamily"
+
         }}
         mobile={{
-          p: "style:buttonPadding"
+          p: "p-[var(--ph-button-padding)]",
         }}
       />
     </RenderToolComponent>,

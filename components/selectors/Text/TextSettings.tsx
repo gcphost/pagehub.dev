@@ -178,7 +178,7 @@ export const TextSettings = () => {
           propKey="text"
           propType="component"
           rows={4}
-          type="quill"
+          type="textarea"
           labelHide={true}
           placeholder="Enter text"
         />

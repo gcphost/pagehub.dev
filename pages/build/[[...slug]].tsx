@@ -40,7 +40,6 @@ import { ButtonList } from "../../components/selectors/ButtonList";
 import { Footer } from "../../components/selectors/Footer";
 import { Header } from "../../components/selectors/Header";
 import { Image } from "../../components/selectors/Image";
-import { Nav, OnlyNavItems } from "../../components/selectors/Nav";
 import { Video } from "../../components/selectors/Video";
 import { useSetTenant } from "../../utils/tenantStore";
 import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
@@ -92,8 +91,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
     FormElement,
     Button,
     ButtonList,
-    OnlyNavItems,
-    Nav,
     Video,
     Audio,
     Image,
@@ -164,12 +161,12 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                   pallet={DEFAULT_PALETTE}
                   styleGuide={DEFAULT_STYLE_GUIDE}
                   root={{
-                    background: "bg-palette:Background",
-                    color: "text-palette:Text",
-                    fontFamily: "style:bodyFontFamily",
+                    background: "bg-[var(--ph-background)]",
+                    color: "text-[var(--ph-text)]",
+
                   }}
                   mobile={{
-                    fontWeight: "style:bodyFont",
+                    fontWeight: "font-[var(--ph-body-font)]",
                   }}
                   desktop={{}}
                 >
@@ -187,8 +184,8 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                       canDelete={true}
                       canEditName={true}
                       root={{
-                        background: "bg-palette:Background",
-                        color: "text-palette:Text",
+                        background: "bg-[var(--ph-background)]",
+                        color: "text-[var(--ph-text)]",
                       }}
                       mobile={{
                         display: "flex",
@@ -196,11 +193,11 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         justifyContent: "justify-between",
                         alignItems: "items-center",
                         width: "w-full",
-                        p: "style:containerSpacing",
                         gap: "gap-4",
+                        p: "p-[var(--ph-container-padding)]",
                       }}
                       desktop={{
-                        px: "px-12",
+
                       }}
                       custom={{ displayName: "Header Content" }}
                     >
@@ -209,36 +206,20 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         canDelete={true}
                         canEditName={true}
                         root={{
-                          color: "text-palette:Primary",
-                          fontFamily: "style:headingFontFamily",
+                          color: "text-[var(--ph-primary)]",
+
                         }}
                         mobile={{
                           fontSize: "text-2xl",
-                          fontWeight: "style:headingFont",
+                          fontWeight: "font-[var(--ph-heading-font)]",
                         }}
                         desktop={{}}
                         custom={{ displayName: "Logo" }}
                         text="<p>{{company.name}}</p>"
                       />
-                      <Element
-                        is={Nav}
-                        canDelete={true}
-                        canEditName={true}
-                        root={{
-                        }}
-                        mobile={{
-                          fontSize: "text-sm",
-                          gap: "gap-6",
-                        }}
-                        desktop={{}}
-                        custom={{ displayName: "Navigation" }}
-                        enableMobileNav={true}
-                        navItems={[
-                          { text: "About", url: "#" },
-                          { text: "Services", url: "#" },
-                          { text: "Contact", url: "#" },
-                        ]}
-                      />
+
+                      [menu..]
+
                     </Element>
                   </Element>
 
@@ -251,8 +232,8 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                     canEditName={true}
                     isHomePage={true}
                     root={{
-                      background: "bg-palette:Background",
-                      color: "text-palette:Text",
+                      background: "bg-[var(--ph-background)]",
+                      color: "text-[var(--ph-text)]",
                     }}
                     mobile={{
                       display: "flex",
@@ -260,7 +241,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                       justifyContent: "justify-center",
                       alignItems: "items-center",
                       width: "w-full",
-                      gap: "style:sectionGap",
+                      gap: "gap-[var(--ph-section-gap)]",
                     }}
                     desktop={{}}
                     custom={{ displayName: "Home Page" }}
@@ -294,12 +275,13 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           display: "flex",
                           flexDirection: "flex-col",
                           alignItems: "items-center",
-                          gap: "style:sectionGap",
-                          maxWidth: "style:contentWidth",
-                          px: "px-6",
-                          py: "py-12",
+                          gap: "gap-[var(--ph-section-gap)]",
+                          maxWidth: "max-w-[var(--ph-content-width)]",
+                          p: "p-[var(--ph-container-padding)]",
                         }}
-                        desktop={{ marginTop: "-mt-28", }}
+                        desktop={{
+
+                        }}
                         custom={{ displayName: "Hero Content" }}
                       >
                         <Element
@@ -312,7 +294,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             display: "flex",
                             flexDirection: "flex-col",
                             alignItems: "items-center",
-                            gap: "style:containerGap",
+                            gap: "gap-[var(--ph-container-gap)]",
                           }}
                           desktop={{}}
                           custom={{ displayName: "Hero Text" }}
@@ -322,11 +304,11 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             canDelete={true}
                             canEditName={true}
                             root={{
-                              fontFamily: "style:headingFontFamily",
+
                             }}
                             mobile={{
                               fontSize: "text-5xl",
-                              fontWeight: "style:headingFont",
+                              fontWeight: "font-[var(--ph-heading-font)]",
                               textAlign: "text-center",
                             }}
                             desktop={{
@@ -362,7 +344,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           }}
                           mobile={{
                             display: "flex",
-                            gap: "style:containerGap",
+                            gap: "gap-[var(--ph-container-gap)]",
                             flexDirection: "flex-col",
                             width: "w-full",
                             justifyContent: "justify-center",
@@ -377,15 +359,15 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             canDelete={true}
                             canEditName={true}
                             root={{
-                              background: "bg-palette:Primary",
+                              background: "bg-[var(--ph-primary)]",
                               color: "text-white",
-                              radius: "style:borderRadius",
-                              shadow: "style:shadowStyle",
-                              fontFamily: "style:headingFontFamily",
+                              radius: "rounded-[var(--ph-border-radius)]",
+                              shadow: "shadow-[var(--ph-shadow-style)]",
+
                             }}
                             mobile={{
-                              p: "style:buttonPadding",
-                              fontWeight: "style:headingFont",
+                              p: "p-[var(--ph-button-padding)]",
+                              fontWeight: "font-[var(--ph-heading-font)]",
                               textAlign: "text-center",
                               display: "flex",
                               justifyContent: "justify-center",
@@ -402,15 +384,15 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             canEditName={true}
                             root={{
                               background: "bg-transparent",
-                              color: "text-palette:Primary",
-                              radius: "style:borderRadius",
+                              color: "text-[var(--ph-primary)]",
+                              radius: "rounded-[var(--ph-border-radius)]",
                               border: "border",
-                              borderColor: "border-palette:Primary",
-                              fontFamily: "style:headingFontFamily",
+                              borderColor: "border-[var(--ph-primary)]",
+
                             }}
                             mobile={{
-                              p: "style:buttonPadding",
-                              fontWeight: "style:headingFont",
+                              p: "p-[var(--ph-button-padding)]",
+                              fontWeight: "font-[var(--ph-heading-font)]",
                               textAlign: "text-center",
                               display: "flex",
                               justifyContent: "justify-center",
@@ -441,7 +423,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                       canDelete={true}
                       canEditName={true}
                       root={{
-                        background: "bg-palette:Alternate Background",
+                        background: "bg-[var(--ph-alternate-background)]",
                       }}
                       mobile={{
                         display: "flex",
@@ -449,8 +431,8 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         justifyContent: "justify-center",
                         alignItems: "items-center",
                         width: "w-full",
-                        p: "style:containerSpacing",
-                        gap: "style:containerGap",
+                        p: "p-[var(--ph-container-padding)]",
+                        gap: "gap-[var(--ph-container-gap)]",
                       }}
                       desktop={{}}
                       custom={{ displayName: "Footer Content" }}
@@ -460,7 +442,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         canDelete={true}
                         canEditName={true}
                         root={{
-                          color: "text-palette:Alternate Text",
+                          color: "text-[var(--ph-alternate-text)]",
                         }}
                         mobile={{
                           fontSize: "text-sm",

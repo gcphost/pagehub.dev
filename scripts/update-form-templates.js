@@ -124,7 +124,7 @@ if (contactTemplate) {
     shadow: 'style:shadowStyle'
   };
   formContainer.props.mobile = {
-    p: 'style:containerSpacing'
+    p: 'style:containerPadding'
   };
 
   // Replace form fields with Form component

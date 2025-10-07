@@ -47,7 +47,7 @@
                         "fontSize": "text-4xl",
                         "fontWeight": "font-bold",
                         "marginBottom": "mb-4",
-                        "fontFamily": "style:headingFontFamily"
+                        "fontFamily": "Open Sans, sans-serif"
                       },
                       "custom": {
                         "displayName": "Title"
@@ -399,7 +399,7 @@
                         "fontSize": "text-4xl",
                         "fontWeight": "font-bold",
                         "marginBottom": "mb-4",
-                        "fontFamily": "style:headingFontFamily"
+                        "fontFamily": "Open Sans, sans-serif"
                       },
                       "custom": {
                         "displayName": "Title"

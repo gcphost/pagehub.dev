@@ -182,10 +182,9 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
 
       {direction === "horizontal" && (
         <div className="h-6 w-6 flex items-center justify-center">
-          <Tooltip content="Duplicate container">
+          <Tooltip content="Duplicate">
             <DuplicateNodeButton
               className="text-white hover:text-gray-200"
-              title="Duplicate container"
             />
           </Tooltip>
         </div>

@@ -53,11 +53,14 @@ interface ButtonListProps extends BaseSelectorProps {
 const defaultProps: ButtonListProps = {
   className: [],
   root: {},
-  mobile: {},
+  mobile: {
+    flexDirection: "flex-col",
+  },
   tablet: {},
-  desktop: {},
+  desktop: {
+    flexDirection: "flex-row",
+  },
   buttons: [],
-  flexDirection: "flex-row",
   alignItems: "items-center",
   justifyContent: "justify-start",
   gap: "gap-2",
@@ -129,12 +132,41 @@ export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProp
 
   const { children } = props;
 
+  // Check if there are non-hamburger Button children
+  let hasActualButtons = false;
+  if (enabled) {
+    try {
+      const node = query.node(id).get();
+      const childButtons = node.data.nodes || [];
+
+      hasActualButtons = childButtons.some((childId) => {
+        try {
+          const childNode = query.node(childId).get();
+          // Only count Button components that aren't hamburger menus
+          if (childNode.data.name === 'Button') {
+            const isHamburger = childNode.data.props?.clickValue?.includes('mobile-menu');
+            return !isHamburger;
+          }
+          return false;
+        } catch (e) {
+          return false;
+        }
+      });
+    } catch (e) {
+      hasActualButtons = !!children;
+    }
+  } else {
+    hasActualButtons = !!children;
+  }
+
   const content = (
     <>
       {enabled && isMounted && (
         <InlineToolsRenderer key={`tools-${id}`} craftComponent={ButtonList} props={props} />
       )}
-      {children || (
+      {hasActualButtons || !enabled ? (
+        children
+      ) : (
         enabled && (
           <div className="w-auto flex justify-center items-center p-4">
             <div data-empty-state={true} className="text-3xl">

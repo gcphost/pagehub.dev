@@ -1,3 +1,4 @@
+import { useTiptapContext } from "components/editor/TiptapContext";
 import { ToolbarItem } from "components/editor/Toolbar";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
@@ -7,6 +8,16 @@ import { AiOutlineAlignRight } from "react-icons/ai";
 import { TbAlignCenter, TbAlignLeft } from "react-icons/tb";
 
 export function TextSettingsTopNodeTool() {
+  // Get the Tiptap editor from context
+  const { editor: tiptapEditor } = useTiptapContext();
+
+  // Debug logging
+  console.log('TextSettingsTopNodeTool - tiptapEditor:', tiptapEditor);
+  console.log('TextSettingsTopNodeTool - editor type:', typeof tiptapEditor);
+
+
+  console.log(tiptapEditor);
+
   return (
     <NodeToolWrapper
       className="bg-primary-500 inside-shadow text-black rounded-md px-3 m-1"
@@ -55,6 +66,56 @@ export function TextSettingsTopNodeTool() {
         labelHide={true}
         wrap="control"
       />
+
+      {/* Tiptap Formatting Buttons */}
+      {tiptapEditor && (
+        <>
+          <button
+            onClick={() => tiptapEditor.chain().focus().toggleBold().run()}
+            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('bold') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+              }`}
+            title="Bold"
+          >
+            <strong>B</strong>
+          </button>
+
+          <button
+            onClick={() => tiptapEditor.chain().focus().toggleItalic().run()}
+            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('italic') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+              }`}
+            title="Italic"
+          >
+            <em>I</em>
+          </button>
+
+          <button
+            onClick={() => tiptapEditor.chain().focus().toggleUnderline().run()}
+            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('underline') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+              }`}
+            title="Underline"
+          >
+            <u>U</u>
+          </button>
+
+          <button
+            onClick={() => tiptapEditor.chain().focus().toggleStrike().run()}
+            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('strike') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+              }`}
+            title="Strikethrough"
+          >
+            <s>S</s>
+          </button>
+
+          <button
+            onClick={() => tiptapEditor.chain().focus().toggleCode().run()}
+            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('code') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+              }`}
+            title="Code"
+          >
+            <code>&lt;/&gt;</code>
+          </button>
+        </>
+      )}
 
       <ToolbarItem
         propKey="textAlign"

@@ -49,7 +49,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
   // Style Guide State
   const [borderRadius, setBorderRadius] = useState(DEFAULT_STYLE_GUIDE.borderRadius);
   const [buttonPadding, setButtonPadding] = useState(DEFAULT_STYLE_GUIDE.buttonPadding);
-  const [containerSpacing, setContainerSpacing] = useState(DEFAULT_STYLE_GUIDE.containerSpacing);
+  const [containerPadding, setContainerPadding] = useState(DEFAULT_STYLE_GUIDE.containerPadding);
   const [sectionGap, setSectionGap] = useState(DEFAULT_STYLE_GUIDE.sectionGap);
   const [containerGap, setContainerGap] = useState(DEFAULT_STYLE_GUIDE.containerGap);
   const [contentWidth, setContentWidth] = useState(DEFAULT_STYLE_GUIDE.contentWidth);
@@ -97,8 +97,29 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
       })
       .join("&");
 
+    // Add the current style guide font families with proper weights
+    const styleGuideFonts = [];
+    if (headingFontFamily && !headingFontFamily.startsWith("style:")) {
+      // Convert Tailwind font weight classes to numeric values
+      const headingWeight = headingFont === "font-bold" ? "700" :
+        headingFont === "font-semibold" ? "600" :
+          headingFont === "font-medium" ? "500" :
+            headingFont === "font-normal" ? "400" : "400";
+      styleGuideFonts.push(`family=${headingFontFamily.replace(/ +/g, "+")}:wght@${headingWeight}`);
+    }
+    if (bodyFontFamily && !bodyFontFamily.startsWith("style:")) {
+      // Convert Tailwind font weight classes to numeric values
+      const bodyWeight = bodyFont === "font-bold" ? "700" :
+        bodyFont === "font-semibold" ? "600" :
+          bodyFont === "font-medium" ? "500" :
+            bodyFont === "font-normal" ? "400" : "400";
+      styleGuideFonts.push(`family=${bodyFontFamily.replace(/ +/g, "+")}:wght@${bodyWeight}`);
+    }
+
+    const allFamilies = [...families.split("&"), ...styleGuideFonts].join("&");
+
     const sheetrefs = getStyleSheets();
-    let href = `https://fonts.googleapis.com/css2?${families}`;
+    let href = `https://fonts.googleapis.com/css2?${allFamilies}`;
     href += "&display=swap";
 
     if (!sheetrefs.includes(href)) {
@@ -135,7 +156,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         const styleGuide = rootNodeData.styleGuide || {};
         setBorderRadius(styleGuide.borderRadius || DEFAULT_STYLE_GUIDE.borderRadius);
         setButtonPadding(styleGuide.buttonPadding || DEFAULT_STYLE_GUIDE.buttonPadding);
-        setContainerSpacing(styleGuide.containerSpacing || DEFAULT_STYLE_GUIDE.containerSpacing);
+        setContainerPadding(styleGuide.containerPadding || DEFAULT_STYLE_GUIDE.containerPadding);
         setSectionGap(styleGuide.sectionGap || DEFAULT_STYLE_GUIDE.sectionGap);
         setContainerGap(styleGuide.containerGap || DEFAULT_STYLE_GUIDE.containerGap);
         setContentWidth(styleGuide.contentWidth || DEFAULT_STYLE_GUIDE.contentWidth);
@@ -190,7 +211,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
           const styleGuide = rootNodeData.styleGuide || {};
           setBorderRadius(styleGuide.borderRadius || DEFAULT_STYLE_GUIDE.borderRadius);
           setButtonPadding(styleGuide.buttonPadding || DEFAULT_STYLE_GUIDE.buttonPadding);
-          setContainerSpacing(styleGuide.containerSpacing || DEFAULT_STYLE_GUIDE.containerSpacing);
+          setContainerPadding(styleGuide.containerPadding || DEFAULT_STYLE_GUIDE.containerPadding);
           setSectionGap(styleGuide.sectionGap || DEFAULT_STYLE_GUIDE.sectionGap);
           setContainerGap(styleGuide.containerGap || DEFAULT_STYLE_GUIDE.containerGap);
           setContentWidth(styleGuide.contentWidth || DEFAULT_STYLE_GUIDE.contentWidth);
@@ -243,7 +264,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
             styleGuide: {
               borderRadius,
               buttonPadding,
-              containerSpacing,
+              containerPadding,
               sectionGap,
               containerGap,
               contentWidth,
@@ -291,7 +312,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         clearTimeout(saveTimeoutRef.current);
       }
     };
-  }, [isOpen, pallets, borderRadius, buttonPadding, containerSpacing, sectionGap, containerGap, contentWidth, headingFont, headingFontFamily, bodyFont, bodyFontFamily, shadowStyle, inputBorderWidth, inputBorderColor, inputBorderRadius, inputPadding, inputBgColor, inputTextColor, inputPlaceholderColor, inputFocusRing, inputFocusRingColor, linkColor, linkHoverColor, linkUnderline, linkUnderlineOffset]);
+  }, [isOpen, pallets, borderRadius, buttonPadding, containerPadding, sectionGap, containerGap, contentWidth, headingFont, headingFontFamily, bodyFont, bodyFontFamily, shadowStyle, inputBorderWidth, inputBorderColor, inputBorderRadius, inputPadding, inputBgColor, inputTextColor, inputPlaceholderColor, inputFocusRing, inputFocusRingColor, linkColor, linkHoverColor, linkUnderline, linkUnderlineOffset]);
 
   // Dragging handlers
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -744,33 +765,35 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
             <CollapsibleSection title="Spacing & Layout" section="spacing">
               <div>
                 <label className="block text-xs font-medium text-gray-300 mb-1">
-                  Button Padding
+                  Button Padding (x y)
                 </label>
                 <select
                   value={buttonPadding}
                   onChange={(e) => setButtonPadding(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="px-3 py-1">Small</option>
-                  <option value="px-4 py-2">Medium</option>
-                  <option value="px-6 py-3">Large</option>
-                  <option value="px-8 py-4">XL</option>
+                  <option value="0.75rem 0.25rem">Small</option>
+                  <option value="1rem 0.5rem">Medium</option>
+                  <option value="1.5rem 0.75rem">Large</option>
+                  <option value="2rem 1rem">XL</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-xs font-medium text-gray-300 mb-1">
-                  Container Padding
+                  Container Padding (x y)
                 </label>
                 <select
-                  value={containerSpacing}
-                  onChange={(e) => setContainerSpacing(e.target.value)}
+                  value={containerPadding}
+                  onChange={(e) => setContainerPadding(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="p-4">Small</option>
-                  <option value="p-6">Medium</option>
-                  <option value="p-8">Large</option>
-                  <option value="p-12">XL</option>
+                  <option value="1rem 1rem">Small (1rem)</option>
+                  <option value="1.5rem 1.5rem">Medium (1.5rem)</option>
+                  <option value="2rem 2rem">Large (2rem)</option>
+                  <option value="3rem 3rem">XL (3rem)</option>
+                  <option value="2rem 1rem">Wide (2rem x 1rem y)</option>
+                  <option value="1rem 2rem">Tall (1rem x 2rem y)</option>
                 </select>
               </div>
 
@@ -783,11 +806,11 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
                   onChange={(e) => setSectionGap(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="gap-8">Small</option>
-                  <option value="gap-12">Medium</option>
-                  <option value="gap-16">Large</option>
-                  <option value="gap-24">XL</option>
-                  <option value="gap-32">2XL</option>
+                  <option value="2rem">Small (2rem)</option>
+                  <option value="3rem">Medium (3rem)</option>
+                  <option value="4rem">Large (4rem)</option>
+                  <option value="6rem">XL (6rem)</option>
+                  <option value="8rem">2XL (8rem)</option>
                 </select>
               </div>
 
@@ -800,11 +823,11 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
                   onChange={(e) => setContainerGap(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="gap-2">XS</option>
-                  <option value="gap-4">Small</option>
-                  <option value="gap-6">Medium</option>
-                  <option value="gap-8">Large</option>
-                  <option value="gap-12">XL</option>
+                  <option value="0.5rem">XS (0.5rem)</option>
+                  <option value="1rem">Small (1rem)</option>
+                  <option value="1.5rem">Medium (1.5rem)</option>
+                  <option value="2rem">Large (2rem)</option>
+                  <option value="3rem">XL (3rem)</option>
                 </select>
               </div>
 
@@ -817,12 +840,12 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
                   onChange={(e) => setContentWidth(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="max-w-3xl">Small (3XL)</option>
-                  <option value="max-w-4xl">Medium (4XL)</option>
-                  <option value="max-w-5xl">Large (5XL)</option>
-                  <option value="max-w-6xl">XL (6XL)</option>
-                  <option value="max-w-7xl">2XL (7XL)</option>
-                  <option value="max-w-full">Full Width</option>
+                  <option value="48rem">Small (48rem)</option>
+                  <option value="56rem">Medium (56rem)</option>
+                  <option value="64rem">Large (64rem)</option>
+                  <option value="72rem">XL (72rem)</option>
+                  <option value="80rem">2XL (80rem)</option>
+                  <option value="100%">Full Width</option>
                 </select>
               </div>
             </CollapsibleSection>
@@ -943,10 +966,10 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
                   onChange={(e) => setInputPadding(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="px-2 py-1">Small</option>
-                  <option value="px-3 py-2">Medium</option>
-                  <option value="px-4 py-2">Large</option>
-                  <option value="px-4 py-3">XL</option>
+                  <option value="0.5rem 0.25rem">Small</option>
+                  <option value="0.75rem 0.5rem">Medium</option>
+                  <option value="1rem 0.5rem">Large</option>
+                  <option value="1rem 0.75rem">XL</option>
                 </select>
               </div>
 
@@ -959,10 +982,10 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
                   onChange={(e) => setInputBorderWidth(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="border-0">None</option>
-                  <option value="border">1px</option>
-                  <option value="border-2">2px</option>
-                  <option value="border-4">4px</option>
+                  <option value="0">None</option>
+                  <option value="1px">1px</option>
+                  <option value="2px">2px</option>
+                  <option value="4px">4px</option>
                 </select>
               </div>
 
@@ -992,13 +1015,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
                   onChange={(e) => setInputBorderRadius(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="rounded-none">None</option>
-                  <option value="rounded-sm">Small</option>
-                  <option value="rounded">Default</option>
-                  <option value="rounded-md">Medium</option>
-                  <option value="rounded-lg">Large</option>
-                  <option value="rounded-xl">XL</option>
-                  <option value="rounded-full">Full</option>
+                  <option value="0">None</option>
+                  <option value="0.125rem">Small</option>
+                  <option value="0.25rem">Default</option>
+                  <option value="0.375rem">Medium</option>
+                  <option value="0.5rem">Large</option>
+                  <option value="0.75rem">XL</option>
+                  <option value="9999px">Full</option>
                 </select>
               </div>
 
@@ -1062,11 +1085,11 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
                   onChange={(e) => setInputFocusRing(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="ring-0">None</option>
-                  <option value="ring-1">1px</option>
-                  <option value="ring-2">2px</option>
-                  <option value="ring-4">4px</option>
-                  <option value="ring">3px (Default)</option>
+                  <option value="0">None</option>
+                  <option value="1px">1px</option>
+                  <option value="2px">2px</option>
+                  <option value="3px">3px (Default)</option>
+                  <option value="4px">4px</option>
                 </select>
               </div>
 

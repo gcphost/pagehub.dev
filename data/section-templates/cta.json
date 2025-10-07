@@ -11,7 +11,7 @@
           "canDelete": true,
           "canEditName": true,
           "root": {
-            "background": "bg-palette:Primary"
+            "background": "bg-[var(--ph-primary)]"
           },
           "mobile": {
             "display": "flex",
@@ -36,10 +36,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "style:contentWidth",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "style:containerGap"
+                "gap": "gap-6"
               },
               "desktop": {},
               "custom": {
@@ -53,11 +53,11 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "style:headingFontFamily"
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
                     "fontSize": "text-4xl",
-                    "fontWeight": "style:headingFont",
+                    "fontWeight": "font-bold",
                     "textAlign": "text-center",
                     "color": "text-white"
                   },
@@ -74,11 +74,11 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "style:headingFontFamily"
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
                     "fontSize": "text-lg",
-                    "fontWeight": "style:bodyFont",
+                    "fontWeight": "font-normal",
                     "textAlign": "text-center",
                     "maxWidth": "max-w-2xl",
                     "color": "text-white"
@@ -97,15 +97,15 @@
                   "canEditName": true,
                   "root": {
                     "background": "bg-white",
-                    "color": "text-palette:Primary",
-                    "radius": "style:borderRadius",
-                    "shadow": "style:shadowStyle",
-                    "fontFamily": "style:headingFontFamily"
+                    "color": "text-[var(--ph-primary)]",
+                    "radius": "rounded-lg",
+                    "shadow": "shadow-lg",
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
-                    "p": "style:buttonPadding",
+                    "p": "px-6 py-3",
                     "fontSize": "text-lg",
-                    "fontWeight": "style:headingFont",
+                    "fontWeight": "font-bold",
                     "gap": "gap-4"
                   },
                   "desktop": {},
@@ -156,10 +156,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "style:contentWidth",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "style:containerGap"
+                "gap": "gap-6"
               },
               "desktop": {},
               "custom": {
@@ -173,11 +173,11 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "style:headingFontFamily"
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
                     "fontSize": "text-4xl",
-                    "fontWeight": "style:headingFont",
+                    "fontWeight": "font-bold",
                     "textAlign": "text-center"
                   },
                   "desktop": {},
@@ -193,11 +193,11 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "style:headingFontFamily"
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
                     "fontSize": "text-lg",
-                    "fontWeight": "style:bodyFont",
+                    "fontWeight": "font-normal",
                     "textAlign": "text-center",
                     "maxWidth": "max-w-2xl"
                   },
@@ -214,16 +214,16 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "background": "bg-palette:Primary",
+                    "background": "bg-[var(--ph-primary)]",
                     "color": "text-white",
-                    "radius": "style:borderRadius",
-                    "shadow": "style:shadowStyle",
-                    "fontFamily": "style:headingFontFamily"
+                    "radius": "rounded-lg",
+                    "shadow": "shadow-lg",
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
-                    "p": "style:buttonPadding",
+                    "p": "px-6 py-3",
                     "fontSize": "text-lg",
-                    "fontWeight": "style:headingFont",
+                    "fontWeight": "font-bold",
                     "gap": "gap-4"
                   },
                   "desktop": {},
@@ -275,10 +275,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "style:contentWidth",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "style:containerGap"
+                "gap": "gap-6"
               },
               "desktop": {},
               "custom": {
@@ -292,11 +292,11 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "style:headingFontFamily"
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
                     "fontSize": "text-4xl",
-                    "fontWeight": "style:headingFont",
+                    "fontWeight": "font-bold",
                     "textAlign": "text-center"
                   },
                   "desktop": {
@@ -316,7 +316,7 @@
                   "root": {},
                   "mobile": {
                     "fontSize": "text-lg",
-                    "fontWeight": "style:bodyFont",
+                    "fontWeight": "font-normal",
                     "textAlign": "text-center"
                   },
                   "desktop": {
@@ -335,15 +335,15 @@
                   "canEditName": true,
                   "root": {
                     "background": "bg-white",
-                    "color": "text-palette:Primary",
+                    "color": "text-[var(--ph-primary)]",
                     "radius": "rounded-full",
-                    "shadow": "style:shadowStyle",
-                    "fontFamily": "style:headingFontFamily"
+                    "shadow": "shadow-lg",
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
-                    "p": "style:buttonPadding",
+                    "p": "px-6 py-3",
                     "fontSize": "text-lg",
-                    "fontWeight": "style:headingFont",
+                    "fontWeight": "font-bold",
                     "gap": "gap-4"
                   },
                   "desktop": {},
@@ -376,8 +376,8 @@
             "justifyContent": "justify-between",
             "alignItems": "items-center",
             "width": "w-full",
-            "gap": "style:containerGap",
-            "p": "style:containerSpacing"
+            "gap": "gap-6",
+            "p": "p-8"
           },
           "desktop": {
             "flexDirection": "flex-row",
@@ -398,9 +398,9 @@
               "mobile": {
                 "display": "flex",
                 "flexDirection": "flex-col",
-                "gap": "style:containerGap",
+                "gap": "gap-6",
                 "width": "w-full",
-                "maxWidth": "style:contentWidth",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6"
               },
@@ -418,11 +418,11 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "style:headingFontFamily"
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
                     "fontSize": "text-3xl",
-                    "fontWeight": "style:headingFont"
+                    "fontWeight": "font-bold"
                   },
                   "desktop": {
                     "fontSize": "text-4xl"
@@ -441,7 +441,7 @@
                   "root": {},
                   "mobile": {
                     "fontSize": "text-base",
-                    "fontWeight": "style:bodyFont"
+                    "fontWeight": "font-normal"
                   },
                   "desktop": {
                     "fontSize": "text-lg"
@@ -460,16 +460,16 @@
               "canDelete": true,
               "canEditName": true,
               "root": {
-                "background": "bg-palette:Primary",
+                "background": "bg-[var(--ph-primary)]",
                 "color": "text-white",
-                "radius": "style:borderRadius",
-                "shadow": "style:shadowStyle",
-                "fontFamily": "style:headingFontFamily"
+                "radius": "rounded-lg",
+                "shadow": "shadow-lg",
+                "fontFamily": "Open Sans, sans-serif"
               },
               "mobile": {
-                "p": "style:buttonPadding",
+                "p": "px-6 py-3",
                 "fontSize": "text-base",
-                "fontWeight": "style:headingFont",
+                "fontWeight": "font-bold",
                 "gap": "gap-4"
               },
               "desktop": {},

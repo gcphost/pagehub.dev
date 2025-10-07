@@ -25,13 +25,15 @@ export const sectionToolboxItems = [
         mobile={{
           display: "flex",
           justifyContent: "justify-center",
-          flexDirection: "flex-row",
+          flexDirection: "flex-col",
           width: "w-full",
-          gap: "style:containerGap",
+          gap: "gap-6",
           height: "h-auto",
-          p: "style:containerSpacing",
+          p: "p-8",
         }}
-        desktop={{}}
+        desktop={{
+          flexDirection: "flex-row",
+        }}
         custom={{ displayName: "Row" }}
       />,
 
@@ -43,9 +45,9 @@ export const sectionToolboxItems = [
           justifyContent: "justify-center",
           flexDirection: "flex-col",
           width: "w-full",
-          gap: "style:containerGap",
+          gap: "gap-6",
           height: "h-auto",
-          p: "style:containerSpacing",
+          p: "p-8",
         }}
         desktop={{}}
         custom={{ displayName: "Column" }}

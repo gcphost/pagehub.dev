@@ -4,6 +4,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./utils/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    // Safelist patterns for dynamically generated classes with CSS variables
+    { pattern: /^(bg|text|border|ring|from|to|via)-\[var\(--ph-.+\)\]$/ },
+    { pattern: /^(bg|text|border|ring)-\[var\(--ph-.+\)\]$/ },
+  ],
   theme: {
     height: (theme) => ({
       auto: "auto",

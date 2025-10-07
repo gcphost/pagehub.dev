@@ -82,7 +82,7 @@ function processContainerProps(props) {
 
     // Convert padding
     if (props.root.p && (props.root.p === 'p-8' || props.root.p === 'p-6')) {
-      props.root.p = 'style:containerSpacing';
+      props.root.p = 'style:containerPadding';
     }
 
     // Convert px/py
@@ -90,7 +90,7 @@ function processContainerProps(props) {
       const pxVal = parseInt(props.root.px.match(/\d+/)?.[0] || '0');
       const pyVal = parseInt(props.root.py.match(/\d+/)?.[0] || '0');
       if (pxVal >= 6 && pyVal >= 3) {
-        props.root.p = 'style:containerSpacing';
+        props.root.p = 'style:containerPadding';
         delete props.root.px;
         delete props.root.py;
       }
@@ -103,7 +103,7 @@ function processContainerProps(props) {
 
     // Convert padding
     if (mobile.p && (mobile.p === 'p-8' || mobile.p === 'p-6')) {
-      mobile.p = 'style:containerSpacing';
+      mobile.p = 'style:containerPadding';
     }
   }
 

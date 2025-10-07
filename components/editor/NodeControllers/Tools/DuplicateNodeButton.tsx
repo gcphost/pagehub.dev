@@ -6,13 +6,11 @@ import { TbCopy } from "react-icons/tb";
 interface DuplicateNodeButtonProps {
   className?: string;
   iconSize?: number;
-  title?: string;
 }
 
 export const DuplicateNodeButton = ({
   className = "text-white",
   iconSize = 16,
-  title = "Duplicate",
 }: DuplicateNodeButtonProps) => {
   const { id } = useNode();
 
@@ -57,7 +55,6 @@ export const DuplicateNodeButton = ({
     <button
       className={className}
       onClick={handleDuplicate}
-      title={title}
     >
       <TbCopy size={iconSize} />
     </button>

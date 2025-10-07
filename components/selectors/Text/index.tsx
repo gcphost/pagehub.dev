@@ -1,6 +1,18 @@
 import { useEditor, useNode } from "@craftjs/core";
+import Color from '@tiptap/extension-color';
+import FontFamily from '@tiptap/extension-font-family';
+import FontSize from '@tiptap/extension-font-size';
+import Highlight from '@tiptap/extension-highlight';
+import Image from '@tiptap/extension-image';
+import { Link as TiptapLink } from '@tiptap/extension-link';
+import Placeholder from '@tiptap/extension-placeholder';
+import Subscript from '@tiptap/extension-subscript';
+import Superscript from '@tiptap/extension-superscript';
+import TextAlign from '@tiptap/extension-text-align';
+import { TextStyle } from '@tiptap/extension-text-style';
+import { EditorContent, useEditor as useTiptapEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 import { AutoTextSize } from "auto-text-size";
-import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
@@ -9,7 +21,7 @@ import {
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
-import Link from "next/link";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaFont } from "react-icons/fa";
@@ -19,7 +31,10 @@ import { motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
 import { getFontFromComp } from "utils/lib";
 import { applyAnimation, ClassGenerator } from "utils/tailwind";
 
+import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import TextSettingsTopNodeTool from "components/editor/NodeControllers/Tools/TextSettingsTopNodeTool";
+import { TiptapProvider } from "components/editor/TiptapContext";
+import { TiptapToolbar } from "components/editor/Tools/TiptapToolbar";
 import { changeProp } from "components/editor/Viewport/lib";
 import { usePalette } from "utils/PaletteContext";
 import { replaceVariables } from "utils/variables";
@@ -114,34 +129,86 @@ export const Text = (props: Partial<TextProps>) => {
 
   let { text, tagName } = props;
 
-  // Handler for inner span blur - save text changes and exit edit mode
-  const handleTextBlur = (e) => {
-    // Exit edit mode
-    setIsEditing(false);
+  // Replace variables in text (only show raw text when actively editing)
+  const processedText = (!enabled || preview || !isEditing) ? replaceVariables(text, query) : text;
 
-    // Check if element is being deleted - if so, don't save
-    if (e.target.getAttribute('data-deleting') === 'true') {
-      return;
-    }
-
-    // Save the current text value immediately on blur
-    const newText = e.target.innerText;
-    const trimmedNew = newText?.trim();
-    const trimmedOld = text?.replace(/<[^>]*>/g, '').trim();
-
-    // Only save if content has changed
-    if (trimmedNew !== trimmedOld) {
+  // Tiptap editor instance - only create when in edit mode or when enabled
+  const tiptapEditor = useTiptapEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: {}, // Enable headings with default config
+        codeBlock: false,
+        blockquote: {}, // Enable blockquotes with default config
+        horizontalRule: {}, // Enable horizontal rules with default config
+        bulletList: {}, // Enable bullet lists with default config
+        orderedList: {}, // Enable ordered lists with default config
+        listItem: {}, // Enable list items with default config
+      }),
+      Placeholder.configure({
+        placeholder: 'Start typing...',
+      }),
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
+      TextStyle,
+      Color.configure({ types: [TextStyle.name] }),
+      FontFamily.configure({ types: [TextStyle.name] }),
+      FontSize.configure({ types: [TextStyle.name] }),
+      Highlight.configure({ multicolor: true }),
+      Superscript,
+      Subscript,
+      TiptapLink.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          class: 'text-blue-600 underline',
+        },
+      }),
+      Image.configure({
+        HTMLAttributes: {
+          class: 'max-w-full h-auto',
+        },
+      }),
+    ],
+    content: processedText,
+    editable: isEditing,
+    immediatelyRender: false, // Fix SSR hydration issues
+    onUpdate: ({ editor }) => {
       changeProp({
         setProp,
         propKey: "text",
         propType: "component",
-        value: newText,
+        value: editor.getHTML(),
       });
-    }
-  };
+    },
+    onFocus: () => {
+      if (isActive && !isEditing) {
+        setIsEditing(true);
+      }
+    },
+    onBlur: () => {
+      //  setIsEditing(false);
+    },
+    editorProps: {
+      attributes: {
+        class: 'prose prose-sm max-w-none focus:outline-none min-h-[1.5em]',
+      },
+    },
+  }, [enabled, isEditing]); // Only recreate when enabled or editing state changes
 
-  // Replace variables in text (only show raw text when actively editing)
-  const processedText = (!enabled || preview || !isEditing) ? replaceVariables(text, query) : text;
+  // Update content when prop changes
+  useEffect(() => {
+    if (tiptapEditor && tiptapEditor.getHTML() !== processedText) {
+      tiptapEditor.commands.setContent(processedText, { errorOnInvalidContent: false });
+    }
+  }, [processedText, tiptapEditor]);
+
+
+  // Update editable state
+  useEffect(() => {
+    if (tiptapEditor) {
+      tiptapEditor.setEditable(isEditing);
+    }
+  }, [tiptapEditor, isEditing]);
 
 
   const prop: any = {
@@ -161,7 +228,7 @@ export const Text = (props: Partial<TextProps>) => {
     // Resolve page references to actual URLs
     const resolvedUrl = resolvePageRef(props.url, query, router?.asPath);
 
-    tagName = Link as any;
+    tagName = NextLink as any;
     prop.href = resolvedUrl || "#";
     prop.target = props.urlTarget;
     prop.onClick = (e) => {
@@ -174,29 +241,24 @@ export const Text = (props: Partial<TextProps>) => {
     const t = (
       <AutoTextSize
         style={{ margin: "0 auto" }}
-        as={props.url ? Link : "div"}
+        as={props.url ? NextLink : "div"}
         dangerouslySetInnerHTML={{ __html: processedText }}
       />
     ) as any;
     prop.children = t;
-  } else if (text) {
+  } else if (text && !enabled) {
     prop.dangerouslySetInnerHTML = { __html: processedText };
   }
 
   // Add inline tools renderer in edit mode (after hydration)
   if (enabled && isMounted) {
-
-
     if (prop.dangerouslySetInnerHTML) {
       // Can't use both dangerouslySetInnerHTML and children
       const innerHTML = prop.dangerouslySetInnerHTML;
       delete prop.dangerouslySetInnerHTML;
       prop.children = (
         <>
-          <span
-            contentEditable={isEditing}
-            suppressContentEditableWarning={true}
-            onBlur={handleTextBlur}
+          <div
             onMouseDown={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
             onClick={(e) => {
@@ -205,20 +267,26 @@ export const Text = (props: Partial<TextProps>) => {
                 setIsEditing(true);
               }
             }}
-            className={`block w-full min-h-inherit transition-all duration-1000 ease-in-out ${isEditing ? 'cursor-text' : 'cursor-pointer'}`}
-            dangerouslySetInnerHTML={innerHTML}
-          />
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props} />
+            className={`w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text' : 'cursor-pointer'} ${!isEditing ? 'hover:bg-blue-50 hover:bg-opacity-30' : ''}`}
+          >
+            {tiptapEditor ? (
+              <EditorContent editor={tiptapEditor} />
+            ) : (
+              <div className="text-gray-400 italic">Loading editor...</div>
+            )}
+          </div>
+          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props}>
+            <TiptapProvider editor={tiptapEditor}>
+              <TiptapToolbar editor={tiptapEditor} />
+            </TiptapProvider>
+          </InlineToolsRenderer>
         </>
       );
     } else {
       const originalChildren = prop.children;
       prop.children = (
         <>
-          <span
-            contentEditable={isEditing}
-            suppressContentEditableWarning={true}
-            onBlur={handleTextBlur}
+          <div
             onMouseDown={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
             onClick={(e) => {
@@ -227,11 +295,19 @@ export const Text = (props: Partial<TextProps>) => {
                 setIsEditing(true);
               }
             }}
-            className={`block w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text' : 'cursor-pointer'}`}
+            className={`w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text' : 'cursor-pointer'} ${!isEditing ? 'hover:bg-blue-50 hover:bg-opacity-30' : ''}`}
           >
-            {originalChildren}
-          </span>
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props} />
+            {tiptapEditor ? (
+              <EditorContent editor={tiptapEditor} />
+            ) : (
+              <div className="text-gray-400 italic">Loading editor...</div>
+            )}
+          </div>
+          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props}>
+            <TiptapProvider editor={tiptapEditor}>
+              <TiptapToolbar editor={tiptapEditor} />
+            </TiptapProvider>
+          </InlineToolsRenderer>
         </>
       );
     }

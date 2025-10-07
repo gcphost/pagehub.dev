@@ -38,10 +38,10 @@
                 "flexDirection": "flex-col",
                 "alignItems": "items-center",
                 "width": "w-full",
-                "maxWidth": "style:contentWidth",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6",
-                "gap": "style:containerGap"
+                "gap": "gap-6"
               },
               "desktop": {
                 "flexDirection": "flex-row",
@@ -87,7 +87,7 @@
                     "display": "flex",
                     "flexDirection": "flex-col",
                     "width": "w-full",
-                    "gap": "style:containerGap",
+                    "gap": "gap-6",
                     "px": "px-6"
                   },
                   "desktop": {
@@ -104,11 +104,11 @@
                       "canDelete": true,
                       "canEditName": true,
                       "root": {
-                        "fontFamily": "style:headingFontFamily"
+                        "fontFamily": "Open Sans, sans-serif"
                       },
                       "mobile": {
                         "fontSize": "text-3xl",
-                        "fontWeight": "style:headingFont"
+                        "fontWeight": "font-bold"
                       },
                       "desktop": {},
                       "custom": {
@@ -155,8 +155,8 @@
             "display": "flex",
             "flexDirection": "flex-col",
             "width": "w-full",
-            "gap": "style:containerGap",
-            "p": "style:containerSpacing"
+            "gap": "gap-6",
+            "p": "p-8"
           },
           "desktop": {
             "flexDirection": "flex-row",
@@ -180,8 +180,8 @@
                 "display": "flex",
                 "flexDirection": "flex-col",
                 "width": "w-full",
-                "gap": "style:containerGap",
-                "maxWidth": "style:contentWidth",
+                "gap": "gap-6",
+                "maxWidth": "max-w-7xl",
                 "mx": "mx-auto",
                 "px": "px-6"
               },
@@ -201,11 +201,11 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "style:headingFontFamily"
+                    "fontFamily": "Open Sans, sans-serif"
                   },
                   "mobile": {
                     "fontSize": "text-3xl",
-                    "fontWeight": "style:headingFont"
+                    "fontWeight": "font-bold"
                   },
                   "desktop": {
                     "fontSize": "text-4xl"

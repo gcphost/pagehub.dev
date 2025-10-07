@@ -70,8 +70,8 @@ const DESIGN_SYSTEM_MAPPINGS = {
   // Container mappings
   container: {
     'p': {
-      'p-8': 'style:containerSpacing',
-      'p-6': 'style:containerSpacing',
+      'p-8': 'style:containerPadding',
+      'p-6': 'style:containerPadding',
     }
   }
 };
@@ -186,7 +186,7 @@ function processNode(node, parentType = null) {
       const mobile = props.mobile;
 
       if (mobile.p && (mobile.p === 'p-8' || mobile.p === 'p-6' || mobile.p === 'p-4' || mobile.p === 'p-12')) {
-        mobile.p = 'style:containerSpacing';
+        mobile.p = 'style:containerPadding';
       }
 
       // Convert px/py to p
@@ -194,7 +194,7 @@ function processNode(node, parentType = null) {
         const pxVal = parseInt(mobile.px.match(/\d+/)?.[0] || '0');
         const pyVal = parseInt(mobile.py.match(/\d+/)?.[0] || '0');
         if (pxVal >= 4 && pyVal >= 2) {
-          mobile.p = 'style:containerSpacing';
+          mobile.p = 'style:containerPadding';
           delete mobile.px;
           delete mobile.py;
         }

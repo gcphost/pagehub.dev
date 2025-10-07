@@ -31,6 +31,7 @@ import { ContainerSettings } from "./ContainerSettings";
 export interface ContainerProps extends BaseSelectorProps {
   type: string;
   isHomePage?: boolean;
+  is404Page?: boolean;
   anchor?: string;
   action?: string;
   method?: string;
@@ -270,41 +271,7 @@ export const Container = (props: Partial<ContainerProps>) => {
     prop["node-id"] = id;
     prop["data-enabled"] = true;
 
-    prop.onClick = (event) => {
-      let closestChild = null;
-      let minDistance = Infinity;
-      const children = ref.current.querySelectorAll("*");
 
-      children.forEach((child) => {
-        const childRect = child.getBoundingClientRect();
-        const childTop = childRect.top;
-        const childBottom = childRect.bottom;
-
-        if (event.clientY >= childTop && event.clientY <= childBottom) {
-          closestChild = child;
-          return;
-        }
-
-        let distance = null;
-        if (event.clientY < childTop) {
-          distance = childTop - event.clientY;
-        } else if (event.clientY > childBottom) {
-          distance = event.clientY - childBottom;
-        }
-
-        if (distance !== null && distance < minDistance) {
-          minDistance = distance;
-          closestChild = child;
-        }
-      });
-
-      if (closestChild) {
-        setSelectedNode({
-          id: closestChild.getAttribute(["node-id"]),
-          position: "after",
-        });
-      }
-    };
   }
 
   if (props.anchor) prop.id = props.anchor;

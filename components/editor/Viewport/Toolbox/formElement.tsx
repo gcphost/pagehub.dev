@@ -15,20 +15,22 @@ export const RenderFormElementComponent = ({ text, ...props }) => (
 // Base styles for all form elements - using style guide
 const formElementBaseStyles = {
   root: {
-    border: 'style:inputBorderWidth',
-    borderColor: 'border-style:inputBorderColor',
-    radius: 'style:inputBorderRadius',
-    background: 'bg-style:inputBgColor',
-    color: 'text-style:inputTextColor',
-    placeholderColor: 'placeholder-style:inputPlaceholderColor',
+    border: 'border',
+    borderWidth: 'border-[var(--ph-input-border-width)]',
+    borderStyle: 'border-solid',
+    borderColor: 'border-[color:var(--ph-input-border-color)]',
+    radius: 'rounded-[var(--ph-input-border-radius)]',
+    background: 'bg-[var(--ph-input-bg-color)]',
+    color: 'text-[color:var(--ph-input-text-color)]',
+    placeholderColor: ':text-[color:var(--ph-input-placeholder-color)]',
     focus: {
-      ring: 'style:inputFocusRing',
-      ringColor: 'ring-style:inputFocusRingColor',
-      outline: 'outline-none',
+      ring: 'focus:ring-[var(--ph-input-focus-ring)]',
+      ringColor: 'focus:ring-[color:var(--ph-input-focus-ring-color)]',
+      outline: 'focus:outline-none',
     },
   },
   mobile: {
-    p: 'style:inputPadding',
+    p: 'p-[var(--ph-input-padding)]',
     width: 'w-full',
   },
 };

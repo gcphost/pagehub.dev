@@ -123,11 +123,14 @@ export const FormDrop = ({
           mobile={{
             display: "flex",
             justifyContent: "justify-center",
-            flexDirection: "flex-row",
+            flexDirection: "flex-col",
             width: "w-full",
             gap: "gap-3",
             px: "px-6",
             py: "py-6",
+          }}
+          desktop={{
+            flexDirection: "flex-row",
           }}
           custom={{
             displayName: "Loading Text Container",
@@ -155,11 +158,14 @@ export const FormDrop = ({
           mobile={{
             display: "flex",
             justifyContent: "justify-center",
-            flexDirection: "flex-row",
+            flexDirection: "flex-col",
             width: "w-full",
             gap: "gap-3",
             px: "px-6",
             py: "py-6",
+          }}
+          desktop={{
+            flexDirection: "flex-row",
           }}
           custom={{
             displayName: "Sent Text Container",
@@ -206,20 +212,22 @@ export const Form = (props: any) => {
   // Base styles for form inputs - using style guide
   const inputBaseStyles = {
     root: {
-      border: 'style:inputBorderWidth',
-      borderColor: 'border-style:inputBorderColor',
-      radius: 'style:inputBorderRadius',
-      background: 'bg-style:inputBgColor',
-      color: 'text-style:inputTextColor',
-      placeholderColor: 'placeholder-style:inputPlaceholderColor',
+      border: 'border',
+      borderWidth: 'border-[var(--ph-input-border-width)]',
+      borderStyle: 'border-solid',
+      borderColor: 'border-[color:var(--ph-input-border-color)]',
+      radius: 'rounded-[var(--ph-input-border-radius)]',
+      background: 'bg-[var(--ph-input-bg-color)]',
+      color: 'text-[color:var(--ph-input-text-color)]',
+      placeholderColor: 'placeholder:text-[color:var(--ph-input-placeholder-color)]',
       focus: {
-        ring: 'style:inputFocusRing',
-        ringColor: 'ring-style:inputFocusRingColor',
+        ring: 'ring ring-[var(--ph-input-focus-ring)]',
+        ringColor: 'ring-[color:var(--ph-input-focus-ring-color)]',
         outline: 'outline-none',
       },
     },
     mobile: {
-      p: 'style:inputPadding',
+      p: 'p-[var(--ph-input-padding)]',
       width: 'w-full',
     },
   };
@@ -256,15 +264,7 @@ export const Form = (props: any) => {
         }}
         custom={{ displayName: "Fields" }}
       >
-        <Element
-          canvas
-          id="formLeadingText"
-          is={Text}
-          custom={{ displayName: "Leading Text" }}
-          canDelete={true}
-          canEditName={true}
-          text={formType === "subscribe" ? "Subscribe to our newsletter" : "Get in touch"}
-        />
+
 
         {formType === "contact" && (
           <Element
@@ -318,11 +318,22 @@ export const Form = (props: any) => {
         type="submit"
         text={formType === "subscribe" ? "Subscribe" : "Send Message"}
         root={{
-          background: "palette:Brand",
-          color: "palette:BrandText",
+          background: "bg-transparent",
+          color: "text-palette:Primary",
+          radius: "style:borderRadius",
           border: "border",
+          borderColor: "border-palette:Primary",
+          fontFamily: "style:headingFontFamily",
         }}
-        mobile={{ px: "px-6", py: "py-3" }}
+        mobile={{
+          p: "style:buttonPadding",
+          fontWeight: "style:headingFont",
+          textAlign: "text-center",
+          display: "flex",
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          gap: "gap-4",
+        }}
         canDelete={true}
         canEditName={true}
       />

@@ -158,6 +158,9 @@ export const ContainerSettings = () => {
       title: "Rows",
       var: "flexDirection",
       mobile: {
+        flexDirection: "flex-col",
+      },
+      desktop: {
         flexDirection: "flex-row",
       },
     },
@@ -172,6 +175,9 @@ export const ContainerSettings = () => {
       title: "Reverse Rows",
       var: "flexDirection",
       mobile: {
+        flexDirection: "flex-col-reverse",
+      },
+      desktop: {
         flexDirection: "flex-row-reverse",
       },
     },
