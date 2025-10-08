@@ -440,6 +440,10 @@ export const clearFontCollection = () => {
 };
 
 export const loadCombinedFonts = () => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
   // Prevent multiple simultaneous font loading
   if (isLoadingFonts) {
     return;

@@ -13,6 +13,12 @@ export interface DesignSystemVars {
  * "inputBorder" -> "input-border"
  */
 export function toCSSVarName(name: string): string {
+  // Guard against undefined/null
+  if (!name || typeof name !== "string") {
+    console.warn("toCSSVarName received invalid name:", name);
+    return "";
+  }
+
   return name
     .replace(/([A-Z])/g, "-$1") // Add hyphen before capitals
     .replace(/\s+/g, "-") // Replace spaces with hyphens
@@ -96,8 +102,23 @@ function resolveTailwindColor(color: string): string {
 export function generatePaletteCSSVariables(palette: NamedColor[]): string {
   const variables: string[] = [];
 
+  if (!palette || !Array.isArray(palette)) {
+    console.warn(
+      "generatePaletteCSSVariables received invalid palette:",
+      palette
+    );
+    return "";
+  }
+
   palette.forEach((item) => {
+    if (!item || !item.name || !item.color) {
+      console.warn("Skipping invalid palette item:", item);
+      return;
+    }
+
     const varName = toCSSVarName(item.name);
+    if (!varName) return; // Skip if name couldn't be converted
+
     const colorValue = resolveTailwindColor(item.color);
     variables.push(`  --ph-${varName}: ${colorValue};`);
   });
@@ -114,6 +135,14 @@ export function generateStyleGuideCSSVariables(
   styleGuide: Record<string, any>
 ): string {
   const variables: string[] = [];
+
+  if (!styleGuide || typeof styleGuide !== "object") {
+    console.warn(
+      "generateStyleGuideCSSVariables received invalid styleGuide:",
+      styleGuide
+    );
+    return "";
+  }
 
   // Create CSS variables for actual CSS values
   // These are values that can be used with Tailwind arbitrary syntax
@@ -147,12 +176,17 @@ export function generateStyleGuideCSSVariables(
   Object.entries(styleGuide).forEach(([key, value]) => {
     if (value && typeof value === "string" && cssVarKeys.includes(key)) {
       const varName = toCSSVarName(key);
+      if (!varName) return; // Skip if key couldn't be converted
 
       // If the value references a palette, we need to resolve it
       let resolvedValue = value;
       if (value.startsWith("palette:")) {
         const paletteName = value.replace("palette:", "").trim();
+        if (!paletteName) return; // Skip if palette name is empty
+
         const cssVarName = toCSSVarName(paletteName);
+        if (!cssVarName) return; // Skip if palette name couldn't be converted
+
         resolvedValue = `var(--ph-${cssVarName})`;
       } else {
         // For non-palette values, resolve Tailwind colors to actual hex values
@@ -218,9 +252,17 @@ export function removeDesignSystemVars(): void {
  * "palette:Primary" -> "var(--ph-primary)"
  */
 export function paletteToCSSVar(value: string): string {
+  if (!value || typeof value !== "string") {
+    return value || "";
+  }
+
   if (value.startsWith("palette:")) {
     const name = value.replace("palette:", "").trim();
+    if (!name) return value;
+
     const varName = toCSSVarName(name);
+    if (!varName) return value;
+
     return `var(--ph-${varName})`;
   }
   return value;
@@ -231,9 +273,17 @@ export function paletteToCSSVar(value: string): string {
  * "style:inputBorder" -> "var(--ph-input-border)"
  */
 export function styleToCSSVar(value: string): string {
+  if (!value || typeof value !== "string") {
+    return value || "";
+  }
+
   if (value.startsWith("style:")) {
     const name = value.replace("style:", "").trim();
+    if (!name) return value;
+
     const varName = toCSSVarName(name);
+    if (!varName) return value;
+
     return `var(--ph-${varName})`;
   }
   return value;
@@ -248,15 +298,27 @@ export function toTailwindArbitraryValue(
   value: string,
   prefix: string = ""
 ): string {
+  if (!value || typeof value !== "string") {
+    return value || "";
+  }
+
   let varRef = "";
 
   if (value.startsWith("palette:")) {
     const name = value.replace("palette:", "").trim();
+    if (!name) return value;
+
     const varName = toCSSVarName(name);
+    if (!varName) return value;
+
     varRef = `--ph-${varName}`;
   } else if (value.startsWith("style:")) {
     const name = value.replace("style:", "").trim();
+    if (!name) return value;
+
     const varName = toCSSVarName(name);
+    if (!varName) return value;
+
     varRef = `--ph-${varName}`;
   } else {
     return value;

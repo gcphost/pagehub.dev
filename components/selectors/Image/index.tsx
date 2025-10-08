@@ -146,7 +146,17 @@ export const Image = (props: ImageProps) => {
   };
 
   if (type === "svg" && content) {
-    prop.dangerouslySetInnerHTML = { __html: content };
+    // Store SVG content for later use
+    _imgProp.dangerouslySetInnerHTML = { __html: content };
+    // Add classes and styles to ensure SVG fits within container
+    // Use Tailwind arbitrary values for the nested SVG selector
+    _imgProp.className = `${_imgProp.className} w-full h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full`.trim();
+    // Inline styles for flexbox centering
+    _imgProp.style = {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
   } else {
     _imgProp.src = getMedialUrl(props);
 
@@ -192,7 +202,8 @@ export const Image = (props: ImageProps) => {
   if (empty) {
     tagName = "div";
   } else if (type === "svg") {
-    tagName = "svg";
+    // Use div wrapper for inline SVG to avoid nested svg tags
+    tagName = "div";
   } else {
     tagName = "img";
   }
@@ -213,23 +224,14 @@ export const Image = (props: ImageProps) => {
   if (enabled && isMounted) {
     const Img = createImgElement(false); // Don't connect drag to img, connect to wrapper
 
-    if (type !== "svg" && !empty) {
-      prop.children = (
-        <>
-          {Img}
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Image} props={props} />
-        </>
-      );
-    } else {
-      prop.children = (
-        <>
-          {prop.children}
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Image} props={props} />
-        </>
-      );
-    }
-
-
+    // For all cases, wrap the image with tools renderer
+    // Don't use dangerouslySetInnerHTML on the wrapper - it's on the SVG element itself
+    prop.children = (
+      <>
+        {empty ? prop.children : Img}
+        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Image} props={props} />
+      </>
+    );
 
     const ele = props.url ? Link : "div";
     return React.createElement(ele, {
@@ -241,20 +243,23 @@ export const Image = (props: ImageProps) => {
   // Preview mode - simpler structure
   const Img = createImgElement(true); // Connect drag to img directly
 
-  if (type !== "svg" && !empty) {
-    prop.children = Img;
+  // For inline SVG or regular images, wrap in container if there's a URL
+  if (!empty) {
+    if (props.url) {
+      prop.children = Img;
+      const ele = Link;
+      return React.createElement(ele, {
+        ...prop,
+        "aria-label": altText || titleText || "Image link",
+      });
+    }
+    // No URL, just return the image/svg directly
+    return Img;
   }
 
-  const ele = props.url ? Link : "div";
-
-  if (props.url) {
-    return React.createElement(ele, {
-      ...prop,
-      "aria-label": altText || titleText || "Image link",
-    });
-  }
-
-  return Img;
+  // Empty state
+  const ele = "div";
+  return React.createElement(ele, prop);
 };
 
 Image.craft = {

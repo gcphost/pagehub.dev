@@ -215,9 +215,9 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       )}
 
       {!props.iconOnly && props.text && (
-        <span className="flex items-center">
-          {props.text}
-        </span>
+
+        props.text
+
       )}
 
       {props.icon && props.iconPosition === "right" && (

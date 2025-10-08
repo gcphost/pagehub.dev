@@ -323,7 +323,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
     .filter((page) =>
       page.displayName.toLowerCase().includes(searchQuery.toLowerCase())
     )
-    .reverse();
+
 
   // Get live URL for current page
   const baseUrl = settings?.draftId
