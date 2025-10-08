@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,12 +15,9 @@ export const Tooltip = ({
 }) => {
   const ref = useRef(null);
 
-  const [id, setId] = useState(null);
+  // Generate a stable ID once using useMemo to avoid infinite loops
+  const id = useMemo(() => uuidv4(), []);
   const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    setId(uuidv4());
-  }, []);
 
   const handleClick = (e: React.MouseEvent) => {
     setIsVisible(false);
@@ -49,7 +46,7 @@ export const Tooltip = ({
         <ReactTooltip
           id={id}
           classNameArrow="hidden"
-          className={`max-w-[220px] ${tooltipClassName}`}
+          className={`max-w-[220px] !text-white !bg-black !rounded-md !px-2 !py-1 !font-normal ${tooltipClassName}`}
         />
       )}
     </>

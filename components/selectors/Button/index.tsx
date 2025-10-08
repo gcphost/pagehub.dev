@@ -6,13 +6,12 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { SettingsAtom } from "utils/atoms";
-import { motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
+import { useRecoilValue } from "recoil";
+import { motionIt, resolvePageRef } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
 import {
   applyAnimation,
@@ -65,17 +64,14 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
     id,
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) =>
+  const { query, enabled } = useEditor((state) =>
     getClonedState(props, state)
   );
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
   const palette = usePalette();
-  const settings = useRecoilValue(SettingsAtom);
   const router = useRouter();
-  const tab = useSetRecoilState(TabAtom);
-  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
 
   props = setClonedProps(props, query);
 
@@ -86,31 +82,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   }, []);
 
   useScrollToSelected(id, enabled);
-  selectAfterAdding(actions.selectNode, tab, id, enabled, initialLoadComplete);
 
-  const baseProps = [
-    "flex",
-    "items-center",
-    "justify-center",
-    "cursor-pointer",
-    "transition-colors",
-    "duration-200",
-  ];
-
-  const inlayProps = [
-    "flex",
-    "items-center",
-    "justify-center",
-  ];
-
-  const include = [
-    "flex",
-    "items-center",
-    "justify-center",
-    "cursor-pointer",
-    "transition-colors",
-    "duration-200",
-  ];
 
   const prop: any = {
     ref: (r) => connect(drag(r)),

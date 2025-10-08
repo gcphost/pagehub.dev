@@ -19,13 +19,13 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaFont } from "react-icons/fa";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { motionIt, resolvePageRef, selectAfterAdding } from "utils/lib";
+import { useRecoilValue } from "recoil";
+import { motionIt, resolvePageRef } from "utils/lib";
 
 import { getFontFromComp } from "utils/lib";
 import { applyAnimation, ClassGenerator } from "utils/tailwind";
@@ -77,15 +77,13 @@ export const Text = (props: Partial<TextProps>) => {
     ...props,
   };
 
-  const { actions, query, enabled } = useEditor((state) =>
+  const { query, enabled } = useEditor((state) =>
     getClonedState(props, state)
   );
 
   const router = useRouter();
-  const tab = useSetRecoilState(TabAtom);
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
-  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
   const palette = usePalette();
 
   const {
@@ -109,7 +107,6 @@ export const Text = (props: Partial<TextProps>) => {
   }, [isActive, isEditing]);
 
   useScrollToSelected(id, enabled);
-  selectAfterAdding(actions.selectNode, tab, id, enabled, initialLoadComplete);
 
   props = setClonedProps(props, query);
 

@@ -33,8 +33,14 @@ export const useComponentSync = () => {
           .map((childId) => {
             const child = query.node(childId).get();
             if (!child) return "";
+            // Handle type being either a string or an object with resolvedName
+            const typeValue = child.data.type;
             const type =
-              child.data.type?.resolvedName || child.data.displayName || "";
+              typeof typeValue === "string"
+                ? typeValue
+                : (typeValue as any)?.resolvedName ||
+                  child.data.displayName ||
+                  "";
             const childStructure = getStructureSignature(childId);
             return `${type}:${childStructure}`;
           })

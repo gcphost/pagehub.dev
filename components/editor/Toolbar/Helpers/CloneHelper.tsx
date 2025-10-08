@@ -155,8 +155,8 @@ export const RenderChildren = ({ props, children, query, actions, id }) => {
           >
             <TbBoxModel2 className="text-green-500 flex-shrink-0 text-xl" />
             <div className="flex-1">
-              <div className="font-semibold text-white">Edit Master Component</div>
-              <div className="text-xs text-primary-200">Changes sync to all instances</div>
+              <div className="font-semibold text-white">Edit Linked Instance</div>
+              <div className="text-xs text-primary-200">Change the main component</div>
             </div>
           </button>
 

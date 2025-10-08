@@ -187,7 +187,7 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
           hideHeaderFooter(query, actions, true);
 
           // Select the content node (the actual component data), not the wrapper
-          actions.selectNode(componentId);
+          actions.selectNode(null);
         }, 100);
       } catch (e) {
         console.error("Error opening component in editor:", e);

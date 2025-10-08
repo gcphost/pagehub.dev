@@ -201,77 +201,6 @@ export const Viewport: React.FC<any> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextRouter.asPath]);
 
-  // Select default node after page isolation completes
-  useEffect(() => {
-    const active = query.getEvent("selected").first();
-
-    if (!active && !ac) {
-      // Wait a bit for page isolation to complete
-      setTimeout(() => {
-        // Check if ROOT_NODE exists before trying to select
-        const rootNode = query.node(ROOT_NODE).get();
-        if (!rootNode || !rootNode.data) {
-          return;
-        }
-
-        // Smart selection: Find a meaningful starting point for the user
-        const findAllNodesByDisplayName = (nodeId) => {
-          const node = query.node(nodeId).get();
-          if (!node) return [];
-
-          const matches = [];
-
-          // Check if this node matches
-          const displayName = node.data.custom?.displayName;
-          if (displayName) {
-            matches.push({ id: nodeId, displayName });
-          }
-
-          // Recursively search child nodes
-          if (node.data.nodes && node.data.nodes.length > 0) {
-            for (const childId of node.data.nodes) {
-              const childMatches = findAllNodesByDisplayName(childId);
-              matches.push(...childMatches);
-            }
-          }
-
-          return matches;
-        };
-
-        // Priority order: Hero Content > Home Page > Header > first child of Background
-        const targetNames = ["Hero Content", "Home Page", "Header"];
-        const allNodes = findAllNodesByDisplayName(ROOT_NODE);
-
-        // Find the highest priority match
-        let foundNode = null;
-        for (const targetName of targetNames) {
-          const match = allNodes.find(n => n.displayName === targetName);
-          if (match) {
-            foundNode = match.id;
-            break;
-          }
-        }
-
-
-        if (foundNode) {
-          actions.selectNode(foundNode);
-          // Mark initial load as complete after selection
-          setTimeout(() => setInitialLoadComplete(true), 100);
-          setAc(true);
-        } else {
-          // Fallback to first child of ROOT_NODE if nothing meaningful found
-          const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
-          if (nl && nl.length >= 1) {
-            actions.selectNode(nl[0]);
-            // Mark initial load as complete after selection
-            setTimeout(() => setInitialLoadComplete(true), 100);
-            setAc(true);
-          }
-        }
-      }, 700); // Wait for page isolation to complete
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isolate]);
 
   const [unsavedChanges, setUnsavedChanged] =
     useRecoilState(UnsavedChangesAtom);
@@ -641,7 +570,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       enabled
         ? "flex h-screen overflow-hidden flex-row w-full w-screen absolute top-0 left-0 right-0 bottom-0"
         : "",
-      enabled ? "w-full overflow-hidden" : "w-screen h-screen overflow-auto",
+      enabled ? `w-screen h-screen overflow-auto ${viewMode === 'component' ? 'mt-[49px]' : ''} ` : "w-screen h-screen overflow-auto",
     ],
   };
 

@@ -1,3 +1,4 @@
+import { useEditor as useCraftEditor } from '@craftjs/core';
 import { Editor } from '@tiptap/react';
 import { Tooltip } from 'components/layout/Tooltip';
 import React, { useEffect, useRef, useState } from 'react';
@@ -20,12 +21,15 @@ import {
   MdSuperscript
 } from 'react-icons/md';
 import { TbChevronDown, TbEraser } from 'react-icons/tb';
-import { useRecoilState } from 'recoil';
-import { getStyleSheets } from 'utils/lib';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { SettingsAtom } from 'utils/atoms';
+import { getMediaContent, getStyleSheets } from 'utils/lib';
 import { isPaletteReference, paletteToCSSVar } from 'utils/palette';
 import { fonts } from 'utils/tailwind';
 import { DeleteNodeButton } from '../NodeControllers/Tools/DeleteNodeButton';
+import { MediaManagerModal } from '../Toolbar/Inputs/MediaManagerModal';
 import { ColorPickerAtom, ColorPickerDialog } from '../Toolbar/Tools/ColorPickerDialog';
+import { PageSelector } from '../Viewport/PageSelector';
 import { TextSettingsDropdown } from './TextSettingsDropdown';
 
 interface TiptapToolbarProps {
@@ -43,11 +47,17 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [showHeadings, setShowHeadings] = useState(false);
   const [fontSearchTerm, setFontSearchTerm] = useState('');
+  const [showMediaModal, setShowMediaModal] = useState(false);
 
   // Color picker state
   const [colorDialog, setColorDialog] = useRecoilState(ColorPickerAtom);
   const backgroundColorButtonRef = useRef<HTMLButtonElement>(null);
   const foregroundColorButtonRef = useRef<HTMLButtonElement>(null);
+
+  const settings = useRecoilValue(SettingsAtom);
+
+  // Get Craft.js query for media operations
+  const { query } = useCraftEditor();
 
   // Import Google Fonts from your existing system and deduplicate
   const fontFamilies = Array.from(new Set(fonts.map(font => font[0])));
@@ -540,32 +550,27 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
         </div>
 
         <div className="border-l border-gray-500 flex gap-1 pl-2" >
-          {/* Image and Link */}
+          {/* Insert Link Dropdown */}
+          <div className="group">
+            <Tooltip content="Insert Link" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
+              <button
+                className="tool-button"
+              >
+                <MdLink className="w-4 h-4" />
+              </button>
+            </Tooltip>
+            <div className="absolute left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-4 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <LinkSelector editor={editor} />
+            </div>
+          </div>
+
+          {/* Insert Image - Opens Media Modal */}
           <Tooltip content="Insert Image" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
             <button
-              onClick={handleButtonClick(() => {
-                const url = window.prompt('Enter image URL:');
-                if (url) {
-                  editor.chain().focus().setImage({ src: url }).run();
-                }
-              })}
+              onClick={handleButtonClick(() => setShowMediaModal(true))}
               className="tool-button"
             >
               <MdImage className="w-4 h-4" />
-            </button>
-          </Tooltip>
-
-          <Tooltip content="Insert Link" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
-            <button
-              onClick={handleButtonClick(() => {
-                const url = window.prompt('Enter URL:');
-                if (url) {
-                  editor.chain().focus().setLink({ href: url }).run();
-                }
-              })}
-              className="tool-button"
-            >
-              <MdLink className="w-4 h-4" />
             </button>
           </Tooltip>
         </div>
@@ -593,6 +598,196 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
 
       {/* Color Picker Dialog */}
       <ColorPickerDialog />
+
+      {/* Media Manager Modal */}
+      <MediaManagerModal
+        isOpen={showMediaModal}
+        onClose={() => setShowMediaModal(false)}
+        onSelect={(mediaId) => {
+          console.log('📸 Selected media ID:', mediaId);
+          const imageUrl = getMediaContent(query, mediaId);
+          console.log('🖼️ Generated image URL:', imageUrl);
+
+          if (imageUrl) {
+            editor?.chain().focus().setImage({ src: imageUrl }).run();
+            console.log('✅ Image inserted into Tiptap');
+          } else {
+            console.error('❌ Failed to generate image URL for mediaId:', mediaId);
+          }
+
+          setShowMediaModal(false);
+        }}
+        selectionMode={true}
+      />
     </div >
+  );
+};
+
+// Link Selector Component for Tiptap
+const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
+  const [linkType, setLinkType] = useState<"external" | "page">("external");
+  const [url, setUrl] = useState('');
+  const [savedSelection, setSavedSelection] = useState<{ from: number; to: number } | null>(null);
+
+  // Save selection when dropdown opens (on mouse enter)
+  useEffect(() => {
+    const { from, to } = editor.state.selection;
+    if (from !== to) {
+      setSavedSelection({ from, to });
+      console.log('💾 Saved selection:', { from, to });
+    }
+  }, [editor]);
+
+  const handlePagePick = (page: { id: string; displayName: string; isHomePage: boolean }) => {
+    console.log('🔗 Page picked:', page);
+    const pageRef = `ref:${page.id}`;
+    console.log('🔗 Setting link href to:', pageRef);
+
+    // Use saved selection or current selection
+    const selection = savedSelection || editor.state.selection;
+    const { from, to } = selection;
+    const hasSelection = from !== to;
+
+    console.log('🔗 Has selection:', hasSelection, 'from:', from, 'to:', to);
+
+    if (hasSelection) {
+      const selectedText = editor.state.doc.textBetween(from, to);
+      console.log('🔗 Selected text:', selectedText);
+
+      // Use toggleLink to apply the link properly
+      editor
+        .chain()
+        .focus()
+        .setTextSelection({ from, to })
+        .toggleLink({ href: pageRef })
+        .run();
+
+      console.log('✅ Link applied to selection');
+
+      // Check if link was applied
+      setTimeout(() => {
+        console.log('🔗 Link active at cursor:', editor.isActive('link'));
+        console.log('🔗 Current HTML:', editor.getHTML());
+      }, 100);
+    } else {
+      // No selection - insert text and then make it a link
+      const startPos = editor.state.selection.from;
+      editor
+        .chain()
+        .focus()
+        .insertContent(page.displayName + ' ')
+        .setTextSelection({ from: startPos, to: startPos + page.displayName.length })
+        .toggleLink({ href: pageRef })
+        .run();
+      console.log('✅ Link inserted with page name as text');
+    }
+
+    setSavedSelection(null);
+  };
+
+  const handleExternalLink = () => {
+    if (url) {
+      console.log('🔗 Setting external link to:', url);
+
+      // Use saved selection or current selection
+      const selection = savedSelection || editor.state.selection;
+      const { from, to } = selection;
+      const hasSelection = from !== to;
+
+      if (hasSelection) {
+        const selectedText = editor.state.doc.textBetween(from, to);
+        console.log('🔗 Selected text:', selectedText);
+
+        // Use toggleLink to apply the link properly
+        editor
+          .chain()
+          .focus()
+          .setTextSelection({ from, to })
+          .toggleLink({ href: url })
+          .run();
+
+        console.log('✅ External link applied to selection');
+
+        // Check if link was applied
+        setTimeout(() => {
+          console.log('🔗 Link active at cursor:', editor.isActive('link'));
+          console.log('🔗 Current HTML:', editor.getHTML());
+        }, 100);
+      } else {
+        // No selection - insert text and then make it a link
+        const startPos = editor.state.selection.from;
+        editor
+          .chain()
+          .focus()
+          .insertContent(url + ' ')
+          .setTextSelection({ from: startPos, to: startPos + url.length })
+          .toggleLink({ href: url })
+          .run();
+        console.log('✅ External link inserted with URL as text');
+      }
+
+      setSavedSelection(null);
+    }
+  };
+
+  return (
+    <div className="space-y-3">
+      {/* Link Type Toggle */}
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={() => setLinkType("external")}
+          className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "external"
+            ? "bg-primary-500 text-white"
+            : "bg-gray-700 text-gray-300"
+            }`}
+        >
+          <MdLink className="inline mr-1" />
+          External URL
+        </button>
+        <button
+          type="button"
+          onClick={() => setLinkType("page")}
+          className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "page"
+            ? "bg-primary-500 text-white"
+            : "bg-gray-700 text-gray-300"
+            }`}
+        >
+          Internal Page
+        </button>
+      </div>
+
+      {/* Conditional Content */}
+      {linkType === "external" ? (
+        <div className="space-y-2">
+          <input
+            type="text"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="https://example.com"
+            className="w-full px-3 py-2 text-sm border border-gray-500 rounded-lg bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleExternalLink();
+            }}
+            className="w-full px-3 py-2 bg-primary-500 hover:bg-primary-600 text-white text-sm rounded-lg transition-colors"
+          >
+            Insert Link
+          </button>
+        </div>
+      ) : (
+        <div onClick={(e) => e.stopPropagation()}>
+          <div className="text-xs text-gray-400 mb-2">Select a page to link to:</div>
+          <PageSelector
+            onPagePick={handlePagePick}
+            pickerMode={true}
+            className="w-full"
+          />
+        </div>
+      )}
+    </div>
   );
 };

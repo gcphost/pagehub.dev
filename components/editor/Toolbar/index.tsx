@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { SideBarAtom, SideBarOpen } from "utils/lib";
 import { PreviewAtom } from "../Viewport";
 import { Header } from "../Viewport/Header";
+import { EditorEmptyState } from "./EditorEmptyState";
 
 export * from "./ToolbarDropdown";
 export * from "./ToolbarItem";
@@ -52,7 +53,7 @@ export const Toolbar = () => {
   const tool = related?.toolbar ? (
     React.createElement(related.toolbar)
   ) : (
-    <div className="bg-gray-700/50 scrollbar w-auto overflow-auto h-screen grow basis-full  pb-24 z-20 gap-12 flex flex-col text-center pt-32"></div>
+    <EditorEmptyState />
   );
 
   const style: any = {

@@ -417,13 +417,8 @@ export const deleteNode = async (query, actions, active, settings) => {
     return;
   }
 
-  const theParent = query.node(node.data.parent).get();
-  const index = theParent.data.nodes.indexOf(active);
-
-  const theNew =
-    index > 0 ? query.node(theParent.data.nodes[index - 1]).get() : theParent;
-
-  actions.selectNode(theNew.id);
+  // Deselect after delete
+  actions.selectNode(null);
 
   const { type, videoId, image, ico } = node.data.props || {};
 

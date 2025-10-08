@@ -6,12 +6,11 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
 import React, { useEffect, useState } from "react";
 import { RxButton } from "react-icons/rx";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { SettingsAtom } from "utils/atoms";
-import { motionIt, selectAfterAdding } from "utils/lib";
+import { useRecoilValue } from "recoil";
+import { motionIt } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
 import {
   applyAnimation,
@@ -84,9 +83,6 @@ export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProp
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
   const palette = usePalette();
-  const settings = useRecoilValue(SettingsAtom);
-  const tab = useSetRecoilState(TabAtom);
-  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
 
   props = setClonedProps(props, query);
 
@@ -97,7 +93,6 @@ export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProp
   }, []);
 
   useScrollToSelected(id, enabled);
-  selectAfterAdding(actions.selectNode, tab, id, enabled, initialLoadComplete);
 
   const baseProps = [
     "flexDirection",

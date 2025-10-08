@@ -7,12 +7,10 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { InitialLoadCompleteAtom, TabAtom } from "components/editor/Viewport";
 import { SaveSubmissions } from "components/editor/Viewport/lib";
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
-import { selectAfterAdding } from "utils/lib";
 
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
 import { Button } from "../Button";
@@ -33,21 +31,13 @@ export const FormDrop = ({
 }) => {
   const { id, connectors: { connect, drag } } = useNode();
 
-  const { actions, enabled, query } = useEditor((state) => ({
+  const { enabled, query } = useEditor((state) => ({
     enabled: state.options.enabled,
     ...getClonedState(props, state),
   }));
 
-  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
 
   useScrollToSelected(id, enabled);
-  selectAfterAdding(
-    actions.selectNode,
-    useSetRecoilState(TabAtom),
-    id,
-    enabled,
-    initialLoadComplete
-  );
 
   props = setClonedProps(props, query);
 

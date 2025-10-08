@@ -177,7 +177,7 @@ export const TextSettings = () => {
         <ToolbarItem
           propKey="text"
           propType="component"
-          rows={4}
+          rows={8}
           type="textarea"
           labelHide={true}
           placeholder="Enter text"

@@ -578,31 +578,6 @@ export const useDefaultTab = (head, activeTab, setActiveTab) => {
   }, [head, activeTab]);
 };
 
-export const selectAfterAdding = (
-  selectNode,
-  setActiveTab,
-  id,
-  enabled,
-  initialLoadComplete
-) => {
-  useEffect(() => {
-    if (!id || !enabled) return;
-
-    // Only auto-select if initial load is complete (prevents selecting last element on page load)
-    // We check the value but don't watch it - we only want to react when id/enabled changes
-    if (!initialLoadComplete) return;
-
-    try {
-      selectNode(id);
-      setActiveTab("");
-    } catch (e) {
-      // Node may not be fully registered yet, ignore
-      console.log("⚠️ Could not auto-select node (may not be ready yet):", id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, enabled]);
-};
-
 export const motionIt = (props, tagName) =>
   props.root?.animation ? motion(tagName) : tagName;
 
@@ -698,7 +673,7 @@ export const isolatePageAlt = (
       try {
         const node = query.node(_active).get();
         if (node) {
-          actions.selectNode(_active);
+          //actions.selectNode(_active);
         }
       } catch (e) {
         console.error("Error selecting node:", e);

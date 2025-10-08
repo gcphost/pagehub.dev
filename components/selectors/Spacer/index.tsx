@@ -8,10 +8,10 @@ import {
   getClonedState,
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { InitialLoadCompleteAtom, PreviewAtom, TabAtom, ViewAtom } from "components/editor/Viewport";
+import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
 import React, { useEffect, useRef, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { motionIt, selectAfterAdding } from "utils/lib";
+import { useRecoilValue } from "recoil";
+import { motionIt } from "utils/lib";
 import { ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { useScrollToSelected } from "../lib";
@@ -47,20 +47,13 @@ export const Spacer = (props: SpacerProps) => {
     id,
   } = useNode();
 
-  const { actions, query, enabled } = useEditor((state) =>
+  const { query, enabled } = useEditor((state) =>
     getClonedState(props, state)
   );
 
-  const initialLoadComplete = useRecoilValue(InitialLoadCompleteAtom);
 
   useScrollToSelected(id, enabled);
-  selectAfterAdding(
-    actions.selectNode,
-    useSetRecoilState(TabAtom),
-    id,
-    enabled,
-    initialLoadComplete
-  );
+
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);

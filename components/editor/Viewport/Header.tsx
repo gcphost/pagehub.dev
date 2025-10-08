@@ -391,12 +391,8 @@ export const Header = () => {
 
                 // Un-isolate to show all pages
                 const { isolatePageAlt } = require('utils/lib');
-
                 isolatePageAlt(true, query, null, actions, () => { }, false);
 
-                setTimeout(() => {
-                  actions.selectNode(null) // hax cause the way nodes are selected so - TO-DO: fix..
-                }, 5);
 
 
                 // Show headers, footers, and pages
