@@ -152,7 +152,7 @@
         "linkProps"
       ],
       "specificProps": {
-        "type": "string (container | page | form | imageContainer | heroContainer)",
+        "type": "string (container | page | form | header | footer)",
         "anchor": "string (id for anchor links)",
         "action": "string (form action URL)",
         "method": "string (GET | POST)",
@@ -462,13 +462,7 @@
       "time",
       "week"
     ],
-    "containerTypes": [
-      "container",
-      "page",
-      "form",
-      "imageContainer",
-      "heroContainer"
-    ],
+    "containerTypes": ["container", "page", "form", "header", "footer"],
     "imageTypes": ["img", "svg"],
     "fetchPriorities": ["high", "low", "auto"],
     "tailwindReferences": {

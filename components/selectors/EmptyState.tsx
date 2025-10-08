@@ -1,13 +1,8 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { ToolboxMenu } from "components/editor/RenderNode";
-import { TabAtom, ViewAtom } from "components/editor/Viewport";
-import {
-  TbActiveItemAtom,
-  TbActiveMenuAtom,
-} from "components/editor/Viewport/atoms";
+import { ViewAtom } from "components/editor/Viewport";
 import { motion } from "framer-motion";
 import { TbLayoutColumns, TbLayoutRows, TbNote, TbPlus } from "react-icons/tb";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { MenuItemState, MenuState } from "utils/lib";
 import { ImageDefault } from "./Image";
 
@@ -21,7 +16,6 @@ export const EmptyState = ({ icon = null }) => {
   }));
 
   const view = useRecoilValue(ViewAtom);
-  const setActiveTab = useSetRecoilState(TabAtom);
   const setShowMenu = useSetRecoilState(MenuState);
   const setShowMenuType = useSetRecoilState(MenuItemState);
 
@@ -31,13 +25,18 @@ export const EmptyState = ({ icon = null }) => {
     isActive: query.getEvent("selected").contains(id),
   }));
 
-  const [menu, setMenu] = useRecoilState(ToolboxMenu);
 
-  const { name, nodeProps } = useNode((node) => ({
+  const { nodeProps } = useNode((node) => ({
     parent: node.data.parent,
     nodeProps: node.data.props,
     name: node.data.custom.displayName || node.data.displayName,
   }));
+
+
+  if (!enabled) {
+    return null;
+  }
+
 
   const props = nodeProps[view];
 
@@ -59,12 +58,6 @@ export const EmptyState = ({ icon = null }) => {
     addIcon = ico;
   }
 
-  const setActiveMenu = useSetRecoilState(TbActiveMenuAtom);
-  const setActiveItem = useSetRecoilState(TbActiveItemAtom);
-
-  if (!enabled) {
-    return null;
-  }
 
   return (
     <div className="w-auto flex justify-center items-center">

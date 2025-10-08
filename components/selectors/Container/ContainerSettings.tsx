@@ -7,7 +7,6 @@ import {
 } from "components/editor/Toolbar/Helpers/SettingsHelper";
 import { AccessibilityInput } from "components/editor/Toolbar/Inputs/AccessibilityInput";
 import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
-import { BackgroundSettingsInput } from "components/editor/Toolbar/Inputs/BackgroundSettingsInput";
 import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
 import ClickItem from "components/editor/Toolbar/Inputs/ClickItem";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
@@ -24,6 +23,7 @@ import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SizeInput } from "components/editor/Toolbar/Inputs/SizeInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
+import { ToolbarItem } from "components/editor/Toolbar/ToolbarItem";
 import { useGetNode } from "components/editor/Toolbar/Tools/lib";
 import { TabAtom } from "components/editor/Viewport";
 import { BiPaint } from "react-icons/bi";
@@ -258,80 +258,115 @@ export const ContainerSettings = () => {
     },
   ];
 
-  const MainTab = () => (
-    <TabBody>
-      {props.type === "imageContainer" && (
-        <ToolbarSection
-          title="Image Container"
-          help="Display an image as a background while also allowing items inside. If you don't need items inside use a Image."
-        >
-          <BackgroundSettingsInput props={props} />
-        </ToolbarSection>
-      )}
+  const MainTab = () => {
+    // Check if header/footer already exist at root level
+    const rootNode = query.node('ROOT').get();
+    const rootChildren = rootNode?.data?.nodes || [];
 
-      {props.type === "heroContainer" && (
-        <ToolbarSection
-          title="Hero Container"
-          help="Display an image as a background while also allowing items inside. If you don't need items inside use a Image."
-        >
-          Hero type a Hero type b Hero type c...
-        </ToolbarSection>
-      )}
+    const hasHeader = rootChildren.some(nodeId => {
+      const node = query.node(nodeId).get();
+      return node?.data?.props?.type === 'header';
+    });
 
-      <ContainerTypeInput />
+    const hasFooter = rootChildren.some(nodeId => {
+      const node = query.node(nodeId).get();
+      return node?.data?.props?.type === 'footer';
+    });
 
-      <ToolbarSection title="Presets">
-        <ToolbarSection full={2}>
+    const isHeader = props.type === 'header';
+    const isFooter = props.type === 'footer';
+    const isPage = props.type === 'page';
+    const isComponent = props.type === 'component';
+
+    // Only show header/footer options for regular containers or if this IS the header/footer
+    const showHeaderOption = !isPage && !isComponent && !isFooter && (!hasHeader || isHeader);
+    const showFooterOption = !isPage && !isComponent && !isHeader && (!hasFooter || isFooter);
+
+    return (
+      <TabBody>
+
+        <ContainerTypeInput />
+
+        <ToolbarSection title="Presets">
+          <ToolbarSection full={2}>
+            <PresetInput
+              presets={presetWidth}
+              label="Width"
+              type="slider"
+            />
+
+            <PresetInput
+              presets={presetMaxWidth}
+              propKey="presetMaxWidth"
+              label="Max Width"
+              type="slider"
+            />
+          </ToolbarSection>
           <PresetInput
-            presets={presetWidth}
-            label="Width"
+            presets={presetPadding}
+            propKey="presetPadding"
+            label="Padding"
             type="slider"
           />
-
-          <PresetInput
-            presets={presetMaxWidth}
-            propKey="presetMaxWidth"
-            label="Max Width"
-            type="slider"
-          />
         </ToolbarSection>
-        <PresetInput
-          presets={presetPadding}
-          propKey="presetPadding"
-          label="Padding"
-          type="slider"
-        />
-      </ToolbarSection>
 
-      <ToolbarSection
-        title="Order"
-        help="Change the order of this component, useful to reposition items on mobile."
-      >
-        <OrderInput />
-      </ToolbarSection>
-
-      {props.type === "page" && (
         <ToolbarSection
-          title="Page Settings"
+          title="Order"
+          help="Change the order of this component, useful to reposition items on mobile."
         >
-          <button
-            onClick={() => {
-              // Find and trigger the page settings modal
-              // We'll dispatch a custom event that the PageSelector can listen to
-              const event = new CustomEvent('openPageSettings', { detail: { pageId: id } });
-              window.dispatchEvent(event);
-            }}
-            className="w-full px-4 py-3 btn"
+          <OrderInput />
+        </ToolbarSection>
+
+        {props.type === "page" && (
+          <ToolbarSection
+            title="Page Settings"
           >
-            <span>Edit Page Settings</span>
-          </button>
-          <p className="text-xs text-gray-500 mt-2">
-            Configure page name, URL, SEO, and social media settings.
-          </p>
-        </ToolbarSection>
-      )}
-    </TabBody>
-  );
+            <button
+              onClick={() => {
+                // Find and trigger the page settings modal
+                // We'll dispatch a custom event that the PageSelector can listen to
+                const event = new CustomEvent('openPageSettings', { detail: { pageId: id } });
+                window.dispatchEvent(event);
+              }}
+              className="w-full px-4 py-3 btn"
+            >
+              <span>Edit Page Settings</span>
+            </button>
+            <p className="text-xs text-gray-500 mt-2">
+              Configure page name, URL, SEO, and social media settings.
+            </p>
+          </ToolbarSection>
+        )}
+
+        {(showHeaderOption || showFooterOption) && (
+          <ToolbarSection title="Special Container Types">
+            {showHeaderOption && (
+              <ToolbarItem
+                propKey="type"
+                propType="component"
+                type="toggle"
+                option={isHeader ? "This is the Header" : "Make this the Header"}
+                on="header"
+              />
+            )}
+            {showFooterOption && (
+              <ToolbarItem
+                propKey="type"
+                propType="component"
+                type="toggle"
+                option={isFooter ? "This is the Footer" : "Make this the Footer"}
+                on="footer"
+              />
+            )}
+            <p className="text-xs text-gray-500 mt-2">
+              Headers and footers are special containers that appear on all pages.
+            </p>
+          </ToolbarSection>
+        )}
+
+      </TabBody>
+    );
+  };
 
   const TBBody = () => (
     <TableBodyStyleControl
@@ -426,7 +461,6 @@ export const ContainerSettings = () => {
           <ToolbarSection title="Opacity">
             <OpacityInput label="" propKey="opacity" />
           </ToolbarSection>
-          '
         </TabBody>
       )}
       {activeTab === "Style" && (

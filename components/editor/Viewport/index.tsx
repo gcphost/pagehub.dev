@@ -665,7 +665,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
         {/* Viewport container */}
         <div className={activeClass[0]} style={deviceStyles}>
-          <main
+          <div
             id="viewport"
             role="main"
             onKeyDown={handleKeyDown}
@@ -676,7 +676,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
             style={viewMode === 'component' && !device && !preview ? { marginTop: '49px' } : undefined}
           >
             {children}
-          </main>
+          </div>
         </div>
 
         {/* SVG overlay for measurement lines */}
