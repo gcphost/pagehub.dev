@@ -49,8 +49,8 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   const backgroundColorButtonRef = useRef<HTMLButtonElement>(null);
   const foregroundColorButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Import Google Fonts from your existing system
-  const fontFamilies = fonts.map(font => font[0]);
+  // Import Google Fonts from your existing system and deduplicate
+  const fontFamilies = Array.from(new Set(fonts.map(font => font[0])));
 
   // Use Tailwind font sizes converted to CSS values
   const fontSizes = [

@@ -1,8 +1,8 @@
 import { ROOT_NODE, useEditor } from "@craftjs/core";
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { TbX } from 'react-icons/tb';
-import { useRecoilState } from 'recoil';
-import { ComponentsAtom, IsolateAtom, OpenComponentEditorAtom, isolatePageAlt } from 'utils/lib';
+import { TbBoxModel2, TbLayoutGridAdd, TbX } from 'react-icons/tb';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { ComponentsAtom, IsolateAtom, OpenComponentEditorAtom, ViewModeAtom, isolatePageAlt } from 'utils/lib';
 
 interface ComponentEditorTab {
   id: string; // The component node ID
@@ -14,7 +14,7 @@ interface ComponentEditorTabsProps {
   className?: string;
 }
 
-// Helper function to hide/show header and footer
+// Helper function to hide/show header, footer, and pages
 const hideHeaderFooter = (query, actions, hide: boolean) => {
   const root = query.node(ROOT_NODE).get();
 
@@ -22,7 +22,7 @@ const hideHeaderFooter = (query, actions, hide: boolean) => {
     const node = query.node(nodeId).get();
     const nodeType = node?.data?.props?.type;
 
-    if (nodeType === 'header' || nodeType === 'footer') {
+    if (nodeType === 'header' || nodeType === 'footer' || nodeType === 'page') {
       actions.setHidden(nodeId, hide);
       actions.setProp(nodeId, (prop) => (prop.hidden = hide));
     }
@@ -37,13 +37,13 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
   const [openComponentEditor, setOpenComponentEditor] = useRecoilState(OpenComponentEditorAtom);
   const [components, setComponents] = useRecoilState(ComponentsAtom);
   const processingRef = useRef<string | null>(null);
+  const viewMode = useRecoilValue(ViewModeAtom);
 
   // Open or switch to a component editor
   const handleOpenComponent = useCallback(async (componentId: string | null, componentName: string) => {
     // If componentId is null, create a new blank component
     if (componentId === null) {
       try {
-        console.log('📦 Creating new component:', componentName);
 
         // Dynamically import Container and Element
         const { Container } = await import("../../selectors/Container");
@@ -75,7 +75,6 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
         actions.addNodeTree(componentWrapper, ROOT_NODE);
         const componentContainerId = componentWrapper.rootNodeId;
 
-        console.log('✅ Created new component container:', componentContainerId);
 
         // Get the first child (the Text node) which will be the actual component root
         const contentNodeId = componentWrapper.nodes[componentContainerId].data.nodes[0];
@@ -100,23 +99,29 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
         };
         setComponents([...components, newComponent]);
 
-        console.log('✅ Added new component to ComponentsAtom:', newComponent);
 
-        // Add tab and open for editing
-        const newTab: ComponentEditorTab = {
-          id: componentContainerId,
-          name: componentName,
-          isDirty: false,
-        };
+        // Check if tab already exists (shouldn't happen for new components, but just in case)
+        const existingTab = tabs.find(t => t.id === componentContainerId);
 
-        setTabs([...tabs, newTab]);
+        if (!existingTab) {
+          // Add tab and open for editing
+          const newTab: ComponentEditorTab = {
+            id: componentContainerId,
+            name: componentName,
+            isDirty: false,
+          };
+
+          setTabs([...tabs, newTab]);
+        }
+
         setActiveTabId(componentContainerId);
 
         // Isolate the component container and hide header/footer
         setTimeout(() => {
           isolatePageAlt(isolate, query, componentContainerId, actions, setIsolate, true);
+          actions.setHidden(componentContainerId, false);
+          actions.setProp(componentContainerId, (prop) => (prop.hidden = false));
           hideHeaderFooter(query, actions, true);
-          console.log('✅ New component opened for editing');
         }, 100);
 
         return;
@@ -133,11 +138,12 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
       // Tab exists, just switch to it
       setActiveTabId(existingTab.id);
       isolatePageAlt(isolate, query, existingTab.id, actions, setIsolate, true);
+      actions.setHidden(existingTab.id, false);
+      actions.setProp(existingTab.id, (prop) => (prop.hidden = false));
       hideHeaderFooter(query, actions, true);
     } else {
       // NEW APPROACH: Just isolate the component node directly!
       try {
-        console.log('📦 Opening component for editing:', componentName, componentId);
 
         // The componentId is the content node - we need to find its parent (the component container)
         const contentNode = query.node(componentId).get();
@@ -154,23 +160,34 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
           return;
         }
 
-        console.log('✅ Found component container:', componentContainer.data.displayName);
 
-        // Add a tab for this component - use the container ID
-        const newTab: ComponentEditorTab = {
-          id: componentContainerId, // Use the component container ID
-          name: componentName,
-          isDirty: false,
-        };
+        // Check if tab already exists
+        const existingTab = tabs.find(t => t.id === componentContainerId);
 
-        setTabs([...tabs, newTab]);
-        setActiveTabId(componentContainerId);
+        if (existingTab) {
+          // Tab exists, just switch to it
+          setActiveTabId(componentContainerId);
+        } else {
+          // Add a new tab for this component - use the container ID
+          const newTab: ComponentEditorTab = {
+            id: componentContainerId, // Use the component container ID
+            name: componentName,
+            isDirty: false,
+          };
 
-        // Isolate the component container and hide header/footer
+          setTabs([...tabs, newTab]);
+          setActiveTabId(componentContainerId);
+        }
+
+        // Isolate the component container and hide header/footer, but select the content node
         setTimeout(() => {
-          isolatePageAlt(isolate, query, componentContainerId, actions, setIsolate, true);
+          isolatePageAlt(isolate, query, componentContainerId, actions, setIsolate, false); // Don't auto-select
+          actions.setHidden(componentContainerId, false);
+          actions.setProp(componentContainerId, (prop) => (prop.hidden = false));
           hideHeaderFooter(query, actions, true);
-          console.log('✅ Component isolated for editing');
+
+          // Select the content node (the actual component data), not the wrapper
+          actions.selectNode(componentId);
         }, 100);
       } catch (e) {
         console.error("Error opening component in editor:", e);
@@ -207,11 +224,99 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
     }
   }, [openComponentEditor, setOpenComponentEditor, handleOpenComponent]);
 
+  // Close tabs for deleted components
+  useEffect(() => {
+    if (tabs.length === 0) return; // Nothing to clean up
+
+    // Get IDs of all components that still exist
+    const existingComponentIds = new Set(components.map(c => {
+      // The tab ID is the component container ID, which is the parent of the content node
+      try {
+        const contentNode = query.node(c.rootNodeId).get();
+        return contentNode?.data?.parent;
+      } catch {
+        return null;
+      }
+    }).filter(Boolean));
+
+    // Find tabs for components that no longer exist
+    const hasDeletedTabs = tabs.some(tab => !existingComponentIds.has(tab.id));
+
+    if (hasDeletedTabs) {
+      // If active tab is being deleted, find the best tab to switch to
+      let newActiveTab = null;
+      if (activeTabId && !existingComponentIds.has(activeTabId)) {
+        const currentIndex = tabs.findIndex(tab => tab.id === activeTabId);
+        // Try to select the tab before the deleted one, or after if it was the first
+        const remainingTabs = tabs.filter(tab => existingComponentIds.has(tab.id));
+        if (remainingTabs.length > 0) {
+          // Find the closest remaining tab
+          let closestTab = remainingTabs[0]; // fallback
+          for (let i = currentIndex - 1; i >= 0; i--) {
+            if (existingComponentIds.has(tabs[i].id)) {
+              closestTab = tabs[i];
+              break;
+            }
+          }
+          // If no tab before, try to find one after
+          if (closestTab === remainingTabs[0] && currentIndex < tabs.length - 1) {
+            for (let i = currentIndex + 1; i < tabs.length; i++) {
+              if (existingComponentIds.has(tabs[i].id)) {
+                closestTab = tabs[i];
+                break;
+              }
+            }
+          }
+          newActiveTab = closestTab.id;
+        }
+      }
+
+      // Remove deleted component tabs
+      const remainingTabs = tabs.filter(tab => existingComponentIds.has(tab.id));
+      setTabs(remainingTabs);
+
+      // Switch to the selected tab or clear
+      if (activeTabId && !existingComponentIds.has(activeTabId)) {
+        if (newActiveTab) {
+          setActiveTabId(newActiveTab);
+          isolatePageAlt(isolate, query, newActiveTab, actions, setIsolate, true);
+          hideHeaderFooter(query, actions, true);
+        } else {
+          setActiveTabId(null);
+          isolatePageAlt(isolate, query, null, actions, setIsolate, false);
+          hideHeaderFooter(query, actions, false);
+        }
+      }
+    }
+  }, [components, query]);
+
+  // Restore active tab when switching back to component mode
+  useEffect(() => {
+    if (viewMode === 'component' && activeTabId && tabs.length > 0) {
+      // Re-isolate the active component
+      isolatePageAlt(isolate, query, activeTabId, actions, setIsolate, true);
+
+      // Make sure the component container is visible
+      actions.setHidden(activeTabId, false);
+      actions.setProp(activeTabId, (prop) => (prop.hidden = false));
+
+      // Hide pages, headers, and footers
+      hideHeaderFooter(query, actions, true);
+    }
+  }, [viewMode, activeTabId, tabs.length, isolate, query, actions, setIsolate]);
+
   // Switch to a different tab
   const handleTabClick = (tabId: string) => {
     setActiveTabId(tabId);
-    // Isolate the component for this tab and hide header/footer
+
+    // Isolate the component for this tab
     isolatePageAlt(isolate, query, tabId, actions, setIsolate, true);
+
+    // Make sure this component container is visible
+    actions.setHidden(tabId, false);
+    actions.setProp(tabId, (prop) => (prop.hidden = false));
+
+    // Hide pages, headers, and footers
     hideHeaderFooter(query, actions, true);
   };
 
@@ -230,87 +335,73 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
         const newActiveTab = newTabs[Math.max(0, tabIndex - 1)];
         setActiveTabId(newActiveTab.id);
         isolatePageAlt(isolate, query, newActiveTab.id, actions, setIsolate, true);
+        actions.setHidden(newActiveTab.id, false);
+        actions.setProp(newActiveTab.id, (prop) => (prop.hidden = false));
         hideHeaderFooter(query, actions, true);
       } else {
-        // No more tabs, show all pages and restore header/footer
+        // No more tabs, clear selection and keep everything hidden
         setActiveTabId(null);
-        isolatePageAlt(true, query, null, actions, setIsolate, false);
-        hideHeaderFooter(query, actions, false);
+
+        actions.setHidden(tabId, true);
+        actions.setProp(tabId, (prop) => (prop.hidden = true));
+
+        isolatePageAlt(isolate, query, null, actions, setIsolate, true);
+        hideHeaderFooter(query, actions, true);
+
+        setTimeout(() => {
+          actions.selectNode(null);
+        }, 100);
       }
     }
 
     // Note: We DON'T delete the component node - it stays in ROOT as a master
   };
 
-  // Save current component
-  const handleSave = () => {
-    if (!activeTabId) return;
-
-    const tab = tabs.find(t => t.id === activeTabId);
-    if (!tab) return;
-
-    try {
-      console.log('💾 Component saved (editing master directly - no save needed!)');
-
-      // Mark as saved
-      setTabs(tabs.map(t =>
-        t.id === activeTabId ? { ...t, isDirty: false } : t
-      ));
-
-      // Refresh the components list
-      const rootNode = query.node(ROOT_NODE).get();
-      const rootChildren = rootNode?.data?.nodes || [];
-
-      const componentNodes = rootChildren
-        .map(nodeId => {
-          try {
-            const node = query.node(nodeId).get();
-            if (node?.data?.props?.type === 'component') {
-              return {
-                rootNodeId: nodeId,
-                name: node?.data?.custom?.displayName || node?.data?.displayName || 'Unnamed Component',
-              };
-            }
-          } catch (e) {
-            return null;
-          }
-          return null;
-        })
-        .filter(Boolean);
-
-      setComponents(componentNodes);
-    } catch (e) {
-      console.error("Error saving component:", e);
-    }
-  };
 
   return (
-    <div className={`relative h-12 flex items-center gap-2 bg-gray-900 border-b border-gray-600 px-3 py-2 ${className}`}>
+    <div className={`relative h-12 flex items-center gap-2 bg-primary-900 border-b border-primary-600 px-3 py-2 ${className}`}>
       {/* Tabs */}
       <div className="absolute bottom-0 flex-1 flex items-center gap-1 overflow-x-auto">
-        {tabs.map((tab) => (
-          <div
-            key={tab.id}
-            onClick={() => handleTabClick(tab.id)}
-            className={`
-              flex items-center gap-2 px-3 py-1.5 rounded-t cursor-pointer transition-colors
-              ${activeTabId === tab.id
-                ? 'bg-gray-700 text-white'
-                : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-gray-300'
-              }
-            `}
-          >
-            <span className="text-sm whitespace-nowrap">
-              {tab.name}
-            </span>
-            <button
-              onClick={(e) => handleCloseTab(tab.id, e)}
-              className="p-0.5 rounded hover:bg-gray-600 transition-colors"
+        {tabs.map((tab) => {
+          // Find the component to check if it's a section
+          const component = components.find(c => {
+            try {
+              const contentNode = query.node(c.rootNodeId).get();
+              return contentNode?.data?.parent === tab.id;
+            } catch {
+              return false;
+            }
+          });
+
+          return (
+            <div
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              className={`
+                group flex items-center gap-2 px-3 py-1.5 rounded-t cursor-pointer transition-colors
+                ${activeTabId === tab.id
+                  ? 'bg-gray-700 text-white'
+                  : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-gray-300'
+                }
+              `}
             >
-              <TbX className="w-3 h-3" />
-            </button>
-          </div>
-        ))}
+              {component?.isSection ? (
+                <TbLayoutGridAdd className="w-3.5 h-3.5 flex-shrink-0" />
+              ) : (
+                <TbBoxModel2 className="w-3.5 h-3.5 flex-shrink-0" />
+              )}
+              <span className="text-sm whitespace-nowrap">
+                {tab.name}
+              </span>
+              <button
+                onClick={(e) => handleCloseTab(tab.id, e)}
+                className={`p-0.5 rounded hover:bg-gray-600 transition-all ${activeTabId === tab.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+              >
+                <TbX className="w-3 h-3" />
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

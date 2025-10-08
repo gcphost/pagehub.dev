@@ -334,11 +334,16 @@ export const Container = (props: Partial<ContainerProps>) => {
 };
 
 const canMoveIn = (nodes, into) => {
+  // Prevent moving anything into component containers (master component storage)
+  //  if (into.data?.props?.type === "component") return false;
+
   const result = nodes.every((node) => {
+    // Prevent moving forms into forms
     if (node?.data?.props?.type === "form") {
       if (into.data?.props?.type === "form") return false;
     }
 
+    // Prevent moving pages anywhere
     return node?.data?.props?.type !== "page";
   });
 

@@ -32,7 +32,9 @@ import {
   isolatePageAlt,
 } from "utils/lib";
 import { DeviceOffline } from "../Toolbar/DeviceOffline";
+import { useComponentSync } from "../useComponentSync";
 import { ComponentEditorTabs } from "./ComponentEditorTabs";
+import { DeviceSelector } from "./DeviceSelector";
 import {
   GetHtmlToComponent,
   SaveToServer,
@@ -81,6 +83,11 @@ export const DeviceAtom = atom({
   default: false,
 });
 
+export const DeviceDimensionsAtom = atom({
+  key: "deviceDimensions",
+  default: { width: 390, height: 844 },
+});
+
 export const EnabledAtom = atom({
   key: "enabled",
   default: true,
@@ -99,6 +106,9 @@ export const Viewport: React.FC<any> = ({ children }) => {
   } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
+
+  // Sync linked components when master components change
+  useComponentSync();
 
   useEffect(() => {
     if (!window) {
@@ -242,6 +252,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
           }
         }
 
+
         if (foundNode) {
           actions.selectNode(foundNode);
           // Mark initial load as complete after selection
@@ -266,7 +277,8 @@ export const Viewport: React.FC<any> = ({ children }) => {
     useRecoilState(UnsavedChangesAtom);
 
   const view = useRecoilValue(ViewAtom);
-  const device = useRecoilValue(DeviceAtom);
+  const [device, setDevice] = useRecoilState(DeviceAtom);
+  const deviceDimensions = useRecoilValue(DeviceDimensionsAtom);
   const [settings, setSettings] = useRecoilState(SettingsAtom);
   const [preview, setPreview] = useRecoilState(PreviewAtom);
   const setEnabled = useSetRecoilState(EnabledAtom);
@@ -565,6 +577,10 @@ export const Viewport: React.FC<any> = ({ children }) => {
       try {
         event.preventDefault();
         const active = query.getEvent("selected").first();
+
+        // Check if a node is selected
+        if (!active) return;
+
         const theNode = query.node(active).get();
 
         if (!theNode.data.props.canDelete) return;
@@ -617,7 +633,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
   const deviceClasses = {
     mobile: [
-      "mx-auto flex z-2 transition overflow-hidden mt-32 mx-auto w-full md:w-[380px] mb-32 px-2 py-6 rounded-2xl bg-gray-700 border-4 border-gray-800 drop-shadow-2xl",
+      "mx-auto flex z-2 transition overflow-hidden mt-32 mx-auto w-full mb-32 px-2 py-6 rounded-2xl bg-gray-700 border-4 border-gray-800 drop-shadow-2xl",
       "w-full h-full flex overflow-auto rounded-xl border-4 border-gray-900 disable-scrollbars relative",
     ],
 
@@ -629,12 +645,17 @@ export const Viewport: React.FC<any> = ({ children }) => {
     ],
   };
 
+  const deviceStyles = device && view === 'mobile' ? {
+    width: `${deviceDimensions.width}px`,
+    height: `${deviceDimensions.height}px`,
+  } : {};
+
   let viewClasses = {
     mobile: [
       `flex h-screen overflow-hidden flex-row mx-auto w-${enabled ? "[380px]" : "screen"
       } mx-auto `,
       enabled
-        ? "w-full my-6 rounded-lg overflow-scroll scrollbar-light bg-white relative"
+        ? "w-full rounded-lg overflow-scroll scrollbar-light bg-white relative"
         : "w-screen h-screen overflow-auto relative",
     ],
 
@@ -643,7 +664,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
         ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen`
         : "w-screen",
       enabled
-        ? "w-full m-1 relative scrollbar-light bg-white overflow-scroll"
+        ? `w-full !border-[7px] ${viewMode === 'component' ? 'border-purple-200' : 'border-gray-100'}   relative scrollbar-light bg-white overflow-scroll`
         : "w-screen h-screen overflow-show relative",
     ],
   };
@@ -664,10 +685,14 @@ export const Viewport: React.FC<any> = ({ children }) => {
   return (
     <>
       <ViewportMeta />
+
+      {/* Main layout container */}
       <div
+        className={`flex h-screen overflow-visible flex-row ${view === 'mobile' && sideBarOpen ? `${sideBarLeft ? 'ml-[360px]' : 'mr-[360px]'} w-[calc(100vw-360px)]` : 'w-screen'}`}
         data-container={true}
-        className={`flex h-screen overflow-visible flex-row w-full`}
       >
+
+        {/* Preview mode: "Edit" button */}
         {!enabled && !screenshot && (
           <div className="absolute right-12 top-12 z-50">
             <Tooltip content="Edit" placement="bottom" arrow={false}>
@@ -680,7 +705,6 @@ export const Viewport: React.FC<any> = ({ children }) => {
                     setPreview(false);
                     setTimeout(() => {
                       if (!lastActive) return;
-
                       const node = query.node(lastActive).get();
                       if (node) actions.selectNode(lastActive);
                     }, 0);
@@ -693,25 +717,34 @@ export const Viewport: React.FC<any> = ({ children }) => {
           </div>
         )}
 
+        {/* Offline indicator */}
         {enabled && !online && <DeviceOffline />}
 
-        <div className={`${activeClass[0]} ${viewMode === 'component' ? '!flex-col' : ''}`}>
-          {/* Component Editor Tabs - Show when in component mode */}
-          {enabled && viewMode === 'component' && (
-            <ComponentEditorTabs className="flex-shrink-0" />
-          )}
+        {/* Component Editor Tabs - absolute positioned above viewport, after sidebar */}
+        {enabled && (
+          <div className={`absolute top-0 ${sideBarOpen && sideBarLeft ? 'left-[360px]' : 'left-0'} right-0 z-40  ${viewMode === 'component' ? '' : 'hidden'}`}>
+            <ComponentEditorTabs />
+          </div>
+        )}
 
+        {/* Device Selector - shown above device preview in mobile view */}
+        {enabled && device && view === 'mobile' && (
+          <div className={`absolute top-[100px] ${sideBarOpen && sideBarLeft ? 'left-[360px]' : 'left-0'} right-0 z-50  `}>
+            <DeviceSelector onClose={() => setDevice(false)} />
+          </div>
+        )}
+
+        {/* Viewport container */}
+        <div className={activeClass[0]} style={deviceStyles}>
           <main
             id="viewport"
             role="main"
-            aria-label="Page canvas"
             onKeyDown={handleKeyDown}
             data-isolated={!!isolated}
             tabIndex={0}
-            className={`${activeClass[1]} ${viewMode === 'component' ? 'flex-1' : ''}`}
-            ref={(ref: any) =>
-              connectors.select(connectors.hover(ref, null), null)
-            }
+            className={activeClass[1]}
+            ref={(ref: any) => connectors.select(connectors.hover(ref, null), null)}
+            style={viewMode === 'component' && !device && !preview ? { marginTop: '49px' } : undefined}
           >
             {children}
           </main>

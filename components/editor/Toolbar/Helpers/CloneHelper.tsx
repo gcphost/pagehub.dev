@@ -1,3 +1,4 @@
+import { getLinkedAncestorNode } from "components/editor/componentUtils";
 import { removeHasManyRelation } from "components/editor/Viewport/lib";
 import { TbBoxModel2, TbLinkOff, TbPalette } from "react-icons/tb";
 import { useSetRecoilState } from "recoil";
@@ -114,24 +115,7 @@ export const RenderChildren = ({ props, children, query, actions, id }) => {
   const setOpenComponentEditor = useSetRecoilState(OpenComponentEditorAtom);
 
   // Check if this node or ANY ancestor is a linked component
-  const checkIfLinked = (nodeId) => {
-    const node = query.node(nodeId).get();
-    if (!node) return null;
-
-    // If this node is fully linked, return it
-    if (node.data.props?.belongsTo && node.data.props?.relationType !== "style") {
-      return node;
-    }
-
-    // Check parent
-    if (node.data.parent) {
-      return checkIfLinked(node.data.parent);
-    }
-
-    return null;
-  };
-
-  const linkedNode = checkIfLinked(id);
+  const linkedNode = getLinkedAncestorNode(id, query);
 
   if (linkedNode) {
     const linkedNodeId = linkedNode.data.props.belongsTo;

@@ -594,36 +594,21 @@ export const saveHandler = async ({ query, id, component = null, actions = null 
       console.log('📦 Placed clone at original location');
 
       // Mark the clone with belongsTo and select it
-      setTimeout(() => {
-        // Recursively set belongsTo on all nodes in the cloned tree
-        const setRecursiveBelongsTo = (clonedNodeId, masterNodeId) => {
-          const clonedNode = query.node(clonedNodeId).get();
-          const masterNode = query.node(masterNodeId).get();
+      setTimeout(async () => {
+        const { setRecursiveBelongsTo } = await import("components/editor/componentUtils");
 
-          if (!clonedNode || !masterNode) return;
-
-          // Set belongsTo on this node
-          actions.setProp(clonedNodeId, (prop) => {
-            prop.belongsTo = masterNodeId;
-            prop.relationType = 'full';
+        setRecursiveBelongsTo(
+          clonedTree.rootNodeId,
+          id,
+          query,
+          actions,
+          (clonedNodeId, prop) => {
+            // Set savedComponentName only on the root node
             if (clonedNodeId === clonedTree.rootNodeId) {
               prop.savedComponentName = componentName;
             }
-          });
-
-          // Recursively set on children
-          const clonedChildren = clonedNode.data.nodes || [];
-          const masterChildren = masterNode.data.nodes || [];
-
-          clonedChildren.forEach((clonedChildId, index) => {
-            const masterChildId = masterChildren[index];
-            if (masterChildId) {
-              setRecursiveBelongsTo(clonedChildId, masterChildId);
-            }
-          });
-        };
-
-        setRecursiveBelongsTo(clonedTree.rootNodeId, id);
+          }
+        );
 
         // Select the clone so user can see it's been created
         actions.selectNode(clonedTree.rootNodeId);

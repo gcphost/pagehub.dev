@@ -1,4 +1,5 @@
 import { NodeTree, ROOT_NODE, useEditor, useNode } from "@craftjs/core";
+import { checkIfAncestorLinked } from "components/editor/componentUtils";
 import { Tooltip } from "components/layout/Tooltip";
 import { motion } from "framer-motion";
 import React, { useCallback, useEffect, useRef } from "react";
@@ -101,24 +102,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   const canMake = !(components || []).find((_) => _.rootNodeId === id);
 
   // Check if this node or ANY ancestor is a fully linked component (not style mode)
-  const checkIfLinked = (nodeId) => {
-    const node = query.node(nodeId).get();
-    if (!node) return false;
-
-    // If this node is fully linked, return true
-    if (node.data.props?.belongsTo && node.data.props?.relationType !== "style") {
-      return true;
-    }
-
-    // Check parent
-    if (node.data.parent) {
-      return checkIfLinked(node.data.parent);
-    }
-
-    return false;
-  };
-
-  const isLinked = checkIfLinked(id);
+  const isLinked = checkIfAncestorLinked(id, query);
 
 
   return (

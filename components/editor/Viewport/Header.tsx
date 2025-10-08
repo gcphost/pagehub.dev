@@ -149,6 +149,7 @@ export const Header = () => {
                   rootNodeId: childNodeId, // The actual content node
                   nodes: serializedNodes,
                   name: node?.data?.custom?.displayName || node?.data?.displayName || 'Unnamed Component',
+                  isSection: node?.data?.props?.isSection || false, // Read isSection from container
                 };
               }
             }
@@ -159,7 +160,6 @@ export const Header = () => {
         })
         .filter(Boolean);
 
-      console.log('📦 Header: Found component nodes:', componentNodes.length);
       setComponents(componentNodes);
     } catch (e) {
       console.error("❌ Error loading components:", e);
@@ -375,36 +375,53 @@ export const Header = () => {
           </Item>
         </Tooltip>
 
-        <Tooltip content={`Switch to ${viewMode === 'page' ? 'Component' : 'Page'} View`} placement="bottom" arrow={false}>
+        <Tooltip content={`Switch to ${viewMode === 'page' ? 'Component' : 'Page'} Editor`} placement="bottom" arrow={false}>
           <Item
-            ariaLabel={`Switch to ${viewMode === 'page' ? 'Component' : 'Page'} View`}
+            ariaLabel={`Switch to ${viewMode === 'page' ? 'Component' : 'Page'} Editor`}
             onClick={() => {
               const newMode = viewMode === 'page' ? 'component' : 'page';
               setViewMode(newMode);
+              actions.selectNode(null);
+              const rootNode = query.node(ROOT_NODE).get();
 
-              // When switching to page view, restore normal state
               if (newMode === 'page') {
+                // Switching to page view - restore normal state
                 // Deselect any active node
-                actions.selectNode(null);
+
 
                 // Un-isolate to show all pages
                 const { isolatePageAlt } = require('utils/lib');
+
                 isolatePageAlt(true, query, null, actions, () => { }, false);
 
-                // Show headers and footers
-                const rootNode = query.node(ROOT_NODE).get();
+                setTimeout(() => {
+                  actions.selectNode(null) // hax cause the way nodes are selected so - TO-DO: fix..
+                }, 5);
+
+
+                // Show headers, footers, and pages
                 rootNode.data.nodes.forEach((nodeId) => {
                   const node = query.node(nodeId).get();
                   const nodeType = node?.data?.props?.type;
 
-                  if (nodeType === 'header' || nodeType === 'footer') {
+                  if (nodeType === 'header' || nodeType === 'footer' || nodeType === 'page') {
                     actions.setHidden(nodeId, false);
                     actions.setProp(nodeId, (prop) => (prop.hidden = false));
                   }
                 });
               } else {
-                // Just deselect when switching to component view
-                actions.selectNode(null);
+                // Switching to component view - hide pages, headers, footers, AND component containers
+                rootNode.data.nodes.forEach((nodeId) => {
+                  const node = query.node(nodeId).get();
+                  const nodeType = node?.data?.props?.type;
+
+                  if (nodeType === 'header' || nodeType === 'footer' || nodeType === 'page' || nodeType === 'component') {
+                    actions.setHidden(nodeId, true);
+                    actions.setProp(nodeId, (prop) => (prop.hidden = true));
+                  }
+                });
+
+                // ComponentEditorTabs will handle showing the active component if there's a tab
               }
             }}
           >

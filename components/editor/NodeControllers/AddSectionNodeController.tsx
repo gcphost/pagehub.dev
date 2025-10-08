@@ -2,7 +2,7 @@ import { Element, ROOT_NODE, useEditor, useNode } from "@craftjs/core";
 import { Container } from "components/selectors/Container";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRef, useState } from "react";
-import { TbPlus } from "react-icons/tb";
+import { TbLayoutGridAdd } from "react-icons/tb";
 import { useIsInlineRender } from "../InlineRenderContext";
 import RenderNodeControl from "../RenderNodeControl";
 import RenderNodeControlInline from "../RenderNodeControlInline";
@@ -130,6 +130,11 @@ export const AddSectionNodeController = (props: { position; align }) => {
               },
               whileHover: { scale: 1.1, y: -5 },
               whileTap: { scale: 1.1 },
+              style: {
+                willChange: 'transform',
+                backfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+              }
             }}
           >
             <motion.button
@@ -206,7 +211,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
                 }
               }}
             >
-              <TbPlus /> Add {type}
+              <TbLayoutGridAdd /> Add {type}
             </motion.button>
           </ControlComponent>
         </AnimatePresence>

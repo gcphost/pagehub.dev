@@ -46,7 +46,6 @@ import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
 
 
 function App({ data, slug, result, session, tenant, sessionToken }) {
-  console.log({ data });
   data = data ? lz.decompress(lz.decodeBase64(data)) : lz.decompress(lz.decodeBase64(CUSTOM_TEMPLATE_DATA));
   const setTenant = useSetTenant();
   const setSessionToken = useSetRecoilState(SessionTokenAtom);

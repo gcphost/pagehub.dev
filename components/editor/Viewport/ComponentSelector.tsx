@@ -1,6 +1,7 @@
 import { useEditor } from '@craftjs/core';
+import { Tooltip } from 'components/layout/Tooltip';
 import React, { useEffect, useRef, useState } from 'react';
-import { TbBoxModel2, TbCheck, TbChevronDown, TbDownload, TbPencil, TbPlus, TbTrash, TbUpload, TbX } from 'react-icons/tb';
+import { TbBoxModel2, TbCheck, TbChevronDown, TbDownload, TbLayoutGridAdd, TbPencil, TbPlus, TbTrash, TbUpload, TbX } from 'react-icons/tb';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ComponentsAtom, IsolateAtom, OpenComponentEditorAtom } from 'utils/lib';
 
@@ -152,6 +153,40 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
     }
   };
 
+  // Toggle component/section type
+  const handleToggleComponentType = (component: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    try {
+      const newIsSection = !component.isSection;
+
+      // Find the component container and update its isSection property
+      const contentNode = query.node(component.rootNodeId).get();
+      if (contentNode) {
+        const componentContainerId = contentNode.data.parent;
+        const componentContainer = query.node(componentContainerId).get();
+
+        if (componentContainer?.data?.props?.type === 'component') {
+          // Update the container's isSection property
+          actions.setProp(componentContainerId, (prop) => {
+            prop.isSection = newIsSection;
+          });
+        }
+      }
+
+      // Toggle isSection in the components list
+      setComponents(components.map(c =>
+        c.rootNodeId === component.rootNodeId
+          ? { ...c, isSection: newIsSection }
+          : c
+      ));
+
+      console.log('✅ Toggled component type:', component.name, newIsSection ? 'Section' : 'Component');
+    } catch (e) {
+      console.error('Error toggling component type:', e);
+    }
+  };
+
   // Find the currently editing component based on isolate ID
   // The isolate ID is the component container, but rootNodeId is the content node
   // So we need to check if the content node's parent matches the isolate
@@ -175,7 +210,11 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
         aria-label="Component selector"
       >
         <div className="flex items-center gap-2 overflow-hidden flex-1">
-          <TbBoxModel2 className="flex-shrink-0" />
+          {currentComponent?.isSection ? (
+            <TbLayoutGridAdd className="flex-shrink-0" />
+          ) : (
+            <TbBoxModel2 className="flex-shrink-0" />
+          )}
           <span className="truncate text-sm font-medium">{displayText}</span>
         </div>
         <TbChevronDown
@@ -241,11 +280,27 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
                   ) : (
                     // Normal mode
                     <>
+                      <Tooltip
+                        content={component.isSection ? "Convert to Component" : "Convert to Section"}
+                        placement="top"
+                        arrow={false}
+                      >
+                        <button
+                          onClick={(e) => handleToggleComponentType(component, e)}
+                          className="p-1 rounded hover:bg-gray-700 text-gray-400 hover:text-white transition-colors flex-shrink-0 flex items-center"
+                          aria-label={component.isSection ? "Convert to Component" : "Convert to Section"}
+                        >
+                          {component.isSection ? (
+                            <TbLayoutGridAdd className="w-4 h-4" />
+                          ) : (
+                            <TbBoxModel2 className="w-4 h-4" />
+                          )}
+                        </button>
+                      </Tooltip>
                       <button
                         onClick={() => handleComponentClick(component)}
                         className="flex items-center gap-2 overflow-hidden flex-1 text-left"
                       >
-                        <TbBoxModel2 className="text-gray-400 flex-shrink-0" />
                         <span className="text-sm text-white truncate">
                           {component.name}
                         </span>

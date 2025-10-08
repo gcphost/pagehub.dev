@@ -73,7 +73,7 @@ export const ComponentSettings = () => {
   // Create dynamic items array with saved components
   const items = useMemo(() => [
     ...baseItems,
-    ...(components?.length ? [SavedComponentsToolbox(components)] : []),
+    ...(components?.filter(component => !component.isSection)?.length ? [SavedComponentsToolbox(components)] : []),
   ], [components]);
 
   const focusRef = useRef(null);

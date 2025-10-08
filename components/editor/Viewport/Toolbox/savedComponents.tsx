@@ -1,4 +1,5 @@
 import { Element, ROOT_NODE, useEditor, useNode } from "@craftjs/core";
+import { setRecursiveBelongsTo } from "components/editor/componentUtils";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef } from "react";
 import { TbBoxModel2, TbTrash } from "react-icons/tb";
@@ -112,32 +113,7 @@ export const SavedComponentLoader = ({ componentData }) => {
         if (!query.node(clonedTree.rootNodeId).get()) return;
 
         if (clonedTree.originalRootId && query.node(clonedTree.originalRootId).get()) {
-          // Recursively set belongsTo on all nodes in the cloned tree
-          const setRecursiveBelongsTo = (clonedNodeId, masterNodeId) => {
-            const clonedNode = query.node(clonedNodeId).get();
-            const masterNode = query.node(masterNodeId).get();
-
-            if (!clonedNode || !masterNode) return;
-
-            // Set belongsTo on this node
-            actions.setProp(clonedNodeId, (prop) => {
-              prop.belongsTo = masterNodeId;
-              prop.relationType = 'full';
-            });
-
-            // Recursively set on children
-            const clonedChildren = clonedNode.data.nodes || [];
-            const masterChildren = masterNode.data.nodes || [];
-
-            clonedChildren.forEach((clonedChildId, index) => {
-              const masterChildId = masterChildren[index];
-              if (masterChildId) {
-                setRecursiveBelongsTo(clonedChildId, masterChildId);
-              }
-            });
-          };
-
-          setRecursiveBelongsTo(clonedTree.rootNodeId, clonedTree.originalRootId);
+          setRecursiveBelongsTo(clonedTree.rootNodeId, clonedTree.originalRootId, query, actions);
         }
         // If no originalRootId, it's not linked (shouldn't happen with our new system)
       }, 50);
@@ -267,32 +243,7 @@ export const RenderSavedComponent = ({ componentData }) => {
         if (!query.node(clonedTree.rootNodeId).get()) return;
 
         if (clonedTree.originalRootId && query.node(clonedTree.originalRootId).get()) {
-          // Recursively set belongsTo on all nodes in the cloned tree
-          const setRecursiveBelongsTo = (clonedNodeId, masterNodeId) => {
-            const clonedNode = query.node(clonedNodeId).get();
-            const masterNode = query.node(masterNodeId).get();
-
-            if (!clonedNode || !masterNode) return;
-
-            // Set belongsTo on this node
-            actions.setProp(clonedNodeId, (prop) => {
-              prop.belongsTo = masterNodeId;
-              prop.relationType = 'full';
-            });
-
-            // Recursively set on children
-            const clonedChildren = clonedNode.data.nodes || [];
-            const masterChildren = masterNode.data.nodes || [];
-
-            clonedChildren.forEach((clonedChildId, index) => {
-              const masterChildId = masterChildren[index];
-              if (masterChildId) {
-                setRecursiveBelongsTo(clonedChildId, masterChildId);
-              }
-            });
-          };
-
-          setRecursiveBelongsTo(clonedTree.rootNodeId, clonedTree.originalRootId);
+          setRecursiveBelongsTo(clonedTree.rootNodeId, clonedTree.originalRootId, query, actions);
         }
         // If no originalRootId, it's not linked (shouldn't happen with our new system)
       }, 50);
@@ -350,8 +301,10 @@ export const RenderSavedComponent = ({ componentData }) => {
 
 export const SavedComponentsToolbox = (components) => ({
   title: "My Components",
-  content: components.map((component, index) => (
-    <RenderSavedComponent key={index} componentData={component} />
-  )),
+  content: components
+    .filter(component => !component.isSection) // Exclude sections
+    .map((component, index) => (
+      <RenderSavedComponent key={index} componentData={component} />
+    )),
 });
 
