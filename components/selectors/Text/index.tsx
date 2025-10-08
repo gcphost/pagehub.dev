@@ -93,6 +93,12 @@ export const Text = (props: Partial<TextProps>) => {
   } = useNode();
 
   const [isEditing, setIsEditing] = React.useState(false);
+  const isEditingRef = React.useRef(isEditing);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    isEditingRef.current = isEditing;
+  }, [isEditing]);
 
   // Check if this node is selected
   const { isActive } = useEditor((_, query) => ({
@@ -188,12 +194,16 @@ export const Text = (props: Partial<TextProps>) => {
     editable: isEditing && !isInsideLinkedComponent,
     immediatelyRender: false, // Fix SSR hydration issues
     onUpdate: ({ editor }) => {
-      changeProp({
-        setProp,
-        propKey: "text",
-        propType: "component",
-        value: editor.getHTML(),
-      });
+      // Only save changes when actively editing (not when content is being set programmatically)
+      // Use ref to avoid stale closure issues
+      if (isEditingRef.current && !isInsideLinkedComponent) {
+        changeProp({
+          setProp,
+          propKey: "text",
+          propType: "component",
+          value: editor.getHTML(),
+        });
+      }
     },
     onFocus: () => {
       if (isActive && !isEditing) {
@@ -207,14 +217,27 @@ export const Text = (props: Partial<TextProps>) => {
       attributes: {
       },
     },
-  }, [enabled, isEditing]); // Only recreate when enabled or editing state changes
+  }, [enabled]); // Only recreate when enabled state changes
 
-  // Update content when prop changes
+  // Update content when prop changes or when switching edit modes
   useEffect(() => {
-    if (tiptapEditor && tiptapEditor.getHTML() !== processedText) {
-      tiptapEditor.commands.setContent(processedText, { errorOnInvalidContent: false });
+    if (tiptapEditor && processedText) {
+      // When switching to editing mode, always update to show raw template text
+      // When switching from editing mode, show replaced text
+      const currentContent = tiptapEditor.getHTML();
+
+      // Normalize HTML for comparison (strip whitespace differences)
+      const normalize = (html: string) => html.replace(/>\s+</g, '><').trim();
+
+      if (normalize(currentContent) !== normalize(processedText)) {
+        // Don't emit update event when programmatically setting content
+        tiptapEditor.commands.setContent(processedText, {
+          errorOnInvalidContent: false,
+          emitUpdate: false, // Prevent onUpdate from firing
+        });
+      }
     }
-  }, [processedText, tiptapEditor]);
+  }, [processedText, tiptapEditor, isEditing]);
 
 
   // Update editable state

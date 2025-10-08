@@ -46,7 +46,11 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
-          display: "hidden"
+          display: "hidden",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
         desktop={{
           display: "block"
@@ -62,7 +66,11 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
-          display: "hidden"
+          display: "hidden",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
         desktop={{
           display: "block"
@@ -78,7 +86,11 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
-          display: "hidden"
+          display: "hidden",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
         desktop={{
           display: "block"
@@ -193,7 +205,6 @@ export const NavToolbox = {
               text="×"
               url=""
               root={{
-
                 border: "border-0"
               }}
               mobile={{
@@ -362,6 +373,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
       <Element
@@ -376,6 +391,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
       <Element
@@ -390,6 +409,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
       <Element
@@ -404,6 +427,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
     </RenderToolComponent>,
@@ -442,6 +469,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
       <Element
@@ -456,6 +487,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
       <Element
@@ -470,6 +505,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
       <Element
@@ -484,6 +523,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
     </RenderToolComponent>,
@@ -526,6 +569,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
       <Element
@@ -541,6 +588,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
       <Element
@@ -556,6 +607,10 @@ export const NavToolbox = {
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
+          flexDirection: "flex-col",
+          gap: "gap-1.5",
+          alignItems: "items-center",
+          justifyContent: "justify-center",
         }}
       />
     </RenderToolComponent>,

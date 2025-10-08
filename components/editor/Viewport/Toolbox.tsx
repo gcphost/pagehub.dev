@@ -8,7 +8,7 @@ import { ROOT_NODE, useEditor } from "@craftjs/core";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-import { TbContainer, TbNote, TbPlus } from "react-icons/tb";
+import { TbContainer, TbPlus } from "react-icons/tb";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ComponentsAtom, SideBarAtom, SideBarOpen } from "utils/lib";
 import { PreviewAtom } from ".";
@@ -27,7 +27,6 @@ import { EmbedToolbox } from "./Toolbox/embedComponents";
 import { FormToolbox } from "./Toolbox/formComponents";
 import { FormElementToolbox } from "./Toolbox/formElement";
 import { ImageToolbox } from "./Toolbox/imageComponents";
-import { pageToolboxItems } from "./Toolbox/pageComponents";
 import { sectionToolboxItems } from "./Toolbox/sectionComponents";
 import { SpacerToolbox } from "./Toolbox/spacerComponents";
 import { textToolboxItems } from "./Toolbox/textComponents";
@@ -138,11 +137,11 @@ export const Toolbox = ({ userStyle = null }) => {
       icon: <TbContainer />,
       items: sectionToolboxItems,
     },
-    {
-      title: "Pages",
-      icon: <TbNote />,
-      items: pageToolboxItems,
-    },
+    /* {
+       title: "Pages",
+       icon: <TbNote />,
+       items: pageToolboxItems,
+     },*/
   ];
 
   //  if (!parent) delete items[0];

@@ -10,7 +10,6 @@ import { FormToolbox } from "./Toolbox/formComponents";
 import { FormElementToolbox } from "./Toolbox/formElement";
 import { ImageToolbox } from "./Toolbox/imageComponents";
 // Removed direct import to avoid circular dependency - loaded dynamically below
-import { pageToolboxItems } from "./Toolbox/pageComponents";
 import { SavedComponentsToolbox } from "./Toolbox/savedComponents";
 import { sectionToolboxItems } from "./Toolbox/sectionComponents";
 import { SpacerToolbox } from "./Toolbox/spacerComponents";
@@ -62,7 +61,7 @@ const baseItems = [
       ...EmbedToolbox.content,
     ],
   },
-  ...pageToolboxItems,
+  // ...pageToolboxItems,
 ];
 
 export const ComponentSettings = () => {
