@@ -1,7 +1,7 @@
 import { Element, ROOT_NODE, useEditor, useNode } from "@craftjs/core";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef } from "react";
-import { TbComponents, TbTrash } from "react-icons/tb";
+import { TbBoxModel2, TbTrash } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ComponentsAtom } from "utils/lib";
 import { buildClonedTree } from "../lib";
@@ -17,6 +17,7 @@ const processingLoaders = new Set();
 export const SavedComponentLoader = ({ componentData }) => {
   const { id } = useNode((node) => ({ id: node.id }));
   const { actions, query } = useEditor();
+  const components = useRecoilValue(ComponentsAtom);
   const processedRef = useRef(false);
 
   useEffect(() => {
@@ -51,36 +52,28 @@ export const SavedComponentLoader = ({ componentData }) => {
         nodes: nodes,
       };
 
-      // Check if an instance of this component already exists in the canvas
-      // by looking for nodes with matching savedComponentName
+      // Check if this component exists in ComponentsAtom (meaning a master exists)
       const savedComponentName = componentData.name;
-      const allNodes = query.getSerializedNodes();
-
-      const existingInstanceEntry = Object.entries(allNodes).find(([nodeId, node]: [string, any]) => {
-        // Make sure we have a valid saved component name match and it's not the root
-        return node.props?.savedComponentName === savedComponentName &&
-          savedComponentName &&
-          node.type?.resolvedName !== 'ROOT';
-      });
+      const existingComponent = components?.find(c => c.name === savedComponentName);
 
       let clonedTree;
-      if (existingInstanceEntry) {
-        // Verify the node actually exists (not just in serialized state)
-        const [existingId] = existingInstanceEntry;
-        const existingNode = query.node(existingId).get();
+      if (existingComponent) {
+        // Master component exists - create a linked clone from it
+        const masterNodeId = existingComponent.rootNodeId;
+        const masterNode = query.node(masterNodeId).get();
 
-        if (existingNode) {
-          // Node exists, create a linked clone to it
-          const existingTree = query.node(existingId).toNodeTree();
+        if (masterNode) {
+          // Master node exists, create a linked clone to it
+          const masterTree = query.node(masterNodeId).toNodeTree();
 
           clonedTree = buildClonedTree({
-            tree: existingTree,
+            tree: masterTree,
             query,
             setProp: actions.setProp,
             createLinks: true
           });
         } else {
-          // Node was deleted, treat as first instance
+          // Master was deleted somehow, treat as first instance
           clonedTree = buildClonedTree({
             tree,
             query,
@@ -89,7 +82,8 @@ export const SavedComponentLoader = ({ componentData }) => {
           });
         }
       } else {
-        // First instance - mark it with the saved component name but don't create links
+        // No master component exists - this shouldn't happen with our new system
+        // but handle it gracefully by creating a non-linked instance
         clonedTree = buildClonedTree({
           tree,
           query,
@@ -113,28 +107,39 @@ export const SavedComponentLoader = ({ componentData }) => {
       // Add the entire tree at once
       actions.addNodeTree(clonedTree, parentId, indexInParent);
 
-      // Set savedComponentName and belongsTo AFTER the tree is added
+      // Set belongsTo relationship AFTER the tree is added
       setTimeout(() => {
         if (!query.node(clonedTree.rootNodeId).get()) return;
 
-        // Always set savedComponentName for tracking
-        if (!clonedTree.originalRootId) {
-          // First instance - mark with saved component name
-          actions.setProp(clonedTree.rootNodeId, (prop) => {
-            prop.savedComponentName = savedComponentName;
-          });
-        } else if (query.node(clonedTree.originalRootId).get()) {
-          // Linked clone - set belongsTo
-          actions.setProp(clonedTree.rootNodeId, (prop) => {
-            prop.belongsTo = clonedTree.originalRootId;
-            prop.relationType = 'full';
-          });
-        } else {
-          // Original node not found, treating as first instance
-          actions.setProp(clonedTree.rootNodeId, (prop) => {
-            prop.savedComponentName = savedComponentName;
-          });
+        if (clonedTree.originalRootId && query.node(clonedTree.originalRootId).get()) {
+          // Recursively set belongsTo on all nodes in the cloned tree
+          const setRecursiveBelongsTo = (clonedNodeId, masterNodeId) => {
+            const clonedNode = query.node(clonedNodeId).get();
+            const masterNode = query.node(masterNodeId).get();
+
+            if (!clonedNode || !masterNode) return;
+
+            // Set belongsTo on this node
+            actions.setProp(clonedNodeId, (prop) => {
+              prop.belongsTo = masterNodeId;
+              prop.relationType = 'full';
+            });
+
+            // Recursively set on children
+            const clonedChildren = clonedNode.data.nodes || [];
+            const masterChildren = masterNode.data.nodes || [];
+
+            clonedChildren.forEach((clonedChildId, index) => {
+              const masterChildId = masterChildren[index];
+              if (masterChildId) {
+                setRecursiveBelongsTo(clonedChildId, masterChildId);
+              }
+            });
+          };
+
+          setRecursiveBelongsTo(clonedTree.rootNodeId, clonedTree.originalRootId);
         }
+        // If no originalRootId, it's not linked (shouldn't happen with our new system)
       }, 50);
 
       // Clean up the global processing set
@@ -154,7 +159,7 @@ export const SavedComponentLoader = ({ componentData }) => {
     return () => {
       processingLoaders.delete(id);
     };
-  }, [componentData, actions, query, id]);
+  }, [componentData, actions, query, id, components]);
 
   // Show a placeholder while loading
   return <div className="p-3 text-gray-400">Loading component...</div>;
@@ -175,14 +180,11 @@ export const RenderSavedComponent = ({ componentData }) => {
   }));
 
   const setComponents = useSetRecoilState(ComponentsAtom);
+  const components = useRecoilValue(ComponentsAtom);
   const selectedNode = useRecoilValue(SelectedNodeAtom);
 
-  // Get component name from first node
-  const nodes = JSON.parse(componentData.nodes);
-  const firstNode = nodes[Object.keys(nodes)[0]];
-  const componentName = firstNode?.props?.custom?.displayName ||
-    firstNode?.displayName ||
-    generate().dashed;
+  // Use the component name from componentData directly
+  const componentName = componentData.name || 'Unnamed Component';
 
   // Create the draggable element
   const tool = (
@@ -212,31 +214,28 @@ export const RenderSavedComponent = ({ componentData }) => {
         nodes: nodes,
       };
 
-      // Check if an instance of this component already exists in the canvas
+      // Check if this component exists in ComponentsAtom (meaning a master exists)
       const savedComponentName = componentData.name;
-      const allNodes = query.getSerializedNodes();
-      const existingInstanceEntry = Object.entries(allNodes).find(([nodeId, node]: [string, any]) =>
-        node.props?.savedComponentName === savedComponentName
-      );
+      const existingComponent = components?.find(c => c.name === savedComponentName);
 
       let clonedTree;
-      if (existingInstanceEntry) {
-        // Verify the node actually exists (not just in serialized state)
-        const [existingId] = existingInstanceEntry;
-        const existingNode = query.node(existingId).get();
+      if (existingComponent) {
+        // Master component exists - create a linked clone from it
+        const masterNodeId = existingComponent.rootNodeId;
+        const masterNode = query.node(masterNodeId).get();
 
-        if (existingNode) {
-          // Node exists, create a linked clone to it
-          const existingTree = query.node(existingId).toNodeTree();
+        if (masterNode) {
+          // Master node exists, create a linked clone to it
+          const masterTree = query.node(masterNodeId).toNodeTree();
 
           clonedTree = buildClonedTree({
-            tree: existingTree,
+            tree: masterTree,
             query,
             setProp: actions.setProp,
             createLinks: true
           });
         } else {
-          // Node was deleted, treat as first instance
+          // Master was deleted somehow, treat as first instance
           clonedTree = buildClonedTree({
             tree,
             query,
@@ -245,7 +244,8 @@ export const RenderSavedComponent = ({ componentData }) => {
           });
         }
       } else {
-        // First instance - mark it with the saved component name but don't create links
+        // No master component exists - this shouldn't happen with our new system
+        // but handle it gracefully by creating a non-linked instance
         clonedTree = buildClonedTree({
           tree,
           query,
@@ -262,32 +262,44 @@ export const RenderSavedComponent = ({ componentData }) => {
       // Add the entire tree at once
       actions.addNodeTree(clonedTree, targetId, targetIndex);
 
-      // Set savedComponentName and belongsTo AFTER the tree is added
+      // Set belongsTo relationship AFTER the tree is added
       setTimeout(() => {
         if (!query.node(clonedTree.rootNodeId).get()) return;
 
-        if (!clonedTree.originalRootId) {
-          // First instance - mark with saved component name
-          actions.setProp(clonedTree.rootNodeId, (prop) => {
-            prop.savedComponentName = savedComponentName;
-          });
-        } else if (query.node(clonedTree.originalRootId).get()) {
-          // Linked clone - set belongsTo
-          actions.setProp(clonedTree.rootNodeId, (prop) => {
-            prop.belongsTo = clonedTree.originalRootId;
-            prop.relationType = 'full';
-          });
-        } else {
-          // Original not found, treat as first instance
-          actions.setProp(clonedTree.rootNodeId, (prop) => {
-            prop.savedComponentName = savedComponentName;
-          });
+        if (clonedTree.originalRootId && query.node(clonedTree.originalRootId).get()) {
+          // Recursively set belongsTo on all nodes in the cloned tree
+          const setRecursiveBelongsTo = (clonedNodeId, masterNodeId) => {
+            const clonedNode = query.node(clonedNodeId).get();
+            const masterNode = query.node(masterNodeId).get();
+
+            if (!clonedNode || !masterNode) return;
+
+            // Set belongsTo on this node
+            actions.setProp(clonedNodeId, (prop) => {
+              prop.belongsTo = masterNodeId;
+              prop.relationType = 'full';
+            });
+
+            // Recursively set on children
+            const clonedChildren = clonedNode.data.nodes || [];
+            const masterChildren = masterNode.data.nodes || [];
+
+            clonedChildren.forEach((clonedChildId, index) => {
+              const masterChildId = masterChildren[index];
+              if (masterChildId) {
+                setRecursiveBelongsTo(clonedChildId, masterChildId);
+              }
+            });
+          };
+
+          setRecursiveBelongsTo(clonedTree.rootNodeId, clonedTree.originalRootId);
         }
+        // If no originalRootId, it's not linked (shouldn't happen with our new system)
       }, 50);
     } catch (error) {
       console.error('Error adding saved component:', error);
     }
-  }, [actions, query, componentData, selectedNode]);
+  }, [actions, query, componentData, selectedNode, components]);
 
   const handleDelete = (e) => {
     e.stopPropagation();
@@ -321,7 +333,7 @@ export const RenderSavedComponent = ({ componentData }) => {
       className="cursor-move pointer-events-auto w-full"
     >
       <div className="flex flex-col items-center justify-center border p-3 rounded-md w-full hover:bg-gray-100 min-h-[80px] gap-2 pointer-events-none transition-colors relative">
-        <TbComponents className="text-2xl" />
+        <TbBoxModel2 className="text-2xl" />
         <span className="text-xs text-center">{componentName}</span>
         <button
           onClick={handleDelete}

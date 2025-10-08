@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { SideBarAtom, SideBarOpen } from "utils/lib";
 import { PreviewAtom } from "../Viewport";
+import { Header } from "../Viewport/Header";
 
 export * from "./ToolbarDropdown";
 export * from "./ToolbarItem";
@@ -80,6 +81,7 @@ export const Toolbar = () => {
       style={style}
       ref={ref}
     >
+      <Header />
       <div
         className="overflow-hidden w-full antialiased bg-gray-800/90 select-none z-0"
         aria-expanded={sideBarOpen && !preview ? "true" : "false"}

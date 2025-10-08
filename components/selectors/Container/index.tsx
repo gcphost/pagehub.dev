@@ -20,7 +20,7 @@ import { TbContainer, TbNote } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { mergeAccessibilityProps } from "utils/accessibility";
 import { SettingsAtom } from "utils/atoms";
-import { applyBackgroundImage, enableContext, motionIt } from "utils/lib";
+import { IsolateAtom, ViewModeAtom, applyBackgroundImage, enableContext, motionIt } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
@@ -65,6 +65,8 @@ export const Container = (props: Partial<ContainerProps>) => {
   };
 
   const view = useRecoilValue(ViewAtom);
+  const viewMode = useRecoilValue(ViewModeAtom);
+  const isolate = useRecoilValue(IsolateAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
   const preview = useRecoilValue(PreviewAtom);
   const settings = useRecoilValue(SettingsAtom);
@@ -77,8 +79,9 @@ export const Container = (props: Partial<ContainerProps>) => {
 
   const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
-  const { name, id } = useNode((node) => ({
+  const { name, id, isActive } = useNode((node) => ({
     name: node.data.custom.displayName || node.data.displayName,
+    isActive: node.events.selected,
   }));
 
   //  const [isolate, setIsolate] = useRecoilState(IsolateAtom);
@@ -131,7 +134,7 @@ export const Container = (props: Partial<ContainerProps>) => {
 
   const inlayed = hasInlay(props);
 
-  const className = ClassGenerator(
+  let className = ClassGenerator(
     props,
     view,
     enabled,
@@ -142,6 +145,23 @@ export const Container = (props: Partial<ContainerProps>) => {
     palette,
     query
   );
+
+  // Hide component containers from the main viewport
+  // Only show them when being actively edited
+  if (props.type === "component") {
+    // Always hide in preview mode (not editing)
+    if (!enabled) {
+      className = `${className} hidden`;
+    }
+    // Hide in page mode (only show when editing components)
+    else if (viewMode === "page") {
+      className = `${className} hidden`;
+    }
+    // In component mode, only show if this specific component is isolated
+    else if (viewMode === "component" && isolate && isolate !== id) {
+      className = `${className} hidden`;
+    }
+  }
 
   let prop: any = {
     ref: (r) => {
@@ -350,6 +370,10 @@ Container.craft = {
   },
   props: {
     tools: (props) => {
+      // If this is a linked component, only show minimal controls
+      const isLinked = props.belongsTo && props.relationType !== "style";
+      const isStyleLinked = props.belongsTo && props.relationType === "style";
+
       const baseControls = [
         <NameNodeController
           key="container1"
@@ -374,18 +398,21 @@ Container.craft = {
           }}
         />,
 
-        <ToolNodeController
-          key="container3"
-          position="bottom"
-          align="start"
-          alt={{
-            position: "top",
-            align: "start",
-            placement: "start",
-          }}
-        >
-          <ContainerSettingsNodeTool />
-        </ToolNodeController>,
+        // Hide settings tool if fully linked
+        ...(!isLinked ? [
+          <ToolNodeController
+            key="container3"
+            position="bottom"
+            align="start"
+            alt={{
+              position: "top",
+              align: "start",
+              placement: "start",
+            }}
+          >
+            <ContainerSettingsNodeTool />
+          </ToolNodeController>
+        ] : []),
       ];
 
       const addControls = [
@@ -393,6 +420,11 @@ Container.craft = {
       ];
 
       if (props.type === "page") {
+        return [...baseControls, ...addControls];
+      }
+
+      // If fully linked (not style mode), only return base controls
+      if (isLinked) {
         return [...baseControls, ...addControls];
       }
 

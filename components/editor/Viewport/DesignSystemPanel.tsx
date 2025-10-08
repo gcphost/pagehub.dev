@@ -18,7 +18,7 @@ interface DesignSystemPanelProps {
 export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) => {
   const { actions, query } = useEditor();
   const [activeTab, setActiveTab] = useState<"colors" | "styles">("colors");
-  const [position, setPosition] = useState({ x: window.innerWidth - 320, y: 100 });
+  const [position, setPosition] = useState({ x: 1000, y: 100 }); // Safe default for SSR
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [fontDialog, setFontDialog] = useRecoilState(FontFamilyDialogAtom);
@@ -86,6 +86,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
     const rootNode = state.nodes[ROOT_NODE];
     return rootNode?.data?.props || {};
   });
+
+  // Initialize position on client side
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setPosition({ x: window.innerWidth - 320, y: 100 });
+    }
+  }, []);
 
   // Load Google Fonts for preview
   useEffect(() => {

@@ -240,6 +240,12 @@ export const setPropOnView = (
   delay = 2000
 ) => {
   try {
+    // Guard against undefined setProp (node not ready yet)
+    if (!setProp) {
+      console.log('⚠️ setProp not available yet, skipping update');
+      return;
+    }
+
     setProp((props: any) => {
       // possible to do non root shit here..
       const setting =
@@ -265,7 +271,13 @@ export const setPropOnView = (
 
     if (onChange) onChange(value);
   } catch (e) {
-    console.error(e);
+    // Silently ignore errors during component loading
+    // This happens when Craft.js tries to update nodes that aren't fully registered yet
+    if (e.message && e.message.includes('data')) {
+      console.log('⚠️ Node not ready for prop update, skipping');
+    } else {
+      console.error(e);
+    }
   }
 };
 
@@ -497,7 +509,7 @@ const fromEntries = (pairs) => {
   );
 };
 
-export const saveHandler = ({ query, id, component = null, actions = null }) => {
+export const saveHandler = async ({ query, id, component = null, actions = null }) => {
   const tree = query.node(id).toNodeTree();
   const nodePairs = Object.keys(tree.nodes).map((id) => [
     id,
@@ -525,46 +537,114 @@ export const saveHandler = ({ query, id, component = null, actions = null }) => 
   // assign component it came froms id.. then that new comp can see if we can mod or take settings..
 
   if (component) {
-    // Save to Background props instead of localStorage
+    // NEW APPROACH: Create a real Container node with type="component"
     if (actions) {
-      // Find the Background node (ROOT_NODE's first child is usually Background)
-      const rootNode = query.node(ROOT_NODE).get();
-      const backgroundId = rootNode?.data?.nodes?.[0];
+      console.log('💾 Creating component as real node:', componentName);
 
-      if (backgroundId) {
-        console.log('💾 Saving component to Background:', componentName);
-        actions.setProp(backgroundId, (prop) => {
-          prop.savedComponents = prop.savedComponents || [];
-          // Check if component already exists (avoid duplicates)
-          if (!prop.savedComponents.find(c => c.rootNodeId === saveData.rootNodeId)) {
-            prop.savedComponents.push(saveData);
-            console.log('✅ Component saved! Total components:', prop.savedComponents.length);
-          } else {
-            console.log('⚠️ Component already exists, skipping');
-          }
-        });
-      }
+      // Get the original node info before moving it
+      const originalNode = query.node(id).get();
+      const originalParent = originalNode.data.parent;
+      const originalParentNode = query.node(originalParent).get();
+      const originalIndex = originalParentNode.data.nodes.indexOf(id);
 
-      // Mark the original component on canvas with savedComponentName so clones can link to it
-      actions.setProp(id, (prop) => {
-        prop.savedComponentName = componentName;
+      // Dynamically import Container to avoid circular dependency
+      const { Container } = await import("../../selectors/Container");
+
+      // 1. Create a new Container with type="component" to store the original
+      // Must be a Canvas element to accept children
+      // Will be automatically hidden in preview mode by Container component
+      const Element = (await import("@craftjs/core")).Element;
+      const componentWrapper = query.parseReactElement(
+        <Element
+          canvas
+          is={Container}
+          type="component"
+          custom={{ displayName: componentName }}
+          root={{
+            background: "bg-transparent",
+          }}
+          mobile={{
+            display: "flex",
+            flexDirection: "flex-col",
+            gap: "gap-0",
+          }}
+        />
+      ).toNodeTree();
+
+      // Add the component wrapper to ROOT
+      actions.addNodeTree(componentWrapper, ROOT_NODE);
+      const componentId = componentWrapper.rootNodeId;
+      console.log('📦 Created component container:', componentId);
+
+      // 2. Move the ORIGINAL node into the component container
+      actions.move(id, componentId, 0);
+      console.log('📦 Moved original into component container');
+
+      // 3. Create a clone from the original (now inside container)
+      const tree = query.node(id).toNodeTree();
+      const clonedTree = buildClonedTree({
+        tree,
+        query,
+        setProp: actions.setProp,
+        createLinks: true // Create link between original and clone
       });
 
-      // Verify serialization and trigger save
-      setTimeout(() => {
-        const serialized = query.serialize();
-        const parsed = JSON.parse(serialized);
-        const bgNode = parsed[backgroundId];
-        console.log('🔍 Background node savedComponents after save:', bgNode?.props?.savedComponents?.length || 0);
+      // 4. Place the clone where the original was
+      actions.addNodeTree(clonedTree, originalParent, originalIndex);
+      console.log('📦 Placed clone at original location');
 
-        // Trigger a tracked change to force the onNodesChange callback
-        // This ensures auto-save captures the new savedComponents
-        actions.setProp(backgroundId, (prop) => {
-          // Touch a property to trigger change detection (this will be in history)
-          prop._lastComponentSave = Date.now();
-        });
-        console.log('🔔 Triggered change to force auto-save');
-      }, 100);
+      // Mark the clone with belongsTo and select it
+      setTimeout(() => {
+        // Recursively set belongsTo on all nodes in the cloned tree
+        const setRecursiveBelongsTo = (clonedNodeId, masterNodeId) => {
+          const clonedNode = query.node(clonedNodeId).get();
+          const masterNode = query.node(masterNodeId).get();
+
+          if (!clonedNode || !masterNode) return;
+
+          // Set belongsTo on this node
+          actions.setProp(clonedNodeId, (prop) => {
+            prop.belongsTo = masterNodeId;
+            prop.relationType = 'full';
+            if (clonedNodeId === clonedTree.rootNodeId) {
+              prop.savedComponentName = componentName;
+            }
+          });
+
+          // Recursively set on children
+          const clonedChildren = clonedNode.data.nodes || [];
+          const masterChildren = masterNode.data.nodes || [];
+
+          clonedChildren.forEach((clonedChildId, index) => {
+            const masterChildId = masterChildren[index];
+            if (masterChildId) {
+              setRecursiveBelongsTo(clonedChildId, masterChildId);
+            }
+          });
+        };
+
+        setRecursiveBelongsTo(clonedTree.rootNodeId, id);
+
+        // Select the clone so user can see it's been created
+        actions.selectNode(clonedTree.rootNodeId);
+      }, 50);
+
+      console.log('✅ Component created as real node!');
+
+      // Serialize the tree for the component data (using original node tree)
+      const componentTreePairs = Object.keys(tree.nodes).map((nodeId) => [
+        nodeId,
+        query.node(nodeId).toSerializedNode(),
+      ]);
+      const componentEntries = fromEntries(componentTreePairs);
+      const componentSerializedJSON = JSON.stringify(componentEntries);
+
+      // Return the component data with the original's tree
+      return {
+        rootNodeId: id, // The original node in the component container is the root
+        nodes: componentSerializedJSON,
+        name: componentName,
+      };
     }
   } else localStorage.setItem("clipBoard", JSON.stringify(saveData));
 

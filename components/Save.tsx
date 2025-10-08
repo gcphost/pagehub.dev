@@ -1,9 +1,8 @@
 import { UnsavedChangesAtom } from "components/editor/Viewport";
 import { SaveToServer } from "components/editor/Viewport/lib";
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { SessionTokenAtom, SettingsAtom } from "utils/atoms";
-import { ComponentsAtom } from "utils/lib";
 
 export const Save = ({ result }) => {
   const [unsavedChanges, setUnsavedChanged] =
@@ -11,16 +10,14 @@ export const Save = ({ result }) => {
 
   const [settings, setSettings] = useRecoilState(SettingsAtom);
   const sessionToken = useRecoilValue(SessionTokenAtom);
-  const setComponents = useSetRecoilState(ComponentsAtom);
 
   const [last, setLast] = useState({});
 
   useEffect(() => {
     setSettings(result);
-    const components = JSON.parse(localStorage.getItem("components")) || [];
-
-    setComponents(components);
-  }, [result, setComponents, setSettings]);
+    // Components are now loaded from Background node in Header.tsx and Toolbox.tsx
+    // No longer using localStorage
+  }, [result, setSettings]);
 
   useEffect(() => {
     if (!last || !Object.keys(last).length) {

@@ -23,6 +23,7 @@ import {
   TbExternalLink,
   TbEye,
   TbFilePlus,
+  TbFileText,
   TbForms,
   TbLayoutSidebar,
   TbLayoutSidebarRight,
@@ -46,12 +47,14 @@ import {
   MenuItemState,
   MenuState,
   SideBarAtom,
-  popupCenter,
+  ViewModeAtom,
+  popupCenter
 } from "utils/lib";
 import { useTenant } from "utils/tenantStore";
 import { DeviceAtom, EnabledAtom, PreviewAtom, ViewAtom } from ".";
 import { MediaManagerModal } from "../Toolbar/Inputs/MediaManagerModal";
 import { AnimatedSaveButton } from "../Tools/AnimatedSaveButton";
+import { ComponentSelector } from "./ComponentSelector";
 import { ComponentSettings } from "./ComponentSettings";
 import { DesignSystemPanel } from "./DesignSystemPanel";
 import { DomainSettings } from "./DomainSettings";
@@ -115,20 +118,51 @@ export const Header = () => {
 
   const setComponents = useSetRecoilState(ComponentsAtom);
 
-  // Load saved components from Background node
+  // Load components by querying for type="component" nodes
   useEffect(() => {
     if (!query || !enabled) return;
 
     try {
       const rootNode = query.node(ROOT_NODE).get();
-      const backgroundId = rootNode?.data?.nodes?.[0];
+      const rootChildren = rootNode?.data?.nodes || [];
 
-      if (backgroundId) {
-        const backgroundNode = query.node(backgroundId).get();
-        const savedComponents = backgroundNode?.data?.props?.savedComponents || [];
-      }
+      // Find all Container nodes with type="component"
+      const componentNodes = rootChildren
+        .map(nodeId => {
+          try {
+            const node = query.node(nodeId).get();
+            if (node?.data?.props?.type === 'component') {
+              // Get the first child of the component container (the actual content)
+              const childNodeId = node.data.nodes?.[0];
+
+              if (childNodeId) {
+                // Serialize the child node tree for dragging
+                const tree = query.node(childNodeId).toNodeTree();
+                const nodePairs = Object.keys(tree.nodes).map((id) => [
+                  id,
+                  query.node(id).toSerializedNode(),
+                ]);
+                const entries = Object.fromEntries(nodePairs);
+                const serializedNodes = JSON.stringify(entries);
+
+                return {
+                  rootNodeId: childNodeId, // The actual content node
+                  nodes: serializedNodes,
+                  name: node?.data?.custom?.displayName || node?.data?.displayName || 'Unnamed Component',
+                };
+              }
+            }
+          } catch (e) {
+            return null;
+          }
+          return null;
+        })
+        .filter(Boolean);
+
+      console.log('📦 Header: Found component nodes:', componentNodes.length);
+      setComponents(componentNodes);
     } catch (e) {
-      console.error("❌ Error loading saved components:", e);
+      console.error("❌ Error loading components:", e);
     }
   }, [query, enabled, setComponents]);
 
@@ -220,6 +254,7 @@ export const Header = () => {
   const sessionToken = useRecoilValue(SessionTokenAtom);
 
   const [sideBarLeft, setSideBarLeft] = useRecoilState(SideBarAtom);
+  const [viewMode, setViewMode] = useRecoilState(ViewModeAtom);
 
   const { data: session, status } = useSession();
 
@@ -340,12 +375,53 @@ export const Header = () => {
           </Item>
         </Tooltip>
 
+        <Tooltip content={`Switch to ${viewMode === 'page' ? 'Component' : 'Page'} View`} placement="bottom" arrow={false}>
+          <Item
+            ariaLabel={`Switch to ${viewMode === 'page' ? 'Component' : 'Page'} View`}
+            onClick={() => {
+              const newMode = viewMode === 'page' ? 'component' : 'page';
+              setViewMode(newMode);
+
+              // When switching to page view, restore normal state
+              if (newMode === 'page') {
+                // Deselect any active node
+                actions.selectNode(null);
+
+                // Un-isolate to show all pages
+                const { isolatePageAlt } = require('utils/lib');
+                isolatePageAlt(true, query, null, actions, () => { }, false);
+
+                // Show headers and footers
+                const rootNode = query.node(ROOT_NODE).get();
+                rootNode.data.nodes.forEach((nodeId) => {
+                  const node = query.node(nodeId).get();
+                  const nodeType = node?.data?.props?.type;
+
+                  if (nodeType === 'header' || nodeType === 'footer') {
+                    actions.setHidden(nodeId, false);
+                    actions.setProp(nodeId, (prop) => (prop.hidden = false));
+                  }
+                });
+              } else {
+                // Just deselect when switching to component view
+                actions.selectNode(null);
+              }
+            }}
+          >
+            {viewMode === 'page' ? <TbBoxModel2 /> : <TbFileText />}
+          </Item>
+        </Tooltip>
+
         <Tooltip content="Preview" placement="bottom" arrow={false}>
           <Item
             ariaLabel="Preview"
             onClick={() => {
               toggle();
               setPreview(!preview);
+              // Deselect any active node when toggling preview
+              if (enabled) {
+                actions.selectNode(null);
+              }
               document.getElementById("viewport").focus();
             }}
           >
@@ -393,9 +469,13 @@ export const Header = () => {
         </Tooltip>
       </header>
 
-      {/* Page Selector Bar - Below Header */}
+      {/* Page/Component Selector Bar - Below Header */}
       <div className="pointer-events-auto bg-primary-900 border-b-2 border-gray-600 px-3 py-2">
-        <PageSelector className="w-full" />
+        {viewMode === 'page' ? (
+          <PageSelector className="w-full" />
+        ) : (
+          <ComponentSelector className="w-full" />
+        )}
       </div>
 
       {showMenu && (

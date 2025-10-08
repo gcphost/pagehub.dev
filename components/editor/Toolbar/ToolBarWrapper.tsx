@@ -1,7 +1,7 @@
 import { NodeTree, ROOT_NODE, useEditor, useNode } from "@craftjs/core";
 import { Tooltip } from "components/layout/Tooltip";
 import { motion } from "framer-motion";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import {
   TbCaretUp,
   TbComponents,
@@ -21,7 +21,6 @@ import {
   SideBarOpen,
   isolatePage,
 } from "utils/lib";
-import { Header } from "../Viewport/Header";
 import {
   addHandler,
   buildClonedTree,
@@ -77,11 +76,11 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
     });
   }, [actions, getCloneTree, id, query, setProp]);
 
-  const handleClone = (e) => {
+  const handleClone = async (e) => {
     e.preventDefault();
 
     try {
-      handleSaveTemplate();
+      await handleSaveTemplate();
       handleAdd();
     } catch (e) {
       console.error(e);
@@ -101,27 +100,47 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
 
   const canMake = !(components || []).find((_) => _.rootNodeId === id);
 
-  const [showProps, setShowProps] = useState(false);
+  // Check if this node or ANY ancestor is a fully linked component (not style mode)
+  const checkIfLinked = (nodeId) => {
+    const node = query.node(nodeId).get();
+    if (!node) return false;
+
+    // If this node is fully linked, return true
+    if (node.data.props?.belongsTo && node.data.props?.relationType !== "style") {
+      return true;
+    }
+
+    // Check parent
+    if (node.data.parent) {
+      return checkIfLinked(node.data.parent);
+    }
+
+    return false;
+  };
+
+  const isLinked = checkIfLinked(id);
+
 
   return (
     <>
-      <Header />
-
       <h1 className="font-bold text-2xl p-3  bg-gray-700 w-full z-50 border-gray-800 border-b">
         {<ToolbarTitleEditor />}
       </h1>
 
-      <div className="border-b border-b-gray-800 font-semibold items-center flex justify-between">
-        <div
-          aria-label="Tabs"
-          role="tablist"
-          className="flex text-center flex-wrap gap-1.5"
-        >
-          {head.map((_, key) => (
-            <Tab key={key} title={_.title} tabId={_.title} icon={_.icon} />
-          ))}
+      {/* Hide settings tabs for fully linked components */}
+      {!isLinked && (
+        <div className="border-b border-b-gray-800 font-semibold items-center flex justify-between">
+          <div
+            aria-label="Tabs"
+            role="tablist"
+            className="flex text-center flex-wrap gap-1.5"
+          >
+            {head.map((_, key) => (
+              <Tab key={key} title={_.title} tabId={_.title} icon={_.icon} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div
         id="toolbarItems"
@@ -204,46 +223,51 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
               </motion.div>
             </Tooltip>
 
-            <Tooltip
-              content="Clone"
-              onClick={(e: React.MouseEvent) => {
-                handleClone(e);
-              }}
-            >
-              <motion.div
-                whileHover={{
-                  scale: 1.3,
-                  transition: { duration: 0.2 },
-                }}
-                whileTap={{ scale: 0.9 }}
-                className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
-                style={scaleAnimationStyle}
-              >
-                <TbCopy />
-              </motion.div>
-            </Tooltip>
+            {/* Hide Clone and Create Component buttons for linked components */}
+            {!isLinked && (
+              <>
+                <Tooltip
+                  content="Clone"
+                  onClick={(e: React.MouseEvent) => {
+                    handleClone(e);
+                  }}
+                >
+                  <motion.div
+                    whileHover={{
+                      scale: 1.3,
+                      transition: { duration: 0.2 },
+                    }}
+                    whileTap={{ scale: 0.9 }}
+                    className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+                    style={scaleAnimationStyle}
+                  >
+                    <TbCopy />
+                  </motion.div>
+                </Tooltip>
 
-            <Tooltip
-              content={`${canMake ? "Create Component" : "Component Exists"}`}
-              onClick={(e: React.MouseEvent) => {
-                const comp = handleSaveTemplate("component");
+                <Tooltip
+                  content={`${canMake ? "Create Component" : "Component Exists"}`}
+                  onClick={async (e: React.MouseEvent) => {
+                    const comp = await handleSaveTemplate("component");
 
-                setComponents([...components, comp]);
-              }}
-            >
-              <motion.div
-                whileHover={{
-                  scale: 1.3,
-                  transition: { duration: 0.2 },
-                }}
-                whileTap={{ scale: 0.9 }}
-                ref={ref}
-                className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
-                style={scaleAnimationStyle}
-              >
-                {canMake ? <TbComponents /> : <TbComponentsOff />}
-              </motion.div>
-            </Tooltip>
+                    setComponents([...components, comp]);
+                  }}
+                >
+                  <motion.div
+                    whileHover={{
+                      scale: 1.3,
+                      transition: { duration: 0.2 },
+                    }}
+                    whileTap={{ scale: 0.9 }}
+                    ref={ref}
+                    className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+                    style={scaleAnimationStyle}
+                  >
+                    {canMake ? <TbComponents /> : <TbComponentsOff />}
+                  </motion.div>
+                </Tooltip>
+              </>
+            )}
           </>
         )}
 

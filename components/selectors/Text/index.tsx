@@ -130,6 +130,26 @@ export const Text = (props: Partial<TextProps>) => {
   // Replace variables in text (only show raw text when actively editing)
   const processedText = (!enabled || preview || !isEditing) ? replaceVariables(text, query) : text;
 
+  // Check if this node or any ancestor is a fully linked component
+  const checkIfAncestorLinked = (nodeId) => {
+    const node = query.node(nodeId).get();
+    if (!node) return false;
+
+    // If this node is fully linked, return true
+    if (node.data.props?.belongsTo && node.data.props?.relationType !== "style") {
+      return true;
+    }
+
+    // Check parent
+    if (node.data.parent) {
+      return checkIfAncestorLinked(node.data.parent);
+    }
+
+    return false;
+  };
+
+  const isInsideLinkedComponent = checkIfAncestorLinked(id);
+
   // Tiptap editor instance - only create when in edit mode or when enabled
   const tiptapEditor = useTiptapEditor({
     extensions: [
@@ -168,7 +188,7 @@ export const Text = (props: Partial<TextProps>) => {
       }),
     ],
     content: processedText,
-    editable: isEditing,
+    editable: isEditing && !isInsideLinkedComponent,
     immediatelyRender: false, // Fix SSR hydration issues
     onUpdate: ({ editor }) => {
       changeProp({
@@ -287,7 +307,27 @@ export const Text = (props: Partial<TextProps>) => {
 Text.craft = {
   displayName: "Text",
   rules: {
-    canDrag: () => true,
+    canDrag: (node, helpers) => {
+      // Check if this node or any ancestor is a fully linked component
+      const checkIfLinked = (nodeId) => {
+        const n = helpers.query.node(nodeId).get();
+        if (!n) return false;
+
+        // If this node is fully linked, prevent dragging
+        if (n.data.props?.belongsTo && n.data.props?.relationType !== "style") {
+          return false;
+        }
+
+        // Check parent
+        if (n.data.parent) {
+          return checkIfLinked(n.data.parent);
+        }
+
+        return false;
+      };
+
+      return !checkIfLinked(node.id);
+    },
     canMoveIn: () => false,
   },
   related: {

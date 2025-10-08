@@ -1352,7 +1352,7 @@ ul {
 }
 
 .tool-bg {
-  @apply bg-primary-500 inside-shadow text-white rounded-md px-3 py-1.5 text-sm font-normal leading-normal tracking-normal flex items-center justify-center !gap-2;
+  @apply bg-primary-500 inside-shadow text-white rounded-md p-1.5 text-sm font-normal leading-normal tracking-normal flex items-center justify-center !gap-2;
 }
 
 .tool-button {

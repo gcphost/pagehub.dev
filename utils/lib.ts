@@ -97,6 +97,16 @@ export const SideBarOpen = atom({
   default: true,
 });
 
+export const ViewModeAtom = atom({
+  key: "viewMode",
+  default: "page", // "page" or "component"
+});
+
+export const OpenComponentEditorAtom = atom({
+  key: "openComponentEditor",
+  default: null, // { componentId: string, componentName: string } or null
+});
+
 export const PageCountAtom = atom({
   key: "pagecount",
   default: 0,
@@ -582,8 +592,13 @@ export const selectAfterAdding = (
     // We check the value but don't watch it - we only want to react when id/enabled changes
     if (!initialLoadComplete) return;
 
-    selectNode(id);
-    setActiveTab("");
+    try {
+      selectNode(id);
+      setActiveTab("");
+    } catch (e) {
+      // Node may not be fully registered yet, ignore
+      console.log("⚠️ Could not auto-select node (may not be ready yet):", id);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, enabled]);
 };

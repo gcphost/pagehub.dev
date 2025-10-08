@@ -28,9 +28,11 @@ import {
   ScreenshotAtom,
   SideBarAtom,
   SideBarOpen,
+  ViewModeAtom,
   isolatePageAlt,
 } from "utils/lib";
 import { DeviceOffline } from "../Toolbar/DeviceOffline";
+import { ComponentEditorTabs } from "./ComponentEditorTabs";
 import {
   GetHtmlToComponent,
   SaveToServer,
@@ -137,6 +139,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const setInitialLoadComplete = useSetRecoilState(InitialLoadCompleteAtom);
   const nextRouter = useRouter();
   const [isolate, setIsolate] = useRecoilState(IsolateAtom);
+  const viewMode = useRecoilValue(ViewModeAtom);
 
   // Handle URL-based page isolation
   useEffect(() => {
@@ -692,7 +695,12 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
         {enabled && !online && <DeviceOffline />}
 
-        <div className={activeClass[0]}>
+        <div className={`${activeClass[0]} ${viewMode === 'component' ? '!flex-col' : ''}`}>
+          {/* Component Editor Tabs - Show when in component mode */}
+          {enabled && viewMode === 'component' && (
+            <ComponentEditorTabs className="flex-shrink-0" />
+          )}
+
           <main
             id="viewport"
             role="main"
@@ -700,7 +708,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
             onKeyDown={handleKeyDown}
             data-isolated={!!isolated}
             tabIndex={0}
-            className={activeClass[1]}
+            className={`${activeClass[1]} ${viewMode === 'component' ? 'flex-1' : ''}`}
             ref={(ref: any) =>
               connectors.select(connectors.hover(ref, null), null)
             }

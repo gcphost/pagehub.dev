@@ -39,12 +39,12 @@ export const DuplicateNodeButton = ({
     });
   }, [actions, getCloneTree, id, query, setProp]);
 
-  const handleDuplicate = (e: React.MouseEvent) => {
+  const handleDuplicate = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     try {
-      handleSaveTemplate();
+      await handleSaveTemplate();
       handleAdd();
     } catch (error) {
       console.error("Error duplicating node:", error);
