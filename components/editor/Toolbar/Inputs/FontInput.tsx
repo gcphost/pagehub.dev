@@ -43,6 +43,8 @@ export const FontInput = () => (
         max={TailwindStyles.fontSize.length - 1}
         min={0}
         valueLabels={TailwindStyles.fontSize}
+        showVarSelector={true}
+        varSelectorPrefix="text"
       />
 
       <ToolbarItem
@@ -52,6 +54,8 @@ export const FontInput = () => (
         max={TailwindStyles.fontWeight.length - 1}
         min={0}
         valueLabels={TailwindStyles.fontWeight}
+        showVarSelector={true}
+        varSelectorPrefix="font"
       />
     </ToolbarSection>
     <ToolbarSection full={1}>

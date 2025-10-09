@@ -37,6 +37,7 @@ import {
 } from "react-icons/tb";
 import { useRecoilState } from "recoil";
 import { autoOpenMenu, useDefaultTab } from "utils/lib";
+import { selectorPresets } from "utils/selectorPresets";
 
 export const ContainerSettings = () => {
   const { id } = useNode();
@@ -83,180 +84,7 @@ export const ContainerSettings = () => {
 
   useDefaultTab(head, activeTab, setActiveTab);
 
-  const presetPadding = [
-    {
-      title: "No padding",
-      var: "pad-none",
-      mobile: {
-        px: "",
-        py: "",
-      },
-      desktop: {
-        px: "",
-        py: "",
-      },
-    },
-    {
-      title: "Small Padding",
-      var: "pad-sm",
-      mobile: {
-        px: "px-3",
-        py: "py-3",
-      },
-      desktop: {
-        px: "px-5",
-        py: "py-5",
-      },
-    },
-    {
-      title: "Medium Padding",
-      var: "pad-md",
-      mobile: {
-        px: "px-6",
-        py: "py-6",
-      },
-      desktop: {
-        px: "px-12",
-        py: "py-12",
-      },
-    },
-    {
-      title: "Large Padding",
-      var: "pad-lg",
-      mobile: {
-        px: "px-12",
-        py: "py-12",
-      },
-      desktop: {
-        px: "px-24",
-        py: "py-24",
-      },
-    },
-    {
-      title: "Extra Large Padding",
-      var: "pad-xl",
-      mobile: {
-        px: "px-24",
-        py: "py-24",
-      },
-      desktop: {
-        px: "px-48",
-        py: "py-48",
-      },
-    },
-  ];
-
-  const presetType = [
-    {
-      title: "Columns",
-      var: "flexDirection",
-      mobile: {
-        flexDirection: "flex-col",
-      },
-    },
-    {
-      title: "Rows",
-      var: "flexDirection",
-      mobile: {
-        flexDirection: "flex-col",
-      },
-      desktop: {
-        flexDirection: "flex-row",
-      },
-    },
-    {
-      title: "Reverse Columns",
-      var: "flexDirection",
-      mobile: {
-        flexDirection: "flex-col-reverse",
-      },
-    },
-    {
-      title: "Reverse Rows",
-      var: "flexDirection",
-      mobile: {
-        flexDirection: "flex-col-reverse",
-      },
-      desktop: {
-        flexDirection: "flex-row-reverse",
-      },
-    },
-  ];
-
-  const presetWidth = [
-    {
-      title: "Quarter",
-      var: "size-1/4",
-      mobile: {
-        width: "w-3/12",
-      },
-    },
-    {
-      title: "Half",
-      var: "size-1/2",
-      mobile: {
-        width: "w-6/12",
-      },
-    },
-    {
-      title: "Full",
-      var: "size-full",
-      mobile: {
-        width: "w-full",
-      },
-    },
-  ];
-
-  const presetMaxWidth = [
-    {
-      title: "Small",
-      var: "max-w-screen-lg",
-      mobile: {
-        maxWidth: "max-w-screen-lg",
-      },
-    },
-
-    {
-      title: "XL",
-      var: "max-w-screen-xl",
-      mobile: {
-        maxWidth: "max-w-screen-xl",
-      },
-    },
-    {
-      title: "Double XL",
-      var: "max-w-screen-2xl",
-      mobile: {
-        maxWidth: "max-w-screen-2xl",
-      },
-    },
-    {
-      title: "Full",
-      var: "max-w-full",
-      mobile: {
-        maxWidth: "max-w-full",
-      },
-    },
-  ];
-
-  const preset = [
-    {
-      title: "Image with Overlay",
-      var: "image-overlay",
-      mobile: {
-        backgroundPosition: "bg-center",
-        backgroundSize: "bg-cover",
-        height: "h-full",
-        width: "w-full",
-      },
-      desktop: {},
-      root: {
-        backgroundGradient: "bg-gradient-to-br",
-        backgroundFrom: "from-[rgba(223,222,228,0)]",
-        backgroundTo: "to-[rgba(29,29,29,0.63)]",
-      },
-    },
-  ];
+  // Get centralized presets from utils/selectorPresets.ts
 
   const MainTab = () => {
     // Check if header/footer already exist at root level
@@ -290,23 +118,27 @@ export const ContainerSettings = () => {
         <ToolbarSection title="Presets">
           <ToolbarSection full={2}>
             <PresetInput
-              presets={presetWidth}
-              label="Width"
-              type="slider"
+              presets={selectorPresets.container.width.items}
+              label={selectorPresets.container.width.label}
+              type={selectorPresets.container.width.type}
+              propKey={selectorPresets.container.width.propKey}
+              propType={selectorPresets.container.width.propType}
             />
 
             <PresetInput
-              presets={presetMaxWidth}
-              propKey="presetMaxWidth"
-              label="Max Width"
-              type="slider"
+              presets={selectorPresets.container.maxWidth.items}
+              label={selectorPresets.container.maxWidth.label}
+              type={selectorPresets.container.maxWidth.type}
+              propKey={selectorPresets.container.maxWidth.propKey}
+              propType={selectorPresets.container.maxWidth.propType}
             />
           </ToolbarSection>
           <PresetInput
-            presets={presetPadding}
-            propKey="presetPadding"
-            label="Padding"
-            type="slider"
+            presets={selectorPresets.container.padding.items}
+            label={selectorPresets.container.padding.label}
+            type={selectorPresets.container.padding.type}
+            propKey={selectorPresets.container.padding.propKey}
+            propType={selectorPresets.container.padding.propType}
           />
         </ToolbarSection>
 

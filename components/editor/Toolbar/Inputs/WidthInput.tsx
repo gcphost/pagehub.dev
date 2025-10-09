@@ -33,6 +33,8 @@ export const WidthInput = ({
           max={TailwindStyles[sliderValues].length - 1}
           min={0}
           valueLabels={TailwindStyles[sliderValues]}
+          showVarSelector={true}
+          varSelectorPrefix={propTag}
         />
       )}
 
@@ -42,6 +44,8 @@ export const WidthInput = ({
           propType={propType}
           type="select"
           label={label}
+          showVarSelector={true}
+          varSelectorPrefix={propTag}
         >
           <option value="">None</option>
           {TailwindStyles[values].map((_, k) => (

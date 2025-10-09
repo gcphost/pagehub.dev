@@ -104,7 +104,7 @@
                       "canDelete": true,
                       "canEditName": true,
                       "root": {
-                        "fontFamily": "Open Sans, sans-serif"
+                        "fontFamily": "var(--ph-heading-font-family)"
                       },
                       "mobile": {
                         "fontSize": "text-3xl",
@@ -201,7 +201,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-3xl",

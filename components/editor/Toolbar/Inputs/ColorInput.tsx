@@ -74,28 +74,24 @@ export const ColorInput = (__props: any) => {
   }, [contextPalette, query]);
 
   // Resolve palette references for display
+  // This handles backward compatibility for old "palette:" format
   const resolveValueForDisplay = (val: string) => {
     if (val && val.includes("palette:")) {
+      // Convert old palette: format to new CSS variable format
       const match = val.match(/palette:(.+)$/);
       if (match) {
         const paletteName = match[1];
-        const paletteColor = palette.find((p) => p.name === paletteName);
+        const varName = paletteName
+          .replace(/([A-Z])/g, "-$1")
+          .replace(/\s+/g, "-")
+          .toLowerCase()
+          .replace(/^-/, "");
 
-        if (paletteColor) {
-          const colorValue = paletteColor.color;
+        // Extract prefix if present (e.g., "text-palette:Primary" → "text-")
+        const currentPrefix = val.split('-palette:')[0];
+        const usePrefix = currentPrefix && currentPrefix !== val ? currentPrefix : prefix;
 
-          // Strip any existing prefix from palette color (backward compatibility)
-          let cleanColor = colorValue;
-          const prefixesToStrip = ["bg-", "text-", "border-", "ring-", "from-", "to-", "via-"];
-          for (const stripPrefix of prefixesToStrip) {
-            if (cleanColor.startsWith(stripPrefix)) {
-              cleanColor = cleanColor.substring(stripPrefix.length);
-              break;
-            }
-          }
-
-          return prefix ? `${prefix}-${cleanColor}` : cleanColor;
-        }
+        return usePrefix ? `${usePrefix}-[var(--ph-${varName})]` : `var(--ph-${varName})`;
       }
     }
     return val;
@@ -108,6 +104,46 @@ export const ColorInput = (__props: any) => {
   const getBackgroundStyle = () => {
     if (!bg) {
       return { backgroundColor: "#e5e7eb" };
+    }
+
+    // Handle CSS variables (e.g., "var(--ph-primary)")
+    if (bg.includes("var(--ph-")) {
+      const varMatch = bg.match(/var\(--ph-([^)]+)\)/);
+      if (varMatch) {
+        const varName = varMatch[1]; // e.g., "primary", "primary-text"
+
+        // Convert kebab-case back to title case for palette lookup
+        const paletteName = varName
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+
+        // Look up in palette
+        const paletteColor = palette.find((p) => p.name === paletteName);
+        if (paletteColor) {
+          // Get the actual color value, stripping any Tailwind prefixes
+          let colorValue = paletteColor.color;
+          const prefixesToStrip = ["bg-", "text-", "border-", "ring-", "from-", "to-", "via-"];
+          for (const stripPrefix of prefixesToStrip) {
+            if (colorValue.startsWith(stripPrefix)) {
+              colorValue = colorValue.substring(stripPrefix.length);
+              break;
+            }
+          }
+
+          // If it's a Tailwind color class, resolve it
+          if (colorValue.includes("-")) {
+            const [colorName, shade] = colorValue.split("-");
+            const colorObj = colors[colorName];
+            if (colorObj && typeof colorObj === "object" && colorObj[shade]) {
+              return { backgroundColor: colorObj[shade] };
+            }
+          }
+
+          // Otherwise use the value directly (could be hex/rgba)
+          return { backgroundColor: colorValue };
+        }
+      }
     }
 
     // If it's a hex/rgba value (wrapped in brackets or not)
@@ -145,8 +181,16 @@ export const ColorInput = (__props: any) => {
 
     if (val) {
       if (data.type === "palette") {
-        // Store palette reference with prefix (e.g., "bg-palette:Brand")
-        val = prefix ? `${prefix}-${data.value}` : data.value;
+        // Convert palette reference to CSS variable format
+        // e.g., "palette:Primary Text" → "text-[var(--ph-primary-text)]"
+        const paletteName = data.value.replace('palette:', '');
+        const varName = paletteName
+          .replace(/([A-Z])/g, "-$1")
+          .replace(/\s+/g, "-")
+          .toLowerCase()
+          .replace(/^-/, "");
+
+        val = prefix ? `${prefix}-[var(--ph-${varName})]` : `var(--ph-${varName})`;
       } else if (data.type === "hex") {
         val = prefix ? `${prefix}-[${val}]` : `${val}`;
       } else if (data.type === "rgb") {

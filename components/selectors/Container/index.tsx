@@ -14,7 +14,6 @@ import {
   setClonedProps,
 } from "components/editor/Toolbar/Helpers/CloneHelper";
 import { PreviewAtom, ViewAtom } from "components/editor/Viewport";
-import { SelectedNodeAtom } from "components/editor/Viewport/Toolbox/lib";
 import React, { useEffect, useRef, useState } from "react";
 import { TbContainer, TbNote } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -70,7 +69,6 @@ export const Container = (props: Partial<ContainerProps>) => {
   const setMenu = useSetRecoilState(ToolboxMenu);
   const preview = useRecoilValue(PreviewAtom);
   const settings = useRecoilValue(SettingsAtom);
-  const setSelectedNode = useSetRecoilState(SelectedNodeAtom);
   const palette = usePalette();
 
   const {
@@ -79,18 +77,12 @@ export const Container = (props: Partial<ContainerProps>) => {
 
   const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
-  const { name, id, isActive } = useNode((node) => ({
+  const { name, id } = useNode((node) => ({
     name: node.data.custom.displayName || node.data.displayName,
     isActive: node.events.selected,
   }));
 
-  //  const [isolate, setIsolate] = useRecoilState(IsolateAtom);
 
-  useEffect(() => {
-    if (props.type === "page") {
-      // isolatePage(false, query, id, actions, setIsolate);
-    }
-  }, []);
 
   props = setClonedProps(props, query, ["order"]);
 
@@ -170,8 +162,6 @@ export const Container = (props: Partial<ContainerProps>) => {
     },
     style: {
       ...(props.root?.style ? CSStoObj(props.root.style) || {} : {}),
-      // Add relative positioning in edit mode for inline controls
-      //  ...(enabled && props.type !== "page" ? { position: 'relative' } : {}),
     },
     className,
     children: (

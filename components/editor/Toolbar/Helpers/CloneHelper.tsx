@@ -1,6 +1,6 @@
 import { getLinkedAncestorNode } from "components/editor/componentUtils";
 import { removeHasManyRelation } from "components/editor/Viewport/lib";
-import { TbBoxModel2, TbLinkOff, TbPalette } from "react-icons/tb";
+import { TbBoxModel2, TbLinkOff, TbPalette, TbPencil } from "react-icons/tb";
 import { useSetRecoilState } from "recoil";
 import { OpenComponentEditorAtom, ViewModeAtom } from "utils/lib";
 
@@ -36,6 +36,27 @@ export const setClonedProps = (props, query, exclude = []) => {
         mobile: props.mobile,
         tablet: props.tablet,
         desktop: props.desktop,
+        belongsTo: props.belongsTo,
+        relationType: props.relationType,
+      };
+    }
+
+    // If it's a "content" relation type, sync styles but keep content local
+    if (props.relationType === "content") {
+      // Clone keeps its own content props (text, url, image, etc.)
+      // but gets styles and layout from master
+      const contentProps = ['text', 'url', 'urlTarget', 'image', 'videoId', 'content', 'buttonText', 'placeholder', 'value'];
+      const localContent = {};
+      contentProps.forEach(key => {
+        if (key in props) {
+          localContent[key] = props[key];
+        }
+      });
+
+      return {
+        ...props,
+        ...masterProps,
+        ...localContent, // Override with local content
         belongsTo: props.belongsTo,
         relationType: props.relationType,
       };
@@ -110,6 +131,21 @@ export const ConvertToStyledComponent = ({ actions, id }) => (
   </button>
 );
 
+export const ConvertToContentComponent = ({ actions, id }) => (
+  <button
+    className="w-full flex items-center gap-3 px-4 py-3 bg-primary-800 hover:bg-primary-700 rounded-lg transition-colors text-left"
+    onClick={() =>
+      actions.setProp(id, (prop) => (prop.relationType = "content"))
+    }
+  >
+    <TbPencil className="text-purple-400 flex-shrink-0 text-xl" />
+    <div className="flex-1">
+      <div className="font-semibold text-white">Content Only Mode</div>
+      <div className="text-xs text-gray-400">Edit text and content while keeping styles linked</div>
+    </div>
+  </button>
+);
+
 export const RenderChildren = ({ props, children, query, actions, id }) => {
   const setViewMode = useSetRecoilState(ViewModeAtom);
   const setOpenComponentEditor = useSetRecoilState(OpenComponentEditorAtom);
@@ -161,6 +197,8 @@ export const RenderChildren = ({ props, children, query, actions, id }) => {
           </button>
 
           <ConvertToStyledComponent actions={actions} id={id} />
+
+          <ConvertToContentComponent actions={actions} id={id} />
 
           <ConvertToRegularComponent query={query} actions={actions} id={id} />
         </div>

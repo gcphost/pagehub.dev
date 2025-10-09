@@ -19,6 +19,7 @@ import { HeightInput } from "components/editor/Toolbar/Inputs/HeightInput";
 import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
 import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
+import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { WidthInput } from "components/editor/Toolbar/Inputs/WidthInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
@@ -31,6 +32,7 @@ import { TbAccessible, TbBoxPadding, TbForms, TbMouse, TbPlayerPlay } from "reac
 import { useRecoilState, useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { useDefaultTab } from "utils/lib";
+import { selectorPresets } from "utils/selectorPresets";
 
 export const FormSettings = () => {
   const { actions, query } = useEditor();
@@ -108,6 +110,10 @@ export const FormSettings = () => {
             <option value="loading">Loading State</option>
             <option value="loaded">Submitted State</option>
           </ToolbarItem>
+        </ToolbarSection>
+
+        <ToolbarSection title="Form Presets">
+          <PresetGroupRenderer presets={selectorPresets.form} />
         </ToolbarSection>
 
         <ToolbarSection title="Form Settings" help={help}>
@@ -219,14 +225,22 @@ export const FormSettings = () => {
           <ToolbarSection>
             <HeightInput />
           </ToolbarSection>
-          <ToolbarSection>
+          <ToolbarSection title="Colors">
             <ColorInput
               propKey="color"
               label="Text Color"
               prefix="text"
               propType="root"
             />
+
+            <ColorInput
+              propKey="background"
+              label="Background Color"
+              prefix="bg"
+              propType="root"
+            />
           </ToolbarSection>
+
 
           <BackgroundInput />
 

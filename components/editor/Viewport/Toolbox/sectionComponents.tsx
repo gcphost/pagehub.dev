@@ -21,7 +21,7 @@ export const sectionToolboxItems = [
     content: [
       <RenderSectionComponent
         key="row1"
-        text={<ToolboxItemDisplay icon={TbLayoutRows} label="Row" />}
+        text={<ToolboxItemDisplay icon={TbLayoutColumns} label="Row" />}
         mobile={{
           display: "flex",
           justifyContent: "justify-center",
@@ -39,7 +39,7 @@ export const sectionToolboxItems = [
 
       <RenderSectionComponent
         key="col"
-        text={<ToolboxItemDisplay icon={TbLayoutColumns} label="Column" />}
+        text={<ToolboxItemDisplay icon={TbLayoutRows} label="Column" />}
         mobile={{
           display: "flex",
           justifyContent: "justify-center",

@@ -11,6 +11,7 @@ import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FileUploadInput } from "components/editor/Toolbar/Inputs/FileUploadInput";
 import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
+import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SizeInput } from "components/editor/Toolbar/Inputs/SizeInput";
 import { SpacingInput } from "components/editor/Toolbar/Inputs/SpacingInput";
@@ -22,6 +23,7 @@ import { MdStyle } from "react-icons/md";
 import { TbAccessible, TbBoxPadding, TbMouse, TbPhoto, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
+import { selectorPresets } from "utils/selectorPresets";
 import { TailwindStyles } from "utils/tailwind";
 
 export const ImageSettings = () => {
@@ -73,6 +75,10 @@ export const ImageSettings = () => {
           typeKey="type"
           contentKey="content"
         />
+      </ToolbarSection>
+
+      <ToolbarSection title="Image Presets">
+        <PresetGroupRenderer presets={selectorPresets.image} />
       </ToolbarSection>
 
       <SizeInput />

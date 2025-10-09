@@ -262,7 +262,6 @@
                       "canDelete": true,
                       "canEditName": true,
                       "root": {
-                        "fontFamily": "Open Sans, sans-serif",
                         "shadow": "shadow-lg"
                       },
                       "mobile": {},
@@ -330,9 +329,7 @@
                 "props": {
                   "canDelete": true,
                   "canEditName": true,
-                  "root": {
-                    "fontFamily": "Open Sans, sans-serif"
-                  },
+                  "root": {},
                   "mobile": {
                     "fontSize": "text-3xl",
                     "fontWeight": "font-bold",

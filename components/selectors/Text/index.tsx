@@ -293,14 +293,7 @@ export const Text = (props: Partial<TextProps>) => {
     prop.children = (
       <>
         <div
-          onMouseDown={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (isActive && !isEditing) {
-              setIsEditing(true);
-            }
-          }}
+
           className={`w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text relative' : 'cursor-pointer'}`}
         >
           {tiptapEditor ? (
@@ -328,14 +321,15 @@ Text.craft = {
   displayName: "Text",
   rules: {
     canDrag: (node, helpers) => {
+      return true;
       // Check if this node or any ancestor is a fully linked component
       const checkIfLinked = (nodeId) => {
         const n = helpers.query.node(nodeId).get();
         if (!n) return false;
 
-        // If this node is fully linked, prevent dragging
+        // If this node is fully linked, return true (it IS linked)
         if (n.data.props?.belongsTo && n.data.props?.relationType !== "style") {
-          return false;
+          return true;
         }
 
         // Check parent
@@ -343,7 +337,7 @@ Text.craft = {
           return checkIfLinked(n.data.parent);
         }
 
-        return false;
+        return false; // Not linked
       };
 
       return !checkIfLinked(node.id);

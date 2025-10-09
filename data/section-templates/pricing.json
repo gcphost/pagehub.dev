@@ -57,7 +57,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-3xl",
@@ -142,7 +142,7 @@
                           "canDelete": true,
                           "canEditName": true,
                           "root": {
-                            "fontFamily": "Open Sans, sans-serif"
+                            "fontFamily": "var(--ph-heading-font-family)"
                           },
                           "mobile": {
                             "fontSize": "text-4xl",
@@ -181,7 +181,6 @@
                           "root": {
                             "background": "bg-gray-100",
                             "color": "text-[var(--ph-text)]",
-                            "fontFamily": "Open Sans, sans-serif",
                             "shadow": "shadow-lg"
                           },
                           "mobile": {
@@ -250,7 +249,7 @@
                           "canDelete": true,
                           "canEditName": true,
                           "root": {
-                            "fontFamily": "Open Sans, sans-serif"
+                            "fontFamily": "var(--ph-heading-font-family)"
                           },
                           "mobile": {
                             "fontSize": "text-4xl",
@@ -289,7 +288,6 @@
                           "root": {
                             "background": "bg-white",
                             "color": "text-[var(--ph-primary)]",
-                            "fontFamily": "Open Sans, sans-serif",
                             "shadow": "shadow-lg"
                           },
                           "mobile": {
@@ -358,7 +356,7 @@
                           "canDelete": true,
                           "canEditName": true,
                           "root": {
-                            "fontFamily": "Open Sans, sans-serif"
+                            "fontFamily": "var(--ph-heading-font-family)"
                           },
                           "mobile": {
                             "fontSize": "text-4xl",
@@ -397,7 +395,6 @@
                           "root": {
                             "background": "bg-gray-100",
                             "color": "text-[var(--ph-text)]",
-                            "fontFamily": "Open Sans, sans-serif",
                             "shadow": "shadow-lg"
                           },
                           "mobile": {
@@ -480,7 +477,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-3xl",
@@ -854,7 +851,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-3xl",
@@ -977,7 +974,6 @@
                           "root": {
                             "background": "bg-[var(--ph-primary)]",
                             "color": "text-white",
-                            "fontFamily": "Open Sans, sans-serif",
                             "shadow": "shadow-lg"
                           },
                           "mobile": {
@@ -1084,7 +1080,6 @@
                           "root": {
                             "background": "bg-[var(--ph-primary)]",
                             "color": "text-white",
-                            "fontFamily": "Open Sans, sans-serif",
                             "shadow": "shadow-lg"
                           },
                           "mobile": {
@@ -1191,7 +1186,6 @@
                           "root": {
                             "background": "bg-[var(--ph-primary)]",
                             "color": "text-white",
-                            "fontFamily": "Open Sans, sans-serif",
                             "shadow": "shadow-lg"
                           },
                           "mobile": {

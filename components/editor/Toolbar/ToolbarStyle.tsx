@@ -50,6 +50,10 @@ const Labler = ({
           propKey={propKey}
           index={index}
           propItemKey={propItemKey}
+          icon={props?.labelIcon}
+          showDeleteIcon={props?.showDeleteIcon}
+          showVarSelector={props?.showVarSelector}
+          varSelectorPrefix={props?.varSelectorPrefix}
         />
       )}
     </h4>
@@ -90,12 +94,34 @@ export const Card = ({
   if (!value) {
     return null;
   }
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Copy to clipboard on left-click
+    navigator.clipboard.writeText(value).then(() => {
+      console.log(`Copied to clipboard: ${value}`);
+    }).catch((err) => {
+      console.error('Failed to copy:', err);
+    });
+  };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Delete on right-click
+    onClick();
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
+      onContextMenu={handleContextMenu}
       className={`${bgColor} text-gray-800 hover:opacity-80 hover:text-gray-700 text-xs font-medium mr-2 px-2.5 py-1.5 rounded inline-flex cursor-pointer whitespace-nowrap`}
     >
-      <Tooltip content={`Remove ${value}`} placement="bottom" arrow={false}>
+      <Tooltip content={`Left-click: Copy | Right-click: Remove`} placement="bottom" arrow={false}>
         {value}
       </Tooltip>
     </button>

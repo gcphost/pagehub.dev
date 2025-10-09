@@ -17,6 +17,7 @@ import { IconDialogInput } from "components/editor/Toolbar/Inputs/IconDialogInpu
 import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
 import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
+import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SpacingInput } from "components/editor/Toolbar/Inputs/SpacingInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
@@ -33,6 +34,7 @@ import {
 } from "react-icons/tb";
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
+import { selectorPresets } from "utils/selectorPresets";
 import { TailwindStyles } from "utils/tailwind";
 
 export const SelectedButtonAtom = atom({
@@ -90,6 +92,10 @@ export const ButtonSettings = () => {
           label="Text"
           propType="component"
         />
+      </ToolbarSection>
+
+      <ToolbarSection title="Button Presets">
+        <PresetGroupRenderer presets={selectorPresets.button} />
       </ToolbarSection>
 
       <LinkSettingsInput

@@ -11,7 +11,7 @@ import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
 import { IpsumGenerator } from "components/editor/Toolbar/Inputs/IpsumGenerator";
-import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
+import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SpacingInput } from "components/editor/Toolbar/Inputs/SpacingInput";
 import { TypeInput } from "components/editor/Toolbar/Inputs/TypeInput";
@@ -25,6 +25,7 @@ import { MdStyle } from "react-icons/md";
 import { TbBoxPadding, TbMouse, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
+import { selectorPresets } from "utils/selectorPresets";
 import { inputTypes } from ".";
 
 export const FormElementSettings = () => {
@@ -68,10 +69,12 @@ export const FormElementSettings = () => {
 
   useDefaultTab(head, activeTab, setActiveTab);
 
-  const presets = [];
-
   const MainTab = () => (
     <TabBody>
+      <ToolbarSection title="Form Element Presets">
+        <PresetGroupRenderer presets={selectorPresets.formElement} />
+      </ToolbarSection>
+
       <ToolbarSection
         title="Name & Placeholder"
         help="The placeholder will be displayed when no text is entered. The name is how you identify this input."
@@ -242,8 +245,6 @@ export const FormElementSettings = () => {
 
       {activeTab === "Appearance" && (
         <TabBody>
-          <PresetInput presets={presets} />
-
           <FontInput />
           <ToolbarSection>
             <ColorInput

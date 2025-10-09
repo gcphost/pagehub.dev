@@ -1,20 +1,9 @@
 import { ClassItem } from "../Items/ClassItem";
-import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
+import { CSSEditorInput } from "./CSSEditorInput";
 
 export const ClassNameInput = () => (
   <>
-    <ToolbarSection>
-      <ToolbarItem
-        propKey="style"
-        propType="root"
-        type="textarea"
-        rows={3}
-        label="CSS"
-        placeholder="color:Tomato; border-style: dotted;"
-        labelHide={true}
-      />
-    </ToolbarSection>
     <ToolbarSection>
       <ClassItem
         propKey="className"
@@ -24,5 +13,8 @@ export const ClassNameInput = () => (
         labelHide={true}
       />
     </ToolbarSection>
+
+    <CSSEditorInput />
+
   </>
 );

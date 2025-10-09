@@ -53,7 +53,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-4xl",
@@ -74,7 +74,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-lg",
@@ -99,8 +99,7 @@
                     "background": "bg-white",
                     "color": "text-[var(--ph-primary)]",
                     "radius": "rounded-lg",
-                    "shadow": "shadow-lg",
-                    "fontFamily": "Open Sans, sans-serif"
+                    "shadow": "shadow-lg"
                   },
                   "mobile": {
                     "p": "px-6 py-3",
@@ -131,7 +130,7 @@
           "canEditName": true,
           "root": {
             "border": "border-4",
-            "borderColor": "border-primary-500"
+            "borderColor": "border-[var(--ph-primary)]"
           },
           "mobile": {
             "display": "flex",
@@ -173,7 +172,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-4xl",
@@ -193,7 +192,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-lg",
@@ -217,8 +216,7 @@
                     "background": "bg-[var(--ph-primary)]",
                     "color": "text-white",
                     "radius": "rounded-lg",
-                    "shadow": "shadow-lg",
-                    "fontFamily": "Open Sans, sans-serif"
+                    "shadow": "shadow-lg"
                   },
                   "mobile": {
                     "p": "px-6 py-3",
@@ -248,7 +246,7 @@
           "canDelete": true,
           "canEditName": true,
           "root": {
-            "background": "bg-gradient-to-r from-primary-500 to-primary-600"
+            "background": "bg-[var(--ph-primary)]"
           },
           "mobile": {
             "display": "flex",
@@ -292,7 +290,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-4xl",
@@ -337,8 +335,7 @@
                     "background": "bg-white",
                     "color": "text-[var(--ph-primary)]",
                     "radius": "rounded-full",
-                    "shadow": "shadow-lg",
-                    "fontFamily": "Open Sans, sans-serif"
+                    "shadow": "shadow-lg"
                   },
                   "mobile": {
                     "p": "px-6 py-3",
@@ -418,7 +415,7 @@
                   "canDelete": true,
                   "canEditName": true,
                   "root": {
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "mobile": {
                     "fontSize": "text-3xl",
@@ -463,8 +460,7 @@
                 "background": "bg-[var(--ph-primary)]",
                 "color": "text-white",
                 "radius": "rounded-lg",
-                "shadow": "shadow-lg",
-                "fontFamily": "Open Sans, sans-serif"
+                "shadow": "shadow-lg"
               },
               "mobile": {
                 "p": "px-6 py-3",

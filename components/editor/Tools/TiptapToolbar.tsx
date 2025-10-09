@@ -23,7 +23,7 @@ import {
 import { TbChevronDown, TbEraser } from 'react-icons/tb';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { SettingsAtom } from 'utils/atoms';
-import { getMediaContent, getStyleSheets } from 'utils/lib';
+import { getMediaContent } from 'utils/lib';
 import { isPaletteReference, paletteToCSSVar } from 'utils/palette';
 import { fonts } from 'utils/tailwind';
 import { DeleteNodeButton } from '../NodeControllers/Tools/DeleteNodeButton';
@@ -59,8 +59,9 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   // Get Craft.js query for media operations
   const { query } = useCraftEditor();
 
-  // Import Google Fonts from your existing system and deduplicate
-  const fontFamilies = Array.from(new Set(fonts.map(font => font[0])));
+  // State for Google Fonts
+  const [allFontFamilies, setAllFontFamilies] = useState<string[]>([]);
+  const [loadingFonts, setLoadingFonts] = useState(true);
 
   // Use Tailwind font sizes converted to CSS values
   const fontSizes = [
@@ -76,41 +77,39 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   ];
 
   // Filter fonts based on search term
-  const filteredFonts = fontFamilies.filter(font =>
+  const filteredFonts = allFontFamilies.filter(font =>
     font.toLowerCase().includes(fontSearchTerm.toLowerCase())
-  );
+  ).slice(0, 50); // Limit to 50 results for performance
 
-  // Load Google Fonts for the toolbar
+  // Load all Google Fonts on mount
   useEffect(() => {
-    // Load all font families with Google Fonts CSS2 API for better performance
-    const families = fonts
-      .map((font) => {
-        const family = font[0].replace(/ +/g, "+");
-        return `family=${family}:wght@400`;
-      })
-      .join("&");
+    const loadAllFonts = async () => {
+      try {
+        // Dynamically import to avoid circular dependencies
+        const { fetchGoogleFonts, getPopularFonts, getFunkyFonts } = await import('utils/googleFonts');
 
-    const sheetrefs = getStyleSheets();
-    let href = `https://fonts.googleapis.com/css2?${families}`;
-    href += "&display=swap";
+        setLoadingFonts(true);
+        const googleFonts = await fetchGoogleFonts();
 
-    if (!sheetrefs.includes(href)) {
-      const head = document.getElementsByTagName("HEAD")[0];
+        // Organize: Popular first, then Funky, then all others
+        const popular = getPopularFonts();
+        const funky = getFunkyFonts();
+        const others = googleFonts
+          .filter(f => !popular.includes(f.family) && !funky.includes(f.family))
+          .map(f => f.family)
+          .sort();
 
-      // Use preload pattern for faster font loading
-      const preloadLink = document.createElement("link");
-      preloadLink.rel = "preload";
-      preloadLink.as = "style";
-      preloadLink.href = href;
+        setAllFontFamilies([...popular, ...funky, ...others]);
+      } catch (error) {
+        console.error("Error loading Google Fonts:", error);
+        // Fallback to legacy fonts
+        setAllFontFamilies(fonts.map(f => f[0]));
+      } finally {
+        setLoadingFonts(false);
+      }
+    };
 
-      // Convert to stylesheet after loading
-      preloadLink.onload = function () {
-        (this as HTMLLinkElement).onload = null;
-        (this as HTMLLinkElement).rel = "stylesheet";
-      };
-
-      head.appendChild(preloadLink);
-    }
+    loadAllFonts();
   }, []);
 
   if (!editor) {
@@ -425,19 +424,38 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   </div>
                   <div className="flex-1 overflow-y-auto border border-gray-600 rounded-lg bg-gray-800">
                     <div className="grid grid-cols-1 gap-0">
-                      {filteredFonts.map((font) => (
-                        <button
-                          key={font}
-                          onClick={handleButtonClick(() => {
-                            editor.chain().focus().setFontFamily(font).run();
-                            setFontSearchTerm('');
-                          })}
-                          className="w-full px-4 py-3 text-left text-sm hover:bg-gray-700 hover:text-white text-gray-300 border-b border-gray-700 last:border-b-0 transition-colors"
-                          style={{ fontFamily: font }}
-                        >
-                          {font}
-                        </button>
-                      ))}
+                      {loadingFonts ? (
+                        <div className="px-4 py-3 text-sm text-gray-400 text-center">
+                          Loading fonts...
+                        </div>
+                      ) : filteredFonts.length === 0 ? (
+                        <div className="px-4 py-3 text-sm text-gray-400 text-center">
+                          No results.
+                        </div>
+                      ) : (
+                        filteredFonts.map((font) => (
+                          <button
+                            key={font}
+                            onClick={handleButtonClick(async () => {
+                              // Dynamically load the font before applying
+                              const { loadGoogleFont } = await import('utils/googleFonts');
+                              loadGoogleFont(font, ["400", "700"]);
+
+                              editor.chain().focus().setFontFamily(font).run();
+                              setFontSearchTerm('');
+                            })}
+                            onMouseEnter={async () => {
+                              // Preload font on hover for instant preview
+                              const { loadGoogleFont } = await import('utils/googleFonts');
+                              loadGoogleFont(font, ["400"]);
+                            }}
+                            className="w-full px-4 py-3 text-left text-sm hover:bg-gray-700 hover:text-white text-gray-300 border-b border-gray-700 last:border-b-0 transition-colors"
+                            style={{ fontFamily: font }}
+                          >
+                            {font}
+                          </button>
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>

@@ -97,11 +97,19 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
         <input
           type="search"
           id="search"
-          className="input"
+          className="input relative z-10"
+          style={{ background: 'transparent' }}
           placeholder="Class Search"
           required
           autoComplete="off"
           onChange={(event) => setClassInput(event.target.value)}
+          onKeyDown={(e) => {
+            // Tab completion
+            if (e.key === "Tab" && matches.length > 0) {
+              e.preventDefault();
+              setClassInput(matches[0]);
+            }
+          }}
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               save();
@@ -109,9 +117,18 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
           }}
           value={classInput}
         />
+        {/* Ghost text suggestion - behind input */}
+        {classInput && matches.length > 0 && matches[0].startsWith(classInput) && (
+          <div className="absolute inset-0 pointer-events-none flex items-center px-3 z-0">
+            <span className="invisible">{classInput}</span>
+            <span className="text-gray-500 font-mono">{matches[0].slice(classInput.length)}</span>
+          </div>
+        )}
+        {/* Background for input */}
+        <div className="absolute inset-0 -z-10 bg-gray-500/50 border border-gray-500 rounded-lg"></div>
         <button
           type="submit"
-          className="text-white inside-shadow absolute right-2.5 bottom-2.5 h-8 bg-primary-500 border border-gray-500 px-5 py-1.5 rounded-md hover:bg-primary-600 "
+          className="text-white inside-shadow absolute right-2.5 bottom-2.5 h-8 bg-primary-500 border border-gray-500 px-5 py-1.5 rounded-md hover:bg-primary-600 z-20"
           onClick={() => save()}
         >
           <TbSearch />
@@ -121,13 +138,20 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
       {searched && (
         <div className="absolute top-16 bg-gray-700/80 rounded-md w-full p-3 overflow-auto scrollbar h-full space-y-3">
           {matches.map((mat, k) => (
-            <CardLight key={k} value={mat} onClick={() => save(mat)} />
+            <div key={k} className={k === 0 ? "ring-2 ring-blue-500 rounded" : ""}>
+              <CardLight value={mat} onClick={() => save(mat)} />
+            </div>
           ))}
+          {matches.length > 0 && (
+            <p className="text-xs text-gray-400 mt-2 pt-2 border-t border-gray-600">
+              Press <kbd className="px-1.5 py-0.5 bg-gray-800 rounded text-white">Tab</kbd> to complete with first result
+            </p>
+          )}
         </div>
       )}
 
       <p>Assigned Classes</p>
-      <div className="space-y-3">
+      <div className="space-y-3 -mt-6">
         {propClasses?.map((_, key) => (
           <Card key={key} value={_} onClick={() => delNodeProp(_, "root")} />
         ))}
@@ -162,7 +186,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
 
       <p>Legend</p>
 
-      <div className="space-y-3 space-x-1.5 text-black">
+      <div className="space-y-3 space-x-1.5 text-black -mt-6">
         <div className="bg-primary-300 px-2.5 py-1.5 rounded inline-flex text-xs inside-shadow">
           Component
         </div>

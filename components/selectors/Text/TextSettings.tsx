@@ -16,7 +16,7 @@ import { IpsumGenerator } from "components/editor/Toolbar/Inputs/IpsumGenerator"
 import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
 import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
 import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
-import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
+import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { TypeInput } from "components/editor/Toolbar/Inputs/TypeInput";
 import { WidthInput } from "components/editor/Toolbar/Inputs/WidthInput";
@@ -26,100 +26,11 @@ import { MdStyle } from "react-icons/md";
 import { TbBoxPadding, TbMouse, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
+import { selectorPresets } from "utils/selectorPresets";
 
-export const textPresets = [
-  {
-    title: "H7",
-    var: "h7",
-    mobile: {
-      fontSize: "text-base",
-    },
-    desktop: {
-      fontSize: "text-xl",
-    },
-    root: {
-      tagName: "h2",
-    },
-  },
-  {
-    title: "H6",
-    var: "h6",
-    mobile: {
-      fontSize: "text-lg",
-    },
-    desktop: {
-      fontSize: "text-2xl",
-    },
-    root: {
-      tagName: "h2",
-    },
-  },
-  {
-    title: "H5",
-    var: "h5",
-    mobile: {
-      fontSize: "text-xl",
-    },
-    desktop: {
-      fontSize: "text-3xl",
-    },
-    root: {
-      tagName: "h2",
-    },
-  },
-  {
-    title: "H4",
-    var: "h4",
-    mobile: {
-      fontSize: "text-2xl",
-    },
-    desktop: {
-      fontSize: "text-4xl",
-    },
-    root: {
-      tagName: "h2",
-    },
-  },
-  {
-    title: "H3",
-    var: "h3",
-    mobile: {
-      fontSize: "text-3xl",
-    },
-    desktop: {
-      fontSize: "text-5xl",
-    },
-    root: {
-      tagName: "h2",
-    },
-  },
-  {
-    title: "H2",
-    var: "h2",
-    mobile: {
-      fontSize: "text-4xl",
-    },
-    desktop: {
-      fontSize: "text-6xl",
-    },
-    root: {
-      tagName: "h2",
-    },
-  },
-  {
-    title: "H1",
-    var: "h1",
-    mobile: {
-      fontSize: "text-5xl",
-    },
-    desktop: {
-      fontSize: "text-7xl",
-    },
-    root: {
-      tagName: "h1",
-    },
-  },
-];
+// Export for backwards compatibility (array of items)
+export const textPresets = selectorPresets.text.sizes.items;
+
 
 export const TextSettings = () => {
   const { actions, query } = useEditor();
@@ -183,7 +94,8 @@ export const TextSettings = () => {
           placeholder="Enter text"
         />
 
-        <PresetInput presets={textPresets} type="slider" label="Preset Sizes" />
+        {/* Loop over all text presets automatically */}
+        <PresetGroupRenderer presets={selectorPresets.text} />
 
         <IpsumGenerator propKey="text" propType="component" />
       </ToolbarSection>

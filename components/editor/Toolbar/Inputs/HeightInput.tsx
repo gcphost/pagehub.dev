@@ -33,6 +33,8 @@ export const HeightInput = ({
           max={TailwindStyles[sliderValues].length - 1}
           min={0}
           valueLabels={TailwindStyles[sliderValues]}
+          showVarSelector={true}
+          varSelectorPrefix={propTag}
         />
       )}
 

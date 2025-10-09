@@ -18,6 +18,8 @@ export const MarginInput = ({ propKey = "margin" }) => (
         max={TailwindStyles.mx.length - 1}
         min={0}
         valueLabels={TailwindStyles.mx}
+        showVarSelector={true}
+        varSelectorPrefix="mx"
       />
 
       <ToolbarItem
@@ -27,6 +29,8 @@ export const MarginInput = ({ propKey = "margin" }) => (
         max={TailwindStyles.my.length - 1}
         min={0}
         valueLabels={TailwindStyles.my}
+        showVarSelector={true}
+        varSelectorPrefix="my"
       />
     </ToolbarSection>
 
@@ -46,6 +50,8 @@ export const MarginInput = ({ propKey = "margin" }) => (
           max={TailwindStyles.mt.length - 1}
           min={0}
           valueLabels={TailwindStyles.mt}
+          showVarSelector={true}
+          varSelectorPrefix="mt"
         />
         <ToolbarItem
           propKey="mb"
@@ -54,6 +60,8 @@ export const MarginInput = ({ propKey = "margin" }) => (
           max={TailwindStyles.mb.length - 1}
           min={0}
           valueLabels={TailwindStyles.mb}
+          showVarSelector={true}
+          varSelectorPrefix="mb"
         />
         <ToolbarItem
           propKey="ml"
@@ -62,6 +70,8 @@ export const MarginInput = ({ propKey = "margin" }) => (
           max={TailwindStyles.ml.length - 1}
           min={0}
           valueLabels={TailwindStyles.ml}
+          showVarSelector={true}
+          varSelectorPrefix="ml"
         />
         <ToolbarItem
           propKey="mr"
@@ -70,6 +80,8 @@ export const MarginInput = ({ propKey = "margin" }) => (
           max={TailwindStyles.mr.length - 1}
           min={0}
           valueLabels={TailwindStyles.mr}
+          showVarSelector={true}
+          varSelectorPrefix="mr"
         />
       </ToolbarSection>
     </ItemAdvanceToggle>

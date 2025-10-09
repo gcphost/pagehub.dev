@@ -382,7 +382,7 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-white",
-                      "color": "text-primary-500"
+                      "color": "text-[var(--ph-primary)]"
                     },
                     "mobile": {
                       "px": "px-8",
@@ -1001,7 +1001,7 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-white",
-                      "color": "text-primary-500"
+                      "color": "text-[var(--ph-primary)]"
                     },
                     "mobile": {
                       "px": "px-8",
@@ -1038,7 +1038,7 @@
             "canEditName": true,
             "root": {
               "border": "border-4",
-              "borderColor": "border-primary-500"
+              "borderColor": "border-[var(--ph-primary)]"
             },
             "mobile": {
               "display": "flex",
@@ -1153,7 +1153,7 @@
             "canDelete": true,
             "canEditName": true,
             "root": {
-              "background": "bg-gradient-to-r from-primary-500 to-primary-600"
+              "background": "bg-[var(--ph-primary)]"
             },
             "mobile": {
               "display": "flex",
@@ -1237,7 +1237,7 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-white",
-                      "color": "text-primary-500"
+                      "color": "text-[var(--ph-primary)]"
                     },
                     "mobile": {
                       "px": "px-8",
@@ -2483,7 +2483,7 @@
                             "canEditName": true,
                             "root": {
                               "background": "bg-white",
-                              "color": "text-primary-500"
+                              "color": "text-[var(--ph-primary)]"
                             },
                             "mobile": {
                               "px": "px-6",
@@ -4820,7 +4820,7 @@
                       "type": "Button",
                       "props": {
                         "root": {
-                          "bg": "bg-blue-600",
+                          "bg": "bg-[var(--ph-primary)]",
                           "color": "text-white",
                           "padding": "px-6 py-3",
                           "radius": "rounded-md",
@@ -4849,7 +4849,7 @@
           "props": {
             "root": {
               "py": "py-20",
-              "bg": "bg-blue-600"
+              "bg": "bg-[var(--ph-primary)]"
             },
             "custom": {
               "displayName": "Newsletter Signup"
@@ -4888,7 +4888,7 @@
                   "props": {
                     "root": {
                       "fontSize": "text-lg",
-                      "color": "text-blue-100",
+                      "color": "text-[var(--ph-primary-text)]",
                       "marginBottom": "mb-8"
                     },
                     "custom": {
@@ -4934,7 +4934,7 @@
                       "props": {
                         "root": {
                           "bg": "bg-white",
-                          "color": "text-blue-600",
+                          "color": "text-[var(--ph-primary)]",
                           "padding": "px-8 py-3",
                           "radius": "rounded-md",
                           "fontWeight": "font-semibold",
@@ -5108,7 +5108,7 @@
                       "type": "Button",
                       "props": {
                         "root": {
-                          "bg": "bg-blue-600",
+                          "bg": "bg-[var(--ph-primary)]",
                           "color": "text-white",
                           "padding": "px-8 py-3",
                           "radius": "rounded-md",

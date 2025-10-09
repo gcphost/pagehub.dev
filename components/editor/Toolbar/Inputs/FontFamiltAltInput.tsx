@@ -84,9 +84,15 @@ export const FontFamiltAltInput = ({
   return (
     <div ref={ref}>
       <Wrap
-        props={{ label, labelHide: true }}
+        props={{
+          label,
+          labelHide: false,
+          showDeleteIcon: true, // Show X icon instead of font name
+          showVarSelector: true, // Show design var selector
+          varSelectorPrefix: "font", // For font-[var(--ph-...)]
+        }}
         lab={value}
-        propType={propType}
+        propType="root" // Font is always stored in root, not class
         propKey={propKey}
       >
         <button

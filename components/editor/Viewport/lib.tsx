@@ -256,17 +256,91 @@ export const setPropOnView = (
       if (index >= 0 && propItemKey) {
         setting[propKey] = setting[propKey] || {};
         setting[propKey][index] = setting[propKey][index] || {};
+        // Smart sync: Track the old value before changing
+        const oldValue = setting[propKey][index][propItemKey];
         setting[propKey][index][propItemKey] = value;
+
+        // Auto-sync to mobile if not set OR if mobile matches the old desktop value
+        if (view === "desktop" || view === "tablet") {
+          // Initialize mobile object if it doesn't exist
+          if (!props.mobile) {
+            props.mobile = {};
+          }
+
+          const mobileSetting = props.mobile;
+          const mobileValue = mobileSetting[propKey]?.[index]?.[propItemKey];
+
+          // Sync if mobile is unset or matches old desktop value
+          if (
+            mobileValue === undefined ||
+            mobileValue === null ||
+            mobileValue === "" ||
+            mobileValue === oldValue
+          ) {
+            mobileSetting[propKey] = mobileSetting[propKey] || {};
+            mobileSetting[propKey][index] = mobileSetting[propKey][index] || {};
+            mobileSetting[propKey][index][propItemKey] = value;
+          }
+        }
         return;
       }
 
       if (index || index > 0) {
         setting[index] = setting[index] || {};
+        // Smart sync: Track the old value before changing
+        const oldValue = setting[index][propKey];
         setting[index][propKey] = value;
+
+        // Auto-sync to mobile if not set OR if mobile matches the old desktop value
+        if (view === "desktop" || view === "tablet") {
+          // Initialize mobile object if it doesn't exist
+          if (!props.mobile) {
+            props.mobile = {};
+          }
+
+          const mobileSetting = props.mobile;
+          const mobileValue = mobileSetting[index]?.[propKey];
+
+          // Sync if mobile is unset or matches old desktop value
+          if (
+            mobileValue === undefined ||
+            mobileValue === null ||
+            mobileValue === "" ||
+            mobileValue === oldValue
+          ) {
+            mobileSetting[index] = mobileSetting[index] || {};
+            mobileSetting[index][propKey] = value;
+          }
+        }
         return;
       }
 
+      // Smart sync: Track the old value before changing
+      const oldValue = setting[propKey];
       setting[propKey] = value;
+
+      // Auto-sync to mobile if not set OR if mobile matches the old desktop value
+      // Only for desktop/tablet views
+      if (view === "desktop" || view === "tablet") {
+        // Initialize mobile object if it doesn't exist
+        if (!props.mobile) {
+          props.mobile = {};
+        }
+
+        const mobileValue = props.mobile[propKey];
+
+        // Sync if:
+        // 1. Mobile value is not set (undefined, null, or empty string)
+        // 2. Mobile value matches the OLD desktop value (user is tweaking, not customizing)
+        if (
+          mobileValue === undefined ||
+          mobileValue === null ||
+          mobileValue === "" ||
+          mobileValue === oldValue
+        ) {
+          props.mobile[propKey] = value;
+        }
+      }
     }, 0);
 
     if (onChange) onChange(value);

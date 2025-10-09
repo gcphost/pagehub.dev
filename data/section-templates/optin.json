@@ -39,7 +39,7 @@
                   "root": {
                     "fontSize": "text-3xl",
                     "color": "text-[var(--ph-primary--text)]",
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "custom": {
                     "displayName": "Title"
@@ -140,7 +140,7 @@
                     "props": {
                       "root": {
                         "fontSize": "text-4xl",
-                        "fontFamily": "Open Sans, sans-serif"
+                        "fontFamily": "var(--ph-heading-font-family)"
                       },
                       "custom": {
                         "displayName": "Title"

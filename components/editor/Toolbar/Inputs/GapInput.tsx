@@ -9,5 +9,7 @@ export const GapInput = () => (
     max={TailwindStyles.gap.length - 1}
     min={0}
     valueLabels={TailwindStyles.gap}
+    showVarSelector={true}
+    varSelectorPrefix="gap"
   />
 );

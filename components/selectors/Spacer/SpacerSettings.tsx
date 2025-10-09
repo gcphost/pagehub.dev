@@ -8,6 +8,7 @@ import {
   TableBodyStyleControl,
   TBWrap,
 } from "components/editor/Toolbar/Helpers/SettingsHelper";
+import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { TabAtom } from "components/editor/Viewport";
 import { useEffect } from "react";
 import { BsInputCursorText } from "react-icons/bs";
@@ -15,6 +16,7 @@ import { MdStyle } from "react-icons/md";
 import { TbBoxPadding, TbMouse, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
+import { selectorPresets } from "utils/selectorPresets";
 
 export const SpacerSettings = () => {
   const { actions, query } = useEditor();
@@ -53,13 +55,15 @@ export const SpacerSettings = () => {
 
   useDefaultTab(head, activeTab, setActiveTab);
 
-  const presets = [];
-
   const MainTab = () => (
     <TabBody>
+      <ToolbarSection title="Spacer Presets">
+        <PresetGroupRenderer presets={selectorPresets.spacer} />
+      </ToolbarSection>
+
       <ToolbarSection
-        title="Spacer Settings"
-        help="Configure the spacing and appearance of the spacer"
+        title="Custom Spacer Settings"
+        help="Configure custom spacing and appearance"
       >
         <ToolbarItem
           propKey="height"

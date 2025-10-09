@@ -264,6 +264,10 @@ export type ToolbarItemProps = {
   labelPrefix?: string;
   labelSuffix?: string;
   labelHide?: boolean;
+  labelIcon?: React.ReactNode;
+  showDeleteIcon?: boolean;
+  showVarSelector?: boolean;
+  varSelectorPrefix?: string;
   full?: boolean;
   propKey?: string;
   propItem?: any;

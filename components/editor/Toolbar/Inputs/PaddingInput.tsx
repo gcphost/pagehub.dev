@@ -33,6 +33,8 @@ export const PaddingInput = ({ propKey = "padding" }) => {
           max={TailwindStyles.px.length - 1}
           min={0}
           valueLabels={TailwindStyles.px}
+          showVarSelector={true}
+          varSelectorPrefix="px"
         />
 
         <ToolbarItem
@@ -42,6 +44,8 @@ export const PaddingInput = ({ propKey = "padding" }) => {
           max={TailwindStyles.py.length - 1}
           min={0}
           valueLabels={TailwindStyles.py}
+          showVarSelector={true}
+          varSelectorPrefix="py"
         />
       </ToolbarSection>
 

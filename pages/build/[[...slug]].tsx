@@ -162,7 +162,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                   root={{
                     background: "bg-[var(--ph-background)]",
                     color: "text-[var(--ph-text)]",
-
+                    fontFamily: "var(--ph-body-font-family)",
                   }}
                   mobile={{
                     fontWeight: "font-[var(--ph-body-font)]",

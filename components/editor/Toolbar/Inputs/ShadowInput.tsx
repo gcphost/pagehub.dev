@@ -14,5 +14,7 @@ export const ShadowInput = ({
     max={TailwindStyles.dropShadows.length - 1}
     min={0}
     valueLabels={TailwindStyles.dropShadows}
+    showVarSelector={true}
+    varSelectorPrefix="shadow"
   />
 );

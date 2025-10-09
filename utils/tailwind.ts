@@ -4,64 +4,65 @@ import colors from "tailwindcss/lib/public/colors";
 import { toCSSVarName } from "./designSystemVars";
 import { getFontFromComp, loadCombinedFonts } from "./lib";
 
-const funkyFonts = [
-  ["Orbitron"],
-  ["Press Start 2P"],
-  ["Permanent Marker"],
-  ["Sigmar One"],
-  ["Saira Stencil One"],
-  ["Russo One"],
-  ["Quicksand"],
-  ["Fredoka One"],
-  ["Black Ops One"],
-  ["Monofett"],
-];
-
-const top30GoogleFonts = [
-  ["Oxygen"],
-  ["Pacifico"],
-  ["Open Sans"],
-  ["Archivo Black"],
-  ["Babylonica"],
-  ["Inter"],
-  ["Rubik"],
-  ["Fira Sans"],
-  ["Armio"],
-  ["Josefin Sans"],
+/**
+ * Legacy font list for backward compatibility
+ * For new implementations, use googleFonts.ts utilities
+ */
+const legacyFonts = [
+  // Popular fonts
   ["Roboto"],
+  ["Open Sans"],
   ["Lato"],
-  ["Slabo 27px"],
-  ["Oswald"],
   ["Montserrat"],
+  ["Oswald"],
   ["Raleway"],
   ["PT Sans"],
   ["Source Sans Pro"],
   ["Noto Sans"],
-  ["Muli"],
-  ["Playfair Display"],
-  ["Indie Flower"],
-  ["Inconsolata"],
-  ["Bitter"],
-  ["Titillium Web"],
-  ["Droid Sans"],
-  ["Crimson Text"],
-  ["Nunito"],
   ["Merriweather"],
-  ["Bree Serif"],
-  ["Vollkorn"],
+  ["Playfair Display"],
+  ["Nunito"],
+  ["Inter"],
+  ["Rubik"],
+  ["Fira Sans"],
+  ["Poppins"],
+  ["Work Sans"],
+  ["Ubuntu"],
+  ["Mukta"],
+  ["Quicksand"],
+  ["Karla"],
+  ["Titillium Web"],
+  ["Bitter"],
+  ["Hind"],
+  ["Cabin"],
+  ["Crimson Text"],
+  ["Inconsolata"],
+  ["Oxygen"],
+  ["Droid Sans"],
+  ["Josefin Sans"],
   ["EB Garamond"],
   ["Abel"],
-  ["Quicksand"],
   ["Lora"],
-  ["Cabin"],
-  ["Hind"],
-  ["Archivo Narrow"],
   ["Noto Serif"],
-  ["Karla"],
-  ["Francois One"],
+  ["Archivo Narrow"],
+  // Funky fonts
+  ["Pacifico"],
+  ["Orbitron"],
+  ["Press Start 2P"],
+  ["Permanent Marker"],
+  ["Bebas Neue"],
+  ["Russo One"],
+  ["Fredoka One"],
+  ["Lobster"],
+  ["Righteous"],
+  ["Indie Flower"],
 ];
 
-export const fonts = [...top30GoogleFonts, ...funkyFonts];
+/**
+ * @deprecated Use googleFonts.ts utilities for full Google Fonts support
+ * This is kept for backward compatibility only
+ */
+export const fonts = legacyFonts;
 
 const numbers = [
   "auto",
@@ -834,7 +835,7 @@ export const TailwindStyles = {
     "self-stretch",
     "self-baseline",
   ],
-  fonts: [...funkyFonts, ...top30GoogleFonts],
+  fonts: legacyFonts,
   objectFit: [
     "object-contain",
     "object-cover",
@@ -1970,6 +1971,21 @@ export const ClassGene = (
     if (props.borderBottom) setBorder(`border-b-${split[1]}`);
 
     if (!deleteBorder) results.push(borderValue);
+  }
+
+  // Handle radius - similar to border handling
+  // This ensures radius values work even with CSS variables
+  if (props.radius) {
+    // Resolve style guide reference if present
+    let radiusValue = props.radius;
+    if (typeof radiusValue === "string" && radiusValue.includes("style:")) {
+      radiusValue = resolveStyleGuide(radiusValue, query);
+    }
+
+    // Add the radius value (should already be in format like "rounded-lg" or "rounded-[var(--ph-border-radius)]")
+    if (radiusValue && !results.some((r) => r && r.startsWith("rounded"))) {
+      results.push(radiusValue);
+    }
   }
 
   const res = results.filter((_) => _);

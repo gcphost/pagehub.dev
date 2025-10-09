@@ -594,7 +594,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
         : "w-screen",
       enabled
         ? `w-full !border-[7px] ${viewMode === 'component' ? 'border-purple-200' : 'border-gray-100'}   relative scrollbar-light bg-white overflow-scroll`
-        : "w-screen h-screen overflow-show relative",
+        : "w-screen h-screen overflow-auto relative",
     ],
   };
 

@@ -39,7 +39,7 @@
                     "fontWeight": "font-bold",
                     "color": "text-white",
                     "marginBottom": "mb-6",
-                    "fontFamily": "Open Sans, sans-serif"
+                    "fontFamily": "var(--ph-heading-font-family)"
                   },
                   "custom": {
                     "displayName": "Title"
@@ -200,7 +200,7 @@
                         "fontSize": "text-3xl",
                         "fontWeight": "font-bold",
                         "marginBottom": "mb-4",
-                        "fontFamily": "Open Sans, sans-serif"
+                        "fontFamily": "var(--ph-heading-font-family)"
                       },
                       "custom": {
                         "displayName": "Title"
@@ -226,12 +226,11 @@
                     "type": "Button",
                     "props": {
                       "root": {
-                        "bg": "bg-blue-600",
+                        "bg": "bg-[var(--ph-primary)]",
                         "color": "text-white",
                         "padding": "px-6 py-3",
                         "radius": "rounded-lg",
                         "fontWeight": "font-semibold",
-                        "fontFamily": "Open Sans, sans-serif",
                         "shadow": "shadow-lg"
                       },
                       "custom": {

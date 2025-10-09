@@ -8,6 +8,7 @@ import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettin
 import { HeightInput } from "components/editor/Toolbar/Inputs/HeightInput";
 import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
 import { PaddingInput } from "components/editor/Toolbar/Inputs/PaddingInput";
+import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { RadiusInput } from "components/editor/Toolbar/Inputs/RadiusInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { WidthInput } from "components/editor/Toolbar/Inputs/WidthInput";
@@ -20,6 +21,7 @@ import { MdStyle } from "react-icons/md";
 import { TbBoxPadding, TbLine, TbMouse, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
+import { selectorPresets } from "utils/selectorPresets";
 
 export const DividerSettings = () => {
   const { id } = useNode();
@@ -76,6 +78,10 @@ export const DividerSettings = () => {
       <>
         {activeTab === "Divider" && (
           <TabBody>
+            <ToolbarSection title="Divider Presets">
+              <PresetGroupRenderer presets={selectorPresets.divider} />
+            </ToolbarSection>
+
             <ToolbarSection full={2}>
               <WidthInput />
               <HeightInput />
