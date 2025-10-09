@@ -33,9 +33,22 @@ import { loadTenantByDomain, loadTenantSettings } from "../utils/tenantUtils";
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
   useEffect(() => {
-    actions.deserialize(data);
+    try {
+      if (data) {
+        actions.deserialize(data);
+      }
+    } catch (error) {
+      console.error("Failed to deserialize Craft.js data:", error);
+      // Return empty frame if deserialization fails
+    }
   }, [actions, data]);
-  return <Frame data={data} />;
+  
+  try {
+    return <Frame data={data} />;
+  } catch (error) {
+    console.error("Failed to render Frame:", error);
+    return <div>Error loading page content</div>;
+  }
 };
 
 function App({ subdomain, data, meta, seo }) {

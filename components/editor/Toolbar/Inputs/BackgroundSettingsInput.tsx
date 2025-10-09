@@ -15,7 +15,7 @@ export const BackgroundSettingsInput = ({ props }) => (
 
 
     {props?.backgroundImage && (
-      <ToolbarSection title="Image Settings" subtitle={true}>
+      <ToolbarSection title="Image Settings" subtitle={true} defaultOpen={false}>
         <ToolbarSection
           full={1}
         >

@@ -27,24 +27,12 @@ export const ImageToolbox = {
         overflow: "overflow-hidden",
       }}
       desktop={{ height: "h-auto" }}
-      display={<ToolboxItemDisplay icon={TbPhoto} label="Inline Image" />}
-      custom={{ displayName: "Inline Image" }}
-    />,
-    <RenderToolComponent
-      key="imageList"
-      element={ImageList}
-      mobile={{
-        width: "w-full",
-        p: "p-4",
-        flexDirection: "flex-row",
-        gap: "gap-4",
-      }}
-      display={<ToolboxItemDisplay icon={TbPhotoScan} label="Image Gallery" />}
-      custom={{ displayName: "Image List" }}
+      display={<ToolboxItemDisplay icon={TbPhoto} label="Image" />}
+      custom={{ displayName: "Image" }}
     />,
     <RenderSectionComponent
       key="image2"
-      text={<ToolboxItemDisplay icon={RiImageAddLine} label="Background Image" />}
+      text={<ToolboxItemDisplay icon={RiImageAddLine} label="Image Background" />}
       mobile={{
         display: "flex",
         minHeight: "min-h-[120px]",
@@ -59,7 +47,19 @@ export const ImageToolbox = {
       }}
       desktop={{ flexDirection: "flex-row", height: "h-full" }}
       type="imageContainer"
-      custom={{ displayName: "Background Image" }}
+      custom={{ displayName: "Image Background" }}
+    />,
+    <RenderToolComponent
+      key="imageList"
+      element={ImageList}
+      mobile={{
+        width: "w-full",
+        p: "p-4",
+        flexDirection: "flex-row",
+        gap: "gap-4",
+      }}
+      display={<ToolboxItemDisplay icon={TbPhotoScan} label="Image Gallery" />}
+      custom={{ displayName: "Image List" }}
     />,
   ],
 };

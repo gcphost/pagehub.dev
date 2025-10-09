@@ -35,9 +35,22 @@ import Tenant from "../../models/tenant.model";
 const CustomDeserializer = ({ data }) => {
   const { actions } = useEditor();
   useEffect(() => {
-    actions.deserialize(data);
+    try {
+      if (data) {
+        actions.deserialize(data);
+      }
+    } catch (error) {
+      console.error("Failed to deserialize Craft.js data:", error);
+      // Return empty frame if deserialization fails
+    }
   }, [actions, data]);
-  return <Frame data={data} />;
+  
+  try {
+    return <Frame data={data} />;
+  } catch (error) {
+    console.error("Failed to render Frame:", error);
+    return <div>Error loading page content</div>;
+  }
 };
 
 function App({ subdomain, data, meta, seo }) {
@@ -299,7 +312,31 @@ export async function getStaticProps({ params }) {
       name,
       draftId,
     } = pageData;
-    const { seo } = parseContent(content || draft, params.slug[0]);
+    
+    let seo = null;
+    try {
+      seo = parseContent(content || draft, params.slug[0]);
+    } catch (error) {
+      console.error("Failed to parse content for page:", params.slug[0], error);
+      // Return empty page if content parsing fails
+      return {
+        props: {
+          subdomain: params.slug[0] || null,
+          data: null,
+          meta: {
+            name: name || null,
+            draftId,
+            title: title || null,
+            description: description || null,
+            content: null,
+            seo: null,
+          },
+          seo: null,
+          slug: params.slug[0] || null,
+        },
+        revalidate: 60,
+      };
+    }
 
     return {
       props: {
@@ -350,11 +387,13 @@ export async function getStaticPaths() {
         });
 
         if (webhookResult?.pages && Array.isArray(webhookResult.pages)) {
-          const webhookPaths = webhookResult.pages.map((domain) => ({
-            params: {
-              slug: [domain],
-            },
-          }));
+          const webhookPaths = webhookResult.pages
+            .filter((domain) => domain !== 'oij') // Skip problematic page
+            .map((domain) => ({
+              params: {
+                slug: [domain],
+              },
+            }));
           paths = [...paths, ...webhookPaths];
         }
       } catch (error) {
@@ -365,11 +404,13 @@ export async function getStaticPaths() {
 
   // Add pages from database
   const pagesWithDomains = await Page.find({ domain: { $ne: null } });
-  const dbPaths = pagesWithDomains.map((page) => ({
-    params: {
-      slug: [`${page.domain}`],
-    },
-  }));
+  const dbPaths = pagesWithDomains
+    .filter((page) => page.domain !== 'oij') // Skip problematic page
+    .map((page) => ({
+      params: {
+        slug: [`${page.domain}`],
+      },
+    }));
 
   paths = [...paths, ...dbPaths];
 

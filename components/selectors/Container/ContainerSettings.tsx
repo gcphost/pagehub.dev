@@ -7,6 +7,7 @@ import {
 } from "components/editor/Toolbar/Helpers/SettingsHelper";
 import { AccessibilityInput } from "components/editor/Toolbar/Inputs/AccessibilityInput";
 import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
+import { BackgroundSettingsInput } from "components/editor/Toolbar/Inputs/BackgroundSettingsInput";
 import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
 import ClickItem from "components/editor/Toolbar/Inputs/ClickItem";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
@@ -111,6 +112,53 @@ export const ContainerSettings = () => {
 
     return (
       <TabBody>
+        {/* Show Background Image settings first for imageContainer types */}
+        {props.type === "imageContainer" && (
+          <>
+            <BackgroundSettingsInput props={props} />
+
+            {/* Background Image Presets */}
+            <ToolbarSection title="Background Layouts" subtitle={true}>
+              <PresetInput
+                presets={selectorPresets.backgroundImage.layouts.items}
+                label={selectorPresets.backgroundImage.layouts.label}
+                type={selectorPresets.backgroundImage.layouts.type}
+                propKey={selectorPresets.backgroundImage.layouts.propKey}
+                propType={selectorPresets.backgroundImage.layouts.propType}
+                inputWidth="w-full"
+                labelWidth="w-1/4"
+                inline
+              />
+            </ToolbarSection>
+
+            <ToolbarSection title="Overlays" subtitle={true}>
+              <PresetInput
+                presets={selectorPresets.backgroundImage.overlays.items}
+                label={selectorPresets.backgroundImage.overlays.label}
+                type={selectorPresets.backgroundImage.overlays.type}
+                propKey={selectorPresets.backgroundImage.overlays.propKey}
+                propType={selectorPresets.backgroundImage.overlays.propType}
+                inputWidth="w-full"
+                labelWidth="w-1/4"
+                inline
+              />
+            </ToolbarSection>
+
+            <ToolbarSection title="Content Position" subtitle={true}>
+              <PresetInput
+                presets={selectorPresets.backgroundImage.content.items}
+                label={selectorPresets.backgroundImage.content.label}
+                type={selectorPresets.backgroundImage.content.type}
+                propKey={selectorPresets.backgroundImage.content.propKey}
+                propType={selectorPresets.backgroundImage.content.propType}
+                inputWidth="w-full"
+                labelWidth="w-1/4"
+                inline
+              />
+            </ToolbarSection>
+          </>
+        )}
+
         <ToolbarSection title="Container Settings">
           <ContainerTypeInput />
         </ToolbarSection>

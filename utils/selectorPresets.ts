@@ -348,6 +348,309 @@ export const containerPresets = {
 };
 
 // ============================================================================
+// BACKGROUND IMAGE PRESETS
+// ============================================================================
+
+export const backgroundImagePresets = {
+  layouts: {
+    label: "Background Layouts",
+    type: "select" as const,
+    propKey: "presetLayout",
+    propType: "component",
+    help: "Choose from common background image layouts",
+    items: [
+      {
+        title: "Hero Section",
+        var: "hero-section",
+        mobile: {
+          height: "h-96",
+          minHeight: "min-h-[400px]",
+          display: "flex",
+          flexDirection: "flex-col",
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          backgroundAttachment: "bg-fixed",
+          px: "px-4",
+          py: "py-16",
+        },
+        desktop: {
+          height: "h-[600px]",
+          minHeight: "min-h-[600px]",
+          px: "px-8",
+          py: "py-24",
+        },
+      },
+      {
+        title: "Full Screen",
+        var: "full-screen",
+        mobile: {
+          height: "h-screen",
+          minHeight: "min-h-screen",
+          display: "flex",
+          flexDirection: "flex-col",
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          backgroundAttachment: "bg-fixed",
+          px: "px-4",
+          py: "py-8",
+        },
+        desktop: {
+          px: "px-8",
+          py: "py-16",
+        },
+      },
+      {
+        title: "Card Style",
+        var: "card-style",
+        mobile: {
+          height: "h-64",
+          minHeight: "min-h-[300px]",
+          display: "flex",
+          flexDirection: "flex-col",
+          justifyContent: "justify-end",
+          alignItems: "items-start",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          px: "px-6",
+          py: "py-8",
+          borderRadius: "rounded-xl",
+        },
+        desktop: {
+          height: "h-80",
+          minHeight: "min-h-[350px]",
+          px: "px-8",
+          py: "py-10",
+        },
+      },
+      {
+        title: "Wide Banner",
+        var: "wide-banner",
+        mobile: {
+          height: "h-48",
+          minHeight: "min-h-[200px]",
+          display: "flex",
+          flexDirection: "flex-row",
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          px: "px-4",
+          py: "py-8",
+        },
+        desktop: {
+          height: "h-64",
+          minHeight: "min-h-[250px]",
+          px: "px-8",
+          py: "py-12",
+        },
+      },
+      {
+        title: "Overlay Content",
+        var: "overlay-content",
+        mobile: {
+          height: "h-80",
+          minHeight: "min-h-[400px]",
+          display: "flex",
+          flexDirection: "flex-col",
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          backgroundAttachment: "bg-fixed",
+          px: "px-4",
+          py: "py-16",
+          position: "relative",
+        },
+        desktop: {
+          height: "h-[500px]",
+          minHeight: "min-h-[500px]",
+          px: "px-8",
+          py: "py-20",
+        },
+      },
+      {
+        title: "Parallax",
+        var: "parallax",
+        mobile: {
+          height: "h-96",
+          minHeight: "min-h-[400px]",
+          display: "flex",
+          flexDirection: "flex-col",
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          backgroundAttachment: "bg-fixed",
+          backgroundRepeat: "bg-no-repeat",
+          px: "px-4",
+          py: "py-16",
+        },
+        desktop: {
+          height: "h-[600px]",
+          minHeight: "min-h-[600px]",
+          px: "px-8",
+          py: "py-24",
+        },
+      },
+      {
+        title: "Fixed Background",
+        var: "fixed-background",
+        mobile: {
+          height: "h-screen",
+          minHeight: "min-h-screen",
+          display: "flex",
+          flexDirection: "flex-col",
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          backgroundSize: "bg-cover",
+          backgroundPosition: "bg-center",
+          backgroundAttachment: "bg-fixed",
+          backgroundRepeat: "bg-no-repeat",
+          px: "px-4",
+          py: "py-8",
+        },
+        desktop: {
+          px: "px-8",
+          py: "py-16",
+        },
+      },
+    ],
+  },
+
+  overlays: {
+    label: "Background Overlays",
+    type: "select" as const,
+    propKey: "presetOverlay",
+    propType: "root",
+    help: "Add overlays to improve text readability over background images",
+    items: [
+      {
+        title: "Dark Overlay",
+        var: "dark-overlay",
+        root: {
+          backgroundGradient: "bg-gradient-to-b",
+          backgroundGradientFrom: "from-black/50",
+          backgroundGradientTo: "to-black/30",
+        },
+      },
+      {
+        title: "Light Overlay",
+        var: "light-overlay",
+        root: {
+          backgroundGradient: "bg-gradient-to-b",
+          backgroundGradientFrom: "from-white/50",
+          backgroundGradientTo: "to-white/30",
+        },
+      },
+      {
+        title: "Primary Overlay",
+        var: "primary-overlay",
+        root: {
+          backgroundGradient: "bg-gradient-to-b",
+          backgroundGradientFrom: "from-[var(--ph-primary)]/60",
+          backgroundGradientTo: "to-[var(--ph-primary)]/40",
+        },
+      },
+      {
+        title: "Subtle Dark",
+        var: "subtle-dark",
+        root: {
+          backgroundGradient: "bg-gradient-to-b",
+          backgroundGradientFrom: "from-black/30",
+          backgroundGradientTo: "to-black/10",
+        },
+      },
+      {
+        title: "Subtle Light",
+        var: "subtle-light",
+        root: {
+          backgroundGradient: "bg-gradient-to-b",
+          backgroundGradientFrom: "from-white/30",
+          backgroundGradientTo: "to-white/10",
+        },
+      },
+      {
+        title: "No Overlay",
+        var: "no-overlay",
+        root: {
+          backgroundGradient: "",
+          backgroundGradientFrom: "",
+          backgroundGradientTo: "",
+        },
+      },
+    ],
+  },
+
+  content: {
+    label: "Content Positioning",
+    type: "select" as const,
+    propKey: "presetContent",
+    propType: "mobile",
+    help: "Position content over the background image",
+    items: [
+      {
+        title: "Center Content",
+        var: "center-content",
+        mobile: {
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          textAlign: "text-center",
+        },
+      },
+      {
+        title: "Top Left",
+        var: "top-left",
+        mobile: {
+          justifyContent: "justify-start",
+          alignItems: "items-start",
+          textAlign: "text-left",
+        },
+      },
+      {
+        title: "Top Right",
+        var: "top-right",
+        mobile: {
+          justifyContent: "justify-end",
+          alignItems: "items-start",
+          textAlign: "text-right",
+        },
+      },
+      {
+        title: "Bottom Left",
+        var: "bottom-left",
+        mobile: {
+          justifyContent: "justify-start",
+          alignItems: "items-end",
+          textAlign: "text-left",
+        },
+      },
+      {
+        title: "Bottom Right",
+        var: "bottom-right",
+        mobile: {
+          justifyContent: "justify-end",
+          alignItems: "items-end",
+          textAlign: "text-right",
+        },
+      },
+      {
+        title: "Bottom Center",
+        var: "bottom-center",
+        mobile: {
+          justifyContent: "justify-center",
+          alignItems: "items-end",
+          textAlign: "text-center",
+        },
+      },
+    ],
+  },
+};
+
+// ============================================================================
 // TEXT PRESETS
 // ============================================================================
 
@@ -1173,6 +1476,7 @@ export const formElementPresets = {
 
 export const selectorPresets = {
   container: containerPresets,
+  backgroundImage: backgroundImagePresets,
   text: textPresets,
   button: buttonPresets,
   spacer: spacerPresets,

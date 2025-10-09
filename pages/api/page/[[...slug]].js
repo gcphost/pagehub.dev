@@ -11,7 +11,16 @@ const sluggit = require("slug");
 // sanitize inputs for lenghts
 
 export const parseContent = (content, slug) => {
-  let data = lz.decompress(lz.decodeBase64(content));
+  if (!content) return { data: null, seo: null };
+  
+  let data;
+  try {
+    data = lz.decompress(lz.decodeBase64(content));
+  } catch (e) {
+    console.error("Failed to decompress/decode content:", e);
+    return { data: null, seo: null };
+  }
+  
   let onlyPage;
 
   let da;
@@ -21,7 +30,10 @@ export const parseContent = (content, slug) => {
 
   try {
     da = JSON.parse(data);
-  } catch (e) { }
+  } catch (e) { 
+    console.error("Failed to parse JSON data:", e);
+    return { data: null, seo: null };
+  }
 
   if (!da) return { data: null, seo: null };
 

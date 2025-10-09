@@ -133,7 +133,7 @@ export const ItemAdvanceToggle = ({
   return (
     <>
       <button
-        className="w-full text-center text-xxs mx-auto mt-2 px-2 py-0 flex items-center justify-center gap-1.5  rounded-md hover:bg-primary-500"
+        className="w-full text-center text-xxs mx-auto mt-2 px-2 py-0 flex items-center justify-center gap-1.5  rounded-md hover:text-underline"
         onClick={() => setShowAdvance(!showAdvance)}
       >{title}
       </button>

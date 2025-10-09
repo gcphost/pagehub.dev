@@ -10,7 +10,7 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { TbCheck, TbPhoto } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { motionIt } from "utils/lib";
+import { getResponsiveImageAttrs, motionIt } from "utils/lib";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { ImageSettings } from "./ImageSettings";
@@ -188,7 +188,6 @@ export const Image = (props: ImageProps) => {
   } else {
     // Use responsive image system for CDN images
     if (videoId) {
-      const { getResponsiveImageAttrs } = require("utils/lib");
       const responsiveAttrs = getResponsiveImageAttrs(query, videoId);
 
       _imgProp.src = responsiveAttrs.src;

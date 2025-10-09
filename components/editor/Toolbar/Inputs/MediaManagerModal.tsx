@@ -4,7 +4,7 @@ import { Tooltip } from "components/layout/Tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { TbCode, TbEdit, TbExternalLink, TbPhoto, TbPlus, TbRefresh, TbSearch, TbTrash, TbUpload, TbX } from "react-icons/tb";
+import { TbClipboard, TbCode, TbEdit, TbExternalLink, TbPhoto, TbPlus, TbRefresh, TbSearch, TbTrash, TbUpload, TbX } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { getCdnUrl } from "utils/cdn";
@@ -29,10 +29,157 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const [addMode, setAddMode] = useState<"upload" | "url" | "svg">("upload");
   const [urlInput, setUrlInput] = useState("");
   const [svgInput, setSvgInput] = useState("");
+  const [saveUrlToCdn, setSaveUrlToCdn] = useState(false);
+  const [hasImageInClipboard, setHasImageInClipboard] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const replaceInputRef = useRef<HTMLInputElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
   const settings = useRecoilValue(SettingsAtom);
+
+  // Handle paste events for images (keyboard shortcut)
+  const handlePaste = async (e: ClipboardEvent) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.type.indexOf('image') !== -1) {
+        e.preventDefault();
+
+        const file = item.getAsFile();
+        if (!file) continue;
+
+        setUploading(true);
+
+        try {
+          // Get signed URL for CDN upload
+          const geturl = await GetSignedUrl();
+          const signedURL = geturl?.result?.uploadURL;
+
+          if (!signedURL) {
+            throw new Error("Failed to get upload URL");
+          }
+
+          // Upload to CDN
+          const res = await SaveMedia(file, signedURL);
+          if (!res?.result?.id) {
+            throw new Error("Failed to upload to CDN");
+          }
+
+          const mediaId = res.result.id;
+          registerMediaWithBackground(query, actions, mediaId, "cdn", "media-manager");
+
+          // Add metadata
+          actions.setProp(ROOT_NODE, (props: any) => {
+            props.pageMedia = props.pageMedia || [];
+            const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+
+            if (existingMedia) {
+              existingMedia.metadata = {
+                ...existingMedia.metadata,
+                title: file.name || "Pasted Image",
+                alt: file.name?.replace(/\.[^/.]+$/, "") || "Pasted Image",
+                size: file.size,
+                source: "paste",
+              };
+            }
+          });
+
+          refreshMediaList();
+          console.log(`✅ Pasted and uploaded image: ${file.name || 'unnamed'}`);
+        } catch (error) {
+          console.error("Failed to upload pasted image:", error);
+          alert(`Failed to upload pasted image: ${error.message}`);
+        } finally {
+          setUploading(false);
+        }
+
+        break; // Only handle first image
+      }
+    }
+  };
+
+  // Check clipboard for images
+  const checkClipboardForImages = async () => {
+    try {
+      const clipboardItems = await navigator.clipboard.read();
+      const hasImage = clipboardItems.some(item =>
+        item.types.some(type => type.startsWith('image/'))
+      );
+      setHasImageInClipboard(hasImage);
+    } catch (error) {
+      // Fallback: assume no image if clipboard access fails
+      setHasImageInClipboard(false);
+    }
+  };
+
+  // Handle paste button click
+  const handlePasteClick = async () => {
+    if (!hasImageInClipboard) return;
+
+    try {
+      const clipboardItems = await navigator.clipboard.read();
+
+      for (const clipboardItem of clipboardItems) {
+        for (const type of clipboardItem.types) {
+          if (type.startsWith('image/')) {
+            const blob = await clipboardItem.getType(type);
+            const file = new File([blob], `pasted-image-${Date.now()}.${type.split('/')[1]}`, { type });
+
+            setUploading(true);
+
+            try {
+              // Get signed URL for CDN upload
+              const geturl = await GetSignedUrl();
+              const signedURL = geturl?.result?.uploadURL;
+
+              if (!signedURL) {
+                throw new Error("Failed to get upload URL");
+              }
+
+              // Upload to CDN
+              const res = await SaveMedia(file, signedURL);
+              if (!res?.result?.id) {
+                throw new Error("Failed to upload to CDN");
+              }
+
+              const mediaId = res.result.id;
+              registerMediaWithBackground(query, actions, mediaId, "cdn", "media-manager");
+
+              // Add metadata
+              actions.setProp(ROOT_NODE, (props: any) => {
+                props.pageMedia = props.pageMedia || [];
+                const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+
+                if (existingMedia) {
+                  existingMedia.metadata = {
+                    ...existingMedia.metadata,
+                    title: file.name,
+                    alt: file.name.replace(/\.[^/.]+$/, ""),
+                    size: file.size,
+                    source: "paste",
+                  };
+                }
+              });
+
+              refreshMediaList();
+              console.log(`✅ Pasted and uploaded image: ${file.name}`);
+            } catch (error) {
+              console.error("Failed to upload pasted image:", error);
+              alert(`Failed to upload pasted image: ${error.message}`);
+            } finally {
+              setUploading(false);
+            }
+
+            return; // Only handle first image
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Failed to read clipboard:", error);
+      alert("Failed to access clipboard. Please try pasting with Ctrl+V / Cmd+V instead.");
+    }
+  };
 
   // Format file size in human-readable format
   const formatFileSize = (bytes: number): string => {
@@ -67,7 +214,6 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     });
     setFilteredMedia(filtered);
   };
-
 
   const handleDelete = (mediaId: string) => {
     if (!confirm("Are you sure you want to delete this media item? This cannot be undone.")) {
@@ -267,30 +413,86 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     }
   };
 
-  const handleAddUrl = () => {
+  const handleAddUrl = async () => {
     if (!urlInput.trim()) return;
 
-    const mediaId = `url-${Date.now()}`;
-    registerMediaWithBackground(query, actions, mediaId, "url", "media-manager");
+    setUploading(true);
 
-    // Add metadata with the actual URL
-    actions.setProp(ROOT_NODE, (props: any) => {
-      props.pageMedia = props.pageMedia || [];
-      const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+    try {
+      if (saveUrlToCdn) {
+        // Download image from URL and upload to CDN
+        const response = await fetch(urlInput);
+        if (!response.ok) throw new Error(`Failed to fetch image: ${response.statusText}`);
 
-      if (existingMedia) {
-        existingMedia.metadata = {
-          ...existingMedia.metadata,
-          title: urlInput.split('/').pop() || urlInput,
-          url: urlInput,
-        };
+        const blob = await response.blob();
+        const file = new File([blob], urlInput.split('/').pop() || 'image.jpg', { type: blob.type });
+
+        // Get signed URL for CDN upload
+        const geturl = await GetSignedUrl();
+        const signedURL = geturl?.result?.uploadURL;
+
+        if (!signedURL) {
+          throw new Error("Failed to get upload URL");
+        }
+
+        // Upload to CDN
+        const res = await SaveMedia(file, signedURL);
+        if (!res?.result?.id) {
+          throw new Error("Failed to upload to CDN");
+        }
+
+        const mediaId = res.result.id;
+        registerMediaWithBackground(query, actions, mediaId, "cdn", "media-manager");
+
+        // Add metadata
+        actions.setProp(ROOT_NODE, (props: any) => {
+          props.pageMedia = props.pageMedia || [];
+          const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+
+          if (existingMedia) {
+            existingMedia.metadata = {
+              ...existingMedia.metadata,
+              title: file.name,
+              alt: file.name.replace(/\.[^/.]+$/, ""),
+              size: file.size,
+              originalUrl: urlInput, // Keep track of original URL
+            };
+          }
+        });
+
+        console.log(`✅ Downloaded and uploaded URL to CDN: ${urlInput}`);
+      } else {
+        // Store as URL reference (existing behavior)
+        const mediaId = `url-${Date.now()}`;
+        registerMediaWithBackground(query, actions, mediaId, "url", "media-manager");
+
+        // Add metadata with the actual URL
+        actions.setProp(ROOT_NODE, (props: any) => {
+          props.pageMedia = props.pageMedia || [];
+          const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+
+          if (existingMedia) {
+            existingMedia.metadata = {
+              ...existingMedia.metadata,
+              title: urlInput.split('/').pop() || urlInput,
+              url: urlInput,
+            };
+          }
+        });
+
+        console.log(`✅ Added URL reference: ${urlInput}`);
       }
-    });
 
-    refreshMediaList();
-    setUrlInput("");
-    setAddMode("upload");
-    console.log(`✅ Added URL media: ${urlInput}`);
+      refreshMediaList();
+      setUrlInput("");
+      setSaveUrlToCdn(false);
+      setAddMode("upload");
+    } catch (error) {
+      console.error("Failed to add URL:", error);
+      alert(`Failed to add URL: ${error.message}`);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleAddSvg = () => {
@@ -329,7 +531,18 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       setSearchQuery("");
       setSelectedMedia(null);
       setEditingMedia(null);
+
+      // Check clipboard for images when modal opens
+      checkClipboardForImages();
+
+      // Add paste event listener when modal opens
+      document.addEventListener('paste', handlePaste);
     }
+
+    // Cleanup paste event listener when modal closes
+    return () => {
+      document.removeEventListener('paste', handlePaste);
+    };
   }, [isOpen, refreshMediaList]);
 
   // Close add mode inputs when clicking outside
@@ -441,28 +654,67 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     <TbCode className="inline" />
                   </button>
                 </Tooltip>
+                <Tooltip
+                  content={hasImageInClipboard
+                    ? "Paste image from clipboard (Ctrl+V / Cmd+V)"
+                    : "No image in clipboard"
+                  }
+                  placement="bottom"
+                >
+                  <button
+                    onClick={handlePasteClick}
+                    disabled={!hasImageInClipboard || uploading}
+                    className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${hasImageInClipboard && !uploading
+                      ? "text-gray-600 hover:text-gray-900"
+                      : "text-gray-400 cursor-not-allowed"
+                      }`}
+                  >
+                    <TbClipboard className="inline" />
+                  </button>
+                </Tooltip>
               </div>
             </div>
 
             {/* Inline input for URL/SVG modes */}
             {addMode === "url" && (
-              <div className="flex gap-2 mt-2">
-                <input
-                  type="text"
-                  value={urlInput}
-                  onChange={(e) => setUrlInput(e.target.value)}
-                  placeholder="https://example.com/image.jpg"
-                  className="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  onKeyDown={(e) => e.key === "Enter" && handleAddUrl()}
-                  autoFocus
-                />
-                <button
-                  onClick={handleAddUrl}
-                  disabled={!urlInput.trim()}
-                  className="px-3 py-1.5 bg-primary-500 text-white rounded text-sm hover:bg-primary-600 disabled:bg-gray-400 transition-colors"
-                >
-                  Add
-                </button>
+              <div className="mt-2">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                    placeholder="https://example.com/image.jpg"
+                    className="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    onKeyDown={(e) => e.key === "Enter" && handleAddUrl()}
+                    autoFocus
+                  />
+                  <button
+                    onClick={handleAddUrl}
+                    disabled={!urlInput.trim() || uploading}
+                    className="px-3 py-1.5 bg-primary-500 text-white rounded text-sm hover:bg-primary-600 disabled:bg-gray-400 transition-colors"
+                  >
+                    {uploading ? "Adding..." : "Add"}
+                  </button>
+                </div>
+
+                {/* Save to CDN toggle */}
+                <div className="flex items-center gap-2 mt-2">
+                  <input
+                    type="checkbox"
+                    id="saveUrlToCdn"
+                    checked={saveUrlToCdn}
+                    onChange={(e) => setSaveUrlToCdn(e.target.checked)}
+                    className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500"
+                  />
+                  <label htmlFor="saveUrlToCdn" className="text-xs text-gray-600">
+                    Save to CDN (downloads image to your account)
+                  </label>
+                </div>
+
+                {/* Paste hint */}
+                <div className="mt-2 text-xs text-gray-500">
+                  💡 Tip: You can also paste images directly (Ctrl+V / Cmd+V) or use the clipboard button above!
+                </div>
               </div>
             )}
 
@@ -524,7 +776,17 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           </div>
 
           {/* Content Grid */}
-          <div className="flex-1 overflow-y-auto p-6 bg-gray-50">
+          <div className="flex-1 overflow-y-auto p-6 bg-gray-50 relative">
+            {/* Upload overlay */}
+            {uploading && (
+              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-50 flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-sm text-gray-600 font-medium">Uploading...</p>
+                </div>
+              </div>
+            )}
+
             {filteredMedia.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
                 <TbPhoto className="text-8xl text-gray-300 mb-4" />
