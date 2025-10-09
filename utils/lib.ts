@@ -10,9 +10,10 @@ import { TailwindStyles } from "./tailwind";
 export const enableContext = false;
 export const enableAnimations = false;
 
-export const siteTitle = "PageHub - Free Page Builder & White-Label API";
+export const siteTitle =
+  "PageHub - Easy-to-Use Website Builder for Tailwind Developers – Free & SEO-Friendly";
 export const siteDescription =
-  "Create beautiful pages for free with our drag-and-drop editor, or embed our white-label page builder API into your product. Visual editor with webhook-based integration. Your brand, your data, your control.";
+  "Build beautiful, responsive websites effortlessly with our free website builder, designed specifically for Tailwind CSS developers. Fast, intuitive, and SEO-optimized—create your site without writing boilerplate code";
 
 function extractRGBA(rgbaString) {
   const regex = /rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),(\d*(?:\.\d+)?)\)/;

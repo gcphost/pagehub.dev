@@ -109,7 +109,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
   return (
     <div className="h-screen w-screen">
       <NextSeo
-        title={`${result?.title || result?.domain || result?.subdomain || slug
+        title={`${result?.title || result?.domain || result?.subdomain || slug || "New Website"
           } - ${tenantSiteTitle || siteTitle}`}
         description={siteDescription}
         canonical={tenant?.domain ? `https://${tenant.domain}/` : tenant?.subdomain ? `https://${tenant.subdomain}.pagehub.dev/` : "https://pagehub.dev/"}
