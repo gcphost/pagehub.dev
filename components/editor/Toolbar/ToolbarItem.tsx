@@ -290,6 +290,7 @@ export type ToolbarItemProps = {
   cols?: boolean;
   propType?: string;
   wrap?: string;
+  inline?: boolean;
 };
 
 export const ToolbarItem = (__props: ToolbarItemProps) => {
@@ -304,6 +305,7 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
     index = null,
     propTag = "",
     wrap = "",
+    inline = false,
     ...props
   } = __props;
 
@@ -363,6 +365,7 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
       index={index}
       propItemKey={propItemKey}
       wrap={wrap}
+      inline={inline}
     >
       <Input
         props={props}

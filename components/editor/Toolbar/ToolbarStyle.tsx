@@ -70,21 +70,55 @@ export const Wrap = ({
   index = null,
   propItemKey = null,
   wrap = null,
-}) => (
-  <div className="w-full">
-    <Labler
-      props={props}
-      lab={lab}
-      viewValue={viewValue}
-      propType={propType}
-      propKey={propKey}
-      index={index}
-      propItemKey={propItemKey}
-      wrap={wrap}
-    />
-    {children}
-  </div>
-);
+  inline = false,
+}) => {
+  if (inline) {
+    // Inline mode: everything in one row
+    return (
+      <div className="w-full flex items-center gap-2">
+        {(!props?.labelHide && props?.label) && (
+          <span className="text-xs whitespace-nowrap w-12 truncate">{props?.label}</span>
+        )}
+        <div className="flex-1">
+          {children}
+        </div>
+        {!props?.labelHide && (
+          <ToolbarLabel
+            lab={lab}
+            prefix={props?.labelPrefix}
+            suffix={props?.labelSuffix}
+            viewValue={viewValue}
+            propType={propType}
+            propKey={propKey}
+            index={index}
+            propItemKey={propItemKey}
+            icon={props?.labelIcon}
+            showDeleteIcon={props?.showDeleteIcon}
+            showVarSelector={props?.showVarSelector}
+            varSelectorPrefix={props?.varSelectorPrefix}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // Default mode: 2 rows
+  return (
+    <div className="w-full">
+      <Labler
+        props={props}
+        lab={lab}
+        viewValue={viewValue}
+        propType={propType}
+        propKey={propKey}
+        index={index}
+        propItemKey={propItemKey}
+        wrap={wrap}
+      />
+      {children}
+    </div>
+  );
+};
 
 export const Card = ({
   value,

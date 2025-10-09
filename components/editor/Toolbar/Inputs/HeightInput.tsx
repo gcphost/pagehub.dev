@@ -35,6 +35,8 @@ export const HeightInput = ({
           valueLabels={TailwindStyles[sliderValues]}
           showVarSelector={true}
           varSelectorPrefix={propTag}
+          inline
+
         />
       )}
 
@@ -47,6 +49,8 @@ export const HeightInput = ({
           placeholder="Pixels"
           label={label}
           labelHide={true}
+          inline
+
         />
       )}
     </ItemToggle>

@@ -8,7 +8,7 @@ export const MarginInput = ({ propKey = "margin" }) => (
   <>
     <ToolbarSection
       title="Margin"
-      full={2}
+      full={1}
       help="The space around this component."
       footer={<ItemAdvanceToggle
         propKey={propKey}
@@ -18,7 +18,7 @@ export const MarginInput = ({ propKey = "margin" }) => (
           </>
         }
       >
-        <ToolbarSection full={2}>
+        <ToolbarSection full={1}>
           <ToolbarItem
             propKey="mt"
             type="slider"
@@ -28,6 +28,7 @@ export const MarginInput = ({ propKey = "margin" }) => (
             valueLabels={TailwindStyles.mt}
             showVarSelector={true}
             varSelectorPrefix="mt"
+            inline
           />
           <ToolbarItem
             propKey="mb"
@@ -38,6 +39,7 @@ export const MarginInput = ({ propKey = "margin" }) => (
             valueLabels={TailwindStyles.mb}
             showVarSelector={true}
             varSelectorPrefix="mb"
+            inline
           />
           <ToolbarItem
             propKey="ml"
@@ -48,6 +50,7 @@ export const MarginInput = ({ propKey = "margin" }) => (
             valueLabels={TailwindStyles.ml}
             showVarSelector={true}
             varSelectorPrefix="ml"
+            inline
           />
           <ToolbarItem
             propKey="mr"
@@ -58,6 +61,7 @@ export const MarginInput = ({ propKey = "margin" }) => (
             valueLabels={TailwindStyles.mr}
             showVarSelector={true}
             varSelectorPrefix="mr"
+            inline
           />
         </ToolbarSection>
       </ItemAdvanceToggle>}
@@ -71,6 +75,8 @@ export const MarginInput = ({ propKey = "margin" }) => (
         valueLabels={TailwindStyles.mx}
         showVarSelector={true}
         varSelectorPrefix="mx"
+        inline
+
       />
 
       <ToolbarItem
@@ -82,6 +88,8 @@ export const MarginInput = ({ propKey = "margin" }) => (
         valueLabels={TailwindStyles.my}
         showVarSelector={true}
         varSelectorPrefix="my"
+        inline
+
       />
 
 

@@ -23,7 +23,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
     <>
       <ToolbarSection
         title="Padding"
-        full={2}
+        full={1}
         help="The space inside this component."
         footer={<ItemAdvanceToggle
           propKey={propKey}
@@ -33,7 +33,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
             </>
           }
         >
-          <ToolbarSection full={2}>
+          <ToolbarSection full={1}>
             <ToolbarItem
               propKey="pt"
               type="slider"
@@ -41,6 +41,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
               max={TailwindStyles.pt.length - 1}
               min={0}
               valueLabels={TailwindStyles.pt}
+              inline
             />
             <ToolbarItem
               propKey="pb"
@@ -49,6 +50,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
               max={TailwindStyles.pb.length - 1}
               min={0}
               valueLabels={TailwindStyles.pb}
+              inline
             />
             <ToolbarItem
               propKey="pl"
@@ -57,6 +59,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
               max={TailwindStyles.pl.length - 1}
               min={0}
               valueLabels={TailwindStyles.pl}
+              inline
             />
             <ToolbarItem
               propKey="pr"
@@ -65,6 +68,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
               max={TailwindStyles.pr.length - 1}
               min={0}
               valueLabels={TailwindStyles.pr}
+              inline
             />
           </ToolbarSection>
         </ItemAdvanceToggle>}
@@ -78,6 +82,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
           valueLabels={TailwindStyles.px}
           showVarSelector={true}
           varSelectorPrefix="px"
+          inline
         />
 
         <ToolbarItem
@@ -89,6 +94,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
           valueLabels={TailwindStyles.py}
           showVarSelector={true}
           varSelectorPrefix="py"
+          inline
         />
 
 

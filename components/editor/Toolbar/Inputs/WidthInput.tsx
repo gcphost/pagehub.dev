@@ -35,6 +35,7 @@ export const WidthInput = ({
           valueLabels={TailwindStyles[sliderValues]}
           showVarSelector={true}
           varSelectorPrefix={propTag}
+          inline
         />
       )}
 
@@ -46,6 +47,8 @@ export const WidthInput = ({
           label={label}
           showVarSelector={true}
           varSelectorPrefix={propTag}
+          inline
+
         >
           <option value="">None</option>
           {TailwindStyles[values].map((_, k) => (
@@ -62,6 +65,8 @@ export const WidthInput = ({
           type="custom"
           label={label}
           placeholder="Pixels"
+          inline
+
         />
       )}
     </ItemToggle>
