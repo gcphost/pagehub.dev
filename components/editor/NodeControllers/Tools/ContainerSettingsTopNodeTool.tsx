@@ -200,13 +200,14 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
             wrap="control"
             options={options}
             propType="class"
+            inline={false}
           />
         </div>
       </Tooltip>
 
 
       {direction == "horizontal" && (<div className="tool-button">
-        <FlexDirectionInput wrap="control" type="toggleNext" />
+        <FlexDirectionInput wrap="control" type="toggleNext" inline={false} />
       </div>)}
 
 
