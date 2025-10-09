@@ -10,38 +10,7 @@ export const FlexInput = ({ propKey = "flex" }) => (
   <ToolbarSection
     title="Flex"
     help="Control the position of the components inside this one."
-  >
-    <ToolbarSection full={2}>
-      <GapInput />
-
-      <ToolbarItem
-        propKey="alignItems"
-        type="select"
-        label="Item Alignment"
-        labelHide={true}
-        cols={true}
-      >
-        <option value="">None</option>
-        {TailwindStyles.alignItems.map((_, k) => (
-          <option key={_}>{_}</option>
-        ))}
-      </ToolbarItem>
-
-      <ToolbarItem
-        propKey="justifyContent"
-        type="select"
-        labelHide={true}
-        label="Justify Content"
-        cols={true}
-      >
-        <option value="">None</option>
-        {TailwindStyles.justifyContent.map((_, k) => (
-          <option key={_}>{_}</option>
-        ))}
-      </ToolbarItem>
-    </ToolbarSection>
-
-    <ItemAdvanceToggle propKey={propKey}>
+    footer={<ItemAdvanceToggle propKey={propKey}>
       <ToolbarSection full={2}>
         <FlexDirectionInput />
 
@@ -90,6 +59,41 @@ export const FlexInput = ({ propKey = "flex" }) => (
           prop="flexBase"
         />
       </ToolbarSection>
-    </ItemAdvanceToggle>
+    </ItemAdvanceToggle>}
+  >
+    <ToolbarSection full={2}>
+      <GapInput />
+
+      <ToolbarItem
+        propKey="alignItems"
+        type="select"
+        label="Item Alignment"
+        labelHide={true}
+        cols={true}
+      >
+        <option value="">None</option>
+        {TailwindStyles.alignItems.map((_, k) => (
+          <option key={_}>{_}</option>
+        ))}
+      </ToolbarItem>
+
+      <ToolbarItem
+        propKey="justifyContent"
+        type="select"
+        labelHide={true}
+        label="Justify Content"
+        cols={true}
+      >
+        <option value="">None</option>
+        {TailwindStyles.justifyContent.map((_, k) => (
+          <option key={_}>{_}</option>
+        ))}
+      </ToolbarItem>
+
+
+
+    </ToolbarSection>
+
+
   </ToolbarSection>
 );

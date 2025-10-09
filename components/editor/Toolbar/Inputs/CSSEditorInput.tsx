@@ -87,9 +87,9 @@ export const CSSEditorInput = () => {
   };
 
   return (
-    <ToolbarSection>
+    <ToolbarSection title="Custom Style">
       <div className="w-full">
-        <h4 className="text-white mb-3">CSS</h4>
+        <h4 className="text-white mb-3 text-sm">CSS</h4>
         <div className="rounded-lg overflow-hidden border border-gray-600">
           <CodeMirror
             value={value || ""}

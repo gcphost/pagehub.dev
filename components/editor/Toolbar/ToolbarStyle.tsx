@@ -8,7 +8,7 @@ export const BgWrap = ({ children, className = "", wrap = null }) => {
   }
   return (
     <div
-      className={`rounded-lg bg-gray-500/50 border-gray-500 border w-full px-3 py-3   ${className || " input-hover"
+      className={`rounded-lg bg-gray-500/50 border-gray-500 border w-full px-1 py-0.5   ${className || " input-hover"
         }`}
     >
       {children}
@@ -30,8 +30,8 @@ const Labler = ({
 
   return (
     <h4
-      className={`text-white ${lab ? "my-3" : "mb-3"
-        } gap-3 h-6 flex justify-between`}
+      className={`text-xs text-white ${lab ? "my-1" : "mb-1"
+        } gap-3 flex justify-between`}
     >
       <div className="flex gap-1.5 items-center">
         {props?.label}
@@ -119,7 +119,7 @@ export const Card = ({
     <button
       onClick={handleClick}
       onContextMenu={handleContextMenu}
-      className={`${bgColor} text-gray-800 hover:opacity-80 hover:text-gray-700 text-xs font-medium mr-2 px-2.5 py-1.5 rounded inline-flex cursor-pointer whitespace-nowrap`}
+      className={`${bgColor} text-gray-800 hover:opacity-80 hover:text-gray-700 text-xs font-medium mr-2 p-1 rounded inline-flex cursor-pointer whitespace-nowrap`}
     >
       <Tooltip content={`Left-click: Copy | Right-click: Remove`} placement="bottom" arrow={false}>
         {value}
@@ -135,7 +135,7 @@ export const CardLight = ({ value, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="bg-white text-gray-800 text-xs font-medium mr-2 px-2.5 py-1.5 rounded inline-flex cursor-pointer"
+      className="bg-white text-gray-800 text-xs font-medium mr-2 p-1 rounded inline-flex cursor-pointer"
     >
       <Tooltip content={`Add ${value}`} placement="top" arrow={false}>
         {value}

@@ -1,4 +1,5 @@
-import { TbQuestionMark } from "react-icons/tb";
+import { useState } from "react";
+import { TbChevronDown, TbChevronUp, TbQuestionMark } from "react-icons/tb";
 import { ToolbarLabel } from "./Label";
 
 export const ToolbarSection = ({
@@ -12,38 +13,67 @@ export const ToolbarSection = ({
   className = "",
   subtitle = false,
   help = "",
+  collapsible = true,
+  defaultOpen = true,
+  footer,
 }: any) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
   const classNames = className
     ? "items-center flex text-lg text-white text-left font-medium text-dark-gray bg-gray-800 p-3 cursor-pointer border-y-gray-900 border-y border border-yellow-500"
-    : `items-center flex text-${subtitle ? "lg" : "2xl"
-    } mt-6 font-bold text-white gap-3 flex`;
+    : `items-center flex text-sm mt-6 font-bold text-white gap-3 flex justify-between w-full`;
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (collapsible) {
+      setIsOpen(!isOpen);
+    }
+    if (onClick) {
+      onClick(e);
+    }
+  };
 
   return (
-    <>
+    <div className="w-full">
       {title && (
-        <button id={title} className={classNames} onClick={onClick} aria-label={title}>
-          {title}
+        <button id={title} className={classNames} onClick={handleClick} aria-label={title}>
+          <div className="flex items-center gap-3">
+            {title}
 
-          {propKey && <ToolbarLabel lab={propKey} propKey={propKey} />}
+            {propKey && <ToolbarLabel lab={propKey} propKey={propKey} />}
 
-          {help && (
-            <>
-              <span className="text-xs p-0.5 bg-gray-500 hover:bg-gray-600 cursor-pointer rounded-full group relative z-10" role="tooltip" aria-label={help}>
-                <TbQuestionMark />
-                <span className="hidden absolute text-sm w-44 left-6 -top-3 group-active:flex group-hover:flex bg-[#222]/80 rounded p-3 font-semibold z-20">
+            {help && (
+              <span
+                className="relative inline-flex"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="text-xxs  cursor-pointer rounded-full peer inline-flex z-10">
+                  <TbQuestionMark />
+                </span>
+                <span className="invisible peer-hover:visible absolute text-sm w-64 left-8 -top-2 bg-gray-900 border border-gray-700 rounded p-3 font-normal text-white shadow-lg z-50 whitespace-normal">
                   {help}
                 </span>
               </span>
-            </>
+            )}
+          </div>
+
+          {collapsible && (
+            <span className="text-base">
+              {isOpen ? <TbChevronUp /> : <TbChevronDown />}
+            </span>
           )}
         </button>
       )}
 
-      {enabled && (
-        <div className={`grid-cols-${full} gap-3 grid items-end`} role="group" aria-labelledby={title}>
+      {enabled && isOpen && (
+        <><div className={`grid-cols-${full} gap-3 grid items-end`} role="group" aria-labelledby={title}>
           {children}
         </div>
+
+          {footer && <>{footer}</>}
+        </>
       )}
-    </>
+
+
+    </div>
   );
 };

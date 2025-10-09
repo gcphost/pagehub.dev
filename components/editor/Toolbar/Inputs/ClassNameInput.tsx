@@ -4,7 +4,7 @@ import { CSSEditorInput } from "./CSSEditorInput";
 
 export const ClassNameInput = () => (
   <>
-    <ToolbarSection>
+    <ToolbarSection title="Tailwind Classes">
       <ClassItem
         propKey="className"
         type="className"

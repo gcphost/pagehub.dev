@@ -235,7 +235,7 @@ export const ColorInput = (__props: any) => {
         propItemKey={propItemKey}
       >
         <button
-          className="w-full h-12 rounded-md cursor-pointer border input-hover"
+          className="input-color"
           style={finalStyle}
           onClick={(e) => {
             setDialog({

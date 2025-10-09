@@ -25,6 +25,49 @@ export const PaddingInput = ({ propKey = "padding" }) => {
         title="Padding"
         full={2}
         help="The space inside this component."
+        footer={<ItemAdvanceToggle
+          propKey={propKey}
+          title={
+            <>
+              <TbBoxPadding /> Top, bottom, left, or right are also available
+            </>
+          }
+        >
+          <ToolbarSection full={2}>
+            <ToolbarItem
+              propKey="pt"
+              type="slider"
+              label="Top"
+              max={TailwindStyles.pt.length - 1}
+              min={0}
+              valueLabels={TailwindStyles.pt}
+            />
+            <ToolbarItem
+              propKey="pb"
+              type="slider"
+              label="Bottom"
+              max={TailwindStyles.pb.length - 1}
+              min={0}
+              valueLabels={TailwindStyles.pb}
+            />
+            <ToolbarItem
+              propKey="pl"
+              type="slider"
+              label="Left"
+              max={TailwindStyles.pl.length - 1}
+              min={0}
+              valueLabels={TailwindStyles.pl}
+            />
+            <ToolbarItem
+              propKey="pr"
+              type="slider"
+              label="Right"
+              max={TailwindStyles.pr.length - 1}
+              min={0}
+              valueLabels={TailwindStyles.pr}
+            />
+          </ToolbarSection>
+        </ItemAdvanceToggle>}
       >
         <ToolbarItem
           propKey="px"
@@ -47,51 +90,11 @@ export const PaddingInput = ({ propKey = "padding" }) => {
           showVarSelector={true}
           varSelectorPrefix="py"
         />
+
+
       </ToolbarSection>
 
-      <ItemAdvanceToggle
-        propKey={propKey}
-        title={
-          <>
-            <TbBoxPadding /> Top, bottom, left, or right are also available
-          </>
-        }
-      >
-        <ToolbarSection full={2}>
-          <ToolbarItem
-            propKey="pt"
-            type="slider"
-            label="Top"
-            max={TailwindStyles.pt.length - 1}
-            min={0}
-            valueLabels={TailwindStyles.pt}
-          />
-          <ToolbarItem
-            propKey="pb"
-            type="slider"
-            label="Bottom"
-            max={TailwindStyles.pb.length - 1}
-            min={0}
-            valueLabels={TailwindStyles.pb}
-          />
-          <ToolbarItem
-            propKey="pl"
-            type="slider"
-            label="Left"
-            max={TailwindStyles.pl.length - 1}
-            min={0}
-            valueLabels={TailwindStyles.pl}
-          />
-          <ToolbarItem
-            propKey="pr"
-            type="slider"
-            label="Right"
-            max={TailwindStyles.pr.length - 1}
-            min={0}
-            valueLabels={TailwindStyles.pr}
-          />
-        </ToolbarSection>
-      </ItemAdvanceToggle>
+
 
       {view === "mobile" &&
         TailwindStyles.px.indexOf(propValues[view]?.px) >

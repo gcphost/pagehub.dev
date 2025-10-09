@@ -2,7 +2,6 @@ import { Tooltip } from "components/layout/Tooltip";
 import { RxSlider } from "react-icons/rx";
 import { TbSelector, TbSettings } from "react-icons/tb";
 import { atom, useRecoilState } from "recoil";
-import { MotionIcon, MotionInside } from "./MotionIcon";
 
 export const sizingItems = [
   {
@@ -23,10 +22,10 @@ export const sizingItems = [
 ];
 
 export const ItemToggle = ({ items = [], children, selected, onChange }) => (
-  <div className="flex flex-col gap-3">
+  <div className="flex flex-row items-end gap-0.5">
     {children}
 
-    <div className="flex flex-row gap-1.5">
+    <div className="flex flex-row gap-0.5">
       {items.map((item) => (
         <ItemSelector
           {...item}
@@ -51,13 +50,12 @@ export const ItemSelector = ({
     onClick={onClick}
     placement="bottom"
   >
-    <MotionInside
-      className={`text-xs p-2 rounded-md border border-gray-800 hover:bg-gray-600 hover:text-lg w-8 h-8 flex items-center justify-center ${
-        selected ? "bg-gray-600" : ""
-      }`}
+    <div
+      className={`text-xs p-2 rounded-md border border-gray-800 hover:bg-gray-600 hover:text-lg w-8 h-8 flex items-center justify-center ${selected ? "bg-gray-600" : ""
+        }`}
     >
-      <MotionIcon>{icon}</MotionIcon>
-    </MotionInside>
+      {icon}
+    </div>
   </Tooltip>
 );
 
@@ -80,10 +78,9 @@ export const ItemAdvanceToggle = ({
   return (
     <>
       <button
-        className="text-xs flex items-center  gap-1.5 cursor-pointer"
+        className="w-full text-center text-xxs mx-auto mt-2 px-2 py-0 flex items-center justify-center gap-1.5 border border-primary-500 rounded-md hover:bg-primary-500"
         onClick={() => setShowAdvance(!showAdvance)}
-      >
-        <MotionIcon>{title}</MotionIcon>
+      >{title}
       </button>
 
       {showAdvance ? children : null}

@@ -82,6 +82,7 @@ export const ImageSettings = () => {
       </ToolbarSection>
 
       <SizeInput />
+
       <ToolbarSection
         full={2}
         title="Loading"

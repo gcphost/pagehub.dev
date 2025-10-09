@@ -95,7 +95,7 @@ export const ToolbarLabel = ({
           onClick={(e) => handleRemove(e)}
         >
           <div
-            className={`flex items-center gap-1.5 truncate text-[10px] max-w-[100px] ${bg} rounded-md px-2 py-1 border border-gray-900 text-black cursor-pointer hover:opacity-80 inside-shadow-light overflow-ellipsis ...`}
+            className={`flex items-center gap-1.5 truncate text-[10px] max-w-[100px] ${bg} rounded-md px-1 py-0 border border-gray-900 text-black cursor-pointer hover:opacity-80 inside-shadow-light overflow-ellipsis ...`}
           >
             {icon ? (
               // If icon provided, show icon

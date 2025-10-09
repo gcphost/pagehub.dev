@@ -31,6 +31,7 @@ interface ImageListProps extends BaseSelectorProps {
   autoScroll: boolean | string;
   autoScrollInterval: number;
   infiniteSpeed: number;
+  infiniteDirection: "left" | "right";
   animationEnabled: boolean | string;
   previewInEditor: boolean | string;
   showNavigation: boolean | string;
@@ -55,6 +56,7 @@ const defaultProps: ImageListProps = {
   autoScroll: false,
   autoScrollInterval: 3000,
   infiniteSpeed: 30,
+  infiniteDirection: "left",
   animationEnabled: true,
   previewInEditor: false,
   showNavigation: true,
@@ -236,12 +238,20 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
     // Calculate width for each image based on itemsPerView
     const imageWidth = `${100 / (props.itemsPerView || 3)}%`;
 
+    // Determine animation direction
+    const isScrollingLeft = props.infiniteDirection === "left";
+    const animationName = isScrollingLeft ? "gallery-scroll-left" : "gallery-scroll-right";
+
     wrappedChildren = (
       <>
         <style jsx global>{`
-          @keyframes gallery-scroll {
+          @keyframes gallery-scroll-left {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
+          }
+          @keyframes gallery-scroll-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
           }
           .gallery-infinite-scroll:hover {
             animation-play-state: paused !important;
@@ -255,7 +265,7 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
           <div
             className="flex gallery-infinite-scroll"
             style={{
-              animation: shouldAnimate ? `gallery-scroll ${props.infiniteSpeed}s linear infinite` : 'none',
+              animation: shouldAnimate ? `${animationName} ${props.infiniteSpeed}s linear infinite` : 'none',
             }}
           >
             {children}

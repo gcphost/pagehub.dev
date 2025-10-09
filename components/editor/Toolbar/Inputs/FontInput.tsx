@@ -58,27 +58,7 @@ export const FontInput = () => (
         varSelectorPrefix="font"
       />
     </ToolbarSection>
-    <ToolbarSection full={1}>
-      <ToolbarItem
-        propKey="lineHeight"
-        type="slider"
-        label="Line Height"
-        max={TailwindStyles.lineHeight.length - 1}
-        min={0}
-        valueLabels={TailwindStyles.lineHeight}
-      />
-
-      <ToolbarItem
-        propKey="tracking"
-        type="slider"
-        label="Letter Spacing"
-        max={TailwindStyles.tracking.length - 1}
-        min={0}
-        valueLabels={TailwindStyles.tracking}
-      />
-    </ToolbarSection>
-
-    <ItemAdvanceToggle
+    <ToolbarSection full={2} footer={<ItemAdvanceToggle
       propKey="font"
       title={
         <>
@@ -115,6 +95,29 @@ export const FontInput = () => (
           type="select"
         />
       </ToolbarSection>
-    </ItemAdvanceToggle>
+    </ItemAdvanceToggle>}>
+
+      <ToolbarItem
+        propKey="lineHeight"
+        type="slider"
+        label="Line Height"
+        max={TailwindStyles.lineHeight.length - 1}
+        min={0}
+        valueLabels={TailwindStyles.lineHeight}
+      />
+
+      <ToolbarItem
+        propKey="tracking"
+        type="slider"
+        label="Letter Spacing"
+        max={TailwindStyles.tracking.length - 1}
+        min={0}
+        valueLabels={TailwindStyles.tracking}
+      />
+
+
+    </ToolbarSection>
+
+
   </>
 );

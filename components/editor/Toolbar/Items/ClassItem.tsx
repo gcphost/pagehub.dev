@@ -128,7 +128,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
         <div className="absolute inset-0 -z-10 bg-gray-500/50 border border-gray-500 rounded-lg"></div>
         <button
           type="submit"
-          className="text-white inside-shadow absolute right-2.5 bottom-2.5 h-8 bg-primary-500 border border-gray-500 px-5 py-1.5 rounded-md hover:bg-primary-600 z-20"
+          className="btn-search"
           onClick={() => save()}
         >
           <TbSearch />

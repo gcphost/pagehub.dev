@@ -40,6 +40,7 @@ import { ButtonList } from "../../components/selectors/ButtonList";
 import { Footer } from "../../components/selectors/Footer";
 import { Header } from "../../components/selectors/Header";
 import { Image } from "../../components/selectors/Image";
+import { ImageGallery } from "../../components/selectors/ImageGallery";
 import { ImageList } from "../../components/selectors/ImageList";
 import { Video } from "../../components/selectors/Video";
 import { useSetTenant } from "../../utils/tenantStore";
@@ -91,6 +92,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
     FormElement,
     Button,
     ButtonList,
+    ImageGallery,
     ImageList,
     Video,
     Audio,

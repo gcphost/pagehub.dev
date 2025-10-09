@@ -6,13 +6,7 @@ import { WidthInput } from "./WidthInput";
 
 export const SizeInput = () => (
   <>
-    <ToolbarSection title="Size" full={2}>
-      <WidthInput />
-
-      <HeightInput />
-    </ToolbarSection>
-
-    <ItemAdvanceToggle
+    <ToolbarSection title="Size" full={2} footer={<ItemAdvanceToggle
       propKey="size"
       title={
         <>
@@ -61,6 +55,14 @@ export const SizeInput = () => (
           propTag="min-h"
         />
       </ToolbarSection>
-    </ItemAdvanceToggle>
+    </ItemAdvanceToggle>}>
+      <WidthInput />
+
+      <HeightInput />
+
+
+    </ToolbarSection>
+
+
   </>
 );
