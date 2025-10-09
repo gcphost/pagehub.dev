@@ -591,9 +591,10 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       ) : (
                         <img
                           key={`${media.id}-${media.uploadedAt || 0}`}
-                          src={`${getCdnUrl(media.cdnId || media.id)}?v=${media.uploadedAt || Date.now()}`}
+                          src={getCdnUrl(media.cdnId || media.id, { width: 400, format: 'auto' })}
                           alt={media.metadata?.alt || media.id}
                           className="w-full h-full object-cover"
+                          loading="lazy"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';
                           }}
@@ -700,7 +701,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   ) : (
                     <img
                       key={`${editingMedia.id}-${editingMedia.uploadedAt || 0}`}
-                      src={`${getCdnUrl(editingMedia.cdnId || editingMedia.id)}?v=${editingMedia.uploadedAt || Date.now()}`}
+                      src={getCdnUrl(editingMedia.cdnId || editingMedia.id, { width: 200, format: 'auto' })}
                       alt={editingMedia.metadata?.alt || "Preview"}
                       className="w-24 h-24 object-cover rounded"
                     />

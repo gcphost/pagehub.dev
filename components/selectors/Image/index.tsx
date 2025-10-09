@@ -10,7 +10,7 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { TbCheck, TbPhoto } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { getMediaContent, motionIt } from "utils/lib";
+import { motionIt } from "utils/lib";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { ImageSettings } from "./ImageSettings";
@@ -186,10 +186,21 @@ export const Image = (props: ImageProps) => {
       };
     }
   } else {
-    // Use media content lookup system - supports cdn and url types from media library
-    _imgProp.src = videoId ? getMediaContent(query, videoId) : null;
+    // Use responsive image system for CDN images
+    if (videoId) {
+      const { getResponsiveImageAttrs } = require("utils/lib");
+      const responsiveAttrs = getResponsiveImageAttrs(query, videoId);
 
-    // Loading attribute is already set above with default fallback
+      _imgProp.src = responsiveAttrs.src;
+
+      // Only add srcset/sizes if available (CDN images only)
+      if (responsiveAttrs.srcset) {
+        _imgProp.srcSet = responsiveAttrs.srcset;
+        _imgProp.sizes = responsiveAttrs.sizes;
+      }
+    } else {
+      _imgProp.src = null;
+    }
 
     // Add fetchpriority attribute to the img element
     if (props.fetchPriority) {
@@ -197,7 +208,7 @@ export const Image = (props: ImageProps) => {
     }
 
     // Add preload link to document head when priority is enabled
-    if (props.priority && typeof document !== "undefined") {
+    if (props.priority && typeof document !== "undefined" && _imgProp.src) {
       const link = document.createElement("link");
 
       link.rel = "preload";

@@ -939,6 +939,58 @@ export const getMediaContent = (query: any, mediaId: string): string | null => {
 };
 
 /**
+ * Get responsive image attributes (src, srcset, sizes) for a media item
+ * @param query - Craft.js query object
+ * @param mediaId - The ID of the media to retrieve
+ * @returns Object with src, srcset, and sizes attributes
+ */
+export const getResponsiveImageAttrs = (query: any, mediaId: string) => {
+  try {
+    if (!mediaId) return { src: null, srcset: null, sizes: null };
+
+    const backgroundNode = query.node(ROOT_NODE).get();
+    if (!backgroundNode) return { src: null, srcset: null, sizes: null };
+
+    const pageMedia = backgroundNode.data.props.pageMedia || [];
+    const media = pageMedia.find((m: any) => m.id === mediaId);
+
+    // Non-CDN media types don't get srcset
+    if (!media || media.type === "url" || media.type === "svg") {
+      return {
+        src: getMediaContent(query, mediaId),
+        srcset: null,
+        sizes: null,
+      };
+    }
+
+    // CDN images get responsive srcset
+    const cdnId = media.cdnId || media.id;
+
+    // Import dynamically to avoid circular dependency
+    const { generateSrcSet, generateSizes } = require("./cdn");
+
+    return {
+      src: getCdnUrl(cdnId, { width: 1280, format: "auto" }),
+      srcset: generateSrcSet(cdnId, [320, 640, 960, 1280, 1920, 2560], {
+        format: "auto",
+      }),
+      sizes: generateSizes({
+        "(max-width: 640px)": "100vw",
+        "(max-width: 1024px)": "50vw",
+        default: "33vw",
+      }),
+    };
+  } catch (e) {
+    console.error("Failed to get responsive image attrs:", e);
+    return {
+      src: getMediaContent(query, mediaId),
+      srcset: null,
+      sizes: null,
+    };
+  }
+};
+
+/**
  * Get full media object by ID
  * @param query - Craft.js query object
  * @param mediaId - The ID of the media to retrieve

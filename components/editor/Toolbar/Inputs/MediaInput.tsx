@@ -44,7 +44,18 @@ export const MediaInput = (propa) => {
   const selectedMedia = hasMedia ? getMediaById(query, mediaId) : null;
   const isSvg = selectedMedia?.type === "svg";
   const svgContent = isSvg ? selectedMedia?.metadata?.svg : null;
-  const imageUrl = hasMedia && !isSvg ? getMediaContent(query, mediaId) : null;
+
+  // For preview, use optimized size for CDN images
+  let imageUrl = null;
+  if (hasMedia && !isSvg) {
+    if (selectedMedia?.type === "cdn") {
+      const { getCdnUrl } = require("utils/cdn");
+      const cdnId = selectedMedia.cdnId || selectedMedia.id;
+      imageUrl = getCdnUrl(cdnId, { width: 600, format: 'auto' });
+    } else {
+      imageUrl = getMediaContent(query, mediaId);
+    }
+  }
 
   const handleClear = () => {
     setProp((_props) => {
@@ -71,6 +82,7 @@ export const MediaInput = (propa) => {
                     src={imageUrl || ""}
                     alt="Preview"
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 )}
               </div>
