@@ -46,25 +46,43 @@ export const MediaInput = (propa) => {
   const svgContent = isSvg ? selectedMedia?.metadata?.svg : null;
   const imageUrl = hasMedia && !isSvg ? getMediaContent(query, mediaId) : null;
 
+  const handleClear = () => {
+    setProp((_props) => {
+      _props[propKey] = null;
+      _props[typeKey] = "cdn";
+    });
+  };
+
   return (
     <>
       <ToolbarSection title={title} full={1}>
         <div className="space-y-2">
           {/* Preview if media exists */}
           {hasMedia && (svgContent || imageUrl) && (
-            <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center p-2">
-              {svgContent ? (
-                <div
-                  className="w-full h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full flex items-center justify-center text-white"
-                  dangerouslySetInnerHTML={{ __html: svgContent }}
-                />
-              ) : (
-                <img
-                  src={imageUrl || ""}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                />
-              )}
+            <div className="relative">
+              <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center p-2">
+                {svgContent ? (
+                  <div
+                    className="w-full h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full flex items-center justify-center text-white"
+                    dangerouslySetInnerHTML={{ __html: svgContent }}
+                  />
+                ) : (
+                  <img
+                    src={imageUrl || ""}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+
+              {/* Clear button - only show when media is set */}
+              <button
+                onClick={handleClear}
+                className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold"
+                title="Clear media"
+              >
+                ×
+              </button>
             </div>
           )}
 

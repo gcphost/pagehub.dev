@@ -34,6 +34,15 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const toolbarRef = useRef<HTMLDivElement>(null);
   const settings = useRecoilValue(SettingsAtom);
 
+  // Format file size in human-readable format
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
+  };
+
   const refreshMediaList = useCallback(() => {
     const media = getPageMedia(query);
     setMediaList(media);
@@ -117,6 +126,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   ...existingMedia.metadata,
                   title: file.name,
                   alt: file.name.replace(/\.[^/.]+$/, ""), // filename without extension
+                  size: file.size, // Store file size in bytes
                 };
               }
             });
@@ -190,10 +200,12 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const saveEditedMetadata = () => {
     if (!editingMedia) return;
 
-    // Clean SVG if it's an SVG type
+    // Clean SVG if it's an SVG type and recalculate size
     const metadata = { ...editingMedia.metadata };
     if (editingMedia.type === "svg" && metadata.svg) {
-      metadata.svg = cleanSvg(metadata.svg);
+      const cleanedSvg = cleanSvg(metadata.svg);
+      metadata.svg = cleanedSvg;
+      metadata.size = new Blob([cleanedSvg]).size; // Recalculate size
     }
 
     updateMediaMetadata(query, actions, editingMedia.id, metadata);
@@ -236,9 +248,10 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
             mediaItem.cdnId = newCdnId;
             mediaItem.uploadedAt = Date.now();
 
-            // Optionally update filename in metadata
+            // Update filename and size in metadata
             if (mediaItem.metadata) {
               mediaItem.metadata.title = file.name;
+              mediaItem.metadata.size = file.size; // Update file size
             }
           }
         });
@@ -284,6 +297,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     if (!svgInput.trim()) return;
 
     const cleanedSvg = cleanSvg(svgInput);
+    const svgSize = new Blob([cleanedSvg]).size; // Get byte size of SVG
 
     const mediaId = `svg-${Date.now()}`;
     registerMediaWithBackground(query, actions, mediaId, "svg", "media-manager");
@@ -298,6 +312,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           ...existingMedia.metadata,
           title: "SVG Image",
           svg: cleanedSvg,
+          size: svgSize, // Store SVG size in bytes
         };
       }
     });
@@ -586,11 +601,16 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       )}
                     </div>
 
-                    {/* Name/Title */}
+                    {/* Name/Title and Size */}
                     <div className="p-2 bg-white">
                       <p className="text-xs truncate text-gray-700 font-medium">
                         {media.metadata?.title || media.id}
                       </p>
+                      {media.metadata?.size && (
+                        <p className="text-[10px] text-gray-500 mt-0.5">
+                          {formatFileSize(media.metadata.size)}
+                        </p>
+                      )}
                     </div>
 
                     {/* Action Buttons (on hover) */}
@@ -688,6 +708,9 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   <div className="flex-1">
                     <p className="text-sm font-mono text-gray-600">{editingMedia.id}</p>
                     <p className="text-xs text-gray-500 mt-1">Type: {editingMedia.type || "cdn"}</p>
+                    {editingMedia.metadata?.size && (
+                      <p className="text-xs text-gray-500 mt-1">Size: {formatFileSize(editingMedia.metadata.size)}</p>
+                    )}
                   </div>
                 </div>
 

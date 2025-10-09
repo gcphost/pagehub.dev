@@ -1,6 +1,8 @@
 import { TailwindStyles } from "utils/tailwind";
 import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
+import { CursorInput } from "./CursorInput";
+import { OverflowInput } from "./OverflowInput";
 
 export const DisplayInput = () => (
   <ToolbarSection title="Display">
@@ -27,5 +29,9 @@ export const DisplayInput = () => (
         <option key={k}>{`${_}`}</option>
       ))}
     </ToolbarItem>
+
+    <CursorInput />
+
+    <OverflowInput />
   </ToolbarSection>
 );

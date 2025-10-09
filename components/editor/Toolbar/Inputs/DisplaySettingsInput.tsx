@@ -1,10 +1,8 @@
 import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
 import { ClassNameInput } from "./ClassNameInput";
-import { CursorInput } from "./CursorInput";
 import { DisplayInput } from "./DisplayInput";
 import { GptInput } from "./GptInput";
-import { OverflowInput } from "./OverflowInput";
 
 export default function DisplaySettingsInput() {
   return (
@@ -13,13 +11,6 @@ export default function DisplaySettingsInput() {
       <ClassNameInput />
 
       <DisplayInput />
-
-      <ToolbarSection title="Cursor">
-        <CursorInput />
-      </ToolbarSection>
-      <ToolbarSection title="Overflow">
-        <OverflowInput />
-      </ToolbarSection>
 
 
       <ToolbarSection title="ID" help="This can be used for Hover & Click">

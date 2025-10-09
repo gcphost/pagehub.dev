@@ -102,6 +102,9 @@ export const Image = (props: ImageProps) => {
     }
   }
 
+  // Check if radius is set (for overflow-hidden)
+  const hasRadius = props.root?.radius;
+
   const prop: any = {
     ref: (r) => {
       ref.current = r;
@@ -112,16 +115,17 @@ export const Image = (props: ImageProps) => {
       enabled && e.preventDefault();
     },
     style: props.root.style ? CSStoObj(props.root.style) || {} : {},
-    // Wrapper gets ALL layout classes (sizing, spacing, borders, shadows, etc.)
+    // Wrapper gets ALL layout classes (sizing, spacing, borders, shadows, radius, etc.)
     // EXCEPT image-specific rendering (object-fit, object-position)
-    className: `${ClassGenerator(
+    // Add overflow-hidden if radius is set to clip image corners properly
+    className: `${hasRadius ? 'overflow-hidden' : ''} ${ClassGenerator(
       props,
       view,
       enabled,
       ["objectFit", "objectPosition"],
       [],
       preview
-    )}`,
+    )}`.trim(),
   };
 
 
@@ -142,12 +146,13 @@ export const Image = (props: ImageProps) => {
     role: !altText && !titleText ? "presentation" : undefined,
     // Img always fills wrapper (w-full h-full) + gets image-specific rendering classes
     // Add default object-cover if not set (important for aspect-ratio to work on wrapper)
+    // Radius stays on wrapper, not on img
     className: `w-full h-full ${!hasObjectFit ? 'object-cover' : ''} ${ClassGenerator(
       props,
       view,
       enabled,
       [],
-      ["objectFit", "objectPosition", "radius"],
+      ["objectFit", "objectPosition"],
       preview
     )}`.trim(),
     // width: "100",
