@@ -15,5 +15,6 @@ export const TailwindInput = ({
     max={TailwindStyles[prop].length - 1}
     min={min}
     valueLabels={TailwindStyles[prop]}
+    inline
   />
 );

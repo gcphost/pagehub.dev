@@ -253,7 +253,7 @@ body {
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  @apply bg-primary-500;
+  @apply bg-primary-500 w-3 h-3;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
@@ -312,8 +312,14 @@ input[type="range"]::-ms-thumb {
 .input {
   @apply w-full bg-gray-500/50 border text-white border-gray-500  rounded-lg active:border-primary-500 focus:border-primary-500 hover:border-primary-500 cursor-pointer;
 }
+.input-plain {
+  @apply w-full bg-transparent border-0 text-white outline-none focus:outline-none cursor-pointer px-2 py-1;
+}
 .input-hover {
   @apply active:border-primary-500 focus:border-primary-500 hover:border-primary-500 border-gray-500 cursor-pointer;
+}
+.input-wrapper {
+  @apply rounded-lg bg-gray-500/50 border-gray-500 border w-full px-1 py-0.5 input-hover;
 }
 
 .control {
@@ -391,10 +397,15 @@ ul {
   @apply text-white inside-shadow absolute right-2.5 bottom-2.5 h-8 bg-primary-500 border border-gray-500 px-5 py-1.5 rounded-md hover:bg-primary-600 z-20;
 }
 
+.input-wrapper {
+  @apply rounded-md bg-primary-500 border-primary-500 border w-full px-1 py-0 inside-shadow;
+}
+
 #toolbarContents .input,
+#toolbarContents .input-plain,
 #toolbarContents .input-base,
 #toolbarContents .btn {
-  @apply text-sm px-2 py-1;
+  @apply text-sm px-2 py-0;
 }
 
 #toolbarContents .input-color {

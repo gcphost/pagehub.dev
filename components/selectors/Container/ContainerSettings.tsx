@@ -13,7 +13,6 @@ import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import { ContainerTypeInput } from "components/editor/Toolbar/Inputs/ContainerTypeInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FlexInput } from "components/editor/Toolbar/Inputs/FlexInput";
-import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
 import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
 import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { OrderInput } from "components/editor/Toolbar/Inputs/OrderInput";
@@ -112,17 +111,21 @@ export const ContainerSettings = () => {
 
     return (
       <TabBody>
-
-        <ContainerTypeInput />
+        <ToolbarSection title="Container Settings">
+          <ContainerTypeInput />
+        </ToolbarSection>
 
         <ToolbarSection title="Presets">
-          <ToolbarSection full={2}>
+          <ToolbarSection full={1}>
             <PresetInput
               presets={selectorPresets.container.width.items}
               label={selectorPresets.container.width.label}
               type={selectorPresets.container.width.type}
               propKey={selectorPresets.container.width.propKey}
               propType={selectorPresets.container.width.propType}
+              inputWidth="w-1/2"
+              labelWidth="w-1/4"
+              inline
             />
 
             <PresetInput
@@ -131,6 +134,9 @@ export const ContainerSettings = () => {
               type={selectorPresets.container.maxWidth.type}
               propKey={selectorPresets.container.maxWidth.propKey}
               propType={selectorPresets.container.maxWidth.propType}
+              inputWidth="w-1/2"
+              labelWidth="w-1/4"
+              inline
             />
           </ToolbarSection>
           <PresetInput
@@ -139,11 +145,14 @@ export const ContainerSettings = () => {
             type={selectorPresets.container.padding.type}
             propKey={selectorPresets.container.padding.propKey}
             propType={selectorPresets.container.padding.propType}
+            inputWidth="w-1/2"
+            labelWidth="w-1/4"
+            inline
           />
         </ToolbarSection>
 
         <ToolbarSection
-          title="Order"
+          title="Display Order"
           help="Change the order of this component, useful to reposition items on mobile."
         >
           <OrderInput />
@@ -231,12 +240,13 @@ export const ContainerSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Colors" full={2}>
+          <ToolbarSection title="Colors" full={1}>
             <ColorInput
               propKey="color"
               label="Text"
               prefix="text"
               propType="root"
+              inline
             />
 
             <ColorInput
@@ -244,6 +254,7 @@ export const ContainerSettings = () => {
               label="Background"
               prefix="bg"
               propType="root"
+              inline
             />
           </ToolbarSection>
 
@@ -257,6 +268,7 @@ export const ContainerSettings = () => {
 
           <ToolbarSection title="Decoration">
             <ShadowInput />
+            <OpacityInput label="Opacity" propKey="opacity" />
           </ToolbarSection>
         </TabBody>
       )}
@@ -290,9 +302,6 @@ export const ContainerSettings = () => {
 
           <PaddingInput />
 
-          <ToolbarSection title="Opacity">
-            <OpacityInput label="" propKey="opacity" />
-          </ToolbarSection>
         </TabBody>
       )}
       {activeTab === "Style" && (
@@ -311,39 +320,49 @@ export const ContainerSettings = () => {
       )}
 
       {activeTab === "Accessibility" && <AccessibilityInput />}
+
+
       {activeTab === "Hover & Click" && (
         <TabBody>
           <ClickItem />
-          <LinkSettingsInput />
 
-          <ToolbarSection title="Colors">
-            <ColorInput
-              propKey="background"
-              label="Background"
-              prefix="bg"
-              index="hover"
-              propType="component"
-            />
 
-            <ColorInput
-              propKey="color"
-              label="Text"
-              prefix="text"
-              index="hover"
-              propType="component"
-            />
 
-            <ColorInput
-              propKey="borderColor"
-              label="Border"
-              prefix="border"
-              propType="root"
-              index="hover"
-            />
-          </ToolbarSection>
 
-          <ToolbarSection title="Opacity">
-            <OpacityInput label="" propKey="opacity" index="hover" />
+
+          <ToolbarSection title="Hover">
+            <ToolbarSection title="Colors">
+              <ColorInput
+                propKey="background"
+                label="Background"
+                prefix="bg"
+                index="hover"
+                propType="component"
+                inline
+              />
+
+              <ColorInput
+                propKey="color"
+                label="Text"
+                prefix="text"
+                index="hover"
+                propType="component"
+                inline
+              />
+
+              <ColorInput
+                propKey="borderColor"
+                label="Border"
+                prefix="border"
+                propType="root"
+                index="hover"
+                inline
+              />
+            </ToolbarSection>
+
+            <ToolbarSection title="Opacity">
+              <OpacityInput label="Opacity" propKey="opacity" index="hover" />
+            </ToolbarSection>
           </ToolbarSection>
         </TabBody>
       )}

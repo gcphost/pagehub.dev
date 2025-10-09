@@ -18,12 +18,15 @@ export const WidthInput = ({
 
   const [state, setState] = useRecoilState(itemListState);
 
+  const toggle = <ItemToggle
+    selected={state}
+    onChange={(value) => setState(value)}
+    items={sizingItems}
+    option={false}
+  />
+
   return (
-    <ItemToggle
-      selected={state}
-      onChange={(value) => setState(value)}
-      items={sizingItems}
-    >
+    <>
       {state === "slider" && (
         <ToolbarItem
           propKey={propKey}
@@ -36,6 +39,7 @@ export const WidthInput = ({
           showVarSelector={true}
           varSelectorPrefix={propTag}
           inline
+          append={toggle}
         />
       )}
 
@@ -48,6 +52,7 @@ export const WidthInput = ({
           showVarSelector={true}
           varSelectorPrefix={propTag}
           inline
+          append={toggle}
 
         >
           <option value="">None</option>
@@ -66,9 +71,12 @@ export const WidthInput = ({
           label={label}
           placeholder="Pixels"
           inline
+          append={toggle}
 
         />
       )}
-    </ItemToggle>
+
+
+    </>
   );
 };

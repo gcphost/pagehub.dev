@@ -7,6 +7,7 @@ export const OpacityInput = ({
   prefix = "",
   labelHide = false,
   label = "Opacity",
+  inline = true,
 }) => (
   <ToolbarItem
     propKey={propKey}
@@ -18,5 +19,7 @@ export const OpacityInput = ({
     valueLabels={TailwindStyles[propKey]}
     index={index}
     propType="root"
+    showVarSelector={true}
+    inline={inline}
   />
 );

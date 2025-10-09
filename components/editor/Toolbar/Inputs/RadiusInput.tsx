@@ -12,5 +12,6 @@ export const RadiusInput = () => (
     valueLabels={TailwindStyles.radius}
     showVarSelector={true}
     varSelectorPrefix="rounded"
+    inline
   />
 );

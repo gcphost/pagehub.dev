@@ -1,17 +1,22 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { TbPlayerPlay } from "react-icons/tb";
+import { useState } from "react";
+import { TbExternalLink, TbPlayerPlay, TbPointer } from "react-icons/tb";
 import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
+import LinkSettingsInput from "./LinkSettingsInput";
 
 export default function ClickItem() {
   const { id } = useNode();
   const { query } = useEditor();
 
-  const { clickType, clickDirection, clickValue } = useNode((node) => ({
+  const { clickMode, clickType, clickDirection, clickValue } = useNode((node) => ({
+    clickMode: node.data.props.clickMode || "link",
     clickType: node.data.props.clickType,
     clickDirection: node.data.props.clickDirection,
     clickValue: node.data.props.clickValue,
   }));
+
+  const [mode, setMode] = useState(clickMode);
 
   const handleTestAction = () => {
     if (!clickValue || !clickType) return;
@@ -39,59 +44,93 @@ export default function ClickItem() {
 
   return (
     <>
-      <ToolbarSection title="Control">
-        <p className="py-3">Toggle a components visiblity.</p>
-        <ToolbarSection full={2}>
-          <ToolbarItem
-            propKey="clickType"
-            type="select"
-            labelHide={true}
-            label="Type"
-            cols={true}
-            propType="component"
+      <ToolbarSection title="Click">
+        {/* Mode Toggle Buttons */}
+        <div className="flex gap-2 mb-3">
+          <button
+            type="button"
+            onClick={() => setMode("link")}
+            className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${mode === "link"
+              ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              : "bg-primary-500 text-white"
+              }`}
           >
-            <option value="">None</option>
-            {["click", "hover"].map((_, k) => (
-              <option key={_}>{_}</option>
-            ))}
-          </ToolbarItem>
-
-          <ToolbarItem
-            propKey="clickDirection"
-            type="select"
-            labelHide={true}
-            label="Direction"
-            cols={true}
-            propType="component"
+            <TbExternalLink className="inline mr-1" />
+            Link
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("action")}
+            className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${mode === "action"
+              ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              : "bg-primary-500 text-white"
+              }`}
           >
-            {["toggle", "show", "hide"].map((_, k) => (
-              <option key={_}>{_}</option>
-            ))}
-          </ToolbarItem>
+            <TbPointer className="inline mr-1" />
+            Action
+          </button>
+        </div>
 
-          <ToolbarItem
-            propKey="clickValue"
-            propType="component"
-            type="text"
-            label="Component"
-            placeholder="ID of a comoponent"
-            labelHide={true}
-            cols={true}
-          />
+        {/* Link Mode */}
+        {mode === "link" && <LinkSettingsInput />}
 
-          <div className="flex items-center justify-center">
-            <button
-              type="button"
-              onClick={handleTestAction}
-              disabled={!clickValue || !clickType}
-              className="btn w-full"
-              title="Test Action"
-            >
-              <TbPlayerPlay className="w-4 h-4" />
-              Test
-            </button>
-          </div>
-        </ToolbarSection>
+        {/* Action Mode */}
+        {mode === "action" && (
+          <>
+            <p className="py-3 text-xs">Toggle a component's visibility.</p>
+            <ToolbarSection full={2}>
+              <ToolbarItem
+                propKey="clickType"
+                type="select"
+                labelHide={true}
+                label="Type"
+                cols={true}
+                propType="component"
+              >
+                <option value="">None</option>
+                {["click", "hover"].map((_, k) => (
+                  <option key={_}>{_}</option>
+                ))}
+              </ToolbarItem>
+
+              <ToolbarItem
+                propKey="clickDirection"
+                type="select"
+                labelHide={true}
+                label="Direction"
+                cols={true}
+                propType="component"
+              >
+                {["toggle", "show", "hide"].map((_, k) => (
+                  <option key={_}>{_}</option>
+                ))}
+              </ToolbarItem>
+
+              <ToolbarItem
+                propKey="clickValue"
+                propType="component"
+                type="text"
+                label="Component"
+                placeholder="ID of a component"
+                labelHide={true}
+                cols={true}
+              />
+
+              <div className="flex items-center justify-center">
+                <button
+                  type="button"
+                  onClick={handleTestAction}
+                  disabled={!clickValue || !clickType}
+                  className="btn w-full"
+                  title="Test Action"
+                >
+                  <TbPlayerPlay className="w-4 h-4" />
+                  Test
+                </button>
+              </div>
+            </ToolbarSection>
+          </>
+        )}
       </ToolbarSection>
     </>
   );

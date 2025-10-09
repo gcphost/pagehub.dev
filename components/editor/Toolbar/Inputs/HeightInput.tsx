@@ -18,12 +18,16 @@ export const HeightInput = ({
 
   const [state, setState] = useRecoilState(itemListState);
 
+  const toggle = <ItemToggle
+    selected={state}
+    onChange={(value) => setState(value)}
+    items={sizingItems}
+    option={false}
+  />
+
+
   return (
-    <ItemToggle
-      selected={state}
-      onChange={(value) => setState(value)}
-      items={sizingItems.filter((_) => _.id !== "select")}
-    >
+    <>
       {state === "slider" && (
         <ToolbarItem
           propKey={propKey}
@@ -36,7 +40,7 @@ export const HeightInput = ({
           showVarSelector={true}
           varSelectorPrefix={propTag}
           inline
-
+          append={toggle}
         />
       )}
 
@@ -50,9 +54,9 @@ export const HeightInput = ({
           label={label}
           labelHide={true}
           inline
-
+          append={toggle}
         />
       )}
-    </ItemToggle>
+    </>
   );
 };

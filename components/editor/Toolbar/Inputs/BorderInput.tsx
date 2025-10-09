@@ -12,7 +12,7 @@ export const BorderInput = ({ index = "" }) => {
 
   return (
     <>
-      <ToolbarSection full={2}>
+      <ToolbarSection full={1} title="Border">
         <ToolbarItem
           propKey="border"
           propType="root"
@@ -22,6 +22,8 @@ export const BorderInput = ({ index = "" }) => {
           max={TailwindStyles.border.length - 1}
           min={0}
           valueLabels={TailwindStyles.border}
+          showVarSelector={true}
+          inline
         />
 
         <RadiusInput />
@@ -29,13 +31,14 @@ export const BorderInput = ({ index = "" }) => {
 
       {props?.root?.border && (
         <>
-          <ToolbarSection full={2}>
+          <ToolbarSection full={1}>
             <ColorInput
               propKey="borderColor"
               label="Color"
               prefix="border"
               propType="root"
               index={index}
+              inline
             />
 
             <ToolbarItem
@@ -44,6 +47,7 @@ export const BorderInput = ({ index = "" }) => {
               type="select"
               label="Border Style"
               index={index}
+              inline
             >
               <option value="">None</option>
               {TailwindStyles.borderStyle.map((_, k) => (
@@ -52,7 +56,7 @@ export const BorderInput = ({ index = "" }) => {
             </ToolbarItem>
           </ToolbarSection>
 
-          <ToolbarSection full={2}>
+          <ToolbarSection full={4}>
             <ToolbarItem
               propKey="borderTop"
               propType="root"
@@ -63,6 +67,7 @@ export const BorderInput = ({ index = "" }) => {
               labelHide={true}
               label="Position"
               index={index}
+
             />
             <ToolbarItem
               propKey="borderBottom"

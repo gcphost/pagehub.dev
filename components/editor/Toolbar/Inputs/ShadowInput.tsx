@@ -5,6 +5,7 @@ export const ShadowInput = ({
   propKey = "shadow",
   propType = "root",
   label = "Shadow",
+  inline = true,
 }) => (
   <ToolbarItem
     propKey={propKey}
@@ -16,5 +17,6 @@ export const ShadowInput = ({
     valueLabels={TailwindStyles.dropShadows}
     showVarSelector={true}
     varSelectorPrefix="shadow"
+    inline={inline}
   />
 );

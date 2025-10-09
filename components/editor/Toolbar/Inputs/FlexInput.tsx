@@ -11,8 +11,8 @@ export const FlexInput = ({ propKey = "flex" }) => (
     title="Flex"
     help="Control the position of the components inside this one."
     footer={<ItemAdvanceToggle propKey={propKey}>
-      <ToolbarSection full={2}>
-        <FlexDirectionInput />
+      <ToolbarSection full={1}>
+
 
         <ToolbarItem
           propKey="alignSelf"
@@ -20,6 +20,7 @@ export const FlexInput = ({ propKey = "flex" }) => (
           label="Self Alignment"
           labelHide={true}
           cols={true}
+          inline
         >
           <option value="">None</option>
           {TailwindStyles.alignSelf.map((_, k) => (
@@ -33,6 +34,7 @@ export const FlexInput = ({ propKey = "flex" }) => (
           labelHide={true}
           label="Justify Self"
           cols={true}
+          inline
         >
           <option value="">None</option>
           {TailwindStyles.justifySelf.map((_, k) => (
@@ -46,6 +48,7 @@ export const FlexInput = ({ propKey = "flex" }) => (
           labelHide={true}
           label="Justify Items"
           cols={true}
+          inline
         >
           <option value="">None</option>
           {TailwindStyles.justifyItems.map((_, k) => (
@@ -55,13 +58,14 @@ export const FlexInput = ({ propKey = "flex" }) => (
 
         <TailwindInput
           propKey="flexBase"
-          label="Grow or Shrink"
+          label="Grow/Shrink"
           prop="flexBase"
         />
       </ToolbarSection>
     </ItemAdvanceToggle>}
   >
-    <ToolbarSection full={2}>
+    <ToolbarSection full={1}>
+      <FlexDirectionInput />
       <GapInput />
 
       <ToolbarItem
@@ -70,6 +74,7 @@ export const FlexInput = ({ propKey = "flex" }) => (
         label="Item Alignment"
         labelHide={true}
         cols={true}
+        inline
       >
         <option value="">None</option>
         {TailwindStyles.alignItems.map((_, k) => (
@@ -83,6 +88,7 @@ export const FlexInput = ({ propKey = "flex" }) => (
         labelHide={true}
         label="Justify Content"
         cols={true}
+        inline
       >
         <option value="">None</option>
         {TailwindStyles.justifyContent.map((_, k) => (

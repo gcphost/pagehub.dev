@@ -10,6 +10,9 @@ export const PresetInput = ({
   propType = "root",
   labelHide = false,
   wrap = "",
+  inline = true,
+  inputWidth = "",
+  labelWidth = "",
 }) => {
   const { actions, query } = useEditor();
 
@@ -29,6 +32,9 @@ export const PresetInput = ({
       valueLabels={presets.map((_) => _.title)}
       min={0}
       max={presets.length - 1}
+      inline={inline}
+      inputWidth={inputWidth}
+      labelWidth={labelWidth}
       onChange={(c) => {
         const preset = presets.find((_) => _.var === c || _.title === c);
 

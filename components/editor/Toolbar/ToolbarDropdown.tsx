@@ -10,6 +10,7 @@ export const ToolbarDropdown = ({
   placeholder,
   valueLabels = [],
   wrap = null,
+  append,
 }: any) => {
   if (!children) {
     const res = [];
@@ -32,22 +33,47 @@ export const ToolbarDropdown = ({
         </div>
       )}
 
-      <select
-        className={`${wrap || "input"
-          } active:outline-none focus:outline-none focus:border-transparent active:border-transparent`}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onMouseDown={() => {
-          // Blur any focused contentEditable element BEFORE dropdown opens
-          const activeEl = document.activeElement as HTMLElement;
-          if (activeEl && activeEl.contentEditable === 'true') {
-            activeEl.blur();
-          }
-        }}
-        aria-label={title || placeholder || "Select option"}
-      >
-        {children}
-      </select>
+      {wrap === "control" ? (
+        // Control mode - no background wrapper
+        <div className="flex items-center gap-2 w-full">
+          <select
+            className="input-plain flex-1 active:outline-none focus:outline-none focus:border-transparent active:border-transparent"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            onMouseDown={() => {
+              // Blur any focused contentEditable element BEFORE dropdown opens
+              const activeEl = document.activeElement as HTMLElement;
+              if (activeEl && activeEl.contentEditable === 'true') {
+                activeEl.blur();
+              }
+            }}
+            aria-label={title || placeholder || "Select option"}
+          >
+            {children}
+          </select>
+          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+        </div>
+      ) : (
+        // Default mode - wrap in BgWrap
+        <div className="input-wrapper flex items-center gap-2 w-full">
+          <select
+            className="input-plain flex-1 active:outline-none focus:outline-none focus:border-transparent active:border-transparent"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            onMouseDown={() => {
+              // Blur any focused contentEditable element BEFORE dropdown opens
+              const activeEl = document.activeElement as HTMLElement;
+              if (activeEl && activeEl.contentEditable === 'true') {
+                activeEl.blur();
+              }
+            }}
+            aria-label={title || placeholder || "Select option"}
+          >
+            {children}
+          </select>
+          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+        </div>
+      )}
     </>
   );
 };

@@ -24,6 +24,9 @@ export const ContainerTypeInput = () => {
         labelHide={true}
         label="Container Type"
         cols={true}
+        inline
+        inputWidth="w-1/2"
+        labelWidth="w-1/4"
       >
         <option value="">None</option>
 
@@ -32,6 +35,7 @@ export const ContainerTypeInput = () => {
 
         <option value="flex-col-reverse">Reverse Column</option>
         <option value="flex-row-reverse">Reverse Row</option>
+
       </ToolbarItem>
 
       {["flex-row", "flex-row-reverse"].includes(flexDirection) && (

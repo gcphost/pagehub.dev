@@ -12,6 +12,7 @@ export const AnchorInput = () => (
       type="text"
       labelHide={true}
       placeholder="Anchor Tag"
+      inline
     />
   </ToolbarSection>
 );

@@ -2,7 +2,6 @@ import { useEditor, useNode } from "@craftjs/core";
 import { Tooltip } from "components/layout/Tooltip";
 import { TbTrash } from "react-icons/tb";
 import { changeProp } from "../Viewport/lib";
-import { DesignVarSelector } from "./Inputs/DesignVarSelector";
 
 export const ToolbarLabel = ({
   lab,
@@ -95,7 +94,7 @@ export const ToolbarLabel = ({
           onClick={(e) => handleRemove(e)}
         >
           <div
-            className={`flex items-center gap-1.5 truncate text-[10px] max-w-[100px] ${bg} rounded-md px-1 py-0 border border-gray-900 text-black cursor-pointer hover:opacity-80 inside-shadow-light overflow-ellipsis ...`}
+            className={`flex justify-center items-center gap-1.5 truncate text-[10px] w-[60px] text-center ${bg} rounded-md px-1 py-0 border border-gray-900 text-black cursor-pointer hover:opacity-80 inside-shadow-light`}
           >
             {icon ? (
               // If icon provided, show icon
@@ -105,25 +104,17 @@ export const ToolbarLabel = ({
               <TbTrash className="w-3 h-3" />
             ) : (
               // Otherwise show text value
-              <>
+              <span className="truncate">
                 {prefix}
                 {lab}
                 {suffix}
-              </>
+              </span>
             )}
           </div>
         </Tooltip>
       )}
 
-      {/* Design Variable Selector - always show if enabled */}
-      {showVarSelector && (
-        <DesignVarSelector
-          propKey={propKey}
-          propType={propType}
-          viewValue={viewValue}
-          prefix={varSelectorPrefix}
-        />
-      )}
+
     </div>
   );
 };

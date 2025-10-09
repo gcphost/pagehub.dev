@@ -3,8 +3,8 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import { ViewAtom } from "../Viewport";
 import { changeProp, getPropFinalValue } from "../Viewport/lib";
-import { QullInput } from "./Quill";
 
+import { DesignVarSelector } from "./Inputs/DesignVarSelector";
 import { ToolbarDropdown } from "./ToolbarDropdown";
 import { BgWrap, Wrap } from "./ToolbarStyle";
 
@@ -19,13 +19,14 @@ const Input = (__props, ref) => {
     propTag = "",
     propType = "class",
     wrap = null,
+    append,
   } = __props;
 
   if (type === "toggle") {
     return (
       <BgWrap wrap={wrap}>
         <label className="relative flex flex-col items-center cursor-pointer">
-          {props.option && <div className="text-sm mb-3 font-medium text-white text-center">
+          {props.option && <div className="text-xs mb-2 font-medium text-white text-center">
             {props.option ? props.option : "Enable"}
           </div>}
 
@@ -36,7 +37,7 @@ const Input = (__props, ref) => {
               onChange={() => changed(value ? "" : props.on)}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-500 rounded-full peer-focus:ring-4 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+            <div className="w-8 h-4 bg-gray-500 rounded-full peer-focus:ring-2 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary-500"></div>
           </div>
         </label>
       </BgWrap>
@@ -47,7 +48,7 @@ const Input = (__props, ref) => {
     return (
       <BgWrap wrap={wrap}>
         <label className="relative flex flex-col items-center cursor-pointer">
-          {props.option && <div className="text-sm mb-3 font-medium text-white text-center">
+          {props.option && <div className="text-xs mb-2 font-medium text-white text-center">
             {props.option ? props.option : "Enable"}
           </div>}
 
@@ -58,7 +59,7 @@ const Input = (__props, ref) => {
               onChange={() => changed(value ? "" : props.on)}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-500 rounded-full peer-focus:ring-4 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+            <div className="w-8 h-4 bg-gray-500 rounded-full peer-focus:ring-2 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary-500"></div>
           </div>
         </label>
       </BgWrap>
@@ -67,14 +68,19 @@ const Input = (__props, ref) => {
 
   if (type === "number") {
     return (
-      <input
-        type="number"
-        id={`input-${props.label || index}`}
-        defaultValue={value}
-        onChange={(event) => changed(event.target.value)}
-        className="input"
-        aria-label={props.label || propKey || "Number input"}
-      />
+      <BgWrap wrap={wrap}>
+        <div className="flex items-center gap-2 w-full">
+          <input
+            type="number"
+            id={`input-${props.label || index}`}
+            defaultValue={value}
+            onChange={(event) => changed(event.target.value)}
+            className="input-plain flex-1"
+            aria-label={props.label || propKey || "Number input"}
+          />
+          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+        </div>
+      </BgWrap>
     );
   }
 
@@ -84,50 +90,63 @@ const Input = (__props, ref) => {
     const match = regex.exec(str);
 
     return (
-      <input
-        type="number"
-        min="0"
-        id={`input-${props.label || index}`}
-        placeholder={props.placeholder}
-        defaultValue={match?.length ? match[0] : null}
-        onChange={(event) => changed(`${propTag}-[${event.target.value}px]`)}
-        className="input"
-        aria-label={props.label || props.placeholder || propKey || "Custom value"}
-      />
+      <BgWrap wrap={wrap}>
+        <div className="flex items-center gap-2 w-full">
+          <input
+            type="number"
+            min="0"
+            id={`input-${props.label || index}`}
+            placeholder={props.placeholder}
+            defaultValue={match?.length ? match[0] : null}
+            onChange={(event) => changed(`${propTag}-[${event.target.value}px]`)}
+            className="input-plain flex-1"
+            aria-label={props.label || props.placeholder || propKey || "Custom value"}
+          />
+          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+        </div>
+      </BgWrap>
     );
   }
 
   if (["url", "text", "email", "number"].includes(type)) {
     return (
-      <input
-        type={type}
-        id={`input-${props.label || index}`}
-        placeholder={props.placeholder}
-        defaultValue={value}
-        onChange={(event) => changed(event.target.value)}
-        className="input"
-        aria-label={props.label || props.placeholder || propKey || `${type} input`}
-      />
+      <BgWrap wrap={wrap}>
+        <div className="flex items-center gap-2 w-full">
+          <input
+            type={type}
+            id={`input-${props.label || index}`}
+            placeholder={props.placeholder}
+            defaultValue={value}
+            onChange={(event) => changed(event.target.value)}
+            className="input-plain flex-1"
+            aria-label={props.label || props.placeholder || propKey || `${type} input`}
+          />
+          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+        </div>
+      </BgWrap>
     );
   }
 
   if (type === "textarea") {
     return (
-      <textarea
-        id={`input-${props.label || index}`}
-        defaultValue={value}
-        onChange={(event) => changed(event.target.value)}
-        rows={props.rows || 4}
-        placeholder={props.placeholder}
-        className="input"
-        aria-label={props.label || props.placeholder || propKey || "Text area"}
-      />
+      <BgWrap wrap={wrap}>
+        <div className="flex items-start gap-2 w-full">
+          <textarea
+            id={`input-${props.label || index}`}
+            defaultValue={value}
+            onChange={(event) => changed(event.target.value)}
+            rows={props.rows || 4}
+            placeholder={props.placeholder}
+            className="input-plain flex-1"
+            aria-label={props.label || props.placeholder || propKey || "Text area"}
+          />
+          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+        </div>
+      </BgWrap>
     );
   }
 
-  if (type === "quill") {
-    return <QullInput value={value} changed={changed} props={props} />;
-  }
+
 
   if (type === "slider") {
     // Find the current index in valueLabels, or use value as index, default to 0
@@ -141,26 +160,30 @@ const Input = (__props, ref) => {
 
     return (
       <BgWrap wrap={wrap}>
-        <input
-          type="range"
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-          min={props.min || 0}
-          max={props.max || 100}
-          step={props.step || 1}
-          defaultValue={currentValue}
-          onChange={(event) => {
-            changed(
-              props?.valueLabels
-                ? props?.valueLabels[event.target.value]
-                : event.target.value
-            );
-          }}
-          aria-label={props.label || propKey || "Slider"}
-          aria-valuemin={props.min || 0}
-          aria-valuemax={props.max || 100}
-          aria-valuenow={currentValue}
-          aria-valuetext={value?.toString() || currentValue.toString()}
-        />
+        <div className="flex items-center gap-2 w-full">
+          <input
+            type="range"
+            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+            min={props.min || 0}
+            max={props.max || 100}
+            step={props.step || 1}
+            defaultValue={currentValue}
+            onChange={(event) => {
+              changed(
+                props?.valueLabels
+                  ? props?.valueLabels[event.target.value]
+                  : event.target.value
+              );
+            }}
+            aria-label={props.label || propKey || "Slider"}
+            aria-valuemin={props.min || 0}
+            aria-valuemax={props.max || 100}
+            aria-valuenow={currentValue}
+            aria-valuetext={value?.toString() || currentValue.toString()}
+          />
+
+          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+        </div>
       </BgWrap>
     );
   }
@@ -171,6 +194,7 @@ const Input = (__props, ref) => {
         wrap={wrap}
         value={value || ""}
         onChange={(value) => changed(value)}
+        append={append}
         {...props}
       />
     );
@@ -291,6 +315,9 @@ export type ToolbarItemProps = {
   propType?: string;
   wrap?: string;
   inline?: boolean;
+  inputWidth?: string;
+  labelWidth?: string;
+  append?: React.ReactNode;
 };
 
 export const ToolbarItem = (__props: ToolbarItemProps) => {
@@ -306,6 +333,11 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
     propTag = "",
     wrap = "",
     inline = false,
+    inputWidth = "",
+    labelWidth = "",
+    showVarSelector = false,
+    varSelectorPrefix = "",
+    append,
     ...props
   } = __props;
 
@@ -366,6 +398,8 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
       propItemKey={propItemKey}
       wrap={wrap}
       inline={inline}
+      inputWidth={inputWidth}
+      labelWidth={labelWidth}
     >
       <Input
         props={props}
@@ -377,7 +411,21 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
         changed={changed}
         index={index}
         wrap={wrap}
+        append={<>{showVarSelector && (
+          <DesignVarSelector
+            propKey={propKey}
+            propType={propType}
+            viewValue={viewValue}
+            prefix={varSelectorPrefix}
+          />
+        )}
+
+          {append}
+        </>}
       />
+
+
+
     </Wrap>
   );
 };

@@ -38,6 +38,9 @@ export const ColorInput = (__props: any) => {
     showPallet = true,
     onChange = () => { },
     labelHide = false,
+    inline = false,
+    inputWidth = "",
+    labelWidth = "",
   } = __props;
 
   const [dialog, setDialog] = useRecoilState(ColorPickerAtom);
@@ -224,15 +227,27 @@ export const ColorInput = (__props: any) => {
   // so the picker can highlight the selected palette color
   const pickerValue = value && value.includes("palette:") ? value : cpVAl;
 
+  // Determine viewValue for the label
+  let viewValue = view;
+  if (propType === "component" || propType === "root") {
+    viewValue = "component";
+  } else if (index) {
+    viewValue = index;
+  }
+
   return (
     <div ref={ref}>
       <Wrap
         props={{ label, labelHide }}
         index={index}
         lab={value}
+        viewValue={viewValue}
         propType={propType}
         propKey={propKey}
         propItemKey={propItemKey}
+        inline={inline}
+        inputWidth={inputWidth}
+        labelWidth={labelWidth}
       >
         <button
           className="input-color"

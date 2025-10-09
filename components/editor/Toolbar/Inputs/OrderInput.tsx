@@ -9,5 +9,6 @@ export const OrderInput = () => (
     max={TailwindStyles.order.length - 1}
     min={0}
     valueLabels={TailwindStyles.order}
+    inline
   />
 );

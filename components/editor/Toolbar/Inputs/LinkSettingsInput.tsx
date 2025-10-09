@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { TbExternalLink, TbHash } from "react-icons/tb";
 import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
-import { AnchorInput } from "./AnchorInput";
 
 interface LinkSettingsInputProps {
   propKey?: string;
@@ -29,7 +28,7 @@ const LinkSettingsInput = ({
   // If index is provided, we're working with an array item (like buttons)
   const isArrayItem = index !== undefined;
 
-  const [linkType, setLinkType] = useState<"external" | "page">("external");
+  const [linkType, setLinkType] = useState<"external" | "page">("page");
   const [selectedPageId, setSelectedPageId] = useState<string>("");
 
   // Get current URL value to detect if it's a page reference
@@ -82,17 +81,6 @@ const LinkSettingsInput = ({
         <div className="flex gap-2 mb-3">
           <button
             type="button"
-            onClick={() => setLinkType("external")}
-            className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "external"
-              ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              : "bg-primary-500 text-white"
-              }`}
-          >
-            <TbExternalLink className="inline mr-1" />
-            External URL
-          </button>
-          <button
-            type="button"
             onClick={() => setLinkType("page")}
             className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "page"
               ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -101,6 +89,17 @@ const LinkSettingsInput = ({
           >
             <TbHash className="inline mr-1" />
             Page
+          </button>
+          <button
+            type="button"
+            onClick={() => setLinkType("external")}
+            className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "external"
+              ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              : "bg-primary-500 text-white"
+              }`}
+          >
+            <TbExternalLink className="inline mr-1" />
+            External URL
           </button>
         </div>
 
@@ -114,6 +113,7 @@ const LinkSettingsInput = ({
             label="URL"
             labelHide={true}
             placeholder="https://...."
+            inline
           />
         ) : (
           <PageSelector
@@ -133,14 +133,23 @@ const LinkSettingsInput = ({
           propItemKey={isArrayItem ? "urlTarget" : undefined}
           type="select"
           label="Target"
+          inline
         >
           <option value="_self">Same tab</option>
           <option value="_blank">New tab</option>
           <option value="_parent">Parent window</option>
           <option value="_top">New window</option>
         </ToolbarItem>
+
+        <ToolbarItem
+          propKey="anchor"
+          propType="component"
+          type="text"
+          labelHide={true}
+          label="Anchor Tag"
+          inline
+        />
       </ToolbarSection>
-      {showAnchor && <AnchorInput />}
     </>
   );
 };

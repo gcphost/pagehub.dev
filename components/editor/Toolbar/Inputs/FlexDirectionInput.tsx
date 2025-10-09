@@ -7,10 +7,11 @@ export const FlexDirectionInput = ({ type = "radio", wrap = "" }) => (
   <ToolbarItem
     propKey="flexDirection"
     type={type}
-    label=""
+    label="Direction"
     cols={true}
     wrap={wrap}
     labelHide={true}
+    inline
     options={[
       {
         label: (

@@ -8,7 +8,7 @@ export const BgWrap = ({ children, className = "", wrap = null }) => {
   }
   return (
     <div
-      className={`rounded-lg bg-gray-500/50 border-gray-500 border w-full px-1 py-0.5   ${className || " input-hover"
+      className={`input-wrapper   ${className || " input-hover"
         }`}
     >
       {children}
@@ -71,33 +71,35 @@ export const Wrap = ({
   propItemKey = null,
   wrap = null,
   inline = false,
+  inputWidth = "",
+  labelWidth = "",
 }) => {
   if (inline) {
     // Inline mode: everything in one row
+    // In inline mode, always show label if it exists (ignore labelHide for the label text)
     return (
       <div className="w-full flex items-center gap-2">
-        {(!props?.labelHide && props?.label) && (
-          <span className="text-xs whitespace-nowrap w-12 truncate">{props?.label}</span>
+        {props?.label && (
+          <span className={`text-xs whitespace-nowrap ${labelWidth || "w-20"} truncate`}>{props?.label}</span>
         )}
-        <div className="flex-1">
+        <div className={inputWidth || "flex-1"}>
           {children}
         </div>
-        {!props?.labelHide && (
-          <ToolbarLabel
-            lab={lab}
-            prefix={props?.labelPrefix}
-            suffix={props?.labelSuffix}
-            viewValue={viewValue}
-            propType={propType}
-            propKey={propKey}
-            index={index}
-            propItemKey={propItemKey}
-            icon={props?.labelIcon}
-            showDeleteIcon={props?.showDeleteIcon}
-            showVarSelector={props?.showVarSelector}
-            varSelectorPrefix={props?.varSelectorPrefix}
-          />
-        )}
+
+        <ToolbarLabel
+          lab={lab}
+          prefix={props?.labelPrefix}
+          suffix={props?.labelSuffix}
+          viewValue={viewValue}
+          propType={propType}
+          propKey={propKey}
+          index={index}
+          propItemKey={propItemKey}
+          icon={props?.labelIcon}
+          showDeleteIcon={props?.showDeleteIcon}
+          showVarSelector={props?.showVarSelector}
+          varSelectorPrefix={props?.varSelectorPrefix}
+        />
       </div>
     );
   }

@@ -9,17 +9,19 @@ export const AccessibilityInput = () => {
           propKey="ariaLabel"
           propType="component"
           type="text"
-          label="Aria Label"
+          label="Label"
           placeholder="Descriptive label for screen readers"
           labelHide={true}
+          inline
         />
         <ToolbarItem
           propKey="ariaDescribedBy"
           propType="component"
           type="text"
-          label="Aria Described By"
+          label="Described By"
           placeholder="ID of element that describes this"
           labelHide={true}
+          inline
         />
       </ToolbarSection>
 
@@ -28,7 +30,8 @@ export const AccessibilityInput = () => {
           propKey="ariaExpanded"
           propType="component"
           type="select"
-          label="Aria Expanded"
+          label="Expanded"
+          inline
         >
           <option value="">None</option>
           <option value="true">Expanded</option>
@@ -38,7 +41,8 @@ export const AccessibilityInput = () => {
           propKey="ariaSelected"
           propType="component"
           type="select"
-          label="Aria Selected"
+          label="Selected"
+          inline
         >
           <option value="">None</option>
           <option value="true">Selected</option>
@@ -48,7 +52,8 @@ export const AccessibilityInput = () => {
           propKey="ariaChecked"
           propType="component"
           type="select"
-          label="Aria Checked"
+          label="Checked"
+          inline
         >
           <option value="">None</option>
           <option value="true">Checked</option>
@@ -59,7 +64,8 @@ export const AccessibilityInput = () => {
           propKey="ariaPressed"
           propType="component"
           type="select"
-          label="Aria Pressed"
+          label="Pressed"
+          inline
         >
           <option value="">None</option>
           <option value="true">Pressed</option>
@@ -73,6 +79,7 @@ export const AccessibilityInput = () => {
           propType="component"
           type="select"
           label="Role"
+          inline
         >
           <option value="">None</option>
           <option value="button">Button</option>
@@ -114,6 +121,7 @@ export const AccessibilityInput = () => {
           propType="component"
           type="select"
           label="Tab Index"
+          inline
         >
           <option value="">Default</option>
           <option value="0">Focusable (0)</option>
@@ -126,7 +134,8 @@ export const AccessibilityInput = () => {
           propKey="ariaHidden"
           propType="component"
           type="select"
-          label="Aria Hidden"
+          label="Hidden"
+          inline
         >
           <option value="">None</option>
           <option value="true">Hidden from screen readers</option>
@@ -139,7 +148,8 @@ export const AccessibilityInput = () => {
           propKey="ariaLive"
           propType="component"
           type="select"
-          label="Aria Live"
+          label="Live"
+          inline
         >
           <option value="">None</option>
           <option value="off">Off</option>
@@ -150,7 +160,8 @@ export const AccessibilityInput = () => {
           propKey="ariaAtomic"
           propType="component"
           type="select"
-          label="Aria Atomic"
+          label="Atomic"
+          inline
         >
           <option value="">None</option>
           <option value="true">Atomic</option>
