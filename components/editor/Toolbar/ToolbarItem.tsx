@@ -44,7 +44,7 @@ const Input = (__props, ref) => {
 
   if (type === "checkbox") {
     return (
-      <BgWrap wrap={wrap}>
+      <>
         <label className="relative flex flex-col items-center cursor-pointer">
           {props.option && <div className="text-xs mb-2 font-medium text-white text-center">
             {props.option ? props.option : "Enable"}
@@ -60,7 +60,7 @@ const Input = (__props, ref) => {
             <div className="w-8 h-4 bg-gray-500 rounded-full peer-focus:ring-2 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary-500"></div>
           </div>
         </label>
-      </BgWrap>
+      </>
     );
   }
 

@@ -11,6 +11,7 @@ export const ToolbarSection = ({
   propKey,
   tabClass = true,
   className = "",
+  bodyClassName = "",
   subtitle = false,
   help = "",
   collapsible = true,
@@ -19,9 +20,6 @@ export const ToolbarSection = ({
 }: any) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
-  const classNames = className
-    ? "items-center flex text-lg text-white text-left font-medium text-dark-gray bg-gray-800 p-3 cursor-pointer border-y-gray-900 border-y border border-yellow-500"
-    : `items-center flex text-sm  font-bold text-white gap-3 flex justify-between w-full my-2`;
 
   const handleClick = (e: React.MouseEvent) => {
     if (collapsible) {
@@ -35,7 +33,7 @@ export const ToolbarSection = ({
   return (
     <div className="w-full mb-2">
       {title && (
-        <button id={title} className={classNames} onClick={handleClick} aria-label={title}>
+        <button id={title} className={`items-center flex text-sm  font-bold text-white gap-3 flex justify-between w-full my-2 ${className}`} onClick={handleClick} aria-label={title}>
           <div className="flex items-center gap-3">
             {title}
 
@@ -65,7 +63,7 @@ export const ToolbarSection = ({
       )}
 
       {enabled && isOpen && (
-        <><div className={`grid-cols-${full} gap-3 grid items-end`} role="group" aria-labelledby={title}>
+        <><div className={`grid-cols-${full} gap-3 grid items-end ${bodyClassName}`} role="group" aria-labelledby={title}>
           {children}
         </div>
 

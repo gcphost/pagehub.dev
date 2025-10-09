@@ -11,7 +11,7 @@ export const BackgroundInput = ({ children }: { children?: React.ReactNode }) =>
   }));
 
   return (
-    <ToolbarSection title="Background">
+    <ToolbarSection title="Background" bodyClassName="px-3">
       <ToolbarSection title="Image" subtitle={true}>
         <BackgroundSettingsInput props={props} />
 
