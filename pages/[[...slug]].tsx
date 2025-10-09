@@ -24,6 +24,7 @@ import { ButtonList } from "../components/selectors/ButtonList";
 import { Footer } from "../components/selectors/Footer";
 import { Header } from "../components/selectors/Header";
 import { Image } from "../components/selectors/Image";
+import { ImageList } from "../components/selectors/ImageList";
 import { Video } from "../components/selectors/Video";
 import dbConnect from "../utils/dbConnect";
 import { loadTenantByDomain, loadTenantSettings } from "../utils/tenantUtils";
@@ -156,6 +157,7 @@ function App({ subdomain, data, meta, seo }) {
       FormDrop,
       Button,
       ButtonList,
+      ImageList,
       Video,
       Audio,
       Image,

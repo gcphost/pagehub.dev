@@ -1,3 +1,4 @@
+import { useEditor } from "@craftjs/core";
 import { useEffect, useState } from "react";
 import { applyPattern } from "utils/lib";
 import { ClassGenerator } from "utils/tailwind";
@@ -164,7 +165,6 @@ export const useScrollToSelected = (id, enabled) =>
         rect.right <= scrollingDiv.clientWidth
       );
     };
-
     if (scrollingDiv !== null && !isInViewport(selected)) {
       scrollingDiv.scroll({
         top: selected.offsetTop,
@@ -172,3 +172,39 @@ export const useScrollToSelected = (id, enabled) =>
       });
     }
   }, [id, enabled]);
+
+/**
+ * Gets child nodes of a specific type from a parent container
+ * Shared utility for components like ButtonList and ImageList
+ */
+export const useChildNodes = (parentId: string, componentName: string) => {
+  return useEditor((_, query) => {
+    try {
+      const node = query.node(parentId).get();
+      const children = node.data.nodes
+        .map(childId => {
+          try {
+            const childNode = query.node(childId).get();
+
+            // Only include components of the specified type
+            if (childNode.data.name !== componentName) return null;
+
+            return {
+              id: childId,
+              name: childNode.data.name,
+              props: childNode.data.props,
+              displayName: childNode.data.displayName || componentName,
+            };
+          } catch (e) {
+            return null;
+          }
+        })
+        .filter(Boolean); // Remove nulls
+
+      return { children };
+    } catch (e) {
+      return { children: [] };
+    }
+  });
+};
+
