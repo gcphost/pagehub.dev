@@ -82,7 +82,7 @@ export const ImageSettings = () => {
       <SizeInput />
 
       <ToolbarSection
-        full={2}
+        full={1}
         title="Loading"
         help="Preload important images, like the first ones on the page. Lazy load images that are below the first page."
       >
@@ -137,13 +137,14 @@ export const ImageSettings = () => {
 
       {activeTab === "Appearance" && (
         <TabBody>
-          <ToolbarSection full={2}>
+          <ToolbarSection full={1} title="Appearance">
             <ToolbarItem propKey="objectFit" type="select" label={"Fit"}>
               <option value="">None</option>
               {TailwindStyles.objectFit.map((_, k) => (
                 <option key={k}>{`${_}`}</option>
               ))}
             </ToolbarItem>
+
             <ToolbarItem
               propKey="objectPosition"
               type="select"

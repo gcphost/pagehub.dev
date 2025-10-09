@@ -54,10 +54,10 @@ const LinkSettingsInput = ({
   useEffect(() => {
     if (currentUrl.startsWith('ref:')) {
       const pageId = currentUrl.replace('ref:', '');
-      setSelectedPageId(pageId);
-      setLinkType("page");
+      setSelectedPageId(prevId => prevId !== pageId ? pageId : prevId);
+      setLinkType(prevType => prevType !== "page" ? "page" : prevType);
     } else if (currentUrl) {
-      setLinkType("external");
+      setLinkType(prevType => prevType !== "external" ? "external" : prevType);
     }
   }, [currentUrl]);
 

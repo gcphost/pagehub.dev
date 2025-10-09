@@ -71,12 +71,12 @@ export const FormElementSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <ToolbarSection title="Form Element Presets">
+      <ToolbarSection title="Presets">
         <PresetGroupRenderer presets={selectorPresets.formElement} />
       </ToolbarSection>
 
       <ToolbarSection
-        title="Name & Placeholder"
+        title="Properties"
         help="The placeholder will be displayed when no text is entered. The name is how you identify this input."
       >
         <ToolbarItem
@@ -84,20 +84,33 @@ export const FormElementSettings = () => {
           propType="component"
           type="text"
           labelHide={true}
-          placeholder="Placeholder"
+          label="Placeholder"
         />
         <ToolbarItem
           propKey="name"
           propType="component"
           type="text"
           labelHide={true}
-          placeholder="Input Name"
+          label="Input Name"
         />
+        <ToolbarItem
+          propKey="type"
+          propType="component"
+          type="select"
+          label="Type"
+          labelHide={true}
+        >
+          {inputTypes.map((_, k) => (
+            <option key={_}>{_}</option>
+          ))}
+        </ToolbarItem>
 
-        <ToolbarSection title="Auto generate content" subtitle={true}>
-          <IpsumGenerator propKey="placeholder" propType="component" />
-        </ToolbarSection>
+
       </ToolbarSection>
+      <ToolbarSection title="Auto generate content" subtitle={true}>
+        <IpsumGenerator propKey="placeholder" propType="component" />
+      </ToolbarSection>
+
 
       {fieldType === "select" && (
         <ToolbarSection
@@ -116,26 +129,10 @@ export const FormElementSettings = () => {
 
 
 
-      <ToolbarSection
-        title="Field Type"
-        help="Each type will produce a different input, the most common are text, textarea, and email."
-      >
-        <ToolbarItem
-          propKey="type"
-          propType="component"
-          type="select"
-          label=""
-          labelHide={true}
-        >
-          {inputTypes.map((_, k) => (
-            <option key={_}>{_}</option>
-          ))}
-        </ToolbarItem>
-      </ToolbarSection>
+
 
       <ToolbarSection
-        title="Field Properties"
-        help="Additional properties for form elements"
+        title="Boolean Properties"
         full={2}
       >
         <ToolbarItem
@@ -246,17 +243,21 @@ export const FormElementSettings = () => {
       {activeTab === "Appearance" && (
         <TabBody>
           <FontInput />
-          <ToolbarSection>
-            <ColorInput
-              propKey="color"
-              label="Color"
-              prefix="text"
-              propType="root"
-            />
-            <BorderInput />
-            <TypeInput />
-            <ShadowInput />
-          </ToolbarSection>
+
+
+
+          <ColorInput
+            propKey="color"
+            label="Color"
+            prefix="text"
+            propType="root"
+            inline
+          />
+
+          <BorderInput />
+          <TypeInput />
+          <ShadowInput />
+
         </TabBody>
       )}
 
@@ -276,13 +277,14 @@ export const FormElementSettings = () => {
 
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <ToolbarSection>
+          <ToolbarSection title="Hover">
             <ColorInput
               propKey="color"
               label="Color"
               prefix="text"
               index="hover"
               propType="component"
+              inline
             />
           </ToolbarSection>
         </TabBody>

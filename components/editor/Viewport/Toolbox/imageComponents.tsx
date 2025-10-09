@@ -22,9 +22,7 @@ export const ImageToolbox = {
       key="image1"
       mobile={{
         objectFit: "object-cover",
-        minHeight: "min-h-[120px]",
-        height: "h-96",
-        width: "w-full",
+
         display: "flex",
         overflow: "overflow-hidden",
       }}

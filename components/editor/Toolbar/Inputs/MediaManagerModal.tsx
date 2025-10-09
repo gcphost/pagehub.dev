@@ -1,9 +1,10 @@
 import { ROOT_NODE, useEditor } from "@craftjs/core";
 import { GetSignedUrl, SaveMedia } from "components/editor/Viewport/lib";
+import { Tooltip } from "components/layout/Tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { TbEdit, TbPhoto, TbPlus, TbRefresh, TbSearch, TbTrash, TbUpload, TbX } from "react-icons/tb";
+import { TbCode, TbEdit, TbExternalLink, TbPhoto, TbPlus, TbRefresh, TbSearch, TbTrash, TbUpload, TbX } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { getCdnUrl } from "utils/cdn";
@@ -25,8 +26,12 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const [editingMedia, setEditingMedia] = useState<any | null>(null);
   const [replacingMedia, setReplacingMedia] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [addMode, setAddMode] = useState<"upload" | "url" | "svg">("upload");
+  const [urlInput, setUrlInput] = useState("");
+  const [svgInput, setSvgInput] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const replaceInputRef = useRef<HTMLInputElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const settings = useRecoilValue(SettingsAtom);
 
   const refreshMediaList = useCallback(() => {
@@ -134,6 +139,41 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     }
   };
 
+  const cleanSvg = (svg: string): string => {
+    let cleaned = svg.trim();
+
+    // Remove XML declaration
+    cleaned = cleaned.replace(/<\?xml[^?]*\?>/gi, '');
+
+    // Remove DOCTYPE
+    cleaned = cleaned.replace(/<!DOCTYPE[^>]*>/gi, '');
+
+    // Remove comments
+    cleaned = cleaned.replace(/<!--[\s\S]*?-->/g, '');
+
+    // Extract only the SVG tag and its contents
+    const svgMatch = cleaned.match(/<svg[\s\S]*<\/svg>/i);
+    if (svgMatch) {
+      cleaned = svgMatch[0];
+    }
+
+    // Remove width and height attributes from SVG tag
+    cleaned = cleaned.replace(/\s*(width|height)\s*=\s*["'][^"']*["']/gi, '');
+
+    // Replace black fills with currentColor to make SVG themeable
+    // Handle various black color formats
+    cleaned = cleaned.replace(/fill\s*=\s*["']#000000["']/gi, 'fill="currentColor"');
+    cleaned = cleaned.replace(/fill\s*=\s*["']#000["']/gi, 'fill="currentColor"');
+    cleaned = cleaned.replace(/fill\s*=\s*["']black["']/gi, 'fill="currentColor"');
+    cleaned = cleaned.replace(/fill\s*=\s*["']rgb\(0,\s*0,\s*0\)["']/gi, 'fill="currentColor"');
+    cleaned = cleaned.replace(/fill\s*=\s*["']rgba\(0,\s*0,\s*0,\s*1\)["']/gi, 'fill="currentColor"');
+
+    // Trim extra whitespace
+    cleaned = cleaned.trim();
+
+    return cleaned;
+  };
+
   const openEditModal = (media: any) => {
     setEditingMedia({
       ...media,
@@ -141,6 +181,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         alt: media.metadata?.alt || "",
         title: media.metadata?.title || "",
         description: media.metadata?.description || "",
+        url: media.metadata?.url || "",
+        svg: media.metadata?.svg || "",
       },
     });
   };
@@ -148,7 +190,13 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const saveEditedMetadata = () => {
     if (!editingMedia) return;
 
-    updateMediaMetadata(query, actions, editingMedia.id, editingMedia.metadata);
+    // Clean SVG if it's an SVG type
+    const metadata = { ...editingMedia.metadata };
+    if (editingMedia.type === "svg" && metadata.svg) {
+      metadata.svg = cleanSvg(metadata.svg);
+    }
+
+    updateMediaMetadata(query, actions, editingMedia.id, metadata);
     setEditingMedia(null);
     refreshMediaList();
   };
@@ -206,6 +254,60 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     }
   };
 
+  const handleAddUrl = () => {
+    if (!urlInput.trim()) return;
+
+    const mediaId = `url-${Date.now()}`;
+    registerMediaWithBackground(query, actions, mediaId, "url", "media-manager");
+
+    // Add metadata with the actual URL
+    actions.setProp(ROOT_NODE, (props: any) => {
+      props.pageMedia = props.pageMedia || [];
+      const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+
+      if (existingMedia) {
+        existingMedia.metadata = {
+          ...existingMedia.metadata,
+          title: urlInput.split('/').pop() || urlInput,
+          url: urlInput,
+        };
+      }
+    });
+
+    refreshMediaList();
+    setUrlInput("");
+    setAddMode("upload");
+    console.log(`✅ Added URL media: ${urlInput}`);
+  };
+
+  const handleAddSvg = () => {
+    if (!svgInput.trim()) return;
+
+    const cleanedSvg = cleanSvg(svgInput);
+
+    const mediaId = `svg-${Date.now()}`;
+    registerMediaWithBackground(query, actions, mediaId, "svg", "media-manager");
+
+    // Add metadata with the SVG content
+    actions.setProp(ROOT_NODE, (props: any) => {
+      props.pageMedia = props.pageMedia || [];
+      const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+
+      if (existingMedia) {
+        existingMedia.metadata = {
+          ...existingMedia.metadata,
+          title: "SVG Image",
+          svg: cleanedSvg,
+        };
+      }
+    });
+
+    refreshMediaList();
+    setSvgInput("");
+    setAddMode("upload");
+    console.log(`✅ Added SVG media`);
+  };
+
   useEffect(() => {
     if (isOpen) {
       refreshMediaList();
@@ -214,6 +316,24 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       setEditingMedia(null);
     }
   }, [isOpen, refreshMediaList]);
+
+  // Close add mode inputs when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (toolbarRef.current && !toolbarRef.current.contains(event.target as Node)) {
+        if (addMode === "url" || addMode === "svg") {
+          setAddMode("upload");
+        }
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isOpen, addMode]);
 
   if (!isOpen) return null;
 
@@ -253,20 +373,122 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           </div>
 
           {/* Toolbar */}
-          <div className="flex items-center gap-3 px-6 py-4 border-b bg-white">
-            {/* Search */}
-            <div className="flex-1 relative">
-              <TbSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search media by name, alt text, or description..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-              />
+          <div ref={toolbarRef} className="px-6 py-3 border-b bg-white">
+            <div className="flex items-center gap-2">
+              {/* Search */}
+              <div className="flex-1 relative">
+                <TbSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  placeholder="Search media..."
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                />
+              </div>
+
+              {/* Add Mode Selector - compact pills */}
+              <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                <Tooltip content="Upload files" placement="bottom">
+                  <button
+                    onClick={() => {
+                      setAddMode("upload");
+                      if (addMode === "upload") fileInputRef.current?.click();
+                    }}
+                    disabled={uploading}
+                    className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "upload"
+                      ? "bg-white text-gray-900 shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                      }`}
+                  >
+                    <TbUpload className="inline" />
+                  </button>
+                </Tooltip>
+                <Tooltip content="Add from URL" placement="bottom">
+                  <button
+                    onClick={() => setAddMode("url")}
+                    className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "url"
+                      ? "bg-white text-gray-900 shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                      }`}
+                  >
+                    <TbExternalLink className="inline" />
+                  </button>
+                </Tooltip>
+                <Tooltip content="Add SVG code" placement="bottom">
+                  <button
+                    onClick={() => setAddMode("svg")}
+                    className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "svg"
+                      ? "bg-white text-gray-900 shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                      }`}
+                  >
+                    <TbCode className="inline" />
+                  </button>
+                </Tooltip>
+              </div>
             </div>
 
-            {/* Upload Button - always visible */}
+            {/* Inline input for URL/SVG modes */}
+            {addMode === "url" && (
+              <div className="flex gap-2 mt-2">
+                <input
+                  type="text"
+                  value={urlInput}
+                  onChange={(e) => setUrlInput(e.target.value)}
+                  placeholder="https://example.com/image.jpg"
+                  className="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  onKeyDown={(e) => e.key === "Enter" && handleAddUrl()}
+                  autoFocus
+                />
+                <button
+                  onClick={handleAddUrl}
+                  disabled={!urlInput.trim()}
+                  className="px-3 py-1.5 bg-primary-500 text-white rounded text-sm hover:bg-primary-600 disabled:bg-gray-400 transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+            )}
+
+            {addMode === "svg" && (
+              <div className="mt-2">
+                <div className="flex gap-2">
+                  <textarea
+                    value={svgInput}
+                    onChange={(e) => setSvgInput(e.target.value)}
+                    placeholder="<svg>...</svg>"
+                    className="flex-1 px-3 py-1.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 font-mono text-xs"
+                    rows={3}
+                    autoFocus
+                  />
+                  <button
+                    onClick={handleAddSvg}
+                    disabled={!svgInput.trim()}
+                    className="px-3 py-1.5 bg-primary-500 text-white rounded text-sm hover:bg-primary-600 disabled:bg-gray-400 transition-colors"
+                  >
+                    Add
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-1.5 ml-0.5">
+                  Find SVGs @{" "}
+                  <a
+                    href="https://www.svgrepo.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-500 hover:text-primary-600 underline"
+                  >
+                    svgrepo.com
+                  </a>
+                </p>
+              </div>
+            )}
+
+            {uploading && (
+              <div className="mt-2 text-sm text-gray-500">Uploading...</div>
+            )}
+
+            {/* Hidden file input for upload */}
             <input
               ref={fileInputRef}
               type="file"
@@ -275,14 +497,6 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
               onChange={(e) => handleUpload(e.target.files)}
               className="hidden"
             />
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              disabled={uploading}
-              className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 disabled:bg-gray-400 transition-colors"
-            >
-              <TbUpload />
-              {uploading ? "Uploading..." : "Upload"}
-            </button>
 
             {/* Hidden file input for replace */}
             <input
@@ -310,10 +524,13 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   <>
                     <p className="text-gray-500 text-lg mb-2">No media uploaded yet</p>
                     <p className="text-sm text-gray-400 mb-4">
-                      Click the Upload button to add images
+                      Upload files, add URLs, or paste SVG code
                     </p>
                     <button
-                      onClick={() => fileInputRef.current?.click()}
+                      onClick={() => {
+                        setAddMode("upload");
+                        fileInputRef.current?.click();
+                      }}
                       className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600"
                     >
                       <TbPlus />
@@ -341,16 +558,32 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   >
                     {/* Thumbnail */}
                     <div className="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <img
-                        key={`${media.id}-${media.uploadedAt || 0}`}
-                        src={`${getCdnUrl(media.cdnId || media.id)}?v=${media.uploadedAt || Date.now()}`}
-                        alt={media.metadata?.alt || media.id}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          // Hide image if load fails
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
+                      {media.type === "url" ? (
+                        <img
+                          key={`${media.id}-${media.uploadedAt || 0}`}
+                          src={media.metadata?.url}
+                          alt={media.metadata?.alt || media.id}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      ) : media.type === "svg" ? (
+                        <div
+                          className="w-full h-full p-2"
+                          dangerouslySetInnerHTML={{ __html: media.metadata?.svg || "" }}
+                        />
+                      ) : (
+                        <img
+                          key={`${media.id}-${media.uploadedAt || 0}`}
+                          src={`${getCdnUrl(media.cdnId || media.id)}?v=${media.uploadedAt || Date.now()}`}
+                          alt={media.metadata?.alt || media.id}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      )}
                     </div>
 
                     {/* Name/Title */}
@@ -360,42 +593,40 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       </p>
                     </div>
 
-                    {/* Action Buttons (on hover) - hide in selection mode */}
-                    {!selectionMode && (
-                      <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setReplacingMedia(media.id);
-                            replaceInputRef.current?.click();
-                          }}
-                          className="p-1.5 bg-white rounded-md shadow-lg hover:bg-blue-50 text-blue-600"
-                          title="Replace image"
-                        >
-                          <TbRefresh className="text-sm" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openEditModal(media);
-                          }}
-                          className="p-1.5 bg-white rounded-md shadow-lg hover:bg-primary-50 text-primary-600"
-                          title="Edit metadata"
-                        >
-                          <TbEdit className="text-sm" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(media.id);
-                          }}
-                          className="p-1.5 bg-white rounded-md shadow-lg hover:bg-red-50 text-red-600"
-                          title="Delete"
-                        >
-                          <TbTrash className="text-sm" />
-                        </button>
-                      </div>
-                    )}
+                    {/* Action Buttons (on hover) */}
+                    <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setReplacingMedia(media.id);
+                          replaceInputRef.current?.click();
+                        }}
+                        className="p-1.5 bg-white rounded-md shadow-lg hover:bg-blue-50 text-blue-600"
+                        title="Replace image"
+                      >
+                        <TbRefresh className="text-sm" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openEditModal(media);
+                        }}
+                        className="p-1.5 bg-white rounded-md shadow-lg hover:bg-primary-50 text-primary-600"
+                        title="Edit metadata"
+                      >
+                        <TbEdit className="text-sm" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(media.id);
+                        }}
+                        className="p-1.5 bg-white rounded-md shadow-lg hover:bg-red-50 text-red-600"
+                        title="Delete"
+                      >
+                        <TbTrash className="text-sm" />
+                      </button>
+                    </div>
 
                     {/* Metadata indicator */}
                     {(media.metadata?.alt || media.metadata?.description) && (
@@ -435,18 +666,74 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
               <div className="p-6 space-y-4">
                 {/* Preview */}
                 <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                  <img
-                    key={`${editingMedia.id}-${editingMedia.uploadedAt || 0}`}
-                    src={`${getCdnUrl(editingMedia.cdnId || editingMedia.id)}?v=${editingMedia.uploadedAt || Date.now()}`}
-                    alt={editingMedia.metadata?.alt || "Preview"}
-                    className="w-24 h-24 object-cover rounded"
-                  />
+                  {editingMedia.type === "url" ? (
+                    <img
+                      src={editingMedia.metadata?.url}
+                      alt={editingMedia.metadata?.alt || "Preview"}
+                      className="w-24 h-24 object-cover rounded"
+                    />
+                  ) : editingMedia.type === "svg" ? (
+                    <div
+                      className="w-24 h-24 flex items-center justify-center rounded border border-gray-200"
+                      dangerouslySetInnerHTML={{ __html: editingMedia.metadata?.svg || "" }}
+                    />
+                  ) : (
+                    <img
+                      key={`${editingMedia.id}-${editingMedia.uploadedAt || 0}`}
+                      src={`${getCdnUrl(editingMedia.cdnId || editingMedia.id)}?v=${editingMedia.uploadedAt || Date.now()}`}
+                      alt={editingMedia.metadata?.alt || "Preview"}
+                      className="w-24 h-24 object-cover rounded"
+                    />
+                  )}
                   <div className="flex-1">
                     <p className="text-sm font-mono text-gray-600">{editingMedia.id}</p>
+                    <p className="text-xs text-gray-500 mt-1">Type: {editingMedia.type || "cdn"}</p>
                   </div>
                 </div>
 
                 {/* Form Fields */}
+                {/* URL field for URL type - show first */}
+                {editingMedia.type === "url" && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Image URL <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={editingMedia.metadata.url || ""}
+                      onChange={(e) =>
+                        setEditingMedia({
+                          ...editingMedia,
+                          metadata: { ...editingMedia.metadata, url: e.target.value },
+                        })
+                      }
+                      placeholder="https://example.com/image.jpg"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    />
+                  </div>
+                )}
+
+                {/* SVG field for SVG type - show first */}
+                {editingMedia.type === "svg" && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      SVG Code <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      value={editingMedia.metadata.svg || ""}
+                      onChange={(e) =>
+                        setEditingMedia({
+                          ...editingMedia,
+                          metadata: { ...editingMedia.metadata, svg: e.target.value },
+                        })
+                      }
+                      placeholder="<svg>...</svg>"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 font-mono text-sm"
+                      rows={6}
+                    />
+                  </div>
+                )}
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     File Name

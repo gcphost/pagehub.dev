@@ -196,7 +196,7 @@ export const ImageUploadInput: any = ({
         {/* Browse Button */}
         <button
           onClick={() => setShowMediaBrowser(true)}
-          className="btn"
+          className="btn gap-2 flex"
           title="Browse media library"
         >
           <TbPhoto />

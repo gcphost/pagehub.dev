@@ -1,7 +1,6 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
-import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import {
   getClonedState,
   setClonedProps,
@@ -11,7 +10,7 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { TbCheck, TbPhoto } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { getMedialUrl, motionIt } from "utils/lib";
+import { getMediaContent, motionIt } from "utils/lib";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { ImageSettings } from "./ImageSettings";
@@ -85,16 +84,17 @@ export const Image = (props: ImageProps) => {
 
   const ref = useRef(null);
 
-  // Look up metadata from media library at render time
+  // Look up media from media library at render time
   let mediaMetadata = null;
-  if (videoId && type === "cdn") {
+  let mediaObject = null;
+  if (videoId) {
     try {
       const backgroundNode = query.node("ROOT").get();
       if (backgroundNode) {
         const pageMedia = backgroundNode.data.props.pageMedia || [];
-        const media = pageMedia.find((m: any) => m.id === videoId);
-        if (media?.metadata) {
-          mediaMetadata = media.metadata;
+        mediaObject = pageMedia.find((m: any) => m.id === videoId);
+        if (mediaObject?.metadata) {
+          mediaMetadata = mediaObject.metadata;
         }
       }
     } catch (e) {
@@ -112,11 +112,13 @@ export const Image = (props: ImageProps) => {
       enabled && e.preventDefault();
     },
     style: props.root.style ? CSStoObj(props.root.style) || {} : {},
+    // Wrapper gets ALL layout classes (sizing, spacing, borders, shadows, etc.)
+    // EXCEPT image-specific rendering (object-fit, object-position)
     className: `${ClassGenerator(
       props,
       view,
       enabled,
-      ["objectFit", "ojectPosition"],
+      ["objectFit", "objectPosition"],
       [],
       preview
     )}`,
@@ -127,38 +129,60 @@ export const Image = (props: ImageProps) => {
   const altText = mediaMetadata?.alt || props.alt || mediaMetadata?.title || props.title || "";
   const titleText = mediaMetadata?.title || props.title || "";
 
+  // Check if objectFit is set in any view
+  const hasObjectFit =
+    props.mobile?.objectFit ||
+    props.tablet?.objectFit ||
+    props.desktop?.objectFit;
+
   const _imgProp: any = {
     loading: props.loading || "lazy",
     alt: altText,
     title: titleText,
     role: !altText && !titleText ? "presentation" : undefined,
-    className: ClassGenerator(
+    // Img always fills wrapper (w-full h-full) + gets image-specific rendering classes
+    // Add default object-cover if not set (important for aspect-ratio to work on wrapper)
+    className: `w-full h-full ${!hasObjectFit ? 'object-cover' : ''} ${ClassGenerator(
       props,
       view,
       enabled,
       [],
       ["objectFit", "objectPosition", "radius"],
       preview
-    ),
+    )}`.trim(),
     // width: "100",
     // height: "100",
     // fill: true,
   };
 
-  if (type === "svg" && content) {
-    // Store SVG content for later use
-    _imgProp.dangerouslySetInnerHTML = { __html: content };
-    // Add classes and styles to ensure SVG fits within container
-    // Use Tailwind arbitrary values for the nested SVG selector
-    _imgProp.className = `${_imgProp.className} w-full h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full`.trim();
-    // Inline styles for flexbox centering
-    _imgProp.style = {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    };
+  // Check if media is SVG type (either from props.type or media library)
+  const isSvg = type === "svg" || mediaObject?.type === "svg";
+
+  if (isSvg) {
+    // Get SVG content from props or media library
+    let svgContent = content; // Direct prop content (legacy)
+
+    // If no direct content, try to get from media library
+    if (!svgContent && videoId && mediaMetadata?.svg) {
+      svgContent = mediaMetadata.svg;
+    }
+
+    if (svgContent) {
+      _imgProp.dangerouslySetInnerHTML = { __html: svgContent };
+      // Add classes and styles to ensure SVG fits within container
+      // Use Tailwind arbitrary values for the nested SVG selector
+      // Note: w-full h-full already applied to base className
+      _imgProp.className = `${_imgProp.className} [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full`.trim();
+      // Inline styles for flexbox centering
+      _imgProp.style = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      };
+    }
   } else {
-    _imgProp.src = getMedialUrl(props);
+    // Use media content lookup system - supports cdn and url types from media library
+    _imgProp.src = videoId ? getMediaContent(query, videoId) : null;
 
     // Loading attribute is already set above with default fallback
 
@@ -201,7 +225,7 @@ export const Image = (props: ImageProps) => {
   let tagName;
   if (empty) {
     tagName = "div";
-  } else if (type === "svg") {
+  } else if (isSvg) {
     // Use div wrapper for inline SVG to avoid nested svg tags
     tagName = "div";
   } else {
@@ -274,12 +298,7 @@ Image.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController
-          position="top"
-          align="end"
-          placement="end"
-          key="image-1"
-        />,
+
         <DeleteNodeController key="imageDelete" />,
       ];
 

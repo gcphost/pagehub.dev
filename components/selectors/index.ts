@@ -32,6 +32,7 @@ export interface BaseStyleProps {
   fontSize?: string;
   fontWeight?: string;
   objectFit?: string;
+  aspectRatio?: string;
   transform?: string;
   wordBreak?: string;
   textOverflow?: string;

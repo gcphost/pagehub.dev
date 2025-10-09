@@ -294,7 +294,15 @@ export const Text = (props: Partial<TextProps>) => {
     prop.children = (
       <>
         <div
-
+          onClick={() => {
+            if (!isEditing && isActive && !isInsideLinkedComponent) {
+              setIsEditing(true);
+              // Focus the editor after a short delay to ensure it's ready
+              setTimeout(() => {
+                tiptapEditor?.commands.focus();
+              }, 10);
+            }
+          }}
           className={`w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text relative' : 'cursor-pointer'}`}
         >
           {tiptapEditor ? (

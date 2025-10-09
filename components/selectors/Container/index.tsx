@@ -287,7 +287,7 @@ export const Container = (props: Partial<ContainerProps>) => {
   if (props.anchor) prop.id = props.anchor;
 
   prop = mergeAccessibilityProps({
-    ...applyBackgroundImage(prop, props, settings),
+    ...applyBackgroundImage(prop, props, settings, query),
     ...applyAnimation({ ...prop, key: id }, props),
   }, props);
 

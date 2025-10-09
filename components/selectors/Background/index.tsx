@@ -427,7 +427,7 @@ export const Background = (props: Partial<ContainerProps>) => {
     };
   }
 
-  applyBackgroundImage(prop, props, settings);
+  applyBackgroundImage(prop, props, settings, query);
   applyAnimation(prop, props);
 
   return React.createElement("main", prop);

@@ -854,6 +854,7 @@ export const TailwindStyles = {
     "object-right-top",
     "object-top",
   ],
+  aspectRatio: ["aspect-auto", "aspect-square", "aspect-video"],
   lineHeight: [
     "leading-3",
     "leading-4",
@@ -1821,6 +1822,7 @@ export const classFilter = [
   "textAlign",
   "objectFit",
   "objectPosition",
+  "aspectRatio",
 
   "radius",
   "background",

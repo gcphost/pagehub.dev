@@ -910,7 +910,7 @@ export const imagePresets = {
     label: "Aspect Ratio",
     type: "select" as const,
     propKey: "presetAspectRatio",
-    propType: "root",
+    propType: "mobile",
     items: [
       {
         title: "Square",
@@ -947,7 +947,7 @@ export const imagePresets = {
     label: "Image Size",
     type: "select" as const,
     propKey: "presetSize",
-    propType: "root",
+    propType: "mobile",
     items: [
       {
         title: "Small",

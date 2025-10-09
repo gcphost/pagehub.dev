@@ -330,11 +330,17 @@ export const getMedialUrl = (props) => {
   }
 };
 
-export const getBackgroundUrl = (props) => {
+export const getBackgroundUrl = (props, query = null) => {
   if (props.backgroundImage) {
     const type = props.backgroundImageType;
     const content = props.backgroundImage;
 
+    // Use media lookup system if query is available
+    if (query && content) {
+      return getMediaContent(query, content);
+    }
+
+    // Fallback to old behavior
     if (type === "cdn" && content) {
       return getCdnUrl(content);
     }
@@ -361,10 +367,11 @@ export const applyPattern = (prop, props: BaseSelectorProps, settings) => {
 export const applyBackgroundImage = (
   prop,
   props: BaseSelectorProps,
-  settings
+  settings,
+  query = null
 ) => {
   if (props.backgroundImage) {
-    const _imgProp = { src: getBackgroundUrl(props) };
+    const _imgProp = { src: getBackgroundUrl(props, query) };
 
     if (_imgProp.src) {
       prop.style = prop.style || {};
@@ -909,6 +916,19 @@ export const getMediaContent = (query: any, mediaId: string): string | null => {
       return getCdnUrl(mediaId);
     }
 
+    // Handle different media types
+    if (media.type === "url") {
+      // Return the URL directly from metadata
+      return media.metadata?.url || null;
+    }
+
+    if (media.type === "svg") {
+      // Return the SVG as a data URI
+      const svgContent = media.metadata?.svg || "";
+      return `data:image/svg+xml;base64,${btoa(svgContent)}`;
+    }
+
+    // Default: CDN upload
     // If media was replaced, use the new cdnId, otherwise use the original id
     const cdnId = media.cdnId || media.id;
     return getCdnUrl(cdnId);
