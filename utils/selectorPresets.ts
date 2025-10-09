@@ -173,7 +173,7 @@ export const containerPresets = {
   },
 
   maxWidth: {
-    label: "Max W",
+    label: "Max Width",
     type: "slider" as const,
     propKey: "presetMaxWidth",
     propType: "root",

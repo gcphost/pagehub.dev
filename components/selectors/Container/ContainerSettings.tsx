@@ -324,10 +324,6 @@ export const ContainerSettings = () => {
         <TabBody>
           <ClickItem />
 
-
-
-
-
           <ToolbarSection title="Hover">
             <ToolbarSection title="Colors">
               <ColorInput

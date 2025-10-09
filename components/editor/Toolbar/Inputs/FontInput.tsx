@@ -49,7 +49,7 @@ export const FontInput = () => (
 
       <ToolbarItem
         propKey="fontWeight"
-        type="slider"
+        type="select"
         label="Weight"
         max={TailwindStyles.fontWeight.length - 1}
         min={0}

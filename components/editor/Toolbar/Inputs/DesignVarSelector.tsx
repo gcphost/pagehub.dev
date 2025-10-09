@@ -224,7 +224,7 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 mt-2 w-80 bg-gray-800 border border-gray-600 rounded-lg shadow-2xl z-[9999] max-h-96 flex flex-col"
+            className="absolute right-0 mt-2 w-64 bg-gray-800 border border-gray-600 rounded-lg shadow-2xl z-[9999] max-h-96 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search input */}

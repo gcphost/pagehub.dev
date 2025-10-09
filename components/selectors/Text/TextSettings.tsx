@@ -206,14 +206,18 @@ export const TextSettings = () => {
 
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <LinkSettingsInput />
-          <ToolbarSection title="Color">
+          <ToolbarSection title="Click">
+            <LinkSettingsInput />
+          </ToolbarSection>
+
+          <ToolbarSection title="Hover">
             <ColorInput
               propKey="color"
               label="Text Color"
               prefix="text"
               index="hover"
               propType="component"
+              inline
             />
           </ToolbarSection>
         </TabBody>

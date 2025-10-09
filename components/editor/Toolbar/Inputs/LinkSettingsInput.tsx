@@ -1,23 +1,31 @@
 import { useNode } from "@craftjs/core";
 import { changeProp } from "components/editor/Viewport/lib";
 import { PageSelector } from "components/editor/Viewport/PageSelector";
+import { Tooltip } from "components/layout/Tooltip";
 import { useEffect, useState } from "react";
 import { TbExternalLink, TbHash } from "react-icons/tb";
 import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
+import { Wrap } from "../ToolbarStyle";
 
 interface LinkSettingsInputProps {
   propKey?: string;
   index?: number;
   showAnchor?: boolean;
   suggestedPageName?: string;
+  inline?: boolean;
+  inputWidth?: string;
+  labelWidth?: string;
 }
 
 const LinkSettingsInput = ({
   propKey = "url",
   index,
   showAnchor = true,
-  suggestedPageName
+  suggestedPageName,
+  inline = true,
+  inputWidth = "",
+  labelWidth = "",
 }: LinkSettingsInputProps = {}) => {
   const {
     actions: { setProp },
@@ -70,6 +78,21 @@ const LinkSettingsInput = ({
     setSelectedPageId(page.id);
   };
 
+  const toggleButton = (
+    <Tooltip
+      content={linkType === "page" ? "Switch to External URL" : "Switch to Page"}
+      placement="top"
+    >
+      <button
+        type="button"
+        onClick={() => setLinkType(linkType === "page" ? "external" : "page")}
+        className="flex items-center justify-center text-xs p-2 hover:bg-gray-600 rounded-md transition-colors"
+      >
+        {linkType === "page" ? <TbExternalLink /> : <TbHash />}
+      </button>
+    </Tooltip>
+  );
+
   return (
     <>
       <ToolbarSection
@@ -77,32 +100,6 @@ const LinkSettingsInput = ({
         title="Link"
         help="Provide a valid URL or select an internal page."
       >
-        {/* Link Type Toggle */}
-        <div className="flex gap-2 mb-3">
-          <button
-            type="button"
-            onClick={() => setLinkType("page")}
-            className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "page"
-              ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              : "bg-primary-500 text-white"
-              }`}
-          >
-            <TbHash className="inline mr-1" />
-            Page
-          </button>
-          <button
-            type="button"
-            onClick={() => setLinkType("external")}
-            className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "external"
-              ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              : "bg-primary-500 text-white"
-              }`}
-          >
-            <TbExternalLink className="inline mr-1" />
-            External URL
-          </button>
-        </div>
-
         {linkType === "external" ? (
           <ToolbarItem
             propKey={isArrayItem ? propKey : "url"}
@@ -113,17 +110,31 @@ const LinkSettingsInput = ({
             label="URL"
             labelHide={true}
             placeholder="https://...."
-            inline
+            inline={inline}
+            inputWidth={inputWidth}
+            labelWidth={labelWidth}
+            append={toggleButton}
           />
         ) : (
-          <PageSelector
-            pickerMode={true}
-            onPagePick={handlePagePick}
-            selectedPageId={selectedPageId}
-            className="w-full"
-            buttonClassName="input w-full flex items-center justify-between"
-            suggestedPageName={suggestedPageName}
-          />
+          <Wrap
+            props={{ label: "Page", labelHide: false }}
+            inline={inline}
+            inputWidth={inputWidth}
+            labelWidth={labelWidth}
+          >
+            <div className="input-wrapper w-full flex items-center gap-2">
+              <PageSelector
+                pickerMode={true}
+                onPagePick={handlePagePick}
+                selectedPageId={selectedPageId}
+                className="flex-1"
+                buttonClassName="input-plain w-full flex items-center justify-between"
+                suggestedPageName={suggestedPageName}
+                showHashIcon={false}
+              />
+              {toggleButton}
+            </div>
+          </Wrap>
         )}
 
         <ToolbarItem
@@ -133,7 +144,9 @@ const LinkSettingsInput = ({
           propItemKey={isArrayItem ? "urlTarget" : undefined}
           type="select"
           label="Target"
-          inline
+          inline={inline}
+          inputWidth={inputWidth}
+          labelWidth={labelWidth}
         >
           <option value="_self">Same tab</option>
           <option value="_blank">New tab</option>
@@ -147,7 +160,9 @@ const LinkSettingsInput = ({
           type="text"
           labelHide={true}
           label="Anchor Tag"
-          inline
+          inline={inline}
+          inputWidth={inputWidth}
+          labelWidth={labelWidth}
         />
       </ToolbarSection>
     </>

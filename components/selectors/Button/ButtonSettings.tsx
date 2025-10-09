@@ -14,7 +14,6 @@ import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
 import { IconDialogInput } from "components/editor/Toolbar/Inputs/IconDialogInput";
-import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
 import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
 import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
@@ -98,10 +97,7 @@ export const ButtonSettings = () => {
         <PresetGroupRenderer presets={selectorPresets.button} />
       </ToolbarSection>
 
-      <LinkSettingsInput
-        propKey="url"
-        showAnchor={false}
-      />
+      <ClickItem />
 
       <ToolbarSection title="Button Type">
         <ToolbarItem
@@ -119,8 +115,10 @@ export const ButtonSettings = () => {
         <IconDialogInput
           propKey="icon"
           propType="component"
-          label="Icon"
+          label="Image"
+          inline
         />
+
         <ToolbarItem
           propKey="iconOnly"
           type="checkbox"
@@ -128,10 +126,9 @@ export const ButtonSettings = () => {
           propType="component"
           on={true}
           labelHide
+          inputWidth="w-fit"
         />
-      </ToolbarSection>
 
-      <ToolbarSection title="Icon Settings">
         <ToolbarItem
           propKey="iconPosition"
           type="select"
@@ -184,16 +181,18 @@ export const ButtonSettings = () => {
           <ToolbarSection title="Colors">
             <ColorInput
               propKey="color"
-              label="Text Color"
+              label="Text"
               prefix="text"
               propType="root"
+              inline
             />
 
             <ColorInput
               propKey="background"
-              label="Background Color"
+              label="Background"
               prefix="bg"
               propType="root"
+              inline
             />
           </ToolbarSection>
 

@@ -73,12 +73,13 @@ export const Wrap = ({
   inline = false,
   inputWidth = "",
   labelWidth = "",
+  className = "",
 }) => {
   if (inline) {
     // Inline mode: everything in one row
     // In inline mode, always show label if it exists (ignore labelHide for the label text)
     return (
-      <div className="w-full flex items-center gap-2">
+      <div className={`w-full flex items-center gap-2 ${className}`}>
         {props?.label && (
           <span className={`text-xs whitespace-nowrap ${labelWidth || "w-20"} truncate`}>{props?.label}</span>
         )}

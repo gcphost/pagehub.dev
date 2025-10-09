@@ -31,6 +31,7 @@ interface PageSelectorProps {
   selectedPageId?: string;
   buttonClassName?: string;
   suggestedPageName?: string;
+  showHashIcon?: boolean;
 }
 
 export const PageSelector: React.FC<PageSelectorProps> = ({
@@ -41,6 +42,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
   selectedPageId,
   buttonClassName,
   suggestedPageName,
+  showHashIcon = true,
 }) => {
   const { query, actions, pages } = useEditor((state, query) => {
     try {
@@ -301,7 +303,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
     : (isolate ? pages.find((p) => p.id === isolate) : null);
 
   const displayText = pickerMode
-    ? (currentPage ? currentPage.displayName : "Select a page...")
+    ? (currentPage ? currentPage.displayName : "Select a page")
     : (currentPage
       ? currentPage.displayName
       : pages.length > 0
@@ -340,7 +342,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
         aria-label="Page selector"
       >
         <div className="flex items-center gap-2 overflow-hidden flex-1">
-          <TbHash className="flex-shrink-0" />
+          {showHashIcon && <TbHash className="flex-shrink-0" />}
           <span className="truncate text-sm font-medium">{displayText}</span>
           {displayRoute && (
             <span className="text-xs text-gray-400 truncate ml-auto">

@@ -212,6 +212,7 @@ export const ImageListSettings = () => {
             type="checkbox"
             label="Show Navigation Arrows"
             labelHide={true}
+            inline={false}
           />
 
           <ToolbarItem
@@ -220,6 +221,7 @@ export const ImageListSettings = () => {
             type="checkbox"
             label="Show Dots Indicator"
             labelHide={true}
+            inline={false}
           />
         </ToolbarSection>
 
@@ -232,6 +234,7 @@ export const ImageListSettings = () => {
                 type="checkbox"
                 label="Enable Animation"
                 on="enabled"
+                inline={false}
               />
               <ToolbarItem
                 propKey="previewInEditor"
@@ -239,6 +242,7 @@ export const ImageListSettings = () => {
                 type="checkbox"
                 label="Preview in Editor"
                 on="enabled"
+                inline={false}
               />
             </ToolbarSection>
             {(props.animationEnabled !== false) && (

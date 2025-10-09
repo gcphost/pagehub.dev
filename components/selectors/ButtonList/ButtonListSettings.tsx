@@ -333,34 +333,39 @@ export const ButtonListSettings = () => {
         <TabBody>
           <ClickItem />
 
-          <ToolbarSection title="Colors">
-            <ColorInput
-              propKey="background"
-              label="Background"
-              prefix="bg"
-              index="hover"
-              propType="component"
-            />
+          <ToolbarSection title="Hover">
+            <ToolbarSection title="Colors">
+              <ColorInput
+                propKey="background"
+                label="Background"
+                prefix="bg"
+                index="hover"
+                propType="component"
+                inline
+              />
 
-            <ColorInput
-              propKey="color"
-              label="Text"
-              prefix="text"
-              propType="component"
-              index="hover"
-            />
+              <ColorInput
+                propKey="color"
+                label="Text"
+                prefix="text"
+                propType="component"
+                index="hover"
+                inline
+              />
 
-            <ColorInput
-              propKey="borderColor"
-              label="Border"
-              prefix="border"
-              propType="root"
-              index="hover"
-            />
-          </ToolbarSection>
+              <ColorInput
+                propKey="borderColor"
+                label="Border"
+                prefix="border"
+                propType="root"
+                index="hover"
+                inline
+              />
+            </ToolbarSection>
 
-          <ToolbarSection title="Opacity">
-            <OpacityInput label="" propKey="opacity" index="hover" />
+            <ToolbarSection title="Opacity">
+              <OpacityInput label="" propKey="opacity" index="hover" />
+            </ToolbarSection>
           </ToolbarSection>
         </TabBody>
       )}

@@ -77,8 +77,9 @@ export default function ClickItem() {
         {/* Action Mode */}
         {mode === "action" && (
           <>
-            <p className="py-3 text-xs">Toggle a component's visibility.</p>
-            <ToolbarSection full={2}>
+            <ToolbarSection full={1} title="Action">
+              <p className="text-xs">Control a components visibility.</p>
+
               <ToolbarItem
                 propKey="clickType"
                 type="select"

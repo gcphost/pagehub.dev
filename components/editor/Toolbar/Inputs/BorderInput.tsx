@@ -27,84 +27,86 @@ export const BorderInput = ({ index = "" }) => {
         />
 
         <RadiusInput />
+
+
+        {props?.root?.border && (
+          <>
+            <ToolbarSection full={1}>
+              <ColorInput
+                propKey="borderColor"
+                label="Color"
+                prefix="border"
+                propType="root"
+                index={index}
+                inline
+              />
+
+              <ToolbarItem
+                propKey="borderStyle"
+                propType="root"
+                type="select"
+                label="Border Style"
+                index={index}
+                inline
+              >
+                <option value="">None</option>
+                {TailwindStyles.borderStyle.map((_, k) => (
+                  <option key={_}>{_}</option>
+                ))}
+              </ToolbarItem>
+            </ToolbarSection>
+
+            <ToolbarSection full={4} title="Enable Position">
+              <ToolbarItem
+                propKey="borderTop"
+                propType="root"
+                type="checkbox"
+                option="Top"
+                on="border-t"
+                cols={true}
+                labelHide={true}
+                label=""
+                index={index}
+
+              />
+              <ToolbarItem
+                propKey="borderBottom"
+                propType="root"
+                type="checkbox"
+                option="Bottom"
+                on="border-b"
+                labelHide={true}
+                cols={true}
+                label={" "}
+                index={index}
+              />
+              <ToolbarItem
+                propKey="borderLeft"
+                propType="root"
+                type="checkbox"
+                option="Left"
+                on="border-l"
+                labelHide={true}
+                cols={true}
+                label={" "}
+                index={index}
+              />
+              <ToolbarItem
+                propKey="borderRight"
+                propType="root"
+                type="checkbox"
+                option="Right"
+                on="border-r"
+                labelHide={true}
+                cols={true}
+                label={" "}
+                index={index}
+              />
+            </ToolbarSection>
+          </>
+        )}
+
       </ToolbarSection>
-
-      {props?.root?.border && (
-        <>
-          <ToolbarSection full={1}>
-            <ColorInput
-              propKey="borderColor"
-              label="Color"
-              prefix="border"
-              propType="root"
-              index={index}
-              inline
-            />
-
-            <ToolbarItem
-              propKey="borderStyle"
-              propType="root"
-              type="select"
-              label="Border Style"
-              index={index}
-              inline
-            >
-              <option value="">None</option>
-              {TailwindStyles.borderStyle.map((_, k) => (
-                <option key={_}>{_}</option>
-              ))}
-            </ToolbarItem>
-          </ToolbarSection>
-
-          <ToolbarSection full={4}>
-            <ToolbarItem
-              propKey="borderTop"
-              propType="root"
-              type="checkbox"
-              option="Top"
-              on="border-t"
-              cols={true}
-              labelHide={true}
-              label="Position"
-              index={index}
-
-            />
-            <ToolbarItem
-              propKey="borderBottom"
-              propType="root"
-              type="checkbox"
-              option="Bottom"
-              on="border-b"
-              labelHide={true}
-              cols={true}
-              label={" "}
-              index={index}
-            />
-            <ToolbarItem
-              propKey="borderLeft"
-              propType="root"
-              type="checkbox"
-              option="Left"
-              on="border-l"
-              labelHide={true}
-              cols={true}
-              label={" "}
-              index={index}
-            />
-            <ToolbarItem
-              propKey="borderRight"
-              propType="root"
-              type="checkbox"
-              option="Right"
-              on="border-r"
-              labelHide={true}
-              cols={true}
-              label={" "}
-              index={index}
-            />
-          </ToolbarSection>
-        </>
-      )}
     </>
   );
 };
