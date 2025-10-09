@@ -262,9 +262,7 @@ export const ContainerSettings = () => {
 
 
 
-          <ToolbarSection title="Border">
-            <BorderInput />
-          </ToolbarSection>
+          <BorderInput />
 
           <ToolbarSection title="Decoration">
             <ShadowInput />

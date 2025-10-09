@@ -30,7 +30,7 @@ export const BackgroundInput = ({ children }: { children?: React.ReactNode }) =>
           </ToolbarItem>
 
           {props?.root?.backgroundGradient && (
-            <ToolbarSection full={2}>
+            <ToolbarSection full={1}>
               <ColorInput
                 propKey="backgroundGradientFrom"
                 label="From"

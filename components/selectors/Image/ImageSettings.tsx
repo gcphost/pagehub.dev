@@ -156,9 +156,7 @@ export const ImageSettings = () => {
             </ToolbarItem>
           </ToolbarSection>
 
-          <ToolbarSection title="Border">
-            <BorderInput />
-          </ToolbarSection>
+          <BorderInput />
           <ToolbarSection title="Decoration">
             <ShadowInput />
           </ToolbarSection>

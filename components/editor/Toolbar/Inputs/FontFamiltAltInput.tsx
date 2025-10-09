@@ -15,6 +15,9 @@ export const FontFamiltAltInput = ({
   index = null,
   propItemKey = "",
   propType = "class",
+  inline = true,
+  inputWidth = "",
+  labelWidth = "",
 }) => {
   const [dialog, setDialog] = useRecoilState(FontFamilyDialogAtom);
   const { actions, query } = useEditor();
@@ -92,8 +95,12 @@ export const FontFamiltAltInput = ({
           varSelectorPrefix: "font", // For font-[var(--ph-...)]
         }}
         lab={value}
+        viewValue="component" // Font is always stored in root
         propType="root" // Font is always stored in root, not class
         propKey={propKey}
+        inline={inline}
+        inputWidth={inputWidth}
+        labelWidth={labelWidth}
       >
         <button
           title={value}

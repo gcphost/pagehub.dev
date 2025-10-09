@@ -35,7 +35,7 @@ export const FontInput = () => (
       ]}
     />
 
-    <ToolbarSection full={2}>
+    <ToolbarSection full={1}>
       <ToolbarItem
         propKey="fontSize"
         type="slider"
@@ -58,7 +58,7 @@ export const FontInput = () => (
         varSelectorPrefix="font"
       />
     </ToolbarSection>
-    <ToolbarSection full={2} footer={<ItemAdvanceToggle
+    <ToolbarSection full={1} footer={<ItemAdvanceToggle
       propKey="font"
       title={
         <>
@@ -66,7 +66,7 @@ export const FontInput = () => (
         </>
       }
     >
-      <ToolbarSection full={2}>
+      <ToolbarSection full={1}>
         <TailwindInput
           propKey="transform"
           label="Transform"

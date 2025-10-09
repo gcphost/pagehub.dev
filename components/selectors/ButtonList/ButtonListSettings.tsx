@@ -309,9 +309,7 @@ export const ButtonListSettings = () => {
           <ToolbarSection title="Text">
             <FontInput />
           </ToolbarSection>
-          <ToolbarSection title="Border">
-            <BorderInput />
-          </ToolbarSection>
+          <BorderInput />
         </TabBody>
       )}
 

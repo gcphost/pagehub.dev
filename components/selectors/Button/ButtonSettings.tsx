@@ -115,7 +115,7 @@ export const ButtonSettings = () => {
         </ToolbarItem>
       </ToolbarSection>
 
-      <ToolbarSection title="Icon" full={2}>
+      <ToolbarSection title="Icon" full={1}>
         <IconDialogInput
           propKey="icon"
           propType="component"
@@ -209,7 +209,7 @@ export const ButtonSettings = () => {
               <option value="right">Right</option>
             </ToolbarItem>
 
-            <ToolbarSection full={2}>
+            <ToolbarSection full={1}>
               <ToolbarItem
                 propKey="iconSize"
                 propType="component"
@@ -225,6 +225,7 @@ export const ButtonSettings = () => {
                 propType="component"
                 label="Color"
                 prefix="text"
+                inline
               />
 
               <ShadowInput propKey="iconShadow" propType="component" />
@@ -246,9 +247,7 @@ export const ButtonSettings = () => {
           <ToolbarSection title="Text">
             <FontInput />
           </ToolbarSection>
-          <ToolbarSection title="Border">
-            <BorderInput />
-          </ToolbarSection>
+          <BorderInput />
         </TabBody>
       )}
 
@@ -277,6 +276,7 @@ export const ButtonSettings = () => {
               prefix="bg"
               index="hover"
               propType="component"
+              inline
             />
 
             <ColorInput
@@ -285,6 +285,7 @@ export const ButtonSettings = () => {
               prefix="text"
               index="hover"
               propType="component"
+              inline
             />
 
             <ColorInput
@@ -293,6 +294,7 @@ export const ButtonSettings = () => {
               prefix="border"
               propType="root"
               index="hover"
+              inline
             />
           </ToolbarSection>
 

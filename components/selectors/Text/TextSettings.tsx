@@ -92,6 +92,7 @@ export const TextSettings = () => {
           type="textarea"
           labelHide={true}
           placeholder="Enter text"
+          inline={false}
         />
 
         {/* Loop over all text presets automatically */}
@@ -132,9 +133,10 @@ export const TextSettings = () => {
           <ToolbarSection title="Colors">
             <ColorInput
               propKey="color"
-              label="Color"
+              label="Text"
               prefix="text"
               propType="root"
+              inline
             />
           </ToolbarSection>
 

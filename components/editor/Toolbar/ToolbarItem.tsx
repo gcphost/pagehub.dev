@@ -332,7 +332,7 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
     index = null,
     propTag = "",
     wrap = "",
-    inline = false,
+    inline = true,
     inputWidth = "",
     labelWidth = "",
     showVarSelector = false,
