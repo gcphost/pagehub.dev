@@ -30,7 +30,7 @@ const Labler = ({
 
   return (
     <h4
-      className={`text-xs text-white ${lab ? "my-1" : "mb-1"
+      className={`toolbar-label ${lab ? "my-1" : "mb-1"
         } gap-3 flex justify-between`}
     >
       <div className="flex gap-1.5 items-center">

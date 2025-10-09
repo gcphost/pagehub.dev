@@ -9,8 +9,8 @@ import { AccessibilityInput } from "components/editor/Toolbar/Inputs/Accessibili
 import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInput";
 import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
-import { FileUploadInput } from "components/editor/Toolbar/Inputs/FileUploadInput";
 import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
+import { MediaInput } from "components/editor/Toolbar/Inputs/MediaInput";
 import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SizeInput } from "components/editor/Toolbar/Inputs/SizeInput";
@@ -69,13 +69,11 @@ export const ImageSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <ToolbarSection>
-        <FileUploadInput
-          propKey="videoId"
-          typeKey="type"
-          contentKey="content"
-        />
-      </ToolbarSection>
+      <MediaInput
+        propKey="videoId"
+        typeKey="type"
+        contentKey="content"
+      />
 
       <ToolbarSection title="Image Presets">
         <PresetGroupRenderer presets={selectorPresets.image} />

@@ -198,7 +198,7 @@ const Input = (__props, ref) => {
                 />
                 <label
                   htmlFor={`radio-${propKey}-${key}`}
-                  className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${checked ? "font-bold " : "text-gray-400"
+                  className={`block text-sm font-medium text-current cursor-pointer input-hover hover:text-white ${checked ? "font-bold " : "text-gray-400"
                     }`}
                 >
                   {_.label}
@@ -246,7 +246,7 @@ const Input = (__props, ref) => {
               />
               <label
                 htmlFor={`radio-${propKey}-${key}`}
-                className={`block text-sm font-medium text-white cursor-pointer input-hover hover:text-white ${checked ? "font-bold " : "text-gray-400"
+                className={`block text-sm font-medium text-current cursor-pointer input-hover hover:text-white ${checked ? "font-bold " : "text-gray-400"
                   }`}
               >
                 {_.label}

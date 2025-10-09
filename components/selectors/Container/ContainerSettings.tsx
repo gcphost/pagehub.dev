@@ -231,25 +231,25 @@ export const ContainerSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Colors">
+          <ToolbarSection title="Colors" full={2}>
             <ColorInput
               propKey="color"
-              label="Text Color"
+              label="Text"
               prefix="text"
               propType="root"
             />
 
             <ColorInput
               propKey="background"
-              label="Background Color"
+              label="Background"
               prefix="bg"
               propType="root"
             />
           </ToolbarSection>
 
-          <BackgroundInput />
+          <BackgroundInput><PatternInput /></BackgroundInput>
 
-          <PatternInput />
+
 
           <ToolbarSection title="Border">
             <BorderInput />

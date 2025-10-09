@@ -392,18 +392,19 @@ ul {
 }
 
 #toolbarContents .input,
-#toolbarContents .input-base {
-  @apply text-xs p-1;
+#toolbarContents .input-base,
+#toolbarContents .btn {
+  @apply text-sm px-2 py-1;
 }
 
 #toolbarContents .input-color {
   @apply h-8;
 }
 
-#toolbarContents .btn {
-  @apply text-sm px-1 py-0.5;
-}
-
 #toolbarContents .btn-search {
   @apply h-7 right-0 bottom-0;
+}
+
+.toolbar-label {
+  @apply text-sm text-white;
 }

@@ -145,13 +145,7 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
 
   useScrollToSelected(id, enabled);
 
-  const baseProps = [
-    "flexDirection",
-    "alignItems",
-    "justifyContent",
-    "gap",
-    "mode",
-  ];
+
 
   const prop: any = {
     ref: (r) => {
@@ -269,7 +263,7 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
             }}
           >
             {children}
-            {children}
+
           </div>
         </div>
       </>

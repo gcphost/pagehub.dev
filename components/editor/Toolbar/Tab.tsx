@@ -69,7 +69,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
       <div
         id="toolbarContents"
         className={`w-full flex flex-col  scrollbar overflow-auto absolute bottom-[64px] top-[${jumps.length ? "246px" : "200px"
-          }] pb-[400px] gap-0 py-1.5 px-2`}
+          }] pb-[400px] gap-3 py-1.5 px-2 divide-y divide-primary-500 `}
       >
         {children}
       </div>

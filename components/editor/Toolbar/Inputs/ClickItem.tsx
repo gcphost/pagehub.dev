@@ -84,7 +84,7 @@ export default function ClickItem() {
               type="button"
               onClick={handleTestAction}
               disabled={!clickValue || !clickType}
-              className="btn w-full h-12 gap-2"
+              className="btn w-full"
               title="Test Action"
             >
               <TbPlayerPlay className="w-4 h-4" />

@@ -21,7 +21,7 @@ export const ToolbarSection = ({
 
   const classNames = className
     ? "items-center flex text-lg text-white text-left font-medium text-dark-gray bg-gray-800 p-3 cursor-pointer border-y-gray-900 border-y border border-yellow-500"
-    : `items-center flex text-sm mt-6 font-bold text-white gap-3 flex justify-between w-full`;
+    : `items-center flex text-sm  font-bold text-white gap-3 flex justify-between w-full my-2`;
 
   const handleClick = (e: React.MouseEvent) => {
     if (collapsible) {
@@ -33,7 +33,7 @@ export const ToolbarSection = ({
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-2">
       {title && (
         <button id={title} className={classNames} onClick={handleClick} aria-label={title}>
           <div className="flex items-center gap-3">

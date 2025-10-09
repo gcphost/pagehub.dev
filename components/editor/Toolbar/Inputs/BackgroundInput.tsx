@@ -5,7 +5,7 @@ import { ToolbarSection } from "../ToolbarSection";
 import { BackgroundSettingsInput } from "./BackgroundSettingsInput";
 import { ColorInput } from "./ColorInput";
 
-export const BackgroundInput = () => {
+export const BackgroundInput = ({ children }: { children?: React.ReactNode }) => {
   const { props } = useNode((node) => ({
     props: node.data.props,
   }));
@@ -47,6 +47,8 @@ export const BackgroundInput = () => {
           )}
         </ToolbarSection>
       </ToolbarSection>
+
+      {children}
     </ToolbarSection>
   );
 };

@@ -135,22 +135,22 @@ export const RenderNodeControlInline = ({
   // Edge positioning
   if (position === "top") {
     if (isPadding) {
-      classes.push('-top-0.5', 'left-0', 'right-0'); // Inside top, 2px from edge
+      classes.push('-top-0.5', '-left-0.5', 'right-0'); // Inside top, 2px from edge
     } else {
       if (isOffScreen) {
         classes.push('top-full', 'left-0', 'right-0', 'mt-0'); // Clipped: flip to bottom
       } else {
-        classes.push('bottom-full', 'left-0', 'right-0', 'mb-0.5'); // Outside top, sits above
+        classes.push('bottom-full', 'left-0', '-right-0.5', 'mb-0.5'); // Outside top, sits above
       }
     }
   } else if (position === "bottom") {
     if (isPadding) {
-      classes.push('-bottom-0.5', 'left-0', 'right-0'); // Inside bottom
+      classes.push('-bottom-0.5', '-left-0.5', 'right-0'); // Inside bottom
     } else {
       if (isOffScreen) {
         classes.push('bottom-full', 'left-0', 'right-0', 'mb-0'); // Clipped: flip to top
       } else {
-        classes.push('top-full', '-left-0', 'right-0', 'mt-0.5'); // Outside bottom, sits below
+        classes.push('top-full', '-left-0', '-right-0.5', 'mt-0.5'); // Outside bottom, sits below
       }
     }
   } else if (position === "left") {

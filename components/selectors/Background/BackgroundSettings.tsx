@@ -96,9 +96,7 @@ export const BackgroundSettings = () => {
               />
             </ToolbarSection>
 
-            <BackgroundInput />
-
-            <PatternInput />
+            <BackgroundInput><PatternInput /></BackgroundInput>
 
             <ToolbarSection title="Text">
               <FontInput />

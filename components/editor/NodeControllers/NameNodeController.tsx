@@ -2,13 +2,20 @@ import { useEditor, useNode } from "@craftjs/core";
 import debounce from "lodash.debounce";
 import { useEffect, useRef, useState } from "react";
 import RenderNodeControlInline from "../RenderNodeControlInline";
+import { useElementColor } from "./lib";
 
 const EditableName = () => {
   const { name, id } = useNode((node) => ({
     name: node.data.custom.displayName || node.data.displayName,
   }));
 
-  const { actions } = useEditor();
+  const { actions, isActive } = useEditor((_, query) => ({
+    isActive: query.getEvent("selected").contains(id),
+  }));
+
+  const dom = document.querySelector(`[node-id="${id}"]`);
+  const elementColor = useElementColor(dom as HTMLElement, isActive);
+
   const [isEditing, setIsEditing] = useState(false);
   const editableRef = useRef<HTMLDivElement>(null);
 
@@ -37,12 +44,13 @@ const EditableName = () => {
   return (
     <div
       className={
-        "pointer-events-auto overflow-hidden border flex flex-row gap-3 bg-white/90 text-black !text-base !font-normal fontfamily-base border-current"
+        "pointer-events-auto overflow-hidden  flex flex-row gap-3 bg-white/90 !text-base !font-normal fontfamily-base border-current"
       }
+      style={{ color: elementColor || 'currentColor' }}
     >
       <div
         ref={editableRef}
-        className={`px-2 ${isEditing ? 'cursor-text' : 'cursor-grab active:cursor-grabbing'}`}
+        className={`${isEditing ? 'cursor-text' : 'cursor-grab active:cursor-grabbing'}`}
         contentEditable={isEditing}
         data-gramm="false"
         suppressContentEditableWarning={true}

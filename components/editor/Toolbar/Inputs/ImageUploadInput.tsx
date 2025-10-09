@@ -174,7 +174,7 @@ export const ImageUploadInput: any = ({
         {/* Upload Button */}
         <label
           htmlFor={`files-${componentId}`}
-          className={`flex-1 flex gap-3 h-12 bg-primary-500 rounded-md btn text-base ${!enabled ? "opacity-50" : ""
+          className={`btn w-full ${!enabled ? "opacity-50" : ""
             } ${hasUploadedImage ? "relative overflow-hidden" : ""}`}
         >
           {hasUploadedImage && imageUrl && (
@@ -196,7 +196,7 @@ export const ImageUploadInput: any = ({
         {/* Browse Button */}
         <button
           onClick={() => setShowMediaBrowser(true)}
-          className="h-12 px-4 btn transition-colors flex items-center gap-2"
+          className="btn"
           title="Browse media library"
         >
           <TbPhoto />

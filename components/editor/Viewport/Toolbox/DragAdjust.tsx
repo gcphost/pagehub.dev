@@ -203,8 +203,8 @@ function DragAdjust({
           },
         }}
         className={`drag-control group ${className} ${isPadding
-          ? direction === "vertical" ? "w-7 h-[4px]" : "w-[4px] h-7"
-          : direction === "vertical" ? "w-9 h-1.5" : "w-1.5 h-9"
+          ? direction === "vertical" ? "w-5 h-[4px]" : "w-[4px] h-5"
+          : direction === "vertical" ? "w-5 h-1" : "w-1 h-5"
           } pointer-events-auto`}
         style={{
           willChange: 'transform',

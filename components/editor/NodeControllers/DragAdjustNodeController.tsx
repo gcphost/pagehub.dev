@@ -88,6 +88,9 @@ export const DragAdjustNodeController = (props: {
     ? "whitespace-nowrap items-center select-none"
     : "whitespace-nowrap items-center select-none fixed pointer-events-auto";
 
+  //        alt={alt}
+  // could use it but drl need it ond rag adjusters..
+
   // For inline rendering, skip AnimatePresence - it causes issues without portals
   if (isInlineRender && isActive) {
     return (
@@ -95,7 +98,6 @@ export const DragAdjustNodeController = (props: {
         key={`${id}-drag-${position}`}
         position={position}
         align={align}
-        alt={alt}
         placement="middle"
         hPlacement="start"
         isPadding={isPadding}

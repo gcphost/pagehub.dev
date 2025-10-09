@@ -90,126 +90,6 @@ export const ImageListSettings = () => {
 
     return (
       <TabBody>
-        <ToolbarSection title="Gallery Mode">
-          <ToolbarItem
-            propKey="mode"
-            propType="component"
-            type="select"
-            label="Mode"
-          >
-            <option value="flex">Flex (Default)</option>
-            <option value="grid">Grid</option>
-            <option value="carousel">Carousel</option>
-            <option value="hero">Hero</option>
-            <option value="masonry">Masonry</option>
-            <option value="infinite">Infinite Scroll</option>
-          </ToolbarItem>
-        </ToolbarSection>
-
-        <ToolbarSection title="Display Options">
-          <ToolbarItem
-            propKey="itemsPerView"
-            propType="component"
-            type="slider"
-            label={`Items Per View: ${props.itemsPerView || 3}`}
-            min={1}
-            max={6}
-            step={1}
-          />
-        </ToolbarSection>
-
-        <ToolbarSection title="Controls">
-          <ToolbarItem
-            propKey="showNavigation"
-            propType="component"
-            type="checkbox"
-            label="Show Navigation Arrows"
-            labelHide={true}
-          />
-
-          <ToolbarItem
-            propKey="showDots"
-            propType="component"
-            type="checkbox"
-            label="Show Dots Indicator"
-            labelHide={true}
-          />
-        </ToolbarSection>
-
-        {props.mode === "infinite" ? (
-          <>
-            <ToolbarSection title="Animation">
-              <ToolbarItem
-                propKey="animationEnabled"
-                propType="component"
-                type="checkbox"
-                label="Enable Animation"
-                on="enabled"
-              />
-              <ToolbarItem
-                propKey="previewInEditor"
-                propType="component"
-                type="checkbox"
-                label="Preview in Editor"
-                on="enabled"
-              />
-            </ToolbarSection>
-            {(props.animationEnabled !== false) && (
-              <>
-                <ToolbarSection title="Direction">
-                  <ToolbarItem
-                    propKey="infiniteDirection"
-                    propType="component"
-                    type="select"
-                    label="Scroll Direction"
-                  >
-                    <option value="left">Scroll Left ←</option>
-                    <option value="right">Scroll Right →</option>
-                  </ToolbarItem>
-                </ToolbarSection>
-                <ToolbarSection title="Scroll Speed">
-                  <ToolbarItem
-                    propKey="infiniteSpeed"
-                    propType="component"
-                    type="slider"
-                    label={`${props.infiniteSpeed || 30} seconds`}
-                    min={5}
-                    max={60}
-                    step={1}
-                  />
-                  <p className="text-xs text-gray-400 mt-2">
-                    Time for one complete scroll (lower = faster)
-                  </p>
-                </ToolbarSection>
-              </>
-            )}
-          </>
-        ) : (
-          <ToolbarSection title="Auto-Scroll">
-            <ToolbarItem
-              propKey="autoScroll"
-              propType="component"
-              type="checkbox"
-              label="Enable Auto-Scroll"
-              labelHide={true}
-            />
-
-            {props.autoScroll && (
-              <ToolbarItem
-                propKey="autoScrollInterval"
-                propType="component"
-                type="number"
-                label="Interval (ms)"
-                placeholder="3000"
-                min={1000}
-                max={10000}
-                step={500}
-                labelHide={true}
-              />
-            )}
-          </ToolbarSection>
-        )}
-
         <ToolbarSection title="Images">
           <div className="border rounded-md border-gray-500">
             {childImages?.map((image, index) => (
@@ -296,6 +176,128 @@ export const ImageListSettings = () => {
             <TbPlus className="inline mr-2" /> Add Image
           </button>
         </ToolbarSection>
+
+        <ToolbarSection title="Gallery Mode">
+          <ToolbarItem
+            propKey="mode"
+            propType="component"
+            type="select"
+            label="Mode"
+          >
+            <option value="flex">Flex (Default)</option>
+            <option value="grid">Grid</option>
+            <option value="carousel">Carousel</option>
+            <option value="hero">Hero</option>
+            <option value="masonry">Masonry</option>
+            <option value="infinite">Infinite Scroll</option>
+          </ToolbarItem>
+        </ToolbarSection>
+
+        <ToolbarSection title="Display Options">
+          <ToolbarItem
+            propKey="itemsPerView"
+            propType="component"
+            type="slider"
+            label={`Items Per View: ${props.itemsPerView || 3}`}
+            min={1}
+            max={6}
+            step={1}
+          />
+        </ToolbarSection>
+
+        <ToolbarSection title="Controls" full={2}>
+          <ToolbarItem
+            propKey="showNavigation"
+            propType="component"
+            type="checkbox"
+            label="Show Navigation Arrows"
+            labelHide={true}
+          />
+
+          <ToolbarItem
+            propKey="showDots"
+            propType="component"
+            type="checkbox"
+            label="Show Dots Indicator"
+            labelHide={true}
+          />
+        </ToolbarSection>
+
+        {props.mode === "infinite" ? (
+          <>
+            <ToolbarSection title="Animation" full={2}>
+              <ToolbarItem
+                propKey="animationEnabled"
+                propType="component"
+                type="checkbox"
+                label="Enable Animation"
+                on="enabled"
+              />
+              <ToolbarItem
+                propKey="previewInEditor"
+                propType="component"
+                type="checkbox"
+                label="Preview in Editor"
+                on="enabled"
+              />
+            </ToolbarSection>
+            {(props.animationEnabled !== false) && (
+              <>
+                <ToolbarSection title="Direction">
+                  <ToolbarItem
+                    propKey="infiniteDirection"
+                    propType="component"
+                    type="select"
+                    label="Scroll Direction"
+                  >
+                    <option value="left">Scroll Left ←</option>
+                    <option value="right">Scroll Right →</option>
+                  </ToolbarItem>
+                </ToolbarSection>
+                <ToolbarSection title="Scroll Speed">
+                  <ToolbarItem
+                    propKey="infiniteSpeed"
+                    propType="component"
+                    type="slider"
+                    label={`${props.infiniteSpeed || 30} seconds`}
+                    min={5}
+                    max={60}
+                    step={1}
+                  />
+                  <p className="text-xs text-gray-400 mt-2">
+                    Time for one complete scroll (lower = faster)
+                  </p>
+                </ToolbarSection>
+              </>
+            )}
+          </>
+        ) : (
+          <ToolbarSection title="Auto-Scroll">
+            <ToolbarItem
+              propKey="autoScroll"
+              propType="component"
+              type="checkbox"
+              label="Enable Auto-Scroll"
+              labelHide={true}
+            />
+
+            {props.autoScroll && (
+              <ToolbarItem
+                propKey="autoScrollInterval"
+                propType="component"
+                type="number"
+                label="Interval (ms)"
+                placeholder="3000"
+                min={1000}
+                max={10000}
+                step={500}
+                labelHide={true}
+              />
+            )}
+          </ToolbarSection>
+        )}
+
+
       </TabBody>
     );
   };

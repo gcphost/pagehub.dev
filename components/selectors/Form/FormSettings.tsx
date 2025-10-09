@@ -242,9 +242,7 @@ export const FormSettings = () => {
           </ToolbarSection>
 
 
-          <BackgroundInput />
-
-          <PatternInput />
+          <BackgroundInput><PatternInput /></BackgroundInput>
 
           <ToolbarSection title="Border">
             <BorderInput />

@@ -4,10 +4,8 @@ import {
   TbCode,
   TbPhoto,
   TbPhotoOff,
-  TbSettings,
-  TbUpload,
+  TbUpload
 } from "react-icons/tb";
-import { ItemAdvanceToggle } from "../Helpers/ItemSelector";
 import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
 import { ImageUploadInput } from "./ImageUploadInput";
@@ -57,57 +55,53 @@ export const FileUploadInput = (propa) => {
         />
       )}
 
-      <ItemAdvanceToggle
-        propKey={props.propKey}
-        title={
-          <>
-            <TbSettings /> Use a URL, SVG, or remove instead
-          </>
-        }
-      >
-        <ToolbarItem
-          propKey={props.typeKey}
-          propType="component"
-          type="radio"
-          labelHide={true}
-          cols={true}
-          options={[
-            {
-              label: (
-                <Tooltip content="Upload File" arrow={false}>
-                  <TbUpload />
-                </Tooltip>
-              ),
-              value: "cdn",
-            },
-            {
-              label: (
-                <Tooltip content="URL" arrow={false}>
-                  <TbPhoto />
-                </Tooltip>
-              ),
-              value: "img",
-            },
 
-            {
-              label: (
-                <Tooltip content="SVG" arrow={false}>
-                  <TbCode />
-                </Tooltip>
-              ),
-              value: "svg",
-            },
-            {
-              label: (
-                <Tooltip content="None" arrow={false}>
-                  <TbPhotoOff />
-                </Tooltip>
-              ),
-              value: "",
-            },
-          ]}
-        />
-      </ItemAdvanceToggle>
+      <ToolbarItem
+        propKey={props.typeKey}
+        propType="component"
+        type="radio"
+        labelHide={true}
+        cols={true}
+        options={[
+          {
+            label: (
+              <Tooltip content="Upload File" arrow={false}>
+                <TbUpload />
+              </Tooltip>
+            ),
+            value: "cdn",
+          },
+          {
+            label: (
+              <Tooltip content="URL" arrow={false}>
+                <TbPhoto />
+              </Tooltip>
+            ),
+            value: "img",
+          },
+
+          {
+            label: (
+              <Tooltip content="SVG" arrow={false}>
+                <TbCode />
+              </Tooltip>
+            ),
+            value: "svg",
+          },
+          {
+            label: (
+              <Tooltip content="None" arrow={false}>
+                <TbPhotoOff />
+              </Tooltip>
+            ),
+            value: "",
+          },
+        ].filter(option => {
+          const currentType = props.props[typeKey] || "cdn";
+          return option.value !== currentType;
+        })}
+      />
+
     </>
   );
 };

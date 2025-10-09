@@ -1,16 +1,18 @@
 import { TailwindStyles } from "utils/tailwind";
 import { ToolbarItem } from "../ToolbarItem";
 import { ToolbarSection } from "../ToolbarSection";
-import { FileUploadInput } from "./FileUploadInput";
+import { MediaInput } from "./MediaInput";
 
 export const BackgroundSettingsInput = ({ props }) => (
   <>
-    <FileUploadInput
+
+    <MediaInput
       props={props}
       propKey="backgroundImage"
       typeKey="backgroundImageType"
       contentKey="backgroundImage"
     />
+
 
     {props?.backgroundImage && (
       <ToolbarSection title="Image Settings" subtitle={true}>

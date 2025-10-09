@@ -241,9 +241,8 @@ export const ButtonSettings = () => {
             </ToolbarSection>
           </ToolbarSection>
 
-          <BackgroundInput />
+          <BackgroundInput><PatternInput /></BackgroundInput>
 
-          <PatternInput />
           <ToolbarSection title="Text">
             <FontInput />
           </ToolbarSection>
