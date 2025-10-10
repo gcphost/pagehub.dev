@@ -72,9 +72,7 @@ export const FormElementSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <ToolbarSection title="Presets">
-        <PresetGroupRenderer presets={selectorPresets.formElement} />
-      </ToolbarSection>
+
 
       <ToolbarSection
         title="Properties"
@@ -108,9 +106,11 @@ export const FormElementSettings = () => {
 
 
       </ToolbarSection>
-      <ToolbarSection title="Auto generate content" subtitle={true}>
-        <IpsumGenerator propKey="placeholder" propType="component" />
+
+      <ToolbarSection title="Presets">
+        <PresetGroupRenderer presets={selectorPresets.formElement} />
       </ToolbarSection>
+
 
 
       {fieldType === "select" && (
@@ -228,6 +228,10 @@ export const FormElementSettings = () => {
       )}
 
 
+
+      <ToolbarSection title="Auto generate content" subtitle={true}>
+        <IpsumGenerator propKey="placeholder" propType="component" />
+      </ToolbarSection>
     </TabBody>
   );
 

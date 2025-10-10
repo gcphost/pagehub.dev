@@ -44,7 +44,7 @@ const CustomDeserializer = ({ data }) => {
       // Return empty frame if deserialization fails
     }
   }, [actions, data]);
-  
+
   try {
     return <Frame data={data} />;
   } catch (error) {
@@ -312,7 +312,7 @@ export async function getStaticProps({ params }) {
       name,
       draftId,
     } = pageData;
-    
+
     let seo = null;
     try {
       seo = parseContent(content || draft, params.slug[0]);
@@ -376,15 +376,22 @@ export async function getStaticPaths() {
     // Try to get all tenants with fetchPageList webhook
     const tenants = await Tenant.find({ 'webhooks.fetchPageList': { $exists: true, $ne: null } });
 
-    // Collect pages from webhooks
+    // Collect pages from webhooks with timeout protection
     for (const tenantDoc of tenants) {
       try {
         // Convert Mongoose document to plain object
         const tenant = tenantDoc.toObject ? tenantDoc.toObject() : tenantDoc;
 
-        const webhookResult = await runTenantWebhook(tenant, 'fetchPageList', {
+        // Add timeout to prevent hanging builds
+        const webhookPromise = runTenantWebhook(tenant, 'fetchPageList', {
           method: 'GET',
         });
+
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Webhook timeout')), 10000)
+        );
+
+        const webhookResult = await Promise.race([webhookPromise, timeoutPromise]);
 
         if (webhookResult?.pages && Array.isArray(webhookResult.pages)) {
           const webhookPaths = webhookResult.pages
@@ -398,6 +405,8 @@ export async function getStaticPaths() {
         }
       } catch (error) {
         console.error("Error calling fetchPageList webhook for tenant:", tenantDoc.subdomain, error);
+        // Continue with other tenants even if one fails
+        continue;
       }
     }
   }

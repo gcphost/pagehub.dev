@@ -1,0 +1,466 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PageHub Tenant Webhooks API",
+    "description": "API specification for PageHub tenant webhook endpoints. These endpoints are called by PageHub when tenants have configured webhooks for page loading and saving operations.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "PageHub Support",
+      "url": "https://pagehub.dev/support"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://pagehub.dev",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/webhook/load/{pageId}": {
+      "get": {
+        "summary": "Load Page Webhook",
+        "description": "Called by PageHub when a user loads a page on a tenant's subdomain. This webhook should return the page content and metadata.",
+        "operationId": "loadPageWebhook",
+        "parameters": [
+          {
+            "name": "pageId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier for the page",
+            "schema": {
+              "type": "string"
+            },
+            "example": "page-123"
+          },
+          {
+            "name": "auth",
+            "in": "query",
+            "required": false,
+            "description": "Authentication token passed from the original request",
+            "schema": {
+              "type": "string"
+            },
+            "example": "token123"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "required": false,
+            "description": "User identifier passed from the original request",
+            "schema": {
+              "type": "string"
+            },
+            "example": "john-doe"
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page loaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageLoadResponse"
+                },
+                "example": {
+                  "document": "eyJST09UIjp7InR5cGUiOnsi...",
+                  "title": "My Page",
+                  "description": "A sample page",
+                  "metadata": {
+                    "customField": "value"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "Unauthorized",
+                  "code": "INVALID_TOKEN"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Page not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "Page not found",
+                  "code": "PAGE_NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "Internal server error",
+                  "code": "INTERNAL_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhook/save/{pageId}": {
+      "post": {
+        "summary": "Save Page Webhook",
+        "description": "Called by PageHub when a user saves a page on a tenant's subdomain. This webhook should save the page content and metadata to the tenant's system.",
+        "operationId": "savePageWebhook",
+        "parameters": [
+          {
+            "name": "pageId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier for the page",
+            "schema": {
+              "type": "string"
+            },
+            "example": "page-123"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageSaveRequest"
+              },
+              "example": {
+                "tenantId": "68dc555507da6fbb680f5fcb",
+                "pageId": "page-123",
+                "document": "eyJST09UIjp7InR5cGUiOnsi...",
+                "isDraft": true,
+                "settings": {
+                  "title": "My Page",
+                  "description": "A sample page",
+                  "_id": "page-123",
+                  "draft": "eyJST09UIjp7InR5cGUiOnsi..."
+                },
+                "timestamp": "2025-01-01T00:00:00.000Z",
+                "auth": {
+                  "query": {
+                    "auth": "token123",
+                    "user": "john-doe"
+                  },
+                  "headers": ["authorization", "x-api-key"],
+                  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                  "ip": "192.168.1.1"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageSaveResponse"
+                },
+                "example": {
+                  "_id": "page-123",
+                  "title": "My Page",
+                  "draftId": "page-123",
+                  "saved": true,
+                  "timestamp": "2025-01-01T00:00:00.000Z",
+                  "webhookReceived": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "Unauthorized",
+                  "code": "INVALID_TOKEN"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Valid authentication but insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "Forbidden",
+                  "code": "INSUFFICIENT_PERMISSIONS"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "Internal server error",
+                  "code": "INTERNAL_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT token passed from the original user request"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API key passed from the original user request"
+      }
+    },
+    "schemas": {
+      "PageLoadResponse": {
+        "type": "object",
+        "required": ["document"],
+        "properties": {
+          "document": {
+            "type": "string",
+            "description": "Base64 encoded page content",
+            "example": "eyJST09UIjp7InR5cGUiOnsi..."
+          },
+          "title": {
+            "type": "string",
+            "description": "Page title",
+            "example": "My Page"
+          },
+          "description": {
+            "type": "string",
+            "description": "Page description",
+            "example": "A sample page"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional page metadata",
+            "additionalProperties": true,
+            "example": {
+              "customField": "value"
+            }
+          }
+        }
+      },
+      "PageSaveRequest": {
+        "type": "object",
+        "required": [
+          "tenantId",
+          "pageId",
+          "document",
+          "isDraft",
+          "settings",
+          "timestamp"
+        ],
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "description": "Tenant MongoDB ID",
+            "example": "68dc555507da6fbb680f5fcb"
+          },
+          "pageId": {
+            "type": "string",
+            "description": "Page identifier",
+            "example": "page-123"
+          },
+          "document": {
+            "type": "string",
+            "description": "Base64 encoded page content",
+            "example": "eyJST09UIjp7InR5cGUiOnsi..."
+          },
+          "isDraft": {
+            "type": "boolean",
+            "description": "Whether this is a draft save",
+            "example": true
+          },
+          "settings": {
+            "type": "object",
+            "description": "Page settings and metadata",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "My Page"
+              },
+              "description": {
+                "type": "string",
+                "example": "A sample page"
+              },
+              "_id": {
+                "type": "string",
+                "example": "page-123"
+              },
+              "draft": {
+                "type": "string",
+                "description": "Base64 encoded draft content",
+                "example": "eyJST09UIjp7InR5cGUiOnsi..."
+              }
+            },
+            "additionalProperties": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp of the save operation",
+            "example": "2025-01-01T00:00:00.000Z"
+          },
+          "auth": {
+            "$ref": "#/components/schemas/AuthInfo"
+          }
+        }
+      },
+      "PageSaveResponse": {
+        "type": "object",
+        "required": ["_id", "saved", "timestamp", "webhookReceived"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Page identifier",
+            "example": "page-123"
+          },
+          "title": {
+            "type": "string",
+            "description": "Page title",
+            "example": "My Page"
+          },
+          "draftId": {
+            "type": "string",
+            "description": "Draft identifier",
+            "example": "page-123"
+          },
+          "saved": {
+            "type": "boolean",
+            "description": "Whether the save was successful",
+            "example": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp of the save operation",
+            "example": "2025-01-01T00:00:00.000Z"
+          },
+          "webhookReceived": {
+            "type": "boolean",
+            "description": "Confirmation that the webhook was received",
+            "example": true
+          }
+        }
+      },
+      "AuthInfo": {
+        "type": "object",
+        "description": "Authentication information forwarded from the original request",
+        "properties": {
+          "query": {
+            "type": "object",
+            "description": "Query parameters from the original request",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "example": {
+              "auth": "token123",
+              "user": "john-doe"
+            }
+          },
+          "headers": {
+            "type": "array",
+            "description": "List of forwarded header names",
+            "items": {
+              "type": "string"
+            },
+            "example": ["authorization", "x-api-key", "cookie"]
+          },
+          "userAgent": {
+            "type": "string",
+            "description": "User agent from the original request",
+            "example": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          },
+          "ip": {
+            "type": "string",
+            "description": "Client IP address",
+            "example": "192.168.1.1"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message",
+            "example": "Unauthorized"
+          },
+          "code": {
+            "type": "string",
+            "description": "Error code",
+            "example": "INVALID_TOKEN"
+          },
+          "details": {
+            "type": "string",
+            "description": "Additional error details",
+            "example": "Token has expired"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Webhooks",
+      "description": "Tenant webhook endpoints for page operations"
+    }
+  ]
+}

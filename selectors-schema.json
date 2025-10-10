@@ -122,6 +122,24 @@
         "desktop": { "$ref": "#/definitions/baseStyleProps" },
         "hover": { "$ref": "#/definitions/baseStyleProps" }
       }
+    },
+    "buttonArrayProp": {
+      "description": "Individual button properties within ButtonList",
+      "properties": {
+        "type": "string",
+        "text": "string",
+        "icon": "string",
+        "url": "string",
+        "onClick": "function",
+        "background": "string",
+        "color": "string",
+        "border": "string",
+        "iconOnly": "boolean",
+        "clickType": "string",
+        "clickDirection": "string",
+        "clickValue": "string",
+        "root": "object"
+      }
     }
   },
   "selectors": {
@@ -140,7 +158,9 @@
         "pageDescription": "string",
         "ico": "string (favicon data)",
         "icoType": "string",
-        "icoContent": "string"
+        "icoContent": "string",
+        "company": "object (company information)",
+        "ai": "object (AI content generation settings)"
       }
     },
     "Container": {
@@ -357,6 +377,130 @@
         "tablet": ["*"],
         "desktop": ["*"]
       }
+    },
+    "Audio": {
+      "description": "Audio player component with HTML5 audio controls",
+      "extends": ["commonEditorProps"],
+      "specificProps": {
+        "audioUrl": "string (URL to audio file)",
+        "title": "string (audio title for accessibility)",
+        "controls": "boolean (show audio controls)",
+        "autoplay": "boolean (auto-play audio)",
+        "loop": "boolean (loop audio playback)"
+      },
+      "supports": {
+        "root": ["animation"],
+        "mobile": ["width", "height"],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      }
+    },
+    "ButtonList": {
+      "description": "Container for multiple Button components with flexible layout",
+      "extends": ["commonEditorProps"],
+      "specificProps": {
+        "buttons": "array<ButtonArrayProp>",
+        "flexDirection": "string (flex-col | flex-row)",
+        "alignItems": "string (items-* class)",
+        "justifyContent": "string (justify-* class)",
+        "gap": "string (gap-* class)"
+      },
+      "supports": {
+        "root": ["animation"],
+        "mobile": ["*"],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      },
+      "rules": {
+        "canMoveIn": "Only Button components can be moved into ButtonList"
+      }
+    },
+    "Footer": {
+      "description": "Footer container component (extends Container)",
+      "extends": [
+        "responsiveProps",
+        "backgroundImageProps",
+        "commonEditorProps",
+        "linkProps"
+      ],
+      "specificProps": {
+        "type": "string (always 'footer')"
+      },
+      "rules": {
+        "canDrag": false,
+        "canDelete": false,
+        "canEditName": false
+      }
+    },
+    "Header": {
+      "description": "Header container component (extends Container)",
+      "extends": [
+        "responsiveProps",
+        "backgroundImageProps",
+        "commonEditorProps",
+        "linkProps"
+      ],
+      "specificProps": {
+        "type": "string (always 'header')"
+      },
+      "rules": {
+        "canDrag": false,
+        "canDelete": false,
+        "canEditName": false
+      }
+    },
+    "ImageGallery": {
+      "description": "Legacy ImageGallery component (backwards compatibility stub)",
+      "extends": ["commonEditorProps"],
+      "specificProps": {},
+      "notes": "Deprecated: Use ImageList instead. This is a compatibility wrapper."
+    },
+    "ImageList": {
+      "description": "Advanced image gallery component with multiple display modes",
+      "extends": ["commonEditorProps"],
+      "specificProps": {
+        "mode": "string (grid | carousel | hero | masonry | infinite | flex)",
+        "itemsPerView": "number (number of items visible at once)",
+        "flexDirection": "string (flex-col | flex-row)",
+        "alignItems": "string (items-* class)",
+        "justifyContent": "string (justify-* class)",
+        "gap": "string (gap-* class)",
+        "autoScroll": "boolean | string (enable auto-scroll)",
+        "autoScrollInterval": "number (milliseconds between scrolls)",
+        "infiniteSpeed": "number (animation speed for infinite mode)",
+        "infiniteDirection": "string (left | right)",
+        "animationEnabled": "boolean | string (enable animations)",
+        "previewInEditor": "boolean | string (preview animations in editor)",
+        "showNavigation": "boolean | string (show navigation arrows)",
+        "showDots": "boolean | string (show dot indicators)"
+      },
+      "supports": {
+        "root": ["animation"],
+        "mobile": ["*"],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      },
+      "rules": {
+        "canMoveIn": "Only Image components can be moved into ImageList"
+      }
+    },
+    "Spacer": {
+      "description": "Spacer component for adding vertical or horizontal space",
+      "extends": ["commonEditorProps"],
+      "specificProps": {
+        "height": "string (height value)",
+        "width": "string (width value)",
+        "showName": "string (display name)"
+      },
+      "supports": {
+        "root": ["background"],
+        "mobile": ["py", "width"],
+        "tablet": ["*"],
+        "desktop": ["*"]
+      },
+      "rules": {
+        "canMoveIn": false
+      }
     }
   },
   "usage": {
@@ -437,6 +581,81 @@
             "background": "bg-blue-700"
           }
         }
+      },
+      "Audio": {
+        "description": "Audio player with controls",
+        "props": {
+          "audioUrl": "https://example.com/audio.mp3",
+          "title": "Background Music",
+          "controls": true,
+          "autoplay": false,
+          "loop": false,
+          "root": {
+            "animation": "fade-in"
+          },
+          "mobile": {
+            "width": "w-full"
+          }
+        }
+      },
+      "ButtonList": {
+        "description": "Container for multiple buttons",
+        "props": {
+          "flexDirection": "flex-row",
+          "alignItems": "items-center",
+          "justifyContent": "justify-center",
+          "gap": "gap-4",
+          "root": {
+            "animation": "slide-up"
+          },
+          "mobile": {
+            "flexDirection": "flex-col",
+            "gap": "gap-2"
+          },
+          "desktop": {
+            "flexDirection": "flex-row",
+            "gap": "gap-6"
+          }
+        }
+      },
+      "ImageList": {
+        "description": "Image gallery with carousel mode",
+        "props": {
+          "mode": "carousel",
+          "itemsPerView": 3,
+          "autoScroll": true,
+          "autoScrollInterval": 3000,
+          "showNavigation": true,
+          "showDots": true,
+          "root": {
+            "animation": "fade-in"
+          },
+          "mobile": {
+            "itemsPerView": 1
+          },
+          "tablet": {
+            "itemsPerView": 2
+          },
+          "desktop": {
+            "itemsPerView": 3
+          }
+        }
+      },
+      "Spacer": {
+        "description": "Vertical spacer",
+        "props": {
+          "height": "py-8",
+          "width": "w-full",
+          "root": {
+            "background": "bg-transparent"
+          },
+          "mobile": {
+            "py": "py-4"
+          },
+          "desktop": {
+            "py": "py-12"
+          }
+        }
       }
     }
   },
@@ -465,6 +684,16 @@
     "containerTypes": ["container", "page", "form", "header", "footer"],
     "imageTypes": ["img", "svg"],
     "fetchPriorities": ["high", "low", "auto"],
+    "imageListModes": [
+      "grid",
+      "carousel",
+      "hero",
+      "masonry",
+      "infinite",
+      "flex"
+    ],
+    "infiniteDirections": ["left", "right"],
+    "audioControls": ["controls", "autoplay", "loop"],
     "tailwindReferences": {
       "spacing": "Uses Tailwind spacing scale (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64, etc.)",
       "colors": "Uses Tailwind color palette (slate, gray, zinc, neutral, stone, red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose)",

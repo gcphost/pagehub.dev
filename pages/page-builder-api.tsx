@@ -6,6 +6,7 @@ import {
   FaBullseye,
   FaCheck,
   FaClipboardList,
+  FaCode,
   FaFile,
   FaFileAlt,
   FaInbox,
@@ -235,6 +236,8 @@ export default function ApiDocs() {
           </div>
         </div>
 
+
+
         {/* Infrastructure */}
         <div className="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-24 md:py-32">
           <div className="max-w-6xl mx-auto px-4">
@@ -410,7 +413,204 @@ export default function ApiDocs() {
             </div>
           </div>
 
+        </div>
 
+        {/* Static Site Generation Flow */}
+        <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 py-24 md:py-32">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-20">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Static Site Generation</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                PageHub can automatically generate static sites from your pages. The <code className="bg-green-100 px-2 py-1 rounded text-sm font-mono">fetchPage</code> and <code className="bg-green-100 px-2 py-1 rounded text-sm font-mono">fetchPageList</code> webhooks power this process.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* fetchPageList Flow */}
+              <div className="bg-white rounded-2xl p-10 shadow-lg border border-green-100">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="bg-green-100 rounded-lg p-3">
+                    <FaClipboardList className="text-2xl text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">fetchPageList Webhook</h3>
+                </div>
+
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  Called first during static site generation to get a list of all pages that should be compiled.
+                </p>
+
+                <div className="bg-gray-900 rounded-lg overflow-hidden mb-6">
+                  <div className="bg-gray-800 px-4 py-2 text-gray-300 text-sm font-semibold">
+                    GET /webhook/fetchPageList
+                  </div>
+                  <pre className="p-4 overflow-x-auto text-sm">
+                    <code className="text-gray-100">{`{
+  "pages": [
+    "homepage",
+    "about-us", 
+    "contact",
+    "products",
+    "blog-post-1"
+  ],
+  "message": "List of pages to compile",
+  "timestamp": "2025-10-01T12:00:00.000Z"
+}`}</code>
+                  </pre>
+                </div>
+
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <div className="flex items-start gap-2">
+                    <FaLightbulb className="text-yellow-500 flex-shrink-0 mt-1" />
+                    <div>
+                      <h4 className="font-semibold text-green-900 mb-1">Use Case</h4>
+                      <p className="text-sm text-green-800">
+                        Tells PageHub which pages exist and should be compiled. Each page identifier in the array will trigger a <code className="bg-green-100 px-1 py-0.5 rounded text-xs">fetchPage</code> call.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* fetchPage Flow */}
+              <div className="bg-white rounded-2xl p-10 shadow-lg border border-blue-100">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="bg-blue-100 rounded-lg p-3">
+                    <FaFile className="text-2xl text-blue-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">fetchPage Webhook</h3>
+                </div>
+
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  Called to fetch individual page data for both static site generation and dynamic page serving. Returns the complete page content and metadata.
+                </p>
+
+                <div className="bg-gray-900 rounded-lg overflow-hidden mb-6">
+                  <div className="bg-gray-800 px-4 py-2 text-gray-300 text-sm font-semibold">
+                    GET /webhook/fetchPage/{`{domain}`}
+                  </div>
+                  <pre className="p-4 overflow-x-auto text-sm">
+                    <code className="text-gray-100">{`{
+  "title": "About Us",
+  "description": "Learn more about our company",
+  "content": "TlpoOTFBWSZTWYbGZ...",
+  "draft": "TlpoOTFBWSZTWYbGZ...",
+  "name": "about-us",
+  "draftId": "draft-about-us"
+}`}</code>
+                  </pre>
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="flex items-start gap-2">
+                    <FaLightbulb className="text-yellow-500 flex-shrink-0 mt-1" />
+                    <div>
+                      <h4 className="font-semibold text-blue-900 mb-1">Use Cases</h4>
+                      <p className="text-sm text-blue-800">
+                        <strong>Static Generation:</strong> Provides page content for compilation during build time.<br />
+                        <strong>Dynamic Serving:</strong> Serves page content on-demand for live websites.<br />
+                        Returns both published content and draft content, allowing you to choose which version to deploy.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Complete Flow Diagram */}
+            <div className="mt-16 bg-white rounded-2xl p-10 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Complete Generation Flow</h3>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">1</div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-900">PageHub calls fetchPageList</h4>
+                    <p className="text-sm text-gray-600">Gets list of all pages to compile</p>
+                  </div>
+                  <div className="text-right">
+                    <code className="bg-white px-2 py-1 rounded text-xs">GET /webhook/fetchPageList</code>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">2</div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-900">PageHub calls fetchPage for each page</h4>
+                    <p className="text-sm text-gray-600">Gets individual page content and metadata (for static generation or dynamic serving)</p>
+                  </div>
+                  <div className="text-right">
+                    <code className="bg-white px-2 py-1 rounded text-xs">GET /webhook/fetchPage/homepage</code>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">3</div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-900">PageHub compiles static site</h4>
+                    <p className="text-sm text-gray-600">Generates HTML, CSS, and assets for each page</p>
+                  </div>
+                  <div className="text-right">
+                    <code className="bg-white px-2 py-1 rounded text-xs">Static Site Generated</code>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">4</div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-900">Pages deployed to CDN</h4>
+                    <p className="text-sm text-gray-600">Static files served from your custom domain</p>
+                  </div>
+                  <div className="text-right">
+                    <code className="bg-white px-2 py-1 rounded text-xs">https://yourdomain.com</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Authentication Note */}
+            <div className="mt-12 bg-yellow-50 border border-yellow-200 rounded-xl p-8">
+              <div className="flex items-start gap-3">
+                <FaLock className="text-2xl text-yellow-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h4 className="font-semibold text-yellow-900 mb-2">Authentication</h4>
+                  <p className="text-yellow-800 leading-relaxed">
+                    Both <code className="bg-yellow-100 px-1 py-0.5 rounded text-xs">fetchPage</code> and <code className="bg-yellow-100 px-1 py-0.5 rounded text-xs">fetchPageList</code> use server-to-server authentication with your tenant API key.
+                    PageHub sends the <code className="bg-yellow-100 px-1 py-0.5 rounded text-xs">x-pagehub-auth</code> header with every request to verify the call came from PageHub.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Custom Page Generation CTA */}
+        <div className="bg-gradient-to-br from-purple-50 to-pink-100 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 text-white rounded-full mb-6">
+                <FaCode className="text-2xl" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Want to Generate Your Own Pages?
+              </h2>
+              <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Create custom page components using our JSON schema. Define your own selectors, properties, and UI controls to build exactly what you need.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/docs/selectors" className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                  View Selector Docs
+                </a>
+                <a href="/docs" className="bg-white hover:bg-gray-50 text-purple-600 px-8 py-3 rounded-lg font-semibold border border-purple-200 transition-colors">
+                  Browse All Docs
+                </a>
+              </div>
+              <div className="mt-8 p-4 bg-white/50 rounded-lg max-w-md mx-auto">
+                <p className="text-sm text-gray-600">
+                  <strong>Pro Tip:</strong> Check out our <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">selectors-schema.json</code> to understand the component structure and create your own custom selectors.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* CTA Section */}
@@ -501,7 +701,7 @@ Response.Redirect($"https://tenant.pagehub.dev/build/page-123?token={token}");`}
                       <h4 className="font-semibold text-blue-900 mb-2">x-pagehub-auth Header</h4>
                       <p className="text-sm text-blue-800 mb-3">
                         Every webhook request includes your tenant&apos;s unique auth token in the <code className="bg-blue-100 px-1 py-0.5 rounded text-xs">x-pagehub-auth</code> header.
-                        This token is automatically generated when your tenant is created and never changes.
+
                       </p>
                       <div className="bg-blue-100 rounded p-3 mb-2">
                         <code className="text-xs text-blue-900 break-all">x-pagehub-auth: ph_1234567890abcdef1234567890abcdef...</code>

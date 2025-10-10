@@ -93,6 +93,7 @@ export const TextSettings = () => {
           labelHide={true}
           placeholder="Enter text"
           inline={false}
+          label="HTML Content"
         />
 
         {/* Loop over all text presets automatically */}

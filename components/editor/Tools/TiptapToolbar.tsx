@@ -1,4 +1,4 @@
-import { useEditor as useCraftEditor } from '@craftjs/core';
+import { ROOT_NODE, useEditor as useCraftEditor } from '@craftjs/core';
 import { Editor } from '@tiptap/react';
 import { Tooltip } from 'components/layout/Tooltip';
 import React, { useEffect, useRef, useState } from 'react';
@@ -20,9 +20,8 @@ import {
   MdSubscript,
   MdSuperscript
 } from 'react-icons/md';
-import { TbChevronDown, TbEraser } from 'react-icons/tb';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { SettingsAtom } from 'utils/atoms';
+import { TbChevronDown, TbEraser, TbWand } from 'react-icons/tb';
+import { useRecoilState } from 'recoil';
 import { getMediaContent } from 'utils/lib';
 import { isPaletteReference, paletteToCSSVar } from 'utils/palette';
 import { fonts } from 'utils/tailwind';
@@ -41,20 +40,16 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   editor,
   className = ""
 }) => {
-  const [showTextFormatting, setShowTextFormatting] = useState(false);
-  const [showFontOptions, setShowFontOptions] = useState(false);
-  const [showAlignmentLists, setShowAlignmentLists] = useState(false);
-  const [showMoreOptions, setShowMoreOptions] = useState(false);
-  const [showHeadings, setShowHeadings] = useState(false);
+
   const [fontSearchTerm, setFontSearchTerm] = useState('');
   const [showMediaModal, setShowMediaModal] = useState(false);
+  const [isGeneratingContent, setIsGeneratingContent] = useState(false);
 
   // Color picker state
   const [colorDialog, setColorDialog] = useRecoilState(ColorPickerAtom);
   const backgroundColorButtonRef = useRef<HTMLButtonElement>(null);
   const foregroundColorButtonRef = useRef<HTMLButtonElement>(null);
 
-  const settings = useRecoilValue(SettingsAtom);
 
   // Get Craft.js query for media operations
   const { query } = useCraftEditor();
@@ -63,18 +58,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   const [allFontFamilies, setAllFontFamilies] = useState<string[]>([]);
   const [loadingFonts, setLoadingFonts] = useState(true);
 
-  // Use Tailwind font sizes converted to CSS values
-  const fontSizes = [
-    { class: 'text-xs', value: '0.75rem', label: 'xs' },
-    { class: 'text-sm', value: '0.875rem', label: 'sm' },
-    { class: 'text-base', value: '1rem', label: 'base' },
-    { class: 'text-lg', value: '1.125rem', label: 'lg' },
-    { class: 'text-xl', value: '1.25rem', label: 'xl' },
-    { class: 'text-2xl', value: '1.5rem', label: '2xl' },
-    { class: 'text-3xl', value: '1.875rem', label: '3xl' },
-    { class: 'text-4xl', value: '2.25rem', label: '4xl' },
-    { class: 'text-5xl', value: '3rem', label: '5xl' },
-  ];
+
 
   // Filter fonts based on search term
   const filteredFonts = allFontFamilies.filter(font =>
@@ -120,6 +104,47 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
     e.preventDefault();
     e.stopPropagation();
     callback();
+  };
+
+  const generateAIContent = async () => {
+    if (!editor) return;
+
+    setIsGeneratingContent(true);
+
+    try {
+      // Get the current text content from the editor
+      const currentText = editor.getText();
+
+      if (!currentText.trim()) {
+        console.log('No text content to improve');
+        return;
+      }
+
+      const response = await fetch("/api/improve-text", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: currentText,
+          customPrompt: query.node(ROOT_NODE).get()?.data?.props?.ai?.prompt,
+          styleTags: query.node(ROOT_NODE).get()?.data?.props?.ai?.styleTags
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success && result.result) {
+        // Replace the entire content with the improved text
+        editor.commands.setContent(result.result);
+      } else if (result.error) {
+        console.error('Failed to generate content:', result.error.message);
+      }
+    } catch (error) {
+      console.error("Error generating content:", error);
+    } finally {
+      setIsGeneratingContent(false);
+    }
   };
 
   // Color picker functions
@@ -204,39 +229,21 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
   return (
     <div className="absolute w-fit z-[9999]">
       <div className="h-10 mt-2 flex items-center justify-center flex-row z-50 gap-0 pointer-events-auto tool-bg">
+        {/* AI Content Generator */}
+        <Tooltip content="AI Content Generator" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
+          <button
+            onClick={handleButtonClick(generateAIContent)}
+            disabled={isGeneratingContent}
+            className={`tool-button ${isGeneratingContent ? 'opacity-50 cursor-not-allowed' : 'hover:text-accent-400'}`}
+          >
+            {isGeneratingContent ? (
+              <div className="w-4 h-4 border-2 border-accent-400 border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <TbWand className="w-4 h-4" />
+            )}
+          </button>
+        </Tooltip>
 
-
-        {/* More Options Dropdown */}
-        <div className="group">
-          <Tooltip content="More Options" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
-            <button
-              className="tool-button"
-            >
-              <TbChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
-            </button>
-          </Tooltip>
-          <div className="absolute w-fit left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-3 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-            <div className="space-y-2">
-              {/* Horizontal Rule */}
-              <button
-                onClick={handleButtonClick(() => {
-                  editor.chain().focus().setHorizontalRule().run();
-                })}
-                className="w-full px-3 py-2 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 flex items-center gap-2"
-                title="Horizontal Rule"
-              >
-                <MdFormatLineSpacing className="w-4 h-4" />
-                <span>Horizontal Rule</span>
-              </button>
-
-              {/* Divider */}
-              <div className="border-t border-gray-600 my-2" />
-
-              {/* Text Settings Dropdown */}
-              <TextSettingsDropdown />
-            </div>
-          </div>
-        </div>
 
 
 
@@ -607,10 +614,43 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
           </Tooltip>
 
 
+
           <DeleteNodeButton
             className="tool-button"
             iconSize={14}
           />
+        </div>
+
+        {/* More Options Dropdown */}
+        <div className="group border-l border-gray-500 pl-2">
+          <Tooltip content="More Options" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
+            <button
+              className="tool-button"
+            >
+              <TbChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
+            </button>
+          </Tooltip>
+          <div className="absolute w-fit left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-3 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div className="space-y-2">
+              {/* Horizontal Rule */}
+              <button
+                onClick={handleButtonClick(() => {
+                  editor.chain().focus().setHorizontalRule().run();
+                })}
+                className="w-full px-3 py-2 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 flex items-center gap-2"
+                title="Horizontal Rule"
+              >
+                <MdFormatLineSpacing className="w-4 h-4" />
+                <span>Horizontal Rule</span>
+              </button>
+
+              {/* Divider */}
+              <div className="border-t border-gray-600 my-2" />
+
+              {/* Text Settings Dropdown */}
+              <TextSettingsDropdown />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -637,6 +677,9 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
         }}
         selectionMode={true}
       />
+
+
+
     </div >
   );
 };

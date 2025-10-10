@@ -14,7 +14,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
   const { actions, query } = useEditor();
 
   // UI State
-  const [activeTab, setActiveTab] = useState<"general" | "code" | "branding">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "code" | "branding" | "ai">("general");
 
   // Site Settings
   const [favicon, setFavicon] = useState("");
@@ -29,6 +29,10 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
   const [companyPhone, setCompanyPhone] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
   const [companyWebsite, setCompanyWebsite] = useState("");
+
+  // AI Settings
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [aiStyleTags, setAiStyleTags] = useState<string[]>([]);
 
   useEffect(() => {
     if (isOpen) {
@@ -50,6 +54,11 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
           setCompanyPhone(company.phone || "");
           setCompanyEmail(company.email || "");
           setCompanyWebsite(company.website || "");
+
+          // Load AI settings from ROOT_NODE
+          const ai = props.ai || {};
+          setAiPrompt(ai.prompt || "");
+          setAiStyleTags(ai.styleTags || []);
         }
       } catch (e) {
         console.error("Error loading site settings:", e);
@@ -78,6 +87,12 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
           phone: companyPhone,
           email: companyEmail,
           website: companyWebsite,
+        };
+
+        // AI settings as nested object
+        props.ai = {
+          prompt: aiPrompt,
+          styleTags: aiStyleTags,
         };
       });
 
@@ -145,6 +160,15 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                   }`}
               >
                 Branding
+              </button>
+              <button
+                onClick={() => setActiveTab("ai")}
+                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "ai"
+                  ? "text-primary-600 border-b-2 border-primary-600 bg-white"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                  }`}
+              >
+                AI
               </button>
             </div>
           </div>
@@ -319,6 +343,80 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{company.phone}}"}</code>, or{" "}
                     <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{year}}"}</code>{" "}
                     to automatically display these values throughout your site.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* AI Tab */}
+            {activeTab === "ai" && (
+              <div className="space-y-6">
+                <div className="space-y-1 mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">AI Content Generator</h3>
+                  <p className="text-sm text-gray-500">
+                    Customize how AI improves your content with a custom prompt and style preferences
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Custom AI Prompt
+                  </label>
+                  <textarea
+                    value={aiPrompt}
+                    onChange={(e) => setAiPrompt(e.target.value)}
+                    rows={3}
+                    maxLength={200}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                    placeholder="Make the copy more engaging, clear, and compelling while keeping the same core message..."
+                  />
+                  <div className="flex justify-between items-center mt-1">
+                    <p className="text-xs text-gray-500">
+                      Brief instructions for how AI should improve your content
+                    </p>
+                    <span className="text-xs text-gray-400">
+                      {aiPrompt.length}/200
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Style Tags
+                  </label>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        "engaging", "vibrant", "professional", "friendly",
+                        "clear", "compelling", "concise", "persuasive",
+                        "creative", "confident", "trustworthy", "modern"
+                      ].map((tag) => (
+                        <label key={tag} className="flex items-center space-x-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={aiStyleTags.includes(tag)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setAiStyleTags([...aiStyleTags, tag]);
+                              } else {
+                                setAiStyleTags(aiStyleTags.filter(t => t !== tag));
+                              }
+                            }}
+                            className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                          />
+                          <span className="text-sm text-gray-700 capitalize">{tag}</span>
+                        </label>
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      Select style preferences to guide AI content generation
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+                  <p className="text-xs text-blue-800">
+                    <strong>💡 Tip:</strong> Your custom prompt and selected style tags will be used by the AI wand tool in the text editor to improve your content. Leave the prompt empty to use default behavior.
                   </p>
                 </div>
               </div>
