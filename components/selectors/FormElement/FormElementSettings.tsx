@@ -6,15 +6,16 @@ import {
   TBWrap,
 } from "components/editor/Toolbar/Helpers/SettingsHelper";
 import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInput";
+import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
 import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
 import { IpsumGenerator } from "components/editor/Toolbar/Inputs/IpsumGenerator";
+import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SpacingInput } from "components/editor/Toolbar/Inputs/SpacingInput";
-import { TypeInput } from "components/editor/Toolbar/Inputs/TypeInput";
 import { SelectOptionsItem } from "components/editor/Toolbar/Items/SelectOptionsItem";
 import { TabBody } from "components/editor/Toolbar/Tab";
 import { TabAtom } from "components/editor/Viewport";
@@ -241,23 +242,60 @@ export const FormElementSettings = () => {
       {activeTab === "Form Input" && <MainTab />}
 
       {activeTab === "Appearance" && (
-        <TabBody>
-          <FontInput />
+        <TabBody
+          jumps={[
+            {
+              title: "Colors",
+              content: <div className="text-sm">Colors</div>,
+            },
+            {
+              title: "Typography",
+              content: <div className="text-sm">Typography</div>,
+            },
+            {
+              title: "Background",
+              content: <div className="text-sm">Background</div>,
+            },
+
+            {
+              title: "Border",
+              content: <div className="text-sm">Border</div>,
+            },
+          ]}
+        >
+          <ToolbarSection title="Colors" full={1}>
+            <ColorInput
+              propKey="color"
+              label="Text"
+              prefix="text"
+              propType="root"
+              inline
+            />
+
+            <ColorInput
+              propKey="background"
+              label="Background"
+              prefix="bg"
+              propType="root"
+              inline
+            />
+          </ToolbarSection>
 
 
+          <ToolbarSection title="Typography">
+            <FontInput />
+          </ToolbarSection>
 
-          <ColorInput
-            propKey="color"
-            label="Color"
-            prefix="text"
-            propType="root"
-            inline
-          />
+          <BackgroundInput />
+
+
 
           <BorderInput />
-          <TypeInput />
-          <ShadowInput />
 
+          <ToolbarSection title="Decoration">
+            <ShadowInput />
+            <OpacityInput label="Opacity" propKey="opacity" />
+          </ToolbarSection>
         </TabBody>
       )}
 

@@ -390,7 +390,7 @@ ul {
 }
 
 .input-color {
-  @apply w-full h-12 rounded-md cursor-pointer border input-hover;
+  @apply w-full h-12 rounded-md cursor-pointer border input-hover flex items-center;
 }
 
 .btn-search {
@@ -409,7 +409,7 @@ ul {
 }
 
 #toolbarContents .input-color {
-  @apply h-8;
+  @apply !h-5;
 }
 
 #toolbarContents .btn-search {
