@@ -1,4 +1,8 @@
+import { css } from "@codemirror/lang-css";
+import { html } from "@codemirror/lang-html";
+import { javascript } from "@codemirror/lang-javascript";
 import { useEditor, useNode } from "@craftjs/core";
+import CodeMirror, { EditorView } from "@uiw/react-codemirror";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { ViewAtom } from "../Viewport";
@@ -20,6 +24,7 @@ const Input = (__props, ref) => {
     propType = "class",
     wrap = null,
     append,
+    codeType = "html",
   } = __props;
 
 
@@ -257,6 +262,78 @@ const Input = (__props, ref) => {
       </BgWrap>
     );
   }
+
+  if (type === "codemirror") {
+    const getExtension = () => {
+      const extensions = [EditorView.lineWrapping];
+      switch (codeType) {
+        case "html":
+          return [...extensions, html()];
+        case "css":
+          return [...extensions, css()];
+        case "javascript":
+        case "js":
+          return [...extensions, javascript()];
+        default:
+          return [...extensions, html()];
+      }
+    };
+
+    return (
+
+      <div className="flex flex-col gap-2 w-full">
+        <div className="rounded-lg overflow-hidden border border-gray-600 focus:border-accent-400 focus-within:border-accent-400">
+          <CodeMirror
+            value={value}
+            height="200px"
+            theme="dark"
+            extensions={getExtension()}
+            onChange={(val) => changed(val)}
+            basicSetup={{
+              lineNumbers: false,
+              highlightActiveLineGutter: true,
+              highlightActiveLine: true,
+              foldGutter: false,
+              dropCursor: true,
+              allowMultipleSelections: true,
+              indentOnInput: true,
+              bracketMatching: true,
+              closeBrackets: true,
+              autocompletion: true,
+              rectangularSelection: true,
+              crosshairCursor: true,
+              highlightSelectionMatches: true,
+              closeBracketsKeymap: true,
+              searchKeymap: true,
+              foldKeymap: true,
+              completionKeymap: true,
+              lintKeymap: true,
+
+            }}
+            placeholder={props.placeholder || `Enter ${codeType} code...`}
+            className="text-sm"
+          />
+        </div>
+      </div>
+
+    );
+  }
+
+  // Default text input
+  return (
+    <BgWrap wrap={wrap}>
+      <div className="flex items-center gap-2 w-full">
+        <input
+          id={`input-${props.label || index}`}
+          type="text"
+          defaultValue={value}
+          onChange={(event) => changed(event.target.value)}
+          placeholder={props.placeholder}
+          className="input-plain flex-1"
+        />
+      </div>
+    </BgWrap>
+  );
 };
 
 export type ToolbarItemProps = {
@@ -276,6 +353,7 @@ export type ToolbarItemProps = {
   index?: any;
   children?: React.ReactNode;
   type?: string;
+  codeType?: "html" | "css" | "javascript" | "js";
   valueLabels?: any;
   max?: number;
   min?: number;
@@ -305,6 +383,7 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
     propType = "class",
     propItemKey,
     type,
+    codeType = "html",
     onChange = null,
     index = null,
     propTag = "",
@@ -384,6 +463,7 @@ export const ToolbarItem = (__props: ToolbarItemProps) => {
         propTag={propTag}
         propType={propType}
         type={type}
+        codeType={codeType}
         value={value}
         changed={changed}
         index={index}

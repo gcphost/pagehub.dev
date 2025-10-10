@@ -149,3 +149,7 @@ export interface BaseSelectorProps {
   isLoading?: boolean;
   loaded?: boolean;
 }
+
+// Export ContainerGroup
+export { ContainerGroup } from "./ContainerGroup";
+export type { ContainerGroupProps } from "./ContainerGroup";

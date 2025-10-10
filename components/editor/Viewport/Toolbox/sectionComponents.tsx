@@ -1,5 +1,6 @@
-import { TbLayoutColumns, TbLayoutRows } from "react-icons/tb";
+import { TbLayoutColumns, TbLayoutGroup, TbLayoutRows } from "react-icons/tb";
 import { Container } from "../../../selectors/Container";
+import { ContainerGroup } from "../../../selectors/ContainerGroup";
 import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 
 export const RenderSectionComponent = ({
@@ -9,6 +10,18 @@ export const RenderSectionComponent = ({
 }) => (
   <RenderToolComponent
     element={Container}
+    renderer={text || display}
+    {...props}
+  />
+);
+
+export const RenderContainerGroupComponent = ({
+  text = <></>,
+  display = <></>,
+  ...props
+}) => (
+  <RenderToolComponent
+    element={ContainerGroup}
     renderer={text || display}
     {...props}
   />
@@ -51,6 +64,22 @@ export const sectionToolboxItems = [
         }}
         desktop={{}}
         custom={{ displayName: "Column" }}
+      />,
+
+      <RenderContainerGroupComponent
+        key="group1"
+        text={<ToolboxItemDisplay icon={TbLayoutGroup} label="Container Group" />}
+        mobile={{
+          display: "flex",
+          justifyContent: "justify-center",
+          flexDirection: "flex-col",
+          width: "w-full",
+          gap: "gap-6",
+          height: "h-auto",
+          p: "p-8",
+        }}
+        desktop={{}}
+        custom={{ displayName: "Container Group" }}
       />,
     ],
   },

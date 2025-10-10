@@ -397,8 +397,9 @@ ul {
   @apply text-white inside-shadow absolute right-2.5 bottom-2.5 h-8 bg-primary-500 border border-gray-500 px-5 py-1.5 rounded-md hover:bg-primary-600 z-20;
 }
 
-.input-wrapper {
-  @apply rounded-md bg-primary-500 border-primary-500 border w-full px-1 py-0 inside-shadow focus-within:border-accent-400;
+.input-wrapper,
+#toolbarContents .input {
+  @apply rounded-md bg-primary-700 border-primary-500 border w-full px-1 py-0  focus-within:border-accent-400;
 }
 
 #toolbarContents .input,

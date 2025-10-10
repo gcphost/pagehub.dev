@@ -1,5 +1,6 @@
 import { html } from "@codemirror/lang-html";
 import { Diagnostic, linter } from "@codemirror/lint";
+import { EditorView } from "@codemirror/view";
 import CodeMirror from "@uiw/react-codemirror";
 import { useState } from "react";
 
@@ -97,7 +98,7 @@ export const HTMLCodeInput = ({
           value={value}
           height={height}
           theme="light"
-          extensions={[html(), htmlLinter]}
+          extensions={[EditorView.lineWrapping, html(), htmlLinter]}
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}

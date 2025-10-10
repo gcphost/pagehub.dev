@@ -4,7 +4,7 @@ import { Tooltip } from "components/layout/Tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { TbClipboard, TbCode, TbEdit, TbExternalLink, TbPhoto, TbPlus, TbRefresh, TbSearch, TbTrash, TbUpload, TbX } from "react-icons/tb";
+import { TbClipboard, TbCode, TbEdit, TbExternalLink, TbLayoutGrid, TbList, TbPhoto, TbPlus, TbRefresh, TbSearch, TbTrash, TbUpload, TbX } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { getCdnUrl } from "utils/cdn";
@@ -31,10 +31,43 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const [svgInput, setSvgInput] = useState("");
   const [saveUrlToCdn, setSaveUrlToCdn] = useState(false);
   const [hasImageInClipboard, setHasImageInClipboard] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{
+    current: number;
+    total: number;
+    currentFile: string;
+    completedFiles: string[];
+  } | null>(null);
+  const [viewMode, setViewMode] = useState<"cards" | "list">("cards");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const replaceInputRef = useRef<HTMLInputElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
   const settings = useRecoilValue(SettingsAtom);
+
+  // Handle drag and drop events
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+
+    const files = e.dataTransfer.files;
+    console.log(`Dropped ${files.length} files:`, Array.from(files).map(f => f.name));
+    if (files && files.length > 0) {
+      handleUpload(files);
+    }
+  };
 
   // Handle paste events for images (keyboard shortcut)
   const handlePaste = async (e: ClipboardEvent) => {
@@ -50,6 +83,12 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         if (!file) continue;
 
         setUploading(true);
+        setUploadProgress({
+          current: 0,
+          total: 1,
+          currentFile: file.name || 'Pasted image',
+          completedFiles: []
+        });
 
         try {
           // Get signed URL for CDN upload
@@ -92,6 +131,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           alert(`Failed to upload pasted image: ${error.message}`);
         } finally {
           setUploading(false);
+          setUploadProgress(null);
         }
 
         break; // Only handle first image
@@ -232,31 +272,52 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const handleUpload = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
+    console.log(`Starting upload of ${files.length} files:`, Array.from(files).map(f => f.name));
     setUploading(true);
+    setUploadProgress({
+      current: 0,
+      total: files.length,
+      currentFile: '',
+      completedFiles: []
+    });
     const uploadedIds: string[] = [];
 
     try {
-      // Get signed URL for CDN upload
-      const geturl = await GetSignedUrl();
-      const signedURL = geturl?.result?.uploadURL;
-
-      if (!signedURL) {
-        console.error("Failed to get upload URL");
-        setUploading(false);
-        return;
-      }
-
       // Upload each file to CDN
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        console.log(`Uploading file ${i + 1}/${files.length}: ${file.name}`);
+
+        // Update progress to show current file
+        setUploadProgress(prev => prev ? {
+          ...prev,
+          current: i,
+          currentFile: file.name
+        } : null);
 
         try {
+          // Get signed URL for each file (in case URLs expire)
+          const geturl = await GetSignedUrl();
+          const signedURL = geturl?.result?.uploadURL;
+
+          if (!signedURL) {
+            console.error(`Failed to get upload URL for ${file.name}`);
+            continue; // Skip this file and continue with next
+          }
+
           // Upload to CDN and get UUID
           const res = await SaveMedia(file, signedURL);
 
           if (res?.result?.id) {
             const mediaId = res.result.id; // This is the UUID from CDN
             uploadedIds.push(mediaId);
+            console.log(`✅ Successfully uploaded ${file.name} with ID: ${mediaId}`);
+
+            // Update progress to show completed file
+            setUploadProgress(prev => prev ? {
+              ...prev,
+              completedFiles: [...prev.completedFiles, file.name]
+            } : null);
 
             // Register with page media
             registerMediaWithBackground(query, actions, mediaId, "cdn", "media-manager");
@@ -279,6 +340,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           }
         } catch (error) {
           console.error(`Failed to upload ${file.name}:`, error);
+          // Continue with next file even if one fails
         }
       }
 
@@ -292,6 +354,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       console.error("Upload failed:", error);
     } finally {
       setUploading(false);
+      setUploadProgress(null);
     }
   };
 
@@ -363,6 +426,12 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     if (!files || files.length === 0 || !replacingMedia) return;
 
     setUploading(true);
+    setUploadProgress({
+      current: 0,
+      total: 1,
+      currentFile: files[0].name,
+      completedFiles: []
+    });
 
     try {
       const file = files[0]; // Only take first file
@@ -410,6 +479,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       console.error("Replace failed:", error);
     } finally {
       setUploading(false);
+      setUploadProgress(null);
     }
   };
 
@@ -615,6 +685,32 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 />
               </div>
 
+              {/* View Mode Toggle */}
+              <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                <Tooltip content="Card view" placement="bottom">
+                  <button
+                    onClick={() => setViewMode("cards")}
+                    className={`px-2 py-1.5 rounded text-xs font-medium transition-colors ${viewMode === "cards"
+                      ? "bg-white text-gray-900 shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                      }`}
+                  >
+                    <TbLayoutGrid className="w-4 h-4" />
+                  </button>
+                </Tooltip>
+                <Tooltip content="List view" placement="bottom">
+                  <button
+                    onClick={() => setViewMode("list")}
+                    className={`px-2 py-1.5 rounded text-xs font-medium transition-colors ${viewMode === "list"
+                      ? "bg-white text-gray-900 shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                      }`}
+                  >
+                    <TbList className="w-4 h-4" />
+                  </button>
+                </Tooltip>
+              </div>
+
               {/* Add Mode Selector - compact pills */}
               <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
                 <Tooltip content="Upload files" placement="bottom">
@@ -776,20 +872,71 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           </div>
 
           {/* Content Grid */}
-          <div className="flex-1 overflow-y-auto p-6 bg-gray-50 relative">
-            {/* Upload overlay */}
-            {uploading && (
-              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-50 flex items-center justify-center">
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-                  <p className="text-sm text-gray-600 font-medium">Uploading...</p>
+          <div
+            className={`flex-1 overflow-y-auto bg-gray-50 relative transition-colors ${isDragOver ? 'bg-accent-50 border-2 border-dashed border-accent-400' : ''
+              } ${uploadProgress ? 'pt-24' : 'p-6'}`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            {/* Add padding when no upload progress */}
+            {!uploadProgress && <div className="p-6"></div>}
+
+            {/* Drag and drop overlay */}
+            {isDragOver && (
+              <div className="absolute inset-0 bg-accent-50/90 backdrop-blur-sm z-40 flex items-center justify-center border-2 border-dashed border-accent-400 rounded-lg">
+                <div className="flex flex-col items-center gap-4 text-accent-600">
+                  <TbUpload className="text-6xl" />
+                  <div className="text-center">
+                    <p className="text-xl font-semibold">Drop files here</p>
+                    <p className="text-sm opacity-75">Release to upload multiple images</p>
+                  </div>
                 </div>
+              </div>
+            )}
+
+            {/* Upload progress bar */}
+            {uploadProgress && (
+              <div className="absolute top-0 left-0 right-0 bg-white border-b border-gray-200 p-4 z-30">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-accent-400 border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-sm font-medium text-gray-700">
+                      Uploading {uploadProgress.current + 1} of {uploadProgress.total} files
+                    </span>
+                  </div>
+                  <span className="text-xs text-gray-500">
+                    {Math.round(((uploadProgress.current + 1) / uploadProgress.total) * 100)}%
+                  </span>
+                </div>
+
+                {/* Progress bar */}
+                <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                  <div
+                    className="bg-accent-400 h-2 rounded-full transition-all duration-300 ease-out"
+                    style={{ width: `${((uploadProgress.current + 1) / uploadProgress.total) * 100}%` }}
+                  ></div>
+                </div>
+
+                {/* Current file */}
+                {uploadProgress.currentFile && (
+                  <div className="text-xs text-gray-600 truncate">
+                    📁 {uploadProgress.currentFile}
+                  </div>
+                )}
+
+                {/* Completed files */}
+                {uploadProgress.completedFiles.length > 0 && (
+                  <div className="text-xs text-green-600 mt-1">
+                    ✅ Completed: {uploadProgress.completedFiles.join(', ')}
+                  </div>
+                )}
               </div>
             )}
 
             {filteredMedia.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
-                <TbPhoto className="text-8xl text-gray-300 mb-4" />
+                <TbPhoto className="text-8xl text-accent-400 mb-4" />
                 {searchQuery ? (
                   <>
                     <p className="text-gray-500 text-lg mb-2">No media found</p>
@@ -800,8 +947,11 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 ) : (
                   <>
                     <p className="text-gray-500 text-lg mb-2">No media uploaded yet</p>
-                    <p className="text-sm text-gray-400 mb-4">
+                    <p className="text-sm text-gray-400 mb-2">
                       Upload files, add URLs, or paste SVG code
+                    </p>
+                    <p className="text-xs text-gray-400 mb-4">
+                      💡 You can also drag & drop multiple images anywhere in this area
                     </p>
                     <button
                       onClick={() => {
@@ -817,13 +967,20 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 )}
               </div>
             ) : (
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+              <div className={viewMode === "cards"
+                ? "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4"
+                : "space-y-2"
+              }>
                 {filteredMedia.map((media) => (
                   <div
                     key={media.id}
-                    className={`group relative bg-white rounded-lg border-2 overflow-hidden cursor-pointer transition-all ${selectedMedia === media.id
-                      ? "border-primary-500 shadow-lg"
-                      : "border-gray-200 hover:border-primary-300 hover:shadow-md"
+                    className={`group relative bg-white rounded-lg border-2 overflow-hidden cursor-pointer transition-all ${viewMode === "cards"
+                      ? selectedMedia === media.id
+                        ? "border-primary-500 shadow-lg"
+                        : "border-gray-200 hover:border-primary-300 hover:shadow-md"
+                      : selectedMedia === media.id
+                        ? "border-primary-500 shadow-lg"
+                        : "border-gray-200 hover:border-primary-300 hover:shadow-md"
                       }`}
                     onClick={() => {
                       if (selectionMode && onSelect) {
@@ -833,51 +990,103 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       }
                     }}
                   >
-                    {/* Thumbnail */}
-                    <div className="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
-                      {media.type === "url" ? (
-                        <img
-                          key={`${media.id}-${media.uploadedAt || 0}`}
-                          src={media.metadata?.url}
-                          alt={media.metadata?.alt || media.id}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                      ) : media.type === "svg" ? (
-                        <div
-                          className="w-full h-full p-2"
-                          dangerouslySetInnerHTML={{ __html: media.metadata?.svg || "" }}
-                        />
-                      ) : (
-                        <img
-                          key={`${media.id}-${media.uploadedAt || 0}`}
-                          src={getCdnUrl(media.cdnId || media.id, { width: 400, format: 'auto' })}
-                          alt={media.metadata?.alt || media.id}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                      )}
-                    </div>
+                    {viewMode === "cards" ? (
+                      <>
+                        {/* Card View - Thumbnail */}
+                        <div className="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                          {media.type === "url" ? (
+                            <img
+                              key={`${media.id}-${media.uploadedAt || 0}`}
+                              src={media.metadata?.url}
+                              alt={media.metadata?.alt || media.id}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
+                          ) : media.type === "svg" ? (
+                            <div
+                              className="w-full h-full p-2"
+                              dangerouslySetInnerHTML={{ __html: media.metadata?.svg || "" }}
+                            />
+                          ) : (
+                            <img
+                              key={`${media.id}-${media.uploadedAt || 0}`}
+                              src={getCdnUrl(media.cdnId || media.id, { width: 400, format: 'auto' })}
+                              alt={media.metadata?.alt || media.id}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
+                          )}
+                        </div>
 
-                    {/* Name/Title and Size */}
-                    <div className="p-2 bg-white">
-                      <p className="text-xs truncate text-gray-700 font-medium">
-                        {media.metadata?.title || media.id}
-                      </p>
-                      {media.metadata?.size && (
-                        <p className="text-[10px] text-gray-500 mt-0.5">
-                          {formatFileSize(media.metadata.size)}
-                        </p>
-                      )}
-                    </div>
+                        {/* Card View - Name/Title and Size */}
+                        <div className="p-2 bg-gray-100">
+                          <p className="text-xs truncate text-gray-700 font-medium">
+                            {media.metadata?.title || media.id}
+                          </p>
+                          {media.metadata?.size && (
+                            <p className="text-[10px] text-gray-500 mt-0.5">
+                              {formatFileSize(media.metadata.size)}
+                            </p>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* List View - Horizontal Layout */}
+                        <div className="flex items-center p-2">
+                          {/* Tiny thumbnail */}
+                          <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center overflow-hidden flex-shrink-0 mr-3">
+                            {media.type === "url" ? (
+                              <img
+                                key={`${media.id}-${media.uploadedAt || 0}`}
+                                src={media.metadata?.url}
+                                alt={media.metadata?.alt || media.id}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none';
+                                }}
+                              />
+                            ) : media.type === "svg" ? (
+                              <div
+                                className="w-full h-full p-1"
+                                dangerouslySetInnerHTML={{ __html: media.metadata?.svg || "" }}
+                              />
+                            ) : (
+                              <img
+                                key={`${media.id}-${media.uploadedAt || 0}`}
+                                src={getCdnUrl(media.cdnId || media.id, { width: 100, format: 'auto' })}
+                                alt={media.metadata?.alt || media.id}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none';
+                                }}
+                              />
+                            )}
+                          </div>
+
+                          {/* File info */}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm truncate text-gray-700 font-medium">
+                              {media.metadata?.title || media.id}
+                            </p>
+                            {media.metadata?.size && (
+                              <p className="text-xs text-gray-500">
+                                {formatFileSize(media.metadata.size)}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    )}
 
                     {/* Action Buttons (on hover) */}
-                    <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                    <div className={`absolute ${viewMode === "cards" ? "top-1 right-1" : "top-2 right-2"} opacity-0 group-hover:opacity-100 transition-opacity flex gap-1`}>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

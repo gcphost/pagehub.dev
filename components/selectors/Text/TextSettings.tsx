@@ -88,10 +88,10 @@ export const TextSettings = () => {
         <ToolbarItem
           propKey="text"
           propType="component"
-          rows={8}
-          type="textarea"
+          type="codemirror"
+          codeType="html"
           labelHide={true}
-          placeholder="Enter text"
+          placeholder="Enter HTML content"
           inline={false}
           label="HTML Content"
         />

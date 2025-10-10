@@ -1,5 +1,6 @@
 import { css } from "@codemirror/lang-css";
 import { Diagnostic, linter } from "@codemirror/lint";
+import { EditorView } from "@codemirror/view";
 import { useEditor, useNode } from "@craftjs/core";
 import CodeMirror from "@uiw/react-codemirror";
 import { ViewAtom } from "components/editor/Viewport";
@@ -94,7 +95,7 @@ export const CSSEditorInput = () => {
             value={value || ""}
             height="150px"
             theme="dark"
-            extensions={[css(), cssLinter]}
+            extensions={[EditorView.lineWrapping, css(), cssLinter]}
             onChange={handleChange}
             basicSetup={{
               lineNumbers: false,
