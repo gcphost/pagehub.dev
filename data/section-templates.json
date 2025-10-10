@@ -98,7 +98,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-4xl",
@@ -119,7 +119,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-lg",
@@ -145,7 +145,7 @@
                       "color": "text-[var(--ph-primary)]",
                       "radius": "rounded-lg",
                       "shadow": "shadow-lg",
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "p": "px-6 py-3",
@@ -218,7 +218,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-4xl",
@@ -238,7 +238,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-lg",
@@ -263,7 +263,7 @@
                       "color": "text-white",
                       "radius": "rounded-lg",
                       "shadow": "shadow-lg",
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "p": "px-6 py-3",
@@ -337,7 +337,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-4xl",
@@ -383,7 +383,7 @@
                       "color": "text-[var(--ph-primary)]",
                       "radius": "rounded-full",
                       "shadow": "shadow-lg",
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "p": "px-6 py-3",
@@ -463,7 +463,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -509,7 +509,7 @@
                   "color": "text-white",
                   "radius": "rounded-lg",
                   "shadow": "shadow-lg",
-                  "fontFamily": "Open Sans, sans-serif"
+                  "fontFamily": "Open Sans"
                 },
                 "mobile": {
                   "p": "px-6 py-3",
@@ -825,7 +825,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "mobile": {
                           "fontSize": "text-base",
@@ -921,7 +921,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "mobile": {
                           "fontSize": "text-base",
@@ -1090,7 +1090,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {},
@@ -1107,7 +1107,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {},
@@ -1124,7 +1124,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {},
@@ -1504,7 +1504,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "fontFamily": "Open Sans, sans-serif",
+                          "fontFamily": "Open Sans",
                           "shadow": "shadow-lg"
                         },
                         "mobile": {},
@@ -1573,7 +1573,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -1723,7 +1723,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-5xl",
@@ -1745,7 +1745,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-lg",
@@ -1766,7 +1766,7 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-[var(--ph-primary)]",
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "p": "px-6 py-3",
@@ -1843,7 +1843,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-5xl",
@@ -1866,7 +1866,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-lg",
@@ -1888,7 +1888,7 @@
                     "canEditName": true,
                     "root": {
                       "background": "bg-[var(--ph-background)]",
-                      "fontFamily": "Open Sans, sans-serif",
+                      "fontFamily": "Open Sans",
                       "shadow": "shadow-lg"
                     },
                     "mobile": {
@@ -1970,7 +1970,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-4xl",
@@ -1992,7 +1992,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-lg",
@@ -2013,7 +2013,7 @@
                     "root": {
                       "background": "bg-white",
                       "color": "text-[var(--ph-primary)]",
-                      "fontFamily": "Open Sans, sans-serif",
+                      "fontFamily": "Open Sans",
                       "shadow": "shadow-lg"
                     },
                     "mobile": {
@@ -2162,7 +2162,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "mobile": {
                           "fontSize": "text-3xl",
@@ -2259,7 +2259,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -2356,7 +2356,7 @@
                       "fontWeight": "font-bold",
                       "color": "text-white",
                       "marginBottom": "mb-4",
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "custom": {
                       "displayName": "Title"
@@ -2420,7 +2420,7 @@
                           "radius": "rounded-lg",
                           "fontWeight": "font-semibold",
                           "width": "w-full",
-                          "fontFamily": "Open Sans, sans-serif",
+                          "fontFamily": "Open Sans",
                           "shadow": "shadow-lg"
                         },
                         "desktop": {
@@ -2484,7 +2484,7 @@
                           "fontSize": "text-4xl",
                           "fontWeight": "font-bold",
                           "marginBottom": "mb-4",
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "custom": {
                           "displayName": "Title"
@@ -2599,7 +2599,7 @@
                           "fontWeight": "font-semibold",
                           "marginTop": "mt-6",
                           "width": "w-full",
-                          "fontFamily": "Open Sans, sans-serif",
+                          "fontFamily": "Open Sans",
                           "shadow": "shadow-lg"
                         },
                         "custom": {
@@ -2672,7 +2672,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -2757,7 +2757,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-4xl",
@@ -2796,7 +2796,7 @@
                             "root": {
                               "background": "bg-gray-100",
                               "color": "text-[var(--ph-text)]",
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {
@@ -2865,7 +2865,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-4xl",
@@ -2904,7 +2904,7 @@
                             "root": {
                               "background": "bg-white",
                               "color": "text-[var(--ph-primary)]",
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {
@@ -2973,7 +2973,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-4xl",
@@ -3012,7 +3012,7 @@
                             "root": {
                               "background": "bg-gray-100",
                               "color": "text-[var(--ph-text)]",
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {
@@ -3095,7 +3095,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -3469,7 +3469,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -3592,7 +3592,7 @@
                             "root": {
                               "background": "bg-[var(--ph-primary)]",
                               "color": "text-white",
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {
@@ -3699,7 +3699,7 @@
                             "root": {
                               "background": "bg-[var(--ph-primary)]",
                               "color": "text-white",
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {
@@ -3806,7 +3806,7 @@
                             "root": {
                               "background": "bg-[var(--ph-primary)]",
                               "color": "text-white",
-                              "fontFamily": "Open Sans, sans-serif",
+                              "fontFamily": "Open Sans",
                               "shadow": "shadow-lg"
                             },
                             "mobile": {
@@ -3886,7 +3886,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-4xl",
@@ -3947,7 +3947,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-2xl",
@@ -4005,7 +4005,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-2xl",
@@ -4063,7 +4063,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-2xl",
@@ -4156,7 +4156,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -4222,7 +4222,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-2xl",
@@ -4283,7 +4283,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-2xl",
@@ -4372,7 +4372,7 @@
                     "root": {
                       "textAlign": "text-center",
                       "margin": "mb-4",
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -4397,7 +4397,7 @@
                       "textAlign": "text-center",
                       "margin": "mb-12",
                       "color": "text-gray-600",
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-base"
@@ -4462,7 +4462,7 @@
                               "margin": "mb-4",
                               "color": "text-green-600",
                               "fontWeight": "font-bold",
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-lg"
@@ -4526,7 +4526,7 @@
                               "margin": "mb-4",
                               "color": "text-green-600",
                               "fontWeight": "font-bold",
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-lg"
@@ -4590,7 +4590,7 @@
                               "margin": "mb-4",
                               "color": "text-green-600",
                               "fontWeight": "font-bold",
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-lg"
@@ -4659,7 +4659,7 @@
                           "color": "text-white",
                           "radius": "rounded-lg",
                           "shadow": "shadow-md",
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "mobile": {
                           "fontSize": "text-base",
@@ -4733,7 +4733,7 @@
                           "fontSize": "text-4xl",
                           "fontWeight": "font-bold",
                           "marginBottom": "mb-4",
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "custom": {
                           "displayName": "Title"
@@ -5085,7 +5085,7 @@
                           "fontSize": "text-4xl",
                           "fontWeight": "font-bold",
                           "marginBottom": "mb-4",
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "custom": {
                           "displayName": "Title"
@@ -5528,7 +5528,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -5638,7 +5638,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "mobile": {
                           "fontSize": "text-2xl",
@@ -5695,7 +5695,7 @@
                         "canDelete": true,
                         "canEditName": true,
                         "root": {
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "mobile": {
                           "fontSize": "text-2xl",
@@ -5786,7 +5786,7 @@
                     "canDelete": true,
                     "canEditName": true,
                     "root": {
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "mobile": {
                       "fontSize": "text-3xl",
@@ -5849,7 +5849,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-xl",
@@ -5906,7 +5906,7 @@
                             "canDelete": true,
                             "canEditName": true,
                             "root": {
-                              "fontFamily": "Open Sans, sans-serif"
+                              "fontFamily": "Open Sans"
                             },
                             "mobile": {
                               "fontSize": "text-xl",
@@ -6076,7 +6076,7 @@
                       "fontWeight": "font-bold",
                       "color": "text-white",
                       "marginBottom": "mb-6",
-                      "fontFamily": "Open Sans, sans-serif"
+                      "fontFamily": "Open Sans"
                     },
                     "custom": {
                       "displayName": "Title"
@@ -6237,7 +6237,7 @@
                           "fontSize": "text-3xl",
                           "fontWeight": "font-bold",
                           "marginBottom": "mb-4",
-                          "fontFamily": "Open Sans, sans-serif"
+                          "fontFamily": "Open Sans"
                         },
                         "custom": {
                           "displayName": "Title"
@@ -6268,7 +6268,7 @@
                           "padding": "px-6 py-3",
                           "radius": "rounded-lg",
                           "fontWeight": "font-semibold",
-                          "fontFamily": "Open Sans, sans-serif",
+                          "fontFamily": "Open Sans",
                           "shadow": "shadow-lg"
                         },
                         "custom": {

@@ -15,7 +15,7 @@ const HEADER_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 // Font families to replace (case-insensitive)
 const OLD_FONTS = [
-  'Open Sans, sans-serif',
+  'Open Sans',
   'Open Sans',
   'Roboto, sans-serif',
   'Roboto',
