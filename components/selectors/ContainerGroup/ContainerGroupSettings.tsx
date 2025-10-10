@@ -181,10 +181,9 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
                   className="border-b border-gray-900 group"
 
                 >
-
                   <NodeProvider id={component.id}>
                     <div className="flex flex-col gap-3 bg-primary-700 p-3">
-                      {React.createElement(ComponentTabTools.groupTools)}
+                      {ComponentTabTools.toolbar && React.createElement(ComponentTabTools.toolbar)}
                     </div>
                   </NodeProvider>
 
@@ -192,7 +191,17 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
                 </Accord>
               ))}
 
-              {React.createElement(ComponentTabTools.groupSettings)}
+              {ComponentTabTools.groupSettings && (
+                <div className="border border-gray-600 rounded-lg p-3 bg-gray-800 mb-3">
+                  <div className="text-white text-sm mb-3 font-semibold">{type} Group Settings</div>
+                  {React.createElement(ComponentTabTools.groupSettings, {
+                    onAdd: () => {
+                      // Refresh the component list after adding
+                      console.log('Image added, refreshing...');
+                    }
+                  })}
+                </div>
+              )}
             </div>
           </Accord>
         );
