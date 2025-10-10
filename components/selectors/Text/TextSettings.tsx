@@ -121,8 +121,8 @@ export const TextSettings = () => {
               content: <div className="text-sm">Colors</div>,
             },
             {
-              title: "Text",
-              content: <div className="text-sm">Text</div>,
+              title: "Typography",
+              content: <div className="text-sm">Typography</div>,
             },
             {
               title: "Decoration",
@@ -140,7 +140,7 @@ export const TextSettings = () => {
             />
           </ToolbarSection>
 
-          <ToolbarSection title="Text">
+          <ToolbarSection title="Typography">
             <FontInput />
           </ToolbarSection>
           <ToolbarSection title="Decoration">

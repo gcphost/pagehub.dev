@@ -30,7 +30,7 @@ export const AudioSettings = () => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
 
-  useEffect(() => setMenu({ enabled: false }), []);
+  useEffect(() => setMenu({ enabled: false }), [setMenu]);
 
   const head = [
     {
@@ -148,7 +148,7 @@ export const AudioSettings = () => {
 
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <p className="p-3">
+          <p className="p-3 text-xs text-center">
             Hover settings are not available for this component.
           </p>
         </TabBody>

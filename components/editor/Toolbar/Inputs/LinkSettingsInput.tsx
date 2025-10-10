@@ -52,12 +52,18 @@ const LinkSettingsInput = ({
 
   // Detect link type on mount and when URL changes
   useEffect(() => {
-    if (currentUrl.startsWith('ref:')) {
-      const pageId = currentUrl.replace('ref:', '');
+    // Treat "#" as empty/null
+    const urlToCheck = currentUrl === "#" ? "" : currentUrl;
+
+    if (urlToCheck.startsWith('ref:')) {
+      const pageId = urlToCheck.replace('ref:', '');
       setSelectedPageId(prevId => prevId !== pageId ? pageId : prevId);
       setLinkType(prevType => prevType !== "page" ? "page" : prevType);
-    } else if (currentUrl) {
+    } else if (urlToCheck) {
       setLinkType(prevType => prevType !== "external" ? "external" : prevType);
+    } else {
+      // Default to page mode for empty URLs
+      setLinkType("page");
     }
   }, [currentUrl]);
 
@@ -76,6 +82,33 @@ const LinkSettingsInput = ({
     });
 
     setSelectedPageId(page.id);
+  };
+
+  const handleClearLink = () => {
+    // Clear the URL by setting it to null
+    changeProp({
+      setProp,
+      propKey: isArrayItem ? propKey : "url",
+      propType: "component",
+      value: null,
+      index: isArrayItem ? index : undefined,
+      propItemKey: isArrayItem ? "url" : undefined,
+    });
+    setSelectedPageId("");
+  };
+
+  const handleUrlChange = (value: string) => {
+    // Convert "#" to null/empty
+    const processedValue = value === "#" ? null : value;
+
+    changeProp({
+      setProp,
+      propKey: isArrayItem ? propKey : "url",
+      propType: "component",
+      value: processedValue,
+      index: isArrayItem ? index : undefined,
+      propItemKey: isArrayItem ? "url" : undefined,
+    });
   };
 
   const toggleButton = (
@@ -114,6 +147,7 @@ const LinkSettingsInput = ({
             inputWidth={inputWidth}
             labelWidth={labelWidth}
             append={toggleButton}
+            onChange={handleUrlChange}
           />
         ) : (
           <Wrap
@@ -132,6 +166,17 @@ const LinkSettingsInput = ({
                 suggestedPageName={suggestedPageName}
                 showHashIcon={false}
               />
+              {currentUrl && (
+                <Tooltip content="Clear link" placement="top">
+                  <button
+                    type="button"
+                    onClick={handleClearLink}
+                    className="flex items-center justify-center text-xs p-2 hover:bg-red-600 rounded-md transition-colors text-red-400 hover:text-white"
+                  >
+                    ×
+                  </button>
+                </Tooltip>
+              )}
               {toggleButton}
             </div>
           </Wrap>

@@ -123,10 +123,10 @@ export const ButtonListSettings = () => {
   const MainTab = () => (
     <TabBody>
       <div className="flex flex-col gap-6">
-        <div className="border rounded-md border-gray-500">
+        <div className="border rounded-md border-gray-900 overflow-hidden">
           {childButtons?.map((button, index) => (
             <Accord
-              className="border-b p-3 border-gray-500"
+              className="border-b border-gray-900 group"
               key={button.id}
               prop={index}
               accordion={accordion}
@@ -135,19 +135,41 @@ export const ButtonListSettings = () => {
                 <input
                   type="text"
                   value={button.text}
+                  data-button-index={index}
                   onChange={(e) => {
                     actions.setProp(button.id, (props) => {
                       props.text = e.target.value;
                     });
                   }}
-                  className="w-full bg-transparent text-white"
+                  onClick={(e) => {
+                    // If accordion is closed, let it expand and then focus the input
+                    if (accordion !== index) {
+                      // Let the accordion expand first, then focus after a short delay
+                      setTimeout(() => {
+                        const input = document.querySelector(`input[data-button-index="${index}"]`) as HTMLInputElement;
+                        if (input) {
+                          input.focus();
+                        }
+                      }, 50);
+                    } else {
+                      // If already open, just focus
+                      e.stopPropagation();
+                    }
+                  }}
+                  onFocus={(e) => {
+                    // Only prevent accordion toggle if this accordion is already open
+                    if (accordion === index) {
+                      e.stopPropagation();
+                    }
+                  }}
+                  className="w-full bg-transparent text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-gray-800 px-2 py-1 rounded"
                   placeholder="Button text"
                 />
               }
               buttons={[
                 <button
                   key="edit"
-                  className="text-blue-500 hover:text-blue-400"
+                  className="text-white hover:text-blue-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                   title="Edit button"
                   onClick={(e) => {
                     e.preventDefault();
@@ -158,7 +180,7 @@ export const ButtonListSettings = () => {
                 </button>,
                 <button
                   key="delete"
-                  className="text-red-500 hover:text-red-400"
+                  className="text-white hover:text-red-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                   title="Delete button"
                   onClick={(e) => {
                     e.preventDefault();
@@ -170,14 +192,14 @@ export const ButtonListSettings = () => {
               ]}
             >
               <NodeProvider id={button.id}>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 bg-primary-700 p-3">
                   <LinkSettingsInput
                     propKey="url"
                     showAnchor={false}
                     suggestedPageName={button.text}
                   />
 
-                  <ToolbarSection full={2}>
+                  <ToolbarSection title="Icon">
                     <IconDialogInput
                       propKey="icon"
                       propType="component"
@@ -191,10 +213,11 @@ export const ButtonListSettings = () => {
                       label="Icon Only"
                       on={true}
                       labelHide
+                      labelWidth="w-fit"
                     />
                   </ToolbarSection>
 
-                  <ToolbarSection full={1}>
+                  <ToolbarSection>
                     <ToolbarItem
                       propKey="iconPosition"
                       propType="component"
@@ -208,17 +231,7 @@ export const ButtonListSettings = () => {
                     </ToolbarItem>
                   </ToolbarSection>
 
-                  <ToolbarSection full={1}>
-                    <ToolbarItem
-                      propKey="type"
-                      propType="component"
-                      type="select"
-                      label="Type"
-                    >
-                      <option value="button">Button</option>
-                      <option value="submit">Submit</option>
-                    </ToolbarItem>
-                  </ToolbarSection>
+
                 </div>
               </NodeProvider>
             </Accord>
@@ -306,7 +319,7 @@ export const ButtonListSettings = () => {
 
           <BackgroundInput><PatternInput /></BackgroundInput>
 
-          <ToolbarSection title="Text">
+          <ToolbarSection title="Typography">
             <FontInput />
           </ToolbarSection>
           <BorderInput />

@@ -169,8 +169,8 @@ export const ButtonSettings = () => {
               content: <div className="text-sm">Background</div>,
             },
             {
-              title: "Text",
-              content: <div className="text-sm">Text</div>,
+              title: "Typography",
+              content: <div className="text-sm">Typography</div>,
             },
             {
               title: "Border",
@@ -243,7 +243,7 @@ export const ButtonSettings = () => {
 
           <BackgroundInput><PatternInput /></BackgroundInput>
 
-          <ToolbarSection title="Text">
+          <ToolbarSection title="Typography">
             <FontInput />
           </ToolbarSection>
           <BorderInput />

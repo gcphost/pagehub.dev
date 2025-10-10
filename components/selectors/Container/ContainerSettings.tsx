@@ -14,6 +14,7 @@ import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import { ContainerTypeInput } from "components/editor/Toolbar/Inputs/ContainerTypeInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FlexInput } from "components/editor/Toolbar/Inputs/FlexInput";
+import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
 import { MarginInput } from "components/editor/Toolbar/Inputs/MarginInput";
 import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { OrderInput } from "components/editor/Toolbar/Inputs/OrderInput";
@@ -274,6 +275,10 @@ export const ContainerSettings = () => {
               content: <div className="text-sm">Colors</div>,
             },
             {
+              title: "Typography",
+              content: <div className="text-sm">Typography</div>,
+            },
+            {
               title: "Background",
               content: <div className="text-sm">Background</div>,
             },
@@ -281,10 +286,6 @@ export const ContainerSettings = () => {
             {
               title: "Border",
               content: <div className="text-sm">Border</div>,
-            },
-            {
-              title: "Decoration",
-              content: <div className="text-sm">Decoration</div>,
             },
           ]}
         >
@@ -304,6 +305,11 @@ export const ContainerSettings = () => {
               propType="root"
               inline
             />
+          </ToolbarSection>
+
+
+          <ToolbarSection title="Typography">
+            <FontInput />
           </ToolbarSection>
 
           <BackgroundInput><PatternInput /></BackgroundInput>
@@ -359,7 +365,7 @@ export const ContainerSettings = () => {
       )}
       {activeTab === "Animations" && (
         <TabBody>
-          <p className="p-3">
+          <p className="p-3 text-xs text-center">
             Animations are not available for this component.
           </p>
         </TabBody>

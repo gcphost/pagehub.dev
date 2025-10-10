@@ -10,7 +10,7 @@ import { AnimationsInput } from "components/editor/Toolbar/Inputs/AnimationsInpu
 import { BackgroundInput } from "components/editor/Toolbar/Inputs/BackgroundInput";
 import { BorderInput } from "components/editor/Toolbar/Inputs/BorderInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
-import { FileUploadInput } from "components/editor/Toolbar/Inputs/FileUploadInput";
+import { MediaInput } from "components/editor/Toolbar/Inputs/MediaInput";
 import { SpacingInput } from "components/editor/Toolbar/Inputs/SpacingInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
 import { Accord } from "components/editor/Toolbar/ToolbarStyle";
@@ -23,10 +23,9 @@ import {
   TbBoxPadding,
   TbColorPicker,
   TbEdit,
-  TbPhoto,
   TbPlayerPlay,
   TbPlus,
-  TbTrash,
+  TbTrash
 } from "react-icons/tb";
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
@@ -82,7 +81,6 @@ export const ImageListSettings = () => {
 
   const MainTab = () => {
     const {
-      actions: { setProp },
       props,
     } = useNode((node) => ({
       props: node.data.props,
@@ -90,30 +88,54 @@ export const ImageListSettings = () => {
 
     return (
       <TabBody>
-        <ToolbarSection title="Images">
-          <div className="border rounded-md border-gray-500">
+        <div className="flex flex-col gap-6">
+          <div className="border rounded-md border-gray-900 overflow-hidden">
             {childImages?.map((image, index) => (
               <Accord
-                className="border-b p-3 border-gray-500"
+                className="border-b border-gray-900 group"
                 key={image.id}
                 prop={index}
                 accordion={accordion}
                 setAccordion={setAccordion}
                 title={
-                  <div className="flex items-center gap-2">
-                    <TbPhoto />
-                    <span>Image {index + 1}</span>
-                    {image.props?.src && (
-                      <span className="text-xs text-gray-400 truncate max-w-[200px]">
-                        ({image.props.src.split('/').pop()})
-                      </span>
-                    )}
-                  </div>
+                  <input
+                    type="text"
+                    value={image.props?.alt || `Image ${index + 1}`}
+                    data-image-index={index}
+                    onChange={(e) => {
+                      actions.setProp(image.id, (props) => {
+                        props.alt = e.target.value;
+                      });
+                    }}
+                    onClick={(e) => {
+                      // If accordion is closed, let it expand and then focus the input
+                      if (accordion !== index) {
+                        // Let the accordion expand first, then focus after a short delay
+                        setTimeout(() => {
+                          const input = document.querySelector(`input[data-image-index="${index}"]`) as HTMLInputElement;
+                          if (input) {
+                            input.focus();
+                          }
+                        }, 50);
+                      } else {
+                        // If already open, just focus
+                        e.stopPropagation();
+                      }
+                    }}
+                    onFocus={(e) => {
+                      // Only prevent accordion toggle if this accordion is already open
+                      if (accordion === index) {
+                        e.stopPropagation();
+                      }
+                    }}
+                    className="w-full bg-transparent text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-gray-800 px-2 py-1 rounded"
+                    placeholder="Image alt text"
+                  />
                 }
                 buttons={[
                   <button
                     key="edit"
-                    className="text-blue-500 hover:text-blue-400"
+                    className="text-white hover:text-blue-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                     title="Edit image"
                     onClick={(e) => {
                       e.preventDefault();
@@ -124,7 +146,7 @@ export const ImageListSettings = () => {
                   </button>,
                   <button
                     key="delete"
-                    className="text-red-500 hover:text-red-400"
+                    className="text-white hover:text-red-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                     title="Delete image"
                     onClick={(e) => {
                       e.preventDefault();
@@ -136,24 +158,12 @@ export const ImageListSettings = () => {
                 ]}
               >
                 <NodeProvider id={image.id}>
-                  <div className="flex flex-col gap-3">
-                    <ToolbarSection>
-                      <FileUploadInput
-                        propKey="videoId"
-                        typeKey="type"
-                        contentKey="content"
-                      />
-                    </ToolbarSection>
-
-                    <ToolbarSection full={1}>
-                      <ToolbarItem
-                        propKey="alt"
-                        propType="component"
-                        type="text"
-                        label="Alt Text"
-                        placeholder="Descriptive text for screen readers"
-                      />
-                    </ToolbarSection>
+                  <div className="flex flex-col gap-3 bg-primary-700 p-3">
+                    <MediaInput
+                      propKey="videoId"
+                      typeKey="type"
+                      title="Image"
+                    />
                   </div>
                 </NodeProvider>
               </Accord>
@@ -161,7 +171,7 @@ export const ImageListSettings = () => {
           </div>
 
           <button
-            className="btn p-3 w-full mt-3"
+            className="btn p-3 w-full"
             onClick={() => {
               const Image = query.getOptions().resolver.Image;
               if (Image) {
@@ -175,7 +185,7 @@ export const ImageListSettings = () => {
           >
             <TbPlus className="inline mr-2" /> Add Image
           </button>
-        </ToolbarSection>
+        </div>
 
         <ToolbarSection title="Gallery Mode">
           <ToolbarItem
@@ -198,7 +208,7 @@ export const ImageListSettings = () => {
             propKey="itemsPerView"
             propType="component"
             type="slider"
-            label={`Items Per View: ${props.itemsPerView || 3}`}
+            label={`Items Per View: ${props?.itemsPerView || 3}`}
             min={1}
             max={6}
             step={1}
@@ -225,7 +235,7 @@ export const ImageListSettings = () => {
           />
         </ToolbarSection>
 
-        {props.mode === "infinite" ? (
+        {props?.mode === "infinite" ? (
           <>
             <ToolbarSection title="Animation" full={2}>
               <ToolbarItem
@@ -245,7 +255,7 @@ export const ImageListSettings = () => {
                 inline={false}
               />
             </ToolbarSection>
-            {(props.animationEnabled !== false) && (
+            {(props?.animationEnabled !== false) && (
               <>
                 <ToolbarSection title="Direction">
                   <ToolbarItem
@@ -263,7 +273,7 @@ export const ImageListSettings = () => {
                     propKey="infiniteSpeed"
                     propType="component"
                     type="slider"
-                    label={`${props.infiniteSpeed || 30} seconds`}
+                    label={`${props?.infiniteSpeed || 30} seconds`}
                     min={5}
                     max={60}
                     step={1}
@@ -285,7 +295,7 @@ export const ImageListSettings = () => {
               labelHide={true}
             />
 
-            {props.autoScroll && (
+            {props?.autoScroll && (
               <ToolbarItem
                 propKey="autoScrollInterval"
                 propType="component"
@@ -300,8 +310,6 @@ export const ImageListSettings = () => {
             )}
           </ToolbarSection>
         )}
-
-
       </TabBody>
     );
   };
@@ -318,6 +326,22 @@ export const ImageListSettings = () => {
 
       {activeTab === "Appearance" && (
         <TabBody>
+          <ToolbarSection title="Gallery Mode">
+            <ToolbarItem
+              propKey="mode"
+              propType="component"
+              type="select"
+              label="Mode"
+            >
+              <option value="flex">Flex (Default)</option>
+              <option value="grid">Grid</option>
+              <option value="carousel">Carousel</option>
+              <option value="hero">Hero</option>
+              <option value="masonry">Masonry</option>
+              <option value="infinite">Infinite Scroll</option>
+            </ToolbarItem>
+          </ToolbarSection>
+
           <ToolbarSection title="Layout">
             <ToolbarItem
               propKey="flexDirection"
@@ -396,4 +420,3 @@ export const ImageListSettings = () => {
     </TBWrap>
   );
 };
-

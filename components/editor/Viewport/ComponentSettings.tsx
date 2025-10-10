@@ -85,30 +85,26 @@ export const ComponentSettings = () => {
 
   useEffect(() => {
     if (search) {
-      const regex = new RegExp(search, "i"); // Create a case-insensitive regex
+      const searchTerm = search.toLowerCase();
       setList(
         items
           .map((item) => {
-            const title = item.title.toString() || ""; // Convert element to string
-            if (title.match(regex)) {
-              return item;
-            }
+            const title = item.title.toString().toLowerCase() || "";
 
+            // Filter content by searching the entire React element as a string
             const filteredContent = item.content.filter((nestedItem) => {
-              const text =
-                nestedItem.props?.custom?.displayName?.toString() || ""; // Convert element to string
-              if (text.match(regex)) {
-                return true;
-              }
-
-              const text1 = nestedItem.props?.text?.toString() || ""; // Convert element to string
-              if (text1.match(regex)) {
-                return true;
-              }
-              return false;
+              // Convert the entire React element to string and search in it
+              const elementString = JSON.stringify(nestedItem) || "";
+              return elementString.toLowerCase().includes(searchTerm);
             });
+
+            // Only return category if it has matching content (always filter items)
             if (filteredContent.length > 0) {
               return { ...item, content: filteredContent };
+            }
+            // If title matches but no content matches, still show the category but with all items
+            if (title.includes(searchTerm)) {
+              return item;
             }
             return null;
           })
@@ -132,7 +128,7 @@ export const ComponentSettings = () => {
           <input
             type="text"
             placeholder="Search Components"
-            className="input"
+            className="input px-2 py-1"
             ref={focusRef}
             onKeyUp={throttle((e) => {
               setSearch(e.target.value);

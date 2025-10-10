@@ -25,7 +25,7 @@ export const EmbedSettings = () => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
 
-  useEffect(() => setMenu({ enabled: false }), []);
+  useEffect(() => setMenu({ enabled: false }), [setMenu]);
 
   const head = [
     {
@@ -108,7 +108,7 @@ export const EmbedSettings = () => {
 
         {activeTab === "Layout" && (
           <TabBody>
-            <p className="p-3">Spacing is not available for this component.</p>
+            <p className="p-3 text-xs text-center">Spacing is not available for this component.</p>
           </TabBody>
         )}
 
@@ -120,7 +120,7 @@ export const EmbedSettings = () => {
 
         {activeTab === "Hover & Click" && (
           <TabBody>
-            <p className="p-3">
+            <p className="p-3 text-xs text-center">
               Hover settings are not available for this component.
             </p>
           </TabBody>

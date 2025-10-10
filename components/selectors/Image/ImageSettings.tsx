@@ -32,7 +32,7 @@ export const ImageSettings = () => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
 
-  useEffect(() => setMenu({ enabled: false }), []);
+  useEffect(() => setMenu({ enabled: false }), [setMenu]);
 
   const head = [
     {

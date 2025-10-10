@@ -194,7 +194,7 @@ export const Accord = ({
 
   return (
     <div className={className}>
-      <div className="flex">
+      <div className="flex gap-2 px-3 py-1.5 bg-primary-800">
         <button
           className="whitespace-nowrap font-2xl font-bold cursor-pointer truncate pr-3 w-full"
           onClick={() => setAccordion(active ? "" : prop)}
@@ -205,7 +205,7 @@ export const Accord = ({
           <span key={k}>{_}</span>
         ))}
       </div>
-      {active && <div className="my-6">{children}</div>}
+      {active && <div className="">{children}</div>}
     </div>
   );
 };

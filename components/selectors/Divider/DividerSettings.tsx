@@ -2,7 +2,10 @@ import { useEditor, useNode } from "@craftjs/core";
 import { ToolboxMenu } from "components/editor/RenderNode";
 import { ToolbarSection } from "components/editor/Toolbar";
 import { NoSettings } from "components/editor/Toolbar/Helpers/CloneHelper";
-import { TBWrap } from "components/editor/Toolbar/Helpers/SettingsHelper";
+import {
+  TableBodyStyleControl,
+  TBWrap,
+} from "components/editor/Toolbar/Helpers/SettingsHelper";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { HeightInput } from "components/editor/Toolbar/Inputs/HeightInput";
@@ -32,7 +35,7 @@ export const DividerSettings = () => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
   const setMenu = useSetRecoilState(ToolboxMenu);
 
-  useEffect(() => setMenu({ enabled: false }), []);
+  useEffect(() => setMenu({ enabled: false }), [setMenu]);
 
   const head = [
     {
@@ -63,7 +66,7 @@ export const DividerSettings = () => {
 
   useDefaultTab(head, activeTab, setActiveTab);
 
-  const TBBody = () => {
+  const MainTab = () => {
     if (propValues.relationType === "style") {
       return (
         <TabBody>
@@ -75,67 +78,78 @@ export const DividerSettings = () => {
     }
 
     return (
-      <>
-        {activeTab === "Divider" && (
-          <TabBody>
-            <ToolbarSection title="Divider Presets">
-              <PresetGroupRenderer presets={selectorPresets.divider} />
-            </ToolbarSection>
+      <TabBody>
+        <ToolbarSection title="Divider Presets">
+          <PresetGroupRenderer presets={selectorPresets.divider} />
+        </ToolbarSection>
 
-            <ToolbarSection full={2}>
-              <WidthInput />
-              <HeightInput />
-            </ToolbarSection>
+        <ToolbarSection full={1} title="Size">
+          <WidthInput />
+          <HeightInput />
+        </ToolbarSection>
 
-            <ColorInput
-              propKey="background"
-              label="Background Color"
-              prefix="bg"
-              propType="root"
-            />
-          </TabBody>
-        )}
 
-        {activeTab === "Appearance" && (
-          <TabBody>
-            <ToolbarSection>
-              <RadiusInput />
-              <ShadowInput />
-            </ToolbarSection>
-          </TabBody>
-        )}
-
-        {activeTab === "Style" && (
-          <TabBody>
-            <DisplaySettingsInput />
-          </TabBody>
-        )}
-
-        {activeTab === "Layout" && (
-          <TabBody>
-            <MarginInput />
-            <PaddingInput />
-          </TabBody>
-        )}
-
-        {activeTab === "Animations" && (
-          <TabBody>
-            <p className="p-3">
-              Animation settings are not available for this component.
-            </p>
-          </TabBody>
-        )}
-
-        {activeTab === "Hover & Click" && (
-          <TabBody>
-            <p className="p-3">
-              Hover settings are not available for this component.
-            </p>
-          </TabBody>
-        )}
-      </>
+        <ToolbarSection full={1} title="Colors">
+          <ColorInput
+            propKey="background"
+            label="Background"
+            prefix="bg"
+            propType="root"
+          />
+        </ToolbarSection>
+      </TabBody>
     );
   };
+
+  const TBBody = () => (
+    <TableBodyStyleControl
+      query={query}
+      actions={actions}
+      activeTab={activeTab}
+      head={head}
+      tab={<MainTab />}
+    >
+      {activeTab === "Divider" && <MainTab />}
+
+      {activeTab === "Appearance" && (
+        <TabBody>
+          <ToolbarSection>
+            <RadiusInput />
+            <ShadowInput />
+          </ToolbarSection>
+        </TabBody>
+      )}
+
+      {activeTab === "Style" && (
+        <TabBody>
+          <DisplaySettingsInput />
+        </TabBody>
+      )}
+
+      {activeTab === "Layout" && (
+        <TabBody>
+          <MarginInput />
+          <PaddingInput />
+        </TabBody>
+      )}
+
+      {activeTab === "Animations" && (
+        <TabBody>
+          <p className="p-3 text-xs text-center">
+            Animation settings are not available for this component.
+          </p>
+        </TabBody>
+      )}
+
+      {activeTab === "Hover & Click" && (
+        <TabBody>
+          <p className="p-3 text-xs text-center">
+            Hover settings are not available for this component.
+          </p>
+        </TabBody>
+      )}
+    </TableBodyStyleControl>
+  );
 
   return (
     <TBWrap head={head}>

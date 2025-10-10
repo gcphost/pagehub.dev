@@ -2,6 +2,7 @@ import { useEditor, useNode, UserComponent } from "@craftjs/core";
 import { InlineToolsRenderer } from "components/editor/InlineToolsRenderer";
 import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
 import { HoverNodeController } from "components/editor/NodeControllers/HoverNodeController";
+import { SelectButtonListTool } from "components/editor/NodeControllers/Tools/SelectButtonListTool";
 import {
   getClonedState,
   setClonedProps,
@@ -264,6 +265,8 @@ Button.craft = {
             placement: "start",
           }}
         />,
+
+        <SelectButtonListTool key="selectButtonList" />,
 
         <DeleteNodeController key="buttonDelete" />,
       ];
