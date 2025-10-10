@@ -95,6 +95,8 @@ export const ImageSettings = () => {
           cols={true}
           labelHide={true}
           label="Preload"
+          labelWidth="w-full"
+
         />
         <ToolbarItem
           propKey="loading"

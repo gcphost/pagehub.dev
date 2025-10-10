@@ -256,20 +256,20 @@ export const FormSettings = () => {
           jumps={[
             {
               title: "Flex",
-              content: <div className="text-sm">Flex</div>,
+              content: <div className="text-xs">Flex</div>,
             },
             {
               title: "Size",
-              content: <div className="text-sm">Size</div>,
+              content: <div className="text-xs">Size</div>,
             },
 
             {
               title: "Margin",
-              content: <div className="text-sm">Margin</div>,
+              content: <div className="text-xs">Margin</div>,
             },
             {
               title: "Padding",
-              content: <div className="text-sm">Padding</div>,
+              content: <div className="text-xs">Padding</div>,
             },
           ]}
         >

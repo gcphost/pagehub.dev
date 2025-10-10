@@ -13,7 +13,7 @@ import ClickItem from "components/editor/Toolbar/Inputs/ClickItem";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
-import { IconDialogInput } from "components/editor/Toolbar/Inputs/IconDialogInput";
+import { IconInput } from "components/editor/Toolbar/Inputs/IconInput";
 import LinkSettingsInput from "components/editor/Toolbar/Inputs/LinkSettingsInput";
 import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
@@ -199,37 +199,15 @@ export const ButtonListSettings = () => {
                     suggestedPageName={button.text}
                   />
 
-                  <ToolbarSection title="Icon">
-                    <IconDialogInput
-                      propKey="icon"
-                      propType="component"
-                      label="Icon"
-                    />
-
-                    <ToolbarItem
-                      propKey="iconOnly"
-                      propType="component"
-                      type="checkbox"
-                      label="Icon Only"
-                      on={true}
-                      labelHide
-                      labelWidth="w-fit"
-                    />
-                  </ToolbarSection>
-
-                  <ToolbarSection>
-                    <ToolbarItem
-                      propKey="iconPosition"
-                      propType="component"
-                      type="select"
-                      label="Icon Position"
-                    >
-                      <option value="left">Left</option>
-                      <option value="right">Right</option>
-                      <option value="top">Top</option>
-                      <option value="bottom">Bottom</option>
-                    </ToolbarItem>
-                  </ToolbarSection>
+                  <IconInput
+                    propKey="icon"
+                    propType="component"
+                    label="Icon"
+                    labelWidth="w-full"
+                    inputWidth="w-fit"
+                    iconOnlyLabel="Only Show Icon"
+                    positionLabel="Position"
+                  />
 
 
                 </div>

@@ -17,7 +17,7 @@ export const BackgroundSettingsInput = ({ props }) => (
     {props?.backgroundImage && (
       <ToolbarSection title="Image Settings" subtitle={true} defaultOpen={false}>
         <ToolbarSection
-          full={1}
+
         >
           <ToolbarItem
             propKey="backgroundPriority"
@@ -28,6 +28,7 @@ export const BackgroundSettingsInput = ({ props }) => (
             cols={true}
             labelHide={true}
             label="Preload"
+            labelWidth="w-full"
           />
           <ToolbarItem
             propKey="backgroundFetchPriority"
@@ -41,7 +42,7 @@ export const BackgroundSettingsInput = ({ props }) => (
           </ToolbarItem>
         </ToolbarSection>
 
-        <ToolbarSection full={2}>
+        <ToolbarSection>
           <ToolbarItem
             propKey={"backgroundRepeat"}
             propType="class"
@@ -67,7 +68,7 @@ export const BackgroundSettingsInput = ({ props }) => (
           </ToolbarItem>
         </ToolbarSection>
 
-        <ToolbarSection full={2}>
+        <ToolbarSection>
           <ToolbarItem
             propKey={"backgroundOrigin"}
             propType="class"

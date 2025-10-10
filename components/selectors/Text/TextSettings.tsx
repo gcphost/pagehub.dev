@@ -118,15 +118,15 @@ export const TextSettings = () => {
           jumps={[
             {
               title: "Colors",
-              content: <div className="text-sm">Colors</div>,
+              content: <div className="text-xs">Colors</div>,
             },
             {
               title: "Typography",
-              content: <div className="text-sm">Typography</div>,
+              content: <div className="text-xs">Typography</div>,
             },
             {
               title: "Decoration",
-              content: <div className="text-sm">Decoration</div>,
+              content: <div className="text-xs">Decoration</div>,
             },
           ]}
         >
@@ -154,16 +154,16 @@ export const TextSettings = () => {
           jumps={[
             {
               title: "Size",
-              content: <div className="text-sm">Size</div>,
+              content: <div className="text-xs">Size</div>,
             },
 
             {
               title: "Margin",
-              content: <div className="text-sm">Margin</div>,
+              content: <div className="text-xs">Margin</div>,
             },
             {
               title: "Padding",
-              content: <div className="text-sm">Padding</div>,
+              content: <div className="text-xs">Padding</div>,
             },
           ]}
         >

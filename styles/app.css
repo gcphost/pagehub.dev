@@ -405,7 +405,7 @@ ul {
 #toolbarContents .input-plain,
 #toolbarContents .input-base,
 #toolbarContents .btn {
-  @apply text-sm px-2 py-0.5 min-h-6;
+  @apply text-sm px-2 py-0.5 min-h-5;
 }
 
 #toolbarContents .input-color {

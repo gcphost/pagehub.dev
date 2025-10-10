@@ -13,7 +13,7 @@ import ClickItem from "components/editor/Toolbar/Inputs/ClickItem";
 import { ColorInput } from "components/editor/Toolbar/Inputs/ColorInput";
 import DisplaySettingsInput from "components/editor/Toolbar/Inputs/DisplaySettingsInput";
 import { FontInput } from "components/editor/Toolbar/Inputs/FontInput";
-import { IconDialogInput } from "components/editor/Toolbar/Inputs/IconDialogInput";
+import IconInput from "components/editor/Toolbar/Inputs/IconInput";
 import { OpacityInput } from "components/editor/Toolbar/Inputs/OpacityInput";
 import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
 import { PresetGroupRenderer } from "components/editor/Toolbar/Inputs/PresetRenderer";
@@ -111,36 +111,15 @@ export const ButtonSettings = () => {
         </ToolbarItem>
       </ToolbarSection>
 
-      <ToolbarSection title="Icon" full={1}>
-        <IconDialogInput
-          propKey="icon"
-          propType="component"
-          label="Image"
-          inline
-        />
-
-        <ToolbarItem
-          propKey="iconOnly"
-          type="checkbox"
-          label="Icon Only"
-          propType="component"
-          on={true}
-          labelHide
-          inputWidth="w-fit"
-        />
-
-        <ToolbarItem
-          propKey="iconPosition"
-          type="select"
-          label="Icon Position"
-          propType="component"
-        >
-          <option value="left">Left</option>
-          <option value="right">Right</option>
-          <option value="top">Top</option>
-          <option value="bottom">Bottom</option>
-        </ToolbarItem>
-      </ToolbarSection>
+      <IconInput
+        propKey="icon"
+        propType="component"
+        label="Icon"
+        labelWidth="w-full"
+        inputWidth="w-fit"
+        iconOnlyLabel="Only Show Icon"
+        positionLabel="Position"
+      />
     </TabBody>
   );
 
@@ -158,23 +137,23 @@ export const ButtonSettings = () => {
           jumps={[
             {
               title: "Colors",
-              content: <div className="text-sm">Colors</div>,
+              content: <div className="text-xs">Colors</div>,
             },
             {
               title: "Icon",
-              content: <div className="text-sm">Icon</div>,
+              content: <div className="text-xs">Icon</div>,
             },
             {
               title: "Background",
-              content: <div className="text-sm">Background</div>,
+              content: <div className="text-xs">Background</div>,
             },
             {
               title: "Typography",
-              content: <div className="text-sm">Typography</div>,
+              content: <div className="text-xs">Typography</div>,
             },
             {
               title: "Border",
-              content: <div className="text-sm">Border</div>,
+              content: <div className="text-xs">Border</div>,
             },
           ]}
         >

@@ -63,9 +63,10 @@ export const ToolbarSection = ({
       )}
 
       {enabled && isOpen && (
-        <><div className={`grid-cols-${full} gap-3 grid items-end ${bodyClassName}`} role="group" aria-labelledby={title}>
-          {children}
-        </div>
+        <>
+          <div className={`grid-cols-${full} gap-3 grid items-end ${bodyClassName}`} role="group" aria-labelledby={title}>
+            {children}
+          </div>
 
           {footer && <>{footer}</>}
         </>

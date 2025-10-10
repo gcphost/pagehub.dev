@@ -136,7 +136,7 @@ const Input = (__props, ref) => {
 
     return (
       <BgWrap wrap={wrap}>
-        <div className="flex items-center gap-2 w-full">
+        <div className="flex items-center gap-2 w-full h-5">
           <input
             type="range"
             className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"

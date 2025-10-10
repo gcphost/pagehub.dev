@@ -246,20 +246,20 @@ export const FormElementSettings = () => {
           jumps={[
             {
               title: "Colors",
-              content: <div className="text-sm">Colors</div>,
+              content: <div className="text-xs">Colors</div>,
             },
             {
               title: "Typography",
-              content: <div className="text-sm">Typography</div>,
+              content: <div className="text-xs">Typography</div>,
             },
             {
               title: "Background",
-              content: <div className="text-sm">Background</div>,
+              content: <div className="text-xs">Background</div>,
             },
 
             {
               title: "Border",
-              content: <div className="text-sm">Border</div>,
+              content: <div className="text-xs">Border</div>,
             },
           ]}
         >

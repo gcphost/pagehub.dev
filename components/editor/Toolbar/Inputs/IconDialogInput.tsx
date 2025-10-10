@@ -16,6 +16,8 @@ export const IconDialogInput = ({
   propItemKey = "",
   propType = "class",
   inline = true,
+  labelWidth = "",
+  inputWidth = "",
 }) => {
   const [dialog, setDialog] = useRecoilState(IconDialogAtom);
   const { actions, query } = useEditor();
@@ -62,7 +64,8 @@ export const IconDialogInput = ({
       propType={propType}
       propKey={propKey}
       inline={inline}
-      className="w-fit"
+      inputWidth={inputWidth}
+      labelWidth={labelWidth}
     >
       <div className="relative">
         <button

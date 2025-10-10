@@ -109,11 +109,11 @@ export const BackgroundSettings = () => {
           jumps={[
             {
               title: "Flex",
-              content: <div className="text-sm">Flex</div>,
+              content: <div className="text-xs">Flex</div>,
             },
             {
               title: "Padding",
-              content: <div className="text-sm">Padding</div>,
+              content: <div className="text-xs">Padding</div>,
             },
           ]}
         >
