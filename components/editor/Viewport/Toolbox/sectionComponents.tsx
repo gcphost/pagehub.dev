@@ -1,4 +1,5 @@
-import { TbLayoutColumns, TbLayoutGroup, TbLayoutRows } from "react-icons/tb";
+import { GrObjectGroup } from "react-icons/gr";
+import { TbLayoutColumns, TbLayoutRows } from "react-icons/tb";
 import { Container } from "../../../selectors/Container";
 import { ContainerGroup } from "../../../selectors/ContainerGroup";
 import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
@@ -68,7 +69,7 @@ export const sectionToolboxItems = [
 
       <RenderContainerGroupComponent
         key="group1"
-        text={<ToolboxItemDisplay icon={TbLayoutGroup} label="Container Group" />}
+        text={<ToolboxItemDisplay icon={GrObjectGroup} label="Group" />}
         mobile={{
           display: "flex",
           justifyContent: "justify-center",
@@ -79,7 +80,7 @@ export const sectionToolboxItems = [
           p: "p-8",
         }}
         desktop={{}}
-        custom={{ displayName: "Container Group" }}
+        custom={{ displayName: "Group" }}
       />,
     ],
   },

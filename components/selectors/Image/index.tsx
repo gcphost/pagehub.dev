@@ -13,6 +13,8 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { getResponsiveImageAttrs, motionIt } from "utils/lib";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
+import ImageGroupSettings from "./ImageGroupSettings";
+import { ImageGroupTools } from "./ImageGroupTools";
 import { ImageSettings } from "./ImageSettings";
 
 export const ImageDefault = ({ tab, props }) => {
@@ -309,6 +311,8 @@ Image.craft = {
   },
   related: {
     toolbar: ImageSettings,
+    groupTools: ImageGroupTools,
+    groupSettings: ImageGroupSettings,
   },
   props: {
     tools: (props) => {

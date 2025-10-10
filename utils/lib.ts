@@ -583,11 +583,11 @@ export const autoOpenMenu = (menu, setMenu, id, node) => {
 
 export const useDefaultTab = (head, activeTab, setActiveTab) => {
   useEffect(() => {
-    if (!head) return;
-    if (!head.find((_) => _.title === activeTab)) {
+    if (!head || head.length === 0) return;
+    if (!activeTab && head[0]?.title) {
       setActiveTab(head[0].title);
     }
-  }, [head, activeTab]);
+  }, [head]); // Only run when head changes, not when activeTab changes
 };
 
 export const motionIt = (props, tagName) =>

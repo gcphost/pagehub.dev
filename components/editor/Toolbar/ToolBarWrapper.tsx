@@ -107,7 +107,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
 
   return (
     <>
-      <h1 className="font-bold text-2xl p-3  bg-gray-700 w-full z-50 border-gray-800 border-b">
+      <h1 className="font-bold text-2xl px-3 py-1.5  bg-gray-700 w-full z-50 border-gray-800 border-b">
         {<ToolbarTitleEditor />}
       </h1>
 

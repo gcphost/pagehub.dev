@@ -7,6 +7,7 @@ import { PatternDialog } from "components/editor/Toolbar/Tools/PatternDialog";
 import { ToolTipDialog } from "components/editor/Toolbar/Tools/TooltipDialog";
 import { Background } from "components/selectors/Background";
 import { Container } from "components/selectors/Container";
+import { ContainerGroup } from "components/selectors/ContainerGroup";
 import { Divider } from "components/selectors/Divider";
 import { Embed } from "components/selectors/Embed";
 import { Spacer } from "components/selectors/Spacer";
@@ -84,6 +85,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
   const editorComponents = {
     Background,
     Container,
+    ContainerGroup,
     Text,
     OnlyFormElement,
     OnlyText,

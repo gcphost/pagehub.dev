@@ -8,6 +8,7 @@ import { Background } from "components/selectors/Background";
 import { Embed } from "components/selectors/Embed";
 
 import { Container } from "components/selectors/Container";
+import { ContainerGroup } from "components/selectors/ContainerGroup";
 import { Divider } from "components/selectors/Divider";
 import { Form, FormDrop } from "components/selectors/Form";
 import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
@@ -42,7 +43,7 @@ const CustomDeserializer = ({ data }) => {
       // Return empty frame if deserialization fails
     }
   }, [actions, data]);
-  
+
   try {
     return <Frame data={data} />;
   } catch (error) {
@@ -163,6 +164,7 @@ function App({ subdomain, data, meta, seo }) {
     const editorComponents = {
       Background,
       Container,
+      ContainerGroup,
       Text,
       OnlyFormElement,
       OnlyText,
