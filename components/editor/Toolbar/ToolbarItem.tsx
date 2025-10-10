@@ -22,46 +22,24 @@ const Input = (__props, ref) => {
     append,
   } = __props;
 
-  if (type === "toggle") {
-    return (
-      <label className="relative flex flex-col items-center cursor-pointer">
-        {props.option && <div className="text-xs mb-2 font-medium text-white text-center">
-          {props.option ? props.option : "Enable"}
-        </div>}
 
-        <div className="relative inline-flex">
-          <input
-            type="checkbox"
-            defaultChecked={!!value}
-            onChange={() => changed(value ? "" : props.on)}
-            className="sr-only peer"
-          />
-          <div className="w-8 h-4 bg-gray-500 rounded-full peer-focus:ring-2 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary-500"></div>
-        </div>
-      </label>
-    );
-  }
 
-  if (type === "checkbox") {
-    return (
-      <>
-        <label className="relative flex flex-col items-center cursor-pointer">
-          {props.option && <div className="text-xs mb-2 font-medium text-white text-center">
-            {props.option ? props.option : "Enable"}
-          </div>}
+  if (['toggle', 'checkbox'].includes(type)) {
+    return (<label className="relative flex flex-col items-center cursor-pointer ">
+      {props.option && <div className="text-xs mb-2 font-medium text-white text-center">
+        {props.option || "Enable"}
+      </div>}
 
-          <div className="relative inline-flex">
-            <input
-              type="checkbox"
-              defaultChecked={!!value}
-              onChange={() => changed(value ? "" : props.on)}
-              className="sr-only peer"
-            />
-            <div className="w-8 h-4 bg-gray-500 rounded-full peer-focus:ring-2 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary-500"></div>
-          </div>
-        </label>
-      </>
-    );
+      <div className="relative inline-flex w-fit">
+        <input
+          type="checkbox"
+          defaultChecked={!!value}
+          onChange={() => changed(value ? "" : props.on)}
+          className="sr-only peer"
+        />
+        <div className="w-8 h-4 bg-gray-500 rounded-full peer-focus:ring-2 peer-focus:ring-primary-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary-500"></div>
+      </div>
+    </label>);
   }
 
   if (type === "number") {
@@ -316,6 +294,7 @@ export type ToolbarItemProps = {
   inputWidth?: string;
   labelWidth?: string;
   append?: React.ReactNode;
+  description?: string;
 };
 
 export const ToolbarItem = (__props: ToolbarItemProps) => {

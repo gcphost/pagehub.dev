@@ -87,9 +87,8 @@ export const CSSEditorInput = () => {
   };
 
   return (
-    <ToolbarSection title="Custom Style">
+    <ToolbarSection title="Inline CSS">
       <div className="w-full">
-        <h4 className="text-white mb-3 text-sm">CSS</h4>
         <div className="rounded-lg overflow-hidden border border-gray-600">
           <CodeMirror
             value={value || ""}
@@ -98,10 +97,10 @@ export const CSSEditorInput = () => {
             extensions={[css(), cssLinter]}
             onChange={handleChange}
             basicSetup={{
-              lineNumbers: true,
+              lineNumbers: false,
               highlightActiveLineGutter: true,
               highlightActiveLine: true,
-              foldGutter: true,
+              foldGutter: false,
               dropCursor: true,
               allowMultipleSelections: true,
               indentOnInput: true,

@@ -1,6 +1,5 @@
 import { Element, useEditor, useNode } from "@craftjs/core";
 import { DeleteNodeController } from "components/editor/NodeControllers/DeleteNodeController";
-import { NameNodeController } from "components/editor/NodeControllers/NameNodeController";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
 import {
@@ -349,12 +348,7 @@ Form.craft = {
   props: {
     tools: () => {
       const baseControls = [
-        <NameNodeController
-          position="top"
-          align="end"
-          placement="start"
-          key="formNameController"
-        />,
+
         <HoverNodeController
           key="formHoverController"
           position="top"

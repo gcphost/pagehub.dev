@@ -7,6 +7,7 @@ export const TypeInput = () => (
     label="Type"
     propType="component"
   >
+    <option value=""></option>
     <option value="span">span</option>
     <option value="article">article</option>
     <option value="section">section</option>

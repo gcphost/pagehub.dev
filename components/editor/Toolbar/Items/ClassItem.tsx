@@ -97,8 +97,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
         <input
           type="search"
           id="search"
-          className="input relative z-10"
-          style={{ background: 'transparent' }}
+          className="px-2 py-1 relative z-10 bg-transparent w-full text-sm rounded-md"
           placeholder="Class Search"
           required
           autoComplete="off"
@@ -125,7 +124,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
           </div>
         )}
         {/* Background for input */}
-        <div className="absolute inset-0 -z-10 bg-gray-500/50 border border-gray-500 rounded-lg"></div>
+        <div className="absolute inset-0 h-7 -z-10 bg-gray-500/50 border border-gray-500 rounded-lg"></div>
         <button
           type="submit"
           className="btn-search"
@@ -150,7 +149,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
         </div>
       )}
 
-      <p>Assigned Classes</p>
+      <p className="text-xs">Assigned Classes</p>
       <div className="space-y-3 -mt-6">
         {propClasses?.map((_, key) => (
           <Card key={key} value={_} onClick={() => delNodeProp(_, "root")} />
@@ -184,19 +183,19 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
         ))}
       </div>
 
-      <p>Legend</p>
+      <p className="text-xs">Legend</p>
 
       <div className="space-y-3 space-x-1.5 text-black -mt-6">
-        <div className="bg-primary-300 px-2.5 py-1.5 rounded inline-flex text-xs inside-shadow">
+        <div className="bg-primary-300 px-1 py-0.5 rounded inline-flex text-xxs inside-shadow">
           Component
         </div>
-        <div className="bg-white text-black px-2.5 py-1.5 rounded inline-flex text-xs inside-shadow">
+        <div className="bg-white text-black px-1 py-0.5 rounded inline-flex text-xxs inside-shadow">
           User
         </div>
-        <div className="bg-green-500 px-2.5 py-1.5 rounded inline-flex text-xs inside-shadow">
+        <div className="bg-green-500 px-1 py-0.5 rounded inline-flex text-xxs inside-shadow">
           Mobile
         </div>
-        <div className="bg-yellow-500 px-2.5 py-1.5 rounded inline-flex text-xs inside-shadow">
+        <div className="bg-yellow-500 px-1 py-0.5 rounded inline-flex text-xxs inside-shadow">
           Desktop
         </div>
       </div>

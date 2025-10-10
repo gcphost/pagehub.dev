@@ -67,7 +67,7 @@ export const PresetInput = ({
         });
       }}
     >
-      <option value="">Size</option>
+      <option value=""></option>
       {presets?.map((_, k) => (
         <option key={k} value={_.var}>
           {_.title}

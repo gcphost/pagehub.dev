@@ -23,6 +23,7 @@ import { PatternInput } from "components/editor/Toolbar/Inputs/PatternInput";
 import { PresetInput } from "components/editor/Toolbar/Inputs/PresetInput";
 import { ShadowInput } from "components/editor/Toolbar/Inputs/ShadowInput";
 import { SizeInput } from "components/editor/Toolbar/Inputs/SizeInput";
+import { TypeInput } from "components/editor/Toolbar/Inputs/TypeInput";
 import { TabBody } from "components/editor/Toolbar/Tab";
 import { ToolbarItem } from "components/editor/Toolbar/ToolbarItem";
 import { useGetNode } from "components/editor/Toolbar/Tools/lib";
@@ -114,57 +115,58 @@ export const ContainerSettings = () => {
     return (
       <TabBody>
         {/* Show Background Image settings first for imageContainer types */}
-        {props.type === "imageContainer" && (
+        {props.type === "imageContainer" ? (
           <>
             <BackgroundSettingsInput props={props} />
+            <ToolbarSection title="Settings">
+              <ContainerTypeInput />
+            </ToolbarSection>
 
             {/* Background Image Presets */}
-            <ToolbarSection title="Background Layouts" subtitle={true}>
+            <ToolbarSection title="Presets" subtitle={true}>
               <PresetInput
                 presets={selectorPresets.backgroundImage.layouts.items}
                 label={selectorPresets.backgroundImage.layouts.label}
                 type={selectorPresets.backgroundImage.layouts.type}
                 propKey={selectorPresets.backgroundImage.layouts.propKey}
                 propType={selectorPresets.backgroundImage.layouts.propType}
-                inputWidth="w-full"
-                labelWidth="w-1/4"
+                inputWidth="w-2/3"
+                labelWidth="w-1/3"
                 inline
               />
-            </ToolbarSection>
 
-            <ToolbarSection title="Overlays" subtitle={true}>
               <PresetInput
                 presets={selectorPresets.backgroundImage.overlays.items}
                 label={selectorPresets.backgroundImage.overlays.label}
                 type={selectorPresets.backgroundImage.overlays.type}
                 propKey={selectorPresets.backgroundImage.overlays.propKey}
                 propType={selectorPresets.backgroundImage.overlays.propType}
-                inputWidth="w-full"
-                labelWidth="w-1/4"
+                inputWidth="w-2/3"
+                labelWidth="w-1/3"
                 inline
               />
-            </ToolbarSection>
 
-            <ToolbarSection title="Content Position" subtitle={true}>
               <PresetInput
                 presets={selectorPresets.backgroundImage.content.items}
                 label={selectorPresets.backgroundImage.content.label}
                 type={selectorPresets.backgroundImage.content.type}
                 propKey={selectorPresets.backgroundImage.content.propKey}
                 propType={selectorPresets.backgroundImage.content.propType}
-                inputWidth="w-full"
-                labelWidth="w-1/4"
+                inputWidth="w-2/3"
+                labelWidth="w-1/3"
                 inline
               />
             </ToolbarSection>
           </>
+        ) : (
+          <><ToolbarSection title="Settings">
+            <ContainerTypeInput />
+          </ToolbarSection>
+          </>
         )}
 
-        <ToolbarSection title="Container Settings">
-          <ContainerTypeInput />
-        </ToolbarSection>
 
-        <ToolbarSection title="Presets">
+        <ToolbarSection title="Container Presets">
           <ToolbarSection full={1}>
             <PresetInput
               presets={selectorPresets.container.width.items}
@@ -172,8 +174,8 @@ export const ContainerSettings = () => {
               type={selectorPresets.container.width.type}
               propKey={selectorPresets.container.width.propKey}
               propType={selectorPresets.container.width.propType}
-              inputWidth="w-1/2"
-              labelWidth="w-1/4"
+              inputWidth="w-2/3"
+              labelWidth="w-1/3"
               inline
             />
 
@@ -183,25 +185,48 @@ export const ContainerSettings = () => {
               type={selectorPresets.container.maxWidth.type}
               propKey={selectorPresets.container.maxWidth.propKey}
               propType={selectorPresets.container.maxWidth.propType}
-              inputWidth="w-1/2"
-              labelWidth="w-1/4"
+              inputWidth="w-2/3"
+              labelWidth="w-1/3"
               inline
             />
           </ToolbarSection>
+
           <PresetInput
             presets={selectorPresets.container.padding.items}
             label={selectorPresets.container.padding.label}
             type={selectorPresets.container.padding.type}
             propKey={selectorPresets.container.padding.propKey}
             propType={selectorPresets.container.padding.propType}
-            inputWidth="w-1/2"
-            labelWidth="w-1/4"
+            inputWidth="w-2/3"
+            labelWidth="w-1/3"
+            inline
+          />
+
+          <PresetInput
+            presets={selectorPresets.container.layouts.items}
+            label={selectorPresets.container.layouts.label}
+            type={selectorPresets.container.layouts.type}
+            propKey={selectorPresets.container.layouts.propKey}
+            propType={selectorPresets.container.layouts.propType}
+            inputWidth="w-2/3"
+            labelWidth="w-1/3"
+            inline
+          />
+
+          <PresetInput
+            presets={selectorPresets.container.spacing.items}
+            label={selectorPresets.container.spacing.label}
+            type={selectorPresets.container.spacing.type}
+            propKey={selectorPresets.container.spacing.propKey}
+            propType={selectorPresets.container.spacing.propType}
+            inputWidth="w-2/3"
+            labelWidth="w-1/3"
             inline
           />
         </ToolbarSection>
 
         <ToolbarSection
-          title="Display Order"
+          title="Display"
           help="Change the order of this component, useful to reposition items on mobile."
         >
           <OrderInput />
@@ -360,6 +385,10 @@ export const ContainerSettings = () => {
         <>
           <TabBody>
             <DisplaySettingsInput />
+
+            <ToolbarSection title="Element Type">
+              <TypeInput />
+            </ToolbarSection>
           </TabBody>
         </>
       )}

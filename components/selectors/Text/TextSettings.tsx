@@ -169,18 +169,13 @@ export const TextSettings = () => {
         >
           <ToolbarSection title="Size">
             <WidthInput />
-          </ToolbarSection>
 
-          <ToolbarSection
-            title="Max Size"
-            subtitle={true}
-            help="Maximum width this component can be."
-          >
             <WidthInput
               propKey="maxWidth"
               values="maxWidths"
               sliderValues="maxWidths"
               propTag="max-w"
+              label="Max Width"
             />
           </ToolbarSection>
           <MarginInput />

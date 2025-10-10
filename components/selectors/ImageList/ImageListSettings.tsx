@@ -176,7 +176,7 @@ export const ImageListSettings = () => {
               const Image = query.getOptions().resolver.Image;
               if (Image) {
                 actions.addNodeTree(
-                  query.parseReactElement(<Image src="/screenshots/clouds.webp" alt="New image" />).toNodeTree(),
+                  query.parseReactElement(<Image alt="New image" />).toNodeTree(),
                   id
                 );
                 setAccordion(childImages.length);
@@ -187,12 +187,14 @@ export const ImageListSettings = () => {
           </button>
         </div>
 
-        <ToolbarSection title="Gallery Mode">
+        <ToolbarSection title="Properties">
           <ToolbarItem
             propKey="mode"
             propType="component"
             type="select"
             label="Mode"
+            labelWidth="w-24"
+
           >
             <option value="flex">Flex (Default)</option>
             <option value="grid">Grid</option>
@@ -201,28 +203,30 @@ export const ImageListSettings = () => {
             <option value="masonry">Masonry</option>
             <option value="infinite">Infinite Scroll</option>
           </ToolbarItem>
-        </ToolbarSection>
 
-        <ToolbarSection title="Display Options">
           <ToolbarItem
             propKey="itemsPerView"
             propType="component"
             type="slider"
-            label={`Items Per View: ${props?.itemsPerView || 3}`}
+            label={`Items Per View`}
             min={1}
             max={6}
             step={1}
+            labelWidth="w-24"
           />
         </ToolbarSection>
 
-        <ToolbarSection title="Controls" full={2}>
+        <ToolbarSection title="Controls" full={1}>
           <ToolbarItem
             propKey="showNavigation"
             propType="component"
             type="checkbox"
             label="Show Navigation Arrows"
             labelHide={true}
-            inline={false}
+            inline
+            labelWidth="w-full"
+            on="enabled"
+
           />
 
           <ToolbarItem
@@ -231,20 +235,27 @@ export const ImageListSettings = () => {
             type="checkbox"
             label="Show Dots Indicator"
             labelHide={true}
-            inline={false}
+            inline
+            labelWidth="w-full"
+            on="enabled"
+
+
           />
         </ToolbarSection>
 
         {props?.mode === "infinite" ? (
           <>
-            <ToolbarSection title="Animation" full={2}>
+            <ToolbarSection title="Animation" full={1}>
               <ToolbarItem
                 propKey="animationEnabled"
                 propType="component"
                 type="checkbox"
                 label="Enable Animation"
                 on="enabled"
-                inline={false}
+                inline
+                labelWidth="w-full"
+                labelHide={true}
+
               />
               <ToolbarItem
                 propKey="previewInEditor"
@@ -252,35 +263,36 @@ export const ImageListSettings = () => {
                 type="checkbox"
                 label="Preview in Editor"
                 on="enabled"
-                inline={false}
+                inline
+                labelWidth="w-full"
+                labelHide={true}
+
               />
             </ToolbarSection>
             {(props?.animationEnabled !== false) && (
               <>
-                <ToolbarSection title="Direction">
+                <ToolbarSection title="Scroll">
                   <ToolbarItem
                     propKey="infiniteDirection"
                     propType="component"
                     type="select"
-                    label="Scroll Direction"
+                    label="Direction"
                   >
                     <option value="left">Scroll Left ←</option>
                     <option value="right">Scroll Right →</option>
                   </ToolbarItem>
-                </ToolbarSection>
-                <ToolbarSection title="Scroll Speed">
+
                   <ToolbarItem
                     propKey="infiniteSpeed"
                     propType="component"
                     type="slider"
-                    label={`${props?.infiniteSpeed || 30} seconds`}
+                    label="Speed"
                     min={5}
-                    max={60}
+                    max={120}
                     step={1}
+                    description="Time for one complete scroll (lower = faster)"
                   />
-                  <p className="text-xs text-gray-400 mt-2">
-                    Time for one complete scroll (lower = faster)
-                  </p>
+
                 </ToolbarSection>
               </>
             )}
@@ -291,8 +303,9 @@ export const ImageListSettings = () => {
               propKey="autoScroll"
               propType="component"
               type="checkbox"
-              label="Enable Auto-Scroll"
+              label="Enable"
               labelHide={true}
+              labelWidth="w-full"
             />
 
             {props?.autoScroll && (
@@ -326,21 +339,7 @@ export const ImageListSettings = () => {
 
       {activeTab === "Appearance" && (
         <TabBody>
-          <ToolbarSection title="Gallery Mode">
-            <ToolbarItem
-              propKey="mode"
-              propType="component"
-              type="select"
-              label="Mode"
-            >
-              <option value="flex">Flex (Default)</option>
-              <option value="grid">Grid</option>
-              <option value="carousel">Carousel</option>
-              <option value="hero">Hero</option>
-              <option value="masonry">Masonry</option>
-              <option value="infinite">Infinite Scroll</option>
-            </ToolbarItem>
-          </ToolbarSection>
+
 
           <ToolbarSection title="Layout">
             <ToolbarItem
@@ -392,11 +391,7 @@ export const ImageListSettings = () => {
         </TabBody>
       )}
 
-      {activeTab === "Layout" && (
-        <TabBody>
-          <SpacingInput />
-        </TabBody>
-      )}
+      {activeTab === "Layout" && <SpacingInput />}
 
       {activeTab === "Animations" && (
         <TabBody>

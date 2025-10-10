@@ -84,7 +84,7 @@ export const ButtonSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <ToolbarSection title="Button Content">
+      <ToolbarSection title="Content">
         <ToolbarItem
           propKey="text"
           type="text"
@@ -93,13 +93,13 @@ export const ButtonSettings = () => {
         />
       </ToolbarSection>
 
-      <ToolbarSection title="Button Presets">
+      <ToolbarSection title="Presets">
         <PresetGroupRenderer presets={selectorPresets.button} />
       </ToolbarSection>
 
       <ClickItem />
 
-      <ToolbarSection title="Button Type">
+      <ToolbarSection title="Type">
         <ToolbarItem
           propKey="type"
           type="select"

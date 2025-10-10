@@ -13,14 +13,15 @@ export default function DisplaySettingsInput() {
       <DisplayInput />
 
 
-      <ToolbarSection title="ID" help="This can be used for Hover & Click">
+      <ToolbarSection title="Id Attribute" help="The HTML id attribute is used to specify a unique id for an HTML element.">
         <ToolbarItem
           propKey="id"
           propType="component"
           type="text"
-          label="ID"
+          label="Id"
           placeholder="myComponent"
           labelHide={true}
+          description="Assign a unique id to the element. Used for Hover & Click settings."
         />
       </ToolbarSection>
     </>

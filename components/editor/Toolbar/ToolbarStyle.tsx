@@ -79,29 +79,36 @@ export const Wrap = ({
     // Inline mode: everything in one row
     // In inline mode, always show label if it exists (ignore labelHide for the label text)
     return (
-      <div className={`w-full flex items-center gap-2 ${className}`}>
-        {props?.label && (
-          <span className={`text-xs whitespace-nowrap ${labelWidth || "w-20"} truncate`}>{props?.label}</span>
-        )}
-        <div className={inputWidth || "flex-1"}>
-          {children}
+      <>
+        <div className={`w-full flex items-center gap-2 ${className}`}>
+          {props?.label && (
+            <span className={`text-xs whitespace-nowrap ${labelWidth || "w-20"} truncate`}>{props?.label}</span>
+          )}
+          <div className={inputWidth || "flex-1"}>
+            {children}
+          </div>
+
+          {!props?.labelHide && <ToolbarLabel
+            lab={lab}
+            prefix={props?.labelPrefix}
+            suffix={props?.labelSuffix}
+            viewValue={viewValue}
+            propType={propType}
+            propKey={propKey}
+            index={index}
+            propItemKey={propItemKey}
+            icon={props?.labelIcon}
+            showDeleteIcon={props?.showDeleteIcon}
+            showVarSelector={props?.showVarSelector}
+            varSelectorPrefix={props?.varSelectorPrefix}
+          />}
         </div>
 
-        <ToolbarLabel
-          lab={lab}
-          prefix={props?.labelPrefix}
-          suffix={props?.labelSuffix}
-          viewValue={viewValue}
-          propType={propType}
-          propKey={propKey}
-          index={index}
-          propItemKey={propItemKey}
-          icon={props?.labelIcon}
-          showDeleteIcon={props?.showDeleteIcon}
-          showVarSelector={props?.showVarSelector}
-          varSelectorPrefix={props?.varSelectorPrefix}
-        />
-      </div>
+        {props.description && <p className="text-xxs text-gray-400 w-full text-center -mt-1">
+          {props.description}
+        </p>}
+
+      </>
     );
   }
 

@@ -9,7 +9,7 @@ export const ClassNameInput = () => (
         propKey="className"
         type="className"
         propType="component"
-        label="Classes"
+        label=""
         labelHide={true}
       />
     </ToolbarSection>

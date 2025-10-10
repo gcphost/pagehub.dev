@@ -75,7 +75,7 @@ export const ImageSettings = () => {
         contentKey="content"
       />
 
-      <ToolbarSection title="Image Presets">
+      <ToolbarSection title="Presets">
         <PresetGroupRenderer presets={selectorPresets.image} />
       </ToolbarSection>
 

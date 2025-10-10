@@ -345,6 +345,339 @@ export const containerPresets = {
       },
     ],
   },
+
+  layouts: {
+    label: "Container Layouts",
+    type: "select" as const,
+    propKey: "presetLayout",
+    propType: "root",
+    help: "Choose from common container layouts and patterns",
+    items: [
+      {
+        title: "Plain Container",
+        var: "plain-container",
+        mobile: {},
+        desktop: {},
+      },
+      {
+        title: "Card Container",
+        var: "card-container",
+        mobile: {
+          background: "bg-[var(--ph-card-bg)]",
+          borderRadius: "rounded-[var(--ph-border-radius)]",
+          shadow: "shadow-[var(--ph-shadow-style)]",
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          border: "border",
+          borderColor: "border-[var(--ph-border-color)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+      },
+      {
+        title: "Glass Card",
+        var: "glass-card",
+        mobile: {
+          background: "bg-[var(--ph-card-bg)]/10",
+          backdropFilter: "backdrop-blur-md",
+          borderRadius: "rounded-[var(--ph-border-radius)]",
+          border: "border",
+          borderColor: "border-[var(--ph-border-color)]/20",
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+      },
+      {
+        title: "Hero Section",
+        var: "hero-section",
+        mobile: {
+          minHeight: "min-h-[400px]",
+          display: "flex",
+          flexDirection: "flex-col",
+          justifyContent: "justify-center",
+          alignItems: "items-center",
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+          textAlign: "text-center",
+        },
+        desktop: {
+          minHeight: "min-h-[600px]",
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+        },
+      },
+      {
+        title: "Content Box",
+        var: "content-box",
+        mobile: {
+          maxWidth: "max-w-[var(--ph-content-width)]",
+          margin: "mx-auto",
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+      },
+      {
+        title: "Sidebar Layout",
+        var: "sidebar-layout",
+        mobile: {
+          display: "flex",
+          flexDirection: "flex-col",
+          gap: "gap-[var(--ph-gap)]",
+        },
+        desktop: {
+          flexDirection: "flex-row",
+          gap: "gap-[var(--ph-gap)]",
+        },
+      },
+      {
+        title: "Grid Container",
+        var: "grid-container",
+        mobile: {
+          display: "grid",
+          gridTemplateColumns: "grid-cols-1",
+          gap: "gap-[var(--ph-gap)]",
+        },
+        desktop: {
+          gridTemplateColumns: "grid-cols-3",
+          gap: "gap-[var(--ph-gap)]",
+        },
+      },
+      {
+        title: "Feature Grid",
+        var: "feature-grid",
+        mobile: {
+          display: "grid",
+          gridTemplateColumns: "grid-cols-1",
+          gap: "gap-[var(--ph-gap)]",
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+        },
+        desktop: {
+          gridTemplateColumns: "grid-cols-2",
+          gap: "gap-[var(--ph-gap)]",
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+        },
+      },
+      {
+        title: "Testimonial Container",
+        var: "testimonial-container",
+        mobile: {
+          background: "bg-[var(--ph-card-bg)]",
+          borderRadius: "rounded-[var(--ph-border-radius)]",
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          textAlign: "text-center",
+          borderLeft: "border-l-4",
+          borderColor: "border-[var(--ph-primary)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+      },
+      {
+        title: "CTA Container",
+        var: "cta-container",
+        mobile: {
+          background: "bg-[var(--ph-primary)]",
+          color: "text-[var(--ph-primary-text)]",
+          borderRadius: "rounded-[var(--ph-border-radius)]",
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          textAlign: "text-center",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+      },
+      {
+        title: "Stats Container",
+        var: "stats-container",
+        mobile: {
+          display: "grid",
+          gridTemplateColumns: "grid-cols-2",
+          gap: "gap-[var(--ph-gap)]",
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+        },
+        desktop: {
+          gridTemplateColumns: "grid-cols-4",
+          gap: "gap-[var(--ph-gap)]",
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+        },
+      },
+      {
+        title: "Pricing Card",
+        var: "pricing-card",
+        mobile: {
+          background: "bg-[var(--ph-card-bg)]",
+          borderRadius: "rounded-[var(--ph-border-radius)]",
+          shadow: "shadow-[var(--ph-shadow-style)]",
+          border: "border-2",
+          borderColor: "border-[var(--ph-border-color)]",
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          textAlign: "text-center",
+          position: "relative",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+      },
+      {
+        title: "Team Card",
+        var: "team-card",
+        mobile: {
+          background: "bg-[var(--ph-card-bg)]",
+          borderRadius: "rounded-[var(--ph-border-radius)]",
+          shadow: "shadow-[var(--ph-shadow-style)]",
+          overflow: "overflow-hidden",
+          textAlign: "text-center",
+        },
+      },
+      {
+        title: "Blog Post",
+        var: "blog-post",
+        mobile: {
+          maxWidth: "max-w-[var(--ph-content-width)]",
+          margin: "mx-auto",
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+      },
+      {
+        title: "Contact Form",
+        var: "contact-form",
+        mobile: {
+          background: "bg-[var(--ph-card-bg)]",
+          borderRadius: "rounded-[var(--ph-border-radius)]",
+          shadow: "shadow-[var(--ph-shadow-style)]",
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          maxWidth: "max-w-md",
+          margin: "mx-auto",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+        },
+      },
+      {
+        title: "Navigation Bar",
+        var: "navigation-bar",
+        mobile: {
+          background: "bg-[var(--ph-card-bg)]",
+          shadow: "shadow-[var(--ph-shadow-style)]",
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+          display: "flex",
+          alignItems: "items-center",
+          justifyContent: "justify-between",
+        },
+        desktop: {
+          px: "px-[var(--ph-section-gap)]",
+        },
+      },
+      {
+        title: "Footer Container",
+        var: "footer-container",
+        mobile: {
+          background: "bg-[var(--ph-footer-bg)]",
+          color: "text-[var(--ph-footer-text)]",
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+        },
+      },
+    ],
+  },
+
+  spacing: {
+    label: "Spacing Patterns",
+    type: "select" as const,
+    propKey: "presetSpacing",
+    propType: "root",
+    help: "Common spacing patterns for different content types",
+    items: [
+      {
+        title: "Tight Spacing",
+        var: "spacing-tight",
+        mobile: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          gap: "gap-[var(--ph-gap)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          gap: "gap-[var(--ph-gap)]",
+        },
+      },
+      {
+        title: "Comfortable",
+        var: "spacing-comfortable",
+        mobile: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          gap: "gap-[var(--ph-gap)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-container-padding-x)]",
+          py: "py-[var(--ph-container-padding-y)]",
+          gap: "gap-[var(--ph-gap)]",
+        },
+      },
+      {
+        title: "Generous",
+        var: "spacing-generous",
+        mobile: {
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+          gap: "gap-[var(--ph-gap)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+          gap: "gap-[var(--ph-gap)]",
+        },
+      },
+      {
+        title: "Section Spacing",
+        var: "spacing-section",
+        mobile: {
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+          gap: "gap-[var(--ph-gap)]",
+        },
+        desktop: {
+          px: "px-[var(--ph-section-gap)]",
+          py: "py-[var(--ph-section-gap)]",
+          gap: "gap-[var(--ph-gap)]",
+        },
+      },
+    ],
+  },
 };
 
 // ============================================================================
@@ -353,7 +686,7 @@ export const containerPresets = {
 
 export const backgroundImagePresets = {
   layouts: {
-    label: "Background Layouts",
+    label: "Layouts",
     type: "select" as const,
     propKey: "presetLayout",
     propType: "component",
@@ -522,7 +855,7 @@ export const backgroundImagePresets = {
   },
 
   overlays: {
-    label: "Background Overlays",
+    label: "Overlays",
     type: "select" as const,
     propKey: "presetOverlay",
     propType: "root",
@@ -586,7 +919,7 @@ export const backgroundImagePresets = {
   },
 
   content: {
-    label: "Content Positioning",
+    label: "Positioning",
     type: "select" as const,
     propKey: "presetContent",
     propType: "mobile",
@@ -1039,7 +1372,7 @@ export const textPresets = {
 
 export const buttonPresets = {
   sizes: {
-    label: "Button Size",
+    label: "Size",
     type: "slider" as const,
     propKey: "presetSize",
     propType: "root",
@@ -1084,7 +1417,7 @@ export const buttonPresets = {
   },
 
   styles: {
-    label: "Button Style",
+    label: "Style",
     type: "select" as const,
     propKey: "presetStyle",
     propType: "root",
