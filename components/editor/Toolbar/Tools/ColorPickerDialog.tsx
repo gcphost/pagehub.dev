@@ -102,7 +102,7 @@ const Item = ({
     }
     initial={{ zIndex: 1 }}
     title={title}
-    className={`relative w-5 h-5 rounded cursor-pointer border-2 ${selected ? "border-primary-500" : "border-gray-600"
+    className={`relative w-5 h-5 rounded cursor-pointer border-2 ${selected ? "border-accent-400" : "border-gray-600"
       }`}
     style={{ backgroundColor: value, ...style }}
     onClick={(e) => onClick(e, value)}

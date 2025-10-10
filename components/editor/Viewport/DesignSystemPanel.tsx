@@ -679,7 +679,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         cursor: isDragging ? 'grabbing' : 'default',
       }}
       onMouseDown={handleMouseDown}
-      className="bg-gray-900 rounded-lg shadow-2xl border border-gray-700 w-80 max-h-[80vh] flex flex-col z-[9999]"
+      className="bg-gray-900 rounded-lg shadow-2xl border border-gray-700 w-80 max-h-[60vh] flex flex-col z-[9999]"
     >
       {/* Header */}
       <div className="drag-handle flex items-center justify-between p-4 border-b border-gray-700 cursor-grab active:cursor-grabbing">
@@ -700,7 +700,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         <button
           onClick={() => setActiveTab("colors")}
           className={`flex-1 px-4 py-3 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "colors"
-            ? "text-blue-400 border-b-2 border-blue-400 bg-gray-800"
+            ? "text-accent-400 border-b-2 border-accent-400 bg-gray-800"
             : "text-gray-400 hover:text-gray-200"
             }`}
         >
@@ -710,7 +710,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         <button
           onClick={() => setActiveTab("styles")}
           className={`flex-1 px-4 py-3 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "styles"
-            ? "text-blue-400 border-b-2 border-blue-400 bg-gray-800"
+            ? "text-accent-400 border-b-2 border-accent-400 bg-gray-800"
             : "text-gray-400 hover:text-gray-200"
             }`}
         >
@@ -720,10 +720,10 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto space-y-3 scrollbar">
+      <div className="flex-1 overflow-y-auto space-y-3 scrollbar bg-gray-700">
         {/* Colors Tab */}
         {activeTab === "colors" && (
-          <div className="space-y-2 p-4">
+          <div className="space-y-2 p-4 overflow-y-auto max-h-full">
             {pallets.map((pallet, index) => (
               <div key={index} className="flex items-center gap-2 group">
                 <button
@@ -768,7 +768,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
         {/* Styles Tab */}
         {activeTab === "styles" && (
-          <div>
+          <div className="overflow-y-auto max-h-full">
             <CollapsibleSection title="Spacing & Layout" section="spacing">
               <div>
                 <label className="block text-xs font-medium text-gray-300 mb-1">

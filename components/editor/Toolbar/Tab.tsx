@@ -9,9 +9,9 @@ export const Tab = ({ tabId, icon = null, title = "" }) => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
 
   const inactive =
-    "flex items-center justify-center p-3 text-lg font-medium text-gray-500 rounded-xl hover:bg-gray-900/30 hover:text-gray-200 cursor-pointer";
+    "flex items-center justify-center p-3 text-lg font-medium text-gray-500  hover:bg-gray-900/30 hover:text-gray-200 cursor-pointer";
   const active =
-    "flex items-center justify-center p-3 text-lg font-medium bg-gray-900/30 rounded-xl text-white cursor-pointer";
+    "flex items-center justify-center p-3 text-lg font-medium text-accent-400 border-b-2 border-accent-400 cursor-pointer";
   const isActive = activeTab === tabId;
 
   if (!icon) return null;

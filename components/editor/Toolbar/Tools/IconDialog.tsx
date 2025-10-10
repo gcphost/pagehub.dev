@@ -91,7 +91,7 @@ export const IconDialogDialog = () => {
       <div style={style}>
         <button
           id={`iconPicker-${icon}`}
-          className={`w-full h-full flex flex-row cursor-pointer hover:bg-gray-100 rounded-md justify-center items-center ${dialog.value === icon ? "bg-gray-100" : ""
+          className={`w-full h-full flex flex-row cursor-pointer hover:bg-accent-50 rounded-md justify-center items-center ${dialog.value === icon ? "bg-accent-100 border-2 border-accent-400" : ""
             }`}
           onClick={(e) => changed(icon)}
         >

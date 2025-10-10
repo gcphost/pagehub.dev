@@ -147,7 +147,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+              className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
               style={scaleAnimationStyle}
               onClick={() => {
                 actions.selectNode(parent);
@@ -171,8 +171,8 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className={`cursor-pointer ${isolate ? "text-white" : "text-gray-400"
-                } hover:text-white  rounded-md p-3`}
+              className={`cursor-pointer ${isolate ? "text-accent-400" : "text-gray-400"
+                } hover:text-accent-400 rounded-md p-3`}
               style={scaleAnimationStyle}
             >
               {isolate ? <TbScaleOutlineOff /> : <TbScaleOutline />}
@@ -200,7 +200,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                   transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.9 }}
-                className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+                className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
                 style={scaleAnimationStyle}
               >
                 {props.canDelete ? <TbTrash /> : <TbTrashOff />}
@@ -222,7 +222,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                       transition: { duration: 0.2 },
                     }}
                     whileTap={{ scale: 0.9 }}
-                    className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+                    className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
                     style={scaleAnimationStyle}
                   >
                     <TbCopy />
@@ -244,7 +244,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                     }}
                     whileTap={{ scale: 0.9 }}
                     ref={ref}
-                    className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+                    className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
                     style={scaleAnimationStyle}
                   >
                     {canMake ? <TbComponents /> : <TbComponentsOff />}
@@ -269,7 +269,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer text-gray-400 hover:text-white  rounded-md p-3"
+              className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
               style={scaleAnimationStyle}
             >
               <TbX />
