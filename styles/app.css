@@ -306,17 +306,17 @@ input[type="range"]::-ms-thumb {
 }
 
 .input-base {
-  @apply border-gray-500  rounded-lg active:border-primary-500 focus:border-primary-500 hover:border-primary-500 cursor-pointer;
+  @apply border-gray-500  rounded-lg active:border-accent-400 focus:border-accent-400 hover:border-primary-500 cursor-pointer;
 }
 
 .input {
-  @apply w-full bg-gray-500/50 border text-white border-gray-500  rounded-lg active:border-primary-500 focus:border-primary-500 hover:border-primary-500 cursor-pointer;
+  @apply w-full bg-gray-500/50 border text-white border-gray-500  rounded-lg active:border-accent-400 focus:border-accent-400 hover:border-primary-500 cursor-pointer;
 }
 .input-plain {
   @apply w-full bg-transparent border-0 text-white outline-none focus:outline-none cursor-pointer px-2 py-1;
 }
 .input-hover {
-  @apply active:border-primary-500 focus:border-primary-500 hover:border-primary-500 border-gray-500 cursor-pointer;
+  @apply focus-within:border-accent-400 hover:border-primary-500 border-gray-500 cursor-pointer;
 }
 .input-wrapper {
   @apply rounded-lg bg-gray-500/50 border-gray-500 border w-full px-1 py-0.5 input-hover;
@@ -339,7 +339,7 @@ input[type="range"]::-ms-thumb {
 }
 
 .dialog-input {
-  @apply rounded-md border-green-500 border p-3 scrollbar bg-gray-50  active:border-primary-500 focus:border-primary-500;
+  @apply rounded-md border-green-500 border p-3 scrollbar bg-gray-50  active:border-accent-400 focus:border-accent-400;
 }
 
 .hue-horizontal {
@@ -390,7 +390,7 @@ ul {
 }
 
 .input-color {
-  @apply w-full h-12 rounded-md cursor-pointer border input-hover flex items-center;
+  @apply w-full h-12 rounded-md cursor-pointer border input-hover flex items-center focus-within:border-accent-400;
 }
 
 .btn-search {
@@ -398,14 +398,14 @@ ul {
 }
 
 .input-wrapper {
-  @apply rounded-md bg-primary-500 border-primary-500 border w-full px-1 py-0 inside-shadow;
+  @apply rounded-md bg-primary-500 border-primary-500 border w-full px-1 py-0 inside-shadow focus-within:border-accent-400;
 }
 
 #toolbarContents .input,
 #toolbarContents .input-plain,
 #toolbarContents .input-base,
 #toolbarContents .btn {
-  @apply text-sm px-2 py-0.5 min-h-5;
+  @apply text-sm px-2 py-0.5 min-h-5 focus:ring-accent-400 focus:border-accent-400;
 }
 
 #toolbarContents .input-color {
@@ -413,7 +413,7 @@ ul {
 }
 
 #toolbarContents .btn-search {
-  @apply top-0 h-7 right-0;
+  @apply top-0 h-7 right-0 w-7 flex items-center justify-center p-0;
 }
 
 .toolbar-label {

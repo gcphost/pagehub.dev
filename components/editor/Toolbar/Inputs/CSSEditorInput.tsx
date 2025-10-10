@@ -87,9 +87,9 @@ export const CSSEditorInput = () => {
   };
 
   return (
-    <ToolbarSection title="Inline CSS">
+    <ToolbarSection title="Inline Style Tag">
       <div className="w-full">
-        <div className="rounded-lg overflow-hidden border border-gray-600">
+        <div className="rounded-lg overflow-hidden border border-gray-600 focus:border-accent-400 focus-within:border-accent-400">
           <CodeMirror
             value={value || ""}
             height="150px"
@@ -121,7 +121,7 @@ export const CSSEditorInput = () => {
           />
         </div>
         <p className="text-xs text-gray-400 mt-2">
-          Inline styles for this element. Use valid CSS syntax.
+          Use valid CSS syntax.
         </p>
       </div>
     </ToolbarSection>

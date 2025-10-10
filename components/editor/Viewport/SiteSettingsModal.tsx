@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { TbX } from "react-icons/tb";
+import { HTMLCodeInput } from "../Toolbar/Inputs/HTMLCodeInput";
 import { StandaloneImagePicker } from "./StandaloneImagePicker";
 
 interface SiteSettingsModalProps {
@@ -14,7 +15,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
   const { actions, query } = useEditor();
 
   // UI State
-  const [activeTab, setActiveTab] = useState<"general" | "code" | "branding" | "ai">("general");
+  const [activeTab, setActiveTab] = useState<"branding" | "code" | "ai">("branding");
 
   // Site Settings
   const [favicon, setFavicon] = useState("");
@@ -135,49 +136,73 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
           <div className="border-b border-gray-200 bg-gray-50">
             <div className="flex">
               <button
-                onClick={() => setActiveTab("general")}
-                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "general"
-                  ? "text-primary-600 border-b-2 border-primary-600 bg-white"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                  }`}
-              >
-                General
-              </button>
-              <button
-                onClick={() => setActiveTab("code")}
-                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "code"
-                  ? "text-primary-600 border-b-2 border-primary-600 bg-white"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                  }`}
-              >
-                Custom Code
-              </button>
-              <button
                 onClick={() => setActiveTab("branding")}
                 className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "branding"
-                  ? "text-primary-600 border-b-2 border-primary-600 bg-white"
+                  ? "text-accent-400 border-b-2 border-accent-400 bg-white"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
               >
                 Branding
               </button>
+
               <button
                 onClick={() => setActiveTab("ai")}
                 className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "ai"
-                  ? "text-primary-600 border-b-2 border-primary-600 bg-white"
+                  ? "text-accent-400 border-b-2 border-accent-400 bg-white"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
               >
                 AI
+              </button>
+
+              <button
+                onClick={() => setActiveTab("code")}
+                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "code"
+                  ? "text-accent-400 border-b-2 border-accent-400 bg-white"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                  }`}
+              >
+                Custom Code
               </button>
             </div>
           </div>
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto p-6">
-            {/* General Tab */}
-            {activeTab === "general" && (
+
+            {/* Custom Code Tab */}
+            {activeTab === "code" && (
               <div className="space-y-6">
+                <HTMLCodeInput
+                  value={headerCode}
+                  onChange={setHeaderCode}
+                  label="Header Code"
+                  height="200px"
+                  placeholder="<style>...</style>&#10;<script>...</script>"
+                  helpText="Custom CSS and JavaScript injected into the &lt;head&gt; of every page"
+                />
+
+                <HTMLCodeInput
+                  value={footerCode}
+                  onChange={setFooterCode}
+                  label="Footer Code"
+                  height="200px"
+                  placeholder="<script>...</script>"
+                  helpText="Scripts injected before the closing &lt;/body&gt; tag"
+                />
+              </div>
+            )}
+
+            {/* Branding Tab */}
+            {activeTab === "branding" && (
+              <div className="space-y-6">
+                <div className="space-y-1 mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Branding & Company Information</h3>
+                  <p className="text-sm text-gray-500">
+                    Your company details and branding assets for customization
+                  </p>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Favicon
@@ -189,58 +214,6 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     help="Recommended: .ico, .png, or .gif. Appears in browser tabs."
                   />
                 </div>
-              </div>
-            )}
-
-            {/* Custom Code Tab */}
-            {activeTab === "code" && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Header Code
-                  </label>
-                  <textarea
-                    value={headerCode}
-                    onChange={(e) => setHeaderCode(e.target.value)}
-                    rows={8}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 font-mono text-sm bg-gray-50"
-                    placeholder="<style>...</style>&#10;<script>...</script>"
-                    spellCheck={false}
-                  />
-                  <p className="text-xs text-gray-500 mt-2">
-                    Custom CSS and JavaScript injected into the &lt;head&gt; of every page
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Footer Code
-                  </label>
-                  <textarea
-                    value={footerCode}
-                    onChange={(e) => setFooterCode(e.target.value)}
-                    rows={8}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 font-mono text-sm bg-gray-50"
-                    placeholder="<script>...</script>"
-                    spellCheck={false}
-                  />
-                  <p className="text-xs text-gray-500 mt-2">
-                    Scripts injected before the closing &lt;/body&gt; tag
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Branding Tab */}
-            {activeTab === "branding" && (
-              <div className="space-y-6">
-                <div className="space-y-1 mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Company Information</h3>
-                  <p className="text-sm text-gray-500">
-                    Your company details for branding and customization
-                  </p>
-
-                </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -250,7 +223,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     type="text"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                     placeholder="Your Company"
                   />
                 </div>
@@ -263,7 +236,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     type="text"
                     value={companyType}
                     onChange={(e) => setCompanyType(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                     placeholder="e.g., ecommerce, finance, technology"
                   />
                 </div>
@@ -276,7 +249,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     type="text"
                     value={companyLocation}
                     onChange={(e) => setCompanyLocation(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                     placeholder="Los Angeles, CA"
                   />
                 </div>
@@ -289,7 +262,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     value={companyAddress}
                     onChange={(e) => setCompanyAddress(e.target.value)}
                     rows={2}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                     placeholder="123 Main St, Suite 100&#10;Los Angeles, CA 90001"
                   />
                 </div>
@@ -303,7 +276,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                       type="tel"
                       value={companyPhone}
                       onChange={(e) => setCompanyPhone(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                       placeholder="(555) 123-4567"
                     />
                   </div>
@@ -316,7 +289,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                       type="email"
                       value={companyEmail}
                       onChange={(e) => setCompanyEmail(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                       placeholder="contact@company.com"
                     />
                   </div>
@@ -330,7 +303,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     type="url"
                     value={companyWebsite}
                     onChange={(e) => setCompanyWebsite(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                     placeholder="https://www.company.com"
                   />
                 </div>
@@ -367,7 +340,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     onChange={(e) => setAiPrompt(e.target.value)}
                     rows={3}
                     maxLength={200}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                     placeholder="Make the copy more engaging, clear, and compelling while keeping the same core message..."
                   />
                   <div className="flex justify-between items-center mt-1">
@@ -402,7 +375,7 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                                 setAiStyleTags(aiStyleTags.filter(t => t !== tag));
                               }
                             }}
-                            className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                            className="rounded border-gray-300 text-accent-400 focus:ring-accent-400"
                           />
                           <span className="text-sm text-gray-700 capitalize">{tag}</span>
                         </label>

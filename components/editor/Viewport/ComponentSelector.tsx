@@ -231,7 +231,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
               placeholder="Search components..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-700 text-white text-sm rounded-md border border-gray-600 focus:outline-none focus:border-primary-500"
+              className="w-full px-3 py-2 bg-gray-700 text-white text-sm rounded-md border border-gray-600 focus:outline-none focus:border-accent-400"
               autoFocus
             />
           </div>

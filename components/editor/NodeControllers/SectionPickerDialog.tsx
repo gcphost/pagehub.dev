@@ -256,7 +256,7 @@ export const SectionPickerDialog = ({
                       placeholder="Search"
                       value={searchQuery}
                       onChange={(e) => handleSearch(e.target.value)}
-                      className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-sm"
+                      className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 focus:border-transparent bg-white text-sm"
                     />
                     <MdSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
                   </div>

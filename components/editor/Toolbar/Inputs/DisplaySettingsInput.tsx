@@ -21,7 +21,7 @@ export default function DisplaySettingsInput() {
           label="Id"
           placeholder="myComponent"
           labelHide={true}
-          description="Assign a unique id to the element. Used for Hover & Click settings."
+          description="Assign a unique id to the element. Can be used in Hover & Click settings."
         />
       </ToolbarSection>
     </>

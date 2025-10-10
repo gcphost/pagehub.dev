@@ -172,14 +172,14 @@ export const Card = ({
   );
 };
 
-export const CardLight = ({ value, onClick }) => {
+export const CardLight = ({ value, onClick, className = "" }) => {
   if (!value) {
     return null;
   }
   return (
     <button
       onClick={onClick}
-      className="bg-white text-gray-800 text-xs font-medium mr-2 p-1 rounded inline-flex cursor-pointer"
+      className={`bg-white text-gray-800 text-xs font-medium px-1 py-0.5 rounded inline-flex cursor-pointer ${className}`}
     >
       <Tooltip content={`Add ${value}`} placement="top" arrow={false}>
         {value}

@@ -611,7 +611,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="Search media..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
                 />
               </div>
 
@@ -684,7 +684,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     value={urlInput}
                     onChange={(e) => setUrlInput(e.target.value)}
                     placeholder="https://example.com/image.jpg"
-                    className="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-accent-400"
                     onKeyDown={(e) => e.key === "Enter" && handleAddUrl()}
                     autoFocus
                   />
@@ -704,7 +704,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     id="saveUrlToCdn"
                     checked={saveUrlToCdn}
                     onChange={(e) => setSaveUrlToCdn(e.target.checked)}
-                    className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500"
+                    className="w-4 h-4 text-accent-400 bg-gray-100 border-gray-300 rounded focus:ring-accent-400"
                   />
                   <label htmlFor="saveUrlToCdn" className="text-xs text-gray-600">
                     Save to CDN (downloads image to your account)
@@ -725,7 +725,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     value={svgInput}
                     onChange={(e) => setSvgInput(e.target.value)}
                     placeholder="<svg>...</svg>"
-                    className="flex-1 px-3 py-1.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 font-mono text-xs"
+                    className="flex-1 px-3 py-1.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-accent-400 font-mono text-xs"
                     rows={3}
                     autoFocus
                   />
@@ -994,7 +994,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                         })
                       }
                       placeholder="https://example.com/image.jpg"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400"
                     />
                   </div>
                 )}
@@ -1014,7 +1014,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                         })
                       }
                       placeholder="<svg>...</svg>"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 font-mono text-sm"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400 font-mono text-sm"
                       rows={6}
                     />
                   </div>
@@ -1034,7 +1034,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       })
                     }
                     placeholder="Enter file name"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400"
                   />
                 </div>
 
@@ -1052,7 +1052,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       })
                     }
                     placeholder="Describe the image for accessibility"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400"
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Important for accessibility and SEO
@@ -1073,7 +1073,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     }
                     placeholder="Additional details about this media"
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400"
                   />
                 </div>
               </div>
