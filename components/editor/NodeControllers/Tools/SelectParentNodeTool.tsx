@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import { motion } from "framer-motion";
 import { TbArrowUp } from "react-icons/tb";
 
 interface SelectParentNodeToolProps {
@@ -54,13 +55,14 @@ export const SelectParentNodeTool = ({
 
   return (
     <>
-      <button
+      <motion.button
+        whileTap={{ scale: 0.9 }}
         type="button"
         className="flex size-6 items-center justify-center text-foreground"
         onClick={handleSelectParent}
       >
         {icon}
-      </button>
+      </motion.button>
       {children}
     </>
   );

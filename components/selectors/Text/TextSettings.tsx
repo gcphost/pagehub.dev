@@ -130,7 +130,7 @@ export const TextSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Colors" collapsible={false}>
+          <ToolbarSection title="Colors" >
             <ColorInput
               propKey="color"
               label="Text"
@@ -142,7 +142,7 @@ export const TextSettings = () => {
 
           <FontInput />
 
-          <ToolbarSection title="Decoration" collapsible={false}>
+          <ToolbarSection title="Decoration" >
             <ShadowInput />
           </ToolbarSection>
         </TabBody>

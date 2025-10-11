@@ -32,6 +32,7 @@ import {
   ViewModeAtom,
   isolatePageAlt,
 } from "utils/lib";
+import { useAutoOpenSidebar } from "../hooks/useAutoOpenSidebar";
 import { DeviceOffline } from "../Toolbar/DeviceOffline";
 import { useComponentSync } from "../useComponentSync";
 import { ComponentEditorTabs } from "./ComponentEditorTabs";
@@ -110,6 +111,9 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
   // Sync linked components when master components change
   useComponentSync();
+
+  // Auto-open sidebar when nodes are selected
+  useAutoOpenSidebar();
 
   useEffect(() => {
     if (!window) {

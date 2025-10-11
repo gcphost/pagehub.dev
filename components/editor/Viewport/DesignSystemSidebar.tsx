@@ -7,6 +7,7 @@ import {
   TbPlus,
   TbRuler,
   TbTrash,
+  TbTypography,
   TbX,
 } from "react-icons/tb";
 import { useRecoilState } from "recoil";
@@ -24,7 +25,7 @@ interface DesignSystemSidebarProps {
 
 export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProps) => {
   const { actions, query } = useEditor();
-  const [activeTab, setActiveTab] = useState<"colors" | "styles">("colors");
+  const [activeTab, setActiveTab] = useState<"colors" | "styles" | "typography">("colors");
   const [fontDialog, setFontDialog] = useRecoilState(FontFamilyDialogAtom);
   const [colorDialog, setColorDialog] = useRecoilState(ColorPickerAtom);
   const headingFontButtonRef = useRef<HTMLButtonElement>(null);
@@ -53,6 +54,13 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
 
   // Color Palette State
   const [pallets, setPallets] = useState(DEFAULT_PALETTE);
+
+  // Typography State
+  const [customFonts, setCustomFonts] = useState([
+    { name: "Heading Font", fontFamily: "Inter", fontSize: "2rem", fontWeight: "700", lineHeight: "1.2" },
+    { name: "Body Font", fontFamily: "Inter", fontSize: "1rem", fontWeight: "400", lineHeight: "1.5" },
+    { name: "Caption Font", fontFamily: "Inter", fontSize: "0.875rem", fontWeight: "400", lineHeight: "1.4" },
+  ]);
 
   // Style Guide State
   const [borderRadius, setBorderRadius] = useState(
@@ -216,6 +224,17 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
           setPallets(rootNodeData.pallet);
         } else {
           setPallets(DEFAULT_PALETTE);
+        }
+
+        // Load typography
+        if (rootNodeData.typography && Array.isArray(rootNodeData.typography)) {
+          setCustomFonts(rootNodeData.typography);
+        } else {
+          setCustomFonts([
+            { name: "Heading Font", fontFamily: "Inter", fontSize: "2rem", fontWeight: "700", lineHeight: "1.2" },
+            { name: "Body Font", fontFamily: "Inter", fontSize: "1rem", fontWeight: "400", lineHeight: "1.5" },
+            { name: "Caption Font", fontFamily: "Inter", fontSize: "0.875rem", fontWeight: "400", lineHeight: "1.4" },
+          ]);
         }
 
         // Load style guide
@@ -399,6 +418,7 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
           // Update last saved data
           lastSavedData.current = {
             pallet: rootNodeData.pallet,
+            typography: rootNodeData.typography,
             styleGuide: rootNodeData.styleGuide,
           };
         } catch (e) {
@@ -423,6 +443,7 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
         try {
           const newData = {
             pallet: pallets,
+            typography: customFonts,
             styleGuide: {
               borderRadius,
               buttonPadding,
@@ -453,6 +474,7 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
 
           actions.setProp(ROOT_NODE, (props) => {
             props.pallet = newData.pallet;
+            props.typography = newData.typography;
             props.styleGuide = newData.styleGuide;
           });
 
@@ -477,6 +499,7 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
   }, [
     isOpen,
     pallets,
+    customFonts,
     borderRadius,
     buttonPadding,
     containerPadding,
@@ -621,6 +644,31 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
   const deleteColor = (index: number) => {
     const newPallets = pallets.filter((_, i) => i !== index);
     setPallets(newPallets);
+  };
+
+  // Typography management functions
+  const updateFontName = (index: number, name: string) => {
+    const newFonts = [...customFonts];
+    newFonts[index] = { ...newFonts[index], name };
+    setCustomFonts(newFonts);
+  };
+
+  const updateFontProperty = (index: number, property: string, value: string) => {
+    const newFonts = [...customFonts];
+    newFonts[index] = { ...newFonts[index], [property]: value };
+    setCustomFonts(newFonts);
+  };
+
+  const addFont = () => {
+    setCustomFonts([
+      ...customFonts,
+      { name: "New Font", fontFamily: "Inter", fontSize: "1rem", fontWeight: "400", lineHeight: "1.5" },
+    ]);
+  };
+
+  const deleteFont = (index: number) => {
+    const newFonts = customFonts.filter((_, i) => i !== index);
+    setCustomFonts(newFonts);
   };
 
   // Font picker handlers
@@ -869,6 +917,16 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
         >
           <TbRuler size={18} />
           Styles
+        </button>
+        <button
+          onClick={() => setActiveTab("typography")}
+          className={`hidden flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${activeTab === "typography"
+            ? "border-b-2 border-primary bg-background text-primary"
+            : "text-muted-foreground hover:text-foreground"
+            }`}
+        >
+          <TbTypography size={18} />
+          Typography
         </button>
       </div>
 
@@ -1350,6 +1408,148 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
                 </select>
               </div>
             </CollapsibleSection>
+          </div>
+        )}
+
+        {/* Typography Tab */}
+        {activeTab === "typography" && (
+          <div className="max-h-full space-y-1.5 overflow-y-auto p-3">
+            {/* Add Font Button - Top */}
+            <button
+              onClick={addFont}
+              className="mb-2 flex w-full items-center justify-center gap-2 rounded border border-border bg-accent px-3 py-2 text-sm text-accent-foreground transition-colors hover:bg-accent"
+            >
+              <TbPlus size={16} />
+              Add Font
+            </button>
+
+            {/* Font List */}
+            {customFonts.map((font, index) => (
+              <div key={index} className="group space-y-3 rounded border border-border bg-card p-3">
+                {/* Font Name */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={font.name}
+                    onChange={(e) => updateFontName(index, e.target.value)}
+                    className="flex-1 border-b border-transparent bg-transparent px-1 py-0.5 text-sm font-medium text-card-foreground hover:border-primary focus:border-ring focus:outline-none"
+                    placeholder="Font name"
+                  />
+                  <button
+                    onClick={() => deleteFont(index)}
+                    className="p-1 text-destructive opacity-0 transition-opacity hover:text-destructive group-hover:opacity-100"
+                    title="Delete font"
+                  >
+                    <TbTrash size={16} />
+                  </button>
+                </div>
+
+                {/* Font Properties */}
+                <div className="grid grid-cols-2 gap-2">
+                  {/* Font Family */}
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-muted-foreground">
+                      Font Family
+                    </label>
+                    <button
+                      onClick={() => {
+                        // Open font family dialog for this specific typography item
+                        const rect = document.querySelector(`[data-font-index="${index}"]`)?.getBoundingClientRect();
+                        if (rect) {
+                          setFontDialog({
+                            enabled: true,
+                            value: font.fontFamily ? font.fontFamily.split(", ") : [],
+                            changed: (value: any) => {
+                              updateFontProperty(index, "fontFamily", Array.isArray(value) ? value.join(", ") : value);
+                            },
+                            e: rect,
+                          });
+                        }
+                      }}
+                      data-font-index={index}
+                      className="w-full rounded border border-border bg-background px-2 py-1 text-left text-xs text-foreground hover:bg-muted focus:outline-none focus:ring-1 focus:ring-ring"
+                      style={{ fontFamily: font.fontFamily }}
+                    >
+                      {font.fontFamily || "Select font family"}
+                    </button>
+                  </div>
+
+                  {/* Font Size */}
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-muted-foreground">
+                      Font Size
+                    </label>
+                    <input
+                      type="text"
+                      value={font.fontSize}
+                      onChange={(e) => updateFontProperty(index, "fontSize", e.target.value)}
+                      className="w-full rounded border border-border bg-background px-2 py-1 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                      placeholder="1rem"
+                    />
+                  </div>
+
+                  {/* Font Weight */}
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-muted-foreground">
+                      Font Weight
+                    </label>
+                    <select
+                      value={font.fontWeight}
+                      onChange={(e) => updateFontProperty(index, "fontWeight", e.target.value)}
+                      className="w-full rounded border border-border bg-background px-2 py-1 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                    >
+                      <option value="100">Thin (100)</option>
+                      <option value="200">Extra Light (200)</option>
+                      <option value="300">Light (300)</option>
+                      <option value="400">Normal (400)</option>
+                      <option value="500">Medium (500)</option>
+                      <option value="600">Semi Bold (600)</option>
+                      <option value="700">Bold (700)</option>
+                      <option value="800">Extra Bold (800)</option>
+                      <option value="900">Black (900)</option>
+                    </select>
+                  </div>
+
+                  {/* Line Height */}
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-muted-foreground">
+                      Line Height
+                    </label>
+                    <input
+                      type="text"
+                      value={font.lineHeight}
+                      onChange={(e) => updateFontProperty(index, "lineHeight", e.target.value)}
+                      className="w-full rounded border border-border bg-background px-2 py-1 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                      placeholder="1.5"
+                    />
+                  </div>
+                </div>
+
+                {/* Font Preview */}
+                <div className="rounded bg-muted p-2">
+                  <div
+                    style={{
+                      fontFamily: font.fontFamily,
+                      fontSize: font.fontSize,
+                      fontWeight: font.fontWeight,
+                      lineHeight: font.lineHeight,
+                    }}
+                    className="text-sm text-muted-foreground"
+                  >
+                    The quick brown fox jumps over the lazy dog
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Add Font Button - Bottom */}
+            <button
+              onClick={addFont}
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded border border-border bg-accent px-3 py-2 text-sm text-accent-foreground transition-colors hover:bg-accent"
+            >
+              <TbPlus size={16} />
+              Add Font
+            </button>
           </div>
         )}
       </div>

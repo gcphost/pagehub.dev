@@ -129,7 +129,6 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
         {/* Render background elements */}
         {props.backgroundPattern && (
           <RenderPattern
-            children={null}
             props={props}
             settings={settings}
             view={view}
@@ -137,18 +136,21 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
             properties={inlayProps}
             preview={preview}
             query={query}
-          />
+          >
+            <></>
+          </RenderPattern>
         )}
         {props.backgroundGradient && (
           <RenderGradient
-            children={null}
             props={props}
             view={view}
             enabled={enabled}
             properties={inlayProps}
             preview={preview}
             query={query}
-          />
+          >
+            <></>
+          </RenderGradient>
         )}
 
         {/* Render grouped components */}

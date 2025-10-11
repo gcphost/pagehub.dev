@@ -49,9 +49,9 @@ export const EditorEmptyState = () => {
         className="text-muted-foreground"
       >
         {isComponentMode && !hasComponents ? (
-          <TbBoxModel2 className="size-20" />
+          <TbBoxModel2 className="size-16" />
         ) : (
-          <TbPointer className="size-20 rotate-90" />
+          <TbPointer className="size-16 rotate-90" />
         )}
       </motion.div>
 
@@ -62,7 +62,7 @@ export const EditorEmptyState = () => {
         transition={{ duration: 0.3, delay: 0.1 }}
         className="space-y-3"
       >
-        <h2 className="text-2xl font-semibold text-foreground">
+        <h2 className="text-xl font-semibold text-foreground">
           {isComponentMode && !hasComponents ? (
             <>Create your first component</>
           ) : (
@@ -94,7 +94,7 @@ export const EditorEmptyState = () => {
           ) : (
             <>
               <span>Click on an element to start editing,</span>
-              <span>or add new sections</span>
+              <span>or create your own components</span>
               <button
                 onClick={handleSectionsClick}
                 className="inline-flex size-5 cursor-pointer items-center justify-center text-foreground transition-colors hover:text-primary"
@@ -102,7 +102,7 @@ export const EditorEmptyState = () => {
               >
                 <TbBoxModel2 className="size-8" />
               </button>
-              <span>and components</span>
+              <span>and then add them</span>
               <button
                 onClick={handleComponentsClick}
                 className="inline-flex size-5 cursor-pointer items-center justify-center text-foreground transition-colors hover:text-primary"
@@ -110,7 +110,7 @@ export const EditorEmptyState = () => {
               >
                 <TbPlus className="size-8" />
               </button>
-              <span>to build your page.</span>
+              <span>to the page.</span>
             </>
           )}
         </p>

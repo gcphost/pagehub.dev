@@ -44,6 +44,7 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
   const designVarsResult = useEditor((state) => {
     const rootNode = state.nodes[ROOT_NODE];
     const runtimePalette = rootNode?.data?.props?.pallet || [];
+    const runtimeTypography = rootNode?.data?.props?.typography || [];
     const runtimeStyleGuide = rootNode?.data?.props?.styleGuide || {};
 
     const vars: DesignVar[] = [];
@@ -67,6 +68,53 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
           value: item.color,
           category: "palette",
           label: `${item.name} (Palette)`,
+        });
+      }
+    });
+
+    // Custom typography fonts
+    runtimeTypography.forEach((font: any, index: number) => {
+      if (font?.name) {
+        const varName = font.name
+          .replace(/([A-Z])/g, "-$1")
+          .replace(/\s+/g, "-")
+          .toLowerCase()
+          .replace(/^-/, "");
+
+        // Add font family variable
+        vars.push({
+          name: `${font.name} Font Family`,
+          varName: `--ph-${varName}-font-family`,
+          value: font.fontFamily || "Inter",
+          category: "typography",
+          label: `${font.name} Font Family`,
+        });
+
+        // Add font size variable
+        vars.push({
+          name: `${font.name} Font Size`,
+          varName: `--ph-${varName}-font-size`,
+          value: font.fontSize || "1rem",
+          category: "typography",
+          label: `${font.name} Font Size`,
+        });
+
+        // Add font weight variable
+        vars.push({
+          name: `${font.name} Font Weight`,
+          varName: `--ph-${varName}-font-weight`,
+          value: font.fontWeight || "400",
+          category: "typography",
+          label: `${font.name} Font Weight`,
+        });
+
+        // Add line height variable
+        vars.push({
+          name: `${font.name} Line Height`,
+          varName: `--ph-${varName}-line-height`,
+          value: font.lineHeight || "1.5",
+          category: "typography",
+          label: `${font.name} Line Height`,
         });
       }
     });

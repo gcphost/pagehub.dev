@@ -18,7 +18,7 @@ export const Tab = ({ tabId, icon = null, title = "" }) => {
       <motion.div
         className={`flex cursor-pointer items-center justify-center rounded-md p-1.5 text-lg font-medium ${isActive
           ? "bg-primary text-primary-foreground"
-          : "text-muted-foreground hover:bg-primary hover:text-primary-foreground"
+          : "text-secondary-foreground hover:bg-primary hover:text-primary-foreground"
           }`}
         role="tab"
         tabIndex={isActive ? 0 : -1}

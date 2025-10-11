@@ -4,6 +4,7 @@ import {
   buildClonedTree,
   saveHandler,
 } from "components/editor/Viewport/lib";
+import { motion } from "framer-motion";
 import { useCallback } from "react";
 import { TbCopy } from "react-icons/tb";
 
@@ -56,8 +57,8 @@ export const DuplicateNodeButton = ({
   };
 
   return (
-    <button className={className} onClick={handleDuplicate}>
+    <motion.button className={className} onClick={handleDuplicate} whileTap={{ scale: 0.9 }}>
       <TbCopy />
-    </button>
+    </motion.button>
   );
 };

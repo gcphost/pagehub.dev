@@ -7,6 +7,7 @@ import { getPropFinalValue } from "components/editor/Viewport/lib";
 import { AddElement } from "components/editor/Viewport/Toolbox/lib";
 import { Tooltip } from "components/layout/Tooltip";
 import { Container } from "components/selectors/Container";
+import { motion } from "framer-motion";
 import {
   TbLayoutAlignBottom,
   TbLayoutAlignCenter,
@@ -215,10 +216,10 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         <Tooltip
           content={`Add ${["flex-row", "flex-row-reverse"].includes(value) ? "column" : "row"} container`}
         >
-          <button
-            className={`tool-button ${
-              direction == "horizontal" ? "-rotate-90" : ""
-            }`}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className={`tool-button ${direction == "horizontal" ? "-rotate-90" : ""
+              }`}
             onClick={() => {
               const isRow = ["flex-row", "flex-row-reverse"].includes(value);
               AddElement({
@@ -241,23 +242,23 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
             }}
           >
             <TbRowInsertTop />
-          </button>
+          </motion.button>
         </Tooltip>
       )}
 
       {match && (
         <Tooltip content="Add components">
-          <button
-            className={`tool-button ${
-              direction == "horizontal" ? "-rotate-90" : ""
-            }`}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className={`tool-button ${direction == "horizontal" ? "-rotate-90" : ""
+              }`}
             onClick={() => {
               setShowMenu(true);
               setShowMenuType("components");
             }}
           >
             <TbPlus />
-          </button>
+          </motion.button>
         </Tooltip>
       )}
     </NodeToolWrapper>

@@ -1,6 +1,7 @@
 import { ROOT_NODE, useEditor as useCraftEditor } from "@craftjs/core";
 import { Editor } from "@tiptap/react";
 import { Tooltip } from "components/layout/Tooltip";
+import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import {
   MdFontDownload,
@@ -237,17 +238,18 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
           placement="top"
           tooltipClassName="!text-xs !px-2 !py-1"
         >
-          <button
+          <motion.button
             onClick={handleButtonClick(generateAIContent)}
             disabled={isGeneratingContent}
             className={`tool-button ${isGeneratingContent ? "cursor-not-allowed opacity-50" : "hover:text-accent-foreground"}`}
+            whileTap={{ scale: 0.9 }}
           >
             {isGeneratingContent ? (
               <div className="size-4 animate-spin rounded-full border-2 border-accent border-t-transparent" />
             ) : (
               <TbWand className="size-4" />
             )}
-          </button>
+          </motion.button>
         </Tooltip>
 
         <div className="flex gap-1 border-l border-border pl-2">
@@ -258,77 +260,84 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
               placement="top"
               tooltipClassName="!text-xs !px-2 !py-1"
             >
-              <button className="tool-button">
+              <motion.button className="tool-button" whileTap={{ scale: 0.9 }}>
                 <MdFormatAlignLeft className="size-4" />
-              </button>
+              </motion.button>
             </Tooltip>
             <div className="invisible absolute left-0 z-50 mt-1 w-fit min-w-32 rounded-lg border border-border bg-card p-2 pb-0 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <div className="mb-2 flex gap-1">
-                <button
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign("left").run();
                   })}
                   className={`tool-button ${editor.isActive({ textAlign: "left" }) ? "bg-muted text-foreground" : ""}`}
                   title="Align Left"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatAlignLeft className="mx-auto size-4" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign("center").run();
                   })}
                   className={`tool-button ${editor.isActive({ textAlign: "center" }) ? "bg-muted text-foreground" : ""}`}
                   title="Align Center"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatAlignCenter className="mx-auto size-4" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign("right").run();
                   })}
                   className={`tool-button ${editor.isActive({ textAlign: "right" }) ? "bg-muted text-foreground" : ""}`}
                   title="Align Right"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatAlignRight className="mx-auto size-4" />
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleBulletList().run();
                   })}
                   className={`tool-button ${editor.isActive("bulletList") ? "bg-muted text-foreground" : ""}`}
                   title="Bullet List"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatListBulleted className="mx-auto size-4" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleOrderedList().run();
                   })}
                   className={`tool-button ${editor.isActive("orderedList") ? "bg-muted text-foreground" : ""}`}
                   title="Numbered List"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatListNumbered className="mx-auto size-4" />
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().liftListItem("listItem").run();
                   })}
                   className="tool-button"
                   title="Decrease Indent"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatIndentIncrease className="mx-auto size-4 rotate-180" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().sinkListItem("listItem").run();
                   })}
                   className="tool-button"
                   title="Increase Indent"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatIndentIncrease className="mx-auto size-4" />
-                </button>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -340,68 +349,74 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
               placement="top"
               tooltipClassName="!text-xs !px-2 !py-1"
             >
-              <button className="tool-button">
+              <motion.button className="tool-button" whileTap={{ scale: 0.9 }}>
                 <MdFormatBold className="size-4" />
-              </button>
+              </motion.button>
             </Tooltip>
             <div className="invisible absolute left-0 z-50 mt-1 w-fit min-w-32 rounded-lg border border-border bg-card p-2 pb-0 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <div className="mb-2 flex gap-1">
-                <button
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleBold().run();
                   })}
                   className={`tool-button ${editor.isActive("bold") ? "bg-muted text-foreground" : ""}`}
                   title="Bold"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatBold className="mx-auto size-4" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleItalic().run();
                   })}
                   className={`tool-button ${editor.isActive("italic") ? "bg-muted text-foreground" : ""}`}
                   title="Italic"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatItalic className="mx-auto size-4" />
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleUnderline().run();
                   })}
                   className={`tool-button ${editor.isActive("underline") ? "bg-muted text-foreground" : ""}`}
                   title="Underline"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatUnderlined className="mx-auto size-4" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleStrike().run();
                   })}
                   className={`tool-button ${editor.isActive("strike") ? "bg-muted text-foreground" : ""}`}
                   title="Strikethrough"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdFormatStrikethrough className="mx-auto size-4" />
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleSuperscript().run();
                   })}
                   className={`tool-button ${editor.isActive("superscript") ? "bg-muted text-foreground" : ""}`}
                   title="Superscript"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdSuperscript className="mx-auto size-4" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleSubscript().run();
                   })}
                   className={`tool-button ${editor.isActive("subscript") ? "bg-muted text-foreground" : ""}`}
                   title="Subscript"
+                  whileTap={{ scale: 0.9 }}
                 >
                   <MdSubscript className="mx-auto size-4" />
-                </button>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -413,11 +428,11 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
               placement="top"
               tooltipClassName="!text-xs !px-2 !py-1"
             >
-              <button className="tool-button">
+              <motion.button className="tool-button" whileTap={{ scale: 0.9 }}>
                 <MdFontDownload className="size-4" />
                 <span className="text-xs">Font</span>
                 <TbChevronDown className="size-3 transition-transform duration-200 group-hover:rotate-180" />
-              </button>
+              </motion.button>
             </Tooltip>
             <div className="invisible absolute inset-x-0 z-50 mt-1 min-w-32 rounded-lg border border-border bg-background p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <div className="flex h-64 gap-8">
@@ -526,42 +541,46 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                       Font Size
                     </div>
                     <div className="flex items-center gap-2">
-                      <button
+                      <motion.button
                         onClick={handleButtonClick(() => {
                           editor.chain().focus().setFontSize("12px").run();
                         })}
                         className="rounded px-2 py-1 text-xs text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground"
                         title="Small"
+                        whileTap={{ scale: 0.9 }}
                       >
                         S
-                      </button>
-                      <button
+                      </motion.button>
+                      <motion.button
                         onClick={handleButtonClick(() => {
                           editor.chain().focus().setFontSize("16px").run();
                         })}
                         className="rounded px-2 py-1 text-xs text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground"
                         title="Medium"
+                        whileTap={{ scale: 0.9 }}
                       >
                         M
-                      </button>
-                      <button
+                      </motion.button>
+                      <motion.button
                         onClick={handleButtonClick(() => {
                           editor.chain().focus().setFontSize("20px").run();
                         })}
                         className="rounded px-2 py-1 text-xs text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground"
                         title="Large"
+                        whileTap={{ scale: 0.9 }}
                       >
                         L
-                      </button>
-                      <button
+                      </motion.button>
+                      <motion.button
                         onClick={handleButtonClick(() => {
                           editor.chain().focus().setFontSize("24px").run();
                         })}
                         className="rounded px-2 py-1 text-xs text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground"
                         title="Extra Large"
+                        whileTap={{ scale: 0.9 }}
                       >
                         XL
-                      </button>
+                      </motion.button>
                     </div>
                   </div>
 
@@ -571,7 +590,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                       <div className="mb-2 text-xs text-muted-foreground">
                         Background Color
                       </div>
-                      <button
+                      <motion.button
                         ref={backgroundColorButtonRef}
                         onClick={handleButtonClick(openBackgroundColorPicker)}
                         className="h-8 w-full rounded border-2 border-border transition-colors hover:border-border"
@@ -580,6 +599,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                             editor.getAttributes("highlight").color ||
                             "#ffffff",
                         }}
+                        whileTap={{ scale: 0.9 }}
                       />
                     </div>
 
@@ -588,7 +608,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                       <div className="mb-2 text-xs text-muted-foreground">
                         Text Color
                       </div>
-                      <button
+                      <motion.button
                         ref={foregroundColorButtonRef}
                         onClick={handleButtonClick(openForegroundColorPicker)}
                         className="h-8 w-full rounded border-2 border-border transition-colors hover:border-border"
@@ -597,6 +617,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                             editor.getAttributes("textStyle").color ||
                             "#000000",
                         }}
+                        whileTap={{ scale: 0.9 }}
                       />
                     </div>
                   </div>
@@ -614,9 +635,9 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
               placement="top"
               tooltipClassName="!text-xs !px-2 !py-1"
             >
-              <button className="tool-button">
+              <motion.button className="tool-button" whileTap={{ scale: 0.9 }}>
                 <MdLink className="size-4" />
-              </button>
+              </motion.button>
             </Tooltip>
             <div className="invisible absolute left-0 z-50 mt-1 w-80 rounded-lg border border-border bg-card p-4 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <LinkSelector editor={editor} />
@@ -629,12 +650,13 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
             placement="top"
             tooltipClassName="!text-xs !px-2 !py-1"
           >
-            <button
+            <motion.button
               onClick={handleButtonClick(() => setShowMediaModal(true))}
               className="tool-button"
+              whileTap={{ scale: 0.9 }}
             >
               <MdImage className="size-4" />
-            </button>
+            </motion.button>
           </Tooltip>
         </div>
 
@@ -645,14 +667,15 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
             placement="top"
             tooltipClassName="!text-xs !px-2 !py-1"
           >
-            <button
+            <motion.button
               onClick={handleButtonClick(() => {
                 editor.chain().focus().clearNodes().unsetAllMarks().run();
               })}
               className="tool-button"
+              whileTap={{ scale: 0.9 }}
             >
               <TbEraser className="size-4" />
-            </button>
+            </motion.button>
           </Tooltip>
 
           <DeleteNodeButton className="tool-button" iconSize={14} />
@@ -665,23 +688,24 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
             placement="top"
             tooltipClassName="!text-xs !px-2 !py-1"
           >
-            <button className="tool-button">
+            <motion.button className="tool-button" whileTap={{ scale: 0.9 }}>
               <TbChevronDown className="size-4 transition-transform duration-200 group-hover:rotate-180" />
-            </button>
+            </motion.button>
           </Tooltip>
           <div className="invisible absolute right-0 z-50 mt-1 w-fit min-w-48 rounded-lg border border-border bg-card p-3 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
             <div className="space-y-2">
               {/* Horizontal Rule */}
-              <button
+              <motion.button
                 onClick={handleButtonClick(() => {
                   editor.chain().focus().setHorizontalRule().run();
                 })}
                 className="flex w-full items-center gap-2 rounded px-3 py-2 text-sm text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground"
                 title="Horizontal Rule"
+                whileTap={{ scale: 0.9 }}
               >
                 <MdFormatLineSpacing className="size-4" />
                 <span>Horizontal Rule</span>
-              </button>
+              </motion.button>
 
               {/* Divider */}
               <div className="my-2 border-t border-border" />
@@ -844,27 +868,29 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
     <div className="space-y-3">
       {/* Link Type Toggle */}
       <div className="flex gap-2">
-        <button
+        <motion.button
           type="button"
           onClick={() => setLinkType("external")}
           className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${linkType === "external"
             ? "bg-primary text-primary-foreground"
             : "bg-muted text-muted-foreground"
             }`}
+          whileTap={{ scale: 0.9 }}
         >
           <MdLink className="mr-1 inline" />
           External URL
-        </button>
-        <button
+        </motion.button>
+        <motion.button
           type="button"
           onClick={() => setLinkType("page")}
           className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${linkType === "page"
             ? "bg-primary text-primary-foreground"
             : "bg-muted text-muted-foreground"
             }`}
+          whileTap={{ scale: 0.9 }}
         >
           Internal Page
-        </button>
+        </motion.button>
       </div>
 
       {/* Conditional Content */}
@@ -878,15 +904,16 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
             className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-muted-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ring"
             onClick={(e) => e.stopPropagation()}
           />
-          <button
+          <motion.button
             onClick={(e) => {
               e.stopPropagation();
               handleExternalLink();
             }}
             className="btn-primary w-full "
+            whileTap={{ scale: 0.9 }}
           >
             Insert Link
-          </button>
+          </motion.button>
         </div>
       ) : (
         <div onClick={(e) => e.stopPropagation()}>

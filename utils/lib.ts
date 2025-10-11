@@ -589,10 +589,17 @@ export const useAutoOpenMenu = (menu, setMenu, id, node) => {
 export const useDefaultTab = (head, activeTab, setActiveTab) => {
   useEffect(() => {
     if (!head || head.length === 0) return;
-    if (!activeTab && head[0]?.title) {
-      setActiveTab(head[0].title);
+
+    // Check if current activeTab exists in available tabs
+    const activeTabExists = head.some((tab) => tab.title === activeTab);
+
+    // If no activeTab or current activeTab doesn't exist, set to first available tab
+    if (!activeTab || !activeTabExists) {
+      if (head[0]?.title) {
+        setActiveTab(head[0].title);
+      }
     }
-  }, [head]); // Only run when head changes, not when activeTab changes
+  }, [head, activeTab, setActiveTab]); // Include activeTab and setActiveTab in dependencies
 };
 
 export const motionIt = (props, tagName) =>

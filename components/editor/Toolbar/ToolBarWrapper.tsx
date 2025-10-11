@@ -138,7 +138,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
         </RenderChildren>
       </div>
 
-      <div className="flex w-full shrink-0 flex-row items-center justify-between border-t border-t-border bg-muted p-0 px-6 text-xl">
+      <div id="toolbarFooter" className="flex w-full shrink-0 flex-row items-center justify-between border-t border-t-border bg-muted p-0 px-6 text-lg">
         {foot}
 
         {id !== ROOT_NODE && (

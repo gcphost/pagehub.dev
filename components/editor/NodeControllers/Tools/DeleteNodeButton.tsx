@@ -1,5 +1,6 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { deleteNode } from "components/editor/Viewport/lib";
+import { motion } from "framer-motion";
 import { TbTrash, TbTrashOff } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
@@ -57,13 +58,14 @@ export const DeleteNodeButton = ({
   };
 
   return (
-    <button
+    <motion.button
+      whileTap={{ scale: 0.9 }}
       className={className}
       onClick={handleDelete}
       title={canDelete ? title : titleDisabled}
       disabled={!canDelete}
     >
       {canDelete ? <TbTrash /> : <TbTrashOff />}
-    </button>
+    </motion.button>
   );
 };
