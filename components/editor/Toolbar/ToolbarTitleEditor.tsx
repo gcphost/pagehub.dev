@@ -29,7 +29,7 @@ export const ToolbarTitleEditor = () => {
           type="text"
           defaultValue={name}
           placeholder={name}
-          className="p w-full truncate rounded bg-transparent capitalize text-foreground focus:bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+          className="w-full truncate rounded bg-transparent capitalize text-foreground focus:bg-background focus:outline-none focus:ring-1 focus:ring-ring"
           onChange={debounce((e) => {
             actions.setCustom(
               id,
@@ -39,7 +39,7 @@ export const ToolbarTitleEditor = () => {
         />
       )}
 
-      <div className="whitespace-nowrap text-xs capitalize">{title}</div>
+      <div className="flex h-4 items-center whitespace-nowrap rounded-md border border-secondary bg-secondary px-1.5 py-0 text-[10px] capitalize text-secondary-foreground">{title}</div>
     </div>
   );
 };

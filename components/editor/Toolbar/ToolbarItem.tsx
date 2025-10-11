@@ -3,6 +3,7 @@ import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
 import { useEditor, useNode } from "@craftjs/core";
 import CodeMirror, { EditorView } from "@uiw/react-codemirror";
+import { motion } from "framer-motion";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { ViewAtom } from "../Viewport";
@@ -29,7 +30,10 @@ const Input = (__props, ref) => {
 
   if (["toggle", "checkbox"].includes(type)) {
     return (
-      <label className="relative flex cursor-pointer flex-col items-center">
+      <motion.label
+        className="relative flex cursor-pointer flex-col items-center"
+        whileTap={{ scale: 0.9 }}
+      >
         {props.option && (
           <div className="mb-2 text-center text-xs font-medium text-foreground">
             {props.option || "Enable"}
@@ -45,7 +49,7 @@ const Input = (__props, ref) => {
           />
           <div className="h-4 w-8 rounded-full bg-muted text-muted-foreground after:absolute after:left-[2px] after:top-[2px] after:size-3 after:rounded-full after:border after:border-border after:bg-background after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-background peer-focus:ring-2 peer-focus:ring-ring"></div>
         </div>
-      </label>
+      </motion.label>
     );
   }
 
@@ -220,15 +224,16 @@ const Input = (__props, ref) => {
                   className="hidden"
                   aria-label={_.value}
                 />
-                <label
+                <motion.label
                   htmlFor={`radio-${propKey}-${key}`}
                   className={`block cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-current transition-colors hover:bg-muted ${checked
                     ? "bg-accent font-semibold text-accent-foreground"
                     : "bg-muted text-muted-foreground"
                     }`}
+                  whileTap={{ scale: 0.9 }}
                 >
                   {_.label}
-                </label>
+                </motion.label>
               </div>
             );
           })}
@@ -270,15 +275,16 @@ const Input = (__props, ref) => {
                 className="hidden"
                 aria-label={_.value}
               />
-              <label
+              <motion.label
                 htmlFor={`radio-${propKey}-${key}`}
                 className={`block cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-current transition-colors ${checked
                   ? "font-semibold text-accent-foreground"
                   : "text-muted-foreground"
                   }`}
+                whileTap={{ scale: 0.9 }}
               >
                 {_.label}
-              </label>
+              </motion.label>
             </div>
           ))}
         </div>
@@ -307,7 +313,9 @@ const Input = (__props, ref) => {
         <div className="overflow-hidden rounded-lg border border-border focus-within:border-accent focus:border-ring">
           <CodeMirror
             value={value}
-            height="200px"
+            height="auto"
+            minHeight="120px"
+            maxHeight="300px"
             theme="dark"
             extensions={getExtension()}
             onChange={(val) => changed(val)}

@@ -1,4 +1,5 @@
 import { ROOT_NODE, useEditor } from "@craftjs/core";
+import { AutoHideScrollbar } from "components/layout/AutoHideScrollbar";
 import { Tooltip } from "components/layout/Tooltip";
 
 import { useEffect, useRef, useState } from "react";
@@ -98,7 +99,7 @@ const Item = ({
     onClick={onClick}
     disabled={disabled}
     aria-label={ariaLabel}
-    className={`flex cursor-pointer items-center justify-center rounded-lg px-1.5 py-3 text-xl text-foreground hover:bg-muted hover:text-foreground ${disabled && "opacity-50"
+    className={`flex cursor-pointer items-center justify-center rounded-lg p-1.5 text-xl hover:bg-secondary hover:text-secondary-foreground ${disabled && "opacity-50"
       } ${className}`}
 
     whileTap={{ scale: 0.9 }}
@@ -303,7 +304,7 @@ export const Header = () => {
     <>
       <header
         role="banner"
-        className="pointer-events-auto flex flex-row-reverse items-center justify-between border-b border-border bg-background text-foreground"
+        className="pointer-events-auto flex flex-row-reverse items-center justify-between border-b border-border bg-primary px-1.5 py-1 text-primary-foreground"
         data-tutorial="header"
       >
         <Tooltip content="Add Component" placement="bottom" arrow={false}>
@@ -549,351 +550,357 @@ export const Header = () => {
           ref={ref}
           role="navigation"
           aria-label="Editor menu"
-          className="scrollbar pointer-events-auto absolute bottom-0 top-12 z-50 flex w-full flex-col gap-3 overflow-y-auto bg-background pt-3 text-foreground drop-shadow-2xl"
+          className="pointer-events-auto absolute bottom-0 top-10 z-50 flex w-full flex-col bg-background text-foreground"
         >
-          {showMenuType === "export" && <ExportModal />}
-          {showMenuType === "import" && (
-            <ImportModal
-              stateToLoad={stateToLoad}
-              setStateToLoad={setStateToLoad}
-              actions={actions}
-            />
-          )}
-          {showMenuType === "components" && <ComponentSettings />}
-          {showMenuType === "domain" && <DomainSettings />}
+          <AutoHideScrollbar
+            className="flex flex-col gap-3 overflow-y-auto"
+            hideDelay={2000}
+            showDelay={100}
+          >
+            {showMenuType === "export" && <ExportModal />}
+            {showMenuType === "import" && (
+              <ImportModal
+                stateToLoad={stateToLoad}
+                setStateToLoad={setStateToLoad}
+                actions={actions}
+              />
+            )}
+            {showMenuType === "components" && <ComponentSettings />}
+            {showMenuType === "domain" && <DomainSettings />}
 
-          {showMenuType === "builds" && lsIds.length > 0 && (
-            <>
-              <div className="flex flex-col gap-6 p-3">
-                <div className="text-xl">Account Builds</div>
-                <p>
-                  These builds have been saved to your account and can be
-                  accessed anywhere you login.
-                </p>
-              </div>
-
-              {lsIds.length ? (
+            {showMenuType === "builds" && lsIds.length > 0 && (
+              <>
                 <div className="flex flex-col gap-6 p-3">
-                  <div className="text-xl">Local Builds</div>
+                  <div className="text-xl">Account Builds</div>
                   <p>
-                    These builds are saved but only referenced locally, you will
-                    need the link to access them outside of your current browser
+                    These builds have been saved to your account and can be
+                    accessed anywhere you login.
                   </p>
+                </div>
 
-                  <div className="flex flex-col gap-3">
-                    {lsIds.reverse().map((_, key) => (
-                      <div className="flex w-full flex-row gap-3" key={key}>
-                        <div className="text-base">
-                          <TbExternalLink />
+                {lsIds.length ? (
+                  <div className="flex flex-col gap-6 p-3">
+                    <div className="text-xl">Local Builds</div>
+                    <p>
+                      These builds are saved but only referenced locally, you will
+                      need the link to access them outside of your current browser
+                    </p>
+
+                    <div className="flex flex-col gap-3">
+                      {lsIds.reverse().map((_, key) => (
+                        <div className="flex w-full flex-row gap-3" key={key}>
+                          <div className="text-base">
+                            <TbExternalLink />
+                          </div>
+                          <div className="capitalize">
+                            <Link href={`/build/${_._id}`} target="_blank">
+                              {_.draftId}
+                            </Link>
+                          </div>
                         </div>
-                        <div className="capitalize">
-                          <Link href={`/build/${_._id}`} target="_blank">
-                            {_.draftId}
-                          </Link>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ) : null}
-            </>
-          )}
-          {showMenuType === "submissions" && (
-            <div className="p-3">
-              <h3 className="text-base">Form Submissions</h3>
-              <p className="mb-3">
-                When users submit forms to your website the data will be
-                available here.
-              </p>
+                ) : null}
+              </>
+            )}
+            {showMenuType === "submissions" && (
+              <div className="p-3">
+                <h3 className="text-base">Form Submissions</h3>
+                <p className="mb-3">
+                  When users submit forms to your website the data will be
+                  available here.
+                </p>
 
-              <hr className="-mx-3 mb-6 border-b border-border" />
+                <hr className="-mx-3 mb-6 border-b border-border" />
 
-              {settings?.submissions?.length ? (
-                <div className="flex flex-col gap-6">
-                  {settings?.submissions.map((submission, _key) => {
-                    const items = Object.keys(submission.data);
+                {settings?.submissions?.length ? (
+                  <div className="flex flex-col gap-6">
+                    {settings?.submissions.map((submission, _key) => {
+                      const items = Object.keys(submission.data);
 
-                    // const a = Object.keys(items);
+                      // const a = Object.keys(items);
 
-                    return (
-                      <div
-                        className="flex flex-col gap-3 rounded border border-border p-3"
-                        key={_key}
-                      >
-                        <p>
-                          {submission.formName} {submission.createdAt}
-                        </p>
+                      return (
+                        <div
+                          className="flex flex-col gap-3 rounded border border-border p-3"
+                          key={_key}
+                        >
+                          <p>
+                            {submission.formName} {submission.createdAt}
+                          </p>
 
-                        {items.map((item, key) => {
-                          const value = submission.data[item];
-                          return (
-                            <div key={key} className="flex flex-row gap-3">
-                              <div className="font-bold capitalize">
-                                {item}:
+                          {items.map((item, key) => {
+                            const value = submission.data[item];
+                            return (
+                              <div key={key} className="flex flex-row gap-3">
+                                <div className="font-bold capitalize">
+                                  {item}:
+                                </div>
+                                <div>{value}</div>
                               </div>
-                              <div>{value}</div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : null}
-            </div>
-          )}
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : null}
+              </div>
+            )}
 
-          {!showMenuType && (
-            <>
-              {isTenant ? (
-                // For tenant users, show background and settings panel buttons
-                <>
-                  <button
-                    onClick={() => {
-                      setShowMenu(false);
-                      actions.selectNode(ROOT_NODE);
-                    }}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      <TbBoxModel2 />
-                    </div>{" "}
-                    Select Background
-                  </button>
-
-                  <button
-                    onClick={() => setSideBarLeft(!sideBarLeft)}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      {sideBarLeft ? (
-                        <TbLayoutSidebarRight />
-                      ) : (
-                        <TbLayoutSidebar />
-                      )}
-                    </div>
-                    Move this panel to the {sideBarLeft ? "right" : "left"} side
-                  </button>
-                </>
-              ) : (
-                // For regular users, show all the original items
-                <>
-                  <Link
-                    href="/build"
-                    className="hidden cursor-pointer items-center gap-3 p-3 text-muted-foreground hover:bg-muted"
-                  >
-                    <TbFilePlus /> New Builder
-                  </Link>
-
-                  {settings?.submissions?.length ? (
+            {!showMenuType && (
+              <>
+                {isTenant ? (
+                  // For tenant users, show background and settings panel buttons
+                  <>
                     <button
                       onClick={() => {
-                        setShowMenu(true);
-                        setShowMenuType("submissions");
+                        setShowMenu(false);
+                        actions.selectNode(ROOT_NODE);
                       }}
                       className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
-                        <TbForms />
+                        <TbBoxModel2 />
                       </div>{" "}
-                      Form Submissions
+                      Select Background
                     </button>
-                  ) : null}
 
-                  <button
-                    onClick={() => {
-                      setIsMediaManagerModalOpen(true);
-                      setShowMenu(false);
-                    }}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      <TbPhoto />
-                    </div>
-                    <div className="text-sm">Media Manager</div>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setIsDesignSystemPanelOpen(true);
-                      setShowMenu(false);
-                    }}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      <TbPalette />
-                    </div>
-                    <div className="text-sm">Design System</div>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setIsSiteSettingsModalOpen(true);
-                      setShowMenu(false);
-                    }}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      <TbSettings />
-                    </div>
-                    <div className="text-sm">Site Settings</div>
-                  </button>
-
-                  {settings?.name && (
-                    <a
-                      href={`https://${settings.name}.pagehub.dev`}
-                      target="_blank"
-                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                    >
-                      <div className="text-base">
-                        <TbExternalLink />
-                      </div>
-                      <div className="text-sm">View Live Version</div>
-                    </a>
-                  )}
-
-                  <hr className="border-b border-border" />
-
-                  {settings?.draftId && (
-                    <a
-                      href={`https://${settings.draftId}.pagehub.dev`}
-                      target="_blank"
-                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                    >
-                      <div className="text-base">
-                        <TbExternalLink />
-                      </div>
-                      <div className="text-sm">View Draft Version</div>
-                    </a>
-                  )}
-
-                  <button
-                    onClick={async () => {
-                      //  return;
-
-                      toggle();
-
-                      setShowMenu(false);
-
-                      actions.setOptions((options) => (options.enabled = true));
-
-                      const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
-
-                      if (nl) actions.selectNode(nl[0]);
-
-                      // isetDialogOpen(htmlOutput);
-                    }}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      <TbCode />
-                    </div>
-                    <div className="text-sm">Copy As Html</div>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowMenuType("export");
-                      setShowMenu(true);
-                    }}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      <TbDownload />
-                    </div>
-                    <div className="text-sm">Export</div>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowMenuType("import");
-                      setShowMenu(true);
-                    }}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      <TbUpload />
-                    </div>
-                    <div className="text-sm">Import</div>
-                  </button>
-
-                  <hr className="border-b border-border" />
-
-                  {lsIds.length ? (
                     <button
-                      onClick={() => {
-                        setShowMenu(true);
-                        setShowMenuType("builds");
-                      }}
+                      onClick={() => setSideBarLeft(!sideBarLeft)}
                       className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
-                        <TbDevices2 />
+                        {sideBarLeft ? (
+                          <TbLayoutSidebarRight />
+                        ) : (
+                          <TbLayoutSidebar />
+                        )}
                       </div>
-                      <div className="text-sm">Previous Builds</div>
+                      Move this panel to the {sideBarLeft ? "right" : "left"} side
                     </button>
-                  ) : null}
+                  </>
+                ) : (
+                  // For regular users, show all the original items
+                  <>
+                    <Link
+                      href="/build"
+                      className="hidden cursor-pointer items-center gap-3 p-3 text-muted-foreground hover:bg-muted"
+                    >
+                      <TbFilePlus /> New Builder
+                    </Link>
 
-                  <hr className="border-b border-border" />
-
-                  {status === "authenticated" ? (
-                    <>
-                      <p className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted">
-                        Signed in as {session.user.email}
-                      </p>{" "}
+                    {settings?.submissions?.length ? (
                       <button
-                        onClick={() =>
-                          popupCenter("/google-signout", "Sign Out")
-                        }
+                        onClick={() => {
+                          setShowMenu(true);
+                          setShowMenuType("submissions");
+                        }}
                         className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                       >
                         <div className="text-base">
-                          <TbLogout />
-                        </div>
-                        <div className="text-sm">Sign out</div>
+                          <TbForms />
+                        </div>{" "}
+                        Form Submissions
                       </button>
-                    </>
-                  ) : (
+                    ) : null}
+
                     <button
-                      onClick={() => popupCenter("/google-signin", "Sign In")}
+                      onClick={() => {
+                        setIsMediaManagerModalOpen(true);
+                        setShowMenu(false);
+                      }}
                       className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
-                        <TbLogin />
+                        <TbPhoto />
                       </div>
-                      <div className="text-sm">Sign in</div>
+                      <div className="text-sm">Media Manager</div>
                     </button>
-                  )}
 
-                  <button
-                    onClick={toggleTheme}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      {isDarkMode ? <TbSun /> : <TbMoon />}
-                    </div>
-                    <div className="text-sm">
-                      Switch to {isDarkMode ? "Light" : "Dark"} Theme
-                    </div>
-                  </button>
+                    <button
+                      onClick={() => {
+                        setIsDesignSystemPanelOpen(true);
+                        setShowMenu(false);
+                      }}
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                    >
+                      <div className="text-base">
+                        <TbPalette />
+                      </div>
+                      <div className="text-sm">Design System</div>
+                    </button>
 
-                  <button
-                    onClick={() => setSideBarLeft(!sideBarLeft)}
-                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
-                  >
-                    <div className="text-base">
-                      {sideBarLeft ? (
-                        <TbLayoutSidebarRight />
-                      ) : (
-                        <TbLayoutSidebar />
-                      )}
-                    </div>
-                    <div className="text-sm">
-                      {sideBarLeft ? "Right" : "Left"} Settings Panel
-                    </div>
-                  </button>
-                </>
-              )}
-            </>
-          )}
+                    <button
+                      onClick={() => {
+                        setIsSiteSettingsModalOpen(true);
+                        setShowMenu(false);
+                      }}
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                    >
+                      <div className="text-base">
+                        <TbSettings />
+                      </div>
+                      <div className="text-sm">Site Settings</div>
+                    </button>
+
+                    {settings?.name && (
+                      <a
+                        href={`https://${settings.name}.pagehub.dev`}
+                        target="_blank"
+                        className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                      >
+                        <div className="text-base">
+                          <TbExternalLink />
+                        </div>
+                        <div className="text-sm">View Live Version</div>
+                      </a>
+                    )}
+
+                    <hr className="border-b border-border" />
+
+                    {settings?.draftId && (
+                      <a
+                        href={`https://${settings.draftId}.pagehub.dev`}
+                        target="_blank"
+                        className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                      >
+                        <div className="text-base">
+                          <TbExternalLink />
+                        </div>
+                        <div className="text-sm">View Draft Version</div>
+                      </a>
+                    )}
+
+                    <button
+                      onClick={async () => {
+                        //  return;
+
+                        toggle();
+
+                        setShowMenu(false);
+
+                        actions.setOptions((options) => (options.enabled = true));
+
+                        const nl = query?.node(ROOT_NODE).get()?.data?.nodes;
+
+                        if (nl) actions.selectNode(nl[0]);
+
+                        // isetDialogOpen(htmlOutput);
+                      }}
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                    >
+                      <div className="text-base">
+                        <TbCode />
+                      </div>
+                      <div className="text-sm">Copy As Html</div>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowMenuType("export");
+                        setShowMenu(true);
+                      }}
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                    >
+                      <div className="text-base">
+                        <TbDownload />
+                      </div>
+                      <div className="text-sm">Export</div>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowMenuType("import");
+                        setShowMenu(true);
+                      }}
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                    >
+                      <div className="text-base">
+                        <TbUpload />
+                      </div>
+                      <div className="text-sm">Import</div>
+                    </button>
+
+                    <hr className="border-b border-border" />
+
+                    {lsIds.length ? (
+                      <button
+                        onClick={() => {
+                          setShowMenu(true);
+                          setShowMenuType("builds");
+                        }}
+                        className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                      >
+                        <div className="text-base">
+                          <TbDevices2 />
+                        </div>
+                        <div className="text-sm">Previous Builds</div>
+                      </button>
+                    ) : null}
+
+                    <hr className="border-b border-border" />
+
+                    {status === "authenticated" ? (
+                      <>
+                        <p className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted">
+                          Signed in as {session.user.email}
+                        </p>{" "}
+                        <button
+                          onClick={() =>
+                            popupCenter("/google-signout", "Sign Out")
+                          }
+                          className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                        >
+                          <div className="text-base">
+                            <TbLogout />
+                          </div>
+                          <div className="text-sm">Sign out</div>
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => popupCenter("/google-signin", "Sign In")}
+                        className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                      >
+                        <div className="text-base">
+                          <TbLogin />
+                        </div>
+                        <div className="text-sm">Sign in</div>
+                      </button>
+                    )}
+
+                    <button
+                      onClick={toggleTheme}
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                    >
+                      <div className="text-base">
+                        {isDarkMode ? <TbSun /> : <TbMoon />}
+                      </div>
+                      <div className="text-sm">
+                        Switch to {isDarkMode ? "Light" : "Dark"} Theme
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => setSideBarLeft(!sideBarLeft)}
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
+                    >
+                      <div className="text-base">
+                        {sideBarLeft ? (
+                          <TbLayoutSidebarRight />
+                        ) : (
+                          <TbLayoutSidebar />
+                        )}
+                      </div>
+                      <div className="text-sm">
+                        {sideBarLeft ? "Right" : "Left"} Settings Panel
+                      </div>
+                    </button>
+                  </>
+                )}
+              </>
+            )}
+          </AutoHideScrollbar>
         </nav>
       )}
 

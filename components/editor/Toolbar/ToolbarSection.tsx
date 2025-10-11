@@ -30,11 +30,11 @@ export const ToolbarSection = ({
   };
 
   return (
-    <div className="mb-4 w-full">
+    <div className="w-full rounded border shadow">
       {title && (
         <button
           id={title}
-          className={`flex w-full items-center justify-between gap-3 rounded-md px-1 py-2 text-sm font-semibold text-foreground transition-colors ${className}`}
+          className={`flex w-full items-center justify-between gap-3 rounded-t bg-sidebar px-2 py-1 text-sm font-semibold text-sidebar-foreground transition-colors ${className}`}
           onClick={handleClick}
           aria-label={title}
         >
@@ -59,7 +59,7 @@ export const ToolbarSection = ({
           </div>
 
           {collapsible && (
-            <span className="text-base">
+            <span className="text-base text-sidebar-foreground">
               {isOpen ? <TbChevronUp /> : <TbChevronDown />}
             </span>
           )}
@@ -69,7 +69,7 @@ export const ToolbarSection = ({
       {enabled && isOpen && (
         <>
           <div
-            className={`grid-cols-${full} grid items-end gap-4 ${bodyClassName} pb-2`}
+            className={`grid-cols-${full} grid items-end gap-4 ${bodyClassName} rounded bg-card p-2 text-card-foreground`}
             role="group"
             aria-labelledby={title}
           >

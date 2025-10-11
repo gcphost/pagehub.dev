@@ -252,6 +252,20 @@ body {
   width: 0px;
 }
 
+/* Auto-hide scrollbar styles */
+.scrollbar-hide::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.scrollbar-hide::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 input[type="range"]::-webkit-slider-thumb {
   @apply h-3 w-3 bg-primary;
 }
@@ -440,4 +454,8 @@ ul {
 
 .slider::-moz-range-track {
   @apply rounded-lg bg-muted;
+}
+
+.input-transparent {
+  @apply flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm;
 }

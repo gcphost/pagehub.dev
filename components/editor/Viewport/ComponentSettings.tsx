@@ -116,18 +116,18 @@ export const ComponentSettings = () => {
   }, [search, items]);
 
   return (
-    <div className="px- flex flex-col gap-3">
+    <div className="flex flex-col bg-popover text-popover-foreground">
       <form
         onSubmit={(e) => {
           setSearch(e.target[0].value);
           e.preventDefault();
         }}
       >
-        <div className="mb-3 flex gap-1.5 px-3">
+        <div className="flex gap-1.5 p-3">
           <input
             type="text"
             placeholder="Search Components"
-            className="input px-2 py-1"
+            className="input-transparent"
             ref={focusRef}
             onKeyUp={throttle((e) => {
               setSearch(e.target.value);
@@ -136,10 +136,10 @@ export const ComponentSettings = () => {
         </div>
       </form>
       {list?.map((a, k) => (
-        <div key={k}>
-          <div className="px-3 pb-3 font-bold">{a.title}</div>
+        <div key={k} className="border">
+          <div className="border-y bg-secondary px-3 py-1.5 font-bold text-secondary-foreground">{a.title}</div>
 
-          <div className="grid w-full grid-cols-3 gap-3 bg-background p-3 text-foreground">
+          <div className="grid w-full grid-cols-3 gap-3 p-3">
             {a.content.map((item, kk) => (
               <div key={kk}>{item}</div>
             ))}

@@ -27,9 +27,8 @@ const Labler = ({
 
   return (
     <h4
-      className={`toolbar-label ${
-        lab ? "my-1" : "mb-1"
-      } flex justify-between gap-3`}
+      className={`toolbar-label ${lab ? "my-1" : "mb-1"
+        } flex justify-between gap-3`}
     >
       <div className="flex items-center gap-1.5">
         {props?.label}

@@ -106,22 +106,21 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   const isLinked = checkIfAncestorLinked(id, query);
 
   return (
-    <>
-      <h1 className="z-50 w-full border-b border-border bg-muted px-3 py-1.5 text-2xl font-bold text-muted-foreground">
-        {<ToolbarTitleEditor />}
+    <div className="flex h-full flex-col">
+      <h1 className="shrink-0 border-b border-border bg-card px-3 py-2 text-lg font-bold text-card-foreground">
+        <ToolbarTitleEditor />
       </h1>
 
       {/* Hide settings tabs for fully linked components */}
       {!isLinked && (
         <div
           id="toolbarTabs"
-          className="flex items-center justify-between border-b border-border bg-muted font-semibold text-accent-foreground"
+          aria-label="Tabs"
+          role="tablist"
+          className="flex shrink-0 flex-wrap items-center justify-between gap-1.5 border-b border-border bg-secondary px-3 py-0.5 text-center font-semibold text-secondary-foreground"
         >
-          <div
-            aria-label="Tabs"
-            role="tablist"
-            className="flex flex-wrap gap-1.5 text-center"
-          >
+          <div className="ml-auto flex flex-row-reverse items-center justify-between gap-3">
+
             {head.map((_, key) => (
               <Tab key={key} title={_.title} tabId={_.title} icon={_.icon} />
             ))}
@@ -132,14 +131,14 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
       <div
         id="toolbarItems"
         data-toolbar={true}
-        className="top-[138px] z-20 flex h-screen w-full grow basis-full flex-col"
+        className="flex min-h-0 flex-1 flex-col"
       >
         <RenderChildren props={props} query={query} actions={actions} id={id}>
           {children}
         </RenderChildren>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-30 flex w-full flex-row items-center justify-between border-t border-t-border bg-muted p-0 px-6 text-xl">
+      <div className="flex w-full shrink-0 flex-row items-center justify-between border-t border-t-border bg-muted p-0 px-6 text-xl">
         {foot}
 
         {id !== ROOT_NODE && (
@@ -268,6 +267,6 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 };

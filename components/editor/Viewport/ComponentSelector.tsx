@@ -220,9 +220,9 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({
   // So we need to check if the content node's parent matches the isolate
   const currentComponent = isolate
     ? components.find((c) => {
-        const contentNode = query.node(c.rootNodeId).get();
-        return contentNode?.data?.parent === isolate;
-      })
+      const contentNode = query.node(c.rootNodeId).get();
+      return contentNode?.data?.parent === isolate;
+    })
     : null;
 
   // Display the current component name if editing, otherwise "Components"
@@ -236,7 +236,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-background px-3 py-2 text-foreground transition-colors hover:bg-muted"
+        className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-popover px-3 py-2 text-popover-foreground transition-colors hover:bg-muted"
         aria-label="Component selector"
       >
         <div className="flex flex-1 items-center gap-2 overflow-hidden">
@@ -253,7 +253,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({
       </button>
 
       {isOpen && (
-        <div className="absolute inset-x-0 top-full z-50 mt-1 flex max-h-[500px] flex-col overflow-hidden rounded-lg border border-border bg-background shadow-xl">
+        <div className="absolute inset-x-0 top-full z-50 mt-1 flex max-h-[500px] flex-col overflow-hidden rounded-lg border border-border bg-background text-foreground shadow-xl">
           {/* Search Header - Fixed */}
           <div className="border-b border-border p-3">
             <input
@@ -261,13 +261,13 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({
               placeholder="Search components..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none"
+              className="input-transparent"
               autoFocus
             />
           </div>
 
           {/* Scrollable Content */}
-          <div className="scrollbar flex-1 overflow-y-auto">
+          <div className="scrollbar flex-1 overflow-y-auto bg-popover text-popover-foreground">
             {/* Component List */}
             {filteredComponents.length > 0 ? (
               filteredComponents.map((component, index) => (
@@ -380,7 +380,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({
           <div className="border-t border-border">
             <button
               onClick={handleCreateComponent}
-              className="flex w-full items-center gap-2 px-3 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-muted"
+              className="flex w-full items-center gap-2 px-3 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-muted-foreground"
             >
               <TbPlus />
               <span className="text-sm font-medium">Create New Component</span>

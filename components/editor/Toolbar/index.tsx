@@ -84,7 +84,7 @@ export const Toolbar = () => {
     >
       <Header />
       <div
-        className="z-0 w-full select-none overflow-hidden bg-background text-foreground antialiased"
+        className="z-0 flex w-full flex-1 flex-col select-none overflow-hidden bg-background text-foreground antialiased"
         aria-expanded={sideBarOpen && !preview ? "true" : "false"}
       >
         {tool}

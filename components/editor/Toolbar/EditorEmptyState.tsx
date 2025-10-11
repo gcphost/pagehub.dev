@@ -138,9 +138,9 @@ export const EditorEmptyState = () => {
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="mt-4 flex items-center gap-2 text-xs text-muted-foreground"
+          className="text-xxs mt-4 flex items-center gap-2 text-muted-foreground"
         >
-          <TbClick className="size-8" />
+          <TbClick className="size-4" />
           <span>Use the dropdown at the top to select a component</span>
         </motion.div>
       )}

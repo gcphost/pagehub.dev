@@ -1,3 +1,4 @@
+import { AutoHideScrollbar } from "components/layout/AutoHideScrollbar";
 import { Tooltip } from "components/layout/Tooltip";
 import { motion } from "framer-motion";
 import { useRecoilState } from "recoil";
@@ -15,9 +16,9 @@ export const Tab = ({ tabId, icon = null, title = "" }) => {
   return (
     <Tooltip content={title} placement="bottom" arrow={false}>
       <motion.div
-        className={`flex cursor-pointer items-center justify-center rounded-md p-3 text-lg font-medium ${isActive
-          ? "bg-accent text-accent-foreground"
-          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+        className={`flex cursor-pointer items-center justify-center rounded-md p-1.5 text-lg font-medium ${isActive
+          ? "bg-primary text-primary-foreground"
+          : "text-muted-foreground hover:bg-primary hover:text-primary-foreground"
           }`}
         role="tab"
         tabIndex={isActive ? 0 : -1}
@@ -41,9 +42,9 @@ export const TabBody = ({ children = null, jumps = [] }) => {
   if (!children) return null;
 
   return (
-    <>
+    <div id="toolbarJumps" className="flex h-full flex-col">
       {jumps.length ? (
-        <div className="flex flex-row justify-end gap-3 border-b border-border bg-muted px-3 text-muted-foreground">
+        <div className="flex shrink-0 flex-row justify-end gap-3 border-b border-border bg-muted px-3 py-0.5 text-muted-foreground drop-shadow-sm">
           {jumps.map((_) => (
             <MenuItem
               key={uuidv4()}
@@ -60,13 +61,15 @@ export const TabBody = ({ children = null, jumps = [] }) => {
         </div>
       ) : null}
 
-      <div
+      <AutoHideScrollbar
         id="toolbarContents"
-        className={`top-[${jumps.length ? "224px" : "190px"}] scrollbar absolute bottom-[64px] flex w-full flex-col gap-3 divide-y divide-border overflow-y-auto overflow-x-hidden px-2 py-1.5 pb-[400px]`}
+        className="flex min-h-0 flex-1 flex-col gap-3 divide-y divide-border overflow-y-auto overflow-x-hidden px-2 py-1.5 pb-[400px]"
+        hideDelay={2000}
+        showDelay={100}
       >
         {children}
-      </div>
-    </>
+      </AutoHideScrollbar>
+    </div>
   );
 };
 

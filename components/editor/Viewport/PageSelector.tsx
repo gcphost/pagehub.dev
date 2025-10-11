@@ -381,7 +381,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         className={
           buttonClassName ||
-          "flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-background px-3 py-2 text-foreground transition-colors hover:bg-muted"
+          "flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-popover px-3 py-2 text-popover-foreground transition-colors hover:bg-muted"
         }
         aria-label="Page selector"
       >
@@ -426,13 +426,13 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
               placeholder="Search pages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm text-foreground focus:border-ring focus:outline-none"
+              className="input-transparent"
               autoFocus
             />
           </div>
 
           {/* Scrollable Content */}
-          <div className="scrollbar flex-1 overflow-y-auto">
+          <div className="scrollbar flex-1 overflow-y-auto bg-popover text-popover-foreground">
             {/* All Pages Option - Only in navigation mode */}
             {!pickerMode && (
               <>
@@ -469,7 +469,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                 return (
                   <div
                     key={page.id}
-                    className={`group flex w-full items-center gap-2 px-3 py-2 transition-colors hover:bg-muted ${isSelected ? "bg-muted font-medium" : ""
+                    className={`group flex w-full items-center gap-2 px-3 py-2 transition-colors hover:bg-muted ${isSelected ? "bg-accent font-medium text-accent-foreground" : ""
                       }`}
                   >
                     {pickerMode ? (
