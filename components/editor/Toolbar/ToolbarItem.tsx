@@ -161,34 +161,34 @@ const Input = (__props, ref) => {
     }
 
     return (
-      <BgWrap wrap={wrap}>
-        <div className="flex h-5 w-full items-center gap-2">
-          <input
-            type="range"
-            className="slider h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-muted text-muted-foreground"
-            min={props.min || 0}
-            max={props.max || 100}
-            step={props.step || 1}
-            defaultValue={currentValue}
-            onChange={(event) => {
-              changed(
-                props?.valueLabels
-                  ? props?.valueLabels[event.target.value]
-                  : event.target.value,
-              );
-            }}
-            aria-label={props.label || propKey || "Slider"}
-            aria-valuemin={props.min || 0}
-            aria-valuemax={props.max || 100}
-            aria-valuenow={currentValue}
-            aria-valuetext={value?.toString() || currentValue.toString()}
-          />
 
-          {append && (
-            <div className="flex shrink-0 items-center gap-0.5">{append}</div>
-          )}
-        </div>
-      </BgWrap>
+      <div className="flex h-5 w-full items-center gap-2">
+        <input
+          type="range"
+          className="slider h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-muted text-muted-foreground"
+          min={props.min || 0}
+          max={props.max || 100}
+          step={props.step || 1}
+          defaultValue={currentValue}
+          onChange={(event) => {
+            changed(
+              props?.valueLabels
+                ? props?.valueLabels[event.target.value]
+                : event.target.value,
+            );
+          }}
+          aria-label={props.label || propKey || "Slider"}
+          aria-valuemin={props.min || 0}
+          aria-valuemax={props.max || 100}
+          aria-valuenow={currentValue}
+          aria-valuetext={value?.toString() || currentValue.toString()}
+        />
+
+        {append && (
+          <div className="flex shrink-0 items-center gap-0.5">{append}</div>
+        )}
+      </div>
+
     );
   }
 

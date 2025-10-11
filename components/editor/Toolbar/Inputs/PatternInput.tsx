@@ -19,7 +19,7 @@ export const PatternInput = () => {
 
         {props.root?.pattern && (
           <>
-            <ToolbarSection full={2}>
+            <ToolbarSection title="Colors">
               {[...Array(+pattern.colors - 1).keys()].map((_) => (
                 <ColorInput
                   key={_}
@@ -32,15 +32,17 @@ export const PatternInput = () => {
               ))}
             </ToolbarSection>
 
-            <ToolbarItem
-              propKey="patternZoom"
-              propType="root"
-              type="slider"
-              label="Scale"
-              max={pattern.maxScale}
-              min={1}
-            />
-            <ToolbarSection full={2}>
+            <ToolbarSection title="Parameters">
+
+              <ToolbarItem
+                propKey="patternZoom"
+                propType="root"
+                type="slider"
+                label="Scale"
+                max={pattern.maxScale}
+                min={1}
+              />
+
               <ToolbarItem
                 propKey="patternVerticalPosition"
                 propType="root"
@@ -57,9 +59,9 @@ export const PatternInput = () => {
                 max={0}
                 min={-120}
               />
-            </ToolbarSection>
 
-            <ToolbarSection full={2}>
+
+
               <ToolbarItem
                 propKey="patternStroke"
                 propType="root"
@@ -78,9 +80,7 @@ export const PatternInput = () => {
                 max={180}
                 min={0}
               />
-            </ToolbarSection>
 
-            <ToolbarSection full={2}>
               <ToolbarItem
                 propKey="patternSpacingX"
                 propType="root"
@@ -97,7 +97,9 @@ export const PatternInput = () => {
                 max={pattern.maxSpacing[1]}
                 min={0}
               />
+
             </ToolbarSection>
+
           </>
         )}
       </ToolbarSection>

@@ -80,9 +80,7 @@ export const BackgroundSettings = () => {
         <PatternInput />
       </BackgroundInput>
 
-      <ToolbarSection title="Typography">
-        <FontInput />
-      </ToolbarSection>
+      <FontInput />
     </TabBody>
   );
 

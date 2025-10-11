@@ -342,8 +342,8 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
               setSelectedIndex((prev) => Math.max(prev - 1, 0));
             }
 
-            // Enter to select highlighted item
-            if (e.key === "Enter" && matches.length > 0 && selectedIndex >= 0) {
+            // Enter to select highlighted item (only if there's a selection)
+            if (e.key === "Enter" && matches.length > 0 && selectedIndex >= 0 && selectedIndex !== 0) {
               e.preventDefault();
               setClassInput(matches[selectedIndex]);
             }
@@ -440,26 +440,26 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
         </div>
       )}
 
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between border-b border-border pb-1.5 ">
         <p className="text-xs">Assigned Classes</p>
 
-        <div className="space-x-1.5 text-foreground">
-          <div className="text-xxs inside-shadow inline-flex rounded bg-primary px-0.5">
+        <div className="flex gap-1 text-foreground">
+          <div className="text-xxs inline-flex rounded bg-primary px-0.5 text-primary-foreground">
             Component
           </div>
-          <div className="5 text-xxs inside-shadow inline-flex rounded bg-background px-0.5 text-foreground">
+          <div className="text-xxs inline-flex rounded bg-background px-0.5 text-foreground">
             User
           </div>
-          <div className="text-xxs inside-shadow inline-flex rounded bg-secondary px-0.5 text-secondary-foreground">
+          <div className="text-xxs inline-flex rounded bg-secondary px-0.5 text-secondary-foreground">
             Mobile
           </div>
-          <div className="text-xxs inside-shadow inline-flex rounded bg-accent px-0.5 text-accent-foreground">
+          <div className="text-xxs inline-flex rounded bg-accent px-0.5 text-accent-foreground">
             Desktop
           </div>
         </div>
       </div>
 
-      <div className="-mt-6 space-y-3">
+      <div className="-mt-3 flex flex-wrap gap-1.5">
         {propClasses?.map((_, key) => (
           <Card key={key} value={_} onClick={() => delNodeProp(_, "root")} />
         ))}
@@ -469,7 +469,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
             key={key}
             value={_}
             onClick={() => del(key)}
-            bgColor="bg-background inside-shadow"
+            bgColor="bg-background text-foreground"
           />
         ))}
 
@@ -478,7 +478,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
             key={key}
             value={_}
             onClick={() => delNodeProp(_, "mobile")}
-            bgColor="bg-secondary inside-shadow"
+            bgColor="bg-secondary text-secondary-foreground"
           />
         ))}
 
@@ -487,7 +487,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
             key={key}
             value={_}
             onClick={() => delNodeProp(_, "desktop")}
-            bgColor="bg-accent inside-shadow text-accent-foreground"
+            bgColor="bg-accent text-accent-foreground"
           />
         ))}
       </div>

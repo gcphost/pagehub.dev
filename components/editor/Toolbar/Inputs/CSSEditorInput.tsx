@@ -124,9 +124,7 @@ export const CSSEditorInput = () => {
             className="text-sm"
           />
         </div>
-        <p className="mt-2 text-xs text-muted-foreground">
-          Use valid CSS syntax.
-        </p>
+
       </div>
     </ToolbarSection>
   );

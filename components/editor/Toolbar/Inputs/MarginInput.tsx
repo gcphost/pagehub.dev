@@ -19,7 +19,7 @@ export const MarginInput = ({ propKey = "margin" }) => (
             </>
           }
         >
-          <ToolbarSection full={1}>
+          <ToolbarSection full={1} collapsible={false}>
             <ToolbarItem
               propKey="mt"
               type="slider"

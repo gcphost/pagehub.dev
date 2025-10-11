@@ -157,7 +157,7 @@ export const ButtonSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Colors">
+          <ToolbarSection title="Colors" collapsible={false}>
             <ColorInput
               propKey="color"
               label="Text"
@@ -175,7 +175,7 @@ export const ButtonSettings = () => {
             />
           </ToolbarSection>
 
-          <ToolbarSection title="Icon">
+          <ToolbarSection title="Icon" collapsible={false}>
             <ToolbarItem
               propKey="iconPosition"
               propType="component"
@@ -224,9 +224,7 @@ export const ButtonSettings = () => {
             <PatternInput />
           </BackgroundInput>
 
-          <ToolbarSection title="Typography">
-            <FontInput />
-          </ToolbarSection>
+          <FontInput />
           <BorderInput />
         </TabBody>
       )}
@@ -249,7 +247,7 @@ export const ButtonSettings = () => {
         <TabBody>
           <ClickItem />
 
-          <ToolbarSection title="Colors">
+          <ToolbarSection title="Colors" collapsible={false}>
             <ColorInput
               propKey="background"
               label="Background"
@@ -278,7 +276,7 @@ export const ButtonSettings = () => {
             />
           </ToolbarSection>
 
-          <ToolbarSection title="Opacity">
+          <ToolbarSection title="Opacity" collapsible={false}>
             <OpacityInput label="" propKey="opacity" index="hover" />
           </ToolbarSection>
         </TabBody>

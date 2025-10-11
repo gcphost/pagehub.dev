@@ -76,7 +76,7 @@ export const MediaInput = (propa) => {
 
   return (
     <>
-      <ToolbarSection title={title} full={1}>
+      <ToolbarSection title={title} full={1} collapsible={props.collapsible}>
         <div className="space-y-2">
           {/* Preview if media exists */}
           {hasMedia && (svgContent || imageUrl) && (

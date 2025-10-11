@@ -23,6 +23,7 @@ export const SizeInput = () => (
             subtitle={true}
             full={1}
             help="Maximum size this component can be."
+            collapsible={false}
           >
             <WidthInput
               propKey="maxWidth"
@@ -44,6 +45,7 @@ export const SizeInput = () => (
             subtitle={true}
             full={1}
             help="Minium size this component can be."
+            collapsible={false}
           >
             <WidthInput
               propKey="minWidth"

@@ -623,7 +623,7 @@ export const Header = () => {
 
                       return (
                         <div
-                          className="flex flex-col gap-3 rounded border border-border p-3"
+                          className="flex flex-col gap-3 rounded border-border p-3"
                           key={_key}
                         >
                           <p>

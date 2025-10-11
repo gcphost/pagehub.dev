@@ -436,10 +436,10 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({
 
   return (
     <div
-      className={`relative flex h-12 items-center gap-2 border-b border-border bg-background px-3 py-2 ${className}`}
+      className={`relative flex h-10 items-center gap-2 border-b border-border bg-secondary px-3 pt-2 ${className}`}
     >
       {/* Tabs */}
-      <div className="absolute bottom-0 flex flex-1 items-center gap-1 overflow-x-auto">
+      <div className="scrollbar-hide flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
         {tabs.map((tab) => {
           // Find the component to check if it's a section
           const component = components.find((c) => {
@@ -455,21 +455,20 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({
             <div
               key={tab.id}
               onClick={() => handleTabClick(tab.id)}
-              className={`group flex cursor-pointer items-center gap-2 rounded-t px-3 py-1.5 transition-colors ${
-                activeTabId === tab.id
-                  ? "bg-muted text-foreground"
-                  : "bg-card text-muted-foreground hover:bg-background hover:text-muted-foreground"
-              } `}
+              className={`group flex min-w-32 cursor-pointer items-center gap-2 rounded-t px-3 py-1.5 transition-colors ${activeTabId === tab.id
+                ? "bg-muted font-bold text-muted-foreground hover:bg-card hover:text-card-foreground"
+                : "bg-background text-secondary-foreground hover:bg-card hover:text-card-foreground"
+                } `}
             >
               {component?.isSection ? (
                 <TbLayoutGridAdd className="size-3.5 shrink-0" />
               ) : (
                 <TbBoxModel2 className="size-3.5 shrink-0" />
               )}
-              <span className="whitespace-nowrap text-sm">{tab.name}</span>
+              <span className="min-w-0 truncate text-sm" title={tab.name}>{tab.name}</span>
               <button
                 onClick={(e) => handleCloseTab(tab.id, e)}
-                className={`rounded p-0.5 transition-all hover:bg-muted ${activeTabId === tab.id ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                className={`rounded p-0.5 transition-all hover:bg-muted hover:text-muted-foreground ${activeTabId === tab.id ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
               >
                 <TbX className="size-3" />
               </button>

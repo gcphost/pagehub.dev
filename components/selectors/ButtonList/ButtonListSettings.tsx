@@ -294,9 +294,8 @@ export const ButtonListSettings = () => {
             <PatternInput />
           </BackgroundInput>
 
-          <ToolbarSection title="Typography">
-            <FontInput />
-          </ToolbarSection>
+          <FontInput />
+
           <BorderInput />
         </TabBody>
       )}
@@ -322,7 +321,7 @@ export const ButtonListSettings = () => {
           <ClickItem />
 
           <ToolbarSection title="Hover">
-            <ToolbarSection title="Colors">
+            <ToolbarSection title="Colors" collapsible={false}>
               <ColorInput
                 propKey="background"
                 label="Background"
@@ -351,7 +350,7 @@ export const ButtonListSettings = () => {
               />
             </ToolbarSection>
 
-            <ToolbarSection title="Opacity">
+            <ToolbarSection title="Opacity" collapsible={false}>
               <OpacityInput label="" propKey="opacity" index="hover" />
             </ToolbarSection>
           </ToolbarSection>

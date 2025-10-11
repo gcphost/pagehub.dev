@@ -12,7 +12,7 @@ export const FlexInput = ({ propKey = "flex" }) => (
     help="Control the position of the components inside this one."
     footer={
       <ItemAdvanceToggle propKey={propKey}>
-        <ToolbarSection full={1}>
+        <ToolbarSection full={1} collapsible={false}>
           <ToolbarItem
             propKey="alignSelf"
             type="select"
@@ -64,37 +64,37 @@ export const FlexInput = ({ propKey = "flex" }) => (
       </ItemAdvanceToggle>
     }
   >
-    <ToolbarSection full={1}>
-      <FlexDirectionInput />
-      <GapInput />
 
-      <ToolbarItem
-        propKey="alignItems"
-        type="select"
-        label="Item Alignment"
-        labelHide={true}
-        cols={true}
-        inline
-      >
-        <option value="">None</option>
-        {TailwindStyles.alignItems.map((_, k) => (
-          <option key={_}>{_}</option>
-        ))}
-      </ToolbarItem>
+    <FlexDirectionInput />
+    <GapInput />
 
-      <ToolbarItem
-        propKey="justifyContent"
-        type="select"
-        labelHide={true}
-        label="Justify Content"
-        cols={true}
-        inline
-      >
-        <option value="">None</option>
-        {TailwindStyles.justifyContent.map((_, k) => (
-          <option key={_}>{_}</option>
-        ))}
-      </ToolbarItem>
-    </ToolbarSection>
+    <ToolbarItem
+      propKey="alignItems"
+      type="select"
+      label="Item Alignment"
+      labelHide={true}
+      cols={true}
+      inline
+    >
+      <option value="">None</option>
+      {TailwindStyles.alignItems.map((_, k) => (
+        <option key={_}>{_}</option>
+      ))}
+    </ToolbarItem>
+
+    <ToolbarItem
+      propKey="justifyContent"
+      type="select"
+      labelHide={true}
+      label="Justify Content"
+      cols={true}
+      inline
+    >
+      <option value="">None</option>
+      {TailwindStyles.justifyContent.map((_, k) => (
+        <option key={_}>{_}</option>
+      ))}
+    </ToolbarItem>
+
   </ToolbarSection>
 );

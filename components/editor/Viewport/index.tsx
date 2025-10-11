@@ -591,15 +591,14 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const deviceStyles =
     device && view === "mobile"
       ? {
-          width: `${deviceDimensions.width}px`,
-          height: `${deviceDimensions.height}px`,
-        }
+        width: `${deviceDimensions.width}px`,
+        height: `${deviceDimensions.height}px`,
+      }
       : {};
 
   let viewClasses = {
     mobile: [
-      `flex h-screen overflow-hidden flex-row mx-auto w-${
-        enabled ? "[380px]" : "screen"
+      `flex h-screen overflow-hidden flex-row mx-auto w-${enabled ? "[380px]" : "screen"
       } mx-auto `,
       enabled
         ? "w-full rounded-lg overflow-scroll scrollbar-light bg-background relative"
@@ -611,7 +610,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
         ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen`
         : "w-screen",
       enabled
-        ? `w-full !border-[7px] ${viewMode === "component" ? "border-purple-200" : "border-border"}   relative scrollbar-light bg-background overflow-scroll`
+        ? `w-full !border-[7px] ${viewMode === "component" ? "border-muted" : "border-muted"}   relative scrollbar-light bg-background overflow-scroll`
         : "w-screen h-screen overflow-auto relative",
     ],
   };

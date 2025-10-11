@@ -92,7 +92,7 @@ export const VideoSettings = () => {
 
       {activeTab === "Appearance" && (
         <TabBody>
-          <ToolbarSection title="Decoration">
+          <ToolbarSection title="Decoration" collapsible={false}>
             <RadiusInput />
             <ShadowInput />
           </ToolbarSection>

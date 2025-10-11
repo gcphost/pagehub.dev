@@ -21,8 +21,8 @@ export const BackgroundInput = ({
       bodyClassName="px-3"
       footer={
         <ItemAdvanceToggle propKey="background">
-          <ToolbarSection full={1} bodyClassName="px-3">
-            <ToolbarSection title="Gradient" subtitle={true}>
+          <ToolbarSection full={1} collapsible={false}>
+            <ToolbarSection title="Gradient">
               <ToolbarItem
                 propKey={"backgroundGradient"}
                 propType="root"
@@ -35,23 +35,27 @@ export const BackgroundInput = ({
                   <option key={_}>{_}</option>
                 ))}
               </ToolbarItem>
+
+              {props?.root?.backgroundGradient && (
+                <ToolbarSection full={1} title="Colors">
+                  <ColorInput
+                    propKey="backgroundGradientFrom"
+                    label="From"
+                    prefix="from"
+                    propType="root"
+                  />
+                  <ColorInput
+                    propKey="backgroundGradientTo"
+                    label="To"
+                    prefix="to"
+                    propType="root"
+                  />
+                </ToolbarSection>
+              )}
             </ToolbarSection>
-            {props?.root?.backgroundGradient && (
-              <ToolbarSection full={1}>
-                <ColorInput
-                  propKey="backgroundGradientFrom"
-                  label="From"
-                  prefix="from"
-                  propType="root"
-                />
-                <ColorInput
-                  propKey="backgroundGradientTo"
-                  label="To"
-                  prefix="to"
-                  propType="root"
-                />
-              </ToolbarSection>
-            )}
+
+
+
 
             {children}
           </ToolbarSection>

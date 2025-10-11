@@ -48,7 +48,7 @@ export default function ClickItem() {
     <>
       <ToolbarSection title="Click">
         {/* Mode Toggle Buttons */}
-        <div className="mb-3 flex gap-2">
+        <div className="flex gap-2">
           <button
             type="button"
             onClick={() => setMode("link")}
@@ -79,7 +79,7 @@ export default function ClickItem() {
         {/* Action Mode */}
         {mode === "action" && (
           <>
-            <ToolbarSection full={1} title="Action">
+            <ToolbarSection full={1} title="Action" collapsible={false}>
               <p className="text-xs">Control a components visibility.</p>
 
               <ToolbarItem

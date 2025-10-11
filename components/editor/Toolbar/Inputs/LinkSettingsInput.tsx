@@ -138,6 +138,7 @@ const LinkSettingsInput = ({
         full={1}
         title="Link"
         help="Provide a valid URL or select an internal page."
+        collapsible={false}
       >
         {linkType === "external" ? (
           <ToolbarItem

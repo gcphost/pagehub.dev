@@ -62,9 +62,8 @@ export const ItemToggle = ({
                     onChange(item.id);
                     setIsOpen(false);
                   }}
-                  className={`flex w-full items-center gap-2 whitespace-nowrap px-3 py-2 text-left text-xs hover:bg-muted ${
-                    selected === item.id ? "bg-muted" : ""
-                  }`}
+                  className={`flex w-full items-center gap-2 whitespace-nowrap px-3 py-2 text-left text-xs hover:bg-muted ${selected === item.id ? "bg-muted" : ""
+                    }`}
                 >
                   <span className="flex size-4 items-center justify-center">
                     {item.icon}
@@ -108,9 +107,8 @@ export const ItemSelector = ({
     placement="bottom"
   >
     <div
-      className={`flex items-center justify-center text-xs ${
-        selected ? "" : ""
-      }`}
+      className={`flex items-center justify-center text-xs ${selected ? "" : ""
+        }`}
     >
       {icon}
     </div>
@@ -136,13 +134,13 @@ export const ItemAdvanceToggle = ({
   return (
     <>
       <button
-        className="text-xxs hover:text-underline mx-auto mt-2 flex w-full items-center justify-center gap-1.5 rounded-md px-2 py-0 text-center"
+        className="text-xxs mx-auto flex w-full items-center justify-center gap-1.5 rounded-md px-2 py-0 text-center hover:underline"
         onClick={() => setShowAdvance(!showAdvance)}
       >
         {title}
       </button>
 
-      {showAdvance ? <div className="mt-4">{children}</div> : null}
+      {showAdvance ? <div className="mt-1 flex flex-col gap-4">{children}</div> : null}
     </>
   );
 };

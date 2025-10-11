@@ -10,6 +10,7 @@ export const BackgroundSettingsInput = ({ props }) => (
       propKey="backgroundImage"
       typeKey="backgroundImageType"
       contentKey="backgroundImage"
+      collapsible={false}
     />
 
     {props?.backgroundImage && (
@@ -18,7 +19,7 @@ export const BackgroundSettingsInput = ({ props }) => (
         subtitle={true}
         defaultOpen={false}
       >
-        <ToolbarSection>
+        <>
           <ToolbarItem
             propKey="backgroundPriority"
             propType="component"
@@ -40,9 +41,9 @@ export const BackgroundSettingsInput = ({ props }) => (
             <option value="high">High</option>
             <option value="">Auto</option>
           </ToolbarItem>
-        </ToolbarSection>
+        </>
 
-        <ToolbarSection>
+        <>
           <ToolbarItem
             propKey={"backgroundRepeat"}
             propType="class"
@@ -66,9 +67,9 @@ export const BackgroundSettingsInput = ({ props }) => (
               <option key={_}>{_}</option>
             ))}
           </ToolbarItem>
-        </ToolbarSection>
+        </>
 
-        <ToolbarSection>
+        <>
           <ToolbarItem
             propKey={"backgroundOrigin"}
             propType="class"
@@ -92,7 +93,7 @@ export const BackgroundSettingsInput = ({ props }) => (
               <option key={_}>{_}</option>
             ))}
           </ToolbarItem>
-        </ToolbarSection>
+        </>
 
         <ToolbarItem
           propKey={"backgroundAttachment"}

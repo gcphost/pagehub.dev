@@ -249,13 +249,16 @@ body {
 .disable-scrollbars::-webkit-scrollbar,
 [data-no-scrollbars="true"]::-webkit-scrollbar {
   background: transparent; /* Chrome/Safari/Webkit */
-  width: 0px;
+}
+
+.scrollbar-hide {
+  @apply overflow-visible;
 }
 
 /* Auto-hide scrollbar styles */
 .scrollbar-hide::-webkit-scrollbar {
-  width: 0px;
   background: transparent;
+  width: 8px;
 }
 
 .scrollbar-hide::-webkit-scrollbar-thumb {

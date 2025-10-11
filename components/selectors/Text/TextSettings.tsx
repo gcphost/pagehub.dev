@@ -130,7 +130,7 @@ export const TextSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Colors">
+          <ToolbarSection title="Colors" collapsible={false}>
             <ColorInput
               propKey="color"
               label="Text"
@@ -140,10 +140,9 @@ export const TextSettings = () => {
             />
           </ToolbarSection>
 
-          <ToolbarSection title="Typography">
-            <FontInput />
-          </ToolbarSection>
-          <ToolbarSection title="Decoration">
+          <FontInput />
+
+          <ToolbarSection title="Decoration" collapsible={false}>
             <ShadowInput />
           </ToolbarSection>
         </TabBody>
@@ -167,7 +166,7 @@ export const TextSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Size">
+          <ToolbarSection title="Size" collapsible={false}>
             <WidthInput />
 
             <WidthInput
@@ -201,11 +200,11 @@ export const TextSettings = () => {
 
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <ToolbarSection title="Click">
+          <ToolbarSection title="Click" collapsible={false}>
             <LinkSettingsInput />
           </ToolbarSection>
 
-          <ToolbarSection title="Hover">
+          <ToolbarSection title="Hover" collapsible={false}>
             <ColorInput
               propKey="color"
               label="Text Color"

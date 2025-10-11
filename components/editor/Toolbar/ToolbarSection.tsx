@@ -30,11 +30,11 @@ export const ToolbarSection = ({
   };
 
   return (
-    <div className="w-full rounded border shadow">
+    <div className={`w-full ${collapsible ? 'rounded border border-border shadow' : ''}`}>
       {title && (
         <button
           id={title}
-          className={`flex w-full items-center justify-between gap-3 rounded-t bg-sidebar px-2 py-1 text-sm font-semibold text-sidebar-foreground transition-colors ${className}`}
+          className={`flex w-full items-center justify-between gap-3 ${collapsible ? 'rounded-t bg-sidebar' : '-ml-2'} px-2 py-1 text-sm font-semibold text-sidebar-foreground transition-colors ${className}`}
           onClick={handleClick}
           aria-label={title}
         >
@@ -69,14 +69,16 @@ export const ToolbarSection = ({
       {enabled && isOpen && (
         <>
           <div
-            className={`grid-cols-${full} grid items-end gap-4 ${bodyClassName} rounded bg-card p-2 text-card-foreground`}
+            className={`grid-cols-${full} grid items-end gap-4 ${collapsible ? 'rounded bg-card p-2 text-card-foreground' : ''} ${bodyClassName}`}
             role="group"
             aria-labelledby={title}
           >
             {children}
+
+            {footer}
           </div>
 
-          {footer && <div className="pt-2">{footer}</div>}
+
         </>
       )}
     </div>

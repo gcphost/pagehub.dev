@@ -18,7 +18,7 @@ export const BorderInput = ({ index = "" }) => {
         title="Border"
         footer={
           <ItemAdvanceToggle propKey="border">
-            <ToolbarSection full={1}>
+            <ToolbarSection full={1} collapsible={false}>
               <ToolbarItem
                 propKey="borderStyle"
                 propType="root"
@@ -34,7 +34,7 @@ export const BorderInput = ({ index = "" }) => {
               </ToolbarItem>
             </ToolbarSection>
 
-            <ToolbarSection full={4} title="Enable Position">
+            <ToolbarSection full={4} title="Enable Position" collapsible={false}>
               <ToolbarItem
                 propKey="borderTop"
                 propType="root"

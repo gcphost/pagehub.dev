@@ -185,44 +185,44 @@ export const FormElementSettings = () => {
         "month",
         "week",
       ].includes(fieldType) && (
-        <ToolbarSection
-          title="Input Settings"
-          help="Settings for input elements"
-        >
-          <ToolbarItem
-            propKey="min"
-            propType="component"
-            type="text"
-            label="Min Value"
-            labelHide={true}
-            placeholder="Minimum value"
-          />
-          <ToolbarItem
-            propKey="max"
-            propType="component"
-            type="text"
-            label="Max Value"
-            labelHide={true}
-            placeholder="Maximum value"
-          />
-          <ToolbarItem
-            propKey="step"
-            propType="component"
-            type="text"
-            label="Step"
-            labelHide={true}
-            placeholder="Step value"
-          />
-          <ToolbarItem
-            propKey="pattern"
-            propType="component"
-            type="text"
-            label="Pattern"
-            labelHide={true}
-            placeholder="Regex pattern"
-          />
-        </ToolbarSection>
-      )}
+          <ToolbarSection
+            title="Input Settings"
+            help="Settings for input elements"
+          >
+            <ToolbarItem
+              propKey="min"
+              propType="component"
+              type="text"
+              label="Min Value"
+              labelHide={true}
+              placeholder="Minimum value"
+            />
+            <ToolbarItem
+              propKey="max"
+              propType="component"
+              type="text"
+              label="Max Value"
+              labelHide={true}
+              placeholder="Maximum value"
+            />
+            <ToolbarItem
+              propKey="step"
+              propType="component"
+              type="text"
+              label="Step"
+              labelHide={true}
+              placeholder="Step value"
+            />
+            <ToolbarItem
+              propKey="pattern"
+              propType="component"
+              type="text"
+              label="Pattern"
+              labelHide={true}
+              placeholder="Regex pattern"
+            />
+          </ToolbarSection>
+        )}
 
       <ToolbarSection title="Auto generate content" subtitle={true}>
         <IpsumGenerator propKey="placeholder" propType="component" />
@@ -262,7 +262,7 @@ export const FormElementSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Colors" full={1}>
+          <ToolbarSection title="Colors" full={1} collapsible={false}>
             <ColorInput
               propKey="color"
               label="Text"
@@ -280,15 +280,13 @@ export const FormElementSettings = () => {
             />
           </ToolbarSection>
 
-          <ToolbarSection title="Typography">
-            <FontInput />
-          </ToolbarSection>
+          <FontInput />
 
           <BackgroundInput />
 
           <BorderInput />
 
-          <ToolbarSection title="Decoration">
+          <ToolbarSection title="Decoration" collapsible={false}>
             <ShadowInput />
             <OpacityInput label="Opacity" propKey="opacity" />
           </ToolbarSection>

@@ -116,7 +116,7 @@ export const ComponentSettings = () => {
   }, [search, items]);
 
   return (
-    <div className="flex flex-col bg-popover text-popover-foreground">
+    <div className="flex flex-col">
       <form
         onSubmit={(e) => {
           setSearch(e.target[0].value);
@@ -136,8 +136,8 @@ export const ComponentSettings = () => {
         </div>
       </form>
       {list?.map((a, k) => (
-        <div key={k} className="border">
-          <div className="border-y bg-secondary px-3 py-1.5 font-bold text-secondary-foreground">{a.title}</div>
+        <div key={k} className="border-border ">
+          <div className="border-y border-border bg-secondary px-3 py-1.5 font-bold text-secondary-foreground">{a.title}</div>
 
           <div className="grid w-full grid-cols-3 gap-3 p-3">
             {a.content.map((item, kk) => (

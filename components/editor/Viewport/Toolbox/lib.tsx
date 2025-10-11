@@ -79,11 +79,14 @@ export const ToolboxItemDisplay = ({
   label,
   isDragging = false,
 }) => (
-  <div className="pointer-events-none flex min-h-[60px] w-full flex-col items-center justify-center gap-2 px-1 py-2 transition-colors">
-    <Icon className="text-2xl text-foreground" />
-    <span className="text-center text-[10px] text-muted-foreground">
-      {label}
-    </span>
+  <div className={`pointer-events-auto w-full cursor-move rounded-md border border-border bg-card text-card-foreground hover:bg-accent ${isDragging ? "border-accent bg-accent text-accent-foreground" : ""}`}>
+
+    <div className="pointer-events-none flex min-h-[60px] w-full flex-col items-center justify-center gap-2 px-1 py-2 transition-colors">
+      <Icon className="text-2xl text-card-foreground" />
+      <span className="text-center text-[10px] text-card-foreground/70">
+        {label}
+      </span>
+    </div>
   </div>
 );
 
@@ -130,7 +133,6 @@ export const RenderToolComponent = ({
   return (
     <motion.div
       whileTap={{ scale: 0.9 }}
-      className={`pointer-events-auto w-full cursor-move rounded-md border border-border hover:bg-accent ${isDragging ? "border-accent bg-accent text-accent-foreground" : ""}`}
       ref={(ref: any) => create(ref, tool)}
       onMouseDown={() => setIsDragging(true)}
       onMouseUp={() => setIsDragging(false)}

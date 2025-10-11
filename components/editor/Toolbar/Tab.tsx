@@ -63,7 +63,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
 
       <AutoHideScrollbar
         id="toolbarContents"
-        className="flex min-h-0 flex-1 flex-col gap-3 divide-y divide-border overflow-y-auto overflow-x-hidden px-2 py-1.5 pb-[400px]"
+        className="flex min-h-0 flex-1 flex-col gap-3 divide-y divide-border overflow-y-auto overflow-x-hidden py-2 pb-[calc(100vh/2)] pl-2 pr-0"
         hideDelay={2000}
         showDelay={100}
       >

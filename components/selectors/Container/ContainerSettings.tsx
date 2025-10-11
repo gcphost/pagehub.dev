@@ -168,30 +168,30 @@ export const ContainerSettings = () => {
           </>
         )}
 
-        <ToolbarSection title="Container Presets">
-          <ToolbarSection full={1}>
-            <PresetInput
-              presets={selectorPresets.container.width.items}
-              label={selectorPresets.container.width.label}
-              type={selectorPresets.container.width.type}
-              propKey={selectorPresets.container.width.propKey}
-              propType={selectorPresets.container.width.propType}
-              inputWidth="w-2/3"
-              labelWidth="w-1/3"
-              inline
-            />
+        <ToolbarSection title="Presets">
 
-            <PresetInput
-              presets={selectorPresets.container.maxWidth.items}
-              label={selectorPresets.container.maxWidth.label}
-              type={selectorPresets.container.maxWidth.type}
-              propKey={selectorPresets.container.maxWidth.propKey}
-              propType={selectorPresets.container.maxWidth.propType}
-              inputWidth="w-2/3"
-              labelWidth="w-1/3"
-              inline
-            />
-          </ToolbarSection>
+          <PresetInput
+            presets={selectorPresets.container.width.items}
+            label={selectorPresets.container.width.label}
+            type={selectorPresets.container.width.type}
+            propKey={selectorPresets.container.width.propKey}
+            propType={selectorPresets.container.width.propType}
+            inputWidth="w-2/3"
+            labelWidth="w-1/3"
+            inline
+          />
+
+          <PresetInput
+            presets={selectorPresets.container.maxWidth.items}
+            label={selectorPresets.container.maxWidth.label}
+            type={selectorPresets.container.maxWidth.type}
+            propKey={selectorPresets.container.maxWidth.propKey}
+            propType={selectorPresets.container.maxWidth.propType}
+            inputWidth="w-2/3"
+            labelWidth="w-1/3"
+            inline
+          />
+
 
           <PresetInput
             presets={selectorPresets.container.padding.items}
@@ -320,7 +320,7 @@ export const ContainerSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Colors" full={1}>
+          <ToolbarSection title="Colors" full={1} >
             <ColorInput
               propKey="color"
               label="Text"
@@ -338,9 +338,7 @@ export const ContainerSettings = () => {
             />
           </ToolbarSection>
 
-          <ToolbarSection title="Typography">
-            <FontInput />
-          </ToolbarSection>
+          <FontInput />
 
           <BackgroundInput>
             <PatternInput />
@@ -411,7 +409,7 @@ export const ContainerSettings = () => {
           <ClickItem />
 
           <ToolbarSection title="Hover">
-            <ToolbarSection title="Colors">
+            <ToolbarSection title="Colors" collapsible={false}>
               <ColorInput
                 propKey="background"
                 label="Background"
@@ -440,7 +438,7 @@ export const ContainerSettings = () => {
               />
             </ToolbarSection>
 
-            <ToolbarSection title="Opacity">
+            <ToolbarSection title="Opacity" collapsible={false}>
               <OpacityInput label="Opacity" propKey="opacity" index="hover" />
             </ToolbarSection>
           </ToolbarSection>

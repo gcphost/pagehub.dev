@@ -135,7 +135,7 @@ export const Wrap = ({
 export const Card = ({
   value,
   onClick,
-  bgColor = "bg-primary inside-shadow",
+  bgColor = "bg-primary text-primary-foreground",
 }) => {
   if (!value) {
     return null;
@@ -168,7 +168,7 @@ export const Card = ({
     <button
       onClick={handleClick}
       onContextMenu={handleContextMenu}
-      className={`${bgColor} mr-2 inline-flex cursor-pointer whitespace-nowrap rounded p-1 text-xs font-medium text-foreground hover:text-foreground hover:opacity-80`}
+      className={`${bgColor}  text-xxs inline-flex cursor-pointer whitespace-nowrap rounded px-0.5 py-0 font-medium text-foreground hover:text-foreground hover:opacity-80`}
     >
       <Tooltip
         content={`Left-click: Copy | Right-click: Remove`}

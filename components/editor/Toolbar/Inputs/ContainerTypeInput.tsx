@@ -22,7 +22,7 @@ export const ContainerTypeInput = () => {
         propKey="flexDirection"
         type="select"
         labelHide={true}
-        label="Container Type"
+        label="Flex Direction"
         cols={true}
         inline
         inputWidth="w-1/2"

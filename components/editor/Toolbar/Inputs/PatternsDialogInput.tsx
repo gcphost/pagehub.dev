@@ -57,10 +57,10 @@ export const PatternsDialogInput = ({
         patternAngle: 0,
         patternSpacingX: 0,
         patternSpacingY: 0,
-        patternColor1: "rgba(0,0,0,100)",
-        patternColor2: "rgba(0,0,0,100)",
-        patternColor3: "rgba(0,0,0,100)",
-        patternColor4: "rgba(0,0,0,100)",
+        patternColor1: "rgba(59, 130, 246, 0.8)", // Blue
+        patternColor2: "rgba(16, 185, 129, 0.8)", // Green
+        patternColor3: "rgba(245, 101, 101, 0.8)", // Red
+        patternColor4: "rgba(168, 85, 247, 0.8)", // Purple
       },
     });
   }

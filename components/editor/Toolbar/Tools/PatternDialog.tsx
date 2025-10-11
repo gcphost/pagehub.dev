@@ -113,10 +113,10 @@ export const PatternDialog = () => {
         patternAngle: 0,
         patternSpacingX: 0,
         patternSpacingY: 0,
-        patternColor1: "rgba(0,0,0,100)",
-        patternColor2: "rgba(0,0,0,100)",
-        patternColor3: "rgba(0,0,0,100)",
-        patternColor4: "rgba(0,0,0,100)",
+        patternColor1: "rgba(59, 130, 246, 0.8)", // Blue
+        patternColor2: "rgba(16, 185, 129, 0.8)", // Green
+        patternColor3: "rgba(245, 101, 101, 0.8)", // Red
+        patternColor4: "rgba(168, 85, 247, 0.8)", // Purple
       },
     });
 
@@ -124,17 +124,16 @@ export const PatternDialog = () => {
       <div style={style}>
         <button
           id={`pattern-${pattern.slug}`}
-          className={`flex w-full cursor-pointer flex-row rounded-md p-2 hover:bg-muted ${
-            dialog.value?.slug === pattern.slug ? "bg-muted" : ""
-          }`}
+          className={`flex w-full cursor-pointer flex-row rounded-md p-1 text-xs text-muted-foreground transition-colors hover:bg-muted ${dialog.value?.slug === pattern.slug ? "bg-accent text-accent-foreground" : ""
+            }`}
           onClick={(e) => changed(pattern)}
         >
           <div className="pointer-events-none flex h-6 w-full items-center justify-between gap-3">
-            <div className="w-1/2 truncate whitespace-nowrap text-sm">
+            <div className="w-1/2 truncate whitespace-nowrap">
               {pattern.title}
             </div>
             <div
-              className="h-full w-1/2 rounded-lg border border-border bg-muted text-muted-foreground"
+              className="h-full w-1/2 rounded-md border border-border bg-muted"
               style={{
                 backgroundImage: patt ? `url(${patt})` : null,
               }}
@@ -162,11 +161,10 @@ export const PatternDialog = () => {
               {categories.map((cat) => (
                 <button
                   key={cat}
-                  className={`rounded px-2.5 py-1 text-xs font-medium ${
-                    category === cat
-                      ? "bg-background text-foreground"
-                      : "bg-muted hover:bg-muted"
-                  }`}
+                  className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${category === cat
+                    ? "bg-accent text-accent-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    }`}
                   onClick={() => handleCategoryChange(cat)}
                 >
                   {cat.charAt(0).toUpperCase() + cat.slice(1)}

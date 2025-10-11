@@ -73,7 +73,7 @@ export const AutoHideScrollbar: React.FC<AutoHideScrollbarProps> = ({
   return (
     <div
       id={id}
-      className={`transition-all duration-300 ease-in-out ${shouldShowScrollbar
+      className={`overflow-visible  transition-all duration-300 ease-in-out ${shouldShowScrollbar
         ? "scrollbar"
         : "scrollbar-hide"
         } ${className}`}
