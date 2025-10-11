@@ -19,7 +19,7 @@ import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
 import { TbBoxPadding, TbMouse, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState } from "recoil";
-import { autoOpenMenu, useDefaultTab } from "utils/lib";
+import { useAutoOpenMenu, useDefaultTab } from "utils/lib";
 
 export const BackgroundSettings = () => {
   const { id } = useNode();
@@ -29,7 +29,7 @@ export const BackgroundSettings = () => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
 
   const [menu, setMenu] = useRecoilState(ToolboxMenu);
-  autoOpenMenu(menu, setMenu, id, node);
+  useAutoOpenMenu(menu, setMenu, id, node);
 
   const head = [
     {

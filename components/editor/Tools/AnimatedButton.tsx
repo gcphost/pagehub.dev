@@ -14,10 +14,6 @@ export const AnimatedButton = ({
       key={uuidv4()}
       className={`${className} origin-top cursor-pointer`}
       aria-label={ariaLabel}
-      whileHover={{
-        scale: 1.3,
-        // transition: { duration: 0.2 },
-      }}
       whileTap={{ scale: 0.9 }}
       initial={{
         scale: 0,

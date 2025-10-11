@@ -569,7 +569,7 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
   });
 };
 
-export const autoOpenMenu = (menu, setMenu, id, node) => {
+export const useAutoOpenMenu = (menu, setMenu, id, node) => {
   useEffect(() => {
     if (menu.id !== id) {
       setMenu({
@@ -578,7 +578,7 @@ export const autoOpenMenu = (menu, setMenu, id, node) => {
         parent: node.data.parent,
       });
     }
-  }, []);
+  }, [menu.id, id, node.data.parent, setMenu]);
 };
 
 export const useDefaultTab = (head, activeTab, setActiveTab) => {

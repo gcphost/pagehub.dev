@@ -70,11 +70,11 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
 
             return _props?.data?.props?.type === "page"
               ? {
-                  id: _,
-                  displayName:
-                    _props.data.custom?.displayName || "Untitled Page",
-                  custom: _props.data.custom,
-                }
+                id: _,
+                displayName:
+                  _props.data.custom?.displayName || "Untitled Page",
+                custom: _props.data.custom,
+              }
               : null;
           } catch (e) {
             // Node may have been removed
@@ -381,7 +381,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         className={
           buttonClassName ||
-          "flex w-full items-center justify-between gap-2 rounded-lg bg-background px-3 py-2 text-foreground transition-colors hover:bg-muted"
+          "flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-background px-3 py-2 text-foreground transition-colors hover:bg-muted"
         }
         aria-label="Page selector"
       >
@@ -395,9 +395,8 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
           )}
         </div>
         <TbChevronDown
-          className={`shrink-0 transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`shrink-0 transition-transform ${isOpen ? "rotate-180" : ""
+            }`}
         />
       </button>
 
@@ -441,9 +440,8 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                   href={getPageUrl(null)}
                   shallow
                   onClick={() => handlePageSelect(null)}
-                  className={`flex w-full items-center gap-2 px-3 py-2 transition-colors hover:bg-muted ${
-                    !isolate ? "bg-muted font-medium" : ""
-                  }`}
+                  className={`flex w-full items-center gap-2 px-3 py-2 transition-colors hover:bg-muted ${!isolate ? "bg-muted font-medium" : ""
+                    }`}
                 >
                   <TbHash className="text-muted-foreground" />
                   <span className="text-sm text-foreground">All Pages</span>
@@ -471,9 +469,8 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                 return (
                   <div
                     key={page.id}
-                    className={`group flex w-full items-center gap-2 px-3 py-2 transition-colors hover:bg-muted ${
-                      isSelected ? "bg-muted font-medium" : ""
-                    }`}
+                    className={`group flex w-full items-center gap-2 px-3 py-2 transition-colors hover:bg-muted ${isSelected ? "bg-muted font-medium" : ""
+                      }`}
                   >
                     {pickerMode ? (
                       <button

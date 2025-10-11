@@ -344,7 +344,7 @@ export const GapDragControl = () => {
             // Check if mouse is within circular radius of the control position
             const distance = Math.sqrt(
               Math.pow(e.clientX - controlX, 2) +
-                Math.pow(e.clientY - controlY, 2),
+              Math.pow(e.clientY - controlY, 2),
             );
 
             if (distance < GAP_DETECTION_THRESHOLD) {
@@ -394,7 +394,7 @@ export const GapDragControl = () => {
             // Check if mouse is within circular radius of the control position
             const distance = Math.sqrt(
               Math.pow(e.clientX - controlX, 2) +
-                Math.pow(e.clientY - controlY, 2),
+              Math.pow(e.clientY - controlY, 2),
             );
 
             if (distance < GAP_DETECTION_THRESHOLD) {
@@ -500,7 +500,7 @@ export const GapDragControl = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
-              className="fixed flex items-center justify-center border border-dashed border-border bg-primary"
+              className="fixed flex items-center justify-center border border-dashed border-border bg-primary text-primary-foreground"
               style={{
                 left: gapHoverInfo.gapRect.x,
                 top: gapHoverInfo.gapRect.y,

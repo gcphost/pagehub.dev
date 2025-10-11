@@ -349,10 +349,10 @@ export const MediaManagerModal = ({
         setUploadProgress((prev) =>
           prev
             ? {
-                ...prev,
-                current: i,
-                currentFile: file.name,
-              }
+              ...prev,
+              current: i,
+              currentFile: file.name,
+            }
             : null,
         );
 
@@ -380,9 +380,9 @@ export const MediaManagerModal = ({
             setUploadProgress((prev) =>
               prev
                 ? {
-                    ...prev,
-                    completedFiles: [...prev.completedFiles, file.name],
-                  }
+                  ...prev,
+                  completedFiles: [...prev.completedFiles, file.name],
+                }
                 : null,
             );
 
@@ -764,7 +764,7 @@ export const MediaManagerModal = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="bg-background/80 fixed inset-0 z-[9997] backdrop-blur-sm"
+        className="fixed inset-0 z-[9997] bg-background/80 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -825,11 +825,10 @@ export const MediaManagerModal = ({
                 <Tooltip content="Card view" placement="bottom">
                   <button
                     onClick={() => setViewMode("cards")}
-                    className={`rounded px-2 py-1.5 text-xs font-medium transition-colors ${
-                      viewMode === "cards"
+                    className={`rounded px-2 py-1.5 text-xs font-medium transition-colors ${viewMode === "cards"
                         ? "bg-background text-foreground shadow-sm"
                         : "text-muted-foreground hover:text-foreground"
-                    }`}
+                      }`}
                   >
                     <TbLayoutGrid className="size-4" />
                   </button>
@@ -837,11 +836,10 @@ export const MediaManagerModal = ({
                 <Tooltip content="List view" placement="bottom">
                   <button
                     onClick={() => setViewMode("list")}
-                    className={`rounded px-2 py-1.5 text-xs font-medium transition-colors ${
-                      viewMode === "list"
+                    className={`rounded px-2 py-1.5 text-xs font-medium transition-colors ${viewMode === "list"
                         ? "bg-background text-foreground shadow-sm"
                         : "text-muted-foreground hover:text-foreground"
-                    }`}
+                      }`}
                   >
                     <TbList className="size-4" />
                   </button>
@@ -857,11 +855,10 @@ export const MediaManagerModal = ({
                       if (addMode === "upload") fileInputRef.current?.click();
                     }}
                     disabled={uploading}
-                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${
-                      addMode === "upload"
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${addMode === "upload"
                         ? "bg-background text-foreground shadow-sm"
                         : "text-muted-foreground hover:text-foreground"
-                    }`}
+                      }`}
                   >
                     <TbUpload className="inline" />
                   </button>
@@ -869,11 +866,10 @@ export const MediaManagerModal = ({
                 <Tooltip content="Add from URL" placement="bottom">
                   <button
                     onClick={() => setAddMode("url")}
-                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${
-                      addMode === "url"
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${addMode === "url"
                         ? "bg-background text-foreground shadow-sm"
                         : "text-muted-foreground hover:text-foreground"
-                    }`}
+                      }`}
                   >
                     <TbExternalLink className="inline" />
                   </button>
@@ -881,11 +877,10 @@ export const MediaManagerModal = ({
                 <Tooltip content="Add SVG code" placement="bottom">
                   <button
                     onClick={() => setAddMode("svg")}
-                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${
-                      addMode === "svg"
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${addMode === "svg"
                         ? "bg-background text-foreground shadow-sm"
                         : "text-muted-foreground hover:text-foreground"
-                    }`}
+                      }`}
                   >
                     <TbCode className="inline" />
                   </button>
@@ -901,11 +896,10 @@ export const MediaManagerModal = ({
                   <button
                     onClick={handlePasteClick}
                     disabled={!hasImageInClipboard || uploading}
-                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${
-                      hasImageInClipboard && !uploading
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${hasImageInClipboard && !uploading
                         ? "text-muted-foreground hover:text-foreground"
                         : "cursor-not-allowed text-muted-foreground"
-                    }`}
+                      }`}
                   >
                     <TbClipboard className="inline" />
                   </button>
@@ -1021,9 +1015,8 @@ export const MediaManagerModal = ({
 
           {/* Content Grid */}
           <div
-            className={`relative flex-1 overflow-y-auto bg-background transition-colors ${
-              isDragOver ? "border-2 border-dashed border-accent bg-accent" : ""
-            } ${uploadProgress ? "pt-16" : "p-3"}`}
+            className={`relative flex-1 overflow-y-auto bg-background transition-colors ${isDragOver ? "border-2 border-dashed border-accent bg-accent" : ""
+              } ${uploadProgress ? "pt-16" : "p-3"}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -1033,7 +1026,7 @@ export const MediaManagerModal = ({
 
             {/* Drag and drop overlay */}
             {isDragOver && (
-              <div className="bg-accent/90 absolute inset-0 z-40 flex items-center justify-center rounded-lg border-2 border-dashed border-accent backdrop-blur-sm">
+              <div className="absolute inset-0 z-40 flex items-center justify-center rounded-lg border-2 border-dashed border-accent bg-accent/90 backdrop-blur-sm">
                 <div className="flex flex-col items-center gap-4 text-accent-foreground">
                   <TbUpload className="text-6xl" />
                   <div className="text-center">
@@ -1060,7 +1053,7 @@ export const MediaManagerModal = ({
                   <span className="text-xs text-muted-foreground">
                     {Math.round(
                       ((uploadProgress.current + 1) / uploadProgress.total) *
-                        100,
+                      100,
                     )}
                     %
                   </span>
@@ -1069,7 +1062,7 @@ export const MediaManagerModal = ({
                 {/* Progress bar */}
                 <div className="mb-2 h-2 w-full rounded-full bg-muted text-muted-foreground">
                   <div
-                    className="h-2 rounded-full bg-accent transition-all duration-300 ease-out"
+                    className="h-2 rounded-full bg-accent text-accent-foreground transition-all duration-300 ease-out"
                     style={{
                       width: `${((uploadProgress.current + 1) / uploadProgress.total) * 100}%`,
                     }}
@@ -1140,15 +1133,14 @@ export const MediaManagerModal = ({
                 {filteredMedia.map((media) => (
                   <div
                     key={media.id}
-                    className={`group relative cursor-pointer overflow-hidden rounded-lg border border-border bg-card transition-all hover:shadow-md ${
-                      viewMode === "cards"
+                    className={`group relative cursor-pointer overflow-hidden rounded-lg border border-border bg-card transition-all hover:shadow-md ${viewMode === "cards"
                         ? selectedMedia === media.id
                           ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
                           : "hover:border-primary"
                         : selectedMedia === media.id
                           ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
                           : "hover:border-primary"
-                    }`}
+                      }`}
                     onClick={() => {
                       if (selectionMode && onSelect) {
                         onSelect(media.id);
@@ -1315,7 +1307,7 @@ export const MediaManagerModal = ({
         {/* Edit Metadata Modal */}
         {editingMedia && (
           <div
-            className="bg-background/80 absolute inset-0 flex items-center justify-center p-4 text-muted-foreground backdrop-blur-sm"
+            className="absolute inset-0 flex items-center justify-center bg-background/80 p-4 text-muted-foreground backdrop-blur-sm"
             onClick={() => setEditingMedia(null)}
           >
             <motion.div

@@ -8,10 +8,6 @@ import MenuItem from "./Helpers/MenuIcon";
 export const Tab = ({ tabId, icon = null, title = "" }) => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
 
-  const inactive =
-    "flex items-center justify-center p-3 text-lg font-medium text-muted-foreground  hover:bg-card hover:text-muted-foreground cursor-pointer rounded-md";
-  const active =
-    "flex items-center justify-center p-3 text-lg font-medium text-accent-foreground   bg-background text-foreground border-accent-foreground cursor-pointer rounded-md";
   const isActive = activeTab === tabId;
 
   if (!icon) return null;
@@ -19,15 +15,14 @@ export const Tab = ({ tabId, icon = null, title = "" }) => {
   return (
     <Tooltip content={title} placement="bottom" arrow={false}>
       <motion.div
-        className={isActive ? active : inactive}
+        className={`flex cursor-pointer items-center justify-center rounded-md p-3 text-lg font-medium ${isActive
+          ? "bg-accent text-accent-foreground"
+          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+          }`}
         role="tab"
         tabIndex={isActive ? 0 : -1}
         onClick={() => {
           setActiveTab(tabId);
-        }}
-        whileHover={{
-          scale: 1.1,
-          transition: { duration: 0.2 },
         }}
         whileTap={{ scale: 0.9 }}
         style={{
@@ -67,9 +62,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
 
       <div
         id="toolbarContents"
-        className={`scrollbar top-[ absolute bottom-[64px] flex w-full flex-col overflow-y-auto overflow-x-hidden${
-          jumps.length ? "224px" : "190px"
-        }] gap-3 divide-y divide-border px-2 py-1.5 pb-[400px]`}
+        className={`top-[${jumps.length ? "224px" : "190px"}] scrollbar absolute bottom-[64px] flex w-full flex-col gap-3 divide-y divide-border overflow-y-auto overflow-x-hidden px-2 py-1.5 pb-[400px]`}
       >
         {children}
       </div>

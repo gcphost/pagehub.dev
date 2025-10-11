@@ -93,7 +93,7 @@ export const setClonedProps = (props, query, exclude = []) => {
 
 export const ConvertToRegularComponent = ({ query, actions, id }) => (
   <button
-    className="flex w-full items-center gap-3 rounded-lg bg-primary px-4 py-3 text-left transition-colors hover:bg-primary"
+    className="flex w-full items-center gap-3 rounded-lg bg-destructive px-4 py-3 text-left text-destructive-foreground transition-colors hover:bg-destructive/90"
     onClick={() => {
       const node = query.node(id).get();
       removeHasManyRelation(node, query, actions);
@@ -104,10 +104,10 @@ export const ConvertToRegularComponent = ({ query, actions, id }) => (
       });
     }}
   >
-    <TbLinkOff className="shrink-0 text-xl text-destructive" />
+    <TbLinkOff className="shrink-0 text-xl" />
     <div className="flex-1">
-      <div className="font-semibold text-foreground">Unlink Component</div>
-      <div className="text-xs text-muted-foreground">
+      <div className="font-semibold">Unlink Component</div>
+      <div className="text-xs">
         Make independent with all settings editable
       </div>
     </div>
@@ -136,10 +136,10 @@ export const NoSettings = ({ actions, id, query }) => (
 
 export const ConvertToStyledComponent = ({ actions, id }) => (
   <button
-    className="flex w-full items-center gap-3 rounded-lg bg-primary px-4 py-3 text-left transition-colors hover:bg-primary"
+    className="flex w-full items-center gap-3 rounded-lg bg-secondary px-4 py-3 text-left text-secondary-foreground transition-colors hover:bg-secondary/90"
     onClick={() => actions.setProp(id, (prop) => (prop.relationType = "style"))}
   >
-    <TbPalette className="shrink-0 text-xl text-primary" />
+    <TbPalette className="shrink-0 text-xl" />
     <div className="flex-1">
       <div className="font-semibold text-foreground">Style Only Mode</div>
       <div className="text-xs text-muted-foreground">
@@ -151,7 +151,7 @@ export const ConvertToStyledComponent = ({ actions, id }) => (
 
 export const ConvertToContentComponent = ({ actions, id }) => (
   <button
-    className="flex w-full items-center gap-3 rounded-lg bg-primary px-4 py-3 text-left transition-colors hover:bg-primary"
+    className="flex w-full items-center gap-3 rounded-lg bg-accent px-4 py-3 text-left text-accent-foreground transition-colors hover:bg-accent/90"
     onClick={() =>
       actions.setProp(id, (prop) => (prop.relationType = "content"))
     }
@@ -219,15 +219,15 @@ export const RenderChildren = ({ props, children, query, actions, id }) => {
           </div>
 
           <button
-            className="flex w-full items-center gap-3 rounded-lg bg-primary px-4 py-3 text-left transition-colors hover:bg-primary"
+            className="flex w-full items-center gap-3 rounded-lg bg-primary px-4 py-3 text-left text-primary-foreground transition-colors hover:bg-primary/90"
             onClick={handleEditComponent}
           >
-            <TbBoxModel2 className="shrink-0 text-xl text-secondary-foreground" />
+            <TbBoxModel2 className="shrink-0 text-xl" />
             <div className="flex-1">
-              <div className="font-semibold text-foreground">
+              <div className="font-semibold">
                 Edit Linked Instance
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs">
                 Change the main component
               </div>
             </div>

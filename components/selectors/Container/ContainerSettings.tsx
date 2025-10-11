@@ -38,7 +38,7 @@ import {
   TbPlayerPlay,
 } from "react-icons/tb";
 import { useRecoilState } from "recoil";
-import { autoOpenMenu, useDefaultTab } from "utils/lib";
+import { useAutoOpenMenu, useDefaultTab } from "utils/lib";
 import { selectorPresets } from "utils/selectorPresets";
 
 export const ContainerSettings = () => {
@@ -51,7 +51,7 @@ export const ContainerSettings = () => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
 
   const [menu, setMenu] = useRecoilState(ToolboxMenu);
-  autoOpenMenu(menu, setMenu, id, node);
+  useAutoOpenMenu(menu, setMenu, id, node);
 
   const head = [
     {

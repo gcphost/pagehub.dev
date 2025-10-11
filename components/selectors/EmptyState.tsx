@@ -60,10 +60,6 @@ export const EmptyState = ({ icon = null }) => {
       {isActive || isHover ? (
         <motion.button
           id={`empty${id}`}
-          whileHover={{
-            scale: 1.1,
-            transition: { duration: 0.2 },
-          }}
           whileTap={{ scale: 0.9 }}
           className={"add-button cursor-pointer rounded-md text-3xl"}
           onClick={(e) => {

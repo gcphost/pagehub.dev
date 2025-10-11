@@ -94,9 +94,8 @@ export const IconDialogDialog = () => {
       <div style={style}>
         <button
           id={`iconPicker-${icon}`}
-          className={`flex size-full cursor-pointer flex-row items-center justify-center rounded-md hover:bg-accent ${
-            dialog.value === icon ? "border-2 border-accent bg-accent" : ""
-          }`}
+          className={`flex size-full cursor-pointer flex-row items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground ${dialog.value === icon ? "border-2 border-accent bg-accent text-accent-foreground" : ""
+            }`}
           onClick={(e) => changed(icon)}
         >
           <div className="pointer-events-none flex items-center justify-center">
@@ -122,41 +121,37 @@ export const IconDialogDialog = () => {
           <div className="scrollbar mb-2 max-h-20 shrink-0 overflow-y-auto">
             <div className="flex flex-wrap gap-1.5">
               <button
-                className={`rounded px-2.5 py-1 text-xs font-medium ${
-                  category === "all"
+                className={`rounded px-2.5 py-1 text-xs font-medium ${category === "all"
                     ? "bg-background text-foreground"
                     : "bg-muted hover:bg-muted"
-                }`}
+                  }`}
                 onClick={() => handleCategoryChange("all")}
               >
                 All
               </button>
               <button
-                className={`rounded px-2.5 py-1 text-xs font-medium ${
-                  category === "regular"
+                className={`rounded px-2.5 py-1 text-xs font-medium ${category === "regular"
                     ? "bg-background text-foreground"
                     : "bg-muted hover:bg-muted"
-                }`}
+                  }`}
                 onClick={() => handleCategoryChange("regular")}
               >
                 Regular
               </button>
               <button
-                className={`rounded px-2.5 py-1 text-xs font-medium ${
-                  category === "brands"
+                className={`rounded px-2.5 py-1 text-xs font-medium ${category === "brands"
                     ? "bg-background text-foreground"
                     : "bg-muted hover:bg-muted"
-                }`}
+                  }`}
                 onClick={() => handleCategoryChange("brands")}
               >
                 Brands
               </button>
               <button
-                className={`rounded px-2.5 py-1 text-xs font-medium ${
-                  category === "solid"
+                className={`rounded px-2.5 py-1 text-xs font-medium ${category === "solid"
                     ? "bg-background text-foreground"
                     : "bg-muted hover:bg-muted"
-                }`}
+                  }`}
                 onClick={() => handleCategoryChange("solid")}
               >
                 Solid

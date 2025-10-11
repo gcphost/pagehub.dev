@@ -669,7 +669,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
               <TbChevronDown className="size-4 transition-transform duration-200 group-hover:rotate-180" />
             </button>
           </Tooltip>
-          <div className="invisible absolute left-0 z-50 mt-1 w-fit min-w-48 rounded-lg border border-border bg-card p-3 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+          <div className="invisible absolute right-0 z-50 mt-1 w-fit min-w-48 rounded-lg border border-border bg-card p-3 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
             <div className="space-y-2">
               {/* Horizontal Rule */}
               <button
@@ -847,11 +847,10 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
         <button
           type="button"
           onClick={() => setLinkType("external")}
-          className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${
-            linkType === "external"
-              ? "bg-primary text-foreground"
-              : "bg-muted text-muted-foreground"
-          }`}
+          className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${linkType === "external"
+            ? "bg-primary text-primary-foreground"
+            : "bg-muted text-muted-foreground"
+            }`}
         >
           <MdLink className="mr-1 inline" />
           External URL
@@ -859,11 +858,10 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
         <button
           type="button"
           onClick={() => setLinkType("page")}
-          className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${
-            linkType === "page"
-              ? "bg-primary text-foreground"
-              : "bg-muted text-muted-foreground"
-          }`}
+          className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${linkType === "page"
+            ? "bg-primary text-primary-foreground"
+            : "bg-muted text-muted-foreground"
+            }`}
         >
           Internal Page
         </button>
@@ -885,7 +883,7 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
               e.stopPropagation();
               handleExternalLink();
             }}
-            className="w-full rounded-lg bg-primary px-3 py-2 text-sm text-foreground transition-colors hover:bg-primary"
+            className="btn-primary w-full "
           >
             Insert Link
           </button>

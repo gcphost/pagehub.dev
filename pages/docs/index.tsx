@@ -71,7 +71,7 @@ const DocsIndex = () => {
               Additional Resources
             </h2>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <a
+              <Link
                 href="/page-builder-api"
                 className="flex items-center gap-3 rounded-lg p-4 transition-colors hover:bg-background"
               >
@@ -84,8 +84,8 @@ const DocsIndex = () => {
                     API endpoints and usage
                   </p>
                 </div>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/templates"
                 className="flex items-center gap-3 rounded-lg p-4 transition-colors hover:bg-background"
               >
@@ -96,7 +96,7 @@ const DocsIndex = () => {
                     Pre-built page templates
                   </p>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
 

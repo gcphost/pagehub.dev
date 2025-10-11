@@ -5,10 +5,6 @@ export const MotionIcon = ({
   className = "flex items-center justify-center gap-1.5",
 }) => (
   <motion.div
-    whileHover={{
-      scale: 1.1,
-      transition: { duration: 0.2 },
-    }}
     whileTap={{ scale: 0.9 }}
     className={className}
     style={{

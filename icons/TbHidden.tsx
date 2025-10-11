@@ -1,4 +1,4 @@
-export default () => (
+const TbHidden = () => (
   <svg
     stroke="currentColor"
     fill="none"
@@ -17,3 +17,7 @@ export default () => (
     <rect x="14" y="14" width="6" height="6" rx="1" />
   </svg>
 );
+
+TbHidden.displayName = 'TbHidden';
+
+export default TbHidden;

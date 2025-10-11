@@ -204,9 +204,8 @@ const Input = (__props, ref) => {
     return (
       <BgWrap wrap={wrap}>
         <div
-          className={`flex items-center justify-center gap-3 p-1 ${
-            !props.cols ? "flex-col" : "flex-row"
-          }`}
+          className={`flex items-center justify-center gap-3 p-1 ${!props.cols ? "flex-col" : "flex-row"
+            }`}
         >
           {props?.options?.map((_, key) => {
             const checked = value === _.value;
@@ -223,11 +222,10 @@ const Input = (__props, ref) => {
                 />
                 <label
                   htmlFor={`radio-${propKey}-${key}`}
-                  className={`block cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-current transition-colors hover:bg-muted ${
-                    checked
-                      ? "bg-accent font-semibold text-accent-foreground"
-                      : "text-muted-foreground"
-                  }`}
+                  className={`block cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-current transition-colors hover:bg-muted ${checked
+                    ? "bg-accent font-semibold text-accent-foreground"
+                    : "bg-muted text-muted-foreground"
+                    }`}
                 >
                   {_.label}
                 </label>
@@ -251,9 +249,8 @@ const Input = (__props, ref) => {
     return (
       <BgWrap wrap={wrap}>
         <div
-          className={`flex items-center justify-center gap-3 p-1 ${
-            !props.cols ? "flex-col" : "flex-row"
-          }`}
+          className={`flex items-center justify-center gap-3 p-1 ${!props.cols ? "flex-col" : "flex-row"
+            }`}
         >
           {options?.map((_, key) => (
             <div key={key} className="flex items-center">
@@ -275,11 +272,10 @@ const Input = (__props, ref) => {
               />
               <label
                 htmlFor={`radio-${propKey}-${key}`}
-                className={`block cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-current transition-colors hover:bg-muted ${
-                  checked
-                    ? "bg-accent font-semibold text-accent-foreground"
-                    : "text-muted-foreground"
-                }`}
+                className={`block cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-current transition-colors ${checked
+                  ? "font-semibold text-accent-foreground"
+                  : "text-muted-foreground"
+                  }`}
               >
                 {_.label}
               </label>

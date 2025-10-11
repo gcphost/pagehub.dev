@@ -49,7 +49,7 @@ export const Dialog = ({
       window.innerHeight * 0.6,
     ); // Max 60% of screen height
 
-    let newStyle = {
+    let newStyle: any = {
       top: rect.bottom + 6,
       left: rect.left,
       zIndex: zIndex,
@@ -254,13 +254,12 @@ export const Dialog = ({
                       return (
                         <button
                           id={`font-${_}`}
-                          className={`flex w-full cursor-pointer flex-row rounded p-1 text-xs text-muted-foreground transition-colors hover:bg-muted ${
-                            dialog.value === _
-                              ? "bg-accent text-accent-foreground"
-                              : selectedIndex === k
-                                ? "bg-muted"
-                                : ""
-                          }`}
+                          className={`flex w-full cursor-pointer flex-row rounded p-1 text-xs text-muted-foreground transition-colors hover:bg-muted ${dialog.value === _
+                            ? "bg-accent text-accent-foreground"
+                            : selectedIndex === k
+                              ? "bg-muted"
+                              : ""
+                            }`}
                           style={{ fontFamily: (_ || []).join(", ") }}
                           key={k}
                           onClick={(e) => changed(_)}

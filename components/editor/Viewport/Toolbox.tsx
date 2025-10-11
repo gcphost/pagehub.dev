@@ -168,18 +168,13 @@ export const Toolbox = ({ userStyle = null }) => {
       delayTime={300}
       key={`icon${k}`}
       variants={subMenuItemVariants}
-      whileHover={{
-        scale: 1.1,
-        transition: { duration: 0.2 },
-      }}
       whileTap={{ scale: 0.9 }}
       onDelayedMouseEnter={() => {
         setActiveMenu(k);
         setActiveItem(0);
       }}
-      className={`btn cursor-pointer rounded-full border bg-primary p-3 text-2xl text-foreground drop-shadow-2xl ${
-        activeMenu === k ? "bg-primary" : ""
-      }`}
+      className={`btn cursor-pointer rounded-full border bg-primary p-3 text-2xl text-foreground drop-shadow-2xl ${activeMenu === k ? "bg-primary" : ""
+        }`}
       aria-label={items[_].title}
       role="button"
     >
@@ -208,14 +203,12 @@ export const Toolbox = ({ userStyle = null }) => {
 
   const itemMenu = (item, getter, setter, col = false) => (
     <div
-      className={`scrollbar flex min-w-[170px] flex-col overflow-auto bg-muted p-4 ${
-        col ? "bg-muted text-foreground" : "bg-muted text-foreground"
-      }`}
+      className={`scrollbar flex min-w-[170px] flex-col overflow-auto bg-muted p-4 ${col ? "bg-muted text-foreground" : "bg-muted text-foreground"
+        }`}
     >
       <div
-        className={`flex ${
-          col ? "flex-col gap-3" : "flex-col gap-1.5"
-        } "items-end" }`}
+        className={`flex ${col ? "flex-col gap-3" : "flex-col gap-1.5"
+          } "items-end" }`}
       >
         {itemMenuButton(item, getter, setter, col)}
       </div>
@@ -228,9 +221,8 @@ export const Toolbox = ({ userStyle = null }) => {
     return item.items?.map((a, k) => (
       <DelayedMouseEnter
         delayTime={300}
-        className={`w-min cursor-pointer whitespace-nowrap rounded-md px-3 py-1.5 ${
-          getter === k ? (!col ? "font-bold underline" : "font-bold") : ""
-        }`}
+        className={`w-min cursor-pointer whitespace-nowrap rounded-md px-3 py-1.5 ${getter === k ? (!col ? "font-bold underline" : "font-bold") : ""
+          }`}
         key={`btn${k}`}
         onClick={() => {
           setter(k);

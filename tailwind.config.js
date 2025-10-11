@@ -1,3 +1,13 @@
+// Function to handle opacity modifiers with CSS variables
+function withOpacity(variableName) {
+  return ({ opacityValue }) => {
+    if (opacityValue !== undefined) {
+      return `hsl(from var(${variableName}) h s l / ${opacityValue})`;
+    }
+    return `var(${variableName})`;
+  };
+}
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -18,26 +28,26 @@ module.exports = {
     }),
     extend: {
       colors: {
-        // Tweakcn colors
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        card: "var(--card)",
-        "card-foreground": "var(--card-foreground)",
-        popover: "var(--popover)",
-        "popover-foreground": "var(--popover-foreground)",
-        primary: "var(--primary)",
-        "primary-foreground": "var(--primary-foreground)",
-        secondary: "var(--secondary)",
-        "secondary-foreground": "var(--secondary-foreground)",
-        muted: "var(--muted)",
-        "muted-foreground": "var(--muted-foreground)",
-        accent: "var(--accent)",
-        "accent-foreground": "var(--accent-foreground)",
-        destructive: "var(--destructive)",
-        "destructive-foreground": "var(--destructive-foreground)",
-        border: "var(--border)",
-        input: "var(--input)",
-        ring: "var(--ring)",
+        // Tweakcn colors with opacity support
+        background: withOpacity('--background'),
+        foreground: withOpacity('--foreground'),
+        card: withOpacity('--card'),
+        "card-foreground": withOpacity('--card-foreground'),
+        popover: withOpacity('--popover'),
+        "popover-foreground": withOpacity('--popover-foreground'),
+        primary: withOpacity('--primary'),
+        "primary-foreground": withOpacity('--primary-foreground'),
+        secondary: withOpacity('--secondary'),
+        "secondary-foreground": withOpacity('--secondary-foreground'),
+        muted: withOpacity('--muted'),
+        "muted-foreground": withOpacity('--muted-foreground'),
+        accent: withOpacity('--accent'),
+        "accent-foreground": withOpacity('--accent-foreground'),
+        destructive: withOpacity('--destructive'),
+        "destructive-foreground": withOpacity('--destructive-foreground'),
+        border: withOpacity('--border'),
+        input: withOpacity('--input'),
+        ring: withOpacity('--ring'),
         "dar-gray": "#4b4b4b",
         "light-gray-0": "#eaeaea",
         "light-gray-1": "rgb(75,75,75)",

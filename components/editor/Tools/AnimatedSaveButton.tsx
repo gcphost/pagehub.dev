@@ -70,14 +70,6 @@ export const AnimatedSaveButton: React.FC<AnimatedSaveButtonProps> = ({
     <motion.div
       onClick={handleClick}
       className={getButtonClasses()}
-      whileHover={
-        !disabled && !isAnimating
-          ? {
-              scale: 1.1,
-              transition: { duration: 0.2 },
-            }
-          : {}
-      }
       whileTap={!disabled && !isAnimating ? { scale: 0.9 } : {}}
     >
       <AnimatePresence mode="wait">

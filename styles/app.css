@@ -331,7 +331,11 @@ input[type="range"]::-ms-thumb {
 }
 
 .btn {
-  @apply inside-shadow flex cursor-pointer items-center justify-center rounded-md border border-border bg-primary text-base text-primary-foreground hover:bg-primary hover:text-muted-foreground;
+  @apply hover:bg-primary/90 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary font-medium text-primary-foreground shadow transition-colors focus:outline-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+}
+
+.btn-primary {
+  @apply hover:bg-primary/90 inline-flex h-8 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors focus:outline-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
 }
 
 .btn-green {
@@ -374,11 +378,11 @@ ul {
 }
 
 .tool-bg {
-  @apply flex items-center justify-center !gap-2 rounded-md !border-border bg-background p-0 text-sm font-normal leading-normal tracking-normal text-foreground;
+  @apply flex items-center justify-center !gap-2 rounded-md !border-border bg-background !p-1 text-sm font-normal leading-normal tracking-normal text-foreground;
 }
 
 .tool-button {
-  @apply btn flex cursor-pointer items-center justify-center gap-1.5 !bg-secondary p-1.5 text-sm !text-secondary-foreground;
+  @apply btn flex cursor-pointer items-center justify-center gap-1.5 !bg-secondary p-1.5 text-sm !text-secondary-foreground hover:!bg-accent hover:!text-accent-foreground;
 }
 
 .tool-button * {

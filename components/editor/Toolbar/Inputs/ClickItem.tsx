@@ -52,11 +52,10 @@ export default function ClickItem() {
           <button
             type="button"
             onClick={() => setMode("link")}
-            className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${
-              mode === "link"
-                ? "bg-accent text-accent-foreground hover:bg-accent"
-                : "bg-muted text-muted-foreground hover:bg-muted"
-            }`}
+            className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${mode === "link"
+              ? "bg-accent text-accent-foreground hover:bg-accent"
+              : "bg-muted text-muted-foreground hover:bg-muted"
+              }`}
           >
             <TbExternalLink className="mr-1 inline" />
             Link
@@ -64,11 +63,10 @@ export default function ClickItem() {
           <button
             type="button"
             onClick={() => setMode("action")}
-            className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${
-              mode === "action"
-                ? "bg-accent text-accent-foreground hover:bg-accent"
-                : "bg-muted text-muted-foreground hover:bg-muted"
-            }`}
+            className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${mode === "action"
+              ? "bg-accent text-accent-foreground hover:bg-accent/90"
+              : "bg-muted text-muted-foreground hover:bg-muted/90"
+              }`}
           >
             <TbPointer className="mr-1 inline" />
             Action

@@ -98,13 +98,9 @@ const Item = ({
     onClick={onClick}
     disabled={disabled}
     aria-label={ariaLabel}
-    className={`flex cursor-pointer items-center justify-center rounded-lg px-1.5 py-3 text-xl text-foreground hover:bg-muted hover:text-foreground ${
-      disabled && "opacity-50"
-    } ${className}`}
-    whileHover={{
-      scale: 1.1,
-      transition: { duration: 0.2 },
-    }}
+    className={`flex cursor-pointer items-center justify-center rounded-lg px-1.5 py-3 text-xl text-foreground hover:bg-muted hover:text-foreground ${disabled && "opacity-50"
+      } ${className}`}
+
     whileTap={{ scale: 0.9 }}
     style={{
       willChange: "transform",
@@ -354,7 +350,7 @@ export const Header = () => {
 
         {animate && (
           <Tooltip content="Play Animations" placement="bottom" arrow={false}>
-            <Item ariaLabel="Play Animations" onClick={() => {}}>
+            <Item ariaLabel="Play Animations" onClick={() => { }}>
               <TbPlayerPlay />
             </Item>
           </Tooltip>
@@ -435,7 +431,7 @@ export const Header = () => {
 
                 // Un-isolate to show all pages
                 const { isolatePageAlt } = require("utils/lib");
-                isolatePageAlt(true, query, null, actions, () => {}, false);
+                isolatePageAlt(true, query, null, actions, () => { }, false);
 
                 // Show headers, footers, and pages
                 rootNode.data.nodes.forEach((nodeId) => {
@@ -657,7 +653,7 @@ export const Header = () => {
                       setShowMenu(false);
                       actions.selectNode(ROOT_NODE);
                     }}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbBoxModel2 />
@@ -667,7 +663,7 @@ export const Header = () => {
 
                   <button
                     onClick={() => setSideBarLeft(!sideBarLeft)}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       {sideBarLeft ? (
@@ -695,7 +691,7 @@ export const Header = () => {
                         setShowMenu(true);
                         setShowMenuType("submissions");
                       }}
-                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbForms />
@@ -709,7 +705,7 @@ export const Header = () => {
                       setIsMediaManagerModalOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbPhoto />
@@ -722,7 +718,7 @@ export const Header = () => {
                       setIsDesignSystemPanelOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbPalette />
@@ -735,7 +731,7 @@ export const Header = () => {
                       setIsSiteSettingsModalOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbSettings />
@@ -747,7 +743,7 @@ export const Header = () => {
                     <a
                       href={`https://${settings.name}.pagehub.dev`}
                       target="_blank"
-                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbExternalLink />
@@ -762,7 +758,7 @@ export const Header = () => {
                     <a
                       href={`https://${settings.draftId}.pagehub.dev`}
                       target="_blank"
-                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbExternalLink />
@@ -787,7 +783,7 @@ export const Header = () => {
 
                       // isetDialogOpen(htmlOutput);
                     }}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbCode />
@@ -799,7 +795,7 @@ export const Header = () => {
                       setShowMenuType("export");
                       setShowMenu(true);
                     }}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbDownload />
@@ -811,7 +807,7 @@ export const Header = () => {
                       setShowMenuType("import");
                       setShowMenu(true);
                     }}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbUpload />
@@ -827,7 +823,7 @@ export const Header = () => {
                         setShowMenu(true);
                         setShowMenuType("builds");
                       }}
-                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbDevices2 />
@@ -840,14 +836,14 @@ export const Header = () => {
 
                   {status === "authenticated" ? (
                     <>
-                      <p className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted">
+                      <p className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted">
                         Signed in as {session.user.email}
                       </p>{" "}
                       <button
                         onClick={() =>
                           popupCenter("/google-signout", "Sign Out")
                         }
-                        className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                        className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                       >
                         <div className="text-base">
                           <TbLogout />
@@ -858,7 +854,7 @@ export const Header = () => {
                   ) : (
                     <button
                       onClick={() => popupCenter("/google-signin", "Sign In")}
-                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                      className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbLogin />
@@ -869,7 +865,7 @@ export const Header = () => {
 
                   <button
                     onClick={toggleTheme}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       {isDarkMode ? <TbSun /> : <TbMoon />}
@@ -881,7 +877,7 @@ export const Header = () => {
 
                   <button
                     onClick={() => setSideBarLeft(!sideBarLeft)}
-                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
+                    className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       {sideBarLeft ? (

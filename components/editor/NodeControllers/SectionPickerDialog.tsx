@@ -248,11 +248,10 @@ export const SectionPickerDialog = ({
                       <button
                         key={category.id}
                         onClick={() => handleCategorySelect(category.id)}
-                        className={`w-full rounded-md px-4 py-2 text-left transition-colors ${
-                          selectedCategory === category.id && !isSearchMode
-                            ? "bg-primary font-medium text-foreground"
-                            : "text-foreground hover:bg-muted"
-                        }`}
+                        className={`w-full rounded-md px-4 py-2 text-left transition-colors ${selectedCategory === category.id && !isSearchMode
+                          ? "bg-primary font-medium text-primary-foreground"
+                          : "text-foreground hover:bg-muted"
+                          }`}
                       >
                         {category.name}
                       </button>
@@ -289,8 +288,8 @@ export const SectionPickerDialog = ({
                   {templates.map((template, templateIndex) => (
                     <motion.button
                       key={`${isSearchMode ? "search" : selectedCategory}-${template.isCustom ? "custom" : "builtin"}-${template.id}-${templateIndex}`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       onClick={() => {
                         if (template.isCustom) {
                           // For custom sections, get the serialized node and reconstruct
@@ -389,7 +388,7 @@ export const SectionPickerDialog = ({
                                           getComponentRegistry();
                                         const typeName =
                                           typeof serializedNode.type ===
-                                          "string"
+                                            "string"
                                             ? serializedNode.type
                                             : serializedNode.type?.resolvedName;
                                         const Component =

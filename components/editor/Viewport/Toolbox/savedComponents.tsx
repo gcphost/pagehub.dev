@@ -301,10 +301,6 @@ export const RenderSavedComponent = ({ componentData }) => {
 
   return (
     <motion.div
-      whileHover={{
-        scale: 1.05,
-        transition: { duration: 0.2 },
-      }}
       whileTap={{ scale: 0.9 }}
       ref={(ref: any) => ref && create(ref, tool)}
       onDoubleClick={handleDoubleClick}

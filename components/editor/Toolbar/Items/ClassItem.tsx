@@ -381,7 +381,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
                 onClick={() => save(mat)}
                 className={
                   k === selectedIndex
-                    ? "rounded-md bg-accent ring-2 ring-accent"
+                    ? "rounded-md bg-accent text-accent-foreground ring-2 ring-accent"
                     : ""
                 }
               />
@@ -450,10 +450,10 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
           <div className="5 text-xxs inside-shadow inline-flex rounded bg-background px-0.5 text-foreground">
             User
           </div>
-          <div className="text-xxs inside-shadow inline-flex rounded bg-secondary px-0.5">
+          <div className="text-xxs inside-shadow inline-flex rounded bg-secondary px-0.5 text-secondary-foreground">
             Mobile
           </div>
-          <div className="text-xxs inside-shadow inline-flex rounded bg-accent px-0.5">
+          <div className="text-xxs inside-shadow inline-flex rounded bg-accent px-0.5 text-accent-foreground">
             Desktop
           </div>
         </div>
@@ -487,7 +487,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
             key={key}
             value={_}
             onClick={() => delNodeProp(_, "desktop")}
-            bgColor="bg-accent inside-shadow"
+            bgColor="bg-accent inside-shadow text-accent-foreground"
           />
         ))}
       </div>

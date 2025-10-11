@@ -39,21 +39,21 @@ export const ToolbarLabel = ({
 
   const { query, actions } = useEditor();
 
-  let bg = "bg-muted";
+  let bg = "bg-muted text-muted-foreground";
   let view = viewValue;
 
   if (viewValue === "mobile") {
-    bg = "bg-secondary";
+    bg = "bg-secondary text-secondary-foreground";
   }
 
   if (viewValue === "desktop") {
-    bg = "bg-accent";
+    bg = "bg-accent text-accent-foreground";
   }
 
   if (propType === "component" || propType === "root") {
     viewValue = "component";
     view = "component"; // Update view too!
-    bg = "bg-primary";
+    bg = "bg-primary text-primary-foreground";
   }
 
   const handleRemove = (e) => {
@@ -94,7 +94,7 @@ export const ToolbarLabel = ({
           onClick={(e) => handleRemove(e)}
         >
           <div
-            className={`flex w-[60px] items-center justify-center gap-1.5 truncate text-center text-[10px] ${bg} cursor-pointer rounded-md border border-border px-1 py-0 text-foreground hover:opacity-80`}
+            className={`flex w-[60px] items-center justify-center gap-1.5 truncate text-center text-[10px] ${bg} cursor-pointer rounded-md border border-border px-1 py-0 hover:opacity-80`}
           >
             {icon ? (
               // If icon provided, show icon

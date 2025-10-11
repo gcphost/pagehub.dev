@@ -284,14 +284,14 @@ export const DesignSystemPanel = ({
         );
         setInputPlaceholderColor(
           styleGuide.inputPlaceholderColor ||
-            DEFAULT_STYLE_GUIDE.inputPlaceholderColor,
+          DEFAULT_STYLE_GUIDE.inputPlaceholderColor,
         );
         setInputFocusRing(
           styleGuide.inputFocusRing || DEFAULT_STYLE_GUIDE.inputFocusRing,
         );
         setInputFocusRingColor(
           styleGuide.inputFocusRingColor ||
-            DEFAULT_STYLE_GUIDE.inputFocusRingColor,
+          DEFAULT_STYLE_GUIDE.inputFocusRingColor,
         );
         setLinkColor(styleGuide.linkColor || DEFAULT_STYLE_GUIDE.linkColor);
         setLinkHoverColor(
@@ -302,7 +302,7 @@ export const DesignSystemPanel = ({
         );
         setLinkUnderlineOffset(
           styleGuide.linkUnderlineOffset ||
-            DEFAULT_STYLE_GUIDE.linkUnderlineOffset,
+          DEFAULT_STYLE_GUIDE.linkUnderlineOffset,
         );
 
         // Store what we loaded
@@ -322,9 +322,9 @@ export const DesignSystemPanel = ({
       // Check if the data actually changed from what we last saved
       const dataChanged =
         JSON.stringify(rootNodeData.pallet) !==
-          JSON.stringify(lastSavedData.current.pallet) ||
+        JSON.stringify(lastSavedData.current.pallet) ||
         JSON.stringify(rootNodeData.styleGuide) !==
-          JSON.stringify(lastSavedData.current.styleGuide);
+        JSON.stringify(lastSavedData.current.styleGuide);
 
       if (dataChanged) {
         try {
@@ -360,7 +360,7 @@ export const DesignSystemPanel = ({
           );
           setHeadingFontFamily(
             styleGuide.headingFontFamily ||
-              DEFAULT_STYLE_GUIDE.headingFontFamily,
+            DEFAULT_STYLE_GUIDE.headingFontFamily,
           );
           setBodyFont(styleGuide.bodyFont || DEFAULT_STYLE_GUIDE.bodyFont);
           setBodyFontFamily(
@@ -377,7 +377,7 @@ export const DesignSystemPanel = ({
           );
           setInputBorderRadius(
             styleGuide.inputBorderRadius ||
-              DEFAULT_STYLE_GUIDE.inputBorderRadius,
+            DEFAULT_STYLE_GUIDE.inputBorderRadius,
           );
           setInputPadding(
             styleGuide.inputPadding || DEFAULT_STYLE_GUIDE.inputPadding,
@@ -390,14 +390,14 @@ export const DesignSystemPanel = ({
           );
           setInputPlaceholderColor(
             styleGuide.inputPlaceholderColor ||
-              DEFAULT_STYLE_GUIDE.inputPlaceholderColor,
+            DEFAULT_STYLE_GUIDE.inputPlaceholderColor,
           );
           setInputFocusRing(
             styleGuide.inputFocusRing || DEFAULT_STYLE_GUIDE.inputFocusRing,
           );
           setInputFocusRingColor(
             styleGuide.inputFocusRingColor ||
-              DEFAULT_STYLE_GUIDE.inputFocusRingColor,
+            DEFAULT_STYLE_GUIDE.inputFocusRingColor,
           );
           setLinkColor(styleGuide.linkColor || DEFAULT_STYLE_GUIDE.linkColor);
           setLinkHoverColor(
@@ -408,7 +408,7 @@ export const DesignSystemPanel = ({
           );
           setLinkUnderlineOffset(
             styleGuide.linkUnderlineOffset ||
-              DEFAULT_STYLE_GUIDE.linkUnderlineOffset,
+            DEFAULT_STYLE_GUIDE.linkUnderlineOffset,
           );
 
           // Update last saved data
@@ -912,22 +912,20 @@ export const DesignSystemPanel = ({
       <div className="flex border-b border-border bg-muted">
         <button
           onClick={() => setActiveTab("colors")}
-          className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
-            activeTab === "colors"
+          className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${activeTab === "colors"
               ? "border-b-2 border-primary bg-background text-primary"
               : "text-muted-foreground hover:text-foreground"
-          }`}
+            }`}
         >
           <TbPalette size={18} />
           Colors
         </button>
         <button
           onClick={() => setActiveTab("styles")}
-          className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
-            activeTab === "styles"
+          className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${activeTab === "styles"
               ? "border-b-2 border-primary bg-background text-primary"
               : "text-muted-foreground hover:text-foreground"
-          }`}
+            }`}
         >
           <TbRuler size={18} />
           Styles

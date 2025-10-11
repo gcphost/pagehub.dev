@@ -129,12 +129,8 @@ export const RenderToolComponent = ({
 
   return (
     <motion.div
-      whileHover={{
-        scale: 1.05,
-        transition: { duration: 0.2 },
-      }}
       whileTap={{ scale: 0.9 }}
-      className={`pointer-events-auto w-full cursor-move rounded-md border border-border hover:bg-accent ${isDragging ? "border-accent bg-accent" : ""}`}
+      className={`pointer-events-auto w-full cursor-move rounded-md border border-border hover:bg-accent ${isDragging ? "border-accent bg-accent text-accent-foreground" : ""}`}
       ref={(ref: any) => create(ref, tool)}
       onMouseDown={() => setIsDragging(true)}
       onMouseUp={() => setIsDragging(false)}

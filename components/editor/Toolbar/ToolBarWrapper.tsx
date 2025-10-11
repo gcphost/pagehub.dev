@@ -145,10 +145,6 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
         {id !== ROOT_NODE && (
           <Tooltip content="Select Parent">
             <motion.button
-              whileHover={{
-                scale: 1.3,
-                transition: { duration: 0.2 },
-              }}
               whileTap={{ scale: 0.9 }}
               className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
               style={scaleAnimationStyle}
@@ -169,14 +165,9 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
             }
           >
             <motion.div
-              whileHover={{
-                scale: 1.3,
-                transition: { duration: 0.2 },
-              }}
               whileTap={{ scale: 0.9 }}
-              className={`cursor-pointer ${
-                isolate ? "text-accent-foreground" : "text-muted-foreground"
-              } rounded-md p-2 hover:text-accent-foreground`}
+              className={`cursor-pointer ${isolate ? "text-accent-foreground" : "text-muted-foreground"
+                } rounded-md p-2 hover:text-accent-foreground`}
               style={scaleAnimationStyle}
             >
               {isolate ? <TbScaleOutlineOff /> : <TbScaleOutline />}
@@ -199,10 +190,6 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
               }}
             >
               <motion.div
-                whileHover={{
-                  scale: 1.3,
-                  transition: { duration: 0.2 },
-                }}
                 whileTap={{ scale: 0.9 }}
                 className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
                 style={scaleAnimationStyle}
@@ -221,10 +208,6 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                   }}
                 >
                   <motion.div
-                    whileHover={{
-                      scale: 1.3,
-                      transition: { duration: 0.2 },
-                    }}
                     whileTap={{ scale: 0.9 }}
                     className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
                     style={scaleAnimationStyle}
@@ -242,10 +225,6 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                   }}
                 >
                   <motion.div
-                    whileHover={{
-                      scale: 1.3,
-                      transition: { duration: 0.2 },
-                    }}
                     whileTap={{ scale: 0.9 }}
                     ref={ref}
                     className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
@@ -268,10 +247,6 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
             }}
           >
             <motion.div
-              whileHover={{
-                scale: 1.3,
-                transition: { duration: 0.2 },
-              }}
               whileTap={{ scale: 0.9 }}
               className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
               style={scaleAnimationStyle}
