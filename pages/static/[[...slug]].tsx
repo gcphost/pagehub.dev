@@ -18,7 +18,6 @@ import { parseContent } from "pages/api/page/[[...slug]]";
 import { useEffect } from "react";
 import { SettingsAtom } from "utils/atoms";
 import dbConnect from "utils/dbConnect";
-import { waitForFonts } from "utils/fontLoader";
 import { loadTenantByDomain, runTenantWebhook } from "utils/tenantUtils";
 import { Audio } from "../../components/selectors/Audio";
 import { Button } from "../../components/selectors/Button";
@@ -71,18 +70,6 @@ function App({ subdomain, data, meta, seo }) {
 
   const router = useRouter();
 
-  // Preload fonts in background (non-blocking)
-  useEffect(() => {
-    if (!subdomain) return;
-
-    // Just preload fonts, don't block rendering
-    waitForFonts({
-      timeout: 1000,
-      onLoaded: () => {
-        console.log("Fonts ready");
-      },
-    });
-  }, [subdomain]);
 
   useEffect(() => {
     if (!subdomain) return;

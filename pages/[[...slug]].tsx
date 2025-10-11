@@ -18,7 +18,6 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { SettingsAtom } from "utils/atoms";
-import { waitForFonts } from "utils/fontLoader";
 import { Audio } from "../components/selectors/Audio";
 import { Button } from "../components/selectors/Button";
 import { ButtonList } from "../components/selectors/ButtonList";
@@ -70,18 +69,6 @@ function App({ subdomain, data, meta, seo }) {
 
   const router = useRouter();
 
-  // Preload fonts in background (non-blocking)
-  useEffect(() => {
-    if (!subdomain) return;
-
-    // Just preload fonts, don't block rendering
-    waitForFonts({
-      timeout: 1000,
-      onLoaded: () => {
-        console.log("Fonts ready");
-      },
-    });
-  }, [subdomain]);
 
   useEffect(() => {
     if (!subdomain) return;

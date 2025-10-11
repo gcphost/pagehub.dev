@@ -28,7 +28,9 @@ export const waitForFonts = async (
       document.fonts.ready,
       new Promise<boolean>((resolve) => {
         setTimeout(() => {
-          console.warn("Font loading timeout reached");
+          console.debug(
+            `Font loading timeout reached (${timeout}ms) - continuing without waiting`,
+          );
           onTimeout?.();
           resolve(false);
         }, timeout);
@@ -121,7 +123,9 @@ export const useFontLoader = (onReady?: () => void, timeout = 3000) => {
     timeout,
     onLoaded: onReady,
     onTimeout: () => {
-      console.warn("Fonts took too long to load, showing content anyway");
+      console.debug(
+        `Fonts took too long to load (${timeout}ms), showing content anyway`,
+      );
       onReady?.();
     },
   });
