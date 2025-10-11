@@ -14,10 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { motionIt, resolvePageRef } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
-import {
-  applyAnimation,
-  ClassGenerator
-} from "utils/tailwind";
+import { applyAnimation, ClassGenerator } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { useScrollToSelected } from "../lib";
 import { ButtonSettings } from "./ButtonSettings";
@@ -65,9 +62,7 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
     id,
   } = useNode();
 
-  const { query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
@@ -84,7 +79,6 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
 
   useScrollToSelected(id, enabled);
 
-
   const prop: any = {
     ref: (r) => connect(drag(r)),
     className: ClassGenerator(
@@ -96,16 +90,20 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       preview,
       false,
       palette,
-      query
+      query,
     ),
   };
 
   // Resolve page references to actual URLs
-  const resolvedUrl = props.url && typeof props.url === "string"
-    ? resolvePageRef(props.url, query, router?.asPath)
-    : props.url;
+  const resolvedUrl =
+    props.url && typeof props.url === "string"
+      ? resolvePageRef(props.url, query, router?.asPath)
+      : props.url;
 
-  let ele = resolvedUrl && typeof resolvedUrl === "string" ? Link : props.type || "button";
+  let ele =
+    resolvedUrl && typeof resolvedUrl === "string"
+      ? Link
+      : props.type || "button";
 
   if (resolvedUrl && typeof resolvedUrl === "string") {
     prop.href = resolvedUrl;
@@ -119,7 +117,11 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       return;
     }
 
-    if (props.clickType === "click" && props.clickDirection && props.clickValue) {
+    if (
+      props.clickType === "click" &&
+      props.clickDirection &&
+      props.clickValue
+    ) {
       const element = document.getElementById(props.clickValue);
       if (element) {
         if (props.clickDirection === "show") {
@@ -127,7 +129,8 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
         } else if (props.clickDirection === "hide") {
           element.style.display = "none";
         } else if (props.clickDirection === "toggle") {
-          element.style.display = element.style.display === "none" ? "block" : "none";
+          element.style.display =
+            element.style.display === "none" ? "block" : "none";
         }
       }
     }
@@ -138,7 +141,11 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       return;
     }
 
-    if (props.clickType === "hover" && props.clickDirection && props.clickValue) {
+    if (
+      props.clickType === "hover" &&
+      props.clickDirection &&
+      props.clickValue
+    ) {
       const element = document.getElementById(props.clickValue);
       if (element) {
         if (props.clickDirection === "show") {
@@ -146,7 +153,8 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
         } else if (props.clickDirection === "hide") {
           element.style.display = "none";
         } else if (props.clickDirection === "toggle") {
-          element.style.display = element.style.display === "none" ? "block" : "none";
+          element.style.display =
+            element.style.display === "none" ? "block" : "none";
         }
       }
     }
@@ -157,7 +165,11 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
       return;
     }
 
-    if (props.clickType === "hover" && props.clickDirection && props.clickValue) {
+    if (
+      props.clickType === "hover" &&
+      props.clickDirection &&
+      props.clickValue
+    ) {
       const element = document.getElementById(props.clickValue);
       if (element) {
         if (props.clickDirection === "show") {
@@ -171,7 +183,12 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   };
 
   const handleDoubleClick = () => {
-    if (enabled && props.clickType === "click" && props.clickDirection && props.clickValue) {
+    if (
+      enabled &&
+      props.clickType === "click" &&
+      props.clickDirection &&
+      props.clickValue
+    ) {
       const element = document.getElementById(props.clickValue);
       if (element) {
         if (props.clickDirection === "show") {
@@ -179,7 +196,8 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
         } else if (props.clickDirection === "hide") {
           element.style.display = "none";
         } else if (props.clickDirection === "toggle") {
-          element.style.display = element.style.display === "none" ? "block" : "none";
+          element.style.display =
+            element.style.display === "none" ? "block" : "none";
         }
       }
     }
@@ -206,25 +224,27 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   const content = (
     <>
       {enabled && isMounted && (
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Button} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Button}
+          props={props}
+        />
       )}
 
       {props.icon && props.iconPosition === "left" && (
-
-        <div className={iconClass.join(" ")} dangerouslySetInnerHTML={{ __html: props.icon }} />
-
+        <div
+          className={iconClass.join(" ")}
+          dangerouslySetInnerHTML={{ __html: props.icon }}
+        />
       )}
 
-      {!props.iconOnly && props.text && (
-
-        props.text
-
-      )}
+      {!props.iconOnly && props.text && props.text}
 
       {props.icon && props.iconPosition === "right" && (
-
-        <div className={iconClass.join(" ")} dangerouslySetInnerHTML={{ __html: props.icon }} />
-
+        <div
+          className={iconClass.join(" ")}
+          dangerouslySetInnerHTML={{ __html: props.icon }}
+        />
       )}
     </>
   );
@@ -253,7 +273,6 @@ Button.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-
         <HoverNodeController
           key="buttonHoverController"
           position="top"

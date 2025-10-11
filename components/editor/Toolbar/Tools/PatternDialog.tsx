@@ -51,7 +51,10 @@ export const PatternDialog = () => {
         p.tags.forEach((tag) => allTags.add(tag));
       }
     });
-    return ["all", "stroke", "fill", ...Array.from(allTags).sort()].slice(0, 10); // Limit to 10 categories
+    return ["all", "stroke", "fill", ...Array.from(allTags).sort()].slice(
+      0,
+      10,
+    ); // Limit to 10 categories
   }, [patterns]);
 
   const filteredPatterns = useMemo(() => {
@@ -68,10 +71,11 @@ export const PatternDialog = () => {
 
     // Filter by search
     if (searchValue) {
-      filtered = filtered.filter((p) =>
-        p.title.search(
-          new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")
-        ) > -1
+      filtered = filtered.filter(
+        (p) =>
+          p.title.search(
+            new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+          ) > -1,
       );
     }
 
@@ -120,16 +124,17 @@ export const PatternDialog = () => {
       <div style={style}>
         <button
           id={`pattern-${pattern.slug}`}
-          className={`w-full flex flex-row cursor-pointer hover:bg-muted p-2 rounded-md ${dialog.value?.slug === pattern.slug ? "bg-muted" : ""
-            }`}
+          className={`flex w-full cursor-pointer flex-row rounded-md p-2 hover:bg-muted ${
+            dialog.value?.slug === pattern.slug ? "bg-muted" : ""
+          }`}
           onClick={(e) => changed(pattern)}
         >
-          <div className="pointer-events-none flex gap-3 items-center h-6 w-full justify-between">
+          <div className="pointer-events-none flex h-6 w-full items-center justify-between gap-3">
             <div className="w-1/2 truncate whitespace-nowrap text-sm">
               {pattern.title}
             </div>
             <div
-              className="w-1/2 h-full border border-border bg-muted text-muted-foreground rounded-lg"
+              className="h-full w-1/2 rounded-lg border border-border bg-muted text-muted-foreground"
               style={{
                 backgroundImage: patt ? `url(${patt})` : null,
               }}
@@ -150,17 +155,18 @@ export const PatternDialog = () => {
       width={containerWidth}
       customOnSearch={handleSearch}
       customRenderer={
-        <div className="flex flex-col h-full overflow-hidden">
+        <div className="flex h-full flex-col overflow-hidden">
           {/* Category Tabs - Scrollable with max height */}
-          <div className="flex-shrink-0 max-h-20 overflow-y-auto scrollbar mb-2">
-            <div className="flex gap-1.5 flex-wrap">
+          <div className="scrollbar mb-2 max-h-20 shrink-0 overflow-y-auto">
+            <div className="flex flex-wrap gap-1.5">
               {categories.map((cat) => (
                 <button
                   key={cat}
-                  className={`px-2.5 py-1 rounded text-xs font-medium ${category === cat
-                    ? "bg-background text-foreground"
-                    : "bg-muted hover:bg-muted"
-                    }`}
+                  className={`rounded px-2.5 py-1 text-xs font-medium ${
+                    category === cat
+                      ? "bg-background text-foreground"
+                      : "bg-muted hover:bg-muted"
+                  }`}
                   onClick={() => handleCategoryChange(cat)}
                 >
                   {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -170,13 +176,13 @@ export const PatternDialog = () => {
           </div>
 
           {/* Pattern Count */}
-          <div className="flex-shrink-0 text-xs text-muted-foreground mb-2">
+          <div className="mb-2 shrink-0 text-xs text-muted-foreground">
             {filteredPatterns.length} pattern
             {filteredPatterns.length !== 1 ? "s" : ""}
           </div>
 
           {/* Virtualized List - Takes remaining space, scrolls independently */}
-          <div className="flex-1 min-h-0 overflow-hidden -mx-3 px-3">
+          <div className="-mx-3 min-h-0 flex-1 overflow-hidden px-3">
             <List
               ref={listRef}
               height={containerHeight}

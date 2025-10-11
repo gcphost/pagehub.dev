@@ -58,7 +58,7 @@ export const createPaletteReference = (name: string): string => {
  */
 export const resolvePaletteColor = (
   value: string,
-  palette: NamedColor[]
+  palette: NamedColor[],
 ): string => {
   if (!isPaletteReference(value)) {
     return value;
@@ -112,7 +112,7 @@ export const styleToCSSVar = (value: string): string => {
  */
 export const toTailwindCSSVar = (
   value: string,
-  prefix: string = ""
+  prefix: string = "",
 ): string => {
   let cssVar = "";
 

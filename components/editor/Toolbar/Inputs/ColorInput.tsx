@@ -36,7 +36,7 @@ export const ColorInput = (__props: any) => {
     propItemKey = "",
     propType = "class",
     showPallet = true,
-    onChange = () => { },
+    onChange = () => {},
     labelHide = false,
     inline = false,
     inputWidth = "",
@@ -91,10 +91,13 @@ export const ColorInput = (__props: any) => {
           .replace(/^-/, "");
 
         // Extract prefix if present (e.g., "text-palette:Primary" → "text-")
-        const currentPrefix = val.split('-palette:')[0];
-        const usePrefix = currentPrefix && currentPrefix !== val ? currentPrefix : prefix;
+        const currentPrefix = val.split("-palette:")[0];
+        const usePrefix =
+          currentPrefix && currentPrefix !== val ? currentPrefix : prefix;
 
-        return usePrefix ? `${usePrefix}-[var(--ph-${varName})]` : `var(--ph-${varName})`;
+        return usePrefix
+          ? `${usePrefix}-[var(--ph-${varName})]`
+          : `var(--ph-${varName})`;
       }
     }
     return val;
@@ -117,16 +120,24 @@ export const ColorInput = (__props: any) => {
 
         // Convert kebab-case back to title case for palette lookup
         const paletteName = varName
-          .split('-')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
 
         // Look up in palette
         const paletteColor = palette.find((p) => p.name === paletteName);
         if (paletteColor) {
           // Get the actual color value, stripping any Tailwind prefixes
           let colorValue = paletteColor.color;
-          const prefixesToStrip = ["bg-", "text-", "border-", "ring-", "from-", "to-", "via-"];
+          const prefixesToStrip = [
+            "bg-",
+            "text-",
+            "border-",
+            "ring-",
+            "from-",
+            "to-",
+            "via-",
+          ];
           for (const stripPrefix of prefixesToStrip) {
             if (colorValue.startsWith(stripPrefix)) {
               colorValue = colorValue.substring(stripPrefix.length);
@@ -186,14 +197,16 @@ export const ColorInput = (__props: any) => {
       if (data.type === "palette") {
         // Convert palette reference to CSS variable format
         // e.g., "palette:Primary Text" → "text-[var(--ph-primary-text)]"
-        const paletteName = data.value.replace('palette:', '');
+        const paletteName = data.value.replace("palette:", "");
         const varName = paletteName
           .replace(/([A-Z])/g, "-$1")
           .replace(/\s+/g, "-")
           .toLowerCase()
           .replace(/^-/, "");
 
-        val = prefix ? `${prefix}-[var(--ph-${varName})]` : `var(--ph-${varName})`;
+        val = prefix
+          ? `${prefix}-[var(--ph-${varName})]`
+          : `var(--ph-${varName})`;
       } else if (data.type === "hex") {
         val = prefix ? `${prefix}-[${val}]` : `${val}`;
       } else if (data.type === "rgb") {

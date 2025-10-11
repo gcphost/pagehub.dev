@@ -7,10 +7,7 @@ export const BgWrap = ({ children, className = "", wrap = null }) => {
     return children;
   }
   return (
-    <div
-      className={`input-wrapper   ${className || " input-hover"
-        }`}
-    >
+    <div className={`input-wrapper ${className || "input-hover"}`}>
       {children}
     </div>
   );
@@ -30,12 +27,13 @@ const Labler = ({
 
   return (
     <h4
-      className={`toolbar-label ${lab ? "my-1" : "mb-1"
-        } gap-3 flex justify-between`}
+      className={`toolbar-label ${
+        lab ? "my-1" : "mb-1"
+      } flex justify-between gap-3`}
     >
-      <div className="flex gap-1.5 items-center">
+      <div className="flex items-center gap-1.5">
         {props?.label}
-        <div className="text-muted-foreground hover:text-foreground hidden">
+        <div className="hidden text-muted-foreground hover:text-foreground">
           <TbInfoCircle />
         </div>
       </div>
@@ -80,34 +78,39 @@ export const Wrap = ({
     // In inline mode, always show label if it exists (ignore labelHide for the label text)
     return (
       <>
-        <div className={`w-full flex items-center gap-2 ${className}`}>
+        <div className={`flex w-full items-center gap-2 ${className}`}>
           {props?.label && (
-            <span className={`text-xs whitespace-nowrap ${labelWidth || "w-20"} truncate`}>{props?.label}</span>
+            <span
+              className={`whitespace-nowrap text-xs ${labelWidth || "w-20"} truncate`}
+            >
+              {props?.label}
+            </span>
           )}
-          <div className={inputWidth || "flex-1"}>
-            {children}
-          </div>
+          <div className={inputWidth || "flex-1"}>{children}</div>
 
-          {!props?.labelHide && <ToolbarLabel
-            lab={lab}
-            prefix={props?.labelPrefix}
-            suffix={props?.labelSuffix}
-            viewValue={viewValue}
-            propType={propType}
-            propKey={propKey}
-            index={index}
-            propItemKey={propItemKey}
-            icon={props?.labelIcon}
-            showDeleteIcon={props?.showDeleteIcon}
-            showVarSelector={props?.showVarSelector}
-            varSelectorPrefix={props?.varSelectorPrefix}
-          />}
+          {!props?.labelHide && (
+            <ToolbarLabel
+              lab={lab}
+              prefix={props?.labelPrefix}
+              suffix={props?.labelSuffix}
+              viewValue={viewValue}
+              propType={propType}
+              propKey={propKey}
+              index={index}
+              propItemKey={propItemKey}
+              icon={props?.labelIcon}
+              showDeleteIcon={props?.showDeleteIcon}
+              showVarSelector={props?.showVarSelector}
+              varSelectorPrefix={props?.varSelectorPrefix}
+            />
+          )}
         </div>
 
-        {props.description && <p className="text-xxs text-muted-foreground w-full text-center -mt-1">
-          {props.description}
-        </p>}
-
+        {props.description && (
+          <p className="text-xxs -mt-1 w-full text-center text-muted-foreground">
+            {props.description}
+          </p>
+        )}
       </>
     );
   }
@@ -144,11 +147,14 @@ export const Card = ({
     e.stopPropagation();
 
     // Copy to clipboard on left-click
-    navigator.clipboard.writeText(value).then(() => {
-      console.log(`Copied to clipboard: ${value}`);
-    }).catch((err) => {
-      console.error('Failed to copy:', err);
-    });
+    navigator.clipboard
+      .writeText(value)
+      .then(() => {
+        console.log(`Copied to clipboard: ${value}`);
+      })
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+      });
   };
 
   const handleContextMenu = (e: React.MouseEvent) => {
@@ -163,9 +169,13 @@ export const Card = ({
     <button
       onClick={handleClick}
       onContextMenu={handleContextMenu}
-      className={`${bgColor} text-foreground hover:opacity-80 hover:text-foreground text-xs font-medium mr-2 p-1 rounded inline-flex cursor-pointer whitespace-nowrap`}
+      className={`${bgColor} mr-2 inline-flex cursor-pointer whitespace-nowrap rounded p-1 text-xs font-medium text-foreground hover:text-foreground hover:opacity-80`}
     >
-      <Tooltip content={`Left-click: Copy | Right-click: Remove`} placement="bottom" arrow={false}>
+      <Tooltip
+        content={`Left-click: Copy | Right-click: Remove`}
+        placement="bottom"
+        arrow={false}
+      >
         {value}
       </Tooltip>
     </button>
@@ -179,7 +189,7 @@ export const CardLight = ({ value, onClick, className = "" }) => {
   return (
     <button
       onClick={onClick}
-      className={`bg-background text-foreground text-xs font-medium px-1 py-0.5 rounded inline-flex cursor-pointer ${className}`}
+      className={`inline-flex cursor-pointer rounded bg-background px-1 py-0.5 text-xs font-medium text-foreground ${className}`}
     >
       <Tooltip content={`Add ${value}`} placement="top" arrow={false}>
         {value}
@@ -201,9 +211,9 @@ export const Accord = ({
 
   return (
     <div className={className}>
-      <div className="flex gap-2 px-3 py-1.5 bg-primary">
+      <div className="flex gap-2 bg-primary px-3 py-1.5">
         <button
-          className="whitespace-nowrap font-2xl font-bold cursor-pointer truncate pr-3 w-full"
+          className="font-2xl w-full cursor-pointer truncate whitespace-nowrap pr-3 font-bold"
           onClick={() => setAccordion(active ? "" : prop)}
         >
           {title}

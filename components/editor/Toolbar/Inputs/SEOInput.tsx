@@ -12,7 +12,6 @@ const SEOInput = () => (
         rows={2}
         label="Title"
         placeholder="Page title (50-60 characters)"
-
       />
 
       <ToolbarItem
@@ -22,7 +21,6 @@ const SEOInput = () => (
         rows={3}
         label="Description"
         placeholder="Meta description (150-160 characters)"
-
       />
 
       <ToolbarItem
@@ -31,7 +29,6 @@ const SEOInput = () => (
         type="text"
         label="Keywords"
         placeholder="keyword1, keyword2, keyword3"
-
       />
 
       <ToolbarItem
@@ -40,7 +37,6 @@ const SEOInput = () => (
         type="text"
         label="Author"
         placeholder="Author name"
-
       />
     </ToolbarSection>
 
@@ -51,7 +47,6 @@ const SEOInput = () => (
         type="text"
         label="OG Title"
         placeholder="Leave empty to use page title"
-
       />
 
       <ToolbarItem
@@ -61,7 +56,6 @@ const SEOInput = () => (
         rows={2}
         label="OG Description"
         placeholder="Leave empty to use page description"
-
       />
 
       <ImageUploadInput
@@ -75,7 +69,6 @@ const SEOInput = () => (
         propType="component"
         type="select"
         label="OG Type"
-
       >
         <option value="website">Website</option>
         <option value="article">Article</option>
@@ -90,7 +83,6 @@ const SEOInput = () => (
         propType="component"
         type="select"
         label="Card Type"
-
       >
         <option value="summary_large_image">Summary Large Image</option>
         <option value="summary">Summary</option>
@@ -102,7 +94,6 @@ const SEOInput = () => (
         type="text"
         label="Twitter Site"
         placeholder="@yourusername"
-
       />
 
       <ToolbarItem
@@ -111,7 +102,6 @@ const SEOInput = () => (
         type="text"
         label="Twitter Creator"
         placeholder="@authorusername"
-
       />
     </ToolbarSection>
 
@@ -122,7 +112,6 @@ const SEOInput = () => (
         type="text"
         label="Canonical URL"
         placeholder="Leave empty for auto-generated"
-
       />
 
       <ToolbarItem
@@ -130,7 +119,6 @@ const SEOInput = () => (
         propType="component"
         type="select"
         label="Robots"
-
       >
         <option value="">Default (index, follow)</option>
         <option value="noindex">No Index</option>
@@ -144,7 +132,6 @@ const SEOInput = () => (
         type="text"
         label="Theme Color"
         placeholder="#000000"
-
       />
     </ToolbarSection>
   </>

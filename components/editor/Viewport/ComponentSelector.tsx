@@ -1,19 +1,36 @@
-import { useEditor } from '@craftjs/core';
-import { Tooltip } from 'components/layout/Tooltip';
-import React, { useEffect, useRef, useState } from 'react';
-import { TbBoxModel2, TbCheck, TbChevronDown, TbDownload, TbLayoutGridAdd, TbPencil, TbPlus, TbTrash, TbUpload, TbX } from 'react-icons/tb';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { ComponentsAtom, IsolateAtom, OpenComponentEditorAtom } from 'utils/lib';
+import { useEditor } from "@craftjs/core";
+import { Tooltip } from "components/layout/Tooltip";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  TbBoxModel2,
+  TbCheck,
+  TbChevronDown,
+  TbDownload,
+  TbLayoutGridAdd,
+  TbPencil,
+  TbPlus,
+  TbTrash,
+  TbUpload,
+  TbX,
+} from "react-icons/tb";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  ComponentsAtom,
+  IsolateAtom,
+  OpenComponentEditorAtom,
+} from "utils/lib";
 
 interface ComponentSelectorProps {
   className?: string;
 }
 
-export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className = "" }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+export const ComponentSelector: React.FC<ComponentSelectorProps> = ({
+  className = "",
+}) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editingName, setEditingName] = useState('');
+  const [editingName, setEditingName] = useState("");
   const { query, actions } = useEditor();
   const [components, setComponents] = useRecoilState(ComponentsAtom);
   const isolate = useRecoilValue(IsolateAtom);
@@ -33,13 +50,14 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isOpen]);
 
   // Filter components based on search term
-  const filteredComponents = components.filter(component =>
-    component.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredComponents = components.filter((component) =>
+    component.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   // Handle component click - open in editor
@@ -56,7 +74,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
     // Trigger opening a new blank component editor
     setOpenComponentEditor({
       componentId: null,
-      componentName: 'New Component',
+      componentName: "New Component",
     });
     setIsOpen(false);
   };
@@ -82,7 +100,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
         const componentContainerId = contentNode.data.parent;
         const componentContainer = query.node(componentContainerId).get();
 
-        if (componentContainer?.data?.props?.type === 'component') {
+        if (componentContainer?.data?.props?.type === "component") {
           // Update the container's display name
           actions.setProp(componentContainerId, (prop) => {
             if (!prop.custom) prop.custom = {};
@@ -90,17 +108,19 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
           });
 
           // Update the components list
-          setComponents(components.map(c =>
-            c.rootNodeId === component.rootNodeId
-              ? { ...c, name: editingName.trim() }
-              : c
-          ));
+          setComponents(
+            components.map((c) =>
+              c.rootNodeId === component.rootNodeId
+                ? { ...c, name: editingName.trim() }
+                : c,
+            ),
+          );
 
-          console.log('✅ Renamed component to:', editingName.trim());
+          console.log("✅ Renamed component to:", editingName.trim());
         }
       }
     } catch (e) {
-      console.error('Error renaming component:', e);
+      console.error("Error renaming component:", e);
     }
 
     setEditingId(null);
@@ -109,7 +129,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
   // Handle cancel rename
   const handleCancelRename = () => {
     setEditingId(null);
-    setEditingName('');
+    setEditingName("");
   };
 
   // Handle delete component
@@ -129,7 +149,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
         const componentContainer = query.node(componentContainerId).get();
 
         // Make sure it's actually a component container
-        if (componentContainer?.data?.props?.type === 'component') {
+        if (componentContainer?.data?.props?.type === "component") {
           // Delete all instances (clones) of this component first
           const allNodes = query.getSerializedNodes();
           Object.entries(allNodes).forEach(([nodeId, node]: [string, any]) => {
@@ -143,13 +163,15 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
           actions.delete(componentContainerId);
 
           // Update the components list
-          setComponents(components.filter(c => c.rootNodeId !== component.rootNodeId));
+          setComponents(
+            components.filter((c) => c.rootNodeId !== component.rootNodeId),
+          );
 
-          console.log('✅ Deleted component:', component.name);
+          console.log("✅ Deleted component:", component.name);
         }
       }
     } catch (e) {
-      console.error('Error deleting component:', e);
+      console.error("Error deleting component:", e);
     }
   };
 
@@ -166,7 +188,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
         const componentContainerId = contentNode.data.parent;
         const componentContainer = query.node(componentContainerId).get();
 
-        if (componentContainer?.data?.props?.type === 'component') {
+        if (componentContainer?.data?.props?.type === "component") {
           // Update the container's isSection property
           actions.setProp(componentContainerId, (prop) => {
             prop.isSection = newIsSection;
@@ -175,75 +197,83 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
       }
 
       // Toggle isSection in the components list
-      setComponents(components.map(c =>
-        c.rootNodeId === component.rootNodeId
-          ? { ...c, isSection: newIsSection }
-          : c
-      ));
+      setComponents(
+        components.map((c) =>
+          c.rootNodeId === component.rootNodeId
+            ? { ...c, isSection: newIsSection }
+            : c,
+        ),
+      );
 
-      console.log('✅ Toggled component type:', component.name, newIsSection ? 'Section' : 'Component');
+      console.log(
+        "✅ Toggled component type:",
+        component.name,
+        newIsSection ? "Section" : "Component",
+      );
     } catch (e) {
-      console.error('Error toggling component type:', e);
+      console.error("Error toggling component type:", e);
     }
   };
 
   // Find the currently editing component based on isolate ID
   // The isolate ID is the component container, but rootNodeId is the content node
   // So we need to check if the content node's parent matches the isolate
-  const currentComponent = isolate ? components.find(c => {
-    const contentNode = query.node(c.rootNodeId).get();
-    return contentNode?.data?.parent === isolate;
-  }) : null;
+  const currentComponent = isolate
+    ? components.find((c) => {
+        const contentNode = query.node(c.rootNodeId).get();
+        return contentNode?.data?.parent === isolate;
+      })
+    : null;
 
   // Display the current component name if editing, otherwise "Components"
   const displayText = currentComponent
     ? currentComponent.name
     : components.length > 0
-      ? 'Components'
-      : 'No Components';
+      ? "Components"
+      : "No Components";
 
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 bg-background hover:bg-muted text-foreground rounded-lg w-full justify-between transition-colors border border-border"
+        className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-background px-3 py-2 text-foreground transition-colors hover:bg-muted"
         aria-label="Component selector"
       >
-        <div className="flex items-center gap-2 overflow-hidden flex-1">
+        <div className="flex flex-1 items-center gap-2 overflow-hidden">
           {currentComponent?.isSection ? (
-            <TbLayoutGridAdd className="flex-shrink-0" />
+            <TbLayoutGridAdd className="shrink-0" />
           ) : (
-            <TbBoxModel2 className="flex-shrink-0" />
+            <TbBoxModel2 className="shrink-0" />
           )}
           <span className="truncate text-sm font-medium">{displayText}</span>
         </div>
         <TbChevronDown
-          className={`flex-shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-background border border-border rounded-lg shadow-xl overflow-hidden z-50 flex flex-col max-h-[500px]">
+        <div className="absolute inset-x-0 top-full z-50 mt-1 flex max-h-[500px] flex-col overflow-hidden rounded-lg border border-border bg-background shadow-xl">
           {/* Search Header - Fixed */}
-          <div className="p-3 border-b border-border">
+          <div className="border-b border-border p-3">
             <input
               type="text"
               placeholder="Search components..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 bg-muted text-foreground text-sm rounded-md border border-border focus:outline-none focus:border-ring placeholder-muted-foreground"
+              className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none"
               autoFocus
             />
           </div>
 
           {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto scrollbar">
+          <div className="scrollbar flex-1 overflow-y-auto">
             {/* Component List */}
             {filteredComponents.length > 0 ? (
               filteredComponents.map((component, index) => (
                 <div
                   key={index}
-                  className="w-full flex items-center justify-between px-3 py-2 hover:bg-muted transition-colors group"
+                  className="group flex w-full items-center justify-between px-3 py-2 transition-colors hover:bg-muted"
                 >
                   {editingId === component.rootNodeId ? (
                     // Rename mode
@@ -253,27 +283,27 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
                         value={editingName}
                         onChange={(e) => setEditingName(e.target.value)}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') handleSaveRename(component);
-                          if (e.key === 'Escape') handleCancelRename();
+                          if (e.key === "Enter") handleSaveRename(component);
+                          if (e.key === "Escape") handleCancelRename();
                         }}
-                        className="flex-1 px-2 py-1 bg-background text-foreground text-sm rounded border border-ring focus:outline-none"
+                        className="flex-1 rounded border border-ring bg-background px-2 py-1 text-sm text-foreground focus:outline-none"
                         autoFocus
                         onClick={(e) => e.stopPropagation()}
                       />
-                      <div className="flex items-center gap-1 ml-2">
+                      <div className="ml-2 flex items-center gap-1">
                         <button
                           onClick={() => handleSaveRename(component)}
-                          className="p-1 rounded hover:bg-primary text-muted-foreground hover:text-primary-foreground transition-colors"
+                          className="rounded p-1 text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
                           aria-label="Save"
                         >
-                          <TbCheck className="w-4 h-4" />
+                          <TbCheck className="size-4" />
                         </button>
                         <button
                           onClick={handleCancelRename}
-                          className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                          className="rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                           aria-label="Cancel"
                         >
-                          <TbX className="w-4 h-4" />
+                          <TbX className="size-4" />
                         </button>
                       </div>
                     </>
@@ -281,44 +311,54 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
                     // Normal mode
                     <>
                       <Tooltip
-                        content={component.isSection ? "Convert to Component" : "Convert to Section"}
+                        content={
+                          component.isSection
+                            ? "Convert to Component"
+                            : "Convert to Section"
+                        }
                         placement="top"
                         arrow={false}
                       >
                         <button
-                          onClick={(e) => handleToggleComponentType(component, e)}
-                          className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors flex-shrink-0 flex items-center"
-                          aria-label={component.isSection ? "Convert to Component" : "Convert to Section"}
+                          onClick={(e) =>
+                            handleToggleComponentType(component, e)
+                          }
+                          className="flex shrink-0 items-center rounded p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                          aria-label={
+                            component.isSection
+                              ? "Convert to Component"
+                              : "Convert to Section"
+                          }
                         >
                           {component.isSection ? (
-                            <TbLayoutGridAdd className="w-4 h-4" />
+                            <TbLayoutGridAdd className="size-4" />
                           ) : (
-                            <TbBoxModel2 className="w-4 h-4" />
+                            <TbBoxModel2 className="size-4" />
                           )}
                         </button>
                       </Tooltip>
                       <button
                         onClick={() => handleComponentClick(component)}
-                        className="flex items-center gap-2 overflow-hidden flex-1 text-left"
+                        className="flex flex-1 items-center gap-2 overflow-hidden text-left"
                       >
-                        <span className="text-sm text-foreground truncate">
+                        <span className="truncate text-sm text-foreground">
                           {component.name}
                         </span>
                       </button>
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100">
                         <button
                           onClick={(e) => handleStartRename(component, e)}
-                          className="p-1 rounded hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
+                          className="rounded p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                           aria-label={`Rename ${component.name}`}
                         >
-                          <TbPencil className="w-4 h-4" />
+                          <TbPencil className="size-4" />
                         </button>
                         <button
                           onClick={(e) => handleDeleteComponent(component, e)}
-                          className="p-1 rounded hover:bg-destructive text-muted-foreground hover:text-destructive-foreground transition-colors"
+                          className="rounded p-1 text-muted-foreground transition-colors hover:bg-destructive hover:text-destructive-foreground"
                           aria-label={`Delete ${component.name}`}
                         >
-                          <TbTrash className="w-4 h-4" />
+                          <TbTrash className="size-4" />
                         </button>
                       </div>
                     </>
@@ -326,11 +366,11 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
                 </div>
               ))
             ) : searchTerm ? (
-              <div className="px-3 py-4 text-center text-muted-foreground text-sm">
+              <div className="px-3 py-4 text-center text-sm text-muted-foreground">
                 No components found
               </div>
             ) : (
-              <div className="px-3 py-4 text-center text-muted-foreground text-sm">
+              <div className="px-3 py-4 text-center text-sm text-muted-foreground">
                 No components yet
               </div>
             )}
@@ -340,7 +380,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
           <div className="border-t border-border">
             <button
               onClick={handleCreateComponent}
-              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-muted transition-colors"
+              className="flex w-full items-center gap-2 px-3 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-muted"
             >
               <TbPlus />
               <span className="text-sm font-medium">Create New Component</span>
@@ -348,12 +388,12 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
 
             {/* Import/Export Actions */}
             <div className="grid grid-cols-2 gap-0 border-t border-border">
-              <button className="flex items-center justify-center gap-1 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors text-xs border-r border-border">
-                <TbUpload className="w-3 h-3" />
+              <button className="flex items-center justify-center gap-1 border-r border-border px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+                <TbUpload className="size-3" />
                 Import
               </button>
-              <button className="flex items-center justify-center gap-1 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors text-xs">
-                <TbDownload className="w-3 h-3" />
+              <button className="flex items-center justify-center gap-1 px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+                <TbDownload className="size-3" />
                 Export
               </button>
             </div>

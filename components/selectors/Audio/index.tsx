@@ -79,7 +79,10 @@ export const Audio = (props: AudioProps) => {
     },
     className: "",
     role: "region",
-    "aria-label": props.title || audioUrl ? `Audio: ${props.title || audioUrl}` : "Audio player",
+    "aria-label":
+      props.title || audioUrl
+        ? `Audio: ${props.title || audioUrl}`
+        : "Audio player",
     children: audioUrl ? (
       <audio
         className={ClassGenerator(props, view, enabled, [], [], preview)}
@@ -88,12 +91,12 @@ export const Audio = (props: AudioProps) => {
         autoPlay={autoplay && !enabled}
         loop={loop}
         preload="metadata"
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
         Your browser does not support the audio element.
       </audio>
     ) : enabled ? (
-      <div className="w-full h-full flex items-center justify-center text-3xl min-h-[50px] border border-dashed border-border rounded">
+      <div className="flex size-full min-h-[50px] items-center justify-center rounded border border-dashed border-border text-3xl">
         <TbMusic aria-label="Audio icon" />
       </div>
     ) : null,
@@ -110,20 +113,24 @@ export const Audio = (props: AudioProps) => {
   if (enabled && isMounted) {
     prop.style = {
       ...(prop.style || {}),
-      overflow: 'visible',
+      overflow: "visible",
     };
     const originalChildren = prop.children;
     prop.children = (
       <>
         {originalChildren}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Audio} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Audio}
+          props={props}
+        />
       </>
     );
   }
 
   return React.createElement(
     motionIt(props, "div"),
-    applyAnimation({ ...prop, key: id }, props)
+    applyAnimation({ ...prop, key: id }, props),
   );
 };
 
@@ -166,4 +173,3 @@ Audio.craft = {
     },
   },
 };
-

@@ -28,7 +28,7 @@ export default async function improveText(req, res) {
 
     res.status(200).json({
       result: result.content,
-      success: true
+      success: true,
     });
   } catch (error) {
     console.error(`Error with OpenAI API request: ${error.message}`);

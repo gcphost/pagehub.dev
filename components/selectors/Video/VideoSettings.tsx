@@ -63,9 +63,9 @@ export const VideoSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <p className="p-3 text-md">
-        Copy the Video ID from the Youtube video you&apos;d like to show, paste it
-        below.
+      <p className="text-md p-3">
+        Copy the Video ID from the Youtube video you&apos;d like to show, paste
+        it below.
       </p>
 
       <ToolbarSection title="">
@@ -115,7 +115,7 @@ export const VideoSettings = () => {
 
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Hover settings are not available for this component.
           </p>
         </TabBody>

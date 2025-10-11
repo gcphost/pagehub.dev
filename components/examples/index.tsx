@@ -10,14 +10,14 @@ const nunitoStyle = `
 `;
 
 const Card = ({ icon, title, description }) => (
-  <div className="text-center flex gap-6 flex-col justify-center items-center w-1/2">
-    <div className="border border-purple-900 bg-purple-800 rounded-full p-12  text-6xl">
+  <div className="flex w-1/2 flex-col items-center justify-center gap-6 text-center">
+    <div className="rounded-full border border-purple-900 bg-purple-800 p-12 text-6xl">
       {icon}
     </div>
 
     <h3 className="text-3xl">{title}</h3>
 
-    <p className="w-2/3 text-center text-xl text-muted-foreground leading-relaxed">
+    <p className="w-2/3 text-center text-xl leading-relaxed text-muted-foreground">
       {description}
     </p>
   </div>
@@ -28,29 +28,36 @@ function Examples() {
     <>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
         <style dangerouslySetInnerHTML={{ __html: nunitoStyle }} />
       </Head>
-      <div className="bg-background text-foreground pb-32">
-        <nav className="p-3 border-border bg-gradient-to-r from-emerald-300 to-cyan-300 h-20 flex items-center">
-          <div className="container flex flex-wrap items-center justify-between mx-auto"></div>
+      <div className="bg-background pb-32 text-foreground">
+        <nav className="flex h-20 items-center border-border bg-gradient-to-r from-emerald-300 to-cyan-300 p-3">
+          <div className="container mx-auto flex flex-wrap items-center justify-between"></div>
         </nav>
 
-        <div className=" flex flex-col gap-12">
-          <div className="container mx-auto ">
-            <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-              <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-foreground md:text-5xl lg:text-6xl">
+        <div className="flex flex-col gap-12">
+          <div className="container mx-auto">
+            <div className="mx-auto max-w-screen-xl px-4 py-8 text-center lg:px-12 lg:py-16">
+              <h1 className="my-20 text-4xl font-extrabold leading-none tracking-tight text-foreground md:text-5xl lg:text-6xl">
                 Templates to get you going
               </h1>
 
-              <p className="mb-20 leading-10 text-xl font-normal lg:text-3xl sm:px-16 xl:px-48 text-muted-foreground">
+              <p className="mb-20 text-xl font-normal leading-10 text-muted-foreground sm:px-16 lg:text-3xl xl:px-48">
                 The fastest way to start, pick a style you like.
               </p>
 
-              <p className="w-2/3 mx-auto leading-8  font-normal lg:text-xl sm:px-16 xl:px-48 text-muted-foreground"></p>
+              <p className="mx-auto w-2/3 font-normal leading-8 text-muted-foreground sm:px-16 lg:text-xl xl:px-48"></p>
 
-              <p className="text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-muted-foreground hidden">
+              <p className="hidden text-lg font-normal text-muted-foreground sm:px-16 lg:text-xl xl:px-48">
                 Start with one of our designs or a{" "}
                 <Link href="/builder" className="text-foreground">
                   blank template
@@ -60,27 +67,27 @@ function Examples() {
             </div>
           </div>
 
-          <div className="pb-44 gap-6 mx-auto grid lg:grid-cols-2 xl:grid-cols-3">
+          <div className="mx-auto grid gap-6 pb-44 lg:grid-cols-2 xl:grid-cols-3">
             {templates.map((tpl, key) => (
               <figure
                 key={key}
-                className="w-[300px] md:w-[400px] h-[290px] bg-center bg-cover flex flex-cl rounded-2xl border-primary/50 border-2 mb-3 group"
+                className="flex-cl border-primary/50 group mb-3 flex h-[290px] w-[300px] rounded-2xl border-2 bg-cover bg-center md:w-[400px]"
                 style={{ backgroundImage: `url(${tpl.image})` }}
               >
                 <Link href={`/build/${tpl.href}`}></Link>
 
-                <div className="w-full h-full bg-muted text-muted-foreground  hidden group-hover:flex transition p-3">
-                  <div className="flex gap-3 self-end justify-between w-full">
+                <div className="hidden size-full bg-muted p-3 text-muted-foreground transition group-hover:flex">
+                  <div className="flex w-full justify-between gap-3 self-end">
                     <div className="w-full">
                       <Link href={`/build/${tpl.href}`} target="_blank">
-                        <div className="bg-primary px-3 py-3 rounded-lg w-full text-center border border-primary hover:bg-primary/90">
+                        <div className="hover:bg-primary/90 w-full rounded-lg border border-primary bg-primary p-3 text-center">
                           Build
                         </div>
                       </Link>
                     </div>
                     <div className="w-full">
                       <Link href={`${tpl.demo}`} target="_blank">
-                        <div className="bg-muted px-3 py-3 rounded-lg w-full text-center hover:bg-muted/90">
+                        <div className="hover:bg-muted/90 w-full rounded-lg bg-muted p-3 text-center">
                           Demo
                         </div>
                       </Link>
@@ -94,7 +101,7 @@ function Examples() {
           <div className="container mx-auto flex justify-center">
             <Link
               href="/build"
-              className="bg-primary hover:bg-primary cursor-pointer text-foreground text-center text-2xl w-full m-3 lg:w-1/3 p-12 rounded-xl"
+              className="m-3 w-full cursor-pointer rounded-xl bg-primary p-12 text-center text-2xl text-foreground hover:bg-primary lg:w-1/3"
             >
               Start from scratch
             </Link>

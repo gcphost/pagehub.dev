@@ -30,11 +30,11 @@ export const HoverNodeController = (props: {
       align={align}
       alt={alt}
       placement={placement || "start"}
-      className={`${position === "top" && align === "start" && placement === "end" ? "m-0.5" : ""} whitespace-nowrap items-center select-none`}
+      className={`${position === "top" && align === "start" && placement === "end" ? "m-0.5" : ""} select-none items-center whitespace-nowrap`}
     >
       <div
         className={
-          "px-2 border flex flex-row gap-3 bg-background text-foreground !text-base !font-normal fontfamily-base rounded-md"
+          "fontfamily-base flex flex-row gap-3 rounded-md border bg-background px-2 !text-base !font-normal text-foreground"
         }
       >
         {name}

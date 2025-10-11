@@ -7,27 +7,27 @@ function Terms() {
     <>
       <NextSeo title="Terms of Service" description="Terms of Service" />
 
-      <div className="bg-muted-foreground text-primary-foreground pb-32">
-        <nav className="p-3 border-border bg-gradient-to-r from-emerald-300 to-cyan-300 h-20 flex items-center"></nav>
+      <div className="bg-muted-foreground pb-32 text-primary-foreground">
+        <nav className="flex h-20 items-center border-border bg-gradient-to-r from-emerald-300 to-cyan-300 p-3"></nav>
 
-        <div className=" flex flex-col gap-12">
-          <div className="container mx-auto ">
-            <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-              <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-primary-foreground md:text-5xl lg:text-6xl">
+        <div className="flex flex-col gap-12">
+          <div className="container mx-auto">
+            <div className="mx-auto max-w-screen-xl px-4 py-8 text-center lg:px-12 lg:py-16">
+              <h1 className="my-20 text-4xl font-extrabold leading-none tracking-tight text-primary-foreground md:text-5xl lg:text-6xl">
                 Terms of Service
               </h1>
 
-              <div className="text-left flex flex-col gap-6 leading-8">
-                <p className="text-center text-2xl lg:w-2/3 mx-auto mb-12">
+              <div className="flex flex-col gap-6 text-left leading-8">
+                <p className="mx-auto mb-12 text-center text-2xl lg:w-2/3">
                   By using Pagehub, you agree to the following terms of service.
                   Please read them carefully.
                 </p>
-                <h3 className="text-lg font-bold mb-2">1. Use of Service:</h3>
+                <h3 className="mb-2 text-lg font-bold">1. Use of Service:</h3>
                 <p className="mb-2">
                   You may use Pagehub only for lawful purposes and in accordance
                   with these terms of service. You agree not to use our service:
                 </p>
-                <ul className="list-disc list-inside mb-2">
+                <ul className="mb-2 list-inside list-disc">
                   <li>To infringe on the rights of others;</li>
                   <li>
                     To engage in conduct that is offensive, defamatory, or
@@ -42,7 +42,7 @@ function Terms() {
                     To interfere with the proper functioning of our service.
                   </li>
                 </ul>
-                <h3 className="text-lg font-bold mb-2">2. User Accounts:</h3>
+                <h3 className="mb-2 text-lg font-bold">2. User Accounts:</h3>
                 <p className="mb-2">
                   To use our service, you may be required to create an account.
                   You are responsible for maintaining the confidentiality of
@@ -50,7 +50,7 @@ function Terms() {
                   under your account. You agree to notify us immediately of any
                   unauthorized access to or use of your account.
                 </p>
-                <h3 className="text-lg font-bold mb-2">
+                <h3 className="mb-2 text-lg font-bold">
                   3. Intellectual Property:
                 </h3>
                 <p className="mb-2">
@@ -61,7 +61,7 @@ function Terms() {
                   reproduce, distribute, or display any content or materials
                   from our service without our prior written consent.
                 </p>
-                <h3 className="text-lg font-bold mb-2">
+                <h3 className="mb-2 text-lg font-bold">
                   4. Limitation of Liability:
                 </h3>
                 <p className="mb-2">
@@ -71,7 +71,7 @@ function Terms() {
                   our service, whether based on contract, tort, strict
                   liability, or any other legal theory.
                 </p>
-                <h3 className="text-lg font-bold mb-2">
+                <h3 className="mb-2 text-lg font-bold">
                   5. Modification of Terms:
                 </h3>
                 <p className="mb-2">
@@ -81,7 +81,7 @@ function Terms() {
                   by the revised terms.
                 </p>
 
-                <h3 className="text-lg font-bold mb-2">
+                <h3 className="mb-2 text-lg font-bold">
                   6. User-Generated Content:
                 </h3>
                 <p className="mb-2">
@@ -105,7 +105,7 @@ function Terms() {
                   these terms of service or that we believe is otherwise
                   offensive, harmful, or inappropriate.
                 </p>
-                <h3 className="text-lg font-bold mb-2">7. Indemnification:</h3>
+                <h3 className="mb-2 text-lg font-bold">7. Indemnification:</h3>
                 <p className="mb-2">
                   You agree to indemnify and hold Pagehub and its affiliates,
                   officers, agents, employees, and partners harmless from any
@@ -114,7 +114,7 @@ function Terms() {
                   our service, your violation of these terms of service, or your
                   violation of any rights of another.
                 </p>
-                <h3 className="text-lg font-bold mb-2">8. Governing Law:</h3>
+                <h3 className="mb-2 text-lg font-bold">8. Governing Law:</h3>
                 <p className="mb-2">
                   These terms of service and your use of our service shall be
                   governed by and construed in accordance with the laws of Los
@@ -122,7 +122,7 @@ function Terms() {
                   these terms of service or your use of our service shall be
                   resolved exclusively in the courts of Los Angeles County.
                 </p>
-                <h3 className="text-lg font-bold mb-2">9. Termination:</h3>
+                <h3 className="mb-2 text-lg font-bold">9. Termination:</h3>
                 <p className="mb-2">
                   Pagehub reserves the right to terminate your access to our
                   service at any time and for any reason without prior notice.
@@ -136,7 +136,7 @@ function Terms() {
           <div className="container mx-auto flex justify-center">
             <Link
               href="/build"
-              className="bg-primary hover:bg-muted-foreground cursor-pointer text-primary-foreground text-center text-2xl w-full m-3 lg:w-1/3 p-12 rounded-xl"
+              className="m-3 w-full cursor-pointer rounded-xl bg-primary p-12 text-center text-2xl text-primary-foreground hover:bg-muted-foreground lg:w-1/3"
             >
               Build a page today!
             </Link>

@@ -20,7 +20,7 @@ export const ParseTree = ({ tree }) => {
         return (
           <div
             key={key}
-            className={`flex gap-3  p-1.5 ${
+            className={`flex gap-3 p-1.5 ${
               to === "object" ? "flex-col" : "flex-row justify-between"
             }`}
           >
@@ -28,7 +28,7 @@ export const ParseTree = ({ tree }) => {
             <div
               className={`${
                 to === "object"
-                  ? "w-full ml-3 border border-border rounded-md p1.5"
+                  ? "p1.5 ml-3 w-full rounded-md border border-border"
                   : ""
               }`}
             >

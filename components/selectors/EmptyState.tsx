@@ -25,18 +25,15 @@ export const EmptyState = ({ icon = null }) => {
     isActive: query.getEvent("selected").contains(id),
   }));
 
-
   const { nodeProps } = useNode((node) => ({
     parent: node.data.parent,
     nodeProps: node.data.props,
     name: node.data.custom.displayName || node.data.displayName,
   }));
 
-
   if (!enabled) {
     return null;
   }
-
 
   const props = nodeProps[view];
 
@@ -58,9 +55,8 @@ export const EmptyState = ({ icon = null }) => {
     addIcon = ico;
   }
 
-
   return (
-    <div className="w-auto flex justify-center items-center">
+    <div className="flex w-auto items-center justify-center">
       {isActive || isHover ? (
         <motion.button
           id={`empty${id}`}
@@ -69,7 +65,7 @@ export const EmptyState = ({ icon = null }) => {
             transition: { duration: 0.2 },
           }}
           whileTap={{ scale: 0.9 }}
-          className={"cursor-pointer add-button rounded-md text-3xl "}
+          className={"add-button cursor-pointer rounded-md text-3xl"}
           onClick={(e) => {
             setShowMenu(true);
             setShowMenuType("components");
@@ -80,7 +76,9 @@ export const EmptyState = ({ icon = null }) => {
       ) : null}
 
       {!isActive && !isHover && icon && (
-        <div data-empty-state={true} className="text-3xl">{icon}</div>
+        <div data-empty-state={true} className="text-3xl">
+          {icon}
+        </div>
       )}
     </div>
   );

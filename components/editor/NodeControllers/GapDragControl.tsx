@@ -74,7 +74,9 @@ export const GapDragControl = () => {
     isSelected: query.getEvent("selected").contains(id),
   }));
 
-  const { actions: { setProp } } = useNode();
+  const {
+    actions: { setProp },
+  } = useNode();
   const view = useRecoilValue(ViewAtom);
 
   // Get the current computed color from the DOM (same as border-current uses)
@@ -91,7 +93,12 @@ export const GapDragControl = () => {
   } | null>(null);
 
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStartPos, setDragStartPos] = useState<{ x: number; y: number; initialGap: number; childIndex: number } | null>(null);
+  const [dragStartPos, setDragStartPos] = useState<{
+    x: number;
+    y: number;
+    initialGap: number;
+    childIndex: number;
+  } | null>(null);
 
   // Use refs to avoid stale closures in event handlers
   const isDraggingRef = useRef(false);
@@ -109,7 +116,8 @@ export const GapDragControl = () => {
 
     // Check if the element actually has flex display
     const styles = window.getComputedStyle(dom);
-    const hasFlex = styles.display === "flex" || styles.display === "inline-flex";
+    const hasFlex =
+      styles.display === "flex" || styles.display === "inline-flex";
 
     if (!hasFlex) return;
 
@@ -119,12 +127,20 @@ export const GapDragControl = () => {
       if (rafId) cancelAnimationFrame(rafId);
 
       // Handle dragging - lock to the specific gap we started dragging
-      if (isDraggingRef.current && dragStartPosRef.current && gapHoverInfoRef.current) {
-        const distance = gapHoverInfoRef.current.direction === "vertical"
-          ? e.clientX - dragStartPosRef.current.x
-          : e.clientY - dragStartPosRef.current.y;
+      if (
+        isDraggingRef.current &&
+        dragStartPosRef.current &&
+        gapHoverInfoRef.current
+      ) {
+        const distance =
+          gapHoverInfoRef.current.direction === "vertical"
+            ? e.clientX - dragStartPosRef.current.x
+            : e.clientY - dragStartPosRef.current.y;
 
-        const newGapPx = Math.max(0, dragStartPosRef.current.initialGap + distance);
+        const newGapPx = Math.max(
+          0,
+          dragStartPosRef.current.initialGap + distance,
+        );
 
         document.body.style.cursor = "move";
 
@@ -133,13 +149,41 @@ export const GapDragControl = () => {
 
         // Apply the snapped gap value to DOM for visual feedback
         const tailwindGapToPx = {
-          "gap-0": 0, "gap-px": 1, "gap-0.5": 2, "gap-1": 4, "gap-1.5": 6,
-          "gap-2": 8, "gap-2.5": 10, "gap-3": 12, "gap-3.5": 14, "gap-4": 16,
-          "gap-5": 20, "gap-6": 24, "gap-7": 28, "gap-8": 32, "gap-9": 36,
-          "gap-10": 40, "gap-11": 44, "gap-12": 48, "gap-14": 56, "gap-16": 64,
-          "gap-20": 80, "gap-24": 96, "gap-28": 112, "gap-32": 128, "gap-36": 144,
-          "gap-40": 160, "gap-44": 176, "gap-48": 192, "gap-52": 208, "gap-56": 224,
-          "gap-60": 240, "gap-64": 256, "gap-72": 288, "gap-80": 320, "gap-96": 384,
+          "gap-0": 0,
+          "gap-px": 1,
+          "gap-0.5": 2,
+          "gap-1": 4,
+          "gap-1.5": 6,
+          "gap-2": 8,
+          "gap-2.5": 10,
+          "gap-3": 12,
+          "gap-3.5": 14,
+          "gap-4": 16,
+          "gap-5": 20,
+          "gap-6": 24,
+          "gap-7": 28,
+          "gap-8": 32,
+          "gap-9": 36,
+          "gap-10": 40,
+          "gap-11": 44,
+          "gap-12": 48,
+          "gap-14": 56,
+          "gap-16": 64,
+          "gap-20": 80,
+          "gap-24": 96,
+          "gap-28": 112,
+          "gap-32": 128,
+          "gap-36": 144,
+          "gap-40": 160,
+          "gap-44": 176,
+          "gap-48": 192,
+          "gap-52": 208,
+          "gap-56": 224,
+          "gap-60": 240,
+          "gap-64": 256,
+          "gap-72": 288,
+          "gap-80": 320,
+          "gap-96": 384,
         };
         const snappedPx = tailwindGapToPx[gapClass] || newGapPx;
 
@@ -152,8 +196,9 @@ export const GapDragControl = () => {
         const children = Array.from(dom.children).filter((child) => {
           const el = child as HTMLElement;
           // Skip node controls (they have data-node-control attribute)
-          if (el.hasAttribute && el.hasAttribute('data-node-control')) return false;
-          return el.offsetParent !== null || el.tagName === 'BODY';
+          if (el.hasAttribute && el.hasAttribute("data-node-control"))
+            return false;
+          return el.offsetParent !== null || el.tagName === "BODY";
         }) as HTMLElement[];
 
         // Use the locked child index from when we started dragging
@@ -182,7 +227,11 @@ export const GapDragControl = () => {
               x: leftChild.right,
               y: child1.top < child2.top ? child1.top : child2.top,
               width: Math.max(1, rightChild.left - leftChild.right),
-              height: (child1.bottom > child2.bottom ? child1.bottom : child2.bottom) - (child1.top < child2.top ? child1.top : child2.top),
+              height:
+                (child1.bottom > child2.bottom
+                  ? child1.bottom
+                  : child2.bottom) -
+                (child1.top < child2.top ? child1.top : child2.top),
             };
           } else {
             // For column gaps (horizontal control), update Y position
@@ -197,7 +246,9 @@ export const GapDragControl = () => {
             newGapRect = {
               x: child1.left < child2.left ? child1.left : child2.left,
               y: topChild.bottom,
-              width: (child1.right > child2.right ? child1.right : child2.right) - (child1.left < child2.left ? child1.left : child2.left),
+              width:
+                (child1.right > child2.right ? child1.right : child2.right) -
+                (child1.left < child2.left ? child1.left : child2.left),
               height: Math.max(1, bottomChild.top - topChild.bottom),
             };
           }
@@ -223,8 +274,9 @@ export const GapDragControl = () => {
         const children = Array.from(dom.children).filter((child) => {
           const el = child as HTMLElement;
           // Skip node controls (they have data-node-control attribute)
-          if (el.hasAttribute && el.hasAttribute('data-node-control')) return false;
-          return el.offsetParent !== null || el.tagName === 'BODY';
+          if (el.hasAttribute && el.hasAttribute("data-node-control"))
+            return false;
+          return el.offsetParent !== null || el.tagName === "BODY";
         }) as HTMLElement[];
 
         if (children.length < 2) {
@@ -235,13 +287,15 @@ export const GapDragControl = () => {
         // Get computed styles to check flex direction
         const styles = window.getComputedStyle(dom);
         const flexDirection = styles.flexDirection;
-        const isRow = flexDirection === "row" || flexDirection === "row-reverse";
-        const isColumn = flexDirection === "column" || flexDirection === "column-reverse";
+        const isRow =
+          flexDirection === "row" || flexDirection === "row-reverse";
+        const isColumn =
+          flexDirection === "column" || flexDirection === "column-reverse";
 
         // Parse current gap value - handle both gap and gap-x/gap-y
         let currentGapPx = 0;
         const gapValue = styles.gap;
-        if (gapValue && gapValue !== 'normal' && gapValue !== '0px') {
+        if (gapValue && gapValue !== "normal" && gapValue !== "0px") {
           const parsed = parseFloat(gapValue);
           if (!isNaN(parsed)) {
             currentGapPx = parsed;
@@ -250,7 +304,7 @@ export const GapDragControl = () => {
 
         // Only show gap controls if there's an actual gap set (or very close to one)
         // This prevents showing controls for natural spacing between elements
-        if (currentGapPx < 1 && styles.gap !== '0px') {
+        if (currentGapPx < 1 && styles.gap !== "0px") {
           setGapHoverInfo(null);
           return;
         }
@@ -289,7 +343,8 @@ export const GapDragControl = () => {
 
             // Check if mouse is within circular radius of the control position
             const distance = Math.sqrt(
-              Math.pow(e.clientX - controlX, 2) + Math.pow(e.clientY - controlY, 2)
+              Math.pow(e.clientX - controlX, 2) +
+                Math.pow(e.clientY - controlY, 2),
             );
 
             if (distance < GAP_DETECTION_THRESHOLD) {
@@ -338,7 +393,8 @@ export const GapDragControl = () => {
 
             // Check if mouse is within circular radius of the control position
             const distance = Math.sqrt(
-              Math.pow(e.clientX - controlX, 2) + Math.pow(e.clientY - controlY, 2)
+              Math.pow(e.clientX - controlX, 2) +
+                Math.pow(e.clientY - controlY, 2),
             );
 
             if (distance < GAP_DETECTION_THRESHOLD) {
@@ -457,17 +513,21 @@ export const GapDragControl = () => {
               <Tooltip content="Drag to adjust gap" placement="right">
                 <motion.button
                   initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    transition: { duration: 0.2 },
+                  }}
                   exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
                   whileHover={{ scale: 1.3, transition: { duration: 0.2 } }}
                   whileTap={{ scale: 1.3 }}
-                  className={`drag-control ${gapHoverInfo.direction === "horizontal" ? "w-8 h-2" : "w-2 h-8"}`}
+                  className={`drag-control ${gapHoverInfo.direction === "horizontal" ? "h-2 w-8" : "h-8 w-2"}`}
                   style={{
                     pointerEvents: "auto",
                     color: elementColor || undefined,
-                    willChange: 'transform',
-                    backfaceVisibility: 'hidden',
-                    WebkitFontSmoothing: 'antialiased',
+                    willChange: "transform",
+                    backfaceVisibility: "hidden",
+                    WebkitFontSmoothing: "antialiased",
                   }}
                   onMouseDown={handleMouseDown}
                   aria-label="Drag to adjust gap"
@@ -479,17 +539,19 @@ export const GapDragControl = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.1, duration: 0.15 }}
-                className="absolute right-1 text-xs font-semibold text-primary bg-background border-border px-1.5 py-0.5 rounded border pointer-events-none select-none font-sans"
-                style={{ top: '50%', transform: 'translateY(-50%)' }}
+                className="pointer-events-none absolute right-1 select-none rounded border border-border bg-background px-1.5 py-0.5 font-sans text-xs font-semibold text-primary"
+                style={{ top: "50%", transform: "translateY(-50%)" }}
               >
-                {isNaN(gapHoverInfo.currentGap) ? '0' : Math.round(gapHoverInfo.currentGap)}px
+                {isNaN(gapHoverInfo.currentGap)
+                  ? "0"
+                  : Math.round(gapHoverInfo.currentGap)}
+                px
               </motion.span>
             </motion.div>
           )}
         </>
       )}
     </AnimatePresence>,
-    container
+    container,
   );
 };
-

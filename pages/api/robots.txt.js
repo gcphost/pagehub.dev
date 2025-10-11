@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const host = req.headers.host;
-  const protocol = host.includes('localhost') ? 'http' : 'https';
+  const protocol = host.includes("localhost") ? "http" : "https";
   const baseUrl = `${protocol}://${host}`;
 
   res.setHeader("Content-Type", "text/plain");

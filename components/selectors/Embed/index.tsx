@@ -62,10 +62,7 @@ export const Embed = (props: EmbedProps) => {
     name: node.data.custom.displayName || node.data.displayName,
   }));
 
-  const { query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
-
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   useScrollToSelected(id, enabled);
 
@@ -106,7 +103,7 @@ export const Embed = (props: EmbedProps) => {
   if (enabled && isMounted) {
     prop.style = {
       ...(prop.style || {}),
-      overflow: 'visible',
+      overflow: "visible",
     };
     // Handle dangerouslySetInnerHTML case
     if (prop.dangerouslySetInnerHTML) {
@@ -115,7 +112,11 @@ export const Embed = (props: EmbedProps) => {
       prop.children = (
         <>
           <div dangerouslySetInnerHTML={innerHTML} />
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Embed} props={props} />
+          <InlineToolsRenderer
+            key={`tools-${id}`}
+            craftComponent={Embed}
+            props={props}
+          />
         </>
       );
     } else {
@@ -123,7 +124,11 @@ export const Embed = (props: EmbedProps) => {
       prop.children = (
         <>
           {originalChildren}
-          <InlineToolsRenderer key={`tools-${id}`} craftComponent={Embed} props={props} />
+          <InlineToolsRenderer
+            key={`tools-${id}`}
+            craftComponent={Embed}
+            props={props}
+          />
         </>
       );
     }
@@ -131,7 +136,7 @@ export const Embed = (props: EmbedProps) => {
 
   return React.createElement(
     motionIt(props, "div"),
-    applyAnimation({ ...prop, key: id }, props)
+    applyAnimation({ ...prop, key: id }, props),
   );
 };
 

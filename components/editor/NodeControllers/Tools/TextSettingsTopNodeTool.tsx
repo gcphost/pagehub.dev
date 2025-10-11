@@ -12,15 +12,14 @@ export function TextSettingsTopNodeTool() {
   const { editor: tiptapEditor } = useTiptapContext();
 
   // Debug logging
-  console.log('TextSettingsTopNodeTool - tiptapEditor:', tiptapEditor);
-  console.log('TextSettingsTopNodeTool - editor type:', typeof tiptapEditor);
-
+  console.log("TextSettingsTopNodeTool - tiptapEditor:", tiptapEditor);
+  console.log("TextSettingsTopNodeTool - editor type:", typeof tiptapEditor);
 
   console.log(tiptapEditor);
 
   return (
     <NodeToolWrapper
-      className="bg-primary inside-shadow text-foreground rounded-md px-3 m-1"
+      className="inside-shadow m-1 rounded-md bg-primary px-3 text-foreground"
       animate={{
         initial: { opacity: 0 },
         animate: {
@@ -49,7 +48,7 @@ export function TextSettingsTopNodeTool() {
         },
       }}
     >
-      <div className="w-16 h-6 rounded-md overflow-hidden border-border border-1">
+      <div className="h-6 w-16 overflow-hidden rounded-md border border-border">
         <ColorInput
           propKey="color"
           label=""
@@ -72,8 +71,11 @@ export function TextSettingsTopNodeTool() {
         <>
           <button
             onClick={() => tiptapEditor.chain().focus().toggleBold().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('bold') ? 'bg-muted text-primary' : 'text-foreground'
-              }`}
+            className={`rounded px-2 py-1 text-sm hover:bg-muted ${
+              tiptapEditor.isActive("bold")
+                ? "bg-muted text-primary"
+                : "text-foreground"
+            }`}
             title="Bold"
           >
             <strong>B</strong>
@@ -81,8 +83,11 @@ export function TextSettingsTopNodeTool() {
 
           <button
             onClick={() => tiptapEditor.chain().focus().toggleItalic().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('italic') ? 'bg-muted text-primary' : 'text-foreground'
-              }`}
+            className={`rounded px-2 py-1 text-sm hover:bg-muted ${
+              tiptapEditor.isActive("italic")
+                ? "bg-muted text-primary"
+                : "text-foreground"
+            }`}
             title="Italic"
           >
             <em>I</em>
@@ -90,8 +95,11 @@ export function TextSettingsTopNodeTool() {
 
           <button
             onClick={() => tiptapEditor.chain().focus().toggleUnderline().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('underline') ? 'bg-muted text-primary' : 'text-foreground'
-              }`}
+            className={`rounded px-2 py-1 text-sm hover:bg-muted ${
+              tiptapEditor.isActive("underline")
+                ? "bg-muted text-primary"
+                : "text-foreground"
+            }`}
             title="Underline"
           >
             <u>U</u>
@@ -99,8 +107,11 @@ export function TextSettingsTopNodeTool() {
 
           <button
             onClick={() => tiptapEditor.chain().focus().toggleStrike().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('strike') ? 'bg-muted text-primary' : 'text-foreground'
-              }`}
+            className={`rounded px-2 py-1 text-sm hover:bg-muted ${
+              tiptapEditor.isActive("strike")
+                ? "bg-muted text-primary"
+                : "text-foreground"
+            }`}
             title="Strikethrough"
           >
             <s>S</s>
@@ -108,8 +119,11 @@ export function TextSettingsTopNodeTool() {
 
           <button
             onClick={() => tiptapEditor.chain().focus().toggleCode().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('code') ? 'bg-muted text-primary' : 'text-foreground'
-              }`}
+            className={`rounded px-2 py-1 text-sm hover:bg-muted ${
+              tiptapEditor.isActive("code")
+                ? "bg-muted text-primary"
+                : "text-foreground"
+            }`}
             title="Code"
           >
             <code>&lt;/&gt;</code>

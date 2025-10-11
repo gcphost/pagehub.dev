@@ -25,7 +25,7 @@ import {
   TbEdit,
   TbPlayerPlay,
   TbPlus,
-  TbTrash
+  TbTrash,
 } from "react-icons/tb";
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
@@ -80,19 +80,17 @@ export const ImageListSettings = () => {
   const [accordion, setAccordion] = useRecoilState(SelectedImageListItemAtom);
 
   const MainTab = () => {
-    const {
-      props,
-    } = useNode((node) => ({
+    const { props } = useNode((node) => ({
       props: node.data.props,
     }));
 
     return (
       <TabBody>
         <div className="flex flex-col gap-6">
-          <div className="border rounded-md border-border overflow-hidden">
+          <div className="overflow-hidden rounded-md border border-border">
             {childImages?.map((image, index) => (
               <Accord
-                className="border-b border-border group"
+                className="group border-b border-border"
                 key={image.id}
                 prop={index}
                 accordion={accordion}
@@ -112,7 +110,9 @@ export const ImageListSettings = () => {
                       if (accordion !== index) {
                         // Let the accordion expand first, then focus after a short delay
                         setTimeout(() => {
-                          const input = document.querySelector(`input[data-image-index="${index}"]`) as HTMLInputElement;
+                          const input = document.querySelector(
+                            `input[data-image-index="${index}"]`,
+                          ) as HTMLInputElement;
                           if (input) {
                             input.focus();
                           }
@@ -128,14 +128,14 @@ export const ImageListSettings = () => {
                         e.stopPropagation();
                       }
                     }}
-                    className="w-full bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:bg-background px-2 py-1 rounded"
+                    className="w-full rounded bg-transparent px-2 py-1 text-foreground focus:bg-background focus:outline-none focus:ring-1 focus:ring-ring"
                     placeholder="Image alt text"
                   />
                 }
                 buttons={[
                   <button
                     key="edit"
-                    className="text-foreground hover:text-primary transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                    className="flex items-center justify-center text-foreground opacity-0 transition-colors duration-200 hover:text-primary group-hover:opacity-100"
                     title="Edit image"
                     onClick={(e) => {
                       e.preventDefault();
@@ -146,7 +146,7 @@ export const ImageListSettings = () => {
                   </button>,
                   <button
                     key="delete"
-                    className="text-foreground hover:text-destructive transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                    className="flex items-center justify-center text-foreground opacity-0 transition-colors duration-200 hover:text-destructive group-hover:opacity-100"
                     title="Delete image"
                     onClick={(e) => {
                       e.preventDefault();
@@ -171,19 +171,21 @@ export const ImageListSettings = () => {
           </div>
 
           <button
-            className="btn p-3 w-full"
+            className="btn w-full p-3"
             onClick={() => {
               const Image = query.getOptions().resolver.Image;
               if (Image) {
                 actions.addNodeTree(
-                  query.parseReactElement(<Image alt="New image" />).toNodeTree(),
-                  id
+                  query
+                    .parseReactElement(<Image alt="New image" />)
+                    .toNodeTree(),
+                  id,
                 );
                 setAccordion(childImages.length);
               }
             }}
           >
-            <TbPlus className="inline mr-2" /> Add Image
+            <TbPlus className="mr-2 inline" /> Add Image
           </button>
         </div>
 
@@ -194,7 +196,6 @@ export const ImageListSettings = () => {
             type="select"
             label="Mode"
             labelWidth="w-24"
-
           >
             <option value="flex">Flex (Default)</option>
             <option value="grid">Grid</option>
@@ -226,7 +227,6 @@ export const ImageListSettings = () => {
             inline
             labelWidth="w-full"
             on="enabled"
-
           />
 
           <ToolbarItem
@@ -238,8 +238,6 @@ export const ImageListSettings = () => {
             inline
             labelWidth="w-full"
             on="enabled"
-
-
           />
         </ToolbarSection>
 
@@ -255,7 +253,6 @@ export const ImageListSettings = () => {
                 inline
                 labelWidth="w-full"
                 labelHide={true}
-
               />
               <ToolbarItem
                 propKey="previewInEditor"
@@ -266,10 +263,9 @@ export const ImageListSettings = () => {
                 inline
                 labelWidth="w-full"
                 labelHide={true}
-
               />
             </ToolbarSection>
-            {(props?.animationEnabled !== false) && (
+            {props?.animationEnabled !== false && (
               <>
                 <ToolbarSection title="Scroll">
                   <ToolbarItem
@@ -292,7 +288,6 @@ export const ImageListSettings = () => {
                     step={1}
                     description="Time for one complete scroll (lower = faster)"
                   />
-
                 </ToolbarSection>
               </>
             )}
@@ -339,8 +334,6 @@ export const ImageListSettings = () => {
 
       {activeTab === "Appearance" && (
         <TabBody>
-
-
           <ToolbarSection title="Layout">
             <ToolbarItem
               propKey="flexDirection"
@@ -352,11 +345,7 @@ export const ImageListSettings = () => {
               <option value="flex-row-reverse">Horizontal Reverse</option>
               <option value="flex-col-reverse">Vertical Reverse</option>
             </ToolbarItem>
-            <ToolbarItem
-              propKey="alignItems"
-              type="select"
-              label="Align Items"
-            >
+            <ToolbarItem propKey="alignItems" type="select" label="Align Items">
               <option value="items-start">Start</option>
               <option value="items-center">Center</option>
               <option value="items-end">End</option>
@@ -374,11 +363,7 @@ export const ImageListSettings = () => {
               <option value="justify-around">Around</option>
               <option value="justify-evenly">Evenly</option>
             </ToolbarItem>
-            <ToolbarItem
-              propKey="gap"
-              type="select"
-              label="Gap"
-            >
+            <ToolbarItem propKey="gap" type="select" label="Gap">
               <option value="gap-0">None</option>
               <option value="gap-1">Small</option>
               <option value="gap-2">Medium</option>

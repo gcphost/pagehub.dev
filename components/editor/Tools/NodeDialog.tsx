@@ -52,8 +52,9 @@ export const NodeToolWrapper = ({
   col = false,
 }) => (
   <motion.div
-    className={`flex items-center justify-center ${col ? "flex-col" : "flex-row"
-      } z-50 gap-2 py-1.5 px-2 pointer-events-auto bg-background border border-border rounded-lg shadow-sm ${className}`}
+    className={`flex items-center justify-center ${
+      col ? "flex-col" : "flex-row"
+    } pointer-events-auto z-50 gap-2 rounded-lg border border-border bg-background px-2 py-1.5 shadow-sm ${className}`}
     {...animate}
   >
     {children}

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 // Inline the default style guide to avoid TypeScript import issues
 const DEFAULT_STYLE_GUIDE = {
@@ -20,7 +20,7 @@ const DEFAULT_STYLE_GUIDE = {
   bodyFontFamily: "Inter",
   headingFont: "font-semibold",
   linkColor: "palette:Primary",
-  linkHoverColor: "palette:Secondary"
+  linkHoverColor: "palette:Secondary",
 };
 
 // Convert name to CSS variable name
@@ -66,7 +66,7 @@ function convertStyleReference(value) {
         "inputBorderWidth",
         "inputBorderRadius",
         "inputPadding",
-        "inputFocusRing"
+        "inputFocusRing",
       ];
 
       if (cssVarKeys.includes(styleName)) {
@@ -109,7 +109,7 @@ function processFile(filePath) {
   console.log(`Processing ${filePath}...`);
 
   try {
-    const content = fs.readFileSync(filePath, 'utf8');
+    const content = fs.readFileSync(filePath, "utf8");
     const data = JSON.parse(content);
     const processed = processObject(data);
 
@@ -122,22 +122,25 @@ function processFile(filePath) {
 
 // Main execution
 function main() {
-  const templatesDir = path.join(__dirname, '..', 'data', 'section-templates');
+  const templatesDir = path.join(__dirname, "..", "data", "section-templates");
 
   // Process individual template files
-  const files = fs.readdirSync(templatesDir)
-    .filter(file => file.endsWith('.json'))
-    .map(file => path.join(templatesDir, file));
+  const files = fs
+    .readdirSync(templatesDir)
+    .filter((file) => file.endsWith(".json"))
+    .map((file) => path.join(templatesDir, file));
 
   files.forEach(processFile);
 
   // Process main section-templates.json
-  const mainFile = path.join(__dirname, '..', 'data', 'section-templates.json');
+  const mainFile = path.join(__dirname, "..", "data", "section-templates.json");
   if (fs.existsSync(mainFile)) {
     processFile(mainFile);
   }
 
-  console.log('\n🎉 Conversion complete! All files now use --ph- prefixed CSS variables.');
+  console.log(
+    "\n🎉 Conversion complete! All files now use --ph- prefixed CSS variables.",
+  );
 }
 
 if (require.main === module) {

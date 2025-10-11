@@ -41,13 +41,14 @@ const htmlLinter = linter((view) => {
     }
 
     // Check for common HTML syntax issues
-    const lines = doc.split('\n');
+    const lines = doc.split("\n");
     lines.forEach((line, index) => {
       const trimmed = line.trim();
 
       // Check for unclosed quotes in attributes
       if (trimmed.includes('="') && !trimmed.includes('"')) {
-        const lineStart = doc.split('\n').slice(0, index).join('\n').length + index;
+        const lineStart =
+          doc.split("\n").slice(0, index).join("\n").length + index;
         diagnostics.push({
           from: lineStart,
           to: lineStart + line.length,
@@ -92,8 +93,11 @@ export const HTMLCodeInput = ({
         </label>
       )}
 
-      <div className={`rounded-lg overflow-hidden border transition-colors ${isFocused ? "border-accent" : "border-border"
-        }`}>
+      <div
+        className={`overflow-hidden rounded-lg border transition-colors ${
+          isFocused ? "border-accent" : "border-border"
+        }`}
+      >
         <CodeMirror
           value={value}
           height={height}
@@ -127,11 +131,7 @@ export const HTMLCodeInput = ({
         />
       </div>
 
-      {helpText && (
-        <p className="text-xs text-muted-foreground">
-          {helpText}
-        </p>
-      )}
+      {helpText && <p className="text-xs text-muted-foreground">{helpText}</p>}
     </div>
   );
 };

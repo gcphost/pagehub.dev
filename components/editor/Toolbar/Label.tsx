@@ -60,7 +60,7 @@ export const ToolbarLabel = ({
     e.preventDefault();
     e.stopPropagation();
 
-    console.log('Removing font:', {
+    console.log("Removing font:", {
       propKey,
       propType,
       view,
@@ -94,14 +94,14 @@ export const ToolbarLabel = ({
           onClick={(e) => handleRemove(e)}
         >
           <div
-            className={`flex justify-center items-center gap-1.5 truncate text-[10px] w-[60px] text-center ${bg} rounded-md px-1 py-0 border border-border text-foreground cursor-pointer hover:opacity-80`}
+            className={`flex w-[60px] items-center justify-center gap-1.5 truncate text-center text-[10px] ${bg} cursor-pointer rounded-md border border-border px-1 py-0 text-foreground hover:opacity-80`}
           >
             {icon ? (
               // If icon provided, show icon
               <span className="flex items-center">{icon}</span>
             ) : showDeleteIcon ? (
               // If showDeleteIcon is true, show delete icon
-              <TbTrash className="w-3 h-3" />
+              <TbTrash className="size-3" />
             ) : (
               // Otherwise show text value
               <span className="truncate">
@@ -113,8 +113,6 @@ export const ToolbarLabel = ({
           </div>
         </Tooltip>
       )}
-
-
     </div>
   );
 };

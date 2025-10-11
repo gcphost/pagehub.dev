@@ -16,28 +16,78 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
 
   // Define conflicting class groups
   const conflictGroups = {
-    flex: ['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse'],
-    justify: ['justify-start', 'justify-end', 'justify-center', 'justify-between', 'justify-around', 'justify-evenly'],
-    items: ['items-start', 'items-end', 'items-center', 'items-baseline', 'items-stretch'],
-    text: ['text-left', 'text-center', 'text-right', 'text-justify'],
-    float: ['float-left', 'float-right', 'float-none'],
-    clear: ['clear-left', 'clear-right', 'clear-both', 'clear-none'],
-    display: ['block', 'inline-block', 'inline', 'flex', 'inline-flex', 'table', 'inline-table', 'table-caption', 'table-cell', 'table-column', 'table-column-group', 'table-footer-group', 'table-header-group', 'table-row-group', 'table-row', 'flow-root', 'grid', 'inline-grid', 'contents', 'list-item', 'hidden'],
-    position: ['static', 'fixed', 'absolute', 'relative', 'sticky'],
-    overflow: ['overflow-auto', 'overflow-hidden', 'overflow-clip', 'overflow-visible', 'overflow-scroll'],
-    whitespace: ['whitespace-normal', 'whitespace-nowrap', 'whitespace-pre', 'whitespace-pre-line', 'whitespace-pre-wrap', 'whitespace-break-spaces'],
+    flex: ["flex-row", "flex-row-reverse", "flex-col", "flex-col-reverse"],
+    justify: [
+      "justify-start",
+      "justify-end",
+      "justify-center",
+      "justify-between",
+      "justify-around",
+      "justify-evenly",
+    ],
+    items: [
+      "items-start",
+      "items-end",
+      "items-center",
+      "items-baseline",
+      "items-stretch",
+    ],
+    text: ["text-left", "text-center", "text-right", "text-justify"],
+    float: ["float-left", "float-right", "float-none"],
+    clear: ["clear-left", "clear-right", "clear-both", "clear-none"],
+    display: [
+      "block",
+      "inline-block",
+      "inline",
+      "flex",
+      "inline-flex",
+      "table",
+      "inline-table",
+      "table-caption",
+      "table-cell",
+      "table-column",
+      "table-column-group",
+      "table-footer-group",
+      "table-header-group",
+      "table-row-group",
+      "table-row",
+      "flow-root",
+      "grid",
+      "inline-grid",
+      "contents",
+      "list-item",
+      "hidden",
+    ],
+    position: ["static", "fixed", "absolute", "relative", "sticky"],
+    overflow: [
+      "overflow-auto",
+      "overflow-hidden",
+      "overflow-clip",
+      "overflow-visible",
+      "overflow-scroll",
+    ],
+    whitespace: [
+      "whitespace-normal",
+      "whitespace-nowrap",
+      "whitespace-pre",
+      "whitespace-pre-line",
+      "whitespace-pre-wrap",
+      "whitespace-break-spaces",
+    ],
   };
 
   const removeConflictingClasses = (newClass, existingClasses) => {
     // Find which conflict group the new class belongs to
-    const conflictGroup = Object.values(conflictGroups).find(group => group.includes(newClass));
+    const conflictGroup = Object.values(conflictGroups).find((group) =>
+      group.includes(newClass),
+    );
 
     if (!conflictGroup) {
       return existingClasses; // No conflicts to remove
     }
 
     // Remove any existing classes from the same conflict group
-    return existingClasses.filter(cls => !conflictGroup.includes(cls));
+    return existingClasses.filter((cls) => !conflictGroup.includes(cls));
   };
 
   const save = (input = null) => {
@@ -48,24 +98,31 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
     if (!data.length) return;
 
     // Separate responsive classes from regular classes
-    const responsiveClasses = data.filter(cls => breakpoints.some(bp => cls.startsWith(bp)));
-    const regularClasses = data.filter(cls => !breakpoints.some(bp => cls.startsWith(bp)));
+    const responsiveClasses = data.filter((cls) =>
+      breakpoints.some((bp) => cls.startsWith(bp)),
+    );
+    const regularClasses = data.filter(
+      (cls) => !breakpoints.some((bp) => cls.startsWith(bp)),
+    );
 
     // Handle responsive classes
-    responsiveClasses.forEach(cls => {
-      if (cls.startsWith('sm:')) {
+    responsiveClasses.forEach((cls) => {
+      if (cls.startsWith("sm:")) {
         // sm: classes go to mobile
         const baseClass = cls.substring(3); // Remove 'sm:' prefix
 
         // Get current mobile classes and remove conflicts
         const currentMobileClasses = Object.keys(nodeProps.mobile || {})
-          .filter(key => nodeProps.mobile[key] === nodeProps.mobile[key])
-          .map(key => nodeProps.mobile[key]);
+          .filter((key) => nodeProps.mobile[key] === nodeProps.mobile[key])
+          .map((key) => nodeProps.mobile[key]);
 
-        const cleanedMobileClasses = removeConflictingClasses(baseClass, currentMobileClasses);
+        const cleanedMobileClasses = removeConflictingClasses(
+          baseClass,
+          currentMobileClasses,
+        );
 
         // Remove conflicting classes from mobile
-        cleanedMobileClasses.forEach(conflictClass => {
+        cleanedMobileClasses.forEach((conflictClass) => {
           changeProp({
             propKey: conflictClass,
             value: "",
@@ -83,19 +140,27 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
           view: "mobile",
           propType: "class",
         });
-      } else if (cls.startsWith('md:') || cls.startsWith('lg:') || cls.startsWith('xl:') || cls.startsWith('2xl:')) {
+      } else if (
+        cls.startsWith("md:") ||
+        cls.startsWith("lg:") ||
+        cls.startsWith("xl:") ||
+        cls.startsWith("2xl:")
+      ) {
         // md: and larger go to desktop
-        const baseClass = cls.substring(cls.indexOf(':') + 1); // Remove prefix
+        const baseClass = cls.substring(cls.indexOf(":") + 1); // Remove prefix
 
         // Get current desktop classes and remove conflicts
         const currentDesktopClasses = Object.keys(nodeProps.desktop || {})
-          .filter(key => nodeProps.desktop[key] === nodeProps.desktop[key])
-          .map(key => nodeProps.desktop[key]);
+          .filter((key) => nodeProps.desktop[key] === nodeProps.desktop[key])
+          .map((key) => nodeProps.desktop[key]);
 
-        const cleanedDesktopClasses = removeConflictingClasses(baseClass, currentDesktopClasses);
+        const cleanedDesktopClasses = removeConflictingClasses(
+          baseClass,
+          currentDesktopClasses,
+        );
 
         // Remove conflicting classes from desktop
-        cleanedDesktopClasses.forEach(conflictClass => {
+        cleanedDesktopClasses.forEach((conflictClass) => {
           changeProp({
             propKey: conflictClass,
             value: "",
@@ -121,7 +186,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
       const cl = [...(classes || [])];
 
       // Remove conflicts for each new class
-      regularClasses.forEach(newClass => {
+      regularClasses.forEach((newClass) => {
         const cleanedClasses = removeConflictingClasses(newClass, cl);
         cl.length = 0; // Clear array
         cl.push(...cleanedClasses); // Add cleaned classes
@@ -146,41 +211,45 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Tailwind responsive breakpoints
-  const breakpoints = ['sm:', 'md:', 'lg:', 'xl:', '2xl:'];
+  const breakpoints = ["sm:", "md:", "lg:", "xl:", "2xl:"];
 
   useEffect(() => {
     if (classInput.length < 2) return;
 
     // Check if input contains a responsive prefix
-    const hasBreakpoint = breakpoints.some(bp => classInput.startsWith(bp));
+    const hasBreakpoint = breakpoints.some((bp) => classInput.startsWith(bp));
 
     let searchTerm = classInput;
     let responsiveMatches = [];
 
     if (hasBreakpoint) {
       // Extract the breakpoint and class
-      const breakpoint = breakpoints.find(bp => classInput.startsWith(bp));
+      const breakpoint = breakpoints.find((bp) => classInput.startsWith(bp));
       const classAfterBreakpoint = classInput.substring(breakpoint.length);
 
       // Find matches for the class after the breakpoint
-      const baseMatches = AllStyles.filter((s) => s?.includes(classAfterBreakpoint));
+      const baseMatches = AllStyles.filter((s) =>
+        s?.includes(classAfterBreakpoint),
+      );
 
       // Create responsive versions
-      responsiveMatches = baseMatches.map(cls => `${breakpoint}${cls}`);
+      responsiveMatches = baseMatches.map((cls) => `${breakpoint}${cls}`);
     } else {
       // Regular search + generate responsive suggestions
       const baseMatches = AllStyles.filter((s) => s?.includes(classInput));
 
       // Add responsive versions for the first few matches
-      responsiveMatches = baseMatches.slice(0, 5).flatMap(cls =>
-        breakpoints.map(bp => `${bp}${cls}`)
-      );
+      responsiveMatches = baseMatches
+        .slice(0, 5)
+        .flatMap((cls) => breakpoints.map((bp) => `${bp}${cls}`));
 
       // Combine base matches with responsive suggestions
       responsiveMatches = [...baseMatches, ...responsiveMatches];
     }
 
-    const matches = responsiveMatches.filter((item) => !classes?.includes(item)).slice(0, 4);
+    const matches = responsiveMatches
+      .filter((item) => !classes?.includes(item))
+      .slice(0, 4);
 
     setMatches(matches);
     setSelectedIndex(0); // Reset selection when matches change
@@ -200,7 +269,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
           setProp,
           view,
           propType: view === "root" ? "root" : "class",
-        })
+        }),
       );
   };
 
@@ -222,10 +291,10 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
     .map((_) => _nodeProps.desktop[_]);
 
   return (
-    <div className="relative z-10 gap-6 flex flex-col">
+    <div className="relative z-10 flex flex-col gap-6">
       <label
         htmlFor="search"
-        className="text-sm font-medium text-foreground sr-only"
+        className="sr-only text-sm font-medium text-foreground"
       >
         Search
       </label>
@@ -244,11 +313,15 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
               e.preventDefault();
 
               // Check if current input has a responsive prefix
-              const hasBreakpoint = breakpoints.some(bp => classInput.startsWith(bp));
+              const hasBreakpoint = breakpoints.some((bp) =>
+                classInput.startsWith(bp),
+              );
 
               if (hasBreakpoint) {
                 // If we're typing with a prefix, complete with the first responsive match
-                const responsiveMatch = matches.find(match => match.startsWith(classInput.split(':')[0] + ':'));
+                const responsiveMatch = matches.find((match) =>
+                  match.startsWith(classInput.split(":")[0] + ":"),
+                );
                 setClassInput(responsiveMatch || matches[0]);
               } else {
                 // Regular completion
@@ -259,7 +332,9 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
             // Arrow key navigation
             if (e.key === "ArrowDown" && matches.length > 0) {
               e.preventDefault();
-              setSelectedIndex((prev) => Math.min(prev + 1, matches.length - 1));
+              setSelectedIndex((prev) =>
+                Math.min(prev + 1, matches.length - 1),
+              );
             }
 
             if (e.key === "ArrowUp" && matches.length > 0) {
@@ -281,71 +356,110 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
           value={classInput}
         />
         {/* Ghost text suggestion - behind input */}
-        {classInput?.length > 0 && matches.length > 0 && matches[0].startsWith(classInput) && (
-          <div className="absolute inset-0 pointer-events-none flex items-center px-3 z-0">
-            <span className="invisible">{classInput}</span>
-            <span className="text-muted-foreground font-mono">{matches[0].slice(classInput.length)}</span>
-          </div>
-        )}
-        <button
-          type="submit"
-          className="btn-search"
-          onClick={() => save()}
-        >
+        {classInput?.length > 0 &&
+          matches.length > 0 &&
+          matches[0].startsWith(classInput) && (
+            <div className="pointer-events-none absolute inset-0 z-0 flex items-center px-3">
+              <span className="invisible">{classInput}</span>
+              <span className="font-mono text-muted-foreground">
+                {matches[0].slice(classInput.length)}
+              </span>
+            </div>
+          )}
+        <button type="submit" className="btn-search" onClick={() => save()}>
           <TbSearch />
         </button>
       </div>
 
       {searched && (
-        <div className="absolute top-10 border border-border  bg-muted text-muted-foreground rounded-md w-full overflow-hidden">
-          <div className="w-full p-2 overflow-auto scrollbar max-h-60 gap-2 flex flex-wrap">
+        <div className="absolute top-10 w-full overflow-hidden rounded-md border border-border bg-muted text-muted-foreground">
+          <div className="scrollbar flex max-h-60 w-full flex-wrap gap-2 overflow-auto p-2">
             {matches.map((mat, k) => (
               <CardLight
                 key={k}
                 value={mat}
                 onClick={() => save(mat)}
-                className={k === selectedIndex ? "ring-2 ring-accent rounded-md bg-accent" : ""}
+                className={
+                  k === selectedIndex
+                    ? "rounded-md bg-accent ring-2 ring-accent"
+                    : ""
+                }
               />
             ))}
-
           </div>
           {matches.length > 0 && (
-            <div className="text-xs text-muted-foreground mt-2 pt-2 border-t border-border p-2 bg-primary">
+            <div className="mt-2 border-t border-border bg-primary p-2 text-xs text-muted-foreground">
               <div className="flex flex-wrap gap-1">
-                <span>Press <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">Tab</kbd> to complete</span>
-                <span>Use <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">↑↓</kbd> to navigate</span>
-                <span>Press <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">Enter</kbd> to select</span>
+                <span>
+                  Press{" "}
+                  <kbd className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                    Tab
+                  </kbd>{" "}
+                  to complete
+                </span>
+                <span>
+                  Use{" "}
+                  <kbd className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                    ↑↓
+                  </kbd>{" "}
+                  to navigate
+                </span>
+                <span>
+                  Press{" "}
+                  <kbd className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                    Enter
+                  </kbd>{" "}
+                  to select
+                </span>
               </div>
               <div className="mt-1">
-                Use <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">sm:</kbd> for mobile, <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">md:</kbd>, <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">lg:</kbd>, <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">xl:</kbd>, <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">2xl:</kbd> for desktop
+                Use{" "}
+                <kbd className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                  sm:
+                </kbd>{" "}
+                for mobile,{" "}
+                <kbd className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                  md:
+                </kbd>
+                ,{" "}
+                <kbd className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                  lg:
+                </kbd>
+                ,{" "}
+                <kbd className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                  xl:
+                </kbd>
+                ,{" "}
+                <kbd className="rounded bg-muted px-1.5 py-0.5 text-foreground">
+                  2xl:
+                </kbd>{" "}
+                for desktop
               </div>
             </div>
           )}
         </div>
       )}
 
-
-      <div className="flex justify-between items-center w-full">
+      <div className="flex w-full items-center justify-between">
         <p className="text-xs">Assigned Classes</p>
 
         <div className="space-x-1.5 text-foreground">
-          <div className="bg-primary  px-0.5 rounded inline-flex text-xxs inside-shadow">
+          <div className="text-xxs inside-shadow inline-flex rounded bg-primary px-0.5">
             Component
           </div>
-          <div className="bg-background text-foreground 5 px-0.5 rounded inline-flex text-xxs inside-shadow">
+          <div className="5 text-xxs inside-shadow inline-flex rounded bg-background px-0.5 text-foreground">
             User
           </div>
-          <div className="bg-secondary  px-0.5 rounded inline-flex text-xxs inside-shadow">
+          <div className="text-xxs inside-shadow inline-flex rounded bg-secondary px-0.5">
             Mobile
           </div>
-          <div className="bg-accent  px-0.5 rounded inline-flex text-xxs inside-shadow">
+          <div className="text-xxs inside-shadow inline-flex rounded bg-accent px-0.5">
             Desktop
           </div>
         </div>
       </div>
 
-
-      <div className="space-y-3 -mt-6">
+      <div className="-mt-6 space-y-3">
         {propClasses?.map((_, key) => (
           <Card key={key} value={_} onClick={() => delNodeProp(_, "root")} />
         ))}
@@ -377,8 +491,6 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
           />
         ))}
       </div>
-
-
     </div>
   );
 };

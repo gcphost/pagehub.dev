@@ -6,55 +6,59 @@ import { ToolbarSection } from "../ToolbarSection";
 import { BackgroundSettingsInput } from "./BackgroundSettingsInput";
 import { ColorInput } from "./ColorInput";
 
-export const BackgroundInput = ({ children }: { children?: React.ReactNode }) => {
+export const BackgroundInput = ({
+  children,
+}: {
+  children?: React.ReactNode;
+}) => {
   const { props } = useNode((node) => ({
     props: node.data.props,
   }));
 
   return (
-    <ToolbarSection title="Background" bodyClassName="px-3" footer={<ItemAdvanceToggle propKey="background">
-      <ToolbarSection full={1} bodyClassName="px-3">
-        <ToolbarSection title="Gradient" subtitle={true}>
-          <ToolbarItem
-            propKey={"backgroundGradient"}
-            propType="root"
-            type="select"
-            label={""}
-            labelHide={true}
-          >
-            <option value="">None</option>
-            {TailwindStyles.gradients.map((_, k) => (
-              <option key={_}>{_}</option>
-            ))}
-          </ToolbarItem>
+    <ToolbarSection
+      title="Background"
+      bodyClassName="px-3"
+      footer={
+        <ItemAdvanceToggle propKey="background">
+          <ToolbarSection full={1} bodyClassName="px-3">
+            <ToolbarSection title="Gradient" subtitle={true}>
+              <ToolbarItem
+                propKey={"backgroundGradient"}
+                propType="root"
+                type="select"
+                label={""}
+                labelHide={true}
+              >
+                <option value="">None</option>
+                {TailwindStyles.gradients.map((_, k) => (
+                  <option key={_}>{_}</option>
+                ))}
+              </ToolbarItem>
+            </ToolbarSection>
+            {props?.root?.backgroundGradient && (
+              <ToolbarSection full={1}>
+                <ColorInput
+                  propKey="backgroundGradientFrom"
+                  label="From"
+                  prefix="from"
+                  propType="root"
+                />
+                <ColorInput
+                  propKey="backgroundGradientTo"
+                  label="To"
+                  prefix="to"
+                  propType="root"
+                />
+              </ToolbarSection>
+            )}
 
-
-        </ToolbarSection>
-        {props?.root?.backgroundGradient && (
-          <ToolbarSection full={1}>
-            <ColorInput
-              propKey="backgroundGradientFrom"
-              label="From"
-              prefix="from"
-              propType="root"
-            />
-            <ColorInput
-              propKey="backgroundGradientTo"
-              label="To"
-              prefix="to"
-              propType="root"
-            />
+            {children}
           </ToolbarSection>
-        )}
-
-
-        {children}
-      </ToolbarSection>
-    </ItemAdvanceToggle>}>
-
+        </ItemAdvanceToggle>
+      }
+    >
       <BackgroundSettingsInput props={props} />
-
-
     </ToolbarSection>
   );
 };

@@ -52,8 +52,11 @@ export const IconDialogDialog = () => {
     if (!searchValue) {
       return _icons;
     }
-    return _icons.filter((_) =>
-      _.search(new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")) > -1
+    return _icons.filter(
+      (_) =>
+        _.search(
+          new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+        ) > -1,
     );
   }, [_icons, searchValue]);
 
@@ -91,11 +94,12 @@ export const IconDialogDialog = () => {
       <div style={style}>
         <button
           id={`iconPicker-${icon}`}
-          className={`w-full h-full flex flex-row cursor-pointer hover:bg-accent rounded-md justify-center items-center ${dialog.value === icon ? "bg-accent border-2 border-accent" : ""
-            }`}
+          className={`flex size-full cursor-pointer flex-row items-center justify-center rounded-md hover:bg-accent ${
+            dialog.value === icon ? "border-2 border-accent bg-accent" : ""
+          }`}
           onClick={(e) => changed(icon)}
         >
-          <div className="pointer-events-none flex justify-center items-center">
+          <div className="pointer-events-none flex items-center justify-center">
             <IconLoader icon={icon} />
           </div>
         </button>
@@ -113,34 +117,46 @@ export const IconDialogDialog = () => {
       width={containerWidth}
       customOnSearch={handleSearch}
       customRenderer={
-        <div className="flex flex-col h-full overflow-hidden">
+        <div className="flex h-full flex-col overflow-hidden">
           {/* Category Tabs - Scrollable with max height */}
-          <div className="flex-shrink-0 max-h-20 overflow-y-auto scrollbar mb-2">
-            <div className="flex gap-1.5 flex-wrap">
+          <div className="scrollbar mb-2 max-h-20 shrink-0 overflow-y-auto">
+            <div className="flex flex-wrap gap-1.5">
               <button
-                className={`px-2.5 py-1 rounded text-xs font-medium ${category === "all" ? "bg-background text-foreground" : "bg-muted hover:bg-muted"
-                  }`}
+                className={`rounded px-2.5 py-1 text-xs font-medium ${
+                  category === "all"
+                    ? "bg-background text-foreground"
+                    : "bg-muted hover:bg-muted"
+                }`}
                 onClick={() => handleCategoryChange("all")}
               >
                 All
               </button>
               <button
-                className={`px-2.5 py-1 rounded text-xs font-medium ${category === "regular" ? "bg-background text-foreground" : "bg-muted hover:bg-muted"
-                  }`}
+                className={`rounded px-2.5 py-1 text-xs font-medium ${
+                  category === "regular"
+                    ? "bg-background text-foreground"
+                    : "bg-muted hover:bg-muted"
+                }`}
                 onClick={() => handleCategoryChange("regular")}
               >
                 Regular
               </button>
               <button
-                className={`px-2.5 py-1 rounded text-xs font-medium ${category === "brands" ? "bg-background text-foreground" : "bg-muted hover:bg-muted"
-                  }`}
+                className={`rounded px-2.5 py-1 text-xs font-medium ${
+                  category === "brands"
+                    ? "bg-background text-foreground"
+                    : "bg-muted hover:bg-muted"
+                }`}
                 onClick={() => handleCategoryChange("brands")}
               >
                 Brands
               </button>
               <button
-                className={`px-2.5 py-1 rounded text-xs font-medium ${category === "solid" ? "bg-background text-foreground" : "bg-muted hover:bg-muted"
-                  }`}
+                className={`rounded px-2.5 py-1 text-xs font-medium ${
+                  category === "solid"
+                    ? "bg-background text-foreground"
+                    : "bg-muted hover:bg-muted"
+                }`}
                 onClick={() => handleCategoryChange("solid")}
               >
                 Solid
@@ -149,12 +165,12 @@ export const IconDialogDialog = () => {
           </div>
 
           {/* Icon count */}
-          <div className="flex-shrink-0 text-xs text-muted-foreground mb-2">
+          <div className="mb-2 shrink-0 text-xs text-muted-foreground">
             {filteredIcons.length} icon{filteredIcons.length !== 1 ? "s" : ""}
           </div>
 
           {/* Virtualized Grid - Takes remaining space, scrolls independently */}
-          <div className="flex-1 min-h-0 overflow-hidden -mx-3 px-3">
+          <div className="-mx-3 min-h-0 flex-1 overflow-hidden px-3">
             <Grid
               ref={gridRef}
               columnCount={columnCount}

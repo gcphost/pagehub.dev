@@ -1,8 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
-import {
-  GetSignedUrl,
-  SaveMedia,
-} from "components/editor/Viewport/lib";
+import { GetSignedUrl, SaveMedia } from "components/editor/Viewport/lib";
 import { useState } from "react";
 import { TbAlertTriangle, TbPhoto, TbUpload } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
@@ -50,7 +47,7 @@ const updateNodeProps = (
   loaded,
   propKey = null,
   typeKey = null,
-  id = null
+  id = null,
 ) => {
   setProp((_props) => {
     _props.isLoading = isLoading;
@@ -148,7 +145,13 @@ export const ImageUploadInput: any = ({
     });
 
     // Register with background (if not already registered)
-    registerMediaWithBackground(query, actions, selectedMediaId, "reference", componentId);
+    registerMediaWithBackground(
+      query,
+      actions,
+      selectedMediaId,
+      "reference",
+      componentId,
+    );
 
     setShowMediaBrowser(false);
     setSaved(true);
@@ -174,8 +177,9 @@ export const ImageUploadInput: any = ({
         {/* Upload Button */}
         <label
           htmlFor={`files-${componentId}`}
-          className={`btn w-full ${!enabled ? "opacity-50" : ""
-            } ${hasUploadedImage ? "relative overflow-hidden" : ""}`}
+          className={`btn w-full ${
+            !enabled ? "opacity-50" : ""
+          } ${hasUploadedImage ? "relative overflow-hidden" : ""}`}
         >
           {hasUploadedImage && imageUrl && (
             <div
@@ -196,7 +200,7 @@ export const ImageUploadInput: any = ({
         {/* Browse Button */}
         <button
           onClick={() => setShowMediaBrowser(true)}
-          className="btn gap-2 flex"
+          className="btn flex gap-2"
           title="Browse media library"
         >
           <TbPhoto />
@@ -215,7 +219,7 @@ export const ImageUploadInput: any = ({
       />
 
       {errors.length ? (
-        <div className="py-3 whitespace-nowrap">
+        <div className="whitespace-nowrap py-3">
           {errors.map((error, key) => (
             <div key={key}>{error.error}</div>
           ))}
@@ -233,7 +237,11 @@ export const ImageUploadInput: any = ({
 };
 
 // Simplified media browser that wraps MediaManagerModal for selection
-const MediaBrowserSelector = ({ isOpen, onClose, onSelect }: {
+const MediaBrowserSelector = ({
+  isOpen,
+  onClose,
+  onSelect,
+}: {
   isOpen: boolean;
   onClose: () => void;
   onSelect: (mediaId: string) => void;

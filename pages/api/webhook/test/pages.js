@@ -10,14 +10,13 @@ export default async function handler(req, res) {
 
   return res.status(200).json({
     pages: [
-      'test-page-1',
-      'test-page-2',
-      'test-page-3',
-      'example-domain',
-      'demo-site',
+      "test-page-1",
+      "test-page-2",
+      "test-page-3",
+      "example-domain",
+      "demo-site",
     ],
-    message: 'List of pages to compile',
+    message: "List of pages to compile",
     timestamp: new Date().toISOString(),
   });
 }
-

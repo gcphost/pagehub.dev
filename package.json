@@ -10,7 +10,11 @@
     "analyze": "cross-env ANALYZE=true next build",
     "update": "ncu -u",
     "create-test-tenant": "node scripts/create-test-tenant.js",
-    "build-templates": "node scripts/build-templates.js"
+    "build-templates": "node scripts/build-templates.js",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "browserslist": [
     "chrome >= 93",
@@ -118,7 +122,9 @@
     "eslint-config-next": "^14.2.7",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.3.3",
+    "eslint-plugin-tailwindcss": "^3.18.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "latest",
     "tsx": "^4.7.0",
     "typescript": "^5.5.4"

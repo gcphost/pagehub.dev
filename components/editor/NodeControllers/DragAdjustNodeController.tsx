@@ -11,20 +11,49 @@ import { useElementColor } from "./lib";
 
 // Tailwind spacing values mapping
 const TAILWIND_SPACING_MAP = {
-  0: "0", 1: "px", 2: "0.5", 4: "1", 6: "1.5", 8: "2", 10: "2.5",
-  12: "3", 14: "3.5", 16: "4", 20: "5", 24: "6", 28: "7", 32: "8",
-  36: "9", 40: "10", 44: "11", 48: "12", 56: "14", 64: "16", 80: "20",
-  96: "24", 112: "28", 128: "32", 144: "36", 160: "40", 176: "44",
-  192: "48", 208: "52", 224: "56", 240: "60", 256: "64", 288: "72",
-  320: "80", 384: "96",
+  0: "0",
+  1: "px",
+  2: "0.5",
+  4: "1",
+  6: "1.5",
+  8: "2",
+  10: "2.5",
+  12: "3",
+  14: "3.5",
+  16: "4",
+  20: "5",
+  24: "6",
+  28: "7",
+  32: "8",
+  36: "9",
+  40: "10",
+  44: "11",
+  48: "12",
+  56: "14",
+  64: "16",
+  80: "20",
+  96: "24",
+  112: "28",
+  128: "32",
+  144: "36",
+  160: "40",
+  176: "44",
+  192: "48",
+  208: "52",
+  224: "56",
+  240: "60",
+  256: "64",
+  288: "72",
+  320: "80",
+  384: "96",
 };
 
 // Map full property names to Tailwind abbreviations
 const PROP_VAR_MAP = {
-  "height": "h",
-  "width": "w",
-  "margin": "m",
-  "padding": "p",
+  height: "h",
+  width: "w",
+  margin: "m",
+  padding: "p",
 };
 
 // Convert pixel value to Tailwind class
@@ -58,8 +87,17 @@ export const DragAdjustNodeController = (props: {
   tooltip?: string;
   isPadding?: boolean;
 }) => {
-  const { position, align, direction, propVar, styleToUse, alt, gridSnap, tooltip, isPadding } =
-    props as any;
+  const {
+    position,
+    align,
+    direction,
+    propVar,
+    styleToUse,
+    alt,
+    gridSnap,
+    tooltip,
+    isPadding,
+  } = props as any;
 
   const { id } = useNode();
 
@@ -83,7 +121,9 @@ export const DragAdjustNodeController = (props: {
   const elementColor = useElementColor(dom as HTMLElement, isActive);
 
   // Choose which control component to use
-  const ControlComponent = isInlineRender ? RenderNodeControlInline : RenderNodeControl;
+  const ControlComponent = isInlineRender
+    ? RenderNodeControlInline
+    : RenderNodeControl;
   const controlClassName = isInlineRender
     ? "whitespace-nowrap items-center select-none"
     : "whitespace-nowrap items-center select-none fixed pointer-events-auto";
@@ -105,7 +145,7 @@ export const DragAdjustNodeController = (props: {
         style={elementColor ? { color: elementColor } : {}}
       >
         <DragAdjust
-          className="text-base flex items-center"
+          className="flex items-center text-base"
           targetElement={dom}
           direction={direction}
           styleToUse={styleToUse}
@@ -138,23 +178,33 @@ export const DragAdjustNodeController = (props: {
                   const percentage = (currentWidth / parentWidth) * 100;
 
                   // Round to nearest grid fraction
-                  const gridFraction = Math.max(1, Math.min(gridSnap, Math.round((percentage / 100) * gridSnap)));
+                  const gridFraction = Math.max(
+                    1,
+                    Math.min(
+                      gridSnap,
+                      Math.round((percentage / 100) * gridSnap),
+                    ),
+                  );
 
                   prop[view][propVar] = `w-${gridFraction}/12`;
                 }
               } else {
                 // Convert snapped pixel value to Tailwind class
                 const numericValue = parseFloat(value);
-                const unit = value.replace(/[0-9.-]/g, '');
+                const unit = value.replace(/[0-9.-]/g, "");
 
-                if (unit === 'px') {
+                if (unit === "px") {
                   // Convert to Tailwind spacing class
-                  const tailwindClass = pixelsToTailwindClass(numericValue, propVar);
+                  const tailwindClass = pixelsToTailwindClass(
+                    numericValue,
+                    propVar,
+                  );
                   prop[view][propVar] = tailwindClass;
                 } else {
                   // Map propVar to Tailwind abbreviation for non-px units too
                   const tailwindProp = PROP_VAR_MAP[propVar] || propVar;
-                  prop[view][propVar] = `${tailwindProp}-[${numericValue}${unit}]`;
+                  prop[view][propVar] =
+                    `${tailwindProp}-[${numericValue}${unit}]`;
                 }
               }
             }, 50);
@@ -180,7 +230,7 @@ export const DragAdjustNodeController = (props: {
           style={elementColor ? { color: elementColor } : {}}
         >
           <DragAdjust
-            className="text-base flex items-center"
+            className="flex items-center text-base"
             targetElement={dom}
             direction={direction}
             styleToUse={styleToUse}
@@ -213,23 +263,33 @@ export const DragAdjustNodeController = (props: {
                     const percentage = (currentWidth / parentWidth) * 100;
 
                     // Round to nearest grid fraction
-                    const gridFraction = Math.max(1, Math.min(gridSnap, Math.round((percentage / 100) * gridSnap)));
+                    const gridFraction = Math.max(
+                      1,
+                      Math.min(
+                        gridSnap,
+                        Math.round((percentage / 100) * gridSnap),
+                      ),
+                    );
 
                     prop[view][propVar] = `w-${gridFraction}/12`;
                   }
                 } else {
                   // Convert snapped pixel value to Tailwind class
                   const numericValue = parseFloat(value);
-                  const unit = value.replace(/[0-9.-]/g, '');
+                  const unit = value.replace(/[0-9.-]/g, "");
 
-                  if (unit === 'px') {
+                  if (unit === "px") {
                     // Convert to Tailwind spacing class
-                    const tailwindClass = pixelsToTailwindClass(numericValue, propVar);
+                    const tailwindClass = pixelsToTailwindClass(
+                      numericValue,
+                      propVar,
+                    );
                     prop[view][propVar] = tailwindClass;
                   } else {
                     // Map propVar to Tailwind abbreviation for non-px units too
                     const tailwindProp = PROP_VAR_MAP[propVar] || propVar;
-                    prop[view][propVar] = `${tailwindProp}-[${numericValue}${unit}]`;
+                    prop[view][propVar] =
+                      `${tailwindProp}-[${numericValue}${unit}]`;
                   }
                 }
               }, 50);

@@ -13,7 +13,7 @@ export const addComponentToStorage = (data = null) => {
 export const removeComponentFromStorage = (
   nodeId,
   components,
-  setComponents
+  setComponents,
 ) => {
   components = components.filter((_) => _.rootNodeId !== nodeId);
 

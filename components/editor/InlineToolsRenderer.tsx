@@ -5,11 +5,11 @@ import { InlineRenderContext } from "./InlineRenderContext";
 /**
  * InlineToolsRenderer - Shared component that renders node tools inline
  * instead of using portals. This eliminates position calculation lag.
- * 
+ *
  * Usage in selectors:
  * 1. With craft config (requires selection):
  *    <InlineToolsRenderer craftComponent={Container} props={props} />
- * 
+ *
  * 2. Always visible with custom children:
  *    <InlineToolsRenderer alwaysVisible>
  *      <AddSectionNodeController position="bottom" align="middle" />
@@ -19,7 +19,7 @@ export const InlineToolsRenderer = ({
   craftComponent,
   props: selectorProps,
   alwaysVisible = false,
-  children
+  children,
 }: {
   craftComponent?: any;
   props?: any;
@@ -33,14 +33,14 @@ export const InlineToolsRenderer = ({
   }));
 
   // Don't render on server (SSR)
-  const isClient = typeof window !== 'undefined';
+  const isClient = typeof window !== "undefined";
 
   // Get tools from craft config (same pattern as RenderNodeTools)
   // Memoize to avoid recalculating on every render
   // MUST be called before any early returns to follow rules of hooks
   const tools = useMemo(
     () => craftComponent?.craft?.props?.tools?.(selectorProps) || [],
-    [craftComponent, selectorProps]
+    [craftComponent, selectorProps],
   );
 
   // Don't render if not in edit mode or on server
@@ -65,13 +65,11 @@ export const InlineToolsRenderer = ({
         {showChildren && children}
 
         {/* Selection-required tools */}
-        {showTools && tools.map((tool, index) => (
-          <React.Fragment key={`inline-tool-${index}`}>
-            {tool}
-          </React.Fragment>
-        ))}
+        {showTools &&
+          tools.map((tool, index) => (
+            <React.Fragment key={`inline-tool-${index}`}>{tool}</React.Fragment>
+          ))}
       </>
     </InlineRenderContext.Provider>
   );
 };
-

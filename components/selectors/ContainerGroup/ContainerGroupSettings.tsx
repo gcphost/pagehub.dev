@@ -7,7 +7,13 @@ import { TabAtom } from "components/editor/Viewport";
 import React from "react";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
-import { TbAccessible, TbBoxPadding, TbContainer, TbMouse, TbPlayerPlay } from "react-icons/tb";
+import {
+  TbAccessible,
+  TbBoxPadding,
+  TbContainer,
+  TbMouse,
+  TbPlayerPlay,
+} from "react-icons/tb";
 import { atom, useRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
 import { Button } from "../Button";
@@ -15,7 +21,7 @@ import { Container } from "../Container";
 import { Image } from "../Image";
 import { Text } from "../Text";
 
-interface ContainerGroupSettingsProps { }
+interface ContainerGroupSettingsProps {}
 
 export const SelectedContainerGroupAtom = atom({
   key: "selectedcontainergroup",
@@ -27,13 +33,16 @@ export const SelectedNestedAccordionAtom = atom({
   default: "",
 });
 
-export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () => {
-
+export const ContainerGroupSettings: React.FC<
+  ContainerGroupSettingsProps
+> = () => {
   const { id } = useNode();
   const { query } = useEditor();
   const node = useGetNode();
   const [accordion, setAccordion] = useRecoilState(SelectedContainerGroupAtom);
-  const [nestedAccordion, setNestedAccordion] = useRecoilState(SelectedNestedAccordionAtom);
+  const [nestedAccordion, setNestedAccordion] = useRecoilState(
+    SelectedNestedAccordionAtom,
+  );
 
   const head = [
     {
@@ -66,9 +75,7 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
     },
   ];
 
-
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
-
 
   useDefaultTab(head, activeTab, setActiveTab);
 
@@ -90,7 +97,11 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
     childNodes.forEach((childId: string) => {
       try {
         const childNode = query.node(childId).get();
-        const componentType = String(childNode.data.displayName || childNode.data.name || childNode.data.type);
+        const componentType = String(
+          childNode.data.displayName ||
+            childNode.data.name ||
+            childNode.data.type,
+        );
 
         if (componentType) {
           if (!groups[componentType]) {
@@ -99,7 +110,7 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
           groups[componentType].push({
             id: childId,
             type: componentType,
-            props: childNode.data.props
+            props: childNode.data.props,
           });
         }
       } catch (error) {
@@ -110,23 +121,20 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
     return groups;
   }, [childNodes, query]);
 
-
-
-
   const getComponentTabTools = (type: string) => {
     try {
       let Component;
       switch (type) {
-        case 'Image':
+        case "Image":
           Component = Image;
           break;
-        case 'Button':
+        case "Button":
           Component = Button;
           break;
-        case 'Text':
+        case "Text":
           Component = Text;
           break;
-        case 'Container':
+        case "Container":
           Component = Container;
           break;
         default:
@@ -139,26 +147,38 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
 
       return null;
     } catch (error) {
-      console.warn(`Could not get groupTools for component type: ${type}`, error);
+      console.warn(
+        `Could not get groupTools for component type: ${type}`,
+        error,
+      );
       return null;
     }
   };
 
-  console.log('ContainerGroupSettings rendering - childNodes:', childNodes.length, 'groupedComponents:', Object.keys(groupedComponents));
-  console.log('ContainerGroupSettings - accordion state:', accordion, 'setAccordion:', typeof setAccordion);
+  console.log(
+    "ContainerGroupSettings rendering - childNodes:",
+    childNodes.length,
+    "groupedComponents:",
+    Object.keys(groupedComponents),
+  );
+  console.log(
+    "ContainerGroupSettings - accordion state:",
+    accordion,
+    "setAccordion:",
+    typeof setAccordion,
+  );
 
   const TBBody = () => (
     <TabBody>
-
-
-
-
       {/* Dynamic Group Settings */}
       {Object.entries(groupedComponents).map(([type, components]) => {
-        console.log('ContainerGroupSettings - MAP EXECUTING for type:', type, 'components:', components);
+        console.log(
+          "ContainerGroupSettings - MAP EXECUTING for type:",
+          type,
+          "components:",
+          components,
+        );
         const ComponentTabTools = getComponentTabTools(type);
-
-
 
         return (
           <Accord
@@ -167,8 +187,7 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
             accordion={accordion}
             setAccordion={setAccordion}
             title={`${type}s (${components.length})`}
-            className="border-b border-border group"
-
+            className="group border-b border-border"
           >
             <div className="flex flex-col gap-3 bg-primary p-3">
               {components.map((component, index) => (
@@ -178,27 +197,27 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
                   accordion={nestedAccordion}
                   setAccordion={setNestedAccordion}
                   title={`${type} ${index + 1}`}
-                  className="border-b border-border group"
-
+                  className="group border-b border-border"
                 >
                   <NodeProvider id={component.id}>
                     <div className="flex flex-col gap-3 bg-primary p-3">
-                      {ComponentTabTools.toolbar && React.createElement(ComponentTabTools.toolbar)}
+                      {ComponentTabTools.toolbar &&
+                        React.createElement(ComponentTabTools.toolbar)}
                     </div>
                   </NodeProvider>
-
-
                 </Accord>
               ))}
 
               {ComponentTabTools.groupSettings && (
-                <div className="border border-border rounded-lg p-3 bg-background mb-3">
-                  <div className="text-foreground text-sm mb-3 font-semibold">{type} Group Settings</div>
+                <div className="mb-3 rounded-lg border border-border bg-background p-3">
+                  <div className="mb-3 text-sm font-semibold text-foreground">
+                    {type} Group Settings
+                  </div>
                   {React.createElement(ComponentTabTools.groupSettings, {
                     onAdd: () => {
                       // Refresh the component list after adding
-                      console.log('Image added, refreshing...');
-                    }
+                      console.log("Image added, refreshing...");
+                    },
                   })}
                 </div>
               )}
@@ -206,9 +225,6 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
           </Accord>
         );
       })}
-
-
-
     </TabBody>
   );
 
@@ -217,7 +233,6 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
       <TBBody />
     </TBWrap>
   );
-
 };
 
 export default ContainerGroupSettings;

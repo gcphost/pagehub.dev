@@ -13,7 +13,11 @@ interface PageSettingsModalProps {
   pageId: string | null;
 }
 
-export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModalProps) => {
+export const PageSettingsModal = ({
+  isOpen,
+  onClose,
+  pageId,
+}: PageSettingsModalProps) => {
   const { actions, query } = useEditor();
   const [pageName, setPageName] = useState("");
   const [pageSlug, setPageSlug] = useState("");
@@ -22,7 +26,9 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
   const [autoSlug, setAutoSlug] = useState(true);
 
   // UI State
-  const [activeTab, setActiveTab] = useState<"basic" | "seo" | "advanced">("basic");
+  const [activeTab, setActiveTab] = useState<"basic" | "seo" | "advanced">(
+    "basic",
+  );
   const [ogExpanded, setOgExpanded] = useState(false);
   const [twitterExpanded, setTwitterExpanded] = useState(false);
 
@@ -60,7 +66,10 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
           setIs404Page(props.is404Page || false);
 
           // Generate slug from display name
-          const generatedSlug = sluggit(custom?.displayName || "untitled-page", "-");
+          const generatedSlug = sluggit(
+            custom?.displayName || "untitled-page",
+            "-",
+          );
           setPageSlug(generatedSlug);
           setAutoSlug(true);
 
@@ -164,14 +173,16 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-background rounded-lg shadow-2xl w-full max-w-3xl h-[85vh] max-h-[800px] overflow-hidden flex flex-col"
+          className="flex h-[85vh] max-h-[800px] w-full max-w-3xl flex-col overflow-hidden rounded-lg bg-background shadow-2xl"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b">
-            <h2 className="text-2xl font-bold text-foreground">Page Settings</h2>
+          <div className="flex items-center justify-between border-b p-6">
+            <h2 className="text-2xl font-bold text-foreground">
+              Page Settings
+            </h2>
             <button
               onClick={onClose}
-              className="text-muted-foreground hover:text-foreground text-2xl"
+              className="text-2xl text-muted-foreground hover:text-foreground"
             >
               <TbX />
             </button>
@@ -182,28 +193,31 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
             <div className="flex">
               <button
                 onClick={() => setActiveTab("basic")}
-                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "basic"
-                  ? "text-primary border-b-2 border-primary bg-background"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  }`}
+                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${
+                  activeTab === "basic"
+                    ? "border-b-2 border-primary bg-background text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }`}
               >
                 Basic
               </button>
               <button
                 onClick={() => setActiveTab("seo")}
-                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "seo"
-                  ? "text-primary border-b-2 border-primary bg-background"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  }`}
+                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${
+                  activeTab === "seo"
+                    ? "border-b-2 border-primary bg-background text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }`}
               >
                 SEO
               </button>
               <button
                 onClick={() => setActiveTab("advanced")}
-                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "advanced"
-                  ? "text-primary border-b-2 border-primary bg-background"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  }`}
+                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${
+                  activeTab === "advanced"
+                    ? "border-b-2 border-primary bg-background text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }`}
               >
                 Advanced
               </button>
@@ -218,30 +232,30 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
                 {/* Page Name & URL - Same Line */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                    <label className="mb-2 block text-sm font-medium text-foreground">
                       Page Name
                     </label>
                     <input
                       type="text"
                       value={pageName}
                       onChange={(e) => handlePageNameChange(e.target.value)}
-                      className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="w-full rounded-md border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Enter page name"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                    <label className="mb-2 block text-sm font-medium text-foreground">
                       URL Slug
                     </label>
                     <div className="flex items-center gap-2">
-                      <span className="text-muted-foreground text-sm">/</span>
+                      <span className="text-sm text-muted-foreground">/</span>
                       <input
                         type="text"
                         value={isHomePage ? "" : pageSlug}
                         onChange={(e) => handleSlugChange(e.target.value)}
                         disabled={isHomePage}
-                        className="flex-1 px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-muted disabled:text-muted-foreground"
+                        className="flex-1 rounded-md border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-muted disabled:text-muted-foreground"
                         placeholder={isHomePage ? "home" : "page-url"}
                       />
                     </div>
@@ -249,46 +263,58 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
                 </div>
 
                 {/* Home Page Toggle */}
-                <div className="flex items-center justify-between p-4 bg-muted text-muted-foreground rounded-lg border border-border">
+                <div className="flex items-center justify-between rounded-lg border border-border bg-muted p-4 text-muted-foreground">
                   <div>
-                    <div className="text-sm font-medium text-foreground">Home Page</div>
-                    <div className="text-xs text-muted-foreground mt-1">Set as root URL (/)</div>
+                    <div className="text-sm font-medium text-foreground">
+                      Home Page
+                    </div>
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      Set as root URL (/)
+                    </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => setIsHomePage(!isHomePage)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isHomePage ? "bg-primary" : "bg-muted"
-                      }`}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      isHomePage ? "bg-primary" : "bg-muted"
+                    }`}
                   >
                     <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-background transition-transform ${isHomePage ? "translate-x-6" : "translate-x-1"
-                        }`}
+                      className={`inline-block size-4 rounded-full bg-background transition-transform${
+                        isHomePage ? "translate-x-6" : "translate-x-1"
+                      }`}
                     />
                   </button>
                 </div>
 
                 {/* 404 Page Toggle */}
-                <div className="flex items-center justify-between p-4 bg-muted text-muted-foreground rounded-lg border border-border">
+                <div className="flex items-center justify-between rounded-lg border border-border bg-muted p-4 text-muted-foreground">
                   <div>
-                    <div className="text-sm font-medium text-foreground">404 Page</div>
-                    <div className="text-xs text-muted-foreground mt-1">Show when route not found</div>
+                    <div className="text-sm font-medium text-foreground">
+                      404 Page
+                    </div>
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      Show when route not found
+                    </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => setIs404Page(!is404Page)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${is404Page ? "bg-primary" : "bg-muted"
-                      }`}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      is404Page ? "bg-primary" : "bg-muted"
+                    }`}
                   >
                     <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-background transition-transform ${is404Page ? "translate-x-6" : "translate-x-1"
-                        }`}
+                      className={`inline-block size-4 rounded-full bg-background transition-transform${
+                        is404Page ? "translate-x-6" : "translate-x-1"
+                      }`}
                     />
                   </button>
                 </div>
 
                 {/* Page Image */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="mb-2 block text-sm font-medium text-foreground">
                     Page Image
                   </label>
                   <StandaloneImagePicker
@@ -307,54 +333,54 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
                 {/* Basic SEO */}
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                    <label className="mb-2 block text-sm font-medium text-foreground">
                       Meta Title
                     </label>
                     <textarea
                       value={pageTitle}
                       onChange={(e) => setPageTitle(e.target.value)}
                       rows={2}
-                      className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                      className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="Page title (50-60 characters)"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                    <label className="mb-2 block text-sm font-medium text-foreground">
                       Meta Description
                     </label>
                     <textarea
                       value={pageDescription}
                       onChange={(e) => setPageDescription(e.target.value)}
                       rows={3}
-                      className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                      className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="Meta description (150-160 characters)"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label className="mb-2 block text-sm font-medium text-foreground">
                         Keywords
                       </label>
                       <input
                         type="text"
                         value={pageKeywords}
                         onChange={(e) => setPageKeywords(e.target.value)}
-                        className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                        className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                         placeholder="keyword1, keyword2"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label className="mb-2 block text-sm font-medium text-foreground">
                         Author
                       </label>
                       <input
                         type="text"
                         value={pageAuthor}
                         onChange={(e) => setPageAuthor(e.target.value)}
-                        className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                        className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                         placeholder="Author name"
                       />
                     </div>
@@ -362,52 +388,57 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
                 </div>
 
                 {/* Open Graph - Collapsible */}
-                <div className="border border-border rounded-lg overflow-hidden">
+                <div className="overflow-hidden rounded-lg border border-border">
                   <button
                     type="button"
                     onClick={() => setOgExpanded(!ogExpanded)}
-                    className="w-full flex items-center justify-between p-4 bg-muted text-muted-foreground hover:bg-muted transition-colors"
+                    className="flex w-full items-center justify-between bg-muted p-4 text-muted-foreground transition-colors hover:bg-muted"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-foreground">Open Graph (Social Media)</span>
-                      <span className="text-xs text-muted-foreground">Optional</span>
+                      <span className="text-sm font-medium text-foreground">
+                        Open Graph (Social Media)
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        Optional
+                      </span>
                     </div>
                     <TbChevronDown
-                      className={`text-muted-foreground transition-transform ${ogExpanded ? "rotate-180" : ""
-                        }`}
+                      className={`text-muted-foreground transition-transform ${
+                        ogExpanded ? "rotate-180" : ""
+                      }`}
                     />
                   </button>
 
                   {ogExpanded && (
-                    <div className="p-4 space-y-4 bg-background border-t border-border">
+                    <div className="space-y-4 border-t border-border bg-background p-4">
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label className="mb-2 block text-sm font-medium text-foreground">
                           OG Title
                         </label>
                         <input
                           type="text"
                           value={ogTitle}
                           onChange={(e) => setOgTitle(e.target.value)}
-                          className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                          className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                           placeholder="Leave empty to use page title"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label className="mb-2 block text-sm font-medium text-foreground">
                           OG Description
                         </label>
                         <textarea
                           value={ogDescription}
                           onChange={(e) => setOgDescription(e.target.value)}
                           rows={2}
-                          className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                          className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                           placeholder="Leave empty to use page description"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label className="mb-2 block text-sm font-medium text-foreground">
                           OG Image
                         </label>
                         <StandaloneImagePicker
@@ -419,13 +450,13 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label className="mb-2 block text-sm font-medium text-foreground">
                           OG Type
                         </label>
                         <select
                           value={ogType}
                           onChange={(e) => setOgType(e.target.value)}
-                          className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                          className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                         >
                           <option value="website">Website</option>
                           <option value="article">Article</option>
@@ -438,61 +469,68 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
                 </div>
 
                 {/* Twitter - Collapsible */}
-                <div className="border border-border rounded-lg overflow-hidden">
+                <div className="overflow-hidden rounded-lg border border-border">
                   <button
                     type="button"
                     onClick={() => setTwitterExpanded(!twitterExpanded)}
-                    className="w-full flex items-center justify-between p-4 bg-muted text-muted-foreground hover:bg-muted transition-colors"
+                    className="flex w-full items-center justify-between bg-muted p-4 text-muted-foreground transition-colors hover:bg-muted"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-foreground">Twitter/X Card</span>
-                      <span className="text-xs text-muted-foreground">Optional</span>
+                      <span className="text-sm font-medium text-foreground">
+                        Twitter/X Card
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        Optional
+                      </span>
                     </div>
                     <TbChevronDown
-                      className={`text-muted-foreground transition-transform ${twitterExpanded ? "rotate-180" : ""
-                        }`}
+                      className={`text-muted-foreground transition-transform ${
+                        twitterExpanded ? "rotate-180" : ""
+                      }`}
                     />
                   </button>
 
                   {twitterExpanded && (
-                    <div className="p-4 space-y-4 bg-background border-t border-border">
+                    <div className="space-y-4 border-t border-border bg-background p-4">
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label className="mb-2 block text-sm font-medium text-foreground">
                           Card Type
                         </label>
                         <select
                           value={twitterCard}
                           onChange={(e) => setTwitterCard(e.target.value)}
-                          className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                          className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                         >
-                          <option value="summary_large_image">Summary Large Image</option>
+                          <option value="summary_large_image">
+                            Summary Large Image
+                          </option>
                           <option value="summary">Summary</option>
                         </select>
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-medium text-foreground mb-2">
+                          <label className="mb-2 block text-sm font-medium text-foreground">
                             Site
                           </label>
                           <input
                             type="text"
                             value={twitterSite}
                             onChange={(e) => setTwitterSite(e.target.value)}
-                            className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                            className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                             placeholder="@yourusername"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-foreground mb-2">
+                          <label className="mb-2 block text-sm font-medium text-foreground">
                             Creator
                           </label>
                           <input
                             type="text"
                             value={twitterCreator}
                             onChange={(e) => setTwitterCreator(e.target.value)}
-                            className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                            className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                             placeholder="@authorusername"
                           />
                         </div>
@@ -507,17 +545,17 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
             {activeTab === "advanced" && (
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="mb-2 block text-sm font-medium text-foreground">
                     Canonical URL
                   </label>
                   <input
                     type="text"
                     value={canonicalUrl}
                     onChange={(e) => setCanonicalUrl(e.target.value)}
-                    className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                    className="w-full rounded-md border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="Leave empty for auto-generated"
                   />
-                  <p className="text-xs text-muted-foreground mt-2">
+                  <p className="mt-2 text-xs text-muted-foreground">
                     Specify a canonical URL to prevent duplicate content issues
                   </p>
                 </div>
@@ -526,16 +564,16 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
           </div>
 
           {/* Footer */}
-          <div className="p-6 border-t bg-muted text-muted-foreground flex gap-3">
+          <div className="flex gap-3 border-t bg-muted p-6 text-muted-foreground">
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted transition-colors font-medium"
+              className="flex-1 rounded-lg border border-border px-4 py-2 font-medium text-foreground transition-colors hover:bg-muted"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 px-4 py-2 bg-primary text-foreground rounded-lg hover:bg-primary transition-colors font-medium"
+              className="flex-1 rounded-lg bg-primary px-4 py-2 font-medium text-foreground transition-colors hover:bg-primary"
             >
               Save Changes
             </button>
@@ -543,7 +581,6 @@ export const PageSettingsModal = ({ isOpen, onClose, pageId }: PageSettingsModal
         </motion.div>
       </motion.div>
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 };
-

@@ -45,12 +45,12 @@ export const ToolTipDialog = () => {
           id={`tooltip-${dialog.key}`}
           data-tooltip={true}
           style={style}
-          className={"absolute z-20 flex pointer-events-none "}
+          className={"pointer-events-none absolute z-20 flex"}
         >
           <div
             ref={ref}
             key={`tooltip-${dialog.key}`}
-            className="pointer-events-none absolute  bg-muted border border-border text-foreground rounded-md px-3 py-1.5 whitespace-nowrap text-xs drop-shadow-2xl font-normal"
+            className="pointer-events-none absolute whitespace-nowrap rounded-md border border-border bg-muted px-3 py-1.5 text-xs font-normal text-foreground drop-shadow-2xl"
           >
             {dialog.value}
           </div>

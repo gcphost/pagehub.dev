@@ -48,7 +48,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
   return (
     <>
       {jumps.length ? (
-        <div className="bg-muted text-muted-foreground border-border border-b flex flex-row gap-3 px-3 justify-end">
+        <div className="flex flex-row justify-end gap-3 border-b border-border bg-muted px-3 text-muted-foreground">
           {jumps.map((_) => (
             <MenuItem
               key={uuidv4()}
@@ -65,11 +65,11 @@ export const TabBody = ({ children = null, jumps = [] }) => {
         </div>
       ) : null}
 
-
       <div
         id="toolbarContents"
-        className={`w-full flex flex-col  scrollbar overflow-x-hidden overflow-y-auto absolute bottom-[64px] top-[${jumps.length ? "224px" : "190px"
-          }] pb-[400px] gap-3 py-1.5 px-2 divide-y divide-border `}
+        className={`scrollbar top-[ absolute bottom-[64px] flex w-full flex-col overflow-y-auto overflow-x-hidden${
+          jumps.length ? "224px" : "190px"
+        }] gap-3 divide-y divide-border px-2 py-1.5 pb-[400px]`}
       >
         {children}
       </div>

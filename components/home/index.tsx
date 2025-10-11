@@ -14,21 +14,32 @@ import {
 import { siteDescription, siteTitle } from "utils/lib";
 
 const nunito = Nunito({
-  subsets: ['latin'],
-  weight: ['300', '400', '600', '700', '800', '900'],
-  display: 'swap',
-  fallback: ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif"],
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700", "800", "900"],
+  display: "swap",
+  fallback: [
+    "ui-sans-serif",
+    "system-ui",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "Noto Sans",
+    "sans-serif",
+  ],
 });
 
 const Card = ({ icon, title, description }) => (
-  <div className="text-center flex gap-6 flex-col justify-center items-center w-full mb-12 md:mb-0 md:w-1/2">
-    <div className="bg-muted border border-border rounded-full p-12 text-6xl shadow-lg backdrop-blur-sm">
+  <div className="mb-12 flex w-full flex-col items-center justify-center gap-6 text-center md:mb-0 md:w-1/2">
+    <div className="rounded-full border border-border bg-muted p-12 text-6xl shadow-lg backdrop-blur-sm">
       {icon}
     </div>
 
     <h3 className="text-3xl">{title}</h3>
 
-    <p className="w-2/3 text-center text-xl text-muted-foreground leading-relaxed">
+    <p className="w-2/3 text-center text-xl leading-relaxed text-muted-foreground">
       {description}
     </p>
   </div>
@@ -49,22 +60,23 @@ export const HomePage = () => (
 function Home() {
   return (
     <div className={`bg-background text-foreground ${nunito.className}`}>
-      <nav className="p-3 border-border bg-gradient-to-r from-emerald-300 to-cyan-300 h-6 flex items-center"></nav>
+      <nav className="flex h-6 items-center border-border bg-gradient-to-r from-emerald-300 to-cyan-300 p-3"></nav>
 
-      <div className=" flex flex-col gap-12 lg:gap-24 pb-20">
-        <div className="container mx-auto ">
-          <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-            <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-foreground md:text-5xl lg:text-6xl">
+      <div className="flex flex-col gap-12 pb-20 lg:gap-24">
+        <div className="container mx-auto">
+          <div className="mx-auto max-w-screen-xl px-4 py-8 text-center lg:px-12 lg:py-16">
+            <h1 className="my-20 text-4xl font-extrabold leading-none tracking-tight text-foreground md:text-5xl lg:text-6xl">
               Build beautiful pages in minutes
             </h1>
 
-            <p className="mb-20 leading-10 text-xl font-normal lg:text-3xl sm:px-16 xl:px-48 text-muted-foreground">
-              The fastest way to create landing pages. No code, no hassle—just drag, drop, and publish.
+            <p className="mb-20 text-xl font-normal leading-10 text-muted-foreground sm:px-16 lg:text-3xl xl:px-48">
+              The fastest way to create landing pages. No code, no hassle—just
+              drag, drop, and publish.
             </p>
 
-            <p className="mb-8 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-muted-foreground hidden">
+            <p className="mb-8 hidden text-lg font-normal text-muted-foreground sm:px-16 lg:text-xl xl:px-48">
               Start with one of our designs or a{" "}
-              <Link href="/builder" className="text-foreground ">
+              <Link href="/builder" className="text-foreground">
                 blank template
               </Link>
               .
@@ -72,16 +84,16 @@ function Home() {
           </div>
         </div>
 
-        <div className="container mx-auto flex justify-center mb-24">
+        <div className="container mx-auto mb-24 flex justify-center">
           <Link
             href="/templates"
-            className="bg-background text-foreground hover:bg-muted cursor-pointer  text-center text-2xl lg:w-1/3 p-12 rounded-xl"
+            className="cursor-pointer rounded-xl bg-background p-12 text-center text-2xl text-foreground hover:bg-muted lg:w-1/3"
           >
             Get Started
           </Link>
         </div>
 
-        <div className="my-6 md:my-12 mx-auto md:flex gap-24 md:w-2/3  items-start">
+        <div className="mx-auto my-6 items-start gap-24 md:my-12 md:flex md:w-2/3">
           <Card
             icon={<SiTailwindcss />}
             title="Powered by Tailwind"
@@ -95,7 +107,7 @@ function Home() {
           />
         </div>
 
-        <div className="my-6 md:my-12 mx-auto md:flex gap-24 w-2/3  items-start">
+        <div className="mx-auto my-6 w-2/3 items-start gap-24 md:my-12 md:flex">
           <Card
             icon={<TbDeviceMobile />}
             title="Mobile Responsive"
@@ -108,7 +120,7 @@ function Home() {
           />
         </div>
 
-        <div className="my-6 md:my-12 mx-auto md:flex gap-24 w-2/3  items-start">
+        <div className="mx-auto my-6 w-2/3 items-start gap-24 md:my-12 md:flex">
           <Card
             icon={<TbDeviceFloppy />}
             title="Auto-Save"
@@ -121,32 +133,33 @@ function Home() {
           />
         </div>
 
-        <div className="text-center text-5xl md:w-1/2 mx-auto leading-relaxed">
+        <div className="mx-auto text-center text-5xl leading-relaxed md:w-1/2">
           Start building today.
         </div>
 
         <div className="container mx-auto flex justify-center">
           <Link
             href="/templates"
-            className="bg-background text-foreground hover:bg-muted cursor-pointer  text-center text-2xl lg:w-1/3 p-12 rounded-xl"
+            className="cursor-pointer rounded-xl bg-background p-12 text-center text-2xl text-foreground hover:bg-muted lg:w-1/3"
           >
             Get Started
           </Link>
         </div>
 
-        <div className="hidden mt-32 bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 py-24">
-          <div className="container mx-auto px-4 text-center max-w-4xl">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8">
+        <div className="mt-32 hidden bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 py-24">
+          <div className="container mx-auto max-w-4xl px-4 text-center">
+            <h2 className="mb-8 text-4xl font-bold md:text-5xl">
               Integrate PageHub into your platform
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed">
-              Seamlessly add page building to your product. Your users create pages, you control the data.
-              Perfect for SaaS apps, CMSs, and platforms that need white-label page creation.
+            <p className="mb-12 text-xl leading-relaxed text-muted-foreground md:text-2xl">
+              Seamlessly add page building to your product. Your users create
+              pages, you control the data. Perfect for SaaS apps, CMSs, and
+              platforms that need white-label page creation.
             </p>
             <div className="flex justify-center">
               <a
                 href="mailto:gcphost@gmail.com"
-                className="bg-background text-foreground hover:bg-muted font-semibold px-10 py-5 rounded-lg text-xl transition-colors"
+                className="rounded-lg bg-background px-10 py-5 text-xl font-semibold text-foreground transition-colors hover:bg-muted"
               >
                 Contact Us for More Info
               </a>

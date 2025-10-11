@@ -28,7 +28,7 @@ export interface OpenAIResponse {
  */
 export const sendToOpenAI = async (
   prompt: string,
-  options: OpenAIOptions = {}
+  options: OpenAIOptions = {},
 ): Promise<OpenAIResponse> => {
   // Validate API key
   if (!process.env.OPENAI_API_KEY) {
@@ -94,7 +94,7 @@ export const sendToOpenAI = async (
 export const improveCopywriting = async (
   text: string,
   customPrompt?: string,
-  styleTags?: string[]
+  styleTags?: string[],
 ): Promise<OpenAIResponse> => {
   let prompt: string;
 
@@ -125,7 +125,7 @@ export const improveCopywriting = async (
  */
 export const generateTailwindClasses = async (
   description: string,
-  existing: string = ""
+  existing: string = "",
 ): Promise<OpenAIResponse> => {
   const excludeText = existing ? `, exclude the following: ${existing}` : "";
   const prompt = `Using Tailwind CSS version 3, I need a list of class names, separated by a space, that would apply to this search term: "${description}"${excludeText}. You can also list things that may be related to it, but if there is nothing that's a good match just return no response, and don't return partials, and make sure it's an actual class name provided by Tailwind CSS, and if it's a class that has sizes, like space-x and I wasn't specific make sure you return it with all the sizes.`;
@@ -145,7 +145,7 @@ export const generateTailwindClasses = async (
  */
 export const generateContent = async (
   prompt: string,
-  options: OpenAIOptions = {}
+  options: OpenAIOptions = {},
 ): Promise<OpenAIResponse> => {
   return sendToOpenAI(prompt, {
     model: "gpt-4o",

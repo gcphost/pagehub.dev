@@ -60,18 +60,19 @@ export const Toolbox = ({ userStyle = null }) => {
   useEffect(() => {
     if (!query || !enabled) return;
 
-    console.log('🔍 Loading saved components from Background node...');
+    console.log("🔍 Loading saved components from Background node...");
     try {
       const rootNode = query.node(ROOT_NODE).get();
       const backgroundId = rootNode?.data?.nodes?.[0];
-      console.log('📦 Background ID:', backgroundId);
+      console.log("📦 Background ID:", backgroundId);
 
       if (backgroundId) {
         const backgroundNode = query.node(backgroundId).get();
-        console.log('📦 Background node:', backgroundNode?.data?.props);
-        const savedComponents = backgroundNode?.data?.props?.savedComponents || [];
-        console.log('📦 Found saved components:', savedComponents.length);
-        console.log('📦 Components:', savedComponents);
+        console.log("📦 Background node:", backgroundNode?.data?.props);
+        const savedComponents =
+          backgroundNode?.data?.props?.savedComponents || [];
+        console.log("📦 Found saved components:", savedComponents.length);
+        console.log("📦 Components:", savedComponents);
         setComponents(savedComponents);
       }
     } catch (e) {
@@ -176,8 +177,9 @@ export const Toolbox = ({ userStyle = null }) => {
         setActiveMenu(k);
         setActiveItem(0);
       }}
-      className={`btn text-2xl rounded-full bg-primary text-foreground border  drop-shadow-2xl p-3 cursor-pointer ${activeMenu === k ? " bg-primary" : ""
-        }`}
+      className={`btn cursor-pointer rounded-full border bg-primary p-3 text-2xl text-foreground drop-shadow-2xl ${
+        activeMenu === k ? "bg-primary" : ""
+      }`}
       aria-label={items[_].title}
       role="button"
     >
@@ -197,7 +199,7 @@ export const Toolbox = ({ userStyle = null }) => {
     }
     return (
       <div
-        className={`bg-background h-full px-6 py-8 gap-3 flex flex-col min-w-[320px] w-full overflow-auto scrollbar ${item?.classes?.content}`}
+        className={`scrollbar flex size-full min-w-[320px] flex-col gap-3 overflow-auto bg-background px-6 py-8 ${item?.classes?.content}`}
       >
         {item.content}
       </div>
@@ -206,12 +208,14 @@ export const Toolbox = ({ userStyle = null }) => {
 
   const itemMenu = (item, getter, setter, col = false) => (
     <div
-      className={` p-4 flex flex-col bg-muted  overflow-auto scrollbar min-w-[170px] ${col ? "bg-muted text-foreground" : "bg-muted text-foreground"
-        }`}
+      className={`scrollbar flex min-w-[170px] flex-col overflow-auto bg-muted p-4 ${
+        col ? "bg-muted text-foreground" : "bg-muted text-foreground"
+      }`}
     >
       <div
-        className={`flex ${col ? "flex-col gap-3" : "flex-col gap-1.5"
-          } "items-end" }`}
+        className={`flex ${
+          col ? "flex-col gap-3" : "flex-col gap-1.5"
+        } "items-end" }`}
       >
         {itemMenuButton(item, getter, setter, col)}
       </div>
@@ -224,8 +228,9 @@ export const Toolbox = ({ userStyle = null }) => {
     return item.items?.map((a, k) => (
       <DelayedMouseEnter
         delayTime={300}
-        className={`px-3 py-1.5 w-min cursor-pointer rounded-md whitespace-nowrap ${getter === k ? (!col ? "font-bold underline" : "font-bold") : ""
-          }`}
+        className={`w-min cursor-pointer whitespace-nowrap rounded-md px-3 py-1.5 ${
+          getter === k ? (!col ? "font-bold underline" : "font-bold") : ""
+        }`}
         key={`btn${k}`}
         onClick={() => {
           setter(k);
@@ -252,7 +257,7 @@ export const Toolbox = ({ userStyle = null }) => {
           initial="hidden"
           animate="visible"
           exit="hidden"
-          className={`absolute z-40 ${pos} select-none flex flex-col md:flex-row h-screen items-center pointer-events-none`}
+          className={`absolute z-40 ${pos} pointer-events-none flex h-screen select-none flex-col items-center md:flex-row`}
         >
           <div
             id="toolboxWrap"
@@ -261,7 +266,7 @@ export const Toolbox = ({ userStyle = null }) => {
               setActiveItem(null);
             }}
             className={
-              "flex flex-col md:flex-row gap-6 justify-center items-center pointer-events-auto"
+              "pointer-events-auto flex flex-col items-center justify-center gap-6 md:flex-row"
             }
           >
             <motion.div
@@ -271,7 +276,7 @@ export const Toolbox = ({ userStyle = null }) => {
               animate="visible"
               exit="hidden"
               className={
-                "flex flex-row md:flex-col gap-5 p-1.5 pointer-events-auto"
+                "pointer-events-auto flex flex-row gap-5 p-1.5 md:flex-col"
               }
             >
               {iconList}
@@ -281,14 +286,14 @@ export const Toolbox = ({ userStyle = null }) => {
               {activeMenu !== null && (
                 <motion.div
                   key="items"
-                  className="overflow-hidden pointer-events-auto flex flex-row z-50 h-[420px]"
+                  className="pointer-events-auto z-50 flex h-[420px] flex-row overflow-hidden"
                   variants={activeMenuContainerVariants}
                   initial="hidden"
                   animate="visible"
                   exit="hidden"
                   id="toolbox"
                 >
-                  <div className="border bg-whit flex-row flex border-border shadow-10x rounded-md overflow-hidden h-full">
+                  <div className="bg-whit shadow-10x flex h-full flex-row overflow-hidden rounded-md border border-border">
                     {activeMenu !== null &&
                       itemMenu(items[activeMenu], activeItem, setActiveItem)}
                     {activeMenu !== null &&

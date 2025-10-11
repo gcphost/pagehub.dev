@@ -11,7 +11,7 @@ export const setRecursiveBelongsTo = (
   masterNodeId: string,
   query: any,
   actions: any,
-  additionalProps?: (clonedNodeId: string, prop: any) => void
+  additionalProps?: (clonedNodeId: string, prop: any) => void,
 ) => {
   const clonedNode = query.node(clonedNodeId).get();
   const masterNode = query.node(masterNodeId).get();
@@ -41,7 +41,7 @@ export const setRecursiveBelongsTo = (
         masterChildId,
         query,
         actions,
-        additionalProps
+        additionalProps,
       );
     }
   });

@@ -7,7 +7,7 @@ import {
   TbDeviceMobile,
   TbLayoutNavbar,
   TbMinus,
-  TbPill
+  TbPill,
 } from "react-icons/tb";
 import { RenderToolComponent, ToolboxItemDisplay } from "./lib";
 
@@ -28,13 +28,12 @@ export const NavToolbox = {
       display={<ToolboxItemDisplay icon={TbDeviceMobile} label="Mobile Menu" />}
       element={ButtonList}
       custom={{ displayName: "Mobile Menu" }}
-      root={{
-      }}
+      root={{}}
       mobile={{
         display: "flex",
         justifyContent: "justify-between",
         alignItems: "items-center",
-        gap: "gap-2"
+        gap: "gap-2",
       }}
     >
       <Element
@@ -42,8 +41,7 @@ export const NavToolbox = {
         custom={{ displayName: "Home" }}
         text="Home"
         url="#"
-        root={{
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           display: "hidden",
@@ -53,7 +51,7 @@ export const NavToolbox = {
           justifyContent: "justify-center",
         }}
         desktop={{
-          display: "block"
+          display: "block",
         }}
       />
 
@@ -62,8 +60,7 @@ export const NavToolbox = {
         custom={{ displayName: "About Us" }}
         text="About Us"
         url="#"
-        root={{
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           display: "hidden",
@@ -73,7 +70,7 @@ export const NavToolbox = {
           justifyContent: "justify-center",
         }}
         desktop={{
-          display: "block"
+          display: "block",
         }}
       />
 
@@ -82,8 +79,7 @@ export const NavToolbox = {
         custom={{ displayName: "Contact us" }}
         text="Contact us"
         url="#"
-        root={{
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           display: "hidden",
@@ -93,7 +89,7 @@ export const NavToolbox = {
           justifyContent: "justify-center",
         }}
         desktop={{
-          display: "block"
+          display: "block",
         }}
       />
 
@@ -107,15 +103,14 @@ export const NavToolbox = {
         icon={`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>`}
         iconOnly={true}
         root={{
-
-          border: "border-0"
+          border: "border-0",
         }}
         mobile={{
           display: "block",
-          p: "p-2"
+          p: "p-2",
         }}
         desktop={{
-          display: "hidden"
+          display: "hidden",
         }}
       />
 
@@ -140,7 +135,7 @@ export const NavToolbox = {
           left: "left-0",
           right: "right-0",
           bottom: "bottom-0",
-          zIndex: "z-50"
+          zIndex: "z-50",
         }}
         desktop={{
           display: "hidden",
@@ -165,13 +160,11 @@ export const NavToolbox = {
             height: "h-full",
             width: "w-80",
             maxWidth: "max-w-sm",
-            transform: "transform"
+            transform: "transform",
           }}
           clickType="click"
           clickDirection="stop"
         >
-
-
           {/* Mobile Nav Header */}
           <Element
             canvas
@@ -181,17 +174,15 @@ export const NavToolbox = {
             canDelete={false}
             canEditName={false}
             root={{
-              borderBottom: "border-b"
+              borderBottom: "border-b",
             }}
             mobile={{
               display: "flex",
               alignItems: "items-center",
               justifyContent: "justify-between",
-              p: "p-4"
+              p: "p-4",
             }}
           >
-
-
             <Element
               canvas
               id={`mobile-menu-close`}
@@ -205,17 +196,15 @@ export const NavToolbox = {
               text="×"
               url=""
               root={{
-                border: "border-0"
+                border: "border-0",
               }}
               mobile={{
                 p: "p-2",
                 fontSize: "text-xl",
-                fontWeight: "font-bold"
+                fontWeight: "font-bold",
               }}
             />
           </Element>
-
-
 
           {/* Mobile Navigation Items - Uses ButtonList */}
           <Element
@@ -226,7 +215,6 @@ export const NavToolbox = {
             canDelete={false}
             canEditName={false}
             root={{
-
               border: "border-0",
             }}
             mobile={{
@@ -249,19 +237,19 @@ export const NavToolbox = {
         background: "bg-muted",
         radius: "rounded-lg",
         px: "px-4",
-        py: "py-2"
+        py: "py-2",
       }}
       mobile={{
         display: "flex",
         flexDirection: "flex-row",
         alignItems: "items-center",
-        gap: "gap-4"
+        gap: "gap-4",
       }}
       desktop={{
         display: "flex",
         flexDirection: "flex-row",
         alignItems: "items-center",
-        gap: "gap-4"
+        gap: "gap-4",
       }}
     >
       <Element
@@ -276,7 +264,7 @@ export const NavToolbox = {
           color: "text-foreground",
           radius: "rounded-lg",
 
-          shadow: "shadow-lg"
+          shadow: "shadow-lg",
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
@@ -294,7 +282,7 @@ export const NavToolbox = {
           color: "text-foreground",
           radius: "rounded-lg",
 
-          shadow: "shadow-lg"
+          shadow: "shadow-lg",
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
@@ -312,7 +300,7 @@ export const NavToolbox = {
           color: "text-foreground",
           radius: "rounded-lg",
 
-          shadow: "shadow-lg"
+          shadow: "shadow-lg",
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
@@ -330,7 +318,7 @@ export const NavToolbox = {
           color: "text-foreground",
           radius: "rounded-lg",
 
-          shadow: "shadow-lg"
+          shadow: "shadow-lg",
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
@@ -346,19 +334,19 @@ export const NavToolbox = {
         background: "bg-muted",
         radius: "rounded-lg",
         px: "px-3",
-        py: "py-2"
+        py: "py-2",
       }}
       mobile={{
         display: "flex",
         flexDirection: "flex-row",
         alignItems: "items-center",
-        gap: "gap-3"
+        gap: "gap-3",
       }}
       desktop={{
         display: "flex",
         flexDirection: "flex-row",
         alignItems: "items-center",
-        gap: "gap-3"
+        gap: "gap-3",
       }}
     >
       <Element
@@ -366,11 +354,7 @@ export const NavToolbox = {
         custom={{ displayName: "Home" }}
         text="Home"
         url="#"
-        root={{
-
-
-
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           flexDirection: "flex-col",
@@ -384,11 +368,7 @@ export const NavToolbox = {
         custom={{ displayName: "About" }}
         text="About"
         url="#"
-        root={{
-
-
-
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           flexDirection: "flex-col",
@@ -402,11 +382,7 @@ export const NavToolbox = {
         custom={{ displayName: "Services" }}
         text="Services"
         url="#"
-        root={{
-
-
-
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           flexDirection: "flex-col",
@@ -420,11 +396,7 @@ export const NavToolbox = {
         custom={{ displayName: "Contact" }}
         text="Contact"
         url="#"
-        root={{
-
-
-
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           flexDirection: "flex-col",
@@ -440,21 +412,20 @@ export const NavToolbox = {
       element={ButtonList}
       custom={{ displayName: "Minimal Nav" }}
       root={{
-
         px: "px-2",
-        py: "py-1"
+        py: "py-1",
       }}
       mobile={{
         display: "flex",
         flexDirection: "flex-row",
         alignItems: "items-center",
-        gap: "gap-4"
+        gap: "gap-4",
       }}
       desktop={{
         display: "flex",
         flexDirection: "flex-row",
         alignItems: "items-center",
-        gap: "gap-4"
+        gap: "gap-4",
       }}
     >
       <Element
@@ -462,11 +433,7 @@ export const NavToolbox = {
         custom={{ displayName: "Home" }}
         text="Home"
         url="#"
-        root={{
-
-
-
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           flexDirection: "flex-col",
@@ -480,11 +447,7 @@ export const NavToolbox = {
         custom={{ displayName: "About" }}
         text="About"
         url="#"
-        root={{
-
-
-
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           flexDirection: "flex-col",
@@ -498,11 +461,7 @@ export const NavToolbox = {
         custom={{ displayName: "Services" }}
         text="Services"
         url="#"
-        root={{
-
-
-
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           flexDirection: "flex-col",
@@ -516,11 +475,7 @@ export const NavToolbox = {
         custom={{ displayName: "Contact" }}
         text="Contact"
         url="#"
-        root={{
-
-
-
-        }}
+        root={{}}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
           flexDirection: "flex-col",
@@ -539,21 +494,20 @@ export const NavToolbox = {
         background: "bg-muted",
         radius: "rounded-full",
         px: "px-2",
-        py: "py-1"
-        ,
-        shadow: "shadow-lg"
+        py: "py-1",
+        shadow: "shadow-lg",
       }}
       mobile={{
         display: "flex",
         flexDirection: "flex-row",
         alignItems: "items-center",
-        gap: "gap-1"
+        gap: "gap-1",
       }}
       desktop={{
         display: "flex",
         flexDirection: "flex-row",
         alignItems: "items-center",
-        gap: "gap-1"
+        gap: "gap-1",
       }}
     >
       <Element
@@ -562,10 +516,7 @@ export const NavToolbox = {
         text="Home"
         url="#"
         root={{
-
-
           radius: "rounded-full",
-
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
@@ -581,10 +532,7 @@ export const NavToolbox = {
         text="About"
         url="#"
         root={{
-
-
           radius: "rounded-full",
-
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",
@@ -600,10 +548,7 @@ export const NavToolbox = {
         text="Contact"
         url="#"
         root={{
-
-
           radius: "rounded-full",
-
         }}
         mobile={{
           p: "p-[var(--ph-button-padding)]",

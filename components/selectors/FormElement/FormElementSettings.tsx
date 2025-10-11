@@ -37,7 +37,9 @@ export const FormElementSettings = () => {
 
   // Get the current field type using query instead of useNode
   const selected = query.getEvent("selected").first();
-  const fieldType = selected ? query.node(selected).get().data.props?.type || "" : "";
+  const fieldType = selected
+    ? query.node(selected).get().data.props?.type || ""
+    : "";
 
   useEffect(() => setMenu({ enabled: false }), [setMenu]);
 
@@ -72,8 +74,6 @@ export const FormElementSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-
-
       <ToolbarSection
         title="Properties"
         help="The placeholder will be displayed when no text is entered. The name is how you identify this input."
@@ -103,15 +103,11 @@ export const FormElementSettings = () => {
             <option key={_}>{_}</option>
           ))}
         </ToolbarItem>
-
-
       </ToolbarSection>
 
       <ToolbarSection title="Presets">
         <PresetGroupRenderer presets={selectorPresets.formElement} />
       </ToolbarSection>
-
-
 
       {fieldType === "select" && (
         <ToolbarSection
@@ -128,14 +124,7 @@ export const FormElementSettings = () => {
         </ToolbarSection>
       )}
 
-
-
-
-
-      <ToolbarSection
-        title="Boolean Properties"
-        full={2}
-      >
+      <ToolbarSection title="Boolean Properties" full={2}>
         <ToolbarItem
           propKey="required"
           propType="component"
@@ -187,7 +176,15 @@ export const FormElementSettings = () => {
         </ToolbarSection>
       )}
 
-      {["number", "range", "date", "datetime-local", "time", "month", "week"].includes(fieldType) && (
+      {[
+        "number",
+        "range",
+        "date",
+        "datetime-local",
+        "time",
+        "month",
+        "week",
+      ].includes(fieldType) && (
         <ToolbarSection
           title="Input Settings"
           help="Settings for input elements"
@@ -226,8 +223,6 @@ export const FormElementSettings = () => {
           />
         </ToolbarSection>
       )}
-
-
 
       <ToolbarSection title="Auto generate content" subtitle={true}>
         <IpsumGenerator propKey="placeholder" propType="component" />
@@ -285,14 +280,11 @@ export const FormElementSettings = () => {
             />
           </ToolbarSection>
 
-
           <ToolbarSection title="Typography">
             <FontInput />
           </ToolbarSection>
 
           <BackgroundInput />
-
-
 
           <BorderInput />
 

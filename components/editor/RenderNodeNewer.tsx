@@ -61,7 +61,7 @@ export const RenderNodeNewer = ({ render }) => {
   // Keep essential non-portal components (like RenderNodeDataStates for hover states)
   // Portal rendering disabled - using inline rendering in selectors instead
   // Only render on client to avoid SSR issues
-  const isClient = typeof window !== 'undefined';
+  const isClient = typeof window !== "undefined";
 
   return (
     <>

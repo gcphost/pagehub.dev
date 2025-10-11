@@ -29,8 +29,9 @@ export const AddSectionNodeController = (props: { position; align }) => {
 
   // Detect if we're being rendered inline (directly as child) vs through tools
   const isInlineRender = useIsInlineRender();
-  const ControlComponent = isInlineRender ? RenderNodeControlInline : RenderNodeControl;
-
+  const ControlComponent = isInlineRender
+    ? RenderNodeControlInline
+    : RenderNodeControl;
 
   const { parent, currentNodeType } = useNode((node) => ({
     parent: node.data.parent,
@@ -61,7 +62,8 @@ export const AddSectionNodeController = (props: { position; align }) => {
           // Get the parent node
           const parentNodeData = query.node(parent).get();
           const currentIndex = parentNodeData.data.nodes.indexOf(id);
-          const newIndex = position === "bottom" ? currentIndex + 1 : currentIndex;
+          const newIndex =
+            position === "bottom" ? currentIndex + 1 : currentIndex;
 
           const newElement = AddElement({
             element,
@@ -77,7 +79,10 @@ export const AddSectionNodeController = (props: { position; align }) => {
               // Get DOM from CraftJS instead of querySelector
               const node = query.node(newElement.rootNodeId).get();
               if (node && node.dom) {
-                node.dom.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                node.dom.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
 
                 // Select after scrolling completes
                 setTimeout(() => {
@@ -99,8 +104,8 @@ export const AddSectionNodeController = (props: { position; align }) => {
             isPadding={true}
             className={
               isInlineRender
-                ? "whitespace-nowrap items-center justify-center select-none cursor-pointer pointer-events-auto"
-                : "whitespace-nowrap fixed items-center justify-center select-none cursor-pointer pointer-events-auto"
+                ? "pointer-events-auto cursor-pointer select-none items-center justify-center whitespace-nowrap"
+                : "pointer-events-auto fixed cursor-pointer select-none items-center justify-center whitespace-nowrap"
             }
             animate={{
               initial: { opacity: 0, y: 2 },
@@ -131,21 +136,21 @@ export const AddSectionNodeController = (props: { position; align }) => {
               whileHover: { scale: 1.1, y: -5 },
               whileTap: { scale: 1.1 },
               style: {
-                willChange: 'transform',
-                backfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'antialiased',
-              }
+                willChange: "transform",
+                backfaceVisibility: "hidden",
+                WebkitFontSmoothing: "antialiased",
+              },
             }}
           >
             <motion.button
               ref={ref}
               className={
-                "border btn text-foreground rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base pointer-events-auto"
+                "btn fontfamily-base pointer-events-auto flex cursor-pointer flex-row items-center gap-1.5 rounded-md border px-3 py-1.5 !text-xs !font-normal text-foreground"
               }
               style={{
-                willChange: 'transform',
-                backfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'antialiased',
+                willChange: "transform",
+                backfaceVisibility: "hidden",
+                WebkitFontSmoothing: "antialiased",
               }}
               onClick={(e) => {
                 e.preventDefault();
@@ -180,7 +185,10 @@ export const AddSectionNodeController = (props: { position; align }) => {
                   // Get the current page's index in ROOT_NODE
                   const rootNode = query.node(ROOT_NODE).get();
                   const currentPageIndex = rootNode.data.nodes.indexOf(id);
-                  const newIndex = position === "bottom" ? currentPageIndex + 1 : currentPageIndex;
+                  const newIndex =
+                    position === "bottom"
+                      ? currentPageIndex + 1
+                      : currentPageIndex;
 
                   const newElement = AddElement({
                     element: newPage,
@@ -196,7 +204,10 @@ export const AddSectionNodeController = (props: { position; align }) => {
                       // Get DOM from CraftJS instead of querySelector
                       const node = query.node(newElement.rootNodeId).get();
                       if (node && node.dom) {
-                        node.dom.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        node.dom.scrollIntoView({
+                          behavior: "smooth",
+                          block: "center",
+                        });
 
                         // Select after scrolling completes
                         setTimeout(() => {

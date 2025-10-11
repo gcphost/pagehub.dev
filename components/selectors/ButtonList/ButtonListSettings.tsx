@@ -56,15 +56,16 @@ export const ButtonListSettings = () => {
     try {
       const node = query.node(id).get();
       const buttons = node.data.nodes
-        .map(childId => {
+        .map((childId) => {
           try {
             const childNode = query.node(childId).get();
 
             // Only include actual Button components
-            if (childNode.data.name !== 'Button') return null;
+            if (childNode.data.name !== "Button") return null;
 
             // Exclude hamburger/mobile menu buttons
-            const isHamburger = childNode.data.props?.clickValue?.includes('mobile-menu');
+            const isHamburger =
+              childNode.data.props?.clickValue?.includes("mobile-menu");
             if (isHamburger) return null;
 
             return {
@@ -123,10 +124,10 @@ export const ButtonListSettings = () => {
   const MainTab = () => (
     <TabBody>
       <div className="flex flex-col gap-6">
-        <div className="border rounded-md border-border overflow-hidden">
+        <div className="overflow-hidden rounded-md border border-border">
           {childButtons?.map((button, index) => (
             <Accord
-              className="border-b border-border group"
+              className="group border-b border-border"
               key={button.id}
               prop={index}
               accordion={accordion}
@@ -146,7 +147,9 @@ export const ButtonListSettings = () => {
                     if (accordion !== index) {
                       // Let the accordion expand first, then focus after a short delay
                       setTimeout(() => {
-                        const input = document.querySelector(`input[data-button-index="${index}"]`) as HTMLInputElement;
+                        const input = document.querySelector(
+                          `input[data-button-index="${index}"]`,
+                        ) as HTMLInputElement;
                         if (input) {
                           input.focus();
                         }
@@ -162,14 +165,14 @@ export const ButtonListSettings = () => {
                       e.stopPropagation();
                     }
                   }}
-                  className="w-full bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:bg-background px-2 py-1 rounded"
+                  className="w-full rounded bg-transparent px-2 py-1 text-foreground focus:bg-background focus:outline-none focus:ring-1 focus:ring-ring"
                   placeholder="Button text"
                 />
               }
               buttons={[
                 <button
                   key="edit"
-                  className="text-foreground hover:text-primary transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                  className="flex items-center justify-center text-foreground opacity-0 transition-colors duration-200 hover:text-primary group-hover:opacity-100"
                   title="Edit button"
                   onClick={(e) => {
                     e.preventDefault();
@@ -180,7 +183,7 @@ export const ButtonListSettings = () => {
                 </button>,
                 <button
                   key="delete"
-                  className="text-foreground hover:text-destructive transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                  className="flex items-center justify-center text-foreground opacity-0 transition-colors duration-200 hover:text-destructive group-hover:opacity-100"
                   title="Delete button"
                   onClick={(e) => {
                     e.preventDefault();
@@ -208,8 +211,6 @@ export const ButtonListSettings = () => {
                     iconOnlyLabel="Only Show Icon"
                     positionLabel="Position"
                   />
-
-
                 </div>
               </NodeProvider>
             </Accord>
@@ -217,19 +218,21 @@ export const ButtonListSettings = () => {
         </div>
 
         <button
-          className="btn p-3 w-full"
+          className="btn w-full p-3"
           onClick={() => {
             const Button = query.getOptions().resolver.Button;
             if (Button) {
               actions.addNodeTree(
-                query.parseReactElement(<Button text="New Button" />).toNodeTree(),
-                id
+                query
+                  .parseReactElement(<Button text="New Button" />)
+                  .toNodeTree(),
+                id,
               );
               setAccordion(childButtons.length);
             }
           }}
         >
-          <TbPlus className="inline mr-2" /> Add Button
+          <TbPlus className="mr-2 inline" /> Add Button
         </button>
       </div>
     </TabBody>
@@ -258,11 +261,7 @@ export const ButtonListSettings = () => {
               <option value="flex-row-reverse">Horizontal Reverse</option>
               <option value="flex-col-reverse">Vertical Reverse</option>
             </ToolbarItem>
-            <ToolbarItem
-              propKey="alignItems"
-              type="select"
-              label="Align Items"
-            >
+            <ToolbarItem propKey="alignItems" type="select" label="Align Items">
               <option value="items-start">Start</option>
               <option value="items-center">Center</option>
               <option value="items-end">End</option>
@@ -280,11 +279,7 @@ export const ButtonListSettings = () => {
               <option value="justify-around">Around</option>
               <option value="justify-evenly">Evenly</option>
             </ToolbarItem>
-            <ToolbarItem
-              propKey="gap"
-              type="select"
-              label="Gap"
-            >
+            <ToolbarItem propKey="gap" type="select" label="Gap">
               <option value="gap-0">None</option>
               <option value="gap-1">Small</option>
               <option value="gap-2">Medium</option>
@@ -295,7 +290,9 @@ export const ButtonListSettings = () => {
             </ToolbarItem>
           </ToolbarSection>
 
-          <BackgroundInput><PatternInput /></BackgroundInput>
+          <BackgroundInput>
+            <PatternInput />
+          </BackgroundInput>
 
           <ToolbarSection title="Typography">
             <FontInput />

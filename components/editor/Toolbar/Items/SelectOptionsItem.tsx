@@ -33,17 +33,19 @@ const Input = ({ options, setProp }) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="border rounded-md border-border">
+      <div className="rounded-md border border-border">
         {optionsArray.map((option, optionKey) => (
           <Accord
-            className="border-b p-3 border-border"
+            className="border-b border-border p-3"
             key={optionKey}
             prop={optionKey}
             accordion={accordion}
             setAccordion={setAccordion}
             title={
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Option {optionKey + 1}:</span>
+                <span className="text-sm text-muted-foreground">
+                  Option {optionKey + 1}:
+                </span>
                 <ToolbarItem
                   propKey="options"
                   propType="component"
@@ -104,13 +106,13 @@ const Input = ({ options, setProp }) => {
       </div>
 
       <button
-        className="btn p-3 w-full flex items-center justify-center gap-2"
+        className="btn flex w-full items-center justify-center gap-2 p-3"
         onClick={() => {
           const _options = [...optionsArray];
           _options.push({
             value: `option${optionsArray.length + 1}`,
             label: `Option ${optionsArray.length + 1}`,
-            disabled: false
+            disabled: false,
           });
 
           setAccordion(optionsArray.length);

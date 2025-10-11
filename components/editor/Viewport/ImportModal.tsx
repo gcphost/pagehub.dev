@@ -15,12 +15,12 @@ export const ImportModal = ({ stateToLoad, setStateToLoad, actions }) => (
       autoFocus={true}
       defaultValue={stateToLoad}
       onChange={(e) => setStateToLoad(e.target.value)}
-      className="px-3 py-6 input  w-full"
+      className="input w-full px-3 py-6"
     />
 
     <div className="w-full">
       <button
-        className="btn w-full py-3 "
+        className="btn w-full py-3"
         onClick={() => {
           if (!stateToLoad) {
             return;

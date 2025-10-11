@@ -50,7 +50,7 @@ export const OnlyFormElement = ({ children, ...props }) => {
     <div
       title="only-FormElement"
       ref={connect}
-      className="w-full mt-5"
+      className="mt-5 w-full"
       {...props}
     >
       {children}
@@ -87,23 +87,24 @@ export interface FormElementProps extends BaseSelectorProps {
 
 const defaultProps: FormElementProps = {
   root: {
-    border: 'border',
-    borderWidth: 'border-[var(--ph-input-border-width)]',
-    borderStyle: 'border-solid',
-    borderColor: 'border-[color:var(--ph-input-border-color)]',
-    radius: 'rounded-[var(--ph-input-border-radius)]',
-    background: 'bg-[var(--ph-input-bg-color)]',
-    color: 'text-[color:var(--ph-input-text-color)]',
-    placeholderColor: 'placeholder:text-[color:var(--ph-input-placeholder-color)]',
+    border: "border",
+    borderWidth: "border-[var(--ph-input-border-width)]",
+    borderStyle: "border-solid",
+    borderColor: "border-[color:var(--ph-input-border-color)]",
+    radius: "rounded-[var(--ph-input-border-radius)]",
+    background: "bg-[var(--ph-input-bg-color)]",
+    color: "text-[color:var(--ph-input-text-color)]",
+    placeholderColor:
+      "placeholder:text-[color:var(--ph-input-placeholder-color)]",
     focus: {
-      ring: 'focus:ring-[var(--ph-input-focus-ring)]',
-      ringColor: 'focus:ring-[color:var(--ph-input-focus-ring-color)]',
-      outline: 'focus:outline-none',
+      ring: "focus:ring-[var(--ph-input-focus-ring)]",
+      ringColor: "focus:ring-[color:var(--ph-input-focus-ring-color)]",
+      outline: "focus:outline-none",
     },
   },
   mobile: {
-    p: 'p-[var(--ph-input-padding)]',
-    width: 'w-full',
+    p: "p-[var(--ph-input-padding)]",
+    width: "w-full",
   },
   tablet: {},
   desktop: {},
@@ -150,7 +151,17 @@ export const FormElement = (props: Partial<FormElementProps>) => {
 
   const prop: any = {
     ref: (r) => connect(drag(r)),
-    className: ClassGenerator(props, view, enabled, [], [], preview, false, palette, query),
+    className: ClassGenerator(
+      props,
+      view,
+      enabled,
+      [],
+      [],
+      preview,
+      false,
+      palette,
+      query,
+    ),
     type: props.type,
     placeholder: props.placeholder,
     name: props.name,
@@ -163,7 +174,8 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     step: props.step,
     pattern: props.pattern,
     defaultValue: "", // Add defaultValue to make it uncontrolled
-    "aria-label": props.placeholder || props.name || `${props.type || 'text'} input`,
+    "aria-label":
+      props.placeholder || props.name || `${props.type || "text"} input`,
     ...(props.type === "email" && { "aria-describedby": "email-desc" }),
     ...(props.type === "tel" && { "aria-describedby": "tel-desc" }),
     ...(props.type === "url" && { "aria-describedby": "url-desc" }),
@@ -189,7 +201,12 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     prop["node-id"] = id;
   }
 
-  const tagName = prop.type === "textarea" ? "textarea" : prop.type === "select" ? "select" : "input";
+  const tagName =
+    prop.type === "textarea"
+      ? "textarea"
+      : prop.type === "select"
+        ? "select"
+        : "input";
 
   // If in edit mode and mounted, wrap in a container with inline tools
   // Input elements are void elements and can't have children
@@ -201,25 +218,31 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     let children = undefined;
     if (tagName === "select" && props.options) {
       children = props.options.map((option, index) =>
-        React.createElement("option", {
-          key: index,
-          value: option.value,
-          disabled: option.disabled
-        }, option.label)
+        React.createElement(
+          "option",
+          {
+            key: index,
+            value: option.value,
+            disabled: option.disabled,
+          },
+          option.label,
+        ),
       );
     }
 
     const formElement = React.createElement(
       motionIt(props, tagName),
-      applyAnimation({ ...formElementProp, key: `formelement-${id}-${tagName}`, children }, props)
+      applyAnimation(
+        { ...formElementProp, key: `formelement-${id}-${tagName}`, children },
+        props,
+      ),
     );
 
     const containerProp: any = {
       ref: (r) => connect(drag(r)),
       style: {
-
-        display: 'inline-block', // Maintain inline nature of form elements
-        width: '100%', // Take full width like the input would
+        display: "inline-block", // Maintain inline nature of form elements
+        width: "100%", // Take full width like the input would
       },
       "data-bounding-box": enabled,
       "data-empty-state": false,
@@ -229,7 +252,11 @@ export const FormElement = (props: Partial<FormElementProps>) => {
     return (
       <div {...containerProp}>
         {formElement}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={FormElement} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={FormElement}
+          props={props}
+        />
       </div>
     );
   }
@@ -239,17 +266,21 @@ export const FormElement = (props: Partial<FormElementProps>) => {
   let children = undefined;
   if (tagName === "select" && props.options) {
     children = props.options.map((option, index) =>
-      React.createElement("option", {
-        key: index,
-        value: option.value,
-        disabled: option.disabled
-      }, option.label)
+      React.createElement(
+        "option",
+        {
+          key: index,
+          value: option.value,
+          disabled: option.disabled,
+        },
+        option.label,
+      ),
     );
   }
 
   const formElement = React.createElement(
     motionIt(props, tagName),
-    applyAnimation({ ...prop, key: `${id}-${tagName}`, children }, props)
+    applyAnimation({ ...prop, key: `${id}-${tagName}`, children }, props),
   );
 
   return formElement;

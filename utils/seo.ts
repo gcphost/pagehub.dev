@@ -75,7 +75,7 @@ export function generateOrganizationSchema(data: {
  * Generate JSON-LD for breadcrumbs
  */
 export function generateBreadcrumbSchema(
-  breadcrumbs: Array<{ name: string; url: string }>
+  breadcrumbs: Array<{ name: string; url: string }>,
 ) {
   return {
     "@context": "https://schema.org",
@@ -104,7 +104,7 @@ export function sanitizeTitle(title: string, maxLength = 60): string {
  */
 export function sanitizeDescription(
   description: string,
-  maxLength = 160
+  maxLength = 160,
 ): string {
   if (!description) return "";
   return description.length > maxLength
@@ -119,7 +119,7 @@ export function generateFullUrl(
   protocol: string,
   host: string,
   pathname: string,
-  includeTrailingSlash = false
+  includeTrailingSlash = false,
 ): string {
   let url = `${protocol}//${host}${pathname}`;
   if (includeTrailingSlash && !url.endsWith("/")) {

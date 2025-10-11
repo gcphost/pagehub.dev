@@ -14,7 +14,7 @@ export interface FontLoadOptions {
  * Falls back to timeout if fonts take too long
  */
 export const waitForFonts = async (
-  options: FontLoadOptions = {}
+  options: FontLoadOptions = {},
 ): Promise<boolean> => {
   const { timeout = 3000, onTimeout, onLoaded } = options;
 
@@ -52,7 +52,7 @@ export const waitForFonts = async (
 export const loadGoogleFont = (
   family: string,
   weights: (number | string)[] = [400],
-  display: "swap" | "block" | "fallback" | "optional" = "swap"
+  display: "swap" | "block" | "fallback" | "optional" = "swap",
 ): void => {
   if (typeof window === "undefined") return;
 
@@ -63,7 +63,7 @@ export const loadGoogleFont = (
 
   // Check if already loaded
   const existingLinks = Array.from(
-    document.querySelectorAll('link[rel="stylesheet"]')
+    document.querySelectorAll('link[rel="stylesheet"]'),
   );
   if (existingLinks.some((link) => (link as HTMLLinkElement).href === href)) {
     return;
@@ -81,7 +81,7 @@ export const loadGoogleFont = (
  */
 export const preloadFont = (
   fontUrl: string,
-  fontType: string = "woff2"
+  fontType: string = "woff2",
 ): void => {
   if (typeof window === "undefined") return;
 

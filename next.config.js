@@ -11,44 +11,46 @@ module.exports = withBundleAnalyzer({
   // Configure SWC to target modern browsers only (no polyfills/transpiling)
   compiler: {
     emotion: false,
-    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
+    removeConsole:
+      process.env.NODE_ENV === "production"
+        ? { exclude: ["error", "warn"] }
+        : false,
   },
-  experimental: {
-  },
+  experimental: {},
   swcMinify: true,
   modularizeImports: {
-    'react-icons/tb': {
-      transform: 'react-icons/tb/{{member}}',
+    "react-icons/tb": {
+      transform: "react-icons/tb/{{member}}",
     },
-    'react-icons/si': {
-      transform: 'react-icons/si/{{member}}',
+    "react-icons/si": {
+      transform: "react-icons/si/{{member}}",
     },
-    'react-icons/bi': {
-      transform: 'react-icons/bi/{{member}}',
+    "react-icons/bi": {
+      transform: "react-icons/bi/{{member}}",
     },
-    'react-icons/md': {
-      transform: 'react-icons/md/{{member}}',
+    "react-icons/md": {
+      transform: "react-icons/md/{{member}}",
     },
-    'react-icons/fa': {
-      transform: 'react-icons/fa/{{member}}',
+    "react-icons/fa": {
+      transform: "react-icons/fa/{{member}}",
     },
-    'react-icons/ai': {
-      transform: 'react-icons/ai/{{member}}',
+    "react-icons/ai": {
+      transform: "react-icons/ai/{{member}}",
     },
-    'react-icons/bs': {
-      transform: 'react-icons/bs/{{member}}',
+    "react-icons/bs": {
+      transform: "react-icons/bs/{{member}}",
     },
-    'react-icons/cg': {
-      transform: 'react-icons/cg/{{member}}',
+    "react-icons/cg": {
+      transform: "react-icons/cg/{{member}}",
     },
-    'react-icons/rx': {
-      transform: 'react-icons/rx/{{member}}',
+    "react-icons/rx": {
+      transform: "react-icons/rx/{{member}}",
     },
-    'react-icons/ri': {
-      transform: 'react-icons/ri/{{member}}',
+    "react-icons/ri": {
+      transform: "react-icons/ri/{{member}}",
     },
-    'react-icons/hi': {
-      transform: 'react-icons/hi/{{member}}',
+    "react-icons/hi": {
+      transform: "react-icons/hi/{{member}}",
     },
   },
   rewrites: async () => [
@@ -146,9 +148,7 @@ module.exports = withBundleAnalyzer({
   compress: true,
   images: {
     unoptimized: true,
-    remotePatterns: [
-      getCdnImageConfig(),
-    ],
+    remotePatterns: [getCdnImageConfig()],
   },
   webpack: (config, { isServer }) => {
     // Add svg-url-loader for SVG files

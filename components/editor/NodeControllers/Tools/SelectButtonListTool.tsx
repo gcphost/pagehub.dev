@@ -46,41 +46,49 @@ export const SelectButtonListTool = () => {
       key={`${id}-select-button-list`}
       position="right"
       align="middle"
-      className="whitespace-nowrap items-center select-none pointer-events-auto"
-    > <motion.div initial={{ opacity: 0 }}
-      animate={{
-        opacity: 1,
-        y: 0,
-        transition: {
-          delay: 0.5,
-          duration: 0.5,
-          type: "spring",
-          stiffness: 200,
-          damping: 20,
-          mass: 0.5,
-        },
-      }}
-      exit={{
-        opacity: 0,
-        transition: {
-          delay: 0.2,
-          duration: 0.3,
-          type: "spring",
-          stiffness: 200,
-          damping: 20,
-          mass: 0.5,
-        },
-      }} className="p-0.5 flex items-center justify-center bg-muted rounded-md !text-base !font-normal fontfamily-base m-1">
-        <Tooltip content="Select List" className="tool-bg h-fit whitespace-nowrap items-center select-none pointer-events-auto">
+      className="pointer-events-auto select-none items-center whitespace-nowrap"
+    >
+      {" "}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: 0.5,
+            duration: 0.5,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            mass: 0.5,
+          },
+        }}
+        exit={{
+          opacity: 0,
+          transition: {
+            delay: 0.2,
+            duration: 0.3,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            mass: 0.5,
+          },
+        }}
+        className="fontfamily-base m-1 flex items-center justify-center rounded-md bg-muted p-0.5 !text-base !font-normal"
+      >
+        <Tooltip
+          content="Select List"
+          className="tool-bg h-fit pointer-events-auto select-none items-center whitespace-nowrap"
+        >
           <button
             type="button"
-            className="text-foreground hover:text-muted-foreground disabled:text-muted-foreground disabled:cursor-not-allowed text-sm"
+            className="text-sm text-foreground hover:text-muted-foreground disabled:cursor-not-allowed disabled:text-muted-foreground"
             onClick={handleSelectButtonList}
           >
             <TbList />
           </button>
-
-        </Tooltip> </motion.div>
+        </Tooltip>{" "}
+      </motion.div>
     </RenderNodeControlInline>
   );
 };

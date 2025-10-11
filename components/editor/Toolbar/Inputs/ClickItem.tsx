@@ -9,12 +9,14 @@ export default function ClickItem() {
   const { id } = useNode();
   const { query } = useEditor();
 
-  const { clickMode, clickType, clickDirection, clickValue } = useNode((node) => ({
-    clickMode: node.data.props.clickMode || "link",
-    clickType: node.data.props.clickType,
-    clickDirection: node.data.props.clickDirection,
-    clickValue: node.data.props.clickValue,
-  }));
+  const { clickMode, clickType, clickDirection, clickValue } = useNode(
+    (node) => ({
+      clickMode: node.data.props.clickMode || "link",
+      clickType: node.data.props.clickType,
+      clickDirection: node.data.props.clickDirection,
+      clickValue: node.data.props.clickValue,
+    }),
+  );
 
   const [mode, setMode] = useState(clickMode);
 
@@ -46,27 +48,29 @@ export default function ClickItem() {
     <>
       <ToolbarSection title="Click">
         {/* Mode Toggle Buttons */}
-        <div className="flex gap-2 mb-3">
+        <div className="mb-3 flex gap-2">
           <button
             type="button"
             onClick={() => setMode("link")}
-            className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${mode === "link"
-              ? "bg-accent text-accent-foreground hover:bg-accent"
-              : "bg-muted text-muted-foreground hover:bg-muted"
-              }`}
+            className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${
+              mode === "link"
+                ? "bg-accent text-accent-foreground hover:bg-accent"
+                : "bg-muted text-muted-foreground hover:bg-muted"
+            }`}
           >
-            <TbExternalLink className="inline mr-1" />
+            <TbExternalLink className="mr-1 inline" />
             Link
           </button>
           <button
             type="button"
             onClick={() => setMode("action")}
-            className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${mode === "action"
-              ? "bg-accent text-accent-foreground hover:bg-accent"
-              : "bg-muted text-muted-foreground hover:bg-muted"
-              }`}
+            className={`flex-1 rounded-md px-3 py-2 text-xs transition-colors ${
+              mode === "action"
+                ? "bg-accent text-accent-foreground hover:bg-accent"
+                : "bg-muted text-muted-foreground hover:bg-muted"
+            }`}
           >
-            <TbPointer className="inline mr-1" />
+            <TbPointer className="mr-1 inline" />
             Action
           </button>
         </div>
@@ -125,7 +129,7 @@ export default function ClickItem() {
                   className="btn w-full"
                   title="Test Action"
                 >
-                  <TbPlayerPlay className="w-4 h-4" />
+                  <TbPlayerPlay className="size-4" />
                   Test
                 </button>
               </div>

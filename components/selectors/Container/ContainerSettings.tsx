@@ -90,27 +90,29 @@ export const ContainerSettings = () => {
 
   const MainTab = () => {
     // Check if header/footer already exist at root level
-    const rootNode = query.node('ROOT').get();
+    const rootNode = query.node("ROOT").get();
     const rootChildren = rootNode?.data?.nodes || [];
 
-    const hasHeader = rootChildren.some(nodeId => {
+    const hasHeader = rootChildren.some((nodeId) => {
       const node = query.node(nodeId).get();
-      return node?.data?.props?.type === 'header';
+      return node?.data?.props?.type === "header";
     });
 
-    const hasFooter = rootChildren.some(nodeId => {
+    const hasFooter = rootChildren.some((nodeId) => {
       const node = query.node(nodeId).get();
-      return node?.data?.props?.type === 'footer';
+      return node?.data?.props?.type === "footer";
     });
 
-    const isHeader = props.type === 'header';
-    const isFooter = props.type === 'footer';
-    const isPage = props.type === 'page';
-    const isComponent = props.type === 'component';
+    const isHeader = props.type === "header";
+    const isFooter = props.type === "footer";
+    const isPage = props.type === "page";
+    const isComponent = props.type === "component";
 
     // Only show header/footer options for regular containers or if this IS the header/footer
-    const showHeaderOption = !isPage && !isComponent && !isFooter && (!hasHeader || isHeader);
-    const showFooterOption = !isPage && !isComponent && !isHeader && (!hasFooter || isFooter);
+    const showHeaderOption =
+      !isPage && !isComponent && !isFooter && (!hasHeader || isHeader);
+    const showFooterOption =
+      !isPage && !isComponent && !isHeader && (!hasFooter || isFooter);
 
     return (
       <TabBody>
@@ -159,12 +161,12 @@ export const ContainerSettings = () => {
             </ToolbarSection>
           </>
         ) : (
-          <><ToolbarSection title="Settings">
-            <ContainerTypeInput />
-          </ToolbarSection>
+          <>
+            <ToolbarSection title="Settings">
+              <ContainerTypeInput />
+            </ToolbarSection>
           </>
         )}
-
 
         <ToolbarSection title="Container Presets">
           <ToolbarSection full={1}>
@@ -233,21 +235,21 @@ export const ContainerSettings = () => {
         </ToolbarSection>
 
         {props.type === "page" && (
-          <ToolbarSection
-            title="Page Settings"
-          >
+          <ToolbarSection title="Page Settings">
             <button
               onClick={() => {
                 // Find and trigger the page settings modal
                 // We'll dispatch a custom event that the PageSelector can listen to
-                const event = new CustomEvent('openPageSettings', { detail: { pageId: id } });
+                const event = new CustomEvent("openPageSettings", {
+                  detail: { pageId: id },
+                });
                 window.dispatchEvent(event);
               }}
-              className="w-full px-4 py-3 btn"
+              className="btn w-full px-4 py-3"
             >
               <span>Edit Page Settings</span>
             </button>
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="mt-2 text-xs text-muted-foreground">
               Configure page name, URL, SEO, and social media settings.
             </p>
           </ToolbarSection>
@@ -260,7 +262,9 @@ export const ContainerSettings = () => {
                 propKey="type"
                 propType="component"
                 type="toggle"
-                option={isHeader ? "This is the Header" : "Make this the Header"}
+                option={
+                  isHeader ? "This is the Header" : "Make this the Header"
+                }
                 on="header"
               />
             )}
@@ -269,16 +273,18 @@ export const ContainerSettings = () => {
                 propKey="type"
                 propType="component"
                 type="toggle"
-                option={isFooter ? "This is the Footer" : "Make this the Footer"}
+                option={
+                  isFooter ? "This is the Footer" : "Make this the Footer"
+                }
                 on="footer"
               />
             )}
-            <p className="text-xs text-muted-foreground mt-2">
-              Headers and footers are special containers that appear on all pages.
+            <p className="mt-2 text-xs text-muted-foreground">
+              Headers and footers are special containers that appear on all
+              pages.
             </p>
           </ToolbarSection>
         )}
-
       </TabBody>
     );
   };
@@ -332,14 +338,13 @@ export const ContainerSettings = () => {
             />
           </ToolbarSection>
 
-
           <ToolbarSection title="Typography">
             <FontInput />
           </ToolbarSection>
 
-          <BackgroundInput><PatternInput /></BackgroundInput>
-
-
+          <BackgroundInput>
+            <PatternInput />
+          </BackgroundInput>
 
           <BorderInput />
 
@@ -378,7 +383,6 @@ export const ContainerSettings = () => {
           <MarginInput />
 
           <PaddingInput />
-
         </TabBody>
       )}
       {activeTab === "Style" && (
@@ -394,14 +398,13 @@ export const ContainerSettings = () => {
       )}
       {activeTab === "Animations" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Animations are not available for this component.
           </p>
         </TabBody>
       )}
 
       {activeTab === "Accessibility" && <AccessibilityInput />}
-
 
       {activeTab === "Hover & Click" && (
         <TabBody>

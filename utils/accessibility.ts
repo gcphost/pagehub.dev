@@ -42,7 +42,7 @@ export const getAccessibilityProps = (props: any) => {
  */
 export const mergeAccessibilityProps = (
   existingProps: any,
-  componentProps: any
+  componentProps: any,
 ) => {
   const accessibilityProps = getAccessibilityProps(componentProps);
 

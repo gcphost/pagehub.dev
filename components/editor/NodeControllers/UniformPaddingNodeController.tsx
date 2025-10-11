@@ -10,11 +10,39 @@ import { SpacingOverlay } from "./SpacingOverlay";
 
 // Tailwind spacing values mapping (same as DragAdjustNodeController)
 const TAILWIND_SPACING_MAP = {
-  0: "0", 1: "px", 2: "0.5", 4: "1", 6: "1.5", 8: "2", 10: "2.5",
-  12: "3", 14: "3.5", 16: "4", 20: "5", 24: "6", 28: "7", 32: "8",
-  40: "10", 48: "12", 56: "14", 64: "16", 80: "20", 96: "24",
-  112: "28", 128: "32", 144: "36", 160: "40", 176: "44", 192: "48",
-  208: "52", 224: "56", 240: "60", 256: "64", 288: "72", 320: "80", 384: "96"
+  0: "0",
+  1: "px",
+  2: "0.5",
+  4: "1",
+  6: "1.5",
+  8: "2",
+  10: "2.5",
+  12: "3",
+  14: "3.5",
+  16: "4",
+  20: "5",
+  24: "6",
+  28: "7",
+  32: "8",
+  40: "10",
+  48: "12",
+  56: "14",
+  64: "16",
+  80: "20",
+  96: "24",
+  112: "28",
+  128: "32",
+  144: "36",
+  160: "40",
+  176: "44",
+  192: "48",
+  208: "52",
+  224: "56",
+  240: "60",
+  256: "64",
+  288: "72",
+  320: "80",
+  384: "96",
 };
 
 const pixelsToTailwindClass = (pixels: number): string => {
@@ -131,7 +159,7 @@ export const UniformPaddingNodeController = () => {
       align="start"
       placement="start"
       isPadding={true}
-      className="whitespace-nowrap items-center select-none"
+      className="select-none items-center whitespace-nowrap"
       style={elementColor ? { color: elementColor } : {}}
     >
       <>
@@ -169,22 +197,19 @@ export const UniformPaddingNodeController = () => {
             }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1.1 }}
-            className="w-6 h-6 border-t-[4px] border-l-[5px] border-current pointer-events-auto cursor-move"
+            className="pointer-events-auto size-6 cursor-move border-l-[5px] border-t-4 border-current"
             style={{
-              willChange: 'transform',
-              backfaceVisibility: 'hidden',
-              WebkitFontSmoothing: 'antialiased',
+              willChange: "transform",
+              backfaceVisibility: "hidden",
+              WebkitFontSmoothing: "antialiased",
             }}
             onMouseDown={handleMouseDown}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
             aria-label="Drag to adjust uniform padding"
-          >
-
-          </motion.button>
+          ></motion.button>
         </Tooltip>
       </>
     </RenderNodeControlInline>
   );
 };
-

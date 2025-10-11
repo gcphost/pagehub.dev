@@ -58,13 +58,14 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   const active = id;
 
   const getCloneTree = useCallback(
-    (tree: NodeTree) => buildClonedTree({ tree, query, setProp, createLinks: false }),
-    [query, setProp]
+    (tree: NodeTree) =>
+      buildClonedTree({ tree, query, setProp, createLinks: false }),
+    [query, setProp],
   );
 
   const handleSaveTemplate = useCallback(
     (component = null) => saveHandler({ query, id, component, actions }),
-    [id, query, actions]
+    [id, query, actions],
   );
 
   const handleAdd = useCallback(() => {
@@ -104,20 +105,22 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
   // Check if this node or ANY ancestor is a fully linked component (not style mode)
   const isLinked = checkIfAncestorLinked(id, query);
 
-
   return (
     <>
-      <h1 className="font-bold text-2xl px-3 py-1.5 bg-muted text-muted-foreground w-full z-50 border-border border-b">
+      <h1 className="z-50 w-full border-b border-border bg-muted px-3 py-1.5 text-2xl font-bold text-muted-foreground">
         {<ToolbarTitleEditor />}
       </h1>
 
       {/* Hide settings tabs for fully linked components */}
       {!isLinked && (
-        <div id="toolbarTabs" className="border-b border-border font-semibold items-center flex justify-between bg-muted text-accent-foreground">
+        <div
+          id="toolbarTabs"
+          className="flex items-center justify-between border-b border-border bg-muted font-semibold text-accent-foreground"
+        >
           <div
             aria-label="Tabs"
             role="tablist"
-            className="flex text-center flex-wrap gap-1.5"
+            className="flex flex-wrap gap-1.5 text-center"
           >
             {head.map((_, key) => (
               <Tab key={key} title={_.title} tabId={_.title} icon={_.icon} />
@@ -129,14 +132,14 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
       <div
         id="toolbarItems"
         data-toolbar={true}
-        className="w-full top-[138px] h-screen grow basis-full z-20 flex flex-col"
+        className="top-[138px] z-20 flex h-screen w-full grow basis-full flex-col"
       >
         <RenderChildren props={props} query={query} actions={actions} id={id}>
           {children}
         </RenderChildren>
       </div>
 
-      <div className="z-30 absolute bottom-0 left-0 right-0  w-full bg-muted  p-0 border-t border-t-border flex flex-row items-center justify-between px-6 text-xl">
+      <div className="absolute inset-x-0 bottom-0 z-30 flex w-full flex-row items-center justify-between border-t border-t-border bg-muted p-0 px-6 text-xl">
         {foot}
 
         {id !== ROOT_NODE && (
@@ -147,7 +150,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
+              className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
               style={scaleAnimationStyle}
               onClick={() => {
                 actions.selectNode(parent);
@@ -171,8 +174,9 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className={`cursor-pointer ${isolate ? "text-accent-foreground" : "text-muted-foreground"
-                } hover:text-accent-foreground rounded-md p-2`}
+              className={`cursor-pointer ${
+                isolate ? "text-accent-foreground" : "text-muted-foreground"
+              } rounded-md p-2 hover:text-accent-foreground`}
               style={scaleAnimationStyle}
             >
               {isolate ? <TbScaleOutlineOff /> : <TbScaleOutline />}
@@ -200,7 +204,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                   transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.9 }}
-                className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
+                className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
                 style={scaleAnimationStyle}
               >
                 {props.canDelete ? <TbTrash /> : <TbTrashOff />}
@@ -222,7 +226,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                       transition: { duration: 0.2 },
                     }}
                     whileTap={{ scale: 0.9 }}
-                    className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
+                    className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
                     style={scaleAnimationStyle}
                   >
                     <TbCopy />
@@ -244,7 +248,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                     }}
                     whileTap={{ scale: 0.9 }}
                     ref={ref}
-                    className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
+                    className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
                     style={scaleAnimationStyle}
                   >
                     {canMake ? <TbComponents /> : <TbComponentsOff />}
@@ -269,7 +273,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
+              className="cursor-pointer rounded-md p-2 text-muted-foreground hover:text-accent-foreground"
               style={scaleAnimationStyle}
             >
               <TbX />
@@ -279,7 +283,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
 
         {id === ROOT_NODE && (
           <button
-            className="w-full btn text-base font-medium r py-2 text-foreground-muted p-2  "
+            className="btn r text-foreground-muted w-full p-2 text-base font-medium"
             onClick={() => {
               actions.selectNode(null);
               setSideBarOpen(false);

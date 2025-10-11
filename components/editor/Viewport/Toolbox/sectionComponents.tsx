@@ -28,7 +28,6 @@ export const RenderContainerGroupComponent = ({
   />
 );
 
-
 export const sectionToolboxItems = [
   {
     title: "Layout",

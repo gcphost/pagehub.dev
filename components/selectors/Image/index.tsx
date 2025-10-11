@@ -26,10 +26,14 @@ export const ImageDefault = ({ tab, props }) => {
         setActiveTab(tab);
         // setTimeout(() => document.getElementById("files")?.click(), 50);
       }}
-      className="text-3xl w-full h-full flex items-center justify-center"
+      className="flex size-full items-center justify-center text-3xl"
       aria-label="Add image"
     >
-      {props.isLoading && <div role="status" aria-live="polite">Loading...</div>}
+      {props.isLoading && (
+        <div role="status" aria-live="polite">
+          Loading...
+        </div>
+      )}
       {!props.isLoading && !props.loaded && <TbPhoto aria-label="Photo icon" />}
       {props.loaded && <TbCheck aria-label="Success" />}
     </button>
@@ -120,19 +124,23 @@ export const Image = (props: ImageProps) => {
     // Wrapper gets ALL layout classes (sizing, spacing, borders, shadows, radius, etc.)
     // EXCEPT image-specific rendering (object-fit, object-position)
     // Add overflow-hidden if radius is set to clip image corners properly
-    className: `${hasRadius ? 'overflow-hidden' : ''} ${ClassGenerator(
+    className: `${hasRadius ? "overflow-hidden" : ""} ${ClassGenerator(
       props,
       view,
       enabled,
       ["objectFit", "objectPosition"],
       [],
-      preview
+      preview,
     )}`.trim(),
   };
 
-
   // Use metadata from media library, fallback to props
-  const altText = mediaMetadata?.alt || props.alt || mediaMetadata?.title || props.title || "";
+  const altText =
+    mediaMetadata?.alt ||
+    props.alt ||
+    mediaMetadata?.title ||
+    props.title ||
+    "";
   const titleText = mediaMetadata?.title || props.title || "";
 
   // Check if objectFit is set in any view
@@ -149,14 +157,15 @@ export const Image = (props: ImageProps) => {
     // Img always fills wrapper (w-full h-full) + gets image-specific rendering classes
     // Add default object-cover if not set (important for aspect-ratio to work on wrapper)
     // Radius stays on wrapper, not on img
-    className: `w-full h-full ${!hasObjectFit ? 'object-cover' : ''} ${ClassGenerator(
-      props,
-      view,
-      enabled,
-      [],
-      ["objectFit", "objectPosition"],
-      preview
-    )}`.trim(),
+    className:
+      `w-full h-full ${!hasObjectFit ? "object-cover" : ""} ${ClassGenerator(
+        props,
+        view,
+        enabled,
+        [],
+        ["objectFit", "objectPosition"],
+        preview,
+      )}`.trim(),
     // width: "100",
     // height: "100",
     // fill: true,
@@ -179,12 +188,13 @@ export const Image = (props: ImageProps) => {
       // Add classes and styles to ensure SVG fits within container
       // Use Tailwind arbitrary values for the nested SVG selector
       // Note: w-full h-full already applied to base className
-      _imgProp.className = `${_imgProp.className} [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full`.trim();
+      _imgProp.className =
+        `${_imgProp.className} [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full`.trim();
       // Inline styles for flexbox centering
       _imgProp.style = {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       };
     }
   } else {
@@ -222,7 +232,7 @@ export const Image = (props: ImageProps) => {
       }
 
       const preloadLink = document.querySelector(
-        `link[rel="preload"][href="${link.href}"][as="image"]`
+        `link[rel="preload"][href="${link.href}"][as="image"]`,
       );
       if (!preloadLink) document.head.appendChild(link);
     }
@@ -253,11 +263,13 @@ export const Image = (props: ImageProps) => {
   const createImgElement = (shouldConnectDrag: boolean) => {
     return React.createElement(motionIt(props, tagName), {
       ...applyAnimation({ ..._imgProp, key: `img-${id}` }, props),
-      ref: shouldConnectDrag ? (r) => {
-        if (props.url) return;
-        ref.current = r;
-        connect(drag(r));
-      } : undefined,
+      ref: shouldConnectDrag
+        ? (r) => {
+            if (props.url) return;
+            ref.current = r;
+            connect(drag(r));
+          }
+        : undefined,
     });
   };
 
@@ -270,14 +282,20 @@ export const Image = (props: ImageProps) => {
     prop.children = (
       <>
         {empty ? prop.children : Img}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Image} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Image}
+          props={props}
+        />
       </>
     );
 
     const ele = props.url ? Link : "div";
     return React.createElement(ele, {
       ...prop,
-      "aria-label": props.url ? (altText || titleText || "Image link") : undefined,
+      "aria-label": props.url
+        ? altText || titleText || "Image link"
+        : undefined,
     });
   }
 
@@ -316,10 +334,7 @@ Image.craft = {
   },
   props: {
     tools: (props) => {
-      const baseControls = [
-
-        <DeleteNodeController key="imageDelete" />,
-      ];
+      const baseControls = [<DeleteNodeController key="imageDelete" />];
 
       return [...baseControls];
     },

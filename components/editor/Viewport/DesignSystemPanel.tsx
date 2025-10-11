@@ -1,7 +1,16 @@
 import { ROOT_NODE, useEditor } from "@craftjs/core";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { TbChevronDown, TbChevronRight, TbGripVertical, TbPalette, TbPlus, TbRuler, TbTrash, TbX } from "react-icons/tb";
+import {
+  TbChevronDown,
+  TbChevronRight,
+  TbGripVertical,
+  TbPalette,
+  TbPlus,
+  TbRuler,
+  TbTrash,
+  TbX,
+} from "react-icons/tb";
 import { useRecoilState } from "recoil";
 import colors from "tailwindcss/lib/public/colors";
 import { DEFAULT_PALETTE, DEFAULT_STYLE_GUIDE } from "utils/defaults";
@@ -15,7 +24,10 @@ interface DesignSystemPanelProps {
   onClose: () => void;
 }
 
-export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) => {
+export const DesignSystemPanel = ({
+  isOpen,
+  onClose,
+}: DesignSystemPanelProps) => {
   const { actions, query } = useEditor();
   const [activeTab, setActiveTab] = useState<"colors" | "styles">("colors");
   const [position, setPosition] = useState({ x: 1000, y: 100 }); // Safe default for SSR
@@ -25,7 +37,9 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
   const [colorDialog, setColorDialog] = useRecoilState(ColorPickerAtom);
   const headingFontButtonRef = useRef<HTMLButtonElement>(null);
   const bodyFontButtonRef = useRef<HTMLButtonElement>(null);
-  const colorButtonRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
+  const colorButtonRefs = useRef<{ [key: number]: HTMLButtonElement | null }>(
+    {},
+  );
   const inputBorderColorButtonRef = useRef<HTMLButtonElement>(null);
   const inputBgColorButtonRef = useRef<HTMLButtonElement>(null);
   const inputTextColorButtonRef = useRef<HTMLButtonElement>(null);
@@ -35,7 +49,9 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
   const linkHoverColorButtonRef = useRef<HTMLButtonElement>(null);
 
   // Collapsible section state
-  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
+  const [expandedSections, setExpandedSections] = useState<{
+    [key: string]: boolean;
+  }>({
     spacing: true,
     typography: false,
     effects: false,
@@ -47,34 +63,76 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
   const [pallets, setPallets] = useState(DEFAULT_PALETTE);
 
   // Style Guide State
-  const [borderRadius, setBorderRadius] = useState(DEFAULT_STYLE_GUIDE.borderRadius);
-  const [buttonPadding, setButtonPadding] = useState(DEFAULT_STYLE_GUIDE.buttonPadding);
-  const [containerPadding, setContainerPadding] = useState(DEFAULT_STYLE_GUIDE.containerPadding);
+  const [borderRadius, setBorderRadius] = useState(
+    DEFAULT_STYLE_GUIDE.borderRadius,
+  );
+  const [buttonPadding, setButtonPadding] = useState(
+    DEFAULT_STYLE_GUIDE.buttonPadding,
+  );
+  const [containerPadding, setContainerPadding] = useState(
+    DEFAULT_STYLE_GUIDE.containerPadding,
+  );
   const [sectionGap, setSectionGap] = useState(DEFAULT_STYLE_GUIDE.sectionGap);
-  const [containerGap, setContainerGap] = useState(DEFAULT_STYLE_GUIDE.containerGap);
-  const [contentWidth, setContentWidth] = useState(DEFAULT_STYLE_GUIDE.contentWidth);
-  const [headingFont, setHeadingFont] = useState(DEFAULT_STYLE_GUIDE.headingFont);
-  const [headingFontFamily, setHeadingFontFamily] = useState(DEFAULT_STYLE_GUIDE.headingFontFamily);
+  const [containerGap, setContainerGap] = useState(
+    DEFAULT_STYLE_GUIDE.containerGap,
+  );
+  const [contentWidth, setContentWidth] = useState(
+    DEFAULT_STYLE_GUIDE.contentWidth,
+  );
+  const [headingFont, setHeadingFont] = useState(
+    DEFAULT_STYLE_GUIDE.headingFont,
+  );
+  const [headingFontFamily, setHeadingFontFamily] = useState(
+    DEFAULT_STYLE_GUIDE.headingFontFamily,
+  );
   const [bodyFont, setBodyFont] = useState(DEFAULT_STYLE_GUIDE.bodyFont);
-  const [bodyFontFamily, setBodyFontFamily] = useState(DEFAULT_STYLE_GUIDE.bodyFontFamily);
-  const [shadowStyle, setShadowStyle] = useState(DEFAULT_STYLE_GUIDE.shadowStyle);
+  const [bodyFontFamily, setBodyFontFamily] = useState(
+    DEFAULT_STYLE_GUIDE.bodyFontFamily,
+  );
+  const [shadowStyle, setShadowStyle] = useState(
+    DEFAULT_STYLE_GUIDE.shadowStyle,
+  );
 
   // Form Input State
-  const [inputBorderWidth, setInputBorderWidth] = useState(DEFAULT_STYLE_GUIDE.inputBorderWidth);
-  const [inputBorderColor, setInputBorderColor] = useState(DEFAULT_STYLE_GUIDE.inputBorderColor);
-  const [inputBorderRadius, setInputBorderRadius] = useState(DEFAULT_STYLE_GUIDE.inputBorderRadius);
-  const [inputPadding, setInputPadding] = useState(DEFAULT_STYLE_GUIDE.inputPadding);
-  const [inputBgColor, setInputBgColor] = useState(DEFAULT_STYLE_GUIDE.inputBgColor);
-  const [inputTextColor, setInputTextColor] = useState(DEFAULT_STYLE_GUIDE.inputTextColor);
-  const [inputPlaceholderColor, setInputPlaceholderColor] = useState(DEFAULT_STYLE_GUIDE.inputPlaceholderColor);
-  const [inputFocusRing, setInputFocusRing] = useState(DEFAULT_STYLE_GUIDE.inputFocusRing);
-  const [inputFocusRingColor, setInputFocusRingColor] = useState(DEFAULT_STYLE_GUIDE.inputFocusRingColor);
+  const [inputBorderWidth, setInputBorderWidth] = useState(
+    DEFAULT_STYLE_GUIDE.inputBorderWidth,
+  );
+  const [inputBorderColor, setInputBorderColor] = useState(
+    DEFAULT_STYLE_GUIDE.inputBorderColor,
+  );
+  const [inputBorderRadius, setInputBorderRadius] = useState(
+    DEFAULT_STYLE_GUIDE.inputBorderRadius,
+  );
+  const [inputPadding, setInputPadding] = useState(
+    DEFAULT_STYLE_GUIDE.inputPadding,
+  );
+  const [inputBgColor, setInputBgColor] = useState(
+    DEFAULT_STYLE_GUIDE.inputBgColor,
+  );
+  const [inputTextColor, setInputTextColor] = useState(
+    DEFAULT_STYLE_GUIDE.inputTextColor,
+  );
+  const [inputPlaceholderColor, setInputPlaceholderColor] = useState(
+    DEFAULT_STYLE_GUIDE.inputPlaceholderColor,
+  );
+  const [inputFocusRing, setInputFocusRing] = useState(
+    DEFAULT_STYLE_GUIDE.inputFocusRing,
+  );
+  const [inputFocusRingColor, setInputFocusRingColor] = useState(
+    DEFAULT_STYLE_GUIDE.inputFocusRingColor,
+  );
 
   // Link State
   const [linkColor, setLinkColor] = useState(DEFAULT_STYLE_GUIDE.linkColor);
-  const [linkHoverColor, setLinkHoverColor] = useState(DEFAULT_STYLE_GUIDE.linkHoverColor);
-  const [linkUnderline, setLinkUnderline] = useState(DEFAULT_STYLE_GUIDE.linkUnderline);
-  const [linkUnderlineOffset, setLinkUnderlineOffset] = useState(DEFAULT_STYLE_GUIDE.linkUnderlineOffset);
+  const [linkHoverColor, setLinkHoverColor] = useState(
+    DEFAULT_STYLE_GUIDE.linkHoverColor,
+  );
+  const [linkUnderline, setLinkUnderline] = useState(
+    DEFAULT_STYLE_GUIDE.linkUnderline,
+  );
+  const [linkUnderlineOffset, setLinkUnderlineOffset] = useState(
+    DEFAULT_STYLE_GUIDE.linkUnderlineOffset,
+  );
 
   // Track if we're currently saving
   const isSaving = useRef(false);
@@ -89,7 +147,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
   // Initialize position on client side
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setPosition({ x: window.innerWidth - 320, y: 100 });
     }
   }, []);
@@ -108,19 +166,35 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
     const styleGuideFonts = [];
     if (headingFontFamily && !headingFontFamily.startsWith("style:")) {
       // Convert Tailwind font weight classes to numeric values
-      const headingWeight = headingFont === "font-bold" ? "700" :
-        headingFont === "font-semibold" ? "600" :
-          headingFont === "font-medium" ? "500" :
-            headingFont === "font-normal" ? "400" : "400";
-      styleGuideFonts.push(`family=${headingFontFamily.replace(/ +/g, "+")}:wght@${headingWeight}`);
+      const headingWeight =
+        headingFont === "font-bold"
+          ? "700"
+          : headingFont === "font-semibold"
+            ? "600"
+            : headingFont === "font-medium"
+              ? "500"
+              : headingFont === "font-normal"
+                ? "400"
+                : "400";
+      styleGuideFonts.push(
+        `family=${headingFontFamily.replace(/ +/g, "+")}:wght@${headingWeight}`,
+      );
     }
     if (bodyFontFamily && !bodyFontFamily.startsWith("style:")) {
       // Convert Tailwind font weight classes to numeric values
-      const bodyWeight = bodyFont === "font-bold" ? "700" :
-        bodyFont === "font-semibold" ? "600" :
-          bodyFont === "font-medium" ? "500" :
-            bodyFont === "font-normal" ? "400" : "400";
-      styleGuideFonts.push(`family=${bodyFontFamily.replace(/ +/g, "+")}:wght@${bodyWeight}`);
+      const bodyWeight =
+        bodyFont === "font-bold"
+          ? "700"
+          : bodyFont === "font-semibold"
+            ? "600"
+            : bodyFont === "font-medium"
+              ? "500"
+              : bodyFont === "font-normal"
+                ? "400"
+                : "400";
+      styleGuideFonts.push(
+        `family=${bodyFontFamily.replace(/ +/g, "+")}:wght@${bodyWeight}`,
+      );
     }
 
     const allFamilies = [...families.split("&"), ...styleGuideFonts].join("&");
@@ -161,30 +235,75 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
         // Load style guide
         const styleGuide = rootNodeData.styleGuide || {};
-        setBorderRadius(styleGuide.borderRadius || DEFAULT_STYLE_GUIDE.borderRadius);
-        setButtonPadding(styleGuide.buttonPadding || DEFAULT_STYLE_GUIDE.buttonPadding);
-        setContainerPadding(styleGuide.containerPadding || DEFAULT_STYLE_GUIDE.containerPadding);
+        setBorderRadius(
+          styleGuide.borderRadius || DEFAULT_STYLE_GUIDE.borderRadius,
+        );
+        setButtonPadding(
+          styleGuide.buttonPadding || DEFAULT_STYLE_GUIDE.buttonPadding,
+        );
+        setContainerPadding(
+          styleGuide.containerPadding || DEFAULT_STYLE_GUIDE.containerPadding,
+        );
         setSectionGap(styleGuide.sectionGap || DEFAULT_STYLE_GUIDE.sectionGap);
-        setContainerGap(styleGuide.containerGap || DEFAULT_STYLE_GUIDE.containerGap);
-        setContentWidth(styleGuide.contentWidth || DEFAULT_STYLE_GUIDE.contentWidth);
-        setHeadingFont(styleGuide.headingFont || DEFAULT_STYLE_GUIDE.headingFont);
-        setHeadingFontFamily(styleGuide.headingFontFamily || DEFAULT_STYLE_GUIDE.headingFontFamily);
+        setContainerGap(
+          styleGuide.containerGap || DEFAULT_STYLE_GUIDE.containerGap,
+        );
+        setContentWidth(
+          styleGuide.contentWidth || DEFAULT_STYLE_GUIDE.contentWidth,
+        );
+        setHeadingFont(
+          styleGuide.headingFont || DEFAULT_STYLE_GUIDE.headingFont,
+        );
+        setHeadingFontFamily(
+          styleGuide.headingFontFamily || DEFAULT_STYLE_GUIDE.headingFontFamily,
+        );
         setBodyFont(styleGuide.bodyFont || DEFAULT_STYLE_GUIDE.bodyFont);
-        setBodyFontFamily(styleGuide.bodyFontFamily || DEFAULT_STYLE_GUIDE.bodyFontFamily);
-        setShadowStyle(styleGuide.shadowStyle || DEFAULT_STYLE_GUIDE.shadowStyle);
-        setInputBorderWidth(styleGuide.inputBorderWidth || DEFAULT_STYLE_GUIDE.inputBorderWidth);
-        setInputBorderColor(styleGuide.inputBorderColor || DEFAULT_STYLE_GUIDE.inputBorderColor);
-        setInputBorderRadius(styleGuide.inputBorderRadius || DEFAULT_STYLE_GUIDE.inputBorderRadius);
-        setInputPadding(styleGuide.inputPadding || DEFAULT_STYLE_GUIDE.inputPadding);
-        setInputBgColor(styleGuide.inputBgColor || DEFAULT_STYLE_GUIDE.inputBgColor);
-        setInputTextColor(styleGuide.inputTextColor || DEFAULT_STYLE_GUIDE.inputTextColor);
-        setInputPlaceholderColor(styleGuide.inputPlaceholderColor || DEFAULT_STYLE_GUIDE.inputPlaceholderColor);
-        setInputFocusRing(styleGuide.inputFocusRing || DEFAULT_STYLE_GUIDE.inputFocusRing);
-        setInputFocusRingColor(styleGuide.inputFocusRingColor || DEFAULT_STYLE_GUIDE.inputFocusRingColor);
+        setBodyFontFamily(
+          styleGuide.bodyFontFamily || DEFAULT_STYLE_GUIDE.bodyFontFamily,
+        );
+        setShadowStyle(
+          styleGuide.shadowStyle || DEFAULT_STYLE_GUIDE.shadowStyle,
+        );
+        setInputBorderWidth(
+          styleGuide.inputBorderWidth || DEFAULT_STYLE_GUIDE.inputBorderWidth,
+        );
+        setInputBorderColor(
+          styleGuide.inputBorderColor || DEFAULT_STYLE_GUIDE.inputBorderColor,
+        );
+        setInputBorderRadius(
+          styleGuide.inputBorderRadius || DEFAULT_STYLE_GUIDE.inputBorderRadius,
+        );
+        setInputPadding(
+          styleGuide.inputPadding || DEFAULT_STYLE_GUIDE.inputPadding,
+        );
+        setInputBgColor(
+          styleGuide.inputBgColor || DEFAULT_STYLE_GUIDE.inputBgColor,
+        );
+        setInputTextColor(
+          styleGuide.inputTextColor || DEFAULT_STYLE_GUIDE.inputTextColor,
+        );
+        setInputPlaceholderColor(
+          styleGuide.inputPlaceholderColor ||
+            DEFAULT_STYLE_GUIDE.inputPlaceholderColor,
+        );
+        setInputFocusRing(
+          styleGuide.inputFocusRing || DEFAULT_STYLE_GUIDE.inputFocusRing,
+        );
+        setInputFocusRingColor(
+          styleGuide.inputFocusRingColor ||
+            DEFAULT_STYLE_GUIDE.inputFocusRingColor,
+        );
         setLinkColor(styleGuide.linkColor || DEFAULT_STYLE_GUIDE.linkColor);
-        setLinkHoverColor(styleGuide.linkHoverColor || DEFAULT_STYLE_GUIDE.linkHoverColor);
-        setLinkUnderline(styleGuide.linkUnderline || DEFAULT_STYLE_GUIDE.linkUnderline);
-        setLinkUnderlineOffset(styleGuide.linkUnderlineOffset || DEFAULT_STYLE_GUIDE.linkUnderlineOffset);
+        setLinkHoverColor(
+          styleGuide.linkHoverColor || DEFAULT_STYLE_GUIDE.linkHoverColor,
+        );
+        setLinkUnderline(
+          styleGuide.linkUnderline || DEFAULT_STYLE_GUIDE.linkUnderline,
+        );
+        setLinkUnderlineOffset(
+          styleGuide.linkUnderlineOffset ||
+            DEFAULT_STYLE_GUIDE.linkUnderlineOffset,
+        );
 
         // Store what we loaded
         lastSavedData.current = {
@@ -202,8 +321,10 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
     if (isOpen && !isSaving.current && lastSavedData.current) {
       // Check if the data actually changed from what we last saved
       const dataChanged =
-        JSON.stringify(rootNodeData.pallet) !== JSON.stringify(lastSavedData.current.pallet) ||
-        JSON.stringify(rootNodeData.styleGuide) !== JSON.stringify(lastSavedData.current.styleGuide);
+        JSON.stringify(rootNodeData.pallet) !==
+          JSON.stringify(lastSavedData.current.pallet) ||
+        JSON.stringify(rootNodeData.styleGuide) !==
+          JSON.stringify(lastSavedData.current.styleGuide);
 
       if (dataChanged) {
         try {
@@ -216,30 +337,79 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
           // Load style guide
           const styleGuide = rootNodeData.styleGuide || {};
-          setBorderRadius(styleGuide.borderRadius || DEFAULT_STYLE_GUIDE.borderRadius);
-          setButtonPadding(styleGuide.buttonPadding || DEFAULT_STYLE_GUIDE.buttonPadding);
-          setContainerPadding(styleGuide.containerPadding || DEFAULT_STYLE_GUIDE.containerPadding);
-          setSectionGap(styleGuide.sectionGap || DEFAULT_STYLE_GUIDE.sectionGap);
-          setContainerGap(styleGuide.containerGap || DEFAULT_STYLE_GUIDE.containerGap);
-          setContentWidth(styleGuide.contentWidth || DEFAULT_STYLE_GUIDE.contentWidth);
-          setHeadingFont(styleGuide.headingFont || DEFAULT_STYLE_GUIDE.headingFont);
-          setHeadingFontFamily(styleGuide.headingFontFamily || DEFAULT_STYLE_GUIDE.headingFontFamily);
+          setBorderRadius(
+            styleGuide.borderRadius || DEFAULT_STYLE_GUIDE.borderRadius,
+          );
+          setButtonPadding(
+            styleGuide.buttonPadding || DEFAULT_STYLE_GUIDE.buttonPadding,
+          );
+          setContainerPadding(
+            styleGuide.containerPadding || DEFAULT_STYLE_GUIDE.containerPadding,
+          );
+          setSectionGap(
+            styleGuide.sectionGap || DEFAULT_STYLE_GUIDE.sectionGap,
+          );
+          setContainerGap(
+            styleGuide.containerGap || DEFAULT_STYLE_GUIDE.containerGap,
+          );
+          setContentWidth(
+            styleGuide.contentWidth || DEFAULT_STYLE_GUIDE.contentWidth,
+          );
+          setHeadingFont(
+            styleGuide.headingFont || DEFAULT_STYLE_GUIDE.headingFont,
+          );
+          setHeadingFontFamily(
+            styleGuide.headingFontFamily ||
+              DEFAULT_STYLE_GUIDE.headingFontFamily,
+          );
           setBodyFont(styleGuide.bodyFont || DEFAULT_STYLE_GUIDE.bodyFont);
-          setBodyFontFamily(styleGuide.bodyFontFamily || DEFAULT_STYLE_GUIDE.bodyFontFamily);
-          setShadowStyle(styleGuide.shadowStyle || DEFAULT_STYLE_GUIDE.shadowStyle);
-          setInputBorderWidth(styleGuide.inputBorderWidth || DEFAULT_STYLE_GUIDE.inputBorderWidth);
-          setInputBorderColor(styleGuide.inputBorderColor || DEFAULT_STYLE_GUIDE.inputBorderColor);
-          setInputBorderRadius(styleGuide.inputBorderRadius || DEFAULT_STYLE_GUIDE.inputBorderRadius);
-          setInputPadding(styleGuide.inputPadding || DEFAULT_STYLE_GUIDE.inputPadding);
-          setInputBgColor(styleGuide.inputBgColor || DEFAULT_STYLE_GUIDE.inputBgColor);
-          setInputTextColor(styleGuide.inputTextColor || DEFAULT_STYLE_GUIDE.inputTextColor);
-          setInputPlaceholderColor(styleGuide.inputPlaceholderColor || DEFAULT_STYLE_GUIDE.inputPlaceholderColor);
-          setInputFocusRing(styleGuide.inputFocusRing || DEFAULT_STYLE_GUIDE.inputFocusRing);
-          setInputFocusRingColor(styleGuide.inputFocusRingColor || DEFAULT_STYLE_GUIDE.inputFocusRingColor);
+          setBodyFontFamily(
+            styleGuide.bodyFontFamily || DEFAULT_STYLE_GUIDE.bodyFontFamily,
+          );
+          setShadowStyle(
+            styleGuide.shadowStyle || DEFAULT_STYLE_GUIDE.shadowStyle,
+          );
+          setInputBorderWidth(
+            styleGuide.inputBorderWidth || DEFAULT_STYLE_GUIDE.inputBorderWidth,
+          );
+          setInputBorderColor(
+            styleGuide.inputBorderColor || DEFAULT_STYLE_GUIDE.inputBorderColor,
+          );
+          setInputBorderRadius(
+            styleGuide.inputBorderRadius ||
+              DEFAULT_STYLE_GUIDE.inputBorderRadius,
+          );
+          setInputPadding(
+            styleGuide.inputPadding || DEFAULT_STYLE_GUIDE.inputPadding,
+          );
+          setInputBgColor(
+            styleGuide.inputBgColor || DEFAULT_STYLE_GUIDE.inputBgColor,
+          );
+          setInputTextColor(
+            styleGuide.inputTextColor || DEFAULT_STYLE_GUIDE.inputTextColor,
+          );
+          setInputPlaceholderColor(
+            styleGuide.inputPlaceholderColor ||
+              DEFAULT_STYLE_GUIDE.inputPlaceholderColor,
+          );
+          setInputFocusRing(
+            styleGuide.inputFocusRing || DEFAULT_STYLE_GUIDE.inputFocusRing,
+          );
+          setInputFocusRingColor(
+            styleGuide.inputFocusRingColor ||
+              DEFAULT_STYLE_GUIDE.inputFocusRingColor,
+          );
           setLinkColor(styleGuide.linkColor || DEFAULT_STYLE_GUIDE.linkColor);
-          setLinkHoverColor(styleGuide.linkHoverColor || DEFAULT_STYLE_GUIDE.linkHoverColor);
-          setLinkUnderline(styleGuide.linkUnderline || DEFAULT_STYLE_GUIDE.linkUnderline);
-          setLinkUnderlineOffset(styleGuide.linkUnderlineOffset || DEFAULT_STYLE_GUIDE.linkUnderlineOffset);
+          setLinkHoverColor(
+            styleGuide.linkHoverColor || DEFAULT_STYLE_GUIDE.linkHoverColor,
+          );
+          setLinkUnderline(
+            styleGuide.linkUnderline || DEFAULT_STYLE_GUIDE.linkUnderline,
+          );
+          setLinkUnderlineOffset(
+            styleGuide.linkUnderlineOffset ||
+              DEFAULT_STYLE_GUIDE.linkUnderlineOffset,
+          );
 
           // Update last saved data
           lastSavedData.current = {
@@ -319,11 +489,38 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         clearTimeout(saveTimeoutRef.current);
       }
     };
-  }, [isOpen, pallets, borderRadius, buttonPadding, containerPadding, sectionGap, containerGap, contentWidth, headingFont, headingFontFamily, bodyFont, bodyFontFamily, shadowStyle, inputBorderWidth, inputBorderColor, inputBorderRadius, inputPadding, inputBgColor, inputTextColor, inputPlaceholderColor, inputFocusRing, inputFocusRingColor, linkColor, linkHoverColor, linkUnderline, linkUnderlineOffset]);
+  }, [
+    isOpen,
+    pallets,
+    borderRadius,
+    buttonPadding,
+    containerPadding,
+    sectionGap,
+    containerGap,
+    contentWidth,
+    headingFont,
+    headingFontFamily,
+    bodyFont,
+    bodyFontFamily,
+    shadowStyle,
+    inputBorderWidth,
+    inputBorderColor,
+    inputBorderRadius,
+    inputPadding,
+    inputBgColor,
+    inputTextColor,
+    inputPlaceholderColor,
+    inputFocusRing,
+    inputFocusRingColor,
+    linkColor,
+    linkHoverColor,
+    linkUnderline,
+    linkUnderlineOffset,
+  ]);
 
   // Dragging handlers
   const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('.drag-handle')) {
+    if ((e.target as HTMLElement).closest(".drag-handle")) {
       setIsDragging(true);
       setDragOffset({
         x: e.clientX - position.x,
@@ -347,13 +544,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
     };
 
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
     }
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging, dragOffset]);
 
@@ -361,21 +558,22 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
   const getColorPreview = (colorValue: any): string => {
     // Handle null/undefined
     if (!colorValue) {
-      return '#3b82f6';
+      return "#3b82f6";
     }
 
     // Convert to string if it's not already
-    const colorStr = typeof colorValue === 'string' ? colorValue : String(colorValue);
+    const colorStr =
+      typeof colorValue === "string" ? colorValue : String(colorValue);
 
     // If it's already a hex or rgba, return it
-    if (colorStr.startsWith('#') || colorStr.startsWith('rgba')) {
+    if (colorStr.startsWith("#") || colorStr.startsWith("rgba")) {
       return colorStr;
     }
 
     // Handle palette references like "palette:Primary"
-    if (colorStr.startsWith('palette:')) {
-      const paletteName = colorStr.replace('palette:', '').trim();
-      const paletteColor = pallets.find(p => p.name === paletteName);
+    if (colorStr.startsWith("palette:")) {
+      const paletteName = colorStr.replace("palette:", "").trim();
+      const paletteColor = pallets.find((p) => p.name === paletteName);
       if (paletteColor) {
         // Recursively resolve the palette color
         return getColorPreview(paletteColor.color);
@@ -384,9 +582,9 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
     // Handle special color names
     const colorMap: Record<string, string> = {
-      'white': '#ffffff',
-      'black': '#000000',
-      'transparent': 'transparent',
+      white: "#ffffff",
+      black: "#000000",
+      transparent: "transparent",
     };
 
     if (colorMap[colorStr]) {
@@ -394,7 +592,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
     }
 
     // Try to parse Tailwind color like "blue-500"
-    const parts = colorStr.split('-');
+    const parts = colorStr.split("-");
     if (parts.length === 2) {
       const [colorName, shade] = parts;
       if (colors[colorName] && colors[colorName][shade]) {
@@ -403,7 +601,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
     }
 
     // Fallback to a default color
-    return '#3b82f6';
+    return "#3b82f6";
   };
 
   const updateColor = (index: number, color: any) => {
@@ -411,16 +609,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
     // Convert color to string format
     let colorValue: string;
-    if (typeof color === 'string') {
+    if (typeof color === "string") {
       colorValue = color;
-    } else if (color && typeof color === 'object') {
+    } else if (color && typeof color === "object") {
       // Handle {type, value} format from color picker
       if (color.value) {
-        if (typeof color.value === 'string') {
+        if (typeof color.value === "string") {
           // If it's a palette reference like "palette:Primary", resolve it to the actual color
-          if (color.value.startsWith('palette:')) {
-            const paletteName = color.value.replace('palette:', '').trim();
-            const paletteColor = pallets.find(p => p.name === paletteName);
+          if (color.value.startsWith("palette:")) {
+            const paletteName = color.value.replace("palette:", "").trim();
+            const paletteColor = pallets.find((p) => p.name === paletteName);
             colorValue = paletteColor ? paletteColor.color : color.value;
           } else {
             colorValue = color.value;
@@ -481,7 +679,9 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
     if (headingFontButtonRef.current) {
       const rect = headingFontButtonRef.current.getBoundingClientRect();
       // Convert string to array format for the dialog
-      const currentFont = headingFontFamily ? headingFontFamily.split(", ") : [];
+      const currentFont = headingFontFamily
+        ? headingFontFamily.split(", ")
+        : [];
       setFontDialog({
         enabled: true,
         value: currentFont,
@@ -521,7 +721,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         changed: (value: any) => {
           // Just save the color value without prefix
           let colorValue = value.value || value;
-          if (typeof colorValue === 'string') {
+          if (typeof colorValue === "string") {
             setInputBorderColor(colorValue);
           }
         },
@@ -539,7 +739,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         prefix: "",
         changed: (value: any) => {
           let colorValue = value.value || value;
-          if (typeof colorValue === 'string') {
+          if (typeof colorValue === "string") {
             setInputBgColor(colorValue);
           }
         },
@@ -557,7 +757,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         prefix: "",
         changed: (value: any) => {
           let colorValue = value.value || value;
-          if (typeof colorValue === 'string') {
+          if (typeof colorValue === "string") {
             setInputTextColor(colorValue);
           }
         },
@@ -568,14 +768,15 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
   const openInputPlaceholderColorPicker = () => {
     if (inputPlaceholderColorButtonRef.current) {
-      const rect = inputPlaceholderColorButtonRef.current.getBoundingClientRect();
+      const rect =
+        inputPlaceholderColorButtonRef.current.getBoundingClientRect();
       setColorDialog({
         enabled: true,
         value: inputPlaceholderColor,
         prefix: "",
         changed: (value: any) => {
           let colorValue = value.value || value;
-          if (typeof colorValue === 'string') {
+          if (typeof colorValue === "string") {
             setInputPlaceholderColor(colorValue);
           }
         },
@@ -594,7 +795,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         changed: (value: any) => {
           // Just save the color value without prefix
           let colorValue = value.value || value;
-          if (typeof colorValue === 'string') {
+          if (typeof colorValue === "string") {
             setInputFocusRingColor(colorValue);
           }
         },
@@ -612,7 +813,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         prefix: "",
         changed: (value: any) => {
           let colorValue = value.value || value;
-          if (typeof colorValue === 'string') {
+          if (typeof colorValue === "string") {
             setLinkColor(colorValue);
           }
         },
@@ -630,7 +831,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         prefix: "",
         changed: (value: any) => {
           let colorValue = value.value || value;
-          if (typeof colorValue === 'string') {
+          if (typeof colorValue === "string") {
             setLinkHoverColor(colorValue);
           }
         },
@@ -640,16 +841,26 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
   };
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const CollapsibleSection = ({ title, section, children }: { title: string; section: string; children: React.ReactNode }) => (
+  const CollapsibleSection = ({
+    title,
+    section,
+    children,
+  }: {
+    title: string;
+    section: string;
+    children: React.ReactNode;
+  }) => (
     <div className="border-b border-border last:border-b-0">
       <button
         onClick={() => toggleSection(section)}
-        className="w-full flex items-center justify-between p-3 hover:bg-background transition-colors text-left"
+        className="flex w-full items-center justify-between p-3 text-left transition-colors hover:bg-background"
       >
-        <span className="text-sm font-semibold text-muted-foreground">{title}</span>
+        <span className="text-sm font-semibold text-muted-foreground">
+          {title}
+        </span>
         {expandedSections[section] ? (
           <TbChevronDown className="text-muted-foreground" size={18} />
         ) : (
@@ -657,7 +868,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         )}
       </button>
       {expandedSections[section] && (
-        <div className="p-3 space-y-3 bg-muted text-muted-foreground">
+        <div className="space-y-3 bg-muted p-3 text-muted-foreground">
           {children}
         </div>
       )}
@@ -672,24 +883,26 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       style={{
-        position: 'fixed',
+        position: "fixed",
         left: position.x,
         top: position.y,
         zIndex: 9999,
-        cursor: isDragging ? 'grabbing' : 'default',
+        cursor: isDragging ? "grabbing" : "default",
       }}
       onMouseDown={handleMouseDown}
-      className="bg-background rounded-lg shadow-xl border border-border w-80 max-h-[60vh] flex flex-col z-[9999]"
+      className="z-[9999] flex max-h-[60vh] w-80 flex-col rounded-lg border border-border bg-background shadow-xl"
     >
       {/* Header */}
-      <div className="drag-handle flex items-center justify-between p-3 border-b border-border cursor-grab active:cursor-grabbing bg-accent text-accent-foreground">
+      <div className="drag-handle flex cursor-grab items-center justify-between border-b border-border bg-accent p-3 text-accent-foreground active:cursor-grabbing">
         <div className="flex items-center gap-2">
           <TbGripVertical className="text-accent-foreground" />
-          <h2 className="text-lg font-bold text-accent-foreground">Design System</h2>
+          <h2 className="text-lg font-bold text-accent-foreground">
+            Design System
+          </h2>
         </div>
         <button
           onClick={onClose}
-          className="text-accent-foreground hover:text-accent-foreground transition-colors"
+          className="text-accent-foreground transition-colors hover:text-accent-foreground"
         >
           <TbX size={20} />
         </button>
@@ -699,20 +912,22 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
       <div className="flex border-b border-border bg-muted">
         <button
           onClick={() => setActiveTab("colors")}
-          className={`flex-1 px-3 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "colors"
-            ? "text-primary border-b-2 border-primary bg-background"
-            : "text-muted-foreground hover:text-foreground"
-            }`}
+          className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
+            activeTab === "colors"
+              ? "border-b-2 border-primary bg-background text-primary"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
         >
           <TbPalette size={18} />
           Colors
         </button>
         <button
           onClick={() => setActiveTab("styles")}
-          className={`flex-1 px-3 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "styles"
-            ? "text-primary border-b-2 border-primary bg-background"
-            : "text-muted-foreground hover:text-foreground"
-            }`}
+          className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
+            activeTab === "styles"
+              ? "border-b-2 border-primary bg-background text-primary"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
         >
           <TbRuler size={18} />
           Styles
@@ -720,34 +935,38 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto space-y-2 scrollbar bg-background text-foreground">
+      <div className="scrollbar flex-1 space-y-2 overflow-y-auto bg-background text-foreground">
         {/* Colors Tab */}
         {activeTab === "colors" && (
-          <div className="space-y-1.5 p-3 overflow-y-auto max-h-full">
+          <div className="max-h-full space-y-1.5 overflow-y-auto p-3">
             {pallets.map((pallet, index) => (
-              <div key={index} className="flex items-center gap-2 group">
+              <div key={index} className="group flex items-center gap-2">
                 <button
-                  ref={(el) => { colorButtonRefs.current[index] = el; }}
+                  ref={(el) => {
+                    colorButtonRefs.current[index] = el;
+                  }}
                   onClick={() => openColorPicker(index)}
-                  className="w-8 h-8 rounded cursor-pointer border-2 border-border flex-shrink-0 hover:border-primary transition-colors"
+                  className="size-8 shrink-0 cursor-pointer rounded border-2 border-border transition-colors hover:border-primary"
                   style={{ backgroundColor: getColorPreview(pallet.color) }}
                   title="Click to change color"
                 />
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <input
                     type="text"
                     value={pallet.name}
                     onChange={(e) => updateColorName(index, e.target.value)}
-                    className="w-full text-sm font-medium text-foreground bg-transparent border-b border-transparent hover:border-primary focus:border-ring focus:outline-none px-1 py-0.5"
+                    className="w-full border-b border-transparent bg-transparent px-1 py-0.5 text-sm font-medium text-foreground hover:border-primary focus:border-ring focus:outline-none"
                     placeholder="Color name"
                   />
-                  <div className="text-xs text-muted-foreground px-1">
-                    {typeof pallet.color === 'string' ? pallet.color : JSON.stringify(pallet.color)}
+                  <div className="px-1 text-xs text-muted-foreground">
+                    {typeof pallet.color === "string"
+                      ? pallet.color
+                      : JSON.stringify(pallet.color)}
                   </div>
                 </div>
                 <button
                   onClick={() => deleteColor(index)}
-                  className="opacity-0 group-hover:opacity-100 text-destructive hover:text-destructive transition-opacity p-1"
+                  className="p-1 text-destructive opacity-0 transition-opacity hover:text-destructive group-hover:opacity-100"
                   title="Delete color"
                 >
                   <TbTrash size={16} />
@@ -758,7 +977,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
             {/* Add Color Button */}
             <button
               onClick={addColor}
-              className="w-full mt-2 px-3 py-2 bg-accent hover:bg-accent text-accent-foreground border border-border rounded text-sm flex items-center justify-center gap-2 transition-colors"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded border border-border bg-accent px-3 py-2 text-sm text-accent-foreground transition-colors hover:bg-accent"
             >
               <TbPlus size={16} />
               Add Color
@@ -768,16 +987,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
         {/* Styles Tab */}
         {activeTab === "styles" && (
-          <div className="overflow-y-auto max-h-full">
+          <div className="max-h-full overflow-y-auto">
             <CollapsibleSection title="Spacing & Layout" section="spacing">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Button Padding (x y)
                 </label>
                 <select
                   value={buttonPadding}
                   onChange={(e) => setButtonPadding(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0.75rem 0.25rem">Small</option>
                   <option value="1rem 0.5rem">Medium</option>
@@ -787,13 +1006,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Container Padding (x y)
                 </label>
                 <select
                   value={containerPadding}
                   onChange={(e) => setContainerPadding(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="1rem 1rem">Small (1rem)</option>
                   <option value="1.5rem 1.5rem">Medium (1.5rem)</option>
@@ -805,13 +1024,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Section Gap
                 </label>
                 <select
                   value={sectionGap}
                   onChange={(e) => setSectionGap(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="2rem">Small (2rem)</option>
                   <option value="3rem">Medium (3rem)</option>
@@ -822,13 +1041,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Container Gap
                 </label>
                 <select
                   value={containerGap}
                   onChange={(e) => setContainerGap(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0.5rem">XS (0.5rem)</option>
                   <option value="1rem">Small (1rem)</option>
@@ -839,13 +1058,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Content Width
                 </label>
                 <select
                   value={contentWidth}
                   onChange={(e) => setContentWidth(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="48rem">Small (48rem)</option>
                   <option value="56rem">Medium (56rem)</option>
@@ -859,13 +1078,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
             <CollapsibleSection title="Typography" section="typography">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Heading Font Weight
                 </label>
                 <select
                   value={headingFont}
                   onChange={(e) => setHeadingFont(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="font-normal">Normal</option>
                   <option value="font-medium">Medium</option>
@@ -876,13 +1095,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Heading Font Family
                 </label>
                 <button
                   ref={headingFontButtonRef}
                   onClick={openHeadingFontPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                   style={{ fontFamily: headingFontFamily }}
                 >
                   {headingFontFamily || "Select font..."}
@@ -890,13 +1109,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Body Font Weight
                 </label>
                 <select
                   value={bodyFont}
                   onChange={(e) => setBodyFont(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="font-thin">Thin</option>
                   <option value="font-extralight">Extra Light</option>
@@ -908,13 +1127,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Body Font Family
                 </label>
                 <button
                   ref={bodyFontButtonRef}
                   onClick={openBodyFontPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                   style={{ fontFamily: bodyFontFamily }}
                 >
                   {bodyFontFamily || "Select font..."}
@@ -924,13 +1143,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
             <CollapsibleSection title="Effects & Borders" section="effects">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Border Radius
                 </label>
                 <select
                   value={borderRadius}
                   onChange={(e) => setBorderRadius(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="rounded-none">None</option>
                   <option value="rounded-sm">Small</option>
@@ -944,13 +1163,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Shadow Style
                 </label>
                 <select
                   value={shadowStyle}
                   onChange={(e) => setShadowStyle(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="shadow-none">None</option>
                   <option value="shadow-sm">Small</option>
@@ -965,13 +1184,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
             <CollapsibleSection title="Form Inputs" section="forms">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Input Padding
                 </label>
                 <select
                   value={inputPadding}
                   onChange={(e) => setInputPadding(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0.5rem 0.25rem">Small</option>
                   <option value="0.75rem 0.5rem">Medium</option>
@@ -981,13 +1200,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Border Width
                 </label>
                 <select
                   value={inputBorderWidth}
                   onChange={(e) => setInputBorderWidth(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0">None</option>
                   <option value="1px">1px</option>
@@ -997,30 +1216,32 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Border Color
                 </label>
                 <button
                   ref={inputBorderColorButtonRef}
                   onClick={openInputBorderColorPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
+                  className="flex w-full items-center gap-2 rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-border"
-                    style={{ backgroundColor: getColorPreview(inputBorderColor) }}
+                    className="size-4 rounded border border-border"
+                    style={{
+                      backgroundColor: getColorPreview(inputBorderColor),
+                    }}
                   />
                   <span className="flex-1 truncate">{inputBorderColor}</span>
                 </button>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Border Radius
                 </label>
                 <select
                   value={inputBorderRadius}
                   onChange={(e) => setInputBorderRadius(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0">None</option>
                   <option value="0.125rem">Small</option>
@@ -1033,16 +1254,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Background Color
                 </label>
                 <button
                   ref={inputBgColorButtonRef}
                   onClick={openInputBgColorPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
+                  className="flex w-full items-center gap-2 rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-border"
+                    className="size-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(inputBgColor) }}
                   />
                   <span className="flex-1 truncate">{inputBgColor}</span>
@@ -1050,16 +1271,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Text Color
                 </label>
                 <button
                   ref={inputTextColorButtonRef}
                   onClick={openInputTextColorPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
+                  className="flex w-full items-center gap-2 rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-border"
+                    className="size-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(inputTextColor) }}
                   />
                   <span className="flex-1 truncate">{inputTextColor}</span>
@@ -1067,30 +1288,34 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Placeholder Color
                 </label>
                 <button
                   ref={inputPlaceholderColorButtonRef}
                   onClick={openInputPlaceholderColorPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
+                  className="flex w-full items-center gap-2 rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-border"
-                    style={{ backgroundColor: getColorPreview(inputPlaceholderColor) }}
+                    className="size-4 rounded border border-border"
+                    style={{
+                      backgroundColor: getColorPreview(inputPlaceholderColor),
+                    }}
                   />
-                  <span className="flex-1 truncate">{inputPlaceholderColor}</span>
+                  <span className="flex-1 truncate">
+                    {inputPlaceholderColor}
+                  </span>
                 </button>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Focus Ring Size
                 </label>
                 <select
                   value={inputFocusRing}
                   onChange={(e) => setInputFocusRing(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0">None</option>
                   <option value="1px">1px</option>
@@ -1101,17 +1326,19 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Focus Ring Color
                 </label>
                 <button
                   ref={inputFocusRingColorButtonRef}
                   onClick={openInputFocusRingColorPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
+                  className="flex w-full items-center gap-2 rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-border"
-                    style={{ backgroundColor: getColorPreview(inputFocusRingColor) }}
+                    className="size-4 rounded border border-border"
+                    style={{
+                      backgroundColor: getColorPreview(inputFocusRingColor),
+                    }}
                   />
                   <span className="flex-1 truncate">{inputFocusRingColor}</span>
                 </button>
@@ -1120,16 +1347,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
             <CollapsibleSection title="Links" section="links">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Link Color
                 </label>
                 <button
                   ref={linkColorButtonRef}
                   onClick={openLinkColorPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
+                  className="flex w-full items-center gap-2 rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-border"
+                    className="size-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(linkColor) }}
                   />
                   <span className="flex-1 truncate">{linkColor}</span>
@@ -1137,16 +1364,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Link Hover Color
                 </label>
                 <button
                   ref={linkHoverColorButtonRef}
                   onClick={openLinkHoverColorPicker}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
+                  className="flex w-full items-center gap-2 rounded border border-border bg-background px-3 py-2 text-left text-sm text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-border"
+                    className="size-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(linkHoverColor) }}
                   />
                   <span className="flex-1 truncate">{linkHoverColor}</span>
@@ -1154,13 +1381,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Link Underline
                 </label>
                 <select
                   value={linkUnderline}
                   onChange={(e) => setLinkUnderline(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="no-underline">None</option>
                   <option value="underline">Always</option>
@@ -1169,13 +1396,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">
                   Underline Offset
                 </label>
                 <select
                   value={linkUnderlineOffset}
                   onChange={(e) => setLinkUnderlineOffset(e.target.value)}
-                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="underline-offset-auto">Auto</option>
                   <option value="underline-offset-1">1px</option>
@@ -1190,8 +1417,8 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
       </div>
 
       {/* Footer hint */}
-      <div className="p-2 border-t border-border bg-muted">
-        <p className="text-xs text-muted-foreground text-center">
+      <div className="border-t border-border bg-muted p-2">
+        <p className="text-center text-xs text-muted-foreground">
           Changes apply instantly ⚡
         </p>
       </div>

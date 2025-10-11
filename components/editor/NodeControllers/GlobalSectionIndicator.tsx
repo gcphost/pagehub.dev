@@ -15,7 +15,7 @@ export const GlobalSectionIndicator = () => {
 
     // Check if any child is selected
     const selectedNodes = query.getEvent("selected").all();
-    const hasSelectedChild = selectedNodes.some(selectedId => {
+    const hasSelectedChild = selectedNodes.some((selectedId) => {
       if (selectedId === id) return false; // Don't count self
       const node = query.node(selectedId).get();
       // Check if this selected node is a descendant of our node
@@ -78,13 +78,13 @@ export const GlobalSectionIndicator = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        className="absolute inset-0 bg-primary/15 border-2 border-dashed border-border pointer-events-none z-0 flex items-center justify-center"
+        className="bg-primary/15 pointer-events-none absolute inset-0 z-0 flex items-center justify-center border-2 border-dashed border-border"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1, duration: 0.2 }}
-          className="flex flex-row items-center gap-2 text-sm font-semibold text-primary bg-background px-3 py-1.5 rounded-md border border-border pointer-events-none select-none shadow-sm"
+          className="pointer-events-none flex select-none flex-row items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-sm font-semibold text-primary shadow-sm"
         >
           <RxGlobe /> {label}
         </motion.div>

@@ -112,7 +112,7 @@ let fetchPromise: Promise<GoogleFont[]> | null = null;
  * 4. Add to .env.local: NEXT_PUBLIC_GOOGLE_FONTS_API_KEY=your_key_here
  */
 export const fetchGoogleFonts = async (
-  apiKey?: string
+  apiKey?: string,
 ): Promise<GoogleFont[]> => {
   // Return cached fonts if available
   if (fontsCache) {
@@ -134,7 +134,7 @@ export const fetchGoogleFonts = async (
         console.warn(
           "⚠️  No Google Fonts API key found. Using fallback font list.\n" +
             "   For ALL 1500+ Google Fonts, add NEXT_PUBLIC_GOOGLE_FONTS_API_KEY to .env.local\n" +
-            "   Get a key at: https://console.cloud.google.com/apis/credentials"
+            "   Get a key at: https://console.cloud.google.com/apis/credentials",
         );
         return getFallbackFonts();
       }
@@ -344,14 +344,14 @@ export const getOrganizedFonts = async (apiKey?: string) => {
   const popular = allFonts.filter((f) => popularFonts.includes(f.family));
   const funky = allFonts.filter((f) => funkyFonts.includes(f.family));
   const serif = allFonts.filter(
-    (f) => f.category === "serif" && !popular.includes(f) && !funky.includes(f)
+    (f) => f.category === "serif" && !popular.includes(f) && !funky.includes(f),
   );
   const sansSerif = allFonts.filter(
     (f) =>
-      f.category === "sans-serif" && !popular.includes(f) && !funky.includes(f)
+      f.category === "sans-serif" && !popular.includes(f) && !funky.includes(f),
   );
   const display = allFonts.filter(
-    (f) => f.category === "display" && !funky.includes(f)
+    (f) => f.category === "display" && !funky.includes(f),
   );
   const handwriting = allFonts.filter((f) => f.category === "handwriting");
   const monospace = allFonts.filter((f) => f.category === "monospace");
@@ -373,20 +373,21 @@ export const getOrganizedFonts = async (apiKey?: string) => {
  */
 export const searchFonts = async (
   query: string,
-  apiKey?: string
+  apiKey?: string,
 ): Promise<GoogleFont[]> => {
   const allFonts = await fetchGoogleFonts(apiKey);
   const lowerQuery = query.toLowerCase();
 
   // Exact matches first
   const exactMatches = allFonts.filter(
-    (f) => f.family.toLowerCase() === lowerQuery
+    (f) => f.family.toLowerCase() === lowerQuery,
   );
 
   // Starts with query
   const startsWith = allFonts.filter(
     (f) =>
-      f.family.toLowerCase().startsWith(lowerQuery) && !exactMatches.includes(f)
+      f.family.toLowerCase().startsWith(lowerQuery) &&
+      !exactMatches.includes(f),
   );
 
   // Contains query
@@ -394,7 +395,7 @@ export const searchFonts = async (
     (f) =>
       f.family.toLowerCase().includes(lowerQuery) &&
       !exactMatches.includes(f) &&
-      !startsWith.includes(f)
+      !startsWith.includes(f),
   );
 
   return [...exactMatches, ...startsWith, ...contains].slice(0, 50); // Limit to 50 results
@@ -407,7 +408,7 @@ export const searchFonts = async (
 export const loadGoogleFont = (
   family: string,
   weights: string[] = ["400", "700"],
-  display: "swap" | "block" | "fallback" | "optional" = "swap"
+  display: "swap" | "block" | "fallback" | "optional" = "swap",
 ): void => {
   if (typeof window === "undefined") return;
 
@@ -419,8 +420,8 @@ export const loadGoogleFont = (
   // Check if already loaded
   const existingLinks = Array.from(
     document.querySelectorAll(
-      'link[rel="stylesheet"][href*="fonts.googleapis.com"]'
-    )
+      'link[rel="stylesheet"][href*="fonts.googleapis.com"]',
+    ),
   );
 
   if (existingLinks.some((link) => (link as HTMLLinkElement).href === href)) {
@@ -442,7 +443,7 @@ export const loadGoogleFont = (
  */
 export const preloadFonts = (
   fonts: Array<{ family: string; weights?: string[] }>,
-  display: "swap" | "block" | "fallback" | "optional" = "swap"
+  display: "swap" | "block" | "fallback" | "optional" = "swap",
 ): void => {
   if (typeof window === "undefined" || fonts.length === 0) return;
 
@@ -460,13 +461,13 @@ export const preloadFonts = (
   // Check if already loaded
   const existingLinks = Array.from(
     document.querySelectorAll(
-      'link[rel="stylesheet"][href*="fonts.googleapis.com"]'
-    )
+      'link[rel="stylesheet"][href*="fonts.googleapis.com"]',
+    ),
   );
 
   if (
     existingLinks.some((link) =>
-      (link as HTMLLinkElement).href.includes(familyParams)
+      (link as HTMLLinkElement).href.includes(familyParams),
     )
   ) {
     return;

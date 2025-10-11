@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState } from 'react';
-import { TbCheck, TbDeviceFloppy, TbLoader2 } from 'react-icons/tb';
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useState } from "react";
+import { TbCheck, TbDeviceFloppy, TbLoader2 } from "react-icons/tb";
 
 interface AnimatedSaveButtonProps {
   onClick: () => Promise<void>;
@@ -8,49 +8,48 @@ interface AnimatedSaveButtonProps {
   className?: string;
 }
 
-type SaveState = 'idle' | 'loading' | 'success';
+type SaveState = "idle" | "loading" | "success";
 
 export const AnimatedSaveButton: React.FC<AnimatedSaveButtonProps> = ({
   onClick,
   disabled = false,
-  className = '',
+  className = "",
 }) => {
-  const [saveState, setSaveState] = useState<SaveState>('idle');
+  const [saveState, setSaveState] = useState<SaveState>("idle");
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleClick = async () => {
     if (disabled || isAnimating) return;
 
     setIsAnimating(true);
-    setSaveState('loading');
+    setSaveState("loading");
 
     try {
       await onClick();
 
       // Ensure minimum loading time of 500ms
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      setSaveState('success');
+      setSaveState("success");
 
       // Show success state for 5 seconds, then reset
       setTimeout(() => {
-        setSaveState('idle');
+        setSaveState("idle");
         setIsAnimating(false);
       }, 5000);
-
     } catch (error) {
-      console.error('Save failed:', error);
+      console.error("Save failed:", error);
       // On error, reset immediately
-      setSaveState('idle');
+      setSaveState("idle");
       setIsAnimating(false);
     }
   };
 
   const getIcon = () => {
     switch (saveState) {
-      case 'loading':
+      case "loading":
         return <TbLoader2 className="animate-spin" />;
-      case 'success':
+      case "success":
         return <TbCheck />;
       default:
         return <TbDeviceFloppy />;
@@ -71,10 +70,14 @@ export const AnimatedSaveButton: React.FC<AnimatedSaveButtonProps> = ({
     <motion.div
       onClick={handleClick}
       className={getButtonClasses()}
-      whileHover={!disabled && !isAnimating ? {
-        scale: 1.1,
-        transition: { duration: 0.2 },
-      } : {}}
+      whileHover={
+        !disabled && !isAnimating
+          ? {
+              scale: 1.1,
+              transition: { duration: 0.2 },
+            }
+          : {}
+      }
       whileTap={!disabled && !isAnimating ? { scale: 0.9 } : {}}
     >
       <AnimatePresence mode="wait">

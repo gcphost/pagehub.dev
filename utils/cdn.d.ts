@@ -47,7 +47,7 @@ export function getCdnAuthHeaders(): {
 export function generateSrcSet(
   mediaId: string,
   widths?: number[],
-  options?: CdnImageOptions
+  options?: CdnImageOptions,
 ): string;
 
 /**

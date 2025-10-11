@@ -93,7 +93,7 @@ const Item = ({ children }) => (
   <motion.a
     variants={liVariants}
     className={
-      "flex w-full items-center gap-y-6  p-2  hover:text-muted-foreground inner-shadow  rounded-md hover:bg-primary  cursor-pointer"
+      "inner-shadow flex w-full cursor-pointer items-center gap-y-6 rounded-md p-2 hover:bg-primary hover:text-muted-foreground"
     }
   >
     {children}
@@ -172,7 +172,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
   const getCloneTree = useCallback(
     (tree: NodeTree) =>
       buildClonedTree({ tree, query, setProp: actions.setProp }),
-    [query]
+    [query],
   );
 
   const handleAdd = useCallback(
@@ -186,7 +186,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
         setProp: actions.setProp,
       });
     },
-    [actions, getCloneTree, query]
+    [actions, getCloneTree, query],
   );
 
   const comps = components
@@ -241,7 +241,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
   const Tool = ({ element, icon, title }) => (
     <button onClick={() => click(element)}>
       <Item>
-        <div className="text-2xl w-12">{icon}</div> {title}
+        <div className="w-12 text-2xl">{icon}</div> {title}
       </Item>
     </button>
   );
@@ -283,13 +283,13 @@ export const ToolboxContexual = ({ userStyle = null }) => {
           id="toolbox"
           ref={ref}
           style={style}
-          className="fixed z-50  p-3 rounded-md drop-shadow-lg  gap-3  flex-col md:flex-row   justify-between text-muted-foreground max-h-[330px] select-none"
+          className="fixed z-50 max-h-[330px] select-none flex-col justify-between gap-3 rounded-md p-3 text-muted-foreground drop-shadow-lg md:flex-row"
         >
           <motion.div
             variants={uloVariants}
-            className="overflow-auto scrollbar rounded-md  bg-background flex flex-col gap-1.5"
+            className="scrollbar flex flex-col gap-1.5 overflow-auto rounded-md bg-background"
           >
-            <div className="p-3 rounded-xl">
+            <div className="rounded-xl p-3">
               {name === "Background" && (
                 <>
                   <Tool element={Tools.page} icon={<TbLayout />} title="Page" />
@@ -356,7 +356,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
           {!["Form", "FormDrop"].includes(name) && comps.length ? (
             <motion.div
               variants={uloVariants}
-              className="overflow-auto scrollbar flex flex-col bg-background  p-3 rounded-md"
+              className="scrollbar flex flex-col overflow-auto rounded-md bg-background p-3"
             >
               {comps.map((a, k) => {
                 if (!a.id || !a.node) return null;
@@ -376,15 +376,15 @@ export const ToolboxContexual = ({ userStyle = null }) => {
                     className="flex items-center gap-y-3"
                   >
                     <Item>
-                      <div className="flex items-center justify-between w-full gap-8">
-                        <div className="flex items-center gap-y-3 whitespace-no-wrap">
-                          <div className="text-2xl w-12">
+                      <div className="flex w-full items-center justify-between gap-8">
+                        <div className="whitespace-no-wrap flex items-center gap-y-3">
+                          <div className="w-12 text-2xl">
                             <TbComponents />
                           </div>
                           {title}
                         </div>
                         <button
-                          className="text-foreground hover:text-muted-foreground text-sm"
+                          className="text-sm text-foreground hover:text-muted-foreground"
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -395,13 +395,17 @@ export const ToolboxContexual = ({ userStyle = null }) => {
 
                             if (backgroundId) {
                               actions.setProp(backgroundId, (prop) => {
-                                prop.savedComponents = (prop.savedComponents || []).filter(
-                                  c => c.rootNodeId !== _.rootNodeId
-                                );
+                                prop.savedComponents = (
+                                  prop.savedComponents || []
+                                ).filter((c) => c.rootNodeId !== _.rootNodeId);
                               });
 
                               // Update the local state
-                              setComponents(prev => prev.filter(c => c.rootNodeId !== _.rootNodeId));
+                              setComponents((prev) =>
+                                prev.filter(
+                                  (c) => c.rootNodeId !== _.rootNodeId,
+                                ),
+                              );
                             }
                           }}
                         >

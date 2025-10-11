@@ -36,13 +36,15 @@ const Selectors = () => {
           return (
             <div
               key={key}
-              className="flex items-start gap-3 py-2 px-3 hover:bg-background rounded"
+              className="flex items-start gap-3 rounded px-3 py-2 hover:bg-background"
             >
-              <code className="text-sm font-mono text-blue-600 whitespace-nowrap">
+              <code className="whitespace-nowrap font-mono text-sm text-blue-600">
                 {prefix}
                 {key}
               </code>
-              <span className="text-sm text-muted-foreground">{displayValue}</span>
+              <span className="text-sm text-muted-foreground">
+                {displayValue}
+              </span>
             </div>
           );
         })}
@@ -57,25 +59,26 @@ const Selectors = () => {
       <div
         id={`component-${name}`}
         key={name}
-        className={`border rounded-lg overflow-hidden transition-all scroll-mt-4 ${isSelected ? "border-blue-500 shadow-lg" : "border-border"
-          }`}
+        className={`scroll-mt-4 overflow-hidden rounded-lg border transition-all ${
+          isSelected ? "border-blue-500 shadow-lg" : "border-border"
+        }`}
       >
         <button
-          onClick={() =>
-            setSelectedComponent(isSelected ? null : name)
-          }
-          className={`w-full px-6 py-4 flex items-center justify-between hover:bg-background transition-colors ${isSelected ? "bg-blue-50" : ""
-            }`}
+          onClick={() => setSelectedComponent(isSelected ? null : name)}
+          className={`flex w-full items-center justify-between px-6 py-4 transition-colors hover:bg-background ${
+            isSelected ? "bg-blue-50" : ""
+          }`}
         >
           <div className="flex items-center gap-3">
             <h3 className="text-xl font-semibold text-foreground">{name}</h3>
-            <span className="text-sm text-muted-foreground italic">
+            <span className="text-sm italic text-muted-foreground">
               {data.description}
             </span>
           </div>
           <svg
-            className={`w-5 h-5 transition-transform ${isSelected ? "transform rotate-180" : ""
-              }`}
+            className={`size-5 transition-transform ${
+              isSelected ? "rotate-180" : ""
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -90,18 +93,18 @@ const Selectors = () => {
         </button>
 
         {isSelected && (
-          <div className="px-6 py-4 bg-background border-t space-y-6">
+          <div className="space-y-6 border-t bg-background px-6 py-4">
             {/* Extends */}
             {data.extends && (
               <div>
-                <h4 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">
+                <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-foreground">
                   Extends
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {data.extends.map((ext: string) => (
                     <span
                       key={ext}
-                      className="px-3 py-1 bg-primary text-primary rounded-full text-sm font-mono"
+                      className="rounded-full bg-primary px-3 py-1 font-mono text-sm text-primary"
                     >
                       {ext}
                     </span>
@@ -113,7 +116,7 @@ const Selectors = () => {
             {/* Specific Props */}
             {data.specificProps && (
               <div>
-                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
+                <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-foreground">
                   Specific Properties
                 </h4>
                 {renderProperties(data.specificProps)}
@@ -123,40 +126,42 @@ const Selectors = () => {
             {/* Supports */}
             {data.supports && (
               <div>
-                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
+                <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-foreground">
                   Supported Props
                 </h4>
                 <div className="space-y-3">
-                  {Object.entries(data.supports).map(([key, values]: [string, any]) => (
-                    <div key={key}>
-                      <h5 className="text-sm font-medium text-muted-foreground mb-2">
-                        {key}
-                      </h5>
-                      <div className="flex flex-wrap gap-2">
-                        {Array.isArray(values) ? (
-                          values.map((prop: string) => (
-                            <code
-                              key={prop}
-                              className="px-2 py-1 bg-background text-foreground rounded text-xs font-mono"
-                            >
-                              {prop}
+                  {Object.entries(data.supports).map(
+                    ([key, values]: [string, any]) => (
+                      <div key={key}>
+                        <h5 className="mb-2 text-sm font-medium text-muted-foreground">
+                          {key}
+                        </h5>
+                        <div className="flex flex-wrap gap-2">
+                          {Array.isArray(values) ? (
+                            values.map((prop: string) => (
+                              <code
+                                key={prop}
+                                className="rounded bg-background px-2 py-1 font-mono text-xs text-foreground"
+                              >
+                                {prop}
+                              </code>
+                            ))
+                          ) : (
+                            <code className="rounded bg-background px-2 py-1 font-mono text-xs text-foreground">
+                              {values}
                             </code>
-                          ))
-                        ) : (
-                          <code className="px-2 py-1 bg-background text-foreground rounded text-xs font-mono">
-                            {values}
-                          </code>
-                        )}
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ),
+                  )}
                 </div>
               </div>
             )}
 
             {/* Notes */}
             {data.notes && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4">
                 <p className="text-sm text-yellow-800">{data.notes}</p>
               </div>
             )}
@@ -169,7 +174,7 @@ const Selectors = () => {
   const filteredSelectors = Object.entries(schema.selectors).filter(
     ([name, data]: [string, any]) =>
       name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      data.description.toLowerCase().includes(searchQuery.toLowerCase())
+      data.description.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const scrollToComponent = (name: string) => {
@@ -190,10 +195,10 @@ const Selectors = () => {
         />
       </Head>
 
-      <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="flex h-screen flex-col bg-gradient-to-br from-gray-50 to-gray-100">
         {/* Header - Fixed */}
-        <header className="bg-background border-b border-border shadow-sm flex-shrink-0">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <header className="shrink-0 border-b border-border bg-background shadow-sm">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-3xl font-bold text-foreground">
@@ -205,7 +210,7 @@ const Selectors = () => {
               </div>
               <a
                 href="/"
-                className="px-4 py-2 bg-blue-600 text-primary-foreground rounded-lg hover:bg-blue-700 transition-colors"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-primary-foreground transition-colors hover:bg-blue-700"
               >
                 Back to Home
               </a>
@@ -218,7 +223,7 @@ const Selectors = () => {
                 placeholder="Search components..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full rounded-lg border border-border px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -226,24 +231,27 @@ const Selectors = () => {
 
         {/* Scrollable Content Area */}
         <div className="flex-1 overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
               {/* Sidebar */}
-              <aside className="lg:col-span-1 space-y-4">
-                <div className="bg-background rounded-lg shadow-sm border border-border overflow-hidden lg:sticky lg:top-4">
-                  <div className="px-4 py-3 bg-background border-b border-border">
-                    <h3 className="font-semibold text-foreground">Quick Links</h3>
+              <aside className="space-y-4 lg:col-span-1">
+                <div className="overflow-hidden rounded-lg border border-border bg-background shadow-sm lg:sticky lg:top-4">
+                  <div className="border-b border-border bg-background px-4 py-3">
+                    <h3 className="font-semibold text-foreground">
+                      Quick Links
+                    </h3>
                   </div>
-                  <nav className="p-2 max-h-[calc(100vh-16rem)] overflow-y-auto">
+                  <nav className="max-h-[calc(100vh-16rem)] overflow-y-auto p-2">
                     <div className="space-y-1">
                       {Object.keys(schema.selectors).map((name) => (
                         <button
                           key={name}
                           onClick={() => scrollToComponent(name)}
-                          className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${selectedComponent === name
-                            ? "bg-blue-100 text-blue-700 font-medium"
-                            : "text-foreground hover:bg-background"
-                            }`}
+                          className={`w-full rounded-md px-3 py-2 text-left text-sm transition-colors ${
+                            selectedComponent === name
+                              ? "bg-blue-100 font-medium text-blue-700"
+                              : "text-foreground hover:bg-background"
+                          }`}
                         >
                           {name}
                         </button>
@@ -254,41 +262,48 @@ const Selectors = () => {
               </aside>
 
               {/* Main Content */}
-              <main className="lg:col-span-3 space-y-8">
+              <main className="space-y-8 lg:col-span-3">
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-background rounded-lg shadow-sm border border-border p-4">
+                  <div className="rounded-lg border border-border bg-background p-4 shadow-sm">
                     <div className="text-3xl font-bold text-blue-600">
                       {Object.keys(schema.selectors).length}
                     </div>
-                    <div className="text-sm text-muted-foreground mt-1">Components</div>
+                    <div className="mt-1 text-sm text-muted-foreground">
+                      Components
+                    </div>
                   </div>
-                  <div className="bg-background rounded-lg shadow-sm border border-border p-4">
+                  <div className="rounded-lg border border-border bg-background p-4 shadow-sm">
                     <div className="text-3xl font-bold text-primary">
                       {Object.keys(schema.definitions).length}
                     </div>
-                    <div className="text-sm text-muted-foreground mt-1">Definitions</div>
+                    <div className="mt-1 text-sm text-muted-foreground">
+                      Definitions
+                    </div>
                   </div>
-                  <div className="bg-background rounded-lg shadow-sm border border-border p-4">
+                  <div className="rounded-lg border border-border bg-background p-4 shadow-sm">
                     <div className="text-3xl font-bold text-secondary-foreground">
                       {schema.version}
                     </div>
-                    <div className="text-sm text-muted-foreground mt-1">Version</div>
+                    <div className="mt-1 text-sm text-muted-foreground">
+                      Version
+                    </div>
                   </div>
                 </div>
 
                 {/* Definitions */}
-                <section className="bg-background rounded-lg shadow-sm border border-border overflow-hidden">
+                <section className="overflow-hidden rounded-lg border border-border bg-background shadow-sm">
                   <button
                     onClick={() => toggleSection("definitions")}
-                    className="w-full px-6 py-4 flex items-center justify-between hover:bg-background transition-colors"
+                    className="flex w-full items-center justify-between px-6 py-4 transition-colors hover:bg-background"
                   >
                     <h2 className="text-2xl font-bold text-foreground">
                       Definitions
                     </h2>
                     <svg
-                      className={`w-6 h-6 transition-transform ${expandedSections.definitions ? "transform rotate-180" : ""
-                        }`}
+                      className={`size-6 transition-transform ${
+                        expandedSections.definitions ? "rotate-180" : ""
+                      }`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -303,19 +318,22 @@ const Selectors = () => {
                   </button>
 
                   {expandedSections.definitions && (
-                    <div className="px-6 py-4 border-t space-y-6">
+                    <div className="space-y-6 border-t px-6 py-4">
                       {Object.entries(schema.definitions).map(
                         ([name, def]: [string, any]) => (
-                          <div key={name} className="border-l-4 border-purple-500 pl-4">
-                            <h3 className="text-lg font-semibold text-foreground mb-2">
+                          <div
+                            key={name}
+                            className="border-l-4 border-purple-500 pl-4"
+                          >
+                            <h3 className="mb-2 text-lg font-semibold text-foreground">
                               {name}
                             </h3>
-                            <p className="text-sm text-muted-foreground mb-3">
+                            <p className="mb-3 text-sm text-muted-foreground">
                               {def.description}
                             </p>
                             {def.properties && renderProperties(def.properties)}
                           </div>
-                        )
+                        ),
                       )}
                     </div>
                   )}
@@ -328,45 +346,47 @@ const Selectors = () => {
                   </h2>
                   <div className="space-y-4">
                     {filteredSelectors.map(([name, data]) =>
-                      renderSelector(name, data)
+                      renderSelector(name, data),
                     )}
                   </div>
                 </section>
 
                 {/* Examples */}
-                <section className="bg-background rounded-lg shadow-sm border border-border p-6">
-                  <h2 className="text-2xl font-bold text-foreground mb-4">
+                <section className="rounded-lg border border-border bg-background p-6 shadow-sm">
+                  <h2 className="mb-4 text-2xl font-bold text-foreground">
                     Usage Examples
                   </h2>
                   <div className="space-y-6">
                     {Object.entries(schema.usage.examples).map(
                       ([name, example]: [string, any]) => (
                         <div key={name}>
-                          <h3 className="text-lg font-semibold text-foreground mb-2">
+                          <h3 className="mb-2 text-lg font-semibold text-foreground">
                             {name}
                           </h3>
-                          <p className="text-sm text-muted-foreground mb-3">
+                          <p className="mb-3 text-sm text-muted-foreground">
                             {example.description}
                           </p>
-                          <pre className="bg-foreground text-background rounded-lg p-4 overflow-x-auto">
-                            <code>{JSON.stringify(example.props, null, 2)}</code>
+                          <pre className="overflow-x-auto rounded-lg bg-foreground p-4 text-background">
+                            <code>
+                              {JSON.stringify(example.props, null, 2)}
+                            </code>
                           </pre>
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 </section>
 
                 {/* Reference */}
-                <section className="bg-background rounded-lg shadow-sm border border-border p-6">
-                  <h2 className="text-2xl font-bold text-foreground mb-4">
+                <section className="rounded-lg border border-border bg-background p-6 shadow-sm">
+                  <h2 className="mb-4 text-2xl font-bold text-foreground">
                     Reference
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {Object.entries(schema.reference).map(
                       ([key, value]: [string, any]) => (
                         <div key={key}>
-                          <h3 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">
+                          <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-foreground">
                             {key}
                           </h3>
                           {Array.isArray(value) ? (
@@ -374,7 +394,7 @@ const Selectors = () => {
                               {value.map((item: string) => (
                                 <code
                                   key={item}
-                                  className="px-2 py-1 bg-background text-foreground rounded text-xs font-mono"
+                                  className="rounded bg-background px-2 py-1 font-mono text-xs text-foreground"
                                 >
                                   {item}
                                 </code>
@@ -387,15 +407,19 @@ const Selectors = () => {
                                   <span className="font-medium text-foreground">
                                     {k}:
                                   </span>{" "}
-                                  <span className="text-muted-foreground">{String(v)}</span>
+                                  <span className="text-muted-foreground">
+                                    {String(v)}
+                                  </span>
                                 </div>
                               ))}
                             </div>
                           ) : (
-                            <p className="text-sm text-muted-foreground">{String(value)}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {String(value)}
+                            </p>
                           )}
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 </section>
@@ -409,4 +433,3 @@ const Selectors = () => {
 };
 
 export default Selectors;
-

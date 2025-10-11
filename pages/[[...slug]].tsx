@@ -78,8 +78,8 @@ function App({ subdomain, data, meta, seo }) {
     waitForFonts({
       timeout: 1000,
       onLoaded: () => {
-        console.log('Fonts ready');
-      }
+        console.log("Fonts ready");
+      },
     });
   }, [subdomain]);
 
@@ -194,19 +194,21 @@ function App({ subdomain, data, meta, seo }) {
       ogTitle,
       ogDescription,
       ogImage,
-      ogType = 'website',
-      twitterCard = 'summary_large_image',
+      ogType = "website",
+      twitterCard = "summary_large_image",
       twitterSite,
       twitterCreator,
       canonicalUrl,
       robots,
-      themeColor
+      themeColor,
     } = seo || {};
 
     // Build the full URL for canonical and OG
-    const host = typeof window !== 'undefined' ? window.location.host : '';
-    const protocol = typeof window !== 'undefined' ? window.location.protocol : 'https:';
-    const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+    const host = typeof window !== "undefined" ? window.location.host : "";
+    const protocol =
+      typeof window !== "undefined" ? window.location.protocol : "https:";
+    const pathname =
+      typeof window !== "undefined" ? window.location.pathname : "";
     const fullUrl = `${protocol}//${host}${pathname}`;
 
     return (
@@ -215,19 +217,20 @@ function App({ subdomain, data, meta, seo }) {
           title={title || meta?.title || ""}
           description={description || meta?.description || ""}
           canonical={canonicalUrl || fullUrl}
-
           additionalMetaTags={[
-            ...(keywords ? [{ name: 'keywords', content: keywords }] : []),
-            ...(author ? [{ name: 'author', content: author }] : []),
-            ...(robots ? [{ name: 'robots', content: robots }] : []),
-            ...(themeColor ? [{ name: 'theme-color', content: themeColor }] : []),
+            ...(keywords ? [{ name: "keywords", content: keywords }] : []),
+            ...(author ? [{ name: "author", content: author }] : []),
+            ...(robots ? [{ name: "robots", content: robots }] : []),
+            ...(themeColor
+              ? [{ name: "theme-color", content: themeColor }]
+              : []),
           ]}
-
           openGraph={{
             type: ogType,
             url: canonicalUrl || fullUrl,
             title: ogTitle || title || meta?.title || "",
-            description: ogDescription || description || meta?.description || "",
+            description:
+              ogDescription || description || meta?.description || "",
             ...(ogImage && {
               images: [
                 {
@@ -239,7 +242,6 @@ function App({ subdomain, data, meta, seo }) {
               ],
             }),
           }}
-
           twitter={{
             cardType: twitterCard,
             ...(twitterSite && { site: twitterSite }),
@@ -262,7 +264,7 @@ export async function getServerSideProps({ req, res, params }) {
 
   // Check if this is a tenant subdomain or custom domain - if so, don't show PageHub brand
   const tenantBySubdomain = await loadTenantSettings(host);
-  const tenantByDomain = await loadTenantByDomain(host.split(':')[0]); // Remove port for domain lookup
+  const tenantByDomain = await loadTenantByDomain(host.split(":")[0]); // Remove port for domain lookup
 
   if (tenantBySubdomain || tenantByDomain) {
     return {
@@ -287,8 +289,9 @@ export async function getServerSideProps({ req, res, params }) {
       await dbConnect();
 
       const apiRes = await fetch(
-        `${process.env.API_ENDPOINT}/page/${subdomain}/${params?.slug?.join("/") || ""
-        }`
+        `${process.env.API_ENDPOINT}/page/${subdomain}/${
+          params?.slug?.join("/") || ""
+        }`,
       );
 
       let result = null;
@@ -314,8 +317,8 @@ export async function getServerSideProps({ req, res, params }) {
   // Set cache headers to enable bfcache (back/forward cache)
   // Cache for 60 seconds, allow stale content for 300 seconds while revalidating
   res.setHeader(
-    'Cache-Control',
-    'public, max-age=60, stale-while-revalidate=300'
+    "Cache-Control",
+    "public, max-age=60, stale-while-revalidate=300",
   );
 
   return {

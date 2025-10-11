@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{}>
+  res: NextApiResponse<{}>,
 ) {
   let { content } = req.body;
 
@@ -114,7 +114,7 @@ export default async function handler(
           }
         },
       },
-      { decodeEntities: true }
+      { decodeEntities: true },
     );
 
     parser.write(html);

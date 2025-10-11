@@ -44,13 +44,13 @@ const EditableName = () => {
   return (
     <div
       className={
-        "pointer-events-auto overflow-hidden  flex flex-row gap-3 bg-background !text-base !font-normal fontfamily-base border-current"
+        "fontfamily-base pointer-events-auto flex flex-row gap-3 overflow-hidden border-current bg-background !text-base !font-normal"
       }
-      style={{ color: elementColor || 'currentColor' }}
+      style={{ color: elementColor || "currentColor" }}
     >
       <div
         ref={editableRef}
-        className={`${isEditing ? 'cursor-text' : 'cursor-grab active:cursor-grabbing'}`}
+        className={`${isEditing ? "cursor-text" : "cursor-grab active:cursor-grabbing"}`}
         contentEditable={isEditing}
         data-gramm="false"
         suppressContentEditableWarning={true}
@@ -59,7 +59,7 @@ const EditableName = () => {
         onInput={debounce((e) => {
           actions.setCustom(
             id,
-            (custom) => (custom.displayName = e.target.innerText)
+            (custom) => (custom.displayName = e.target.innerText),
           );
         }, 500)}
       >
@@ -92,7 +92,7 @@ export const NameNodeController = (props: {
       align={align}
       alt={alt}
       placement={placement}
-      className={`${position === "top" && align === "start" && placement === "end" ? "m-0" : ""} whitespace-nowrap items-center select-none`}
+      className={`${position === "top" && align === "start" && placement === "end" ? "m-0" : ""} select-none items-center whitespace-nowrap`}
     >
       <EditableName />
     </RenderNodeControlInline>

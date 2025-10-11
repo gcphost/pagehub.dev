@@ -1,7 +1,7 @@
-import Placeholder from '@tiptap/extension-placeholder';
-import { EditorContent, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { useEffect } from 'react';
+import Placeholder from "@tiptap/extension-placeholder";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { useEffect } from "react";
 
 interface InlineTiptapProps {
   content: string;
@@ -18,7 +18,7 @@ export const InlineTiptap = ({
   isEditing,
   onFocus,
   onBlur,
-  className = '',
+  className = "",
 }: InlineTiptapProps) => {
   const editor = useEditor({
     extensions: [
@@ -33,7 +33,7 @@ export const InlineTiptap = ({
         listItem: false,
       }),
       Placeholder.configure({
-        placeholder: 'Start typing...',
+        placeholder: "Start typing...",
       }),
     ],
     content,
@@ -72,9 +72,5 @@ export const InlineTiptap = ({
     return null;
   }
 
-  return (
-
-    <EditorContent editor={editor} />
-
-  );
+  return <EditorContent editor={editor} />;
 };

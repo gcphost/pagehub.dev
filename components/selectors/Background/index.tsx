@@ -1,5 +1,10 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { CSStoObj, ClassGenerator, applyAnimation, clearClassCache } from "utils/tailwind";
+import {
+  CSStoObj,
+  ClassGenerator,
+  applyAnimation,
+  clearClassCache,
+} from "utils/tailwind";
 
 import React, { useEffect, useRef, useState } from "react";
 import { TbContainer } from "react-icons/tb";
@@ -169,7 +174,7 @@ export const Background = (props: Partial<ContainerProps>) => {
       preview,
       false,
       props.pallet || [],
-      query
+      query,
     ),
   };
 
@@ -201,7 +206,7 @@ export const Background = (props: Partial<ContainerProps>) => {
 
             if (!isCssValid(styleContent)) {
               console.warn(
-                `Ignoring invalid ${nodeName} element: ${node.textContent}`
+                `Ignoring invalid ${nodeName} element: ${node.textContent}`,
               );
               continue;
             }
@@ -225,7 +230,7 @@ export const Background = (props: Partial<ContainerProps>) => {
 
               if (!isJsValid(scriptContent)) {
                 console.warn(
-                  `Ignoring invalid ${nodeName} element: ${node.textContent}`
+                  `Ignoring invalid ${nodeName} element: ${node.textContent}`,
                 );
                 continue;
               }
@@ -238,7 +243,7 @@ export const Background = (props: Partial<ContainerProps>) => {
                 head.appendChild(script);
               } catch (e) {
                 console.warn(
-                  `Failed to append ${nodeName} element: ${node.textContent}`
+                  `Failed to append ${nodeName} element: ${node.textContent}`,
                 );
               }
             }
@@ -263,7 +268,7 @@ export const Background = (props: Partial<ContainerProps>) => {
               }
             } else {
               console.warn(
-                `Ignoring invalid ${nodeName} element: ${node.textContent}`
+                `Ignoring invalid ${nodeName} element: ${node.textContent}`,
               );
             }
           }
@@ -313,12 +318,14 @@ export const Background = (props: Partial<ContainerProps>) => {
     // Generate and inject new styles if styleGuide exists
     if (props.styleGuide) {
       const resolveLinkColor = (colorValue: string | undefined): string => {
-        if (!colorValue) return 'inherit';
+        if (!colorValue) return "inherit";
 
         // If it's a palette reference, resolve it
-        if (colorValue.startsWith('palette:')) {
-          const paletteName = colorValue.replace('palette:', '');
-          const paletteColor = (props.pallet || []).find((p) => p.name === paletteName);
+        if (colorValue.startsWith("palette:")) {
+          const paletteName = colorValue.replace("palette:", "");
+          const paletteColor = (props.pallet || []).find(
+            (p) => p.name === paletteName,
+          );
           if (paletteColor) {
             // Recursively resolve in case the palette color is also a reference
             return resolveLinkColor(paletteColor.color);
@@ -326,18 +333,22 @@ export const Background = (props: Partial<ContainerProps>) => {
         }
 
         // If it's a Tailwind color like "blue-500", convert to CSS
-        if (colorValue.includes('-') && !colorValue.startsWith('#') && !colorValue.startsWith('rgb')) {
+        if (
+          colorValue.includes("-") &&
+          !colorValue.startsWith("#") &&
+          !colorValue.startsWith("rgb")
+        ) {
           // Map common Tailwind colors to CSS
           const colorMap: { [key: string]: string } = {
-            'blue-500': '#3b82f6',
-            'purple-500': '#a855f7',
-            'orange-500': '#f97316',
-            'gray-500': '#6b7280',
-            'gray-900': '#111827',
-            'gray-50': '#f9fafb',
-            'gray-600': '#4b5563',
-            'white': '#ffffff',
-            'black': '#000000',
+            "blue-500": "#3b82f6",
+            "purple-500": "#a855f7",
+            "orange-500": "#f97316",
+            "gray-500": "#6b7280",
+            "gray-900": "#111827",
+            "gray-50": "#f9fafb",
+            "gray-600": "#4b5563",
+            white: "#ffffff",
+            black: "#000000",
           };
           return colorMap[colorValue] || colorValue;
         }
@@ -346,18 +357,20 @@ export const Background = (props: Partial<ContainerProps>) => {
       };
 
       // Scope styles to the viewport in edit mode, or globally in preview/published mode
-      const selector = enabled ? 'main[data-renderer="true"] a:not([class*="no-style"])' : 'a:not([class*="no-style"])';
+      const selector = enabled
+        ? 'main[data-renderer="true"] a:not([class*="no-style"])'
+        : 'a:not([class*="no-style"])';
 
       const linkStyles = `
         ${selector} {
           color: ${resolveLinkColor(props.styleGuide.linkColor)};
-          ${props.styleGuide.linkUnderline === 'underline' ? 'text-decoration: underline;' : props.styleGuide.linkUnderline === 'no-underline' ? 'text-decoration: none;' : ''};
-          ${props.styleGuide.linkUnderlineOffset && props.styleGuide.linkUnderlineOffset !== 'underline-offset-auto' ? `text-underline-offset: ${props.styleGuide.linkUnderlineOffset.replace('underline-offset-', '')}px;` : ''};
+          ${props.styleGuide.linkUnderline === "underline" ? "text-decoration: underline;" : props.styleGuide.linkUnderline === "no-underline" ? "text-decoration: none;" : ""};
+          ${props.styleGuide.linkUnderlineOffset && props.styleGuide.linkUnderlineOffset !== "underline-offset-auto" ? `text-underline-offset: ${props.styleGuide.linkUnderlineOffset.replace("underline-offset-", "")}px;` : ""};
           transition: color 150ms ease-in-out;
         }
         ${selector}:hover {
           color: ${resolveLinkColor(props.styleGuide.linkHoverColor)};
-          ${props.styleGuide.linkUnderline === 'hover:underline' ? 'text-decoration: underline;' : ''};
+          ${props.styleGuide.linkUnderline === "hover:underline" ? "text-decoration: underline;" : ""};
         }
       `;
 
@@ -414,7 +427,11 @@ export const Background = (props: Partial<ContainerProps>) => {
         </RenderGradient>
       </RenderPattern>
       {enabled && isMounted && (
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Background} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Background}
+          props={props}
+        />
       )}
     </PaletteProvider>
   );
@@ -423,7 +440,7 @@ export const Background = (props: Partial<ContainerProps>) => {
   if (enabled && isMounted) {
     prop.style = {
       ...(prop.style || {}),
-      overflow: 'visible',
+      overflow: "visible",
     };
   }
 
@@ -445,8 +462,18 @@ Background.craft = {
   },
   props: {
     tools: () => [
-      <NameNodeController key="name" position="bottom" align="end" placement="start" />,
-      <ToolNodeController key="tool" position="bottom" align="start" placement="start">
+      <NameNodeController
+        key="name"
+        position="bottom"
+        align="end"
+        placement="start"
+      />,
+      <ToolNodeController
+        key="tool"
+        position="bottom"
+        align="start"
+        placement="start"
+      >
         <ContainerSettingsNodeTool />
       </ToolNodeController>,
     ],

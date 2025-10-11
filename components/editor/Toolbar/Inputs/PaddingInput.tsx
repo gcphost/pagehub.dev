@@ -25,53 +25,55 @@ export const PaddingInput = ({ propKey = "padding" }) => {
         title="Padding"
         full={1}
         help="The space inside this component."
-        footer={<ItemAdvanceToggle
-          propKey={propKey}
-          title={
-            <>
-              <TbBoxPadding /> Top, bottom, left, or right are also available
-            </>
-          }
-        >
-          <ToolbarSection full={1}>
-            <ToolbarItem
-              propKey="pt"
-              type="slider"
-              label="Top"
-              max={TailwindStyles.pt.length - 1}
-              min={0}
-              valueLabels={TailwindStyles.pt}
-              inline
-            />
-            <ToolbarItem
-              propKey="pb"
-              type="slider"
-              label="Bottom"
-              max={TailwindStyles.pb.length - 1}
-              min={0}
-              valueLabels={TailwindStyles.pb}
-              inline
-            />
-            <ToolbarItem
-              propKey="pl"
-              type="slider"
-              label="Left"
-              max={TailwindStyles.pl.length - 1}
-              min={0}
-              valueLabels={TailwindStyles.pl}
-              inline
-            />
-            <ToolbarItem
-              propKey="pr"
-              type="slider"
-              label="Right"
-              max={TailwindStyles.pr.length - 1}
-              min={0}
-              valueLabels={TailwindStyles.pr}
-              inline
-            />
-          </ToolbarSection>
-        </ItemAdvanceToggle>}
+        footer={
+          <ItemAdvanceToggle
+            propKey={propKey}
+            title={
+              <>
+                <TbBoxPadding /> Top, bottom, left, or right are also available
+              </>
+            }
+          >
+            <ToolbarSection full={1}>
+              <ToolbarItem
+                propKey="pt"
+                type="slider"
+                label="Top"
+                max={TailwindStyles.pt.length - 1}
+                min={0}
+                valueLabels={TailwindStyles.pt}
+                inline
+              />
+              <ToolbarItem
+                propKey="pb"
+                type="slider"
+                label="Bottom"
+                max={TailwindStyles.pb.length - 1}
+                min={0}
+                valueLabels={TailwindStyles.pb}
+                inline
+              />
+              <ToolbarItem
+                propKey="pl"
+                type="slider"
+                label="Left"
+                max={TailwindStyles.pl.length - 1}
+                min={0}
+                valueLabels={TailwindStyles.pl}
+                inline
+              />
+              <ToolbarItem
+                propKey="pr"
+                type="slider"
+                label="Right"
+                max={TailwindStyles.pr.length - 1}
+                min={0}
+                valueLabels={TailwindStyles.pr}
+                inline
+              />
+            </ToolbarSection>
+          </ItemAdvanceToggle>
+        }
       >
         <ToolbarItem
           propKey="px"
@@ -96,17 +98,13 @@ export const PaddingInput = ({ propKey = "padding" }) => {
           varSelectorPrefix="py"
           inline
         />
-
-
       </ToolbarSection>
-
-
 
       {view === "mobile" &&
         TailwindStyles.px.indexOf(propValues[view]?.px) >
-        TailwindStyles.px.indexOf("px-3") && (
+          TailwindStyles.px.indexOf("px-3") && (
           <ToolbarSection>
-            <div className="flex gap-3 items-center text-xs text-muted-foreground">
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
               <TbInfoSquare /> Padding may be too large for mobile.
             </div>
           </ToolbarSection>

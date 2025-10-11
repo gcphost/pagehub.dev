@@ -12,7 +12,7 @@ const sluggit = require("slug");
 
 export const parseContent = (content, slug) => {
   if (!content) return { data: null, seo: null };
-  
+
   let data;
   try {
     data = lz.decompress(lz.decodeBase64(content));
@@ -20,7 +20,7 @@ export const parseContent = (content, slug) => {
     console.error("Failed to decompress/decode content:", e);
     return { data: null, seo: null };
   }
-  
+
   let onlyPage;
 
   let da;
@@ -30,7 +30,7 @@ export const parseContent = (content, slug) => {
 
   try {
     da = JSON.parse(data);
-  } catch (e) { 
+  } catch (e) {
     console.error("Failed to parse JSON data:", e);
     return { data: null, seo: null };
   }
@@ -49,7 +49,7 @@ export const parseContent = (content, slug) => {
 
   if (!slug?.length || slug?.length > 1) {
     const homePage = Object.keys(pageData).find(
-      (_) => pageData[_].data?.props?.isHomePage === true
+      (_) => pageData[_].data?.props?.isHomePage === true,
     );
 
     if (homePage) {
@@ -57,7 +57,7 @@ export const parseContent = (content, slug) => {
     }
   } else if (slug[0] === "index") {
     const homePage = Object.keys(pageData).find(
-      (_) => pageData[_].data?.props?.isHomePage === true
+      (_) => pageData[_].data?.props?.isHomePage === true,
     );
 
     if (homePage) {
@@ -65,10 +65,10 @@ export const parseContent = (content, slug) => {
     }
   } else {
     const aPage = Object.keys(pageData).find(
-      (_) => pageData[_].slug === slug[0]
+      (_) => pageData[_].slug === slug[0],
     );
 
-    console.log('pd', pageData, slug[0])
+    console.log("pd", pageData, slug[0]);
 
     if (aPage) {
       onlyPage = aPage;
@@ -76,13 +76,24 @@ export const parseContent = (content, slug) => {
   }
 
   // Helper function to process page and return data
-  const processPage = (pageKey, defaultTitle = null, defaultDescription = null) => {
+  const processPage = (
+    pageKey,
+    defaultTitle = null,
+    defaultDescription = null,
+  ) => {
     const k = pageData[pageKey].key;
     const props = da[k];
 
     // Basic SEO
-    seo.title = props.props.pageTitle || props.pageTitle || props?.custom?.displayName || defaultTitle;
-    seo.description = props.props.pageDescription || props.pageDescription || defaultDescription;
+    seo.title =
+      props.props.pageTitle ||
+      props.pageTitle ||
+      props?.custom?.displayName ||
+      defaultTitle;
+    seo.description =
+      props.props.pageDescription ||
+      props.pageDescription ||
+      defaultDescription;
     seo.keywords = props.props.pageKeywords || null;
     seo.author = props.props.pageAuthor || null;
 
@@ -90,10 +101,10 @@ export const parseContent = (content, slug) => {
     seo.ogTitle = props.props.ogTitle || seo.title;
     seo.ogDescription = props.props.ogDescription || seo.description;
     seo.ogImage = props.props.ogImage || null;
-    seo.ogType = props.props.ogType || 'website';
+    seo.ogType = props.props.ogType || "website";
 
     // Twitter
-    seo.twitterCard = props.props.twitterCard || 'summary_large_image';
+    seo.twitterCard = props.props.twitterCard || "summary_large_image";
     seo.twitterSite = props.props.twitterSite || null;
     seo.twitterCreator = props.props.twitterCreator || null;
 
@@ -120,11 +131,15 @@ export const parseContent = (content, slug) => {
 
   // If no page found, look for a 404 page
   const notFoundPage = Object.keys(pageData).find(
-    (_) => pageData[_].data?.props?.is404Page === true
+    (_) => pageData[_].data?.props?.is404Page === true,
   );
 
   if (notFoundPage) {
-    return processPage(notFoundPage, "Page Not Found", "The page you're looking for doesn't exist.");
+    return processPage(
+      notFoundPage,
+      "Page Not Found",
+      "The page you're looking for doesn't exist.",
+    );
   }
 
   console.error("404");

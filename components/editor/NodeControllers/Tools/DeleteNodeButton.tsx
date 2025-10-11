@@ -34,8 +34,11 @@ export const DeleteNodeButton = ({
 
     // Mark element as being deleted BEFORE blurring
     const activeElement = document.activeElement;
-    if (activeElement instanceof HTMLElement && activeElement.isContentEditable) {
-      activeElement.setAttribute('data-deleting', 'true');
+    if (
+      activeElement instanceof HTMLElement &&
+      activeElement.isContentEditable
+    ) {
+      activeElement.setAttribute("data-deleting", "true");
       activeElement.blur();
     }
 
@@ -64,4 +67,3 @@ export const DeleteNodeButton = ({
     </button>
   );
 };
-

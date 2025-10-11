@@ -60,7 +60,7 @@ export const TextComponents = [
   <RenderParagraphComponent
     key="2"
     element={Text}
-  // mobile={{ lineHeight: "leading-10" }}
+    // mobile={{ lineHeight: "leading-10" }}
   />,
 ];
 

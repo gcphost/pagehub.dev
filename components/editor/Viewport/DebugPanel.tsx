@@ -40,7 +40,7 @@ export default function DebugPanel() {
   return (
     <button
       ref={divRef}
-      className="flex flex-col gap-3 p-1.5 z-50 h-1/2 w-1/3 overflow-auto scrollbar absolute top-3 right-3 bg-background rounded-xl"
+      className="h-1/2 scrollbar absolute right-3 top-3 z-50 flex w-1/3 flex-col gap-3 overflow-auto rounded-xl bg-background p-1.5"
       style={{
         position: "absolute",
         left: position.x,

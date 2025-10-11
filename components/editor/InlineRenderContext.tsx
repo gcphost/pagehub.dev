@@ -8,4 +8,3 @@ import { createContext, useContext } from "react";
 export const InlineRenderContext = createContext(false);
 
 export const useIsInlineRender = () => useContext(InlineRenderContext);
-

@@ -20,7 +20,6 @@ export const ToolbarSection = ({
 }: any) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
-
   const handleClick = (e: React.MouseEvent) => {
     if (collapsible) {
       setIsOpen(!isOpen);
@@ -31,9 +30,14 @@ export const ToolbarSection = ({
   };
 
   return (
-    <div className="w-full mb-4">
+    <div className="mb-4 w-full">
       {title && (
-        <button id={title} className={`text-sm font-semibold text-foreground gap-3 flex items-center justify-between w-full py-2 px-1 rounded-md  transition-colors ${className}`} onClick={handleClick} aria-label={title}>
+        <button
+          id={title}
+          className={`flex w-full items-center justify-between gap-3 rounded-md px-1 py-2 text-sm font-semibold text-foreground transition-colors ${className}`}
+          onClick={handleClick}
+          aria-label={title}
+        >
           <div className="flex items-center gap-3">
             {title}
 
@@ -44,10 +48,10 @@ export const ToolbarSection = ({
                 className="relative inline-flex"
                 onClick={(e) => e.stopPropagation()}
               >
-                <span className="text-xxs  cursor-pointer rounded-full peer inline-flex z-10">
+                <span className="text-xxs peer z-10 inline-flex cursor-pointer rounded-full">
                   <TbQuestionMark />
                 </span>
-                <span className="invisible peer-hover:visible absolute text-sm w-64 left-8 -top-2 bg-card border border-border rounded p-3 font-normal text-foreground shadow-lg z-50 whitespace-normal">
+                <span className="invisible absolute -top-2 left-8 z-50 w-64 whitespace-normal rounded border border-border bg-card p-3 text-sm font-normal text-foreground shadow-lg peer-hover:visible">
                   {help}
                 </span>
               </span>
@@ -64,15 +68,17 @@ export const ToolbarSection = ({
 
       {enabled && isOpen && (
         <>
-          <div className={`grid-cols-${full} gap-4 grid items-end ${bodyClassName} pb-2`} role="group" aria-labelledby={title}>
+          <div
+            className={`grid-cols-${full} grid items-end gap-4 ${bodyClassName} pb-2`}
+            role="group"
+            aria-labelledby={title}
+          >
             {children}
           </div>
 
           {footer && <div className="pt-2">{footer}</div>}
         </>
       )}
-
-
     </div>
   );
 };

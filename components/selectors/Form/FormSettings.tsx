@@ -23,7 +23,13 @@ import { TabAtom } from "components/editor/Viewport";
 import { useState } from "react";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
-import { TbAccessible, TbBoxPadding, TbForms, TbMouse, TbPlayerPlay } from "react-icons/tb";
+import {
+  TbAccessible,
+  TbBoxPadding,
+  TbForms,
+  TbMouse,
+  TbPlayerPlay,
+} from "react-icons/tb";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { useDefaultTab } from "utils/lib";
@@ -93,7 +99,10 @@ export const FormSettings = () => {
 
     return (
       <TabBody>
-        <ToolbarSection title="View State" help="Toggle between form states to design each one">
+        <ToolbarSection
+          title="View State"
+          help="Toggle between form states to design each one"
+        >
           <ToolbarItem
             propKey="view"
             propType="component"
@@ -111,26 +120,31 @@ export const FormSettings = () => {
           <PresetGroupRenderer presets={selectorPresets.form} />
         </ToolbarSection>
 
-        <ToolbarSection title="Properties" help={help}
-          footer={<ItemAdvanceToggle
-            propKey="formSettings"
-            title={
-              <>
-                <TbForms /> Additional Settings
-              </>
-            }
-          >
-            <ToolbarItem
-              propKey="view"
-              propType="component"
-              type="select"
-              label="View"
+        <ToolbarSection
+          title="Properties"
+          help={help}
+          footer={
+            <ItemAdvanceToggle
+              propKey="formSettings"
+              title={
+                <>
+                  <TbForms /> Additional Settings
+                </>
+              }
             >
-              <option value="">Default</option>
-              <option value="loading">loading</option>
-              <option value="loaded">loaded</option>
-            </ToolbarItem>
-          </ItemAdvanceToggle>}>
+              <ToolbarItem
+                propKey="view"
+                propType="component"
+                type="select"
+                label="View"
+              >
+                <option value="">Default</option>
+                <option value="loading">loading</option>
+                <option value="loaded">loaded</option>
+              </ToolbarItem>
+            </ItemAdvanceToggle>
+          }
+        >
           <ToolbarItem
             propKey="formName"
             propType="component"
@@ -200,9 +214,6 @@ export const FormSettings = () => {
             </ToolbarItem>
           </>
         )}
-
-
-
       </TabBody>
     );
   };
@@ -219,10 +230,6 @@ export const FormSettings = () => {
 
       {activeTab === "Appearance" && (
         <TabBody>
-
-
-
-
           <ToolbarSection title="Colors">
             <ColorInput
               propKey="color"
@@ -241,8 +248,9 @@ export const FormSettings = () => {
             />
           </ToolbarSection>
 
-
-          <BackgroundInput><PatternInput /></BackgroundInput>
+          <BackgroundInput>
+            <PatternInput />
+          </BackgroundInput>
 
           <BorderInput />
 
@@ -280,7 +288,6 @@ export const FormSettings = () => {
           <MarginInput />
 
           <PaddingInput />
-
         </TabBody>
       )}
       {activeTab === "Style" && (
@@ -292,7 +299,7 @@ export const FormSettings = () => {
       )}
       {activeTab === "Animations" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Animation settings are not available for this component.
           </p>
         </TabBody>
@@ -301,7 +308,7 @@ export const FormSettings = () => {
       {activeTab === "Accessibility" && <AccessibilityInput />}
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Hover settings are not available for this component.
           </p>
         </TabBody>

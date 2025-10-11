@@ -46,7 +46,7 @@ export const SelectImageListTool = () => {
       key={`${id}-select-image-list`}
       position="right"
       align="middle"
-      className="whitespace-nowrap items-center select-none pointer-events-auto"
+      className="pointer-events-auto select-none items-center whitespace-nowrap"
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -73,12 +73,15 @@ export const SelectImageListTool = () => {
             mass: 0.5,
           },
         }}
-        className="p-0.5 flex items-center justify-center bg-muted rounded-md !text-base !font-normal fontfamily-base m-1"
+        className="fontfamily-base m-1 flex items-center justify-center rounded-md bg-muted p-0.5 !text-base !font-normal"
       >
-        <Tooltip content="Select List" className="tool-bg h-fit whitespace-nowrap items-center select-none pointer-events-auto">
+        <Tooltip
+          content="Select List"
+          className="tool-bg h-fit pointer-events-auto select-none items-center whitespace-nowrap"
+        >
           <button
             type="button"
-            className="text-foreground hover:text-muted-foreground disabled:text-muted-foreground disabled:cursor-not-allowed text-sm"
+            className="text-sm text-foreground hover:text-muted-foreground disabled:cursor-not-allowed disabled:text-muted-foreground"
             onClick={handleSelectImageList}
           >
             <TbPhoto />

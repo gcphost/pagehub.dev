@@ -11,7 +11,7 @@ export const ContainerTypeInput = () => {
     {
       propKey: "flexDirection",
     },
-    nodeProps
+    nodeProps,
   );
 
   const { actions, query } = useEditor();
@@ -35,12 +35,10 @@ export const ContainerTypeInput = () => {
 
         <option value="flex-col-reverse">Reverse Column</option>
         <option value="flex-row-reverse">Reverse Row</option>
-
       </ToolbarItem>
 
-
       <button
-        className="h-fill w-full btn btn-text"
+        className="h-fill btn btn-text w-full"
         onClick={() => {
           AddElement({
             element: (
@@ -65,7 +63,6 @@ export const ContainerTypeInput = () => {
       >
         Add Container
       </button>
-
     </>
   );
 };

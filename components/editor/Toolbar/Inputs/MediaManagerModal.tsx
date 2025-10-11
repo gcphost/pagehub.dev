@@ -4,11 +4,29 @@ import { Tooltip } from "components/layout/Tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { TbClipboard, TbCode, TbEdit, TbExternalLink, TbLayoutGrid, TbList, TbPhoto, TbPlus, TbRefresh, TbSearch, TbTrash, TbUpload, TbX } from "react-icons/tb";
+import {
+  TbClipboard,
+  TbCode,
+  TbEdit,
+  TbExternalLink,
+  TbLayoutGrid,
+  TbList,
+  TbPhoto,
+  TbPlus,
+  TbRefresh,
+  TbSearch,
+  TbTrash,
+  TbUpload,
+  TbX,
+} from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { getCdnUrl } from "utils/cdn";
-import { getPageMedia, registerMediaWithBackground, updateMediaMetadata } from "utils/lib";
+import {
+  getPageMedia,
+  registerMediaWithBackground,
+  updateMediaMetadata,
+} from "utils/lib";
 
 interface MediaManagerModalProps {
   isOpen: boolean;
@@ -17,7 +35,12 @@ interface MediaManagerModalProps {
   selectionMode?: boolean; // If true, shows "Select" button on items
 }
 
-export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = false }: MediaManagerModalProps) => {
+export const MediaManagerModal = ({
+  isOpen,
+  onClose,
+  onSelect,
+  selectionMode = false,
+}: MediaManagerModalProps) => {
   const { query, actions } = useEditor();
   const [mediaList, setMediaList] = useState<any[]>([]);
   const [filteredMedia, setFilteredMedia] = useState<any[]>([]);
@@ -63,7 +86,10 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     setIsDragOver(false);
 
     const files = e.dataTransfer.files;
-    console.log(`Dropped ${files.length} files:`, Array.from(files).map(f => f.name));
+    console.log(
+      `Dropped ${files.length} files:`,
+      Array.from(files).map((f) => f.name),
+    );
     if (files && files.length > 0) {
       handleUpload(files);
     }
@@ -76,7 +102,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
-      if (item.type.indexOf('image') !== -1) {
+      if (item.type.indexOf("image") !== -1) {
         e.preventDefault();
 
         const file = item.getAsFile();
@@ -86,8 +112,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         setUploadProgress({
           current: 0,
           total: 1,
-          currentFile: file.name || 'Pasted image',
-          completedFiles: []
+          currentFile: file.name || "Pasted image",
+          completedFiles: [],
         });
 
         try {
@@ -106,12 +132,20 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           }
 
           const mediaId = res.result.id;
-          registerMediaWithBackground(query, actions, mediaId, "cdn", "media-manager");
+          registerMediaWithBackground(
+            query,
+            actions,
+            mediaId,
+            "cdn",
+            "media-manager",
+          );
 
           // Add metadata
           actions.setProp(ROOT_NODE, (props: any) => {
             props.pageMedia = props.pageMedia || [];
-            const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+            const existingMedia = props.pageMedia.find(
+              (m: any) => m.id === mediaId,
+            );
 
             if (existingMedia) {
               existingMedia.metadata = {
@@ -125,7 +159,9 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           });
 
           refreshMediaList();
-          console.log(`✅ Pasted and uploaded image: ${file.name || 'unnamed'}`);
+          console.log(
+            `✅ Pasted and uploaded image: ${file.name || "unnamed"}`,
+          );
         } catch (error) {
           console.error("Failed to upload pasted image:", error);
           alert(`Failed to upload pasted image: ${error.message}`);
@@ -143,8 +179,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const checkClipboardForImages = async () => {
     try {
       const clipboardItems = await navigator.clipboard.read();
-      const hasImage = clipboardItems.some(item =>
-        item.types.some(type => type.startsWith('image/'))
+      const hasImage = clipboardItems.some((item) =>
+        item.types.some((type) => type.startsWith("image/")),
       );
       setHasImageInClipboard(hasImage);
     } catch (error) {
@@ -162,9 +198,13 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
       for (const clipboardItem of clipboardItems) {
         for (const type of clipboardItem.types) {
-          if (type.startsWith('image/')) {
+          if (type.startsWith("image/")) {
             const blob = await clipboardItem.getType(type);
-            const file = new File([blob], `pasted-image-${Date.now()}.${type.split('/')[1]}`, { type });
+            const file = new File(
+              [blob],
+              `pasted-image-${Date.now()}.${type.split("/")[1]}`,
+              { type },
+            );
 
             setUploading(true);
 
@@ -184,12 +224,20 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
               }
 
               const mediaId = res.result.id;
-              registerMediaWithBackground(query, actions, mediaId, "cdn", "media-manager");
+              registerMediaWithBackground(
+                query,
+                actions,
+                mediaId,
+                "cdn",
+                "media-manager",
+              );
 
               // Add metadata
               actions.setProp(ROOT_NODE, (props: any) => {
                 props.pageMedia = props.pageMedia || [];
-                const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+                const existingMedia = props.pageMedia.find(
+                  (m: any) => m.id === mediaId,
+                );
 
                 if (existingMedia) {
                   existingMedia.metadata = {
@@ -217,15 +265,17 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       }
     } catch (error) {
       console.error("Failed to read clipboard:", error);
-      alert("Failed to access clipboard. Please try pasting with Ctrl+V / Cmd+V instead.");
+      alert(
+        "Failed to access clipboard. Please try pasting with Ctrl+V / Cmd+V instead.",
+      );
     }
   };
 
   // Format file size in human-readable format
   const formatFileSize = (bytes: number): string => {
-    if (bytes === 0) return '0 B';
+    if (bytes === 0) return "0 B";
     const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const sizes = ["B", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
   };
@@ -256,7 +306,11 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   };
 
   const handleDelete = (mediaId: string) => {
-    if (!confirm("Are you sure you want to delete this media item? This cannot be undone.")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete this media item? This cannot be undone.",
+      )
+    ) {
       return;
     }
 
@@ -272,13 +326,16 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
   const handleUpload = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
-    console.log(`Starting upload of ${files.length} files:`, Array.from(files).map(f => f.name));
+    console.log(
+      `Starting upload of ${files.length} files:`,
+      Array.from(files).map((f) => f.name),
+    );
     setUploading(true);
     setUploadProgress({
       current: 0,
       total: files.length,
-      currentFile: '',
-      completedFiles: []
+      currentFile: "",
+      completedFiles: [],
     });
     const uploadedIds: string[] = [];
 
@@ -289,11 +346,15 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         console.log(`Uploading file ${i + 1}/${files.length}: ${file.name}`);
 
         // Update progress to show current file
-        setUploadProgress(prev => prev ? {
-          ...prev,
-          current: i,
-          currentFile: file.name
-        } : null);
+        setUploadProgress((prev) =>
+          prev
+            ? {
+                ...prev,
+                current: i,
+                currentFile: file.name,
+              }
+            : null,
+        );
 
         try {
           // Get signed URL for each file (in case URLs expire)
@@ -311,21 +372,35 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           if (res?.result?.id) {
             const mediaId = res.result.id; // This is the UUID from CDN
             uploadedIds.push(mediaId);
-            console.log(`✅ Successfully uploaded ${file.name} with ID: ${mediaId}`);
+            console.log(
+              `✅ Successfully uploaded ${file.name} with ID: ${mediaId}`,
+            );
 
             // Update progress to show completed file
-            setUploadProgress(prev => prev ? {
-              ...prev,
-              completedFiles: [...prev.completedFiles, file.name]
-            } : null);
+            setUploadProgress((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    completedFiles: [...prev.completedFiles, file.name],
+                  }
+                : null,
+            );
 
             // Register with page media
-            registerMediaWithBackground(query, actions, mediaId, "cdn", "media-manager");
+            registerMediaWithBackground(
+              query,
+              actions,
+              mediaId,
+              "cdn",
+              "media-manager",
+            );
 
             // Also add metadata
             actions.setProp(ROOT_NODE, (props: any) => {
               props.pageMedia = props.pageMedia || [];
-              const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+              const existingMedia = props.pageMedia.find(
+                (m: any) => m.id === mediaId,
+              );
 
               if (existingMedia) {
                 // Update existing entry with metadata
@@ -362,13 +437,13 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     let cleaned = svg.trim();
 
     // Remove XML declaration
-    cleaned = cleaned.replace(/<\?xml[^?]*\?>/gi, '');
+    cleaned = cleaned.replace(/<\?xml[^?]*\?>/gi, "");
 
     // Remove DOCTYPE
-    cleaned = cleaned.replace(/<!DOCTYPE[^>]*>/gi, '');
+    cleaned = cleaned.replace(/<!DOCTYPE[^>]*>/gi, "");
 
     // Remove comments
-    cleaned = cleaned.replace(/<!--[\s\S]*?-->/g, '');
+    cleaned = cleaned.replace(/<!--[\s\S]*?-->/g, "");
 
     // Extract only the SVG tag and its contents
     const svgMatch = cleaned.match(/<svg[\s\S]*<\/svg>/i);
@@ -377,15 +452,30 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     }
 
     // Remove width and height attributes from SVG tag
-    cleaned = cleaned.replace(/\s*(width|height)\s*=\s*["'][^"']*["']/gi, '');
+    cleaned = cleaned.replace(/\s*(width|height)\s*=\s*["'][^"']*["']/gi, "");
 
     // Replace black fills with currentColor to make SVG themeable
     // Handle various black color formats
-    cleaned = cleaned.replace(/fill\s*=\s*["']#000000["']/gi, 'fill="currentColor"');
-    cleaned = cleaned.replace(/fill\s*=\s*["']#000["']/gi, 'fill="currentColor"');
-    cleaned = cleaned.replace(/fill\s*=\s*["']black["']/gi, 'fill="currentColor"');
-    cleaned = cleaned.replace(/fill\s*=\s*["']rgb\(0,\s*0,\s*0\)["']/gi, 'fill="currentColor"');
-    cleaned = cleaned.replace(/fill\s*=\s*["']rgba\(0,\s*0,\s*0,\s*1\)["']/gi, 'fill="currentColor"');
+    cleaned = cleaned.replace(
+      /fill\s*=\s*["']#000000["']/gi,
+      'fill="currentColor"',
+    );
+    cleaned = cleaned.replace(
+      /fill\s*=\s*["']#000["']/gi,
+      'fill="currentColor"',
+    );
+    cleaned = cleaned.replace(
+      /fill\s*=\s*["']black["']/gi,
+      'fill="currentColor"',
+    );
+    cleaned = cleaned.replace(
+      /fill\s*=\s*["']rgb\(0,\s*0,\s*0\)["']/gi,
+      'fill="currentColor"',
+    );
+    cleaned = cleaned.replace(
+      /fill\s*=\s*["']rgba\(0,\s*0,\s*0,\s*1\)["']/gi,
+      'fill="currentColor"',
+    );
 
     // Trim extra whitespace
     cleaned = cleaned.trim();
@@ -430,7 +520,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       current: 0,
       total: 1,
       currentFile: files[0].name,
-      completedFiles: []
+      completedFiles: [],
     });
 
     try {
@@ -457,7 +547,9 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         actions.setProp("ROOT", (props: any) => {
           if (!props.pageMedia) return;
 
-          const mediaItem = props.pageMedia.find((m: any) => m.id === replacingMedia);
+          const mediaItem = props.pageMedia.find(
+            (m: any) => m.id === replacingMedia,
+          );
           if (mediaItem) {
             // Keep the same media library ID but update to point to new CDN file
             mediaItem.cdnId = newCdnId;
@@ -492,10 +584,15 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       if (saveUrlToCdn) {
         // Download image from URL and upload to CDN
         const response = await fetch(urlInput);
-        if (!response.ok) throw new Error(`Failed to fetch image: ${response.statusText}`);
+        if (!response.ok)
+          throw new Error(`Failed to fetch image: ${response.statusText}`);
 
         const blob = await response.blob();
-        const file = new File([blob], urlInput.split('/').pop() || 'image.jpg', { type: blob.type });
+        const file = new File(
+          [blob],
+          urlInput.split("/").pop() || "image.jpg",
+          { type: blob.type },
+        );
 
         // Get signed URL for CDN upload
         const geturl = await GetSignedUrl();
@@ -512,12 +609,20 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         }
 
         const mediaId = res.result.id;
-        registerMediaWithBackground(query, actions, mediaId, "cdn", "media-manager");
+        registerMediaWithBackground(
+          query,
+          actions,
+          mediaId,
+          "cdn",
+          "media-manager",
+        );
 
         // Add metadata
         actions.setProp(ROOT_NODE, (props: any) => {
           props.pageMedia = props.pageMedia || [];
-          const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+          const existingMedia = props.pageMedia.find(
+            (m: any) => m.id === mediaId,
+          );
 
           if (existingMedia) {
             existingMedia.metadata = {
@@ -534,17 +639,25 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       } else {
         // Store as URL reference (existing behavior)
         const mediaId = `url-${Date.now()}`;
-        registerMediaWithBackground(query, actions, mediaId, "url", "media-manager");
+        registerMediaWithBackground(
+          query,
+          actions,
+          mediaId,
+          "url",
+          "media-manager",
+        );
 
         // Add metadata with the actual URL
         actions.setProp(ROOT_NODE, (props: any) => {
           props.pageMedia = props.pageMedia || [];
-          const existingMedia = props.pageMedia.find((m: any) => m.id === mediaId);
+          const existingMedia = props.pageMedia.find(
+            (m: any) => m.id === mediaId,
+          );
 
           if (existingMedia) {
             existingMedia.metadata = {
               ...existingMedia.metadata,
-              title: urlInput.split('/').pop() || urlInput,
+              title: urlInput.split("/").pop() || urlInput,
               url: urlInput,
             };
           }
@@ -572,7 +685,13 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
     const svgSize = new Blob([cleanedSvg]).size; // Get byte size of SVG
 
     const mediaId = `svg-${Date.now()}`;
-    registerMediaWithBackground(query, actions, mediaId, "svg", "media-manager");
+    registerMediaWithBackground(
+      query,
+      actions,
+      mediaId,
+      "svg",
+      "media-manager",
+    );
 
     // Add metadata with the SVG content
     actions.setProp(ROOT_NODE, (props: any) => {
@@ -606,19 +725,22 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
       checkClipboardForImages();
 
       // Add paste event listener when modal opens
-      document.addEventListener('paste', handlePaste);
+      document.addEventListener("paste", handlePaste);
     }
 
     // Cleanup paste event listener when modal closes
     return () => {
-      document.removeEventListener('paste', handlePaste);
+      document.removeEventListener("paste", handlePaste);
     };
   }, [isOpen, refreshMediaList]);
 
   // Close add mode inputs when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (toolbarRef.current && !toolbarRef.current.contains(event.target as Node)) {
+      if (
+        toolbarRef.current &&
+        !toolbarRef.current.contains(event.target as Node)
+      ) {
         if (addMode === "url" || addMode === "svg") {
           setAddMode("upload");
         }
@@ -642,7 +764,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[9997] bg-background/80 backdrop-blur-sm"
+        className="bg-background/80 fixed inset-0 z-[9997] backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -652,12 +774,12 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.2 }}
-        className="fixed inset-0 z-[9998] bg-background border border-border shadow-xl"
+        className="fixed inset-0 z-[9998] border border-border bg-background shadow-xl"
         style={{ margin: "20px", borderRadius: "12px", overflow: "hidden" }}
       >
-        <div className="h-full flex flex-col">
+        <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-accent text-accent-foreground">
+          <div className="flex items-center justify-between border-b border-border bg-accent px-4 py-3 text-accent-foreground">
             <div className="flex items-center gap-4">
               <TbPhoto className="text-3xl text-primary" />
               <div>
@@ -667,14 +789,13 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 <p className="text-sm text-muted-foreground">
                   {selectionMode
                     ? "Click an image to select it"
-                    : `${filteredMedia.length} ${filteredMedia.length === 1 ? "item" : "items"}${searchQuery ? ` (filtered from ${mediaList.length})` : ""}`
-                  }
+                    : `${filteredMedia.length} ${filteredMedia.length === 1 ? "item" : "items"}${searchQuery ? ` (filtered from ${mediaList.length})` : ""}`}
                 </p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="text-muted-foreground hover:text-foreground text-2xl p-2 hover:bg-muted rounded-lg"
+              className="rounded-lg p-2 text-2xl text-muted-foreground hover:bg-muted hover:text-foreground"
               title="Close"
             >
               <TbX />
@@ -682,48 +803,53 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           </div>
 
           {/* Toolbar */}
-          <div ref={toolbarRef} className="px-4 py-2 border-b border-border bg-muted">
+          <div
+            ref={toolbarRef}
+            className="border-b border-border bg-muted px-4 py-2"
+          >
             <div className="flex items-center gap-2">
               {/* Search */}
-              <div className="flex-1 relative">
+              <div className="relative flex-1">
                 <TbSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="Search media..."
-                  className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-sm"
+                  className="w-full rounded-lg border border-border py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
 
               {/* View Mode Toggle */}
-              <div className="flex items-center gap-1 bg-muted text-muted-foreground rounded-lg p-1 border border-border">
+              <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 text-muted-foreground">
                 <Tooltip content="Card view" placement="bottom">
                   <button
                     onClick={() => setViewMode("cards")}
-                    className={`px-2 py-1.5 rounded text-xs font-medium transition-colors ${viewMode === "cards"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                      }`}
+                    className={`rounded px-2 py-1.5 text-xs font-medium transition-colors ${
+                      viewMode === "cards"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
-                    <TbLayoutGrid className="w-4 h-4" />
+                    <TbLayoutGrid className="size-4" />
                   </button>
                 </Tooltip>
                 <Tooltip content="List view" placement="bottom">
                   <button
                     onClick={() => setViewMode("list")}
-                    className={`px-2 py-1.5 rounded text-xs font-medium transition-colors ${viewMode === "list"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                      }`}
+                    className={`rounded px-2 py-1.5 text-xs font-medium transition-colors ${
+                      viewMode === "list"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
-                    <TbList className="w-4 h-4" />
+                    <TbList className="size-4" />
                   </button>
                 </Tooltip>
               </div>
 
               {/* Add Mode Selector - compact pills */}
-              <div className="flex items-center gap-1 bg-muted text-muted-foreground rounded-lg p-1 border border-border">
+              <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 text-muted-foreground">
                 <Tooltip content="Upload files" placement="bottom">
                   <button
                     onClick={() => {
@@ -731,10 +857,11 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       if (addMode === "upload") fileInputRef.current?.click();
                     }}
                     disabled={uploading}
-                    className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "upload"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                      }`}
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${
+                      addMode === "upload"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
                     <TbUpload className="inline" />
                   </button>
@@ -742,10 +869,11 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 <Tooltip content="Add from URL" placement="bottom">
                   <button
                     onClick={() => setAddMode("url")}
-                    className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "url"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                      }`}
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${
+                      addMode === "url"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
                     <TbExternalLink className="inline" />
                   </button>
@@ -753,28 +881,31 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 <Tooltip content="Add SVG code" placement="bottom">
                   <button
                     onClick={() => setAddMode("svg")}
-                    className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "svg"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                      }`}
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${
+                      addMode === "svg"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
                     <TbCode className="inline" />
                   </button>
                 </Tooltip>
                 <Tooltip
-                  content={hasImageInClipboard
-                    ? "Paste image from clipboard (Ctrl+V / Cmd+V)"
-                    : "No image in clipboard"
+                  content={
+                    hasImageInClipboard
+                      ? "Paste image from clipboard (Ctrl+V / Cmd+V)"
+                      : "No image in clipboard"
                   }
                   placement="bottom"
                 >
                   <button
                     onClick={handlePasteClick}
                     disabled={!hasImageInClipboard || uploading}
-                    className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${hasImageInClipboard && !uploading
-                      ? "text-muted-foreground hover:text-foreground"
-                      : "text-muted-foreground cursor-not-allowed"
-                      }`}
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${
+                      hasImageInClipboard && !uploading
+                        ? "text-muted-foreground hover:text-foreground"
+                        : "cursor-not-allowed text-muted-foreground"
+                    }`}
                   >
                     <TbClipboard className="inline" />
                   </button>
@@ -791,36 +922,40 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     value={urlInput}
                     onChange={(e) => setUrlInput(e.target.value)}
                     placeholder="https://example.com/image.jpg"
-                    className="flex-1 px-3 py-1.5 border border-border rounded text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="flex-1 rounded border border-border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                     onKeyDown={(e) => e.key === "Enter" && handleAddUrl()}
                     autoFocus
                   />
                   <button
                     onClick={handleAddUrl}
                     disabled={!urlInput.trim() || uploading}
-                    className="px-3 py-1.5 bg-primary text-foreground rounded text-sm hover:bg-primary disabled:bg-muted transition-colors"
+                    className="rounded bg-primary px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-primary disabled:bg-muted"
                   >
                     {uploading ? "Adding..." : "Add"}
                   </button>
                 </div>
 
                 {/* Save to CDN toggle */}
-                <div className="flex items-center gap-2 mt-2">
+                <div className="mt-2 flex items-center gap-2">
                   <input
                     type="checkbox"
                     id="saveUrlToCdn"
                     checked={saveUrlToCdn}
                     onChange={(e) => setSaveUrlToCdn(e.target.checked)}
-                    className="w-4 h-4 text-accent bg-muted border-border rounded focus:ring-ring"
+                    className="size-4 rounded border-border bg-muted text-accent focus:ring-ring"
                   />
-                  <label htmlFor="saveUrlToCdn" className="text-xs text-muted-foreground">
+                  <label
+                    htmlFor="saveUrlToCdn"
+                    className="text-xs text-muted-foreground"
+                  >
                     Save to CDN (downloads image to your account)
                   </label>
                 </div>
 
                 {/* Paste hint */}
                 <div className="mt-2 text-xs text-muted-foreground">
-                  💡 Tip: You can also paste images directly (Ctrl+V / Cmd+V) or use the clipboard button above!
+                  💡 Tip: You can also paste images directly (Ctrl+V / Cmd+V) or
+                  use the clipboard button above!
                 </div>
               </div>
             )}
@@ -832,25 +967,25 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     value={svgInput}
                     onChange={(e) => setSvgInput(e.target.value)}
                     placeholder="<svg>...</svg>"
-                    className="flex-1 px-3 py-1.5 border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring font-mono text-xs"
+                    className="flex-1 rounded border border-border px-3 py-1.5 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-ring"
                     rows={3}
                     autoFocus
                   />
                   <button
                     onClick={handleAddSvg}
                     disabled={!svgInput.trim()}
-                    className="px-3 py-1.5 bg-primary text-foreground rounded text-sm hover:bg-primary disabled:bg-muted transition-colors"
+                    className="rounded bg-primary px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-primary disabled:bg-muted"
                   >
                     Add
                   </button>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1.5 ml-0.5">
+                <p className="ml-0.5 mt-1.5 text-xs text-muted-foreground">
                   Find SVGs @{" "}
                   <a
                     href="https://www.svgrepo.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:text-primary underline"
+                    className="text-primary underline hover:text-primary"
                   >
                     svgrepo.com
                   </a>
@@ -859,7 +994,9 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
             )}
 
             {uploading && (
-              <div className="mt-2 text-sm text-muted-foreground">Uploading...</div>
+              <div className="mt-2 text-sm text-muted-foreground">
+                Uploading...
+              </div>
             )}
 
             {/* Hidden file input for upload */}
@@ -884,8 +1021,9 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
           {/* Content Grid */}
           <div
-            className={`flex-1 overflow-y-auto bg-background relative transition-colors ${isDragOver ? 'bg-accent border-2 border-dashed border-accent' : ''
-              } ${uploadProgress ? 'pt-16' : 'p-3'}`}
+            className={`relative flex-1 overflow-y-auto bg-background transition-colors ${
+              isDragOver ? "border-2 border-dashed border-accent bg-accent" : ""
+            } ${uploadProgress ? "pt-16" : "p-3"}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -895,12 +1033,14 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
             {/* Drag and drop overlay */}
             {isDragOver && (
-              <div className="absolute inset-0 bg-accent/90 backdrop-blur-sm z-40 flex items-center justify-center border-2 border-dashed border-accent rounded-lg">
+              <div className="bg-accent/90 absolute inset-0 z-40 flex items-center justify-center rounded-lg border-2 border-dashed border-accent backdrop-blur-sm">
                 <div className="flex flex-col items-center gap-4 text-accent-foreground">
                   <TbUpload className="text-6xl" />
                   <div className="text-center">
                     <p className="text-xl font-semibold">Drop files here</p>
-                    <p className="text-sm opacity-75">Release to upload multiple images</p>
+                    <p className="text-sm opacity-75">
+                      Release to upload multiple images
+                    </p>
                   </div>
                 </div>
               </div>
@@ -908,68 +1048,80 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
             {/* Upload progress bar */}
             {uploadProgress && (
-              <div className="absolute top-0 left-0 right-0 bg-background border-b border-border p-4 z-30">
-                <div className="flex items-center justify-between mb-2">
+              <div className="absolute inset-x-0 top-0 z-30 border-b border-border bg-background p-4">
+                <div className="mb-2 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-accent border-t-transparent rounded-full animate-spin"></div>
+                    <div className="size-4 animate-spin rounded-full border-2 border-accent border-t-transparent"></div>
                     <span className="text-sm font-medium text-foreground">
-                      Uploading {uploadProgress.current + 1} of {uploadProgress.total} files
+                      Uploading {uploadProgress.current + 1} of{" "}
+                      {uploadProgress.total} files
                     </span>
                   </div>
                   <span className="text-xs text-muted-foreground">
-                    {Math.round(((uploadProgress.current + 1) / uploadProgress.total) * 100)}%
+                    {Math.round(
+                      ((uploadProgress.current + 1) / uploadProgress.total) *
+                        100,
+                    )}
+                    %
                   </span>
                 </div>
 
                 {/* Progress bar */}
-                <div className="w-full bg-muted text-muted-foreground rounded-full h-2 mb-2">
+                <div className="mb-2 h-2 w-full rounded-full bg-muted text-muted-foreground">
                   <div
-                    className="bg-accent h-2 rounded-full transition-all duration-300 ease-out"
-                    style={{ width: `${((uploadProgress.current + 1) / uploadProgress.total) * 100}%` }}
+                    className="h-2 rounded-full bg-accent transition-all duration-300 ease-out"
+                    style={{
+                      width: `${((uploadProgress.current + 1) / uploadProgress.total) * 100}%`,
+                    }}
                   ></div>
                 </div>
 
                 {/* Current file */}
                 {uploadProgress.currentFile && (
-                  <div className="text-xs text-muted-foreground truncate">
+                  <div className="truncate text-xs text-muted-foreground">
                     📁 {uploadProgress.currentFile}
                   </div>
                 )}
 
                 {/* Completed files */}
                 {uploadProgress.completedFiles.length > 0 && (
-                  <div className="text-xs text-secondary-foreground mt-1">
-                    ✅ Completed: {uploadProgress.completedFiles.join(', ')}
+                  <div className="mt-1 text-xs text-secondary-foreground">
+                    ✅ Completed: {uploadProgress.completedFiles.join(", ")}
                   </div>
                 )}
               </div>
             )}
 
             {filteredMedia.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-center p-4">
-                <TbPhoto className="text-6xl text-primary mb-3" />
+              <div className="flex h-full flex-col items-center justify-center p-4 text-center">
+                <TbPhoto className="mb-3 text-6xl text-primary" />
                 {searchQuery ? (
                   <>
-                    <p className="text-muted-foreground text-lg mb-2">No media found</p>
+                    <p className="mb-2 text-lg text-muted-foreground">
+                      No media found
+                    </p>
                     <p className="text-sm text-muted-foreground">
                       Try a different search term
                     </p>
                   </>
                 ) : (
                   <>
-                    <p className="text-muted-foreground text-lg mb-2">No media uploaded yet</p>
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="mb-2 text-lg text-muted-foreground">
+                      No media uploaded yet
+                    </p>
+                    <p className="mb-2 text-sm text-muted-foreground">
                       Upload files, add URLs, or paste SVG code
                     </p>
-                    <p className="text-xs text-muted-foreground mb-4">
-                      💡 You can also drag & drop multiple images anywhere in this area
+                    <p className="mb-4 text-xs text-muted-foreground">
+                      💡 You can also drag & drop multiple images anywhere in
+                      this area
                     </p>
                     <button
                       onClick={() => {
                         setAddMode("upload");
                         fileInputRef.current?.click();
                       }}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary shadow-sm"
+                      className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-primary-foreground shadow-sm hover:bg-primary"
                     >
                       <TbPlus />
                       Upload Your First Image
@@ -978,21 +1130,25 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 )}
               </div>
             ) : (
-              <div className={viewMode === "cards"
-                ? "grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2"
-                : "space-y-1"
-              }>
+              <div
+                className={
+                  viewMode === "cards"
+                    ? "grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10"
+                    : "space-y-1"
+                }
+              >
                 {filteredMedia.map((media) => (
                   <div
                     key={media.id}
-                    className={`group relative bg-card rounded-lg border border-border overflow-hidden cursor-pointer transition-all hover:shadow-md ${viewMode === "cards"
-                      ? selectedMedia === media.id
-                        ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
-                        : "hover:border-primary"
-                      : selectedMedia === media.id
-                        ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
-                        : "hover:border-primary"
-                      }`}
+                    className={`group relative cursor-pointer overflow-hidden rounded-lg border border-border bg-card transition-all hover:shadow-md ${
+                      viewMode === "cards"
+                        ? selectedMedia === media.id
+                          ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                          : "hover:border-primary"
+                        : selectedMedia === media.id
+                          ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                          : "hover:border-primary"
+                    }`}
                     onClick={() => {
                       if (selectionMode && onSelect) {
                         onSelect(media.id);
@@ -1004,43 +1160,48 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     {viewMode === "cards" ? (
                       <>
                         {/* Card View - Thumbnail */}
-                        <div className="aspect-square bg-muted text-muted-foreground flex items-center justify-center overflow-hidden">
+                        <div className="flex aspect-square items-center justify-center overflow-hidden bg-muted text-muted-foreground">
                           {media.type === "url" ? (
                             <img
                               key={`${media.id}-${media.uploadedAt || 0}`}
                               src={media.metadata?.url}
                               alt={media.metadata?.alt || media.id}
-                              className="w-full h-full object-cover"
+                              className="size-full object-cover"
                               onError={(e) => {
-                                e.currentTarget.style.display = 'none';
+                                e.currentTarget.style.display = "none";
                               }}
                             />
                           ) : media.type === "svg" ? (
                             <div
-                              className="w-full h-full p-2"
-                              dangerouslySetInnerHTML={{ __html: media.metadata?.svg || "" }}
+                              className="size-full p-2"
+                              dangerouslySetInnerHTML={{
+                                __html: media.metadata?.svg || "",
+                              }}
                             />
                           ) : (
                             <img
                               key={`${media.id}-${media.uploadedAt || 0}`}
-                              src={getCdnUrl(media.cdnId || media.id, { width: 400, format: 'auto' })}
+                              src={getCdnUrl(media.cdnId || media.id, {
+                                width: 400,
+                                format: "auto",
+                              })}
                               alt={media.metadata?.alt || media.id}
-                              className="w-full h-full object-cover"
+                              className="size-full object-cover"
                               loading="lazy"
                               onError={(e) => {
-                                e.currentTarget.style.display = 'none';
+                                e.currentTarget.style.display = "none";
                               }}
                             />
                           )}
                         </div>
 
                         {/* Card View - Name/Title and Size */}
-                        <div className="p-1.5 bg-accent text-accent-foreground">
-                          <p className="text-xs truncate text-foreground font-medium">
+                        <div className="bg-accent p-1.5 text-accent-foreground">
+                          <p className="truncate text-xs font-medium text-foreground">
                             {media.metadata?.title || media.id}
                           </p>
                           {media.metadata?.size && (
-                            <p className="text-[10px] text-muted-foreground mt-0.5">
+                            <p className="mt-0.5 text-[10px] text-muted-foreground">
                               {formatFileSize(media.metadata.size)}
                             </p>
                           )}
@@ -1049,41 +1210,46 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     ) : (
                       <>
                         {/* List View - Horizontal Layout */}
-                        <div className="flex items-center p-1.5 bg-accent text-accent-foreground">
+                        <div className="flex items-center bg-accent p-1.5 text-accent-foreground">
                           {/* Tiny thumbnail */}
-                          <div className="w-8 h-8 bg-muted text-muted-foreground rounded flex items-center justify-center overflow-hidden flex-shrink-0 mr-3">
+                          <div className="mr-3 flex size-8 shrink-0 items-center justify-center overflow-hidden rounded bg-muted text-muted-foreground">
                             {media.type === "url" ? (
                               <img
                                 key={`${media.id}-${media.uploadedAt || 0}`}
                                 src={media.metadata?.url}
                                 alt={media.metadata?.alt || media.id}
-                                className="w-full h-full object-cover"
+                                className="size-full object-cover"
                                 onError={(e) => {
-                                  e.currentTarget.style.display = 'none';
+                                  e.currentTarget.style.display = "none";
                                 }}
                               />
                             ) : media.type === "svg" ? (
                               <div
-                                className="w-full h-full p-1"
-                                dangerouslySetInnerHTML={{ __html: media.metadata?.svg || "" }}
+                                className="size-full p-1"
+                                dangerouslySetInnerHTML={{
+                                  __html: media.metadata?.svg || "",
+                                }}
                               />
                             ) : (
                               <img
                                 key={`${media.id}-${media.uploadedAt || 0}`}
-                                src={getCdnUrl(media.cdnId || media.id, { width: 100, format: 'auto' })}
+                                src={getCdnUrl(media.cdnId || media.id, {
+                                  width: 100,
+                                  format: "auto",
+                                })}
                                 alt={media.metadata?.alt || media.id}
-                                className="w-full h-full object-cover"
+                                className="size-full object-cover"
                                 loading="lazy"
                                 onError={(e) => {
-                                  e.currentTarget.style.display = 'none';
+                                  e.currentTarget.style.display = "none";
                                 }}
                               />
                             )}
                           </div>
 
                           {/* File info */}
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm truncate text-foreground font-medium">
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-sm font-medium text-foreground">
                               {media.metadata?.title || media.id}
                             </p>
                             {media.metadata?.size && (
@@ -1097,14 +1263,16 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     )}
 
                     {/* Action Buttons (on hover) */}
-                    <div className={`absolute ${viewMode === "cards" ? "top-1 right-1" : "top-2 right-2"} opacity-0 group-hover:opacity-100 transition-opacity flex gap-1`}>
+                    <div
+                      className={`absolute ${viewMode === "cards" ? "right-1 top-1" : "right-2 top-2"} flex gap-1 opacity-0 transition-opacity group-hover:opacity-100`}
+                    >
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           setReplacingMedia(media.id);
                           replaceInputRef.current?.click();
                         }}
-                        className="p-1.5 bg-background border border-border rounded-md shadow-lg hover:bg-muted text-primary transition-colors"
+                        className="rounded-md border border-border bg-background p-1.5 text-primary shadow-lg transition-colors hover:bg-muted"
                         title="Replace image"
                       >
                         <TbRefresh className="text-sm" />
@@ -1114,7 +1282,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                           e.stopPropagation();
                           openEditModal(media);
                         }}
-                        className="p-1.5 bg-background border border-border rounded-md shadow-lg hover:bg-muted text-primary transition-colors"
+                        className="rounded-md border border-border bg-background p-1.5 text-primary shadow-lg transition-colors hover:bg-muted"
                         title="Edit metadata"
                       >
                         <TbEdit className="text-sm" />
@@ -1124,7 +1292,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                           e.stopPropagation();
                           handleDelete(media.id);
                         }}
-                        className="p-1.5 bg-background border border-border rounded-md shadow-lg hover:bg-destructive text-destructive transition-colors"
+                        className="rounded-md border border-border bg-background p-1.5 text-destructive shadow-lg transition-colors hover:bg-destructive"
                         title="Delete"
                       >
                         <TbTrash className="text-sm" />
@@ -1134,7 +1302,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     {/* Metadata indicator */}
                     {(media.metadata?.alt || media.metadata?.description) && (
                       <div className="absolute bottom-10 left-1">
-                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                        <div className="size-2 rounded-full bg-secondary"></div>
                       </div>
                     )}
                   </div>
@@ -1147,52 +1315,65 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         {/* Edit Metadata Modal */}
         {editingMedia && (
           <div
-            className="absolute inset-0 bg-background/80 backdrop-blur-sm text-muted-foreground flex items-center justify-center p-4"
+            className="bg-background/80 absolute inset-0 flex items-center justify-center p-4 text-muted-foreground backdrop-blur-sm"
             onClick={() => setEditingMedia(null)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-background border border-border rounded-lg shadow-2xl w-full max-w-2xl overflow-hidden"
+              className="w-full max-w-2xl overflow-hidden rounded-lg border border-border bg-background shadow-2xl"
             >
-              <div className="flex items-center justify-between p-6 border-b border-border">
-                <h3 className="text-xl font-bold text-foreground">Edit Media</h3>
+              <div className="flex items-center justify-between border-b border-border p-6">
+                <h3 className="text-xl font-bold text-foreground">
+                  Edit Media
+                </h3>
                 <button
                   onClick={() => setEditingMedia(null)}
-                  className="text-muted-foreground hover:text-foreground text-xl"
+                  className="text-xl text-muted-foreground hover:text-foreground"
                 >
                   <TbX />
                 </button>
               </div>
 
-              <div className="p-6 space-y-4">
+              <div className="space-y-4 p-6">
                 {/* Preview */}
-                <div className="flex items-center gap-4 p-4 bg-muted text-muted-foreground rounded-lg border border-border">
+                <div className="flex items-center gap-4 rounded-lg border border-border bg-muted p-4 text-muted-foreground">
                   {editingMedia.type === "url" ? (
                     <img
                       src={editingMedia.metadata?.url}
                       alt={editingMedia.metadata?.alt || "Preview"}
-                      className="w-24 h-24 object-cover rounded"
+                      className="size-24 rounded object-cover"
                     />
                   ) : editingMedia.type === "svg" ? (
                     <div
-                      className="w-24 h-24 flex items-center justify-center rounded border border-border"
-                      dangerouslySetInnerHTML={{ __html: editingMedia.metadata?.svg || "" }}
+                      className="flex size-24 items-center justify-center rounded border border-border"
+                      dangerouslySetInnerHTML={{
+                        __html: editingMedia.metadata?.svg || "",
+                      }}
                     />
                   ) : (
                     <img
                       key={`${editingMedia.id}-${editingMedia.uploadedAt || 0}`}
-                      src={getCdnUrl(editingMedia.cdnId || editingMedia.id, { width: 200, format: 'auto' })}
+                      src={getCdnUrl(editingMedia.cdnId || editingMedia.id, {
+                        width: 200,
+                        format: "auto",
+                      })}
                       alt={editingMedia.metadata?.alt || "Preview"}
-                      className="w-24 h-24 object-cover rounded"
+                      className="size-24 rounded object-cover"
                     />
                   )}
                   <div className="flex-1">
-                    <p className="text-sm font-mono text-muted-foreground">{editingMedia.id}</p>
-                    <p className="text-xs text-muted-foreground mt-1">Type: {editingMedia.type || "cdn"}</p>
+                    <p className="font-mono text-sm text-muted-foreground">
+                      {editingMedia.id}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Type: {editingMedia.type || "cdn"}
+                    </p>
                     {editingMedia.metadata?.size && (
-                      <p className="text-xs text-muted-foreground mt-1">Size: {formatFileSize(editingMedia.metadata.size)}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        Size: {formatFileSize(editingMedia.metadata.size)}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -1201,7 +1382,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 {/* URL field for URL type - show first */}
                 {editingMedia.type === "url" && (
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                    <label className="mb-2 block text-sm font-medium text-foreground">
                       Image URL <span className="text-destructive">*</span>
                     </label>
                     <input
@@ -1210,11 +1391,14 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       onChange={(e) =>
                         setEditingMedia({
                           ...editingMedia,
-                          metadata: { ...editingMedia.metadata, url: e.target.value },
+                          metadata: {
+                            ...editingMedia.metadata,
+                            url: e.target.value,
+                          },
                         })
                       }
                       placeholder="https://example.com/image.jpg"
-                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="w-full rounded-lg border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-ring"
                     />
                   </div>
                 )}
@@ -1222,7 +1406,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 {/* SVG field for SVG type - show first */}
                 {editingMedia.type === "svg" && (
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                    <label className="mb-2 block text-sm font-medium text-foreground">
                       SVG Code <span className="text-destructive">*</span>
                     </label>
                     <textarea
@@ -1230,18 +1414,21 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       onChange={(e) =>
                         setEditingMedia({
                           ...editingMedia,
-                          metadata: { ...editingMedia.metadata, svg: e.target.value },
+                          metadata: {
+                            ...editingMedia.metadata,
+                            svg: e.target.value,
+                          },
                         })
                       }
                       placeholder="<svg>...</svg>"
-                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring font-mono text-sm"
+                      className="w-full rounded-lg border border-border px-4 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                       rows={6}
                     />
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="mb-2 block text-sm font-medium text-foreground">
                     File Name
                   </label>
                   <input
@@ -1250,16 +1437,19 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     onChange={(e) =>
                       setEditingMedia({
                         ...editingMedia,
-                        metadata: { ...editingMedia.metadata, title: e.target.value },
+                        metadata: {
+                          ...editingMedia.metadata,
+                          title: e.target.value,
+                        },
                       })
                     }
                     placeholder="Enter file name"
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="w-full rounded-lg border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="mb-2 block text-sm font-medium text-foreground">
                     Alt Text <span className="text-destructive">*</span>
                   </label>
                   <input
@@ -1268,19 +1458,22 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     onChange={(e) =>
                       setEditingMedia({
                         ...editingMedia,
-                        metadata: { ...editingMedia.metadata, alt: e.target.value },
+                        metadata: {
+                          ...editingMedia.metadata,
+                          alt: e.target.value,
+                        },
                       })
                     }
                     placeholder="Describe the image for accessibility"
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="w-full rounded-lg border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-ring"
                   />
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="mt-1 text-xs text-muted-foreground">
                     Important for accessibility and SEO
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="mb-2 block text-sm font-medium text-foreground">
                     Description
                   </label>
                   <textarea
@@ -1288,26 +1481,29 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     onChange={(e) =>
                       setEditingMedia({
                         ...editingMedia,
-                        metadata: { ...editingMedia.metadata, description: e.target.value },
+                        metadata: {
+                          ...editingMedia.metadata,
+                          description: e.target.value,
+                        },
                       })
                     }
                     placeholder="Additional details about this media"
                     rows={3}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="w-full rounded-lg border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 p-6 border-t border-border bg-muted text-muted-foreground">
+              <div className="flex justify-end gap-3 border-t border-border bg-muted p-6 text-muted-foreground">
                 <button
                   onClick={() => setEditingMedia(null)}
-                  className="px-4 py-2 border border-border rounded-lg hover:bg-muted text-muted-foreground"
+                  className="rounded-lg border border-border px-4 py-2 text-muted-foreground hover:bg-muted"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={saveEditedMetadata}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary text-foreground rounded-lg hover:bg-primary"
+                  className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-foreground hover:bg-primary"
                 >
                   <TbEdit />
                   Save Changes
@@ -1318,7 +1514,6 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         )}
       </motion.div>
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 };
-

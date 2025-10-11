@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { atom, useRecoilState } from "recoil";
-import { fetchGoogleFonts, getFunkyFonts, getPopularFonts, loadGoogleFont } from "utils/googleFonts";
+import {
+  fetchGoogleFonts,
+  getFunkyFonts,
+  getPopularFonts,
+  loadGoogleFont,
+} from "utils/googleFonts";
 import { fonts } from "utils/tailwind";
 import { Dialog } from "./Dialog";
 
@@ -33,11 +38,17 @@ export const FontFamilyDialog = () => {
         const funkyFonts = getFunkyFonts();
 
         // Organize fonts: Popular first, then Funky, then all others alphabetically
-        const popularList = popularFonts.map(f => [f]);
-        const funkyList = funkyFonts.filter(f => !popularFonts.includes(f)).map(f => [f]);
+        const popularList = popularFonts.map((f) => [f]);
+        const funkyList = funkyFonts
+          .filter((f) => !popularFonts.includes(f))
+          .map((f) => [f]);
         const otherFonts = googleFonts
-          .filter(f => !popularFonts.includes(f.family) && !funkyFonts.includes(f.family))
-          .map(f => [f.family])
+          .filter(
+            (f) =>
+              !popularFonts.includes(f.family) &&
+              !funkyFonts.includes(f.family),
+          )
+          .map((f) => [f.family])
           .sort((a, b) => a[0].localeCompare(b[0]));
 
         const allFontsList = [...popularList, ...funkyList, ...otherFonts];
@@ -76,14 +87,15 @@ export const FontFamilyDialog = () => {
         items={fonts} // Use legacy fonts during loading
         onSearch={(_, value) =>
           _[0].search(
-            new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")
+            new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
           ) > -1
         }
         callback={(_, k) => (
           <button
             id={`fontFamily-${_}`}
-            className={`w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs transition-colors ${dialog.value === _ ? "bg-accent text-accent-foreground" : ""
-              }`}
+            className={`flex w-full cursor-pointer flex-row rounded p-1 text-xs text-muted-foreground transition-colors hover:bg-muted ${
+              dialog.value === _ ? "bg-accent text-accent-foreground" : ""
+            }`}
             style={{ fontFamily: (_ || []).join(", ") }}
             key={k}
             onClick={(e) => changed(_)}
@@ -103,14 +115,15 @@ export const FontFamilyDialog = () => {
       items={allFonts}
       onSearch={(_, value) =>
         _[0].search(
-          new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")
+          new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
         ) > -1
       }
       callback={(_, k) => (
         <button
           id={`fontFamily-${_}`}
-          className={`w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs transition-colors ${dialog.value === _ ? "bg-accent text-accent-foreground" : ""
-            }`}
+          className={`flex w-full cursor-pointer flex-row rounded p-1 text-xs text-muted-foreground transition-colors hover:bg-muted ${
+            dialog.value === _ ? "bg-accent text-accent-foreground" : ""
+          }`}
           style={{ fontFamily: (_ || []).join(", ") }}
           key={k}
           onClick={(e) => changed(_)}

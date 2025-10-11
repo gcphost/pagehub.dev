@@ -19,7 +19,13 @@ import { TbContainer, TbNote } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { mergeAccessibilityProps } from "utils/accessibility";
 import { SettingsAtom } from "utils/atoms";
-import { IsolateAtom, ViewModeAtom, applyBackgroundImage, enableContext, motionIt } from "utils/lib";
+import {
+  IsolateAtom,
+  ViewModeAtom,
+  applyBackgroundImage,
+  enableContext,
+  motionIt,
+} from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
@@ -82,8 +88,6 @@ export const Container = (props: Partial<ContainerProps>) => {
     isActive: node.events.selected,
   }));
 
-
-
   props = setClonedProps(props, query, ["order"]);
 
   const [isMounted, setIsMounted] = useState(false);
@@ -135,7 +139,7 @@ export const Container = (props: Partial<ContainerProps>) => {
     preview,
     false,
     palette,
-    query
+    query,
   );
 
   // Hide component containers from the main viewport
@@ -280,16 +284,17 @@ export const Container = (props: Partial<ContainerProps>) => {
     prop["data-empty-state"] = !children;
     prop["node-id"] = id;
     prop["data-enabled"] = true;
-
-
   }
 
   if (props.anchor) prop.id = props.anchor;
 
-  prop = mergeAccessibilityProps({
-    ...applyBackgroundImage(prop, props, settings, query),
-    ...applyAnimation({ ...prop, key: id }, props),
-  }, props);
+  prop = mergeAccessibilityProps(
+    {
+      ...applyBackgroundImage(prop, props, settings, query),
+      ...applyAnimation({ ...prop, key: id }, props),
+    },
+    props,
+  );
 
   let tagName = props?.type === "page" ? "article" : "div";
 
@@ -302,17 +307,19 @@ export const Container = (props: Partial<ContainerProps>) => {
   if (enabled && props.type !== "page" && isMounted) {
     prop.style = {
       ...(prop.style || {}),
-      overflow: 'visible', // ok so TO-DO ... this  lilll ookkkll ... 
+      overflow: "visible", // ok so TO-DO ... this  lilll ookkkll ...
     };
     const originalChildren = prop.children;
     prop.children = (
       <>
         {originalChildren}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Container} props={props} alwaysVisible>
-          <AddSectionNodeController
-            position="bottom"
-            align="middle"
-          />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Container}
+          props={props}
+          alwaysVisible
+        >
+          <AddSectionNodeController position="bottom" align="middle" />
         </InlineToolsRenderer>
       </>
     );
@@ -394,25 +401,25 @@ Container.craft = {
         />,
 
         // Hide settings tool if fully linked
-        ...(!isLinked ? [
-          <ToolNodeController
-            key="container3"
-            position="bottom"
-            align="start"
-            alt={{
-              position: "top",
-              align: "start",
-              placement: "start",
-            }}
-          >
-            <ContainerSettingsNodeTool />
-          </ToolNodeController>
-        ] : []),
+        ...(!isLinked
+          ? [
+              <ToolNodeController
+                key="container3"
+                position="bottom"
+                align="start"
+                alt={{
+                  position: "top",
+                  align: "start",
+                  placement: "start",
+                }}
+              >
+                <ContainerSettingsNodeTool />
+              </ToolNodeController>,
+            ]
+          : []),
       ];
 
-      const addControls = [
-
-      ];
+      const addControls = [];
 
       if (props.type === "page") {
         return [...baseControls, ...addControls];

@@ -12,11 +12,7 @@ import { RxButton } from "react-icons/rx";
 import { useRecoilValue } from "recoil";
 import { motionIt } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
-import {
-  applyAnimation,
-  ClassGenerator,
-  CSStoObj,
-} from "utils/tailwind";
+import { applyAnimation, ClassGenerator, CSStoObj } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { useScrollToSelected } from "../lib";
 import { ButtonListSettings } from "./ButtonListSettings";
@@ -65,7 +61,9 @@ const defaultProps: ButtonListProps = {
   gap: "gap-2",
 };
 
-export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProps) => {
+export const ButtonList: UserComponent<ButtonListProps> = (
+  props: ButtonListProps,
+) => {
   props = {
     ...defaultProps,
     ...props,
@@ -77,7 +75,7 @@ export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProp
   } = useNode();
 
   const { actions, query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
+    getClonedState(props, state),
   );
 
   const view = useRecoilValue(ViewAtom);
@@ -94,12 +92,7 @@ export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProp
 
   useScrollToSelected(id, enabled);
 
-  const baseProps = [
-    "flexDirection",
-    "alignItems",
-    "justifyContent",
-    "gap",
-  ];
+  const baseProps = ["flexDirection", "alignItems", "justifyContent", "gap"];
 
   const prop: any = {
     ref: (r) => {
@@ -114,7 +107,7 @@ export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProp
       [],
       preview,
       false,
-      palette
+      palette,
     ),
   };
 
@@ -138,8 +131,9 @@ export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProp
         try {
           const childNode = query.node(childId).get();
           // Only count Button components that aren't hamburger menus
-          if (childNode.data.name === 'Button') {
-            const isHamburger = childNode.data.props?.clickValue?.includes('mobile-menu');
+          if (childNode.data.name === "Button") {
+            const isHamburger =
+              childNode.data.props?.clickValue?.includes("mobile-menu");
             return !isHamburger;
           }
           return false;
@@ -157,19 +151,21 @@ export const ButtonList: UserComponent<ButtonListProps> = (props: ButtonListProp
   const content = (
     <>
       {enabled && isMounted && (
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={ButtonList} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={ButtonList}
+          props={props}
+        />
       )}
-      {hasActualButtons || !enabled ? (
-        children
-      ) : (
-        enabled && (
-          <div className="w-auto flex justify-center items-center p-4">
-            <div data-empty-state={true} className="text-3xl">
-              <RxButton />
+      {hasActualButtons || !enabled
+        ? children
+        : enabled && (
+            <div className="flex w-auto items-center justify-center p-4">
+              <div data-empty-state={true} className="text-3xl">
+                <RxButton />
+              </div>
             </div>
-          </div>
-        )
-      )}
+          )}
     </>
   );
 
@@ -192,7 +188,6 @@ ButtonList.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-
         <HoverNodeController
           key="buttonListHoverController"
           position="top"
@@ -206,9 +201,6 @@ ButtonList.craft = {
         />,
 
         <DeleteNodeController key="buttonListDelete" />,
-
-
-
       ];
 
       return [...baseControls];

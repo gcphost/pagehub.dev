@@ -22,21 +22,27 @@ export const sizingItems = [
   },
 ];
 
-export const ItemToggle = ({ items = [], children, selected, onChange, option = true }: any) => {
+export const ItemToggle = ({
+  items = [],
+  children,
+  selected,
+  onChange,
+  option = true,
+}: any) => {
   const [isOpen, setIsOpen] = useState(false);
-  const selectedItem = items.find(item => item.id === selected) || items[0];
+  const selectedItem = items.find((item) => item.id === selected) || items[0];
 
   if (option) {
     // Dropdown mode
     return (
-
-
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-xs p-0.5 rounded-md flex items-center justify-center"
+          className="flex items-center justify-center rounded-md p-0.5 text-xs"
         >
-          <TbChevronDown className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          <TbChevronDown
+            className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+          />
         </button>
 
         {isOpen && (
@@ -48,7 +54,7 @@ export const ItemToggle = ({ items = [], children, selected, onChange, option = 
             />
 
             {/* Dropdown menu */}
-            <div className="absolute top-full right-0 mt-1 bg-muted text-muted-foreground border border-border rounded-md shadow-lg z-20 overflow-hidden">
+            <div className="absolute right-0 top-full z-20 mt-1 overflow-hidden rounded-md border border-border bg-muted text-muted-foreground shadow-lg">
               {items.map((item) => (
                 <button
                   key={item.id}
@@ -56,10 +62,11 @@ export const ItemToggle = ({ items = [], children, selected, onChange, option = 
                     onChange(item.id);
                     setIsOpen(false);
                   }}
-                  className={`flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted w-full text-left whitespace-nowrap ${selected === item.id ? 'bg-muted' : ''
-                    }`}
+                  className={`flex w-full items-center gap-2 whitespace-nowrap px-3 py-2 text-left text-xs hover:bg-muted ${
+                    selected === item.id ? "bg-muted" : ""
+                  }`}
                 >
-                  <span className="w-4 h-4 flex items-center justify-center">
+                  <span className="flex size-4 items-center justify-center">
                     {item.icon}
                   </span>
                   {item.content}
@@ -69,13 +76,12 @@ export const ItemToggle = ({ items = [], children, selected, onChange, option = 
           </>
         )}
       </div>
-
     );
   }
 
   // Single button toggle mode - cycles through options
   const handleToggle = () => {
-    const currentIndex = items.findIndex(item => item.id === selected);
+    const currentIndex = items.findIndex((item) => item.id === selected);
     const nextIndex = (currentIndex + 1) % items.length;
     onChange(items[nextIndex].id);
   };
@@ -84,11 +90,7 @@ export const ItemToggle = ({ items = [], children, selected, onChange, option = 
     <div className="flex flex-row items-end gap-0.5">
       {children}
 
-      <ItemSelector
-        {...selectedItem}
-        onClick={handleToggle}
-        selected={true}
-      />
+      <ItemSelector {...selectedItem} onClick={handleToggle} selected={true} />
     </div>
   );
 };
@@ -106,8 +108,9 @@ export const ItemSelector = ({
     placement="bottom"
   >
     <div
-      className={`text-xs  flex items-center justify-center ${selected ? "" : ""
-        }`}
+      className={`flex items-center justify-center text-xs ${
+        selected ? "" : ""
+      }`}
     >
       {icon}
     </div>
@@ -133,9 +136,10 @@ export const ItemAdvanceToggle = ({
   return (
     <>
       <button
-        className="w-full text-center text-xxs mx-auto mt-2 px-2 py-0 flex items-center justify-center gap-1.5  rounded-md hover:text-underline"
+        className="text-xxs hover:text-underline mx-auto mt-2 flex w-full items-center justify-center gap-1.5 rounded-md px-2 py-0 text-center"
         onClick={() => setShowAdvance(!showAdvance)}
-      >{title}
+      >
+        {title}
       </button>
 
       {showAdvance ? <div className="mt-4">{children}</div> : null}

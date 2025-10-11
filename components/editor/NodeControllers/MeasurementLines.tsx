@@ -13,18 +13,22 @@ export const MeasurementLines = () => {
     enabled: state.options.enabled,
   }));
 
-  const [measurements, setMeasurements] = useState<Array<{
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
-    distance: number;
-    direction: "horizontal" | "vertical";
-    labelX: number;
-    labelY: number;
-  }>>([]);
+  const [measurements, setMeasurements] = useState<
+    Array<{
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+      distance: number;
+      direction: "horizontal" | "vertical";
+      labelX: number;
+      labelY: number;
+    }>
+  >([]);
 
-  const [hoveredElement, setHoveredElement] = useState<HTMLElement | null>(null);
+  const [hoveredElement, setHoveredElement] = useState<HTMLElement | null>(
+    null,
+  );
   const [altPressed, setAltPressed] = useState(false);
 
   // Track Alt/Option key (Figma-style)
@@ -80,12 +84,12 @@ export const MeasurementLines = () => {
       const target = e.target as HTMLElement;
 
       // Find the craftjs node element - look up the tree for node-id attribute
-      let nodeElement = target.closest('[node-id]') as HTMLElement;
+      let nodeElement = target.closest("[node-id]") as HTMLElement;
 
       // Special handling for text elements that might be deeply nested
       if (!nodeElement && target.textContent) {
         let parent = target.parentElement;
-        while (parent && !parent.hasAttribute('node-id')) {
+        while (parent && !parent.hasAttribute("node-id")) {
           parent = parent.parentElement;
         }
         nodeElement = parent as HTMLElement;
@@ -108,23 +112,31 @@ export const MeasurementLines = () => {
       const newMeasurements = [];
 
       // Find all other craftjs elements
-      const allNodes = document.querySelectorAll('[node-id]');
+      const allNodes = document.querySelectorAll("[node-id]");
 
       // Find the parent container (look for craftjs node or regular parent)
       let parent = nodeElement.parentElement;
-      while (parent && !parent.hasAttribute('node-id') && parent.parentElement) {
+      while (
+        parent &&
+        !parent.hasAttribute("node-id") &&
+        parent.parentElement
+      ) {
         parent = parent.parentElement;
       }
 
-      const siblings = parent ? Array.from(parent.children).filter(
-        (el) => el !== nodeElement && (el.hasAttribute('node-id') || el.querySelector('[node-id]'))
-      ) as HTMLElement[] : [];
+      const siblings = parent
+        ? (Array.from(parent.children).filter(
+            (el) =>
+              el !== nodeElement &&
+              (el.hasAttribute("node-id") || el.querySelector("[node-id]")),
+          ) as HTMLElement[])
+        : [];
 
       // Maximum distance to show measurements (in pixels)
       const MAX_DISTANCE = 300;
 
       // Measure distance to parent container edges
-      if (parent && parent.hasAttribute('node-id')) {
+      if (parent && parent.hasAttribute("node-id")) {
         const parentRect = parent.getBoundingClientRect();
 
         // Distance to top of parent
@@ -195,9 +207,9 @@ export const MeasurementLines = () => {
       // Check siblings for proximity
       siblings.forEach((sibling) => {
         // Get the actual node element if sibling contains one
-        const siblingNode = sibling.hasAttribute('node-id')
+        const siblingNode = sibling.hasAttribute("node-id")
           ? sibling
-          : sibling.querySelector('[node-id]') as HTMLElement;
+          : (sibling.querySelector("[node-id]") as HTMLElement);
 
         if (!siblingNode) return;
 
@@ -212,7 +224,10 @@ export const MeasurementLines = () => {
           if (siblingRect.left > targetRect.right) {
             const distance = siblingRect.left - targetRect.right;
             if (distance > 0 && distance < MAX_DISTANCE) {
-              const y = (Math.max(targetRect.top, siblingRect.top) + Math.min(targetRect.bottom, siblingRect.bottom)) / 2;
+              const y =
+                (Math.max(targetRect.top, siblingRect.top) +
+                  Math.min(targetRect.bottom, siblingRect.bottom)) /
+                2;
               newMeasurements.push({
                 x1: targetRect.right,
                 y1: y,
@@ -229,7 +244,10 @@ export const MeasurementLines = () => {
           else if (siblingRect.right < targetRect.left) {
             const distance = targetRect.left - siblingRect.right;
             if (distance > 0 && distance < MAX_DISTANCE) {
-              const y = (Math.max(targetRect.top, siblingRect.top) + Math.min(targetRect.bottom, siblingRect.bottom)) / 2;
+              const y =
+                (Math.max(targetRect.top, siblingRect.top) +
+                  Math.min(targetRect.bottom, siblingRect.bottom)) /
+                2;
               newMeasurements.push({
                 x1: siblingRect.right,
                 y1: y,
@@ -253,7 +271,10 @@ export const MeasurementLines = () => {
           if (siblingRect.top > targetRect.bottom) {
             const distance = siblingRect.top - targetRect.bottom;
             if (distance > 0 && distance < MAX_DISTANCE) {
-              const x = (Math.max(targetRect.left, siblingRect.left) + Math.min(targetRect.right, siblingRect.right)) / 2;
+              const x =
+                (Math.max(targetRect.left, siblingRect.left) +
+                  Math.min(targetRect.right, siblingRect.right)) /
+                2;
               newMeasurements.push({
                 x1: x,
                 y1: targetRect.bottom,
@@ -270,7 +291,10 @@ export const MeasurementLines = () => {
           else if (siblingRect.bottom < targetRect.top) {
             const distance = targetRect.top - siblingRect.bottom;
             if (distance > 0 && distance < MAX_DISTANCE) {
-              const x = (Math.max(targetRect.left, siblingRect.left) + Math.min(targetRect.right, siblingRect.right)) / 2;
+              const x =
+                (Math.max(targetRect.left, siblingRect.left) +
+                  Math.min(targetRect.right, siblingRect.right)) /
+                2;
               newMeasurements.push({
                 x1: x,
                 y1: siblingRect.bottom,
@@ -296,7 +320,7 @@ export const MeasurementLines = () => {
     };
   }, [enabled, altPressed, measurements.length]);
 
-  const svg = document?.getElementById('measurement-lines-svg');
+  const svg = document?.getElementById("measurement-lines-svg");
   if (!svg || measurements.length === 0) return null;
 
   return ReactDOM.createPortal(
@@ -406,7 +430,6 @@ export const MeasurementLines = () => {
         </motion.g>
       ))}
     </>,
-    svg
+    svg,
   );
 };
-

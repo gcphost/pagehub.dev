@@ -12,8 +12,10 @@ export default function DisplaySettingsInput() {
 
       <DisplayInput />
 
-
-      <ToolbarSection title="Id Attribute" help="The HTML id attribute is used to specify a unique id for an HTML element.">
+      <ToolbarSection
+        title="Id Attribute"
+        help="The HTML id attribute is used to specify a unique id for an HTML element."
+      >
         <ToolbarItem
           propKey="id"
           propType="component"

@@ -18,7 +18,7 @@ import { VideoToolbox } from "./Toolbox/videoComponents";
 
 // Dynamically load NavToolbox to avoid circular dependency
 let NavToolbox: any = { content: [] };
-import("./Toolbox/navComponents").then(module => {
+import("./Toolbox/navComponents").then((module) => {
   NavToolbox = module.NavToolbox;
 });
 
@@ -31,7 +31,6 @@ const baseItems = [
       ...DividerToolbox.content,
       ...SpacerToolbox.content,
       ...sectionToolboxItems[0].content, // always last
-
     ],
   },
   {
@@ -50,16 +49,11 @@ const baseItems = [
   },
   {
     title: "Forms",
-    content: [
-      ...FormToolbox.content,
-      ...FormElementToolbox.content,
-    ],
+    content: [...FormToolbox.content, ...FormElementToolbox.content],
   },
   {
     title: "Advanced",
-    content: [
-      ...EmbedToolbox.content,
-    ],
+    content: [...EmbedToolbox.content],
   },
   // ...pageToolboxItems,
 ];
@@ -70,10 +64,15 @@ export const ComponentSettings = () => {
   const [search, setSearch] = useState(null);
 
   // Create dynamic items array with saved components
-  const items = useMemo(() => [
-    ...baseItems,
-    ...(components?.filter(component => !component.isSection)?.length ? [SavedComponentsToolbox(components)] : []),
-  ], [components]);
+  const items = useMemo(
+    () => [
+      ...baseItems,
+      ...(components?.filter((component) => !component.isSection)?.length
+        ? [SavedComponentsToolbox(components)]
+        : []),
+    ],
+    [components],
+  );
 
   const focusRef = useRef(null);
 
@@ -108,7 +107,7 @@ export const ComponentSettings = () => {
             }
             return null;
           })
-          .filter((item) => item !== null)
+          .filter((item) => item !== null),
       );
       return;
     }
@@ -124,7 +123,7 @@ export const ComponentSettings = () => {
           e.preventDefault();
         }}
       >
-        <div className="flex gap-1.5 px-3 mb-3">
+        <div className="mb-3 flex gap-1.5 px-3">
           <input
             type="text"
             placeholder="Search Components"
@@ -140,11 +139,9 @@ export const ComponentSettings = () => {
         <div key={k}>
           <div className="px-3 pb-3 font-bold">{a.title}</div>
 
-          <div className="bg-background text-foreground w-full grid grid-cols-3 gap-3 p-3">
+          <div className="grid w-full grid-cols-3 gap-3 bg-background p-3 text-foreground">
             {a.content.map((item, kk) => (
-              <div key={kk}>
-                {item}
-              </div>
+              <div key={kk}>{item}</div>
             ))}
           </div>
         </div>

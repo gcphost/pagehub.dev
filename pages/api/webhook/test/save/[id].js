@@ -10,7 +10,8 @@ export default async function handler(req, res) {
   console.log("Test onSave webhook - Query:", req.query);
 
   try {
-    const { tenantId, pageId, document, isDraft, settings, timestamp, auth } = req.body;
+    const { tenantId, pageId, document, isDraft, settings, timestamp, auth } =
+      req.body;
 
     console.log("Test onSave webhook - Received data:", {
       tenantId,
@@ -19,12 +20,14 @@ export default async function handler(req, res) {
       isDraft,
       settings: settings ? Object.keys(settings) : null,
       timestamp,
-      auth: auth ? {
-        queryKeys: Object.keys(auth.query || {}),
-        headerKeys: auth.headers || [],
-        userAgent: auth.userAgent,
-        ip: auth.ip,
-      } : null,
+      auth: auth
+        ? {
+            queryKeys: Object.keys(auth.query || {}),
+            headerKeys: auth.headers || [],
+            userAgent: auth.userAgent,
+            ip: auth.ip,
+          }
+        : null,
     });
 
     // Log authentication information received
@@ -56,4 +59,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Internal server error" });
   }
 }
-

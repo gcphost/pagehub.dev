@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 const checkIfOffScreen = (ref, position) => {
   if (!ref.current) return false;
 
-  const viewport = document.getElementById('viewport');
+  const viewport = document.getElementById("viewport");
   if (!viewport) return false;
 
   const rect = ref.current.getBoundingClientRect();
@@ -16,9 +16,10 @@ const checkIfOffScreen = (ref, position) => {
 
   if (position === "left" || position === "right") {
     // For left/right, check if clipped horizontally OR vertically (top)
-    const clippedHorizontally = position === "left"
-      ? rect.left < viewportRect.left
-      : rect.right > viewportRect.right;
+    const clippedHorizontally =
+      position === "left"
+        ? rect.left < viewportRect.left
+        : rect.right > viewportRect.right;
     const clippedAtTop = rect.top < viewportRect.top;
     return clippedHorizontally || clippedAtTop;
   } else if (position === "top") {
@@ -35,7 +36,7 @@ const checkIfOffScreen = (ref, position) => {
 /**
  * RenderNodeControlInline - Simplified version of RenderNodeControl
  * that uses CSS positioning instead of calculating positions.
- * 
+ *
  * This is used when controls are rendered inline within the element
  * instead of being portaled.
  */
@@ -43,7 +44,7 @@ export const RenderNodeControlInline = ({
   position: initialPosition, // "top" | "bottom" | "left" | "right"
   align: initialAlign, // "start" | "middle" | "end"
   placement: initialPlacement = "start", // for vertical offset
-  hPlacement = "start", // for horizontal offset  
+  hPlacement = "start", // for horizontal offset
   isPadding = false,
   children = null,
   className = "",
@@ -78,7 +79,8 @@ export const RenderNodeControlInline = ({
       if (!viewportElement) return;
 
       const viewportRect = viewportElement.getBoundingClientRect();
-      const outOfViewport = rect.bottom > viewportRect.bottom || rect.top < viewportRect.top;
+      const outOfViewport =
+        rect.bottom > viewportRect.bottom || rect.top < viewportRect.top;
 
       // If alt prop is provided, use it
       if (outOfViewport && alt.position) {
@@ -110,7 +112,7 @@ export const RenderNodeControlInline = ({
     // Listen for scroll events with debounce
     const viewportElement = document.getElementById("viewport");
     if (viewportElement) {
-      viewportElement.addEventListener('scroll', handleScroll);
+      viewportElement.addEventListener("scroll", handleScroll);
     }
 
     return () => {
@@ -118,7 +120,7 @@ export const RenderNodeControlInline = ({
         clearTimeout(scrollTimeout);
       }
       if (viewportElement) {
-        viewportElement.removeEventListener('scroll', handleScroll);
+        viewportElement.removeEventListener("scroll", handleScroll);
       }
     };
   }, [initialPosition, initialAlign, initialPlacement, alt]);
@@ -130,78 +132,78 @@ export const RenderNodeControlInline = ({
   // - Inside: 2px inside the border
   // - Use Tailwind classes for positioning
 
-  const classes = ['absolute', 'pointer-events-none', 'z-50'];
+  const classes = ["absolute", "pointer-events-none", "z-50"];
 
   // Edge positioning
   if (position === "top") {
     if (isPadding) {
-      classes.push('-top-0.5', '-left-0.5', 'right-0'); // Inside top, 2px from edge
+      classes.push("-top-0.5", "-left-0.5", "right-0"); // Inside top, 2px from edge
     } else {
       if (isOffScreen) {
-        classes.push('top-full', 'left-0', 'right-0', 'mt-0'); // Clipped: flip to bottom
+        classes.push("top-full", "left-0", "right-0", "mt-0"); // Clipped: flip to bottom
       } else {
-        classes.push('bottom-full', 'left-0', '-right-0.5', 'mb-0.5'); // Outside top, sits above
+        classes.push("bottom-full", "left-0", "-right-0.5", "mb-0.5"); // Outside top, sits above
       }
     }
   } else if (position === "bottom") {
     if (isPadding) {
-      classes.push('-bottom-0.5', '-left-0.5', 'right-0'); // Inside bottom
+      classes.push("-bottom-0.5", "-left-0.5", "right-0"); // Inside bottom
     } else {
       if (isOffScreen) {
-        classes.push('bottom-full', 'left-0', 'right-0', 'mb-0'); // Clipped: flip to top
+        classes.push("bottom-full", "left-0", "right-0", "mb-0"); // Clipped: flip to top
       } else {
-        classes.push('top-full', '-left-0', '-right-0.5', 'mt-0.5'); // Outside bottom, sits below
+        classes.push("top-full", "-left-0", "-right-0.5", "mt-0.5"); // Outside bottom, sits below
       }
     }
   } else if (position === "left") {
     if (isPadding) {
-      classes.push('-left-0.5', 'top-0', 'bottom-0'); // Inside left
+      classes.push("-left-0.5", "top-0", "bottom-0"); // Inside left
     } else {
       if (isOffScreen) {
-        classes.push('-left-0.5', 'top-0'); // Clipped: move inside, anchor to top only
+        classes.push("-left-0.5", "top-0"); // Clipped: move inside, anchor to top only
       } else {
-        classes.push('right-full', 'top-0', 'bottom-0', 'mr-0.5'); // Outside left
+        classes.push("right-full", "top-0", "bottom-0", "mr-0.5"); // Outside left
       }
     }
   } else if (position === "right") {
     if (isPadding) {
-      classes.push('-right-0.5', 'top-0', 'bottom-0'); // Inside right
+      classes.push("-right-0.5", "top-0", "bottom-0"); // Inside right
     } else {
       if (isOffScreen) {
-        classes.push('right-0.5', 'top-0'); // Clipped: move inside, anchor to top only
+        classes.push("right-0.5", "top-0"); // Clipped: move inside, anchor to top only
       } else {
-        classes.push('left-full', 'top-0', 'bottom-0', 'ml-0.5'); // Outside right
+        classes.push("left-full", "top-0", "bottom-0", "ml-0.5"); // Outside right
       }
     }
   }
 
   // Alignment using flex
   if (["top", "bottom"].includes(position)) {
-    classes.push('flex', 'items-end'); // Items align to bottom (extend downward)
+    classes.push("flex", "items-end"); // Items align to bottom (extend downward)
     if (align === "start") {
-      classes.push('justify-start');
-      if (!isPadding) classes.push(''); // Only add padding for outside controls
+      classes.push("justify-start");
+      if (!isPadding) classes.push(""); // Only add padding for outside controls
     } else if (align === "middle") {
-      classes.push('justify-center');
+      classes.push("justify-center");
     } else if (align === "end") {
-      classes.push('justify-end');
-      if (!isPadding) classes.push(''); // Only add padding for outside controls
+      classes.push("justify-end");
+      if (!isPadding) classes.push(""); // Only add padding for outside controls
     }
   } else if (["left", "right"].includes(position)) {
-    classes.push('flex', 'flex-col');
+    classes.push("flex", "flex-col");
     if (align === "start") {
-      classes.push('justify-start');
-      if (!isPadding) classes.push(''); // Only add padding for outside controls
+      classes.push("justify-start");
+      if (!isPadding) classes.push(""); // Only add padding for outside controls
     } else if (align === "middle") {
       // If middle-aligned but would clip, align to start instead
       if (isOffScreen) {
-        classes.push('justify-start');
+        classes.push("justify-start");
       } else {
-        classes.push('justify-center');
+        classes.push("justify-center");
       }
     } else if (align === "end") {
-      classes.push('justify-end');
-      if (!isPadding) classes.push(''); // Only add padding for outside controls
+      classes.push("justify-end");
+      if (!isPadding) classes.push(""); // Only add padding for outside controls
     }
   }
 
@@ -209,19 +211,19 @@ export const RenderNodeControlInline = ({
     <motion.div
       ref={ref}
       {...animate}
-      className={`${classes.join(' ')} ${className}`}
+      className={`${classes.join(" ")} ${className}`}
       data-node-control="true"
       style={{
         // Reset/lock styles to prevent inheritance from parent
-        fontSize: '14px',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-        fontWeight: 'normal',
-        lineHeight: 'normal',
-        letterSpacing: 'normal',
-        textAlign: 'left',
-        textTransform: 'none',
-        textDecoration: 'none',
-        color: 'inherit',
+        fontSize: "14px",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+        fontWeight: "normal",
+        lineHeight: "normal",
+        letterSpacing: "normal",
+        textAlign: "left",
+        textTransform: "none",
+        textDecoration: "none",
+        color: "inherit",
         ...style,
       }}
       {...props}
@@ -232,5 +234,3 @@ export const RenderNodeControlInline = ({
 };
 
 export default RenderNodeControlInline;
-
-

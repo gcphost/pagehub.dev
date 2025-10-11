@@ -1,8 +1,5 @@
 import { useEditor } from "@craftjs/core";
-import {
-  GetSignedUrl,
-  SaveMedia,
-} from "components/editor/Viewport/lib";
+import { GetSignedUrl, SaveMedia } from "components/editor/Viewport/lib";
 import { useState } from "react";
 import { TbAlertTriangle, TbPhoto, TbTrash, TbUpload } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
@@ -117,14 +114,15 @@ export const StandaloneImagePicker = ({
       <div className="flex gap-2">
         <label
           htmlFor={`file-upload-${label}`}
-          className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-all ${errors.length
-            ? "border-destructive bg-destructive text-destructive"
-            : saved
-              ? "border-secondary bg-secondary text-secondary-foreground"
-              : loading
-                ? "border-primary bg-muted text-primary"
-                : "border-border hover:border-primary bg-muted hover:bg-muted text-foreground"
-            } ${!enabled && "opacity-50 cursor-not-allowed"}`}
+          className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-3 transition-all ${
+            errors.length
+              ? "border-destructive bg-destructive text-destructive"
+              : saved
+                ? "border-secondary bg-secondary text-secondary-foreground"
+                : loading
+                  ? "border-primary bg-muted text-primary"
+                  : "border-border bg-muted text-foreground hover:border-primary hover:bg-muted"
+          } ${!enabled && "cursor-not-allowed opacity-50"}`}
         >
           {loading ? (
             <Spinner />
@@ -147,7 +145,7 @@ export const StandaloneImagePicker = ({
         <button
           type="button"
           onClick={() => setShowMediaBrowser(true)}
-          className="px-4 py-3 border-2 border-border rounded-lg hover:border-primary hover:bg-muted transition-all flex items-center gap-2 text-foreground"
+          className="flex items-center gap-2 rounded-lg border-2 border-border px-4 py-3 text-foreground transition-all hover:border-primary hover:bg-muted"
         >
           <TbPhoto className="text-xl" />
           <span className="text-sm font-medium">Browse</span>
@@ -157,7 +155,7 @@ export const StandaloneImagePicker = ({
           <button
             type="button"
             onClick={handleClear}
-            className="px-4 py-3 border-2 border-destructive rounded-lg hover:border-destructive hover:bg-destructive transition-all flex items-center gap-2 text-destructive"
+            className="flex items-center gap-2 rounded-lg border-2 border-destructive px-4 py-3 text-destructive transition-all hover:border-destructive hover:bg-destructive"
           >
             <TbTrash className="text-xl" />
           </button>
@@ -175,11 +173,11 @@ export const StandaloneImagePicker = ({
       )}
 
       {hasUploadedImage && mediaContent && (
-        <div className="relative w-full h-48 bg-muted text-muted-foreground rounded-lg overflow-hidden">
+        <div className="relative h-48 w-full overflow-hidden rounded-lg bg-muted text-muted-foreground">
           <img
             src={mediaContent}
             alt="Preview"
-            className="w-full h-full object-cover"
+            className="size-full object-cover"
           />
         </div>
       )}
@@ -193,4 +191,3 @@ export const StandaloneImagePicker = ({
     </div>
   );
 };
-

@@ -114,10 +114,20 @@ export const FontFamiltAltInput = ({
               e: getRect(ref.current),
             });
           }}
-          style={{ fontFamily: value ? (Array.isArray(value) ? value.join(", ") : value) : null }}
+          style={{
+            fontFamily: value
+              ? Array.isArray(value)
+                ? value.join(", ")
+                : value
+              : null,
+          }}
           className="input"
         >
-          {value ? (Array.isArray(value) ? value.join(", ") : value) : "Default"}
+          {value
+            ? Array.isArray(value)
+              ? value.join(", ")
+              : value
+            : "Default"}
         </button>
       </Wrap>
     </div>

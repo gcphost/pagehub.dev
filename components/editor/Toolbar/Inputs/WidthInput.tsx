@@ -18,12 +18,14 @@ export const WidthInput = ({
 
   const [state, setState] = useRecoilState(itemListState);
 
-  const toggle = <ItemToggle
-    selected={state}
-    onChange={(value) => setState(value)}
-    items={sizingItems}
-    option={false}
-  />
+  const toggle = (
+    <ItemToggle
+      selected={state}
+      onChange={(value) => setState(value)}
+      items={sizingItems}
+      option={false}
+    />
+  );
 
   return (
     <>
@@ -53,7 +55,6 @@ export const WidthInput = ({
           varSelectorPrefix={propTag}
           inline
           append={toggle}
-
         >
           <option value="">None</option>
           {TailwindStyles[values].map((_, k) => (
@@ -72,11 +73,8 @@ export const WidthInput = ({
           placeholder="Pixels"
           inline
           append={toggle}
-
         />
       )}
-
-
     </>
   );
 };

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{}>
+  res: NextApiResponse<{}>,
 ) {
   res.status(200).json(await getDomain(req.body.domain));
 }
@@ -15,7 +15,7 @@ export async function getDomain(name) {
         Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
       },
       method: "get",
-    }
+    },
   );
 
   return result.json();
@@ -39,7 +39,7 @@ export async function deploy() {
       },
       method: "POST",
       body: `{"deploymentId":"${deployments.deployments[0].uid}","meta":{"action":"redeploy"},"name":"pagehub","target":"production"}`,
-    }
+    },
   );
   return result.json();
 }
@@ -52,7 +52,7 @@ export async function removeDomain(name) {
         Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
       },
       method: "delete",
-    }
+    },
   );
   return result.json();
 }
@@ -68,7 +68,7 @@ export async function addDomain(name) {
         Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
       },
       method: "post",
-    }
+    },
   );
 
   return result.json();

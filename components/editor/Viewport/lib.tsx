@@ -56,7 +56,7 @@ export const SaveMedia = async (media, url) => {
 export const SaveSubmissions = async (
   submission,
   settings,
-  additional = {}
+  additional = {},
 ) => {
   try {
     const res = await fetch("/api/submissions", {
@@ -78,7 +78,12 @@ export const SaveSubmissions = async (
   }
 };
 
-export const DeleteMedia = async (mediaId, settings, query = null, actions = null) => {
+export const DeleteMedia = async (
+  mediaId,
+  settings,
+  query = null,
+  actions = null,
+) => {
   try {
     const res = await fetch("/api/files", {
       method: "DELETE",
@@ -104,7 +109,13 @@ export const DeleteMedia = async (mediaId, settings, query = null, actions = nul
   }
 };
 
-export const SaveToServer = async (json, draft, settings, setSettings, sessionToken = null) => {
+export const SaveToServer = async (
+  json,
+  draft,
+  settings,
+  setSettings,
+  sessionToken = null,
+) => {
   const content = lz.encodeBase64(lz.compress(json));
 
   localStorage.setItem("draft", content);
@@ -130,7 +141,7 @@ export const SaveToServer = async (json, draft, settings, setSettings, sessionTo
 
   // Also send token in header for redundancy
   if (sessionToken) {
-    headers['x-pagehub-token'] = sessionToken;
+    headers["x-pagehub-token"] = sessionToken;
   }
 
   const res = await fetch("/api/save", {
@@ -237,12 +248,12 @@ export const setPropOnView = (
     propItemKey = null,
     onChange = null,
   }: PropType,
-  delay = 2000
+  delay = 2000,
 ) => {
   try {
     // Guard against undefined setProp (node not ready yet)
     if (!setProp) {
-      console.log('⚠️ setProp not available yet, skipping update');
+      console.log("⚠️ setProp not available yet, skipping update");
       return;
     }
 
@@ -347,8 +358,8 @@ export const setPropOnView = (
   } catch (e) {
     // Silently ignore errors during component loading
     // This happens when Craft.js tries to update nodes that aren't fully registered yet
-    if (e.message && e.message.includes('data')) {
-      console.log('⚠️ Node not ready for prop update, skipping');
+    if (e.message && e.message.includes("data")) {
+      console.log("⚠️ Node not ready for prop update, skipping");
     } else {
       console.error(e);
     }
@@ -377,7 +388,7 @@ export const propagatePropsToClones = (
   query,
   actions,
   index = null,
-  propItemKey = null
+  propItemKey = null,
 ) => {
   try {
     const original = query.node(originalId).get();
@@ -385,52 +396,57 @@ export const propagatePropsToClones = (
 
     const clones = original.data.props.hasMany;
 
-    clones.forEach(cloneId => {
+    clones.forEach((cloneId) => {
       const clone = query.node(cloneId).get();
       if (!clone) return;
 
       // Check if this prop should propagate based on relationType
       const cloneRelationType = clone.data.props.relationType;
 
-      if (cloneRelationType === 'style') {
+      if (cloneRelationType === "style") {
         // Only propagate style-related props (view-based styles)
-        const styleViews = ['root', 'mobile', 'tablet', 'desktop', 'hover'];
-        if (view !== 'component' && !styleViews.includes(view)) return;
-        if (view === 'component') return; // Don't propagate component props in style mode
+        const styleViews = ["root", "mobile", "tablet", "desktop", "hover"];
+        if (view !== "component" && !styleViews.includes(view)) return;
+        if (view === "component") return; // Don't propagate component props in style mode
       }
 
       // Apply the same change to clone
-      actions.setProp(cloneId, (props) => {
-        const setting =
-          view === "component"
-            ? props
-            : (props[view] = props[view] || {});
+      actions.setProp(
+        cloneId,
+        (props) => {
+          const setting =
+            view === "component" ? props : (props[view] = props[view] || {});
 
-        if (index >= 0 && propItemKey) {
-          setting[propKey] = setting[propKey] || {};
-          setting[propKey][index] = setting[propKey][index] || {};
-          setting[propKey][index][propItemKey] = value;
-          return;
-        }
+          if (index >= 0 && propItemKey) {
+            setting[propKey] = setting[propKey] || {};
+            setting[propKey][index] = setting[propKey][index] || {};
+            setting[propKey][index][propItemKey] = value;
+            return;
+          }
 
-        if (index || index > 0) {
-          setting[index] = setting[index] || {};
-          setting[index][propKey] = value;
-          return;
-        }
+          if (index || index > 0) {
+            setting[index] = setting[index] || {};
+            setting[index][propKey] = value;
+            return;
+          }
 
-        setting[propKey] = value;
-      }, 0);
+          setting[propKey] = value;
+        },
+        0,
+      );
     });
   } catch (e) {
-    console.error('Error propagating props to clones:', e);
+    console.error("Error propagating props to clones:", e);
   }
 };
 
 export const changeProp = (props: PropType, delay = 2000) => {
-  const view = props.propType === "root" ? "root" :
-    props.propType === "component" ? "component" :
-      props.view;
+  const view =
+    props.propType === "root"
+      ? "root"
+      : props.propType === "component"
+        ? "component"
+        : props.view;
 
   // Apply the change
   setPropOnView({ ...props, view }, delay);
@@ -447,7 +463,7 @@ export const changeProp = (props: PropType, delay = 2000) => {
         props.query,
         props.actions,
         props.index,
-        props.propItemKey
+        props.propItemKey,
       );
     }
   }
@@ -460,7 +476,7 @@ export const removeHasManyRelation = (node, query, actions) => {
     if (belongsTo) {
       actions.setProp(
         node.data.props.belongsTo,
-        (prop) => (prop.hasMany = prop.hasMany.filter((_) => _ !== node.id))
+        (prop) => (prop.hasMany = prop.hasMany.filter((_) => _ !== node.id)),
       );
     }
   }
@@ -574,11 +590,16 @@ const fromEntries = (pairs) => {
       ...accum,
       [id]: value,
     }),
-    {}
+    {},
   );
 };
 
-export const saveHandler = async ({ query, id, component = null, actions = null }) => {
+export const saveHandler = async ({
+  query,
+  id,
+  component = null,
+  actions = null,
+}) => {
   const tree = query.node(id).toNodeTree();
   const nodePairs = Object.keys(tree.nodes).map((id) => [
     id,
@@ -590,7 +611,8 @@ export const saveHandler = async ({ query, id, component = null, actions = null 
 
   // Get the component name from the root node
   const rootNode = query.node(tree.rootNodeId).get();
-  const componentName = rootNode?.data?.custom?.displayName ||
+  const componentName =
+    rootNode?.data?.custom?.displayName ||
     rootNode?.data?.displayName ||
     rootNode?.data?.name ||
     `Component ${Date.now()}`;
@@ -608,7 +630,7 @@ export const saveHandler = async ({ query, id, component = null, actions = null 
   if (component) {
     // NEW APPROACH: Create a real Container node with type="component"
     if (actions) {
-      console.log('💾 Creating component as real node:', componentName);
+      console.log("💾 Creating component as real node:", componentName);
 
       // Get the original node info before moving it
       const originalNode = query.node(id).get();
@@ -623,31 +645,33 @@ export const saveHandler = async ({ query, id, component = null, actions = null 
       // Must be a Canvas element to accept children
       // Will be automatically hidden in preview mode by Container component
       const Element = (await import("@craftjs/core")).Element;
-      const componentWrapper = query.parseReactElement(
-        <Element
-          canvas
-          is={Container}
-          type="component"
-          custom={{ displayName: componentName }}
-          root={{
-            background: "bg-transparent",
-          }}
-          mobile={{
-            display: "flex",
-            flexDirection: "flex-col",
-            gap: "gap-0",
-          }}
-        />
-      ).toNodeTree();
+      const componentWrapper = query
+        .parseReactElement(
+          <Element
+            canvas
+            is={Container}
+            type="component"
+            custom={{ displayName: componentName }}
+            root={{
+              background: "bg-transparent",
+            }}
+            mobile={{
+              display: "flex",
+              flexDirection: "flex-col",
+              gap: "gap-0",
+            }}
+          />,
+        )
+        .toNodeTree();
 
       // Add the component wrapper to ROOT
       actions.addNodeTree(componentWrapper, ROOT_NODE);
       const componentId = componentWrapper.rootNodeId;
-      console.log('📦 Created component container:', componentId);
+      console.log("📦 Created component container:", componentId);
 
       // 2. Move the ORIGINAL node into the component container
       actions.move(id, componentId, 0);
-      console.log('📦 Moved original into component container');
+      console.log("📦 Moved original into component container");
 
       // 3. Create a clone from the original (now inside container)
       const tree = query.node(id).toNodeTree();
@@ -655,16 +679,18 @@ export const saveHandler = async ({ query, id, component = null, actions = null 
         tree,
         query,
         setProp: actions.setProp,
-        createLinks: true // Create link between original and clone
+        createLinks: true, // Create link between original and clone
       });
 
       // 4. Place the clone where the original was
       actions.addNodeTree(clonedTree, originalParent, originalIndex);
-      console.log('📦 Placed clone at original location');
+      console.log("📦 Placed clone at original location");
 
       // Mark the clone with belongsTo and select it
       setTimeout(async () => {
-        const { setRecursiveBelongsTo } = await import("components/editor/componentUtils");
+        const { setRecursiveBelongsTo } = await import(
+          "components/editor/componentUtils"
+        );
 
         setRecursiveBelongsTo(
           clonedTree.rootNodeId,
@@ -676,14 +702,14 @@ export const saveHandler = async ({ query, id, component = null, actions = null 
             if (clonedNodeId === clonedTree.rootNodeId) {
               prop.savedComponentName = componentName;
             }
-          }
+          },
         );
 
         // Select the clone so user can see it's been created
         actions.selectNode(clonedTree.rootNodeId);
       }, 50);
 
-      console.log('✅ Component created as real node!');
+      console.log("✅ Component created as real node!");
 
       // Serialize the tree for the component data (using original node tree)
       const componentTreePairs = Object.keys(tree.nodes).map((nodeId) => [
@@ -710,12 +736,12 @@ export const getNodeTree = ({ tree, query }) => {
   const changeNodeId = (node: any, newParentId?: string) => {
     const newNodeId = getRandomId();
     const childNodes = node.data.nodes.map((childId) =>
-      changeNodeId(tree.nodes[childId], newNodeId)
+      changeNodeId(tree.nodes[childId], newNodeId),
     );
     const linkedNodes = Object.keys(node.data.linkedNodes).reduce((acc, id) => {
       const newLinkedNodeId = changeNodeId(
         tree.nodes[node.data.linkedNodes[id]],
-        newNodeId
+        newNodeId,
       );
       return {
         ...acc,
@@ -745,17 +771,22 @@ export const getNodeTree = ({ tree, query }) => {
   };
 };
 
-export const buildClonedTree = ({ tree, query, setProp, createLinks = true }) => {
+export const buildClonedTree = ({
+  tree,
+  query,
+  setProp,
+  createLinks = true,
+}) => {
   const newNodes = {};
   const changeNodeId = (node: any, newParentId?: string) => {
     const newNodeId = getRandomId();
     const childNodes = node.data.nodes.map((childId) =>
-      changeNodeId(tree.nodes[childId], newNodeId)
+      changeNodeId(tree.nodes[childId], newNodeId),
     );
     const linkedNodes = Object.keys(node.data.linkedNodes).reduce((acc, id) => {
       const newLinkedNodeId = changeNodeId(
         tree.nodes[node.data.linkedNodes[id]],
-        newNodeId
+        newNodeId,
       );
       return {
         ...acc,

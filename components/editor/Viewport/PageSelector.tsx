@@ -4,7 +4,14 @@ import { Container } from "components/selectors/Container";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { TbChevronDown, TbExternalLink, TbExternalLinkOff, TbHash, TbPlus, TbSettings } from "react-icons/tb";
+import {
+  TbChevronDown,
+  TbExternalLink,
+  TbExternalLinkOff,
+  TbHash,
+  TbPlus,
+  TbSettings,
+} from "react-icons/tb";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import { IsolateAtom, isolatePageAlt } from "utils/lib";
@@ -27,7 +34,11 @@ interface PageSelectorProps {
   className?: string;
   // Picker mode: just select a page without navigation/isolation
   pickerMode?: boolean;
-  onPagePick?: (page: { id: string; displayName: string; isHomePage: boolean }) => void;
+  onPagePick?: (page: {
+    id: string;
+    displayName: string;
+    isHomePage: boolean;
+  }) => void;
   selectedPageId?: string;
   buttonClassName?: string;
   suggestedPageName?: string;
@@ -59,11 +70,11 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
 
             return _props?.data?.props?.type === "page"
               ? {
-                id: _,
-                displayName:
-                  _props.data.custom?.displayName || "Untitled Page",
-                custom: _props.data.custom,
-              }
+                  id: _,
+                  displayName:
+                    _props.data.custom?.displayName || "Untitled Page",
+                  custom: _props.data.custom,
+                }
               : null;
           } catch (e) {
             // Node may have been removed
@@ -111,7 +122,8 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isOpen]);
 
@@ -124,9 +136,15 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
       }
     };
 
-    window.addEventListener("openPageSettings", handleOpenPageSettings as EventListener);
+    window.addEventListener(
+      "openPageSettings",
+      handleOpenPageSettings as EventListener,
+    );
     return () => {
-      window.removeEventListener("openPageSettings", handleOpenPageSettings as EventListener);
+      window.removeEventListener(
+        "openPageSettings",
+        handleOpenPageSettings as EventListener,
+      );
     };
   }, []);
 
@@ -161,9 +179,12 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
   };
 
   const getPageUrl = (pageId: string | null): string => {
-    const currentPath = router.asPath.split('?')[0];
-    const pathParts = currentPath.split('/').filter(p => p);
-    const baseUrl = pathParts.length > 1 ? `/${pathParts[0]}/${pathParts[1]}` : `/${pathParts[0]}`;
+    const currentPath = router.asPath.split("?")[0];
+    const pathParts = currentPath.split("/").filter((p) => p);
+    const baseUrl =
+      pathParts.length > 1
+        ? `/${pathParts[0]}/${pathParts[1]}`
+        : `/${pathParts[0]}`;
 
     if (pageId === null) {
       // "All Pages" - return base URL
@@ -197,7 +218,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
       // Check if a page with this slug already exists
       if (suggestedPageName) {
         const baseSlug = sluggit(suggestedPageName, "-");
-        const existingSlugs = pages.map(page => {
+        const existingSlugs = pages.map((page) => {
           const displayName = page.displayName;
           return sluggit(displayName, "-");
         });
@@ -270,11 +291,12 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                 // Navigation mode: navigate and isolate
                 if (displayName) {
                   const pageSlug = sluggit(displayName, "-");
-                  const currentPath = router.asPath.split('?')[0];
-                  const pathParts = currentPath.split('/').filter(p => p);
-                  const baseUrl = pathParts.length > 1
-                    ? `/${pathParts[0]}/${pathParts[1]}`
-                    : `/${pathParts[0]}`;
+                  const currentPath = router.asPath.split("?")[0];
+                  const pathParts = currentPath.split("/").filter((p) => p);
+                  const baseUrl =
+                    pathParts.length > 1
+                      ? `/${pathParts[0]}/${pathParts[1]}`
+                      : `/${pathParts[0]}`;
 
                   // New pages always get a slug (they're not the first page)
                   const newUrl = `${baseUrl}/${pageSlug}`;
@@ -282,7 +304,14 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                   router.push(newUrl, undefined, { shallow: true });
                 }
 
-                isolatePageAlt(isolate, query, newNodeId, actions, setIsolate, true);
+                isolatePageAlt(
+                  isolate,
+                  query,
+                  newNodeId,
+                  actions,
+                  setIsolate,
+                  true,
+                );
                 onPageChange?.(newNodeId);
               }
             }
@@ -299,16 +328,22 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
 
   // Get current page info
   const currentPage = pickerMode
-    ? (selectedPageId ? pages.find((p) => p.id === selectedPageId) : null)
-    : (isolate ? pages.find((p) => p.id === isolate) : null);
+    ? selectedPageId
+      ? pages.find((p) => p.id === selectedPageId)
+      : null
+    : isolate
+      ? pages.find((p) => p.id === isolate)
+      : null;
 
   const displayText = pickerMode
-    ? (currentPage ? currentPage.displayName : "Select a page")
-    : (currentPage
+    ? currentPage
+      ? currentPage.displayName
+      : "Select a page"
+    : currentPage
       ? currentPage.displayName
       : pages.length > 0
         ? "All Pages"
-        : "No Pages");
+        : "No Pages";
 
   // Check if current page is home page
   const currentNode = currentPage ? query.node(currentPage.id).get() : null;
@@ -316,43 +351,53 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
 
   const displayRoute = pickerMode
     ? null // Don't show route in picker mode
-    : (currentPage
-      ? (isCurrentHomePage ? "/" : `/${sluggit(currentPage.displayName, "-")}`)
-      : null);
+    : currentPage
+      ? isCurrentHomePage
+        ? "/"
+        : `/${sluggit(currentPage.displayName, "-")}`
+      : null;
 
   // Filter pages based on search query and reverse order
-  const filteredPages = pages
-    .filter((page) =>
-      page.displayName.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-
+  const filteredPages = pages.filter((page) =>
+    page.displayName.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   // Get live URL for current page
   const baseUrl = settings?.draftId
     ? `https://${settings.draftId}.pagehub.dev/`
     : "";
-  const pageSlug = currentPage && !isCurrentHomePage ? sluggit(currentPage.displayName, "-") : "";
+  const pageSlug =
+    currentPage && !isCurrentHomePage
+      ? sluggit(currentPage.displayName, "-")
+      : "";
   const liveUrl = currentPage ? `${baseUrl}${pageSlug}` : null;
 
   return (
-    <div className={`relative ${className} flex items-center gap-2`} ref={dropdownRef}>
+    <div
+      className={`relative ${className} flex items-center gap-2`}
+      ref={dropdownRef}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={buttonClassName || "flex items-center gap-2 px-3 py-2 bg-background hover:bg-muted text-foreground rounded-lg w-full justify-between transition-colors"}
+        className={
+          buttonClassName ||
+          "flex w-full items-center justify-between gap-2 rounded-lg bg-background px-3 py-2 text-foreground transition-colors hover:bg-muted"
+        }
         aria-label="Page selector"
       >
-        <div className="flex items-center gap-2 overflow-hidden flex-1">
-          {showHashIcon && <TbHash className="flex-shrink-0" />}
+        <div className="flex flex-1 items-center gap-2 overflow-hidden">
+          {showHashIcon && <TbHash className="shrink-0" />}
           <span className="truncate text-sm font-medium">{displayText}</span>
           {displayRoute && (
-            <span className="text-xs text-muted-foreground truncate ml-auto">
+            <span className="ml-auto truncate text-xs text-muted-foreground">
               {displayRoute}
             </span>
           )}
         </div>
         <TbChevronDown
-          className={`flex-shrink-0 transition-transform ${isOpen ? "rotate-180" : ""
-            }`}
+          className={`shrink-0 transition-transform ${
+            isOpen ? "rotate-180" : ""
+          }`}
         />
       </button>
 
@@ -363,7 +408,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
           placement="bottom"
         >
           <a
-            className="text-muted-foreground hover:text-foreground text-xl p-0 flex-shrink-0 transition-colors"
+            className="shrink-0 p-0 text-xl text-muted-foreground transition-colors hover:text-foreground"
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -374,21 +419,21 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
       )}
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-background border border-border rounded-lg shadow-xl overflow-hidden z-50 flex flex-col max-h-[500px]">
+        <div className="absolute inset-x-0 top-full z-50 mt-1 flex max-h-[500px] flex-col overflow-hidden rounded-lg border border-border bg-background shadow-xl">
           {/* Search Header - Fixed */}
-          <div className="p-3 border-b border-border">
+          <div className="border-b border-border p-3">
             <input
               type="text"
               placeholder="Search pages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-3 py-2 bg-muted text-foreground text-sm rounded-md border border-border focus:outline-none focus:border-ring"
+              className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm text-foreground focus:border-ring focus:outline-none"
               autoFocus
             />
           </div>
 
           {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto scrollbar">
+          <div className="scrollbar flex-1 overflow-y-auto">
             {/* All Pages Option - Only in navigation mode */}
             {!pickerMode && (
               <>
@@ -396,8 +441,9 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                   href={getPageUrl(null)}
                   shallow
                   onClick={() => handlePageSelect(null)}
-                  className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-muted transition-colors ${!isolate ? "bg-muted font-medium" : ""
-                    }`}
+                  className={`flex w-full items-center gap-2 px-3 py-2 transition-colors hover:bg-muted ${
+                    !isolate ? "bg-muted font-medium" : ""
+                  }`}
                 >
                   <TbHash className="text-muted-foreground" />
                   <span className="text-sm text-foreground">All Pages</span>
@@ -405,7 +451,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
 
                 {/* Divider */}
                 {filteredPages.length > 0 && (
-                  <div className="border-t border-border my-1" />
+                  <div className="my-1 border-t border-border" />
                 )}
               </>
             )}
@@ -415,27 +461,32 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
               filteredPages.map((page) => {
                 const pageNode = query.node(page.id).get();
                 const isPageHomePage = pageNode?.data?.props?.isHomePage;
-                const pageRoute = isPageHomePage ? "/" : `/${sluggit(page.displayName, "-")}`;
-                const isSelected = pickerMode ? (selectedPageId === page.id) : (isolate === page.id);
+                const pageRoute = isPageHomePage
+                  ? "/"
+                  : `/${sluggit(page.displayName, "-")}`;
+                const isSelected = pickerMode
+                  ? selectedPageId === page.id
+                  : isolate === page.id;
 
                 return (
                   <div
                     key={page.id}
-                    className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-muted transition-colors group ${isSelected ? "bg-muted font-medium" : ""
-                      }`}
+                    className={`group flex w-full items-center gap-2 px-3 py-2 transition-colors hover:bg-muted ${
+                      isSelected ? "bg-muted font-medium" : ""
+                    }`}
                   >
                     {pickerMode ? (
                       <button
                         onClick={() => handlePageSelect(page.id)}
-                        className="flex-1 flex items-center gap-2 overflow-hidden text-left"
+                        className="flex flex-1 items-center gap-2 overflow-hidden text-left"
                       >
                         <TbHash className="text-muted-foreground" />
-                        <div className="flex-1 flex items-center justify-between gap-2 overflow-hidden">
-                          <span className="text-sm text-foreground truncate">
+                        <div className="flex flex-1 items-center justify-between gap-2 overflow-hidden">
+                          <span className="truncate text-sm text-foreground">
                             {page.displayName}
                           </span>
                           {isPageHomePage && (
-                            <span className="text-xs text-muted-foreground truncate">
+                            <span className="truncate text-xs text-muted-foreground">
                               (Home)
                             </span>
                           )}
@@ -446,14 +497,14 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                         href={getPageUrl(page.id)}
                         shallow
                         onClick={() => handlePageSelect(page.id)}
-                        className="flex-1 flex items-center gap-2 overflow-hidden"
+                        className="flex flex-1 items-center gap-2 overflow-hidden"
                       >
                         <TbHash className="text-muted-foreground" />
-                        <div className="flex-1 flex items-center justify-between gap-2 overflow-hidden">
-                          <span className="text-sm text-foreground truncate">
+                        <div className="flex flex-1 items-center justify-between gap-2 overflow-hidden">
+                          <span className="truncate text-sm text-foreground">
                             {page.displayName}
                           </span>
-                          <span className="text-xs text-muted-foreground truncate">
+                          <span className="truncate text-xs text-muted-foreground">
                             {pageRoute}
                           </span>
                         </div>
@@ -466,7 +517,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                           setSettingsPageId(page.id);
                           setIsOpen(false);
                         }}
-                        className="flex-shrink-0 p-1 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="shrink-0 p-1 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100"
                         aria-label="Page settings"
                       >
                         <TbSettings size={16} />
@@ -476,7 +527,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                 );
               })
             ) : searchQuery ? (
-              <div className="px-3 py-4 text-center text-muted-foreground text-sm">
+              <div className="px-3 py-4 text-center text-sm text-muted-foreground">
                 No pages found
               </div>
             ) : null}
@@ -486,7 +537,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
           <div className="border-t border-border">
             <button
               onClick={handleCreatePage}
-              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-primary hover:text-primary transition-colors"
+              className="flex w-full items-center gap-2 px-3 py-2 text-primary transition-colors hover:bg-muted hover:text-primary"
             >
               <TbPlus />
               <span className="text-sm font-medium">Create New Page</span>
@@ -506,4 +557,3 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
     </div>
   );
 };
-

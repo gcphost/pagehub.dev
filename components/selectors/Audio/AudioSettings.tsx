@@ -15,12 +15,7 @@ import { TabAtom } from "components/editor/Viewport";
 import { useEffect } from "react";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
-import {
-  TbBoxPadding,
-  TbMouse,
-  TbMusic,
-  TbPlayerPlay,
-} from "react-icons/tb";
+import { TbBoxPadding, TbMouse, TbMusic, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
 
@@ -63,7 +58,7 @@ export const AudioSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <p className="p-3 text-md">
+      <p className="text-md p-3">
         Enter the URL of the audio file you&apos;d like to play.
       </p>
 
@@ -148,7 +143,7 @@ export const AudioSettings = () => {
 
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Hover settings are not available for this component.
           </p>
         </TabBody>
@@ -162,4 +157,3 @@ export const AudioSettings = () => {
     </TBWrap>
   );
 };
-

@@ -14,6 +14,7 @@ When a tenant has webhooks configured, PageHub will forward page operations to t
 ## Webhook Types
 
 ### 1. onLoad Webhook (GET)
+
 Triggered when a user loads a page on the tenant's subdomain.
 
 **Endpoint**: `GET {tenant.webhooks.onLoad}/{pageId}`
@@ -21,6 +22,7 @@ Triggered when a user loads a page on the tenant's subdomain.
 **Purpose**: Load page content and metadata from the tenant's system.
 
 ### 2. onSave Webhook (POST)
+
 Triggered when a user saves a page on the tenant's subdomain.
 
 **Endpoint**: `POST {tenant.webhooks.onSave}/{pageId}`
@@ -32,6 +34,7 @@ Triggered when a user saves a page on the tenant's subdomain.
 PageHub automatically forwards authentication information from the original user request to your webhook endpoints. This includes:
 
 ### Headers Forwarded
+
 - `Authorization` - Bearer tokens, API keys, etc.
 - `X-API-Key` - Custom API key headers
 - `X-Auth-Token` - Custom auth token headers
@@ -39,9 +42,11 @@ PageHub automatically forwards authentication information from the original user
 - `Cookie` - Session cookies and other cookie-based auth
 
 ### Query Parameters
+
 All URL query parameters from the original request are included in the webhook payload.
 
 ### Additional Context
+
 - User Agent
 - Client IP Address
 - Request timestamp
@@ -51,6 +56,7 @@ All URL query parameters from the original request are included in the webhook p
 ### onLoad Webhook (GET)
 
 **Headers Received:**
+
 ```
 Authorization: Bearer {original-token}
 X-API-Key: {original-api-key}
@@ -58,11 +64,13 @@ Cookie: {original-cookies}
 ```
 
 **Query Parameters:**
+
 ```
 GET /webhook/endpoint/page123?auth=token123&user=john
 ```
 
 **Expected Response:**
+
 ```json
 {
   "document": "base64-encoded-page-content",
@@ -77,6 +85,7 @@ GET /webhook/endpoint/page123?auth=token123&user=john
 ### onSave Webhook (POST)
 
 **Headers Received:**
+
 ```
 Authorization: Bearer {original-token}
 X-API-Key: {original-api-key}
@@ -85,6 +94,7 @@ Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "tenantId": "tenant-mongodb-id",
@@ -111,6 +121,7 @@ Content-Type: application/json
 ```
 
 **Expected Response:**
+
 ```json
 {
   "_id": "page-identifier",
@@ -132,15 +143,15 @@ app.get('/webhook/load/:pageId', (req, res) => {
   const { pageId } = req.params;
   const authToken = req.headers.authorization;
   const apiKey = req.headers['x-api-key'];
-  
+
   // Validate authentication
   if (!isValidToken(authToken)) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-  
+
   // Load page from your system
   const page = await loadPageFromDatabase(pageId);
-  
+
   res.json({
     document: page.content,
     title: page.title,
@@ -151,22 +162,22 @@ app.get('/webhook/load/:pageId', (req, res) => {
 // onSave webhook
 app.post('/webhook/save/:pageId', async (req, res) => {
   const { pageId, document, isDraft, settings, auth } = req.body;
-  
+
   // Validate authentication from forwarded auth info
   const authToken = req.headers.authorization;
   if (!isValidToken(authToken)) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-  
+
   // Additional validation using query params
   const queryToken = auth.query.token;
   if (!isValidQueryToken(queryToken)) {
     return res.status(401).json({ error: 'Invalid token' });
   }
-  
+
   // Save to your system
   await savePageToDatabase(pageId, document, settings);
-  
+
   res.json({
     _id: pageId,
     title: settings.title,
@@ -191,14 +202,14 @@ def load_page(page_id):
     # Get auth from headers
     auth_token = request.headers.get('Authorization')
     api_key = request.headers.get('X-API-Key')
-    
+
     # Validate authentication
     if not validate_token(auth_token):
         return jsonify({'error': 'Unauthorized'}), 401
-    
+
     # Load page from your system
     page = load_page_from_database(page_id)
-    
+
     return jsonify({
         'document': page['content'],
         'title': page['title'],
@@ -208,21 +219,21 @@ def load_page(page_id):
 @app.route('/webhook/save/<page_id>', methods=['POST'])
 def save_page(page_id):
     data = request.get_json()
-    
+
     # Validate authentication
     auth_token = request.headers.get('Authorization')
     if not validate_token(auth_token):
         return jsonify({'error': 'Unauthorized'}), 401
-    
+
     # Additional validation using forwarded auth info
     auth_info = data.get('auth', {})
     query_token = auth_info.get('query', {}).get('token')
     if not validate_query_token(query_token):
         return jsonify({'error': 'Invalid token'}), 401
-    
+
     # Save to your system
     save_page_to_database(page_id, data['document'], data['settings'])
-    
+
     return jsonify({
         '_id': page_id,
         'title': data['settings'].get('title'),
@@ -236,10 +247,14 @@ def save_page(page_id):
 ## Authentication Patterns
 
 ### JWT Token Validation
+
 ```javascript
 function validateJWT(token) {
   try {
-    const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
+    const decoded = jwt.verify(
+      token.replace("Bearer ", ""),
+      process.env.JWT_SECRET,
+    );
     return decoded.exp > Date.now() / 1000; // Check expiration
   } catch (error) {
     return false;
@@ -248,24 +263,28 @@ function validateJWT(token) {
 ```
 
 ### API Key Validation
+
 ```javascript
 function validateAPIKey(apiKey) {
-  const validKeys = process.env.VALID_API_KEYS.split(',');
+  const validKeys = process.env.VALID_API_KEYS.split(",");
   return validKeys.includes(apiKey);
 }
 ```
 
 ### Short-lived Token Pattern
+
 ```javascript
-function validateShortLivedToken(token, maxAge = 300) { // 5 minutes
+function validateShortLivedToken(token, maxAge = 300) {
+  // 5 minutes
   const tokenData = decryptToken(token);
-  return tokenData && (Date.now() - tokenData.timestamp) < maxAge * 1000;
+  return tokenData && Date.now() - tokenData.timestamp < maxAge * 1000;
 }
 ```
 
 ## Error Handling
 
 ### Standard HTTP Status Codes
+
 - `200` - Success
 - `401` - Unauthorized (invalid/missing auth)
 - `403` - Forbidden (valid auth but insufficient permissions)
@@ -273,6 +292,7 @@ function validateShortLivedToken(token, maxAge = 300) { // 5 minutes
 - `500` - Internal server error
 
 ### Error Response Format
+
 ```json
 {
   "error": "Error message",
@@ -308,8 +328,8 @@ Configure webhooks in your tenant settings:
 const tenant = {
   webhooks: {
     onLoad: "https://your-domain.com/webhook/load",
-    onSave: "https://your-domain.com/webhook/save"
-  }
+    onSave: "https://your-domain.com/webhook/save",
+  },
 };
 ```
 

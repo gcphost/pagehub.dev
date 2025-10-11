@@ -11,4 +11,3 @@ ImageGallery.craft = {
   displayName: "Image Gallery (Legacy)",
   props: {},
 };
-

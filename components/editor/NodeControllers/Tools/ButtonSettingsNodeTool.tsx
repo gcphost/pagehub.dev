@@ -4,7 +4,7 @@ import OpenSettingsDialogNodeTool from "./OpenSettingsDialogNodeTool";
 export function ButtonSettingsNodeTool() {
   return (
     <NodeToolWrapper>
-      { /* <AnimatedTooltipButton
+      {/* <AnimatedTooltipButton
         content="Color"
         placement="bottom"
         className="w-6 h-6 rounded-md overflow-hidden border-border border-1"

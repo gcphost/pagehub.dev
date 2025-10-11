@@ -23,7 +23,7 @@ export const RenderPattern = ({
     preview,
     false,
     [],
-    query
+    query,
   )} flex flex-col flex-1 w-full`;
 
   if (inlayProps?.style?.backgroundImage) {
@@ -56,7 +56,7 @@ export const RenderGradient = ({
       preview,
       false,
       [],
-      query
+      query,
     )} flex flex-row flex-1 w-full`;
 
     return <div className={inlayClass}>{children}</div>;
@@ -84,7 +84,7 @@ export const hasInlay = (props) =>
 
 export const useFindScrollingParent = (id) => {
   const [scrollingParent, setScrollingParent] = useState<HTMLElement | null>(
-    null
+    null,
   );
   const element: HTMLElement = document.querySelector(`[node-id="${id}"]`);
   const classesToCheck = ["overflow-auto", "overflow-y-auto"];
@@ -93,7 +93,7 @@ export const useFindScrollingParent = (id) => {
     let currentElement = element?.parentElement;
     while (currentElement && currentElement !== null) {
       const hasClass = classesToCheck.some((className) =>
-        currentElement.classList.contains(className)
+        currentElement.classList.contains(className),
       );
 
       if (
@@ -113,7 +113,7 @@ export const useFindScrollingParent = (id) => {
 // Hook to check if an element is in the viewport of its parent scrolling container
 export const useIsInViewport = (
   element: HTMLElement | null,
-  scrollingParent: HTMLElement | null
+  scrollingParent: HTMLElement | null,
 ) => {
   const [isInViewport, setIsInViewport] = useState(false);
 
@@ -122,9 +122,9 @@ export const useIsInViewport = (
       const rect = element.getBoundingClientRect();
       setIsInViewport(
         rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= scrollingParent.clientHeight &&
-        rect.right <= scrollingParent.clientWidth
+          rect.left >= 0 &&
+          rect.bottom <= scrollingParent.clientHeight &&
+          rect.right <= scrollingParent.clientWidth,
       );
     }
   }, [element, scrollingParent]);
@@ -143,7 +143,7 @@ export const useScrollToSelected = (id, enabled) =>
     let currentElement = selected.parentElement;
     while (currentElement !== null) {
       const hasClass = classesToCheck.some((className) =>
-        currentElement.classList.contains(className)
+        currentElement.classList.contains(className),
       );
 
       if (
@@ -182,7 +182,7 @@ export const useChildNodes = (parentId: string, componentName: string) => {
     try {
       const node = query.node(parentId).get();
       const children = node.data.nodes
-        .map(childId => {
+        .map((childId) => {
           try {
             const childNode = query.node(childId).get();
 
@@ -207,4 +207,3 @@ export const useChildNodes = (parentId: string, componentName: string) => {
     }
   });
 };
-

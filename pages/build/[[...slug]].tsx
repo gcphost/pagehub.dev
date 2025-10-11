@@ -22,9 +22,10 @@ import { siteDescription, siteTitle } from "utils/lib";
 import { templates } from "utils/templates";
 
 // Custom template data - set to null to use default JSX template
-let CUSTOM_TEMPLATE_DATA = "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"
+let CUSTOM_TEMPLATE_DATA =
+  "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";
 
-CUSTOM_TEMPLATE_DATA = ''
+CUSTOM_TEMPLATE_DATA = "";
 
 import { RenderNodeNewer } from "components/editor/RenderNodeNewer";
 import { Toolbar } from "components/editor/Toolbar";
@@ -47,9 +48,10 @@ import { Video } from "../../components/selectors/Video";
 import { useSetTenant } from "../../utils/tenantStore";
 import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
 
-
 function App({ data, slug, result, session, tenant, sessionToken }) {
-  data = data ? lz.decompress(lz.decodeBase64(data)) : lz.decompress(lz.decodeBase64(CUSTOM_TEMPLATE_DATA));
+  data = data
+    ? lz.decompress(lz.decodeBase64(data))
+    : lz.decompress(lz.decodeBase64(CUSTOM_TEMPLATE_DATA));
   const setTenant = useSetTenant();
   const setSessionToken = useSetRecoilState(SessionTokenAtom);
   // Use tenant prop directly to avoid delay from client-side store
@@ -107,14 +109,24 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
     SavedComponentLoader,
   };
 
-
   return (
     <div className="h-screen w-screen">
       <NextSeo
-        title={`${result?.title || result?.domain || result?.subdomain || slug || "New Website"
-          } - ${tenantSiteTitle || siteTitle}`}
+        title={`${
+          result?.title ||
+          result?.domain ||
+          result?.subdomain ||
+          slug ||
+          "New Website"
+        } - ${tenantSiteTitle || siteTitle}`}
         description={siteDescription}
-        canonical={tenant?.domain ? `https://${tenant.domain}/` : tenant?.subdomain ? `https://${tenant.subdomain}.pagehub.dev/` : "https://pagehub.dev/"}
+        canonical={
+          tenant?.domain
+            ? `https://${tenant.domain}/`
+            : tenant?.subdomain
+              ? `https://${tenant.subdomain}.pagehub.dev/`
+              : "https://pagehub.dev/"
+        }
       />
 
       <ToolTipDialog />
@@ -123,11 +135,13 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
         resolver={editorComponents}
         enabled={true}
         onRender={RenderNodeNewer}
-        handlers={(store) => new CustomEventHandlers({
-          store,
-          isMultiSelectEnabled: () => false,
-          removeHoverOnMouseleave: true
-        })}
+        handlers={(store) =>
+          new CustomEventHandlers({
+            store,
+            isMultiSelectEnabled: () => false,
+            removeHoverOnMouseleave: true,
+          })
+        }
         indicator={{
           success: "currentColor",
           error: "rgb(153 27 27)",
@@ -138,7 +152,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
         }, 1000)}
       >
         <div
-          className="flex flex-row w-full h-screen overflow-hidden fixed bg-muted text-muted-foreground"
+          className="fixed flex h-screen w-full flex-row overflow-hidden bg-muted text-muted-foreground"
           data-base={true}
         >
           <Toolbar />
@@ -147,7 +161,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
           <FontFamilyDialog />
           <IconDialogDialog />
           <PatternDialog />
-
 
           <Save result={result} />
 
@@ -200,9 +213,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         gap: "gap-4",
                         p: "p-[var(--ph-container-padding)]",
                       }}
-                      desktop={{
-
-                      }}
+                      desktop={{}}
                       custom={{ displayName: "Header Content" }}
                     >
                       <Element
@@ -211,7 +222,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         canEditName={true}
                         root={{
                           color: "text-[var(--ph-primary)]",
-
                         }}
                         mobile={{
                           fontSize: "text-2xl",
@@ -221,9 +231,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                         custom={{ displayName: "Logo" }}
                         text="<p>{{company.name}}</p>"
                       />
-
                       [menu..]
-
                     </Element>
                   </Element>
 
@@ -250,7 +258,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                     desktop={{}}
                     custom={{ displayName: "Home Page" }}
                   >
-
                     <Element
                       canvas
                       is={Container}
@@ -268,7 +275,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                       desktop={{}}
                       custom={{ displayName: "Hero Section" }}
                     >
-
                       <Element
                         canvas
                         is={Container}
@@ -283,9 +289,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           maxWidth: "max-w-[var(--ph-content-width)]",
                           p: "p-[var(--ph-container-padding)]",
                         }}
-                        desktop={{
-
-                        }}
+                        desktop={{}}
                         custom={{ displayName: "Hero Content" }}
                       >
                         <Element
@@ -307,9 +311,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             is={Text}
                             canDelete={true}
                             canEditName={true}
-                            root={{
-
-                            }}
+                            root={{}}
                             mobile={{
                               fontSize: "text-5xl",
                               fontWeight: "font-[var(--ph-heading-font)]",
@@ -325,8 +327,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             is={Text}
                             canDelete={true}
                             canEditName={true}
-                            root={{
-                            }}
+                            root={{}}
                             mobile={{
                               fontSize: "text-lg",
                               textAlign: "text-center",
@@ -343,9 +344,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           is={ButtonList}
                           canDelete={true}
                           canEditName={true}
-                          root={{
-
-                          }}
+                          root={{}}
                           mobile={{
                             display: "flex",
                             gap: "gap-[var(--ph-container-gap)]",
@@ -355,7 +354,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             alignItems: "items-center",
                             fontSize: "text-lg",
                           }}
-                          desktop={{ flexDirection: "flex-row", }}
+                          desktop={{ flexDirection: "flex-row" }}
                           custom={{ displayName: "Hero Buttons" }}
                         >
                           <Element
@@ -367,7 +366,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                               color: "text-primary-foreground",
                               radius: "rounded-[var(--ph-border-radius)]",
                               shadow: "shadow-[var(--ph-shadow-style)]",
-
                             }}
                             mobile={{
                               p: "p-[var(--ph-button-padding)]",
@@ -392,7 +390,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                               radius: "rounded-[var(--ph-border-radius)]",
                               border: "border",
                               borderColor: "border-[var(--ph-primary)]",
-
                             }}
                             mobile={{
                               p: "p-[var(--ph-button-padding)]",
@@ -409,7 +406,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                           />
                         </Element>
                       </Element>
-
                     </Element>
                   </Element>
 
@@ -498,10 +494,10 @@ export async function getServerSideProps({ req, query }) {
       // Check if tenant has onLoad webhook and call it directly
       if (!data) {
         const pageId = query?.slug?.length ? query.slug[0] : null;
-        const webhookData = await runTenantWebhook(tenant, 'onLoad', {
+        const webhookData = await runTenantWebhook(tenant, "onLoad", {
           req,
           query,
-          method: 'GET',
+          method: "GET",
           pageId,
           token: incomingToken, // Pass the token to the webhook
         });
@@ -533,15 +529,13 @@ export async function getServerSideProps({ req, query }) {
 
     // Handle regular templates and existing pages
     const template = Object.keys(templates).find(
-      (_) => templates[_].href === slug
+      (_) => templates[_].href === slug,
     );
 
     if (template) {
       data = templates[template].content;
     } else {
-      const res = await fetch(
-        `${process.env.API_ENDPOINT}/page/${slug}`
-      );
+      const res = await fetch(`${process.env.API_ENDPOINT}/page/${slug}`);
 
       try {
         result = await res.json();
@@ -557,11 +551,10 @@ export async function getServerSideProps({ req, query }) {
 
   json = data ? lz.decompress(lz.decodeBase64(data)) : null;
 
-
   return {
     props: {
       subdomain: tenant?.subdomain || null,
-      data: (json && json.trim()) ? lz.encodeBase64(lz.compress(json)) : null,
+      data: json && json.trim() ? lz.encodeBase64(lz.compress(json)) : null,
       slug: query?.slug?.length ? query.slug[0] : "",
       domain: process.env.DOMAIN,
       result,

@@ -31,7 +31,6 @@ import { selectorPresets } from "utils/selectorPresets";
 // Export for backwards compatibility (array of items)
 export const textPresets = selectorPresets.text.sizes.items;
 
-
 export const TextSettings = () => {
   const { actions, query } = useEditor();
 

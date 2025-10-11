@@ -16,7 +16,7 @@ import {
   TbLayoutAlignTop,
   TbNavigation,
   TbPlus,
-  TbRowInsertTop
+  TbRowInsertTop,
 } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SettingsAtom } from "utils/atoms";
@@ -104,7 +104,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
       propKey: "flexDirection",
     },
     view,
-    nodeProps
+    nodeProps,
   );
 
   const propKey = determinePropKey(direction, value);
@@ -123,7 +123,6 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
       ["flex-row", "flex-row-reverse"].includes(value)) ||
     (direction !== "horizontal" &&
       ["flex-col", "flex-col-reverse"].includes(value));
-
 
   return (
     <NodeToolWrapper
@@ -156,20 +155,23 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         },
       }}
     >
-
       {direction == "horizontal" && (
         <>
-
-
-
-          <SelectParentNodeTool parentType="Nav" icon={<Tooltip content="Select Navigation" className="border-r border-border pr-2"><TbNavigation /></Tooltip>}>
-          </SelectParentNodeTool>
-
+          <SelectParentNodeTool
+            parentType="Nav"
+            icon={
+              <Tooltip
+                content="Select Navigation"
+                className="border-r border-border pr-2"
+              >
+                <TbNavigation />
+              </Tooltip>
+            }
+          ></SelectParentNodeTool>
         </>
       )}
 
       {direction === "horizontal" && (
-
         <Tooltip content="Delete container">
           <DeleteNodeButton
             title="Delete container"
@@ -177,19 +179,17 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
             className="tool-button"
           />
         </Tooltip>
-
       )}
 
       {direction === "horizontal" && (
         <Tooltip content="Duplicate">
-          <DuplicateNodeButton
-            className="tool-button"
-          />
+          <DuplicateNodeButton className="tool-button" />
         </Tooltip>
       )}
 
-
-      <Tooltip content={`Align items ${direction === "horizontal" ? "horizontally" : "vertically"}`}>
+      <Tooltip
+        content={`Align items ${direction === "horizontal" ? "horizontally" : "vertically"}`}
+      >
         <div className="tool-button">
           <ToolbarItem
             propKey={propKey}
@@ -205,21 +205,20 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
         </div>
       </Tooltip>
 
-
-      {direction == "horizontal" && (<div className="tool-button">
-        <FlexDirectionInput wrap="control" type="toggleNext" inline={false} />
-      </div>)}
-
-
-
-
+      {direction == "horizontal" && (
+        <div className="tool-button">
+          <FlexDirectionInput wrap="control" type="toggleNext" inline={false} />
+        </div>
+      )}
 
       {match && (
-
-        <Tooltip content={`Add ${["flex-row", "flex-row-reverse"].includes(value) ? "column" : "row"} container`}>
+        <Tooltip
+          content={`Add ${["flex-row", "flex-row-reverse"].includes(value) ? "column" : "row"} container`}
+        >
           <button
-            className={`tool-button ${direction == "horizontal" ? "-rotate-90" : ""
-              }`}
+            className={`tool-button ${
+              direction == "horizontal" ? "-rotate-90" : ""
+            }`}
             onClick={() => {
               const isRow = ["flex-row", "flex-row-reverse"].includes(value);
               AddElement({
@@ -244,18 +243,14 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
             <TbRowInsertTop />
           </button>
         </Tooltip>
-
       )}
-
-
-
-
 
       {match && (
         <Tooltip content="Add components">
           <button
-            className={`tool-button ${direction == "horizontal" ? "-rotate-90" : ""
-              }`}
+            className={`tool-button ${
+              direction == "horizontal" ? "-rotate-90" : ""
+            }`}
             onClick={() => {
               setShowMenu(true);
               setShowMenuType("components");

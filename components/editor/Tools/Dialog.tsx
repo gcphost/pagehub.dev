@@ -56,7 +56,7 @@ function Dialog({ children, target, state, opener }: any): any {
       dialog.style.width = `${rect.width}px`;
       dialog.style.height = `${rect.height}px`;
     },
-    [dialogRef]
+    [dialogRef],
   );
 
   useEffect(() => {
@@ -176,7 +176,7 @@ function Dialog({ children, target, state, opener }: any): any {
   return ReactDOM.createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="absolute w-[350px] h-[350px]" ref={dialogRef}>
+        <div className="absolute size-[350px]" ref={dialogRef}>
           <motion.div
             role="dialog"
             aria-modal="true"
@@ -185,7 +185,7 @@ function Dialog({ children, target, state, opener }: any): any {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 1, opacity: 0 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="absolute select-none bg-muted  max-w-[320px] text-foreground  border-2 border-border flex-col gap- rounded-lg shadow-2xl overflow-hidden"
+            className="gap- absolute max-w-[320px] select-none flex-col overflow-hidden rounded-lg border-2 border-border bg-muted text-foreground shadow-2xl"
             style={{
               zIndex: 50,
             }}
@@ -196,11 +196,11 @@ function Dialog({ children, target, state, opener }: any): any {
               className="h-8 cursor-move"
               aria-label="Drag to move dialog"
             >
-              <div className="w-2/3 h-4 inside-shadow bg-primary hover:bg-primary rounded-b-md mx-auto -mt-[2px]   border-border border-2 border-t-primary hover:border-t-primary drop-shadow-lg  px-3 py-1.5"></div>
+              <div className="inside-shadow mx-auto -mt-[2px] h-4 w-2/3 rounded-b-md border-2 border-border border-t-primary bg-primary px-3 py-1.5 drop-shadow-lg hover:border-t-primary hover:bg-primary"></div>
 
-              <div className="flex items-center justify-between ">
+              <div className="flex items-center justify-between">
                 <button
-                  className="text-muted-foreground absolute left-3 top-2.5"
+                  className="absolute left-3 top-2.5 text-muted-foreground"
                   onClick={() => setIsOpen(false)}
                   aria-label="Close dialog"
                 >
@@ -212,7 +212,7 @@ function Dialog({ children, target, state, opener }: any): any {
 
             <div
               ref={dialogContentRef}
-              className="max-h-[320px] overflow-y-auto overflow-x-hidden scrollbar  px-3 pb-1.5"
+              className="scrollbar max-h-[320px] overflow-y-auto overflow-x-hidden px-3 pb-1.5"
             >
               {children}
             </div>
@@ -220,7 +220,7 @@ function Dialog({ children, target, state, opener }: any): any {
         </div>
       )}
     </AnimatePresence>,
-    document.querySelector('[data-container="true"]')
+    document.querySelector('[data-container="true"]'),
   );
 }
 

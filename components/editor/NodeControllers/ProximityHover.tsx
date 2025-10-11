@@ -7,13 +7,20 @@ export const ProximityHover = () => {
   const { id, dom, isInteractiveElement } = useNode((node) => ({
     dom: node.dom,
     isInteractiveElement:
-      node.data.name === "Container" || node.data.displayName === "Container" ||
-      node.data.name === "Button" || node.data.displayName === "Button" ||
-      node.data.name === "Text" || node.data.displayName === "Text" ||
-      node.data.name === "Image" || node.data.displayName === "Image" ||
-      node.data.name === "Nav" || node.data.displayName === "Nav" ||
-      node.data.name === "Header" || node.data.displayName === "Header" ||
-      node.data.name === "Footer" || node.data.displayName === "Footer",
+      node.data.name === "Container" ||
+      node.data.displayName === "Container" ||
+      node.data.name === "Button" ||
+      node.data.displayName === "Button" ||
+      node.data.name === "Text" ||
+      node.data.displayName === "Text" ||
+      node.data.name === "Image" ||
+      node.data.displayName === "Image" ||
+      node.data.name === "Nav" ||
+      node.data.displayName === "Nav" ||
+      node.data.name === "Header" ||
+      node.data.displayName === "Header" ||
+      node.data.name === "Footer" ||
+      node.data.displayName === "Footer",
   }));
 
   const { isSelected } = useEditor((_, query) => ({
@@ -57,7 +64,10 @@ export const ProximityHover = () => {
     document.addEventListener("dragover", checkProximity as EventListener);
 
     return () => {
-      document.removeEventListener("mousemove", checkProximity as EventListener);
+      document.removeEventListener(
+        "mousemove",
+        checkProximity as EventListener,
+      );
       document.removeEventListener("dragover", checkProximity as EventListener);
       if (rafId) cancelAnimationFrame(rafId);
     };
@@ -80,4 +90,3 @@ export const ProximityHover = () => {
 
   return null;
 };
-

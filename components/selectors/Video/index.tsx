@@ -23,7 +23,13 @@ import { VideoSettings } from "./VideoSettings";
 const DynamicYouTube = React.lazy(() => import("react-youtube"));
 
 const YouTube = (props) => (
-  <React.Suspense fallback={<div role="status" aria-live="polite">Loading video...</div>}>
+  <React.Suspense
+    fallback={
+      <div role="status" aria-live="polite">
+        Loading video...
+      </div>
+    }
+  >
     <DynamicYouTube {...props} />
   </React.Suspense>
 );
@@ -81,7 +87,10 @@ export const Video = (props: VideoProps) => {
     },
     className: "",
     role: "region",
-    "aria-label": props.title || videoId ? `Video: ${props.title || videoId}` : "Video player",
+    "aria-label":
+      props.title || videoId
+        ? `Video: ${props.title || videoId}`
+        : "Video player",
     children: videoId ? (
       <YouTube
         className={ClassGenerator(props, view, enabled, [], [], preview)}
@@ -93,7 +102,7 @@ export const Video = (props: VideoProps) => {
         title={props.title || `YouTube video ${videoId}`}
       />
     ) : enabled ? (
-      <div className="w-full h-full flex items-center justify-center text-3xl">
+      <div className="flex size-full items-center justify-center text-3xl">
         <TbBrandYoutube aria-label="YouTube icon" />
       </div>
     ) : null,
@@ -110,20 +119,24 @@ export const Video = (props: VideoProps) => {
   if (enabled && isMounted) {
     prop.style = {
       ...(prop.style || {}),
-      overflow: 'visible',
+      overflow: "visible",
     };
     const originalChildren = prop.children;
     prop.children = (
       <>
         {originalChildren}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Video} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Video}
+          props={props}
+        />
       </>
     );
   }
 
   return React.createElement(
     motionIt(props, "div"),
-    applyAnimation({ ...prop, key: id }, props)
+    applyAnimation({ ...prop, key: id }, props),
   );
 };
 

@@ -105,7 +105,7 @@ export function generatePaletteCSSVariables(palette: NamedColor[]): string {
   if (!palette || !Array.isArray(palette)) {
     console.warn(
       "generatePaletteCSSVariables received invalid palette:",
-      palette
+      palette,
     );
     return "";
   }
@@ -132,14 +132,14 @@ export function generatePaletteCSSVariables(palette: NamedColor[]): string {
  * NOT for Tailwind utility classes like "rounded-lg" or "px-6 py-3"
  */
 export function generateStyleGuideCSSVariables(
-  styleGuide: Record<string, any>
+  styleGuide: Record<string, any>,
 ): string {
   const variables: string[] = [];
 
   if (!styleGuide || typeof styleGuide !== "object") {
     console.warn(
       "generateStyleGuideCSSVariables received invalid styleGuide:",
-      styleGuide
+      styleGuide,
     );
     return "";
   }
@@ -204,7 +204,7 @@ export function generateStyleGuideCSSVariables(
  * Generates all design system CSS variables
  */
 export function generateDesignSystemCSSVariables(
-  designSystem: DesignSystemVars
+  designSystem: DesignSystemVars,
 ): string {
   const paletteVars = generatePaletteCSSVariables(designSystem.palette);
   const styleVars = generateStyleGuideCSSVariables(designSystem.styleGuide);
@@ -296,7 +296,7 @@ export function styleToCSSVar(value: string): string {
  */
 export function toTailwindArbitraryValue(
   value: string,
-  prefix: string = ""
+  prefix: string = "",
 ): string {
   if (!value || typeof value !== "string") {
     return value || "";

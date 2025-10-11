@@ -130,8 +130,6 @@ export const Viewport: React.FC<any> = ({ children }) => {
     canRedo: query.history.canRedo(),
   }));
 
-
-
   // TO-DO: what is this ? bad? lazy AI
   // Expose query to window for style guide resolution
   useEffect(() => {
@@ -154,7 +152,9 @@ export const Viewport: React.FC<any> = ({ children }) => {
   // Handle URL-based page isolation
   useEffect(() => {
     const sluggit = require("slug");
-    const pathParts = nextRouter.asPath.split('/').filter(p => p && !p.startsWith('?'));
+    const pathParts = nextRouter.asPath
+      .split("/")
+      .filter((p) => p && !p.startsWith("?"));
 
     const root = query.node(ROOT_NODE).get();
     if (!root) return;
@@ -165,7 +165,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       const pageSlug = pathParts[pathParts.length - 1];
 
       // Find the page that matches this slug
-      const matchingPage = root.data.nodes.find(nodeId => {
+      const matchingPage = root.data.nodes.find((nodeId) => {
         const node = query.node(nodeId).get();
         if (node?.data?.props?.type === "page") {
           const displayName = node.data.custom?.displayName;
@@ -178,13 +178,20 @@ export const Viewport: React.FC<any> = ({ children }) => {
       if (matchingPage && matchingPage !== isolate) {
         // Isolate the page found in the URL
         setTimeout(() => {
-          isolatePageAlt(isolate, query, matchingPage, actions, setIsolate, true);
+          isolatePageAlt(
+            isolate,
+            query,
+            matchingPage,
+            actions,
+            setIsolate,
+            true,
+          );
         }, 500);
       }
     } else if (pathParts.length === 1 || pathParts.length === 2) {
       // Base URL: /build or /build/something - show home page
       // Find the page marked as home page
-      const homePageId = root.data.nodes.find(nodeId => {
+      const homePageId = root.data.nodes.find((nodeId) => {
         const node = query.node(nodeId).get();
         const isPage = node?.data?.props?.type === "page";
         const isHomePage = node?.data?.props?.isHomePage;
@@ -200,7 +207,6 @@ export const Viewport: React.FC<any> = ({ children }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextRouter.asPath]);
-
 
   const [unsavedChanges, setUnsavedChanged] =
     useRecoilState(UnsavedChangesAtom);
@@ -251,13 +257,19 @@ export const Viewport: React.FC<any> = ({ children }) => {
     const handleBrowseAway = (url: string) => {
       // Check if navigating within the same build context (just changing pages)
       const currentPath = router.asPath;
-      const currentParts = currentPath.split('/').filter(p => p && !p.startsWith('?'));
-      const newParts = url.split('/').filter(p => p && !p.startsWith('?'));
+      const currentParts = currentPath
+        .split("/")
+        .filter((p) => p && !p.startsWith("?"));
+      const newParts = url.split("/").filter((p) => p && !p.startsWith("?"));
 
       // If both URLs are /build/[tenant]/... then it's just page navigation
-      if (currentParts.length >= 2 && newParts.length >= 2 &&
-        currentParts[0] === 'build' && newParts[0] === 'build' &&
-        currentParts[1] === newParts[1]) {
+      if (
+        currentParts.length >= 2 &&
+        newParts.length >= 2 &&
+        currentParts[0] === "build" &&
+        newParts[0] === "build" &&
+        currentParts[1] === newParts[1]
+      ) {
         // Same build context, allow navigation without warning
         return;
       }
@@ -289,13 +301,13 @@ export const Viewport: React.FC<any> = ({ children }) => {
         ...accum,
         [id]: value,
       }),
-      {}
+      {},
     );
   };
 
   const getCloneTree = useCallback(
     (tree: NodeTree) => buildClonedTree({ tree, query, setProp }),
-    [query]
+    [query],
   );
 
   async function checkIfHtmlInClipboard() {
@@ -570,18 +582,24 @@ export const Viewport: React.FC<any> = ({ children }) => {
       enabled
         ? "flex h-screen overflow-hidden flex-row w-full w-screen absolute top-0 left-0 right-0 bottom-0"
         : "",
-      enabled ? `w-screen h-screen overflow-auto ${viewMode === 'component' ? 'mt-[49px]' : ''} ` : "w-screen h-screen overflow-auto",
+      enabled
+        ? `w-screen h-screen overflow-auto ${viewMode === "component" ? "mt-[49px]" : ""} `
+        : "w-screen h-screen overflow-auto",
     ],
   };
 
-  const deviceStyles = device && view === 'mobile' ? {
-    width: `${deviceDimensions.width}px`,
-    height: `${deviceDimensions.height}px`,
-  } : {};
+  const deviceStyles =
+    device && view === "mobile"
+      ? {
+          width: `${deviceDimensions.width}px`,
+          height: `${deviceDimensions.height}px`,
+        }
+      : {};
 
   let viewClasses = {
     mobile: [
-      `flex h-screen overflow-hidden flex-row mx-auto w-${enabled ? "[380px]" : "screen"
+      `flex h-screen overflow-hidden flex-row mx-auto w-${
+        enabled ? "[380px]" : "screen"
       } mx-auto `,
       enabled
         ? "w-full rounded-lg overflow-scroll scrollbar-light bg-background relative"
@@ -593,7 +611,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
         ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen`
         : "w-screen",
       enabled
-        ? `w-full !border-[7px] ${viewMode === 'component' ? 'border-purple-200' : 'border-border'}   relative scrollbar-light bg-background overflow-scroll`
+        ? `w-full !border-[7px] ${viewMode === "component" ? "border-purple-200" : "border-border"}   relative scrollbar-light bg-background overflow-scroll`
         : "w-screen h-screen overflow-auto relative",
     ],
   };
@@ -617,16 +635,15 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
       {/* Main layout container */}
       <div
-        className={`flex h-screen overflow-visible flex-row ${view === 'mobile' && sideBarOpen ? `${sideBarLeft ? 'ml-[360px]' : 'mr-[360px]'} w-[calc(100vw-360px)]` : 'w-screen'}`}
+        className={`flex h-screen flex-row overflow-visible ${view === "mobile" && sideBarOpen ? `${sideBarLeft ? "ml-[360px]" : "mr-[360px]"} w-[calc(100vw-360px)]` : "w-screen"}`}
         data-container={true}
       >
-
         {/* Preview mode: "Edit" button */}
         {!enabled && !screenshot && (
           <div className="absolute right-12 top-12 z-50">
             <Tooltip content="Edit" placement="bottom" arrow={false}>
               <button
-                className="p-4 btn text-2xl bg-primary cursor-pointer select-none rounded-md text-primary-foreground"
+                className="btn cursor-pointer select-none rounded-md bg-primary p-4 text-2xl text-primary-foreground"
                 aria-label="Edit page"
                 onClick={() =>
                   setOptions((options) => {
@@ -651,14 +668,18 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
         {/* Component Editor Tabs - absolute positioned above viewport, after sidebar */}
         {enabled && (
-          <div className={`absolute top-0 ${sideBarOpen && sideBarLeft ? 'left-[360px]' : 'left-0'} right-0 z-40  ${viewMode === 'component' ? '' : 'hidden'}`}>
+          <div
+            className={`absolute top-0 ${sideBarOpen && sideBarLeft ? "left-[360px]" : "left-0"} right-0 z-40 ${viewMode === "component" ? "" : "hidden"}`}
+          >
             <ComponentEditorTabs />
           </div>
         )}
 
         {/* Device Selector - shown above device preview in mobile view */}
-        {enabled && device && view === 'mobile' && (
-          <div className={`absolute top-[100px] ${sideBarOpen && sideBarLeft ? 'left-[360px]' : 'left-0'} right-0 z-50  `}>
+        {enabled && device && view === "mobile" && (
+          <div
+            className={`absolute top-[100px] ${sideBarOpen && sideBarLeft ? "left-[360px]" : "left-0"} right-0 z-50`}
+          >
             <DeviceSelector onClose={() => setDevice(false)} />
           </div>
         )}
@@ -672,8 +693,14 @@ export const Viewport: React.FC<any> = ({ children }) => {
             data-isolated={!!isolated}
             tabIndex={0}
             className={activeClass[1]}
-            ref={(ref: any) => connectors.select(connectors.hover(ref, null), null)}
-            style={viewMode === 'component' && !device && !preview ? { marginTop: '49px' } : undefined}
+            ref={(ref: any) =>
+              connectors.select(connectors.hover(ref, null), null)
+            }
+            style={
+              viewMode === "component" && !device && !preview
+                ? { marginTop: "49px" }
+                : undefined
+            }
           >
             {children}
           </div>
@@ -684,12 +711,12 @@ export const Viewport: React.FC<any> = ({ children }) => {
           <svg
             id="measurement-lines-svg"
             style={{
-              position: 'fixed',
+              position: "fixed",
               top: 0,
               left: 0,
-              width: '100%',
-              height: '100%',
-              pointerEvents: 'none',
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
               zIndex: 9997,
             }}
           />

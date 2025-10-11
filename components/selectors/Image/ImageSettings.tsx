@@ -20,7 +20,13 @@ import { TabAtom } from "components/editor/Viewport";
 import { useEffect } from "react";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
-import { TbAccessible, TbBoxPadding, TbMouse, TbPhoto, TbPlayerPlay } from "react-icons/tb";
+import {
+  TbAccessible,
+  TbBoxPadding,
+  TbMouse,
+  TbPhoto,
+  TbPlayerPlay,
+} from "react-icons/tb";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useDefaultTab } from "utils/lib";
 import { selectorPresets } from "utils/selectorPresets";
@@ -69,11 +75,7 @@ export const ImageSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <MediaInput
-        propKey="videoId"
-        typeKey="type"
-        contentKey="content"
-      />
+      <MediaInput propKey="videoId" typeKey="type" contentKey="content" />
 
       <ToolbarSection title="Presets">
         <PresetGroupRenderer presets={selectorPresets.image} />
@@ -96,7 +98,6 @@ export const ImageSettings = () => {
           labelHide={true}
           label="Preload"
           labelWidth="w-full"
-
         />
         <ToolbarItem
           propKey="loading"

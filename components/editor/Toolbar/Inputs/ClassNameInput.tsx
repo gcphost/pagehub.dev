@@ -15,6 +15,5 @@ export const ClassNameInput = () => (
     </ToolbarSection>
 
     <CSSEditorInput />
-
   </>
 );

@@ -5,7 +5,6 @@ import { MediaInput } from "./MediaInput";
 
 export const BackgroundSettingsInput = ({ props }) => (
   <>
-
     <MediaInput
       props={props}
       propKey="backgroundImage"
@@ -13,12 +12,13 @@ export const BackgroundSettingsInput = ({ props }) => (
       contentKey="backgroundImage"
     />
 
-
     {props?.backgroundImage && (
-      <ToolbarSection title="Image Settings" subtitle={true} defaultOpen={false}>
-        <ToolbarSection
-
-        >
+      <ToolbarSection
+        title="Image Settings"
+        subtitle={true}
+        defaultOpen={false}
+      >
+        <ToolbarSection>
           <ToolbarItem
             propKey="backgroundPriority"
             propType="component"

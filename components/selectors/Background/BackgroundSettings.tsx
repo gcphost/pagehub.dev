@@ -17,11 +17,7 @@ import { useGetNode } from "components/editor/Toolbar/Tools/lib";
 import { TabAtom } from "components/editor/Viewport";
 import { BiPaint } from "react-icons/bi";
 import { MdStyle } from "react-icons/md";
-import {
-  TbBoxPadding,
-  TbMouse,
-  TbPlayerPlay
-} from "react-icons/tb";
+import { TbBoxPadding, TbMouse, TbPlayerPlay } from "react-icons/tb";
 import { useRecoilState } from "recoil";
 import { autoOpenMenu, useDefaultTab } from "utils/lib";
 
@@ -80,7 +76,9 @@ export const BackgroundSettings = () => {
         />
       </ToolbarSection>
 
-      <BackgroundInput><PatternInput /></BackgroundInput>
+      <BackgroundInput>
+        <PatternInput />
+      </BackgroundInput>
 
       <ToolbarSection title="Typography">
         <FontInput />
@@ -124,7 +122,7 @@ export const BackgroundSettings = () => {
 
       {activeTab === "Animations" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Animations are not available for this component.
           </p>
         </TabBody>
@@ -132,7 +130,7 @@ export const BackgroundSettings = () => {
 
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Hover settings are not available for this component.
           </p>
         </TabBody>

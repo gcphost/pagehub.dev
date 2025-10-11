@@ -40,13 +40,9 @@ export const Divider = (props: DividerProps) => {
     id,
   } = useNode();
 
-  const { query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
-
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   useScrollToSelected(id, enabled);
-
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
@@ -76,18 +72,22 @@ export const Divider = (props: DividerProps) => {
 
     // Hr inside gets minimal styling
     const hrProp: any = {
-      className: '', // No classes needed, wrapper handles it
+      className: "", // No classes needed, wrapper handles it
     };
 
     const hr = React.createElement(
       motionIt(props, "hr"),
-      applyAnimation({ ...hrProp, key: `hr-${id}` }, props)
+      applyAnimation({ ...hrProp, key: `hr-${id}` }, props),
     );
 
     return (
       <div {...containerProp}>
         {hr}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Divider} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Divider}
+          props={props}
+        />
       </div>
     );
   }
@@ -98,7 +98,7 @@ export const Divider = (props: DividerProps) => {
 
   const hr = React.createElement(
     motionIt(props, "hr"),
-    applyAnimation({ ...hrProp, key: `hr-${id}` }, props)
+    applyAnimation({ ...hrProp, key: `hr-${id}` }, props),
   );
 
   // In preview mode, just connect to the hr directly
@@ -118,7 +118,7 @@ export const Divider = (props: DividerProps) => {
 
   return React.createElement(
     motionIt(props, "hr"),
-    applyAnimation({ ...prop, key: id }, props)
+    applyAnimation({ ...prop, key: id }, props),
   );
 };
 
@@ -134,7 +134,12 @@ Divider.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController key="name" position="top" align="end" placement="start" />,
+        <NameNodeController
+          key="name"
+          position="top"
+          align="end"
+          placement="start"
+        />,
         <HoverNodeController
           key="hover"
           position="top"

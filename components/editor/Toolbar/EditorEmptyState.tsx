@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { TbBoxModel2, TbClick, TbPlus, TbPointer } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ComponentsAtom, MenuItemState, MenuState, OpenComponentEditorAtom, ViewModeAtom } from "utils/lib";
+import {
+  ComponentsAtom,
+  MenuItemState,
+  MenuState,
+  OpenComponentEditorAtom,
+  ViewModeAtom,
+} from "utils/lib";
 
 export const EditorEmptyState = () => {
   const viewMode = useRecoilValue(ViewModeAtom);
@@ -10,28 +16,31 @@ export const EditorEmptyState = () => {
   const setShowMenu = useSetRecoilState(MenuState);
   const setShowMenuType = useSetRecoilState(MenuItemState);
 
-  const isComponentMode = viewMode === 'component';
+  const isComponentMode = viewMode === "component";
   const hasComponents = components.length > 0;
 
   const handleCreateClick = () => {
     // Open component editor to create new component
-    setOpenComponentEditor({ componentId: null, componentName: 'New Component' });
+    setOpenComponentEditor({
+      componentId: null,
+      componentName: "New Component",
+    });
   };
 
   const handleSectionsClick = (e: React.MouseEvent) => {
     e.preventDefault();
     // This will be handled by AddSectionNodeController, just focus on something
-    document.getElementById('viewport')?.focus();
+    document.getElementById("viewport")?.focus();
   };
 
   const handleComponentsClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowMenu(true);
-    setShowMenuType('components');
+    setShowMenuType("components");
   };
 
   return (
-    <div className="bg-background scrollbar w-auto overflow-auto h-screen grow basis-full pb-24 z-20 gap-8 flex flex-col items-center justify-center text-center px-4">
+    <div className="scrollbar z-20 flex h-screen w-auto grow basis-full flex-col items-center justify-center gap-8 overflow-auto bg-background px-4 pb-24 text-center">
       {/* Icon */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
@@ -40,9 +49,9 @@ export const EditorEmptyState = () => {
         className="text-muted-foreground"
       >
         {isComponentMode && !hasComponents ? (
-          <TbBoxModel2 className="w-20 h-20" />
+          <TbBoxModel2 className="size-20" />
         ) : (
-          <TbPointer className="w-20 h-20 rotate-90" />
+          <TbPointer className="size-20 rotate-90" />
         )}
       </motion.div>
 
@@ -61,7 +70,7 @@ export const EditorEmptyState = () => {
           )}
         </h2>
 
-        <p className="text-muted-foreground text-sm max-w-md flex items-center justify-center gap-1 flex-wrap">
+        <p className="flex max-w-md flex-wrap items-center justify-center gap-1 text-sm text-muted-foreground">
           {isComponentMode ? (
             hasComponents ? (
               <>
@@ -69,33 +78,37 @@ export const EditorEmptyState = () => {
                 <span>or add components</span>
                 <button
                   onClick={handleComponentsClick}
-                  className="inline-flex items-center justify-center w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer"
+                  className="inline-flex size-5 cursor-pointer items-center justify-center text-foreground transition-colors hover:text-primary"
                   title="Browse components"
                 >
-                  <TbPlus className="w-8 h-8" />
+                  <TbPlus className="size-8" />
                 </button>
                 <span>to build your component.</span>
               </>
             ) : (
-              <>Get started by creating your first reusable component. Components can be used across multiple pages.</>
+              <>
+                Get started by creating your first reusable component.
+                Components can be used across multiple pages.
+              </>
             )
           ) : (
             <>
-              <span>Click on an element to start editing,</span><span>or add new sections</span>
+              <span>Click on an element to start editing,</span>
+              <span>or add new sections</span>
               <button
                 onClick={handleSectionsClick}
-                className="inline-flex items-center justify-center w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer"
+                className="inline-flex size-5 cursor-pointer items-center justify-center text-foreground transition-colors hover:text-primary"
                 title="Add sections"
               >
-                <TbBoxModel2 className="w-8 h-8" />
+                <TbBoxModel2 className="size-8" />
               </button>
               <span>and components</span>
               <button
                 onClick={handleComponentsClick}
-                className="inline-flex items-center justify-center w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer"
+                className="inline-flex size-5 cursor-pointer items-center justify-center text-foreground transition-colors hover:text-primary"
                 title="Browse components"
               >
-                <TbPlus className="w-8 h-8" />
+                <TbPlus className="size-8" />
               </button>
               <span>to build your page.</span>
             </>
@@ -112,9 +125,9 @@ export const EditorEmptyState = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleCreateClick}
-          className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary text-primary-foreground rounded-lg transition-colors shadow-sm"
+          className="flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-primary-foreground shadow-sm transition-colors hover:bg-primary"
         >
-          <TbPlus className="w-5 h-5" />
+          <TbPlus className="size-5" />
           <span>Create Component</span>
         </motion.button>
       )}
@@ -125,13 +138,12 @@ export const EditorEmptyState = () => {
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="flex items-center gap-2 text-muted-foreground text-xs mt-4"
+          className="mt-4 flex items-center gap-2 text-xs text-muted-foreground"
         >
-          <TbClick className="w-8 h-8" />
+          <TbClick className="size-8" />
           <span>Use the dropdown at the top to select a component</span>
         </motion.div>
       )}
     </div>
   );
 };
-

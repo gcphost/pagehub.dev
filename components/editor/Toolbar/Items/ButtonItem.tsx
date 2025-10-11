@@ -28,10 +28,10 @@ const Input = ({ nodeProps, setProp }) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="border rounded-md border-border">
+      <div className="rounded-md border border-border">
         {buttons.map((but, butKey) => (
           <Accord
-            className="border-b p-3 border-border"
+            className="border-b border-border p-3"
             key={butKey}
             prop={butKey}
             accordion={accordion}
@@ -134,7 +134,7 @@ const Input = ({ nodeProps, setProp }) => {
       </div>
 
       <button
-        className="btn p-3 w-full"
+        className="btn w-full p-3"
         onClick={async () => {
           const _buttons = [...buttons];
 
@@ -151,7 +151,7 @@ const Input = ({ nodeProps, setProp }) => {
           _buttons.push({
             text: "Button",
             icon: iconSvg,
-            iconOnly: true
+            iconOnly: true,
           });
 
           setAccordion(buttons.length - 1);

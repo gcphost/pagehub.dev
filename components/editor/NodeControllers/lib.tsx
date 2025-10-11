@@ -29,7 +29,7 @@ export function useMousePosition(id, distance = 45, cref = null) {
       setIsInTopOrLeft(Math.abs(clientY - top) <= distance);
       setIsInBottomOrRight(Math.abs(clientY - bottom) <= distance);
       setIsInTopOrLeftOrBottomOrRight(
-        clientX < left + distance || clientX > right - distance
+        clientX < left + distance || clientX > right - distance,
       );
 
       // Individual edge detection
@@ -111,7 +111,7 @@ export function useElementColor(dom: HTMLElement | null, isActive: boolean) {
       setElementColor(color);
     } else {
       // Fallback to a neutral color if no color is computed
-      setElementColor('#9ca3af'); // gray-400
+      setElementColor("#9ca3af"); // gray-400
     }
   }, [dom, isActive]);
 

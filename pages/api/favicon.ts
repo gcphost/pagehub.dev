@@ -6,7 +6,7 @@ import { loadTenantSettings, runTenantWebhook } from "../../utils/tenantUtils";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   try {
     await dbConnect();
@@ -101,7 +101,7 @@ export default async function handler(
               res.setHeader("Content-Type", contentType);
               res.setHeader(
                 "Cache-Control",
-                "public, max-age=31536000, immutable"
+                "public, max-age=31536000, immutable",
               );
               res.send(buffer);
               return;
@@ -111,7 +111,7 @@ export default async function handler(
               res.setHeader("Content-Type", contentType);
               res.setHeader(
                 "Cache-Control",
-                "public, max-age=31536000, immutable"
+                "public, max-age=31536000, immutable",
               );
               res.send(buffer);
               return;

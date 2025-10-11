@@ -7,7 +7,12 @@ export const RenderFormComponent = ({ text, formType, ...props }) => (
     element={Form}
     type="save"
     formType={formType}
-    display={<ToolboxItemDisplay icon={formType === "subscribe" ? TbMail : TbForms} label={text} />}
+    display={
+      <ToolboxItemDisplay
+        icon={formType === "subscribe" ? TbMail : TbForms}
+        label={text}
+      />
+    }
     {...props}
   />
 );

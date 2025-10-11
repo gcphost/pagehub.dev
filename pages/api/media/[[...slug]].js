@@ -13,7 +13,7 @@ export default async function media(req, res) {
 
   if (page) {
     const image = page.media.find(
-      (_) => _._id === mediaId.replace(".webp", "")
+      (_) => _._id === mediaId.replace(".webp", ""),
     );
 
     if (!image) return res.status(404).json({ first: true });

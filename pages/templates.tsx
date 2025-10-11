@@ -19,8 +19,8 @@ function App() {
 export async function getServerSideProps({ req, res, params }) {
   // Set cache headers to enable bfcache (back/forward cache)
   res.setHeader(
-    'Cache-Control',
-    'public, max-age=3600, stale-while-revalidate=86400'
+    "Cache-Control",
+    "public, max-age=3600, stale-while-revalidate=86400",
   );
 
   return {

@@ -27,7 +27,7 @@ export const AnimationsInput = () => {
           <option value="bounce">Bounce</option>
 
           {animationClasses.map((_) =>
-            _.classes.map((a, k) => <option key={k}>{a}</option>)
+            _.classes.map((a, k) => <option key={k}>{a}</option>),
           )}
         </ToolbarItem>
 
@@ -36,9 +36,9 @@ export const AnimationsInput = () => {
           {
             ...applyAnimation({}, props),
           },
-          <div className="hidden rounded-2xl bg-muted text-muted-foreground w-24 h-24  mx-auto  mt-6 items-center justify-center">
+          <div className="mx-auto mt-6 hidden size-24 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
             Test
-          </div>
+          </div>,
         )}
       </ToolbarSection>
     </>

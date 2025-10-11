@@ -47,7 +47,7 @@ export function getColors(dom, props) {
       }
       basecolor = `text-[${_color.replace(/\s/g, "")}] border-[${_color.replace(
         /\s/g,
-        ""
+        "",
       )}]`;
     }
   }
@@ -77,7 +77,7 @@ export function invertColor(color: string): string {
 
   // Check if color is in RGBA format
   const rgbaMatch = color.match(
-    /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d*\.?\d+)\)$/
+    /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d*\.?\d+)\)$/,
   );
   if (rgbaMatch) {
     const r = 255 - parseInt(rgbaMatch[1], 10);

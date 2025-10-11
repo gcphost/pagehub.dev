@@ -246,7 +246,7 @@ export const generatePattern = (props) => {
     angle,
     join,
     moveLeft,
-    moveTop
+    moveTop,
   ) => {
     function multiStroke(i) {
       let defColor = colors[i + 1];
@@ -276,7 +276,7 @@ export const generatePattern = (props) => {
           "/>",
           ` transform='translate(${spacing[0] / 2},0)' ${
             joinMode
-          }stroke-width='${stroke}'${strokeFill}/>`
+          }stroke-width='${stroke}'${strokeFill}/>`,
         )
         .replace("transform='translate(0,0)' ", " ");
     }
@@ -316,7 +316,7 @@ export const generatePattern = (props) => {
     angle,
     join,
     moveLeft,
-    moveTop
+    moveTop,
   );
 };
 
@@ -368,7 +368,7 @@ export const applyBackgroundImage = (
   prop,
   props: BaseSelectorProps,
   settings,
-  query = null
+  query = null,
 ) => {
   if (props.backgroundImage) {
     const _imgProp = { src: getBackgroundUrl(props, query) };
@@ -402,7 +402,7 @@ export const applyBackgroundImage = (
           React.Fragment,
           {},
           preloadImageElement,
-          existingChildren
+          existingChildren,
         );
       }
     }
@@ -515,7 +515,7 @@ export const getFontFromComp = (props: BaseSelectorProps) => {
 
   const weights = [
     ...new Set(
-      ["desktop", "mobile", "tablet"].map((_) => (props[_] || {}).fontWeight)
+      ["desktop", "mobile", "tablet"].map((_) => (props[_] || {}).fontWeight),
     ),
   ].filter((_) => _);
 
@@ -604,7 +604,7 @@ export const getPageCount = (query) => {
   const pageCount = !root
     ? []
     : root?.data?.nodes.filter(
-        (_) => query.node(_).get().data.props.type === "page"
+        (_) => query.node(_).get().data.props.type === "page",
       ) || [];
 
   return pageCount;
@@ -616,7 +616,7 @@ export const isolatePage = (
   active,
   actions,
   setIsolate,
-  select = true
+  select = true,
 ) => {
   const root = query.node(ROOT_NODE).get();
   const _active = active ? active.valueOf() : null;
@@ -654,7 +654,7 @@ export const isolatePageAlt = (
   active,
   actions,
   setIsolate,
-  select = true
+  select = true,
 ) => {
   const root = query.node(ROOT_NODE).get();
   const _active = active ? active.valueOf() : null;
@@ -707,7 +707,7 @@ export const isolatePageAlt = (
 export const resolvePageRef = (
   url: string,
   query: any,
-  currentPath?: string
+  currentPath?: string,
 ): string => {
   // If not a page reference, return as-is
   if (!url || typeof url !== "string" || !url.startsWith("ref:")) {
@@ -801,7 +801,7 @@ export const popupCenter = (url, title) => {
     title,
     `width=${500 / systemZoom},height=${
       550 / systemZoom
-    },top=${top},left=${left}`
+    },top=${top},left=${left}`,
   );
 
   newWindow?.focus();
@@ -825,7 +825,7 @@ export const registerMediaWithBackground = (
   actions: any,
   mediaId: string,
   mediaType: string = "cdn",
-  componentId?: string
+  componentId?: string,
 ) => {
   try {
     const backgroundNode = query.node(ROOT_NODE).get();
@@ -864,7 +864,7 @@ export const registerMediaWithBackground = (
 export const unregisterMediaFromBackground = (
   query: any,
   actions: any,
-  mediaId: string
+  mediaId: string,
 ) => {
   try {
     const backgroundNode = query.node(ROOT_NODE).get();
@@ -1022,7 +1022,7 @@ export const updateMediaMetadata = (
   query: any,
   actions: any,
   mediaId: string,
-  metadata: { alt?: string; title?: string; description?: string }
+  metadata: { alt?: string; title?: string; description?: string },
 ) => {
   try {
     actions.setProp(ROOT_NODE, (props: any) => {
@@ -1080,7 +1080,7 @@ export const syncPageMedia = (query: any, actions: any) => {
     actions.setProp(ROOT_NODE, (props: any) => {
       if (!props.pageMedia) return;
       props.pageMedia = props.pageMedia.filter((m: any) =>
-        usedMediaIds.has(m.id)
+        usedMediaIds.has(m.id),
       );
     });
 

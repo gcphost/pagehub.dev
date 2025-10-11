@@ -42,9 +42,11 @@ export const SavedComponentLoader = ({ componentData }) => {
       const serializedNodes = JSON.parse(componentData.nodes);
 
       // Convert serialized nodes back to node format
-      const nodeEntries = Object.entries(serializedNodes).map(([nodeId, serializedNode]: [string, any]) => {
-        return [nodeId, query.parseSerializedNode(serializedNode).toNode()];
-      });
+      const nodeEntries = Object.entries(serializedNodes).map(
+        ([nodeId, serializedNode]: [string, any]) => {
+          return [nodeId, query.parseSerializedNode(serializedNode).toNode()];
+        },
+      );
 
       const nodes = Object.fromEntries(nodeEntries);
 
@@ -55,7 +57,9 @@ export const SavedComponentLoader = ({ componentData }) => {
 
       // Check if this component exists in ComponentsAtom (meaning a master exists)
       const savedComponentName = componentData.name;
-      const existingComponent = components?.find(c => c.name === savedComponentName);
+      const existingComponent = components?.find(
+        (c) => c.name === savedComponentName,
+      );
 
       let clonedTree;
       if (existingComponent) {
@@ -71,7 +75,7 @@ export const SavedComponentLoader = ({ componentData }) => {
             tree: masterTree,
             query,
             setProp: actions.setProp,
-            createLinks: true
+            createLinks: true,
           });
         } else {
           // Master was deleted somehow, treat as first instance
@@ -79,7 +83,7 @@ export const SavedComponentLoader = ({ componentData }) => {
             tree,
             query,
             setProp: actions.setProp,
-            createLinks: false
+            createLinks: false,
           });
         }
       } else {
@@ -89,7 +93,7 @@ export const SavedComponentLoader = ({ componentData }) => {
           tree,
           query,
           setProp: actions.setProp,
-          createLinks: false
+          createLinks: false,
         });
       }
 
@@ -112,8 +116,16 @@ export const SavedComponentLoader = ({ componentData }) => {
       setTimeout(() => {
         if (!query.node(clonedTree.rootNodeId).get()) return;
 
-        if (clonedTree.originalRootId && query.node(clonedTree.originalRootId).get()) {
-          setRecursiveBelongsTo(clonedTree.rootNodeId, clonedTree.originalRootId, query, actions);
+        if (
+          clonedTree.originalRootId &&
+          query.node(clonedTree.originalRootId).get()
+        ) {
+          setRecursiveBelongsTo(
+            clonedTree.rootNodeId,
+            clonedTree.originalRootId,
+            query,
+            actions,
+          );
         }
         // If no originalRootId, it's not linked (shouldn't happen with our new system)
       }, 50);
@@ -123,7 +135,7 @@ export const SavedComponentLoader = ({ componentData }) => {
         processingLoaders.delete(id);
       }, 100);
     } catch (error) {
-      console.error('Error loading saved component:', error);
+      console.error("Error loading saved component:", error);
       // Clean up on error
       processingLoaders.delete(id);
       if (query.node(id).get()) {
@@ -160,7 +172,7 @@ export const RenderSavedComponent = ({ componentData }) => {
   const selectedNode = useRecoilValue(SelectedNodeAtom);
 
   // Use the component name from componentData directly
-  const componentName = componentData.name || 'Unnamed Component';
+  const componentName = componentData.name || "Unnamed Component";
 
   // Create the draggable element
   const tool = (
@@ -179,9 +191,11 @@ export const RenderSavedComponent = ({ componentData }) => {
       const serializedNodes = JSON.parse(componentData.nodes);
 
       // Convert serialized nodes back to node format
-      const nodeEntries = Object.entries(serializedNodes).map(([nodeId, serializedNode]: [string, any]) => {
-        return [nodeId, query.parseSerializedNode(serializedNode).toNode()];
-      });
+      const nodeEntries = Object.entries(serializedNodes).map(
+        ([nodeId, serializedNode]: [string, any]) => {
+          return [nodeId, query.parseSerializedNode(serializedNode).toNode()];
+        },
+      );
 
       const nodes = Object.fromEntries(nodeEntries);
 
@@ -192,7 +206,9 @@ export const RenderSavedComponent = ({ componentData }) => {
 
       // Check if this component exists in ComponentsAtom (meaning a master exists)
       const savedComponentName = componentData.name;
-      const existingComponent = components?.find(c => c.name === savedComponentName);
+      const existingComponent = components?.find(
+        (c) => c.name === savedComponentName,
+      );
 
       let clonedTree;
       if (existingComponent) {
@@ -208,7 +224,7 @@ export const RenderSavedComponent = ({ componentData }) => {
             tree: masterTree,
             query,
             setProp: actions.setProp,
-            createLinks: true
+            createLinks: true,
           });
         } else {
           // Master was deleted somehow, treat as first instance
@@ -216,7 +232,7 @@ export const RenderSavedComponent = ({ componentData }) => {
             tree,
             query,
             setProp: actions.setProp,
-            createLinks: false
+            createLinks: false,
           });
         }
       } else {
@@ -226,12 +242,13 @@ export const RenderSavedComponent = ({ componentData }) => {
           tree,
           query,
           setProp: actions.setProp,
-          createLinks: false
+          createLinks: false,
         });
       }
 
       // Add to selected node or root
-      const targetId = selectedNode?.id || Object.keys(query.getSerializedNodes())[0];
+      const targetId =
+        selectedNode?.id || Object.keys(query.getSerializedNodes())[0];
       const targetNode = query.node(targetId).get();
       const targetIndex = targetNode.data.nodes.length;
 
@@ -242,13 +259,21 @@ export const RenderSavedComponent = ({ componentData }) => {
       setTimeout(() => {
         if (!query.node(clonedTree.rootNodeId).get()) return;
 
-        if (clonedTree.originalRootId && query.node(clonedTree.originalRootId).get()) {
-          setRecursiveBelongsTo(clonedTree.rootNodeId, clonedTree.originalRootId, query, actions);
+        if (
+          clonedTree.originalRootId &&
+          query.node(clonedTree.originalRootId).get()
+        ) {
+          setRecursiveBelongsTo(
+            clonedTree.rootNodeId,
+            clonedTree.originalRootId,
+            query,
+            actions,
+          );
         }
         // If no originalRootId, it's not linked (shouldn't happen with our new system)
       }, 50);
     } catch (error) {
-      console.error('Error adding saved component:', error);
+      console.error("Error adding saved component:", error);
     }
   }, [actions, query, componentData, selectedNode, components]);
 
@@ -263,12 +288,14 @@ export const RenderSavedComponent = ({ componentData }) => {
     if (backgroundId) {
       actions.setProp(backgroundId, (prop) => {
         prop.savedComponents = (prop.savedComponents || []).filter(
-          c => c.rootNodeId !== componentData.rootNodeId
+          (c) => c.rootNodeId !== componentData.rootNodeId,
         );
       });
 
       // Update the local state
-      setComponents(prev => prev.filter(c => c.rootNodeId !== componentData.rootNodeId));
+      setComponents((prev) =>
+        prev.filter((c) => c.rootNodeId !== componentData.rootNodeId),
+      );
     }
   };
 
@@ -281,15 +308,15 @@ export const RenderSavedComponent = ({ componentData }) => {
       whileTap={{ scale: 0.9 }}
       ref={(ref: any) => ref && create(ref, tool)}
       onDoubleClick={handleDoubleClick}
-      className="cursor-move pointer-events-auto w-full"
+      className="pointer-events-auto w-full cursor-move"
     >
-      <div className="flex flex-col items-center justify-center border p-3 rounded-md w-full hover:bg-muted text-muted-foreground min-h-[80px] gap-2 pointer-events-none transition-colors relative">
+      <div className="pointer-events-none relative flex min-h-[80px] w-full flex-col items-center justify-center gap-2 rounded-md border p-3 text-muted-foreground transition-colors hover:bg-muted">
         <TbBoxModel2 className="text-2xl" />
-        <span className="text-xs text-center">{componentName}</span>
+        <span className="text-center text-xs">{componentName}</span>
         <button
           onClick={handleDelete}
           onMouseDown={(e) => e.stopPropagation()}
-          className="absolute top-1 right-1 text-destructive hover:text-destructive p-1 pointer-events-auto z-10"
+          className="pointer-events-auto absolute right-1 top-1 z-10 p-1 text-destructive hover:text-destructive"
           aria-label="Delete component"
         >
           <TbTrash className="text-sm" />
@@ -302,9 +329,8 @@ export const RenderSavedComponent = ({ componentData }) => {
 export const SavedComponentsToolbox = (components) => ({
   title: "My Components",
   content: components
-    .filter(component => !component.isSection) // Exclude sections
+    .filter((component) => !component.isSection) // Exclude sections
     .map((component, index) => (
       <RenderSavedComponent key={index} componentData={component} />
     )),
 });
-

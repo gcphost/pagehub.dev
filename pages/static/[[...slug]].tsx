@@ -79,8 +79,8 @@ function App({ subdomain, data, meta, seo }) {
     waitForFonts({
       timeout: 1000,
       onLoaded: () => {
-        console.log('Fonts ready');
-      }
+        console.log("Fonts ready");
+      },
     });
   }, [subdomain]);
 
@@ -191,19 +191,21 @@ function App({ subdomain, data, meta, seo }) {
       ogTitle,
       ogDescription,
       ogImage,
-      ogType = 'website',
-      twitterCard = 'summary_large_image',
+      ogType = "website",
+      twitterCard = "summary_large_image",
       twitterSite,
       twitterCreator,
       canonicalUrl,
       robots,
-      themeColor
+      themeColor,
     } = seo || {};
 
     // Build the full URL for canonical and OG
-    const host = typeof window !== 'undefined' ? window.location.host : '';
-    const protocol = typeof window !== 'undefined' ? window.location.protocol : 'https:';
-    const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+    const host = typeof window !== "undefined" ? window.location.host : "";
+    const protocol =
+      typeof window !== "undefined" ? window.location.protocol : "https:";
+    const pathname =
+      typeof window !== "undefined" ? window.location.pathname : "";
     const fullUrl = `${protocol}//${host}${pathname}`;
 
     return (
@@ -212,19 +214,20 @@ function App({ subdomain, data, meta, seo }) {
           title={title || meta?.title || ""}
           description={description || meta?.description || ""}
           canonical={canonicalUrl || fullUrl}
-
           additionalMetaTags={[
-            ...(keywords ? [{ name: 'keywords', content: keywords }] : []),
-            ...(author ? [{ name: 'author', content: author }] : []),
-            ...(robots ? [{ name: 'robots', content: robots }] : []),
-            ...(themeColor ? [{ name: 'theme-color', content: themeColor }] : []),
+            ...(keywords ? [{ name: "keywords", content: keywords }] : []),
+            ...(author ? [{ name: "author", content: author }] : []),
+            ...(robots ? [{ name: "robots", content: robots }] : []),
+            ...(themeColor
+              ? [{ name: "theme-color", content: themeColor }]
+              : []),
           ]}
-
           openGraph={{
             type: ogType,
             url: canonicalUrl || fullUrl,
             title: ogTitle || title || meta?.title || "",
-            description: ogDescription || description || meta?.description || "",
+            description:
+              ogDescription || description || meta?.description || "",
             ...(ogImage && {
               images: [
                 {
@@ -236,7 +239,6 @@ function App({ subdomain, data, meta, seo }) {
               ],
             }),
           }}
-
           twitter={{
             cardType: twitterCard,
             ...(twitterSite && { site: twitterSite }),
@@ -263,7 +265,7 @@ export async function getStaticProps({ params }) {
   let pageData = null;
 
   // Skip webhook calls in dev mode for faster compilation
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = process.env.NODE_ENV === "development";
 
   if (!isDev) {
     // Try to load tenant by domain to check for webhook
@@ -274,8 +276,8 @@ export async function getStaticProps({ params }) {
     // If tenant has fetchPage webhook, use that
     if (tenant?.webhooks?.fetchPage) {
       try {
-        const webhookResult = await runTenantWebhook(tenant, 'fetchPage', {
-          method: 'GET',
+        const webhookResult = await runTenantWebhook(tenant, "fetchPage", {
+          method: "GET",
           pageId: domain,
         });
 
@@ -370,11 +372,13 @@ export async function getStaticPaths() {
   let paths = [];
 
   // Only fetch webhook paths in production builds (skip in dev for speed)
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = process.env.NODE_ENV === "development";
 
   if (!isDev) {
     // Try to get all tenants with fetchPageList webhook
-    const tenants = await Tenant.find({ 'webhooks.fetchPageList': { $exists: true, $ne: null } });
+    const tenants = await Tenant.find({
+      "webhooks.fetchPageList": { $exists: true, $ne: null },
+    });
 
     // Collect pages from webhooks with timeout protection
     for (const tenantDoc of tenants) {
@@ -383,19 +387,22 @@ export async function getStaticPaths() {
         const tenant = tenantDoc.toObject ? tenantDoc.toObject() : tenantDoc;
 
         // Add timeout to prevent hanging builds
-        const webhookPromise = runTenantWebhook(tenant, 'fetchPageList', {
-          method: 'GET',
+        const webhookPromise = runTenantWebhook(tenant, "fetchPageList", {
+          method: "GET",
         });
 
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Webhook timeout')), 10000)
+          setTimeout(() => reject(new Error("Webhook timeout")), 10000),
         );
 
-        const webhookResult = await Promise.race([webhookPromise, timeoutPromise]);
+        const webhookResult = await Promise.race([
+          webhookPromise,
+          timeoutPromise,
+        ]);
 
         if (webhookResult?.pages && Array.isArray(webhookResult.pages)) {
           const webhookPaths = webhookResult.pages
-            .filter((domain) => domain !== 'oij') // Skip problematic page
+            .filter((domain) => domain !== "oij") // Skip problematic page
             .map((domain) => ({
               params: {
                 slug: [domain],
@@ -404,7 +411,11 @@ export async function getStaticPaths() {
           paths = [...paths, ...webhookPaths];
         }
       } catch (error) {
-        console.error("Error calling fetchPageList webhook for tenant:", tenantDoc.subdomain, error);
+        console.error(
+          "Error calling fetchPageList webhook for tenant:",
+          tenantDoc.subdomain,
+          error,
+        );
         // Continue with other tenants even if one fails
         continue;
       }
@@ -414,7 +425,7 @@ export async function getStaticPaths() {
   // Add pages from database
   const pagesWithDomains = await Page.find({ domain: { $ne: null } });
   const dbPaths = pagesWithDomains
-    .filter((page) => page.domain !== 'oij') // Skip problematic page
+    .filter((page) => page.domain !== "oij") // Skip problematic page
     .map((page) => ({
       params: {
         slug: [`${page.domain}`],
@@ -428,6 +439,5 @@ export async function getStaticPaths() {
     fallback: "blocking",
   };
 }
-
 
 export default App;

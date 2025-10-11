@@ -37,11 +37,11 @@ const getCdnUrl = (mediaId, options = {}) => {
 
   // Build query parameters for Cloudflare flexible variants
   const params = new URLSearchParams();
-  if (options.width) params.append('width', options.width.toString());
-  if (options.height) params.append('height', options.height.toString());
-  if (options.fit) params.append('fit', options.fit);
-  if (options.format) params.append('format', options.format);
-  if (options.quality) params.append('quality', options.quality.toString());
+  if (options.width) params.append("width", options.width.toString());
+  if (options.height) params.append("height", options.height.toString());
+  if (options.fit) params.append("fit", options.fit);
+  if (options.format) params.append("format", options.format);
+  if (options.quality) params.append("quality", options.quality.toString());
 
   const queryString = params.toString();
   return queryString ? `${baseUrl}?${queryString}` : baseUrl;
@@ -92,22 +92,26 @@ const getCdnAuthHeaders = () => {
  * @param {object} options - Additional image transformation options
  * @returns {string} srcset string for img tag
  */
-const generateSrcSet = (mediaId, widths = [320, 640, 960, 1280, 1920], options = {}) => {
+const generateSrcSet = (
+  mediaId,
+  widths = [320, 640, 960, 1280, 1920],
+  options = {},
+) => {
   if (!mediaId) return "";
 
   return widths
-    .map(width => {
+    .map((width) => {
       const url = getCdnUrl(mediaId, { ...options, width });
       return `${url} ${width}w`;
     })
-    .join(', ');
+    .join(", ");
 };
 
 /**
  * Generate sizes attribute for responsive images
  * @param {object} breakpoints - Breakpoints with their sizes
  * @returns {string} sizes string for img tag
- * 
+ *
  * @example
  * generateSizes({
  *   '(max-width: 640px)': '100vw',
@@ -118,16 +122,16 @@ const generateSrcSet = (mediaId, widths = [320, 640, 960, 1280, 1920], options =
  */
 const generateSizes = (breakpoints = {}) => {
   const entries = Object.entries(breakpoints);
-  const defaultIndex = entries.findIndex(([key]) => key === 'default');
+  const defaultIndex = entries.findIndex(([key]) => key === "default");
 
   // Separate default from media queries
-  let mediaQueries = entries.filter(([key]) => key !== 'default');
-  const defaultSize = defaultIndex !== -1 ? entries[defaultIndex][1] : '100vw';
+  let mediaQueries = entries.filter(([key]) => key !== "default");
+  const defaultSize = defaultIndex !== -1 ? entries[defaultIndex][1] : "100vw";
 
   // Build sizes string
   const sizesStr = mediaQueries
     .map(([query, size]) => `${query} ${size}`)
-    .join(', ');
+    .join(", ");
 
   return sizesStr ? `${sizesStr}, ${defaultSize}` : defaultSize;
 };
@@ -160,4 +164,3 @@ module.exports = {
 
 // ES6 exports for TypeScript/modern JavaScript
 module.exports.default = CDN_CONFIG;
-

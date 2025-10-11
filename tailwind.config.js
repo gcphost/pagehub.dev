@@ -6,8 +6,8 @@ module.exports = {
   ],
   safelist: [
     // Safelist patterns for dynamically generated classes with CSS variables
-    { pattern: /^(bg|text|border|ring|from|to|via)-\[var\(--ph-.+\)\]$/ },
-    { pattern: /^(bg|text|border|ring)-\[var\(--ph-.+\)\]$/ },
+    // { pattern: /^(bg|text|border|ring|from|to|via)-\[var\(--ph-.+\)\]$/ },
+    //  { pattern: /^(bg|text|border|ring)-\[var\(--ph-.+\)\]$/ },
   ],
   theme: {
     height: (theme) => ({
@@ -44,7 +44,6 @@ module.exports = {
         "light-gray-2": "rgb(128,128,128)",
         "renderer-gray": "rgb(224, 224, 224)",
         red: "#e34850",
-
       },
       fontFamily: {
         sans: ["var(--font-sans)", "sans-serif"],

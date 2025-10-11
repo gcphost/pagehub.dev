@@ -13,11 +13,7 @@ import { TbChevronLeft, TbChevronRight, TbPhoto } from "react-icons/tb";
 import { useRecoilValue } from "recoil";
 import { motionIt } from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
-import {
-  applyAnimation,
-  ClassGenerator,
-  CSStoObj,
-} from "utils/tailwind";
+import { applyAnimation, ClassGenerator, CSStoObj } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
 import { useScrollToSelected } from "../lib";
 import { ImageListSettings } from "./ImageListSettings";
@@ -64,7 +60,9 @@ const defaultProps: ImageListProps = {
   showDots: true,
 };
 
-export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) => {
+export const ImageList: UserComponent<ImageListProps> = (
+  props: ImageListProps,
+) => {
   props = {
     ...defaultProps,
     ...props,
@@ -76,7 +74,7 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
   } = useNode();
 
   const { actions, query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
+    getClonedState(props, state),
   );
 
   const view = useRecoilValue(ViewAtom);
@@ -121,7 +119,14 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
 
   // Auto-scroll functionality
   useEffect(() => {
-    if (!props.autoScroll || enabled || !isMounted || props.mode === "flex" || props.mode === "infinite") return;
+    if (
+      !props.autoScroll ||
+      enabled ||
+      !isMounted ||
+      props.mode === "flex" ||
+      props.mode === "infinite"
+    )
+      return;
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => {
@@ -131,10 +136,20 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
     }, props.autoScrollInterval);
 
     return () => clearInterval(interval);
-  }, [props.autoScroll, props.autoScrollInterval, childImages.length, props.itemsPerView, enabled, isMounted, props.mode]);
+  }, [
+    props.autoScroll,
+    props.autoScrollInterval,
+    childImages.length,
+    props.itemsPerView,
+    enabled,
+    isMounted,
+    props.mode,
+  ]);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : childImages.length - props.itemsPerView));
+    setCurrentIndex((prev) =>
+      prev > 0 ? prev - 1 : childImages.length - props.itemsPerView,
+    );
   };
 
   const handleNext = () => {
@@ -145,8 +160,6 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
   };
 
   useScrollToSelected(id, enabled);
-
-
 
   const prop: any = {
     ref: (r) => {
@@ -161,7 +174,7 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
       [],
       preview,
       false,
-      palette
+      palette,
     ),
   };
 
@@ -204,7 +217,7 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
   let wrappedChildren = children;
   if ((props.mode === "carousel" || props.mode === "hero") && isMounted) {
     const isHero = props.mode === "hero";
-    const imageWidth = isHero ? '100%' : `${100 / (props.itemsPerView || 3)}%`;
+    const imageWidth = isHero ? "100%" : `${100 / (props.itemsPerView || 3)}%`;
 
     wrappedChildren = (
       <>
@@ -216,7 +229,7 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
           }
         `}</style>
         <div
-          className="flex transition-transform duration-500 ease-in-out carousel-container"
+          className="carousel-container flex transition-transform duration-500 ease-in-out"
           style={{
             transform: `translateX(-${currentIndex * (100 / (isHero ? 1 : props.itemsPerView))}%)`,
           }}
@@ -226,7 +239,8 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
       </>
     );
   } else if (props.mode === "infinite" && isMounted) {
-    const shouldAnimate = isMounted &&
+    const shouldAnimate =
+      isMounted &&
       props.animationEnabled !== "" &&
       (!enabled || !!props.previewInEditor);
 
@@ -235,18 +249,28 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
 
     // Determine animation direction
     const isScrollingLeft = props.infiniteDirection === "left";
-    const animationName = isScrollingLeft ? "gallery-scroll-left" : "gallery-scroll-right";
+    const animationName = isScrollingLeft
+      ? "gallery-scroll-left"
+      : "gallery-scroll-right";
 
     wrappedChildren = (
       <>
         <style jsx global>{`
           @keyframes gallery-scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
           }
           @keyframes gallery-scroll-right {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
+            0% {
+              transform: translateX(-50%);
+            }
+            100% {
+              transform: translateX(0);
+            }
           }
           .gallery-infinite-scroll:hover {
             animation-play-state: paused !important;
@@ -256,15 +280,16 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
             width: ${imageWidth};
           }
         `}</style>
-        <div className="overflow-hidden w-full">
+        <div className="w-full overflow-hidden">
           <div
-            className="flex gallery-infinite-scroll"
+            className="gallery-infinite-scroll flex"
             style={{
-              animation: shouldAnimate ? `${animationName} ${props.infiniteSpeed}s linear infinite` : 'none',
+              animation: shouldAnimate
+                ? `${animationName} ${props.infiniteSpeed}s linear infinite`
+                : "none",
             }}
           >
             {children}
-
           </div>
         </div>
       </>
@@ -274,21 +299,23 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
   const content = (
     <>
       {enabled && isMounted && (
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={ImageList} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={ImageList}
+          props={props}
+        />
       )}
 
       {/* Render children with mode-specific wrapper */}
-      {hasActualImages || !enabled ? (
-        wrappedChildren
-      ) : (
-        enabled && (
-          <div className="w-auto flex justify-center items-center p-4">
-            <div data-empty-state={true} className="text-3xl">
-              <TbPhoto />
+      {hasActualImages || !enabled
+        ? wrappedChildren
+        : enabled && (
+            <div className="flex w-auto items-center justify-center p-4">
+              <div data-empty-state={true} className="text-3xl">
+                <TbPhoto />
+              </div>
             </div>
-          </div>
-        )
-      )}
+          )}
 
       {/* Navigation Arrows for carousel/hero */}
       {(props.mode === "carousel" || props.mode === "hero") &&
@@ -298,14 +325,14 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
           <>
             <button
               onClick={handlePrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-foreground hover:bg-muted text-background p-2 rounded-full transition-colors z-10"
+              className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-foreground p-2 text-background transition-colors hover:bg-muted"
               aria-label="Previous"
             >
               <TbChevronLeft size={24} />
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-foreground hover:bg-muted text-background p-2 rounded-full transition-colors z-10"
+              className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-foreground p-2 text-background transition-colors hover:bg-muted"
               aria-label="Next"
             >
               <TbChevronRight size={24} />
@@ -318,12 +345,14 @@ export const ImageList: UserComponent<ImageListProps> = (props: ImageListProps) 
         props.showDots &&
         childImages.length > props.itemsPerView &&
         !enabled && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-            {Array.from({ length: childImages.length - props.itemsPerView + 1 }).map((_, index) => (
+          <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+            {Array.from({
+              length: childImages.length - props.itemsPerView + 1,
+            }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all ${currentIndex === index ? "bg-background w-8" : "bg-muted"}`}
+                className={`size-2 rounded-full transition-all ${currentIndex === index ? "w-8 bg-background" : "bg-muted"}`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
@@ -370,4 +399,3 @@ ImageList.craft = {
     },
   },
 };
-

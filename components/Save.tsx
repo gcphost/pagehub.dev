@@ -27,13 +27,26 @@ export const Save = ({ result }) => {
 
     if (!unsavedChanges || last === unsavedChanges) return;
 
-    console.log('🔄 Auto-save triggered');
-    SaveToServer(unsavedChanges, true, settings, setSettings, sessionToken).then(() => {
-      console.log('✅ Auto-save completed');
+    console.log("🔄 Auto-save triggered");
+    SaveToServer(
+      unsavedChanges,
+      true,
+      settings,
+      setSettings,
+      sessionToken,
+    ).then(() => {
+      console.log("✅ Auto-save completed");
       setUnsavedChanged(null);
       setLast(unsavedChanges);
     });
-  }, [last, setSettings, setUnsavedChanged, settings, unsavedChanges, sessionToken]);
+  }, [
+    last,
+    setSettings,
+    setUnsavedChanged,
+    settings,
+    unsavedChanges,
+    sessionToken,
+  ]);
 
   return <></>;
 };

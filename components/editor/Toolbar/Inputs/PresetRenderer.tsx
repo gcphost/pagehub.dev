@@ -29,7 +29,7 @@ export const PresetRenderer: React.FC<{
 /**
  * Renders multiple presets from a preset group object
  * Automatically loops over all presets in the group and renders them
- * 
+ *
  * @example
  * <PresetGroupRenderer presets={selectorPresets.container} keys={['padding', 'width', 'maxWidth']} />
  */
@@ -42,7 +42,7 @@ export const PresetGroupRenderer: React.FC<{
   labelWidth?: string;
 }> = ({ presets, keys, wrapper: Wrapper, inline, inputWidth, labelWidth }) => {
   const presetsToRender = keys
-    ? keys.map(key => ({ key, preset: presets[key] })).filter(p => p.preset)
+    ? keys.map((key) => ({ key, preset: presets[key] })).filter((p) => p.preset)
     : Object.entries(presets).map(([key, preset]) => ({ key, preset }));
 
   const content = presetsToRender.map(({ key, preset }) => (
@@ -61,4 +61,3 @@ export const PresetGroupRenderer: React.FC<{
 
   return <>{content}</>;
 };
-

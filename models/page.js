@@ -5,7 +5,7 @@ const SubmissionSchema = new mongoose.Schema(
     data: Object,
     formName: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const PageSchema = new mongoose.Schema(
@@ -33,7 +33,7 @@ export const PageSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // PageSchema.index({ name: "ids", "Page._id": "text" });

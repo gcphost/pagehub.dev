@@ -1,17 +1,17 @@
 import { useEditor, useNode } from "@craftjs/core";
-import Color from '@tiptap/extension-color';
-import FontFamily from '@tiptap/extension-font-family';
-import FontSize from '@tiptap/extension-font-size';
-import Highlight from '@tiptap/extension-highlight';
-import Image from '@tiptap/extension-image';
-import { Link as TiptapLink } from '@tiptap/extension-link';
-import Placeholder from '@tiptap/extension-placeholder';
-import Subscript from '@tiptap/extension-subscript';
-import Superscript from '@tiptap/extension-superscript';
-import TextAlign from '@tiptap/extension-text-align';
-import { TextStyle } from '@tiptap/extension-text-style';
-import { EditorContent, useEditor as useTiptapEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
+import Color from "@tiptap/extension-color";
+import FontFamily from "@tiptap/extension-font-family";
+import FontSize from "@tiptap/extension-font-size";
+import Highlight from "@tiptap/extension-highlight";
+import Image from "@tiptap/extension-image";
+import { Link as TiptapLink } from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import TextAlign from "@tiptap/extension-text-align";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { EditorContent, useEditor as useTiptapEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import { AutoTextSize } from "auto-text-size";
 import { ToolNodeController } from "components/editor/NodeControllers/ToolNodeController";
 import TextSettingsNodeTool from "components/editor/NodeControllers/Tools/TextSettingsNodeTool";
@@ -60,7 +60,7 @@ export const OnlyText = ({ children, ...props }) => {
     connectors: { connect },
   }: any = useNode();
   return (
-    <div title="only-buttons" ref={connect} className="w-full mt-5" {...props}>
+    <div title="only-buttons" ref={connect} className="mt-5 w-full" {...props}>
       {children}
     </div>
   );
@@ -78,9 +78,7 @@ export const Text = (props: Partial<TextProps>) => {
     ...props,
   };
 
-  const { query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   const router = useRouter();
   const view = useRecoilValue(ViewAtom);
@@ -117,7 +115,6 @@ export const Text = (props: Partial<TextProps>) => {
 
   props = setClonedProps(props, query);
 
-
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -132,7 +129,8 @@ export const Text = (props: Partial<TextProps>) => {
   let { text, tagName } = props;
 
   // Replace variables in text (only show raw text when actively editing)
-  const processedText = (!enabled || preview || !isEditing) ? replaceVariables(text, query) : text;
+  const processedText =
+    !enabled || preview || !isEditing ? replaceVariables(text, query) : text;
 
   // Check if this node or any ancestor is a fully linked component
   const checkIfAncestorLinked = (nodeId) => {
@@ -140,7 +138,10 @@ export const Text = (props: Partial<TextProps>) => {
     if (!node) return false;
 
     // If this node is fully linked, return true
-    if (node.data.props?.belongsTo && node.data.props?.relationType !== "style") {
+    if (
+      node.data.props?.belongsTo &&
+      node.data.props?.relationType !== "style"
+    ) {
       return true;
     }
 
@@ -155,70 +156,72 @@ export const Text = (props: Partial<TextProps>) => {
   const isInsideLinkedComponent = checkIfAncestorLinked(id);
 
   // Tiptap editor instance - only create when in edit mode or when enabled
-  const tiptapEditor = useTiptapEditor({
-    extensions: [
-      StarterKit.configure({
-        heading: {}, // Enable headings with default config
-        codeBlock: false,
-        blockquote: {}, // Enable blockquotes with default config
-        horizontalRule: {}, // Enable horizontal rules with default config
-        bulletList: {}, // Enable bullet lists with default config
-        orderedList: {}, // Enable ordered lists with default config
-        listItem: {}, // Enable list items with default config
-      }),
-      Placeholder.configure({
-        placeholder: 'Start typing...',
-      }),
-      TextAlign.configure({
-        types: ['heading', 'paragraph'],
-      }),
-      TextStyle,
-      Color.configure({ types: [TextStyle.name] }),
-      FontFamily.configure({ types: [TextStyle.name] }),
-      FontSize.configure({ types: [TextStyle.name] }),
-      Highlight.configure({ multicolor: true }),
-      Superscript,
-      Subscript,
-      TiptapLink.configure({
-        openOnClick: false,
-        HTMLAttributes: {
-          class: 'text-primary underline',
-        },
-      }),
-      Image.configure({
-        HTMLAttributes: {
-          class: 'max-w-full h-auto',
-        },
-      }),
-    ],
-    content: processedText,
-    editable: isEditing && !isInsideLinkedComponent,
-    immediatelyRender: false, // Fix SSR hydration issues
-    onUpdate: ({ editor }) => {
-      // Only save changes when actively editing (not when content is being set programmatically)
-      // Use ref to avoid stale closure issues
-      if (isEditingRef.current && !isInsideLinkedComponent) {
-        changeProp({
-          setProp,
-          propKey: "text",
-          propType: "component",
-          value: editor.getHTML(),
-        });
-      }
-    },
-    onFocus: () => {
-      if (isActive && !isEditing) {
-        setIsEditing(true);
-      }
-    },
-    onBlur: () => {
-      //  setIsEditing(false);
-    },
-    editorProps: {
-      attributes: {
+  const tiptapEditor = useTiptapEditor(
+    {
+      extensions: [
+        StarterKit.configure({
+          heading: {}, // Enable headings with default config
+          codeBlock: false,
+          blockquote: {}, // Enable blockquotes with default config
+          horizontalRule: {}, // Enable horizontal rules with default config
+          bulletList: {}, // Enable bullet lists with default config
+          orderedList: {}, // Enable ordered lists with default config
+          listItem: {}, // Enable list items with default config
+        }),
+        Placeholder.configure({
+          placeholder: "Start typing...",
+        }),
+        TextAlign.configure({
+          types: ["heading", "paragraph"],
+        }),
+        TextStyle,
+        Color.configure({ types: [TextStyle.name] }),
+        FontFamily.configure({ types: [TextStyle.name] }),
+        FontSize.configure({ types: [TextStyle.name] }),
+        Highlight.configure({ multicolor: true }),
+        Superscript,
+        Subscript,
+        TiptapLink.configure({
+          openOnClick: false,
+          HTMLAttributes: {
+            class: "text-primary underline",
+          },
+        }),
+        Image.configure({
+          HTMLAttributes: {
+            class: "max-w-full h-auto",
+          },
+        }),
+      ],
+      content: processedText,
+      editable: isEditing && !isInsideLinkedComponent,
+      immediatelyRender: false, // Fix SSR hydration issues
+      onUpdate: ({ editor }) => {
+        // Only save changes when actively editing (not when content is being set programmatically)
+        // Use ref to avoid stale closure issues
+        if (isEditingRef.current && !isInsideLinkedComponent) {
+          changeProp({
+            setProp,
+            propKey: "text",
+            propType: "component",
+            value: editor.getHTML(),
+          });
+        }
+      },
+      onFocus: () => {
+        if (isActive && !isEditing) {
+          setIsEditing(true);
+        }
+      },
+      onBlur: () => {
+        //  setIsEditing(false);
+      },
+      editorProps: {
+        attributes: {},
       },
     },
-  }, [enabled]); // Only recreate when enabled state changes
+    [enabled],
+  ); // Only recreate when enabled state changes
 
   // Update content when prop changes or when switching edit modes
   useEffect(() => {
@@ -228,7 +231,7 @@ export const Text = (props: Partial<TextProps>) => {
       const currentContent = tiptapEditor.getHTML();
 
       // Normalize HTML for comparison (strip whitespace differences)
-      const normalize = (html: string) => html.replace(/>\s+</g, '><').trim();
+      const normalize = (html: string) => html.replace(/>\s+</g, "><").trim();
 
       if (normalize(currentContent) !== normalize(processedText)) {
         // Don't emit update event when programmatically setting content
@@ -240,7 +243,6 @@ export const Text = (props: Partial<TextProps>) => {
     }
   }, [processedText, tiptapEditor, isEditing]);
 
-
   // Update editable state
   useEffect(() => {
     if (tiptapEditor) {
@@ -248,10 +250,19 @@ export const Text = (props: Partial<TextProps>) => {
     }
   }, [tiptapEditor, isEditing]);
 
-
   const prop: any = {
     ref: (r) => connect(drag(r)),
-    className: ClassGenerator(props, view, enabled, [], [], preview, false, palette, query),
+    className: ClassGenerator(
+      props,
+      view,
+      enabled,
+      [],
+      [],
+      preview,
+      false,
+      palette,
+      query,
+    ),
   };
 
   if (enabled) {
@@ -290,7 +301,6 @@ export const Text = (props: Partial<TextProps>) => {
 
   // Add inline tools renderer in edit mode (after hydration)
   if (enabled && isMounted) {
-
     prop.children = (
       <>
         <div
@@ -303,22 +313,27 @@ export const Text = (props: Partial<TextProps>) => {
               }, 10);
             }
           }}
-          className={`w-full min-h-inherit transition-all duration-150 ease-in-out ${isEditing ? 'cursor-text relative' : 'cursor-pointer'}`}
+          className={`min-h-inherit w-full transition-all duration-150 ease-in-out ${isEditing ? "relative cursor-text" : "cursor-pointer"}`}
         >
           {tiptapEditor ? (
             <EditorContent editor={tiptapEditor} />
           ) : (
-            <div className="text-muted-foreground italic">Loading editor...</div>
+            <div className="italic text-muted-foreground">
+              Loading editor...
+            </div>
           )}
         </div>
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props}>
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Text}
+          props={props}
+        >
           <TiptapProvider editor={tiptapEditor}>
             <TiptapToolbar editor={tiptapEditor} />
           </TiptapProvider>
         </InlineToolsRenderer>
       </>
     );
-
   }
 
   const final = applyAnimation({ ...prop, key: `${id}` }, props);
@@ -359,7 +374,6 @@ Text.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-
         <HoverNodeController
           key="textHoverController"
           position="top"
@@ -375,7 +389,6 @@ Text.craft = {
         <ToolNodeController position="bottom" align="start" key="textSettings">
           <TextSettingsNodeTool />
         </ToolNodeController>,
-
       ];
 
       return [...baseControls];

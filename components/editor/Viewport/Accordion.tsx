@@ -8,11 +8,11 @@ function AccordionMenu(props) {
   };
 
   return (
-    <div className={`flex flex-col  w-full   ${props.classes?.body}`}>
+    <div className={`flex w-full flex-col ${props.classes?.body}`}>
       {props.items.map((item, index) => (
-        <div key={index} className={" w-full"}>
+        <div key={index} className={"w-full"}>
           <button
-            className={`flex px-3 py-6 flex-row justify-between cursor-pointer ${props.classes?.header}`}
+            className={`flex cursor-pointer flex-row justify-between px-3 py-6 ${props.classes?.header}`}
             onClick={() => handleClick(index)}
           >
             <div className="">{item.title}</div>

@@ -3,7 +3,11 @@ import { TbClearAll, TbLayoutColumns, TbLayoutRows } from "react-icons/tb";
 import { TailwindStyles } from "utils/tailwind";
 import { ToolbarItem } from "../ToolbarItem";
 
-export const FlexDirectionInput = ({ type = "radio", wrap = "", inline = true }) => (
+export const FlexDirectionInput = ({
+  type = "radio",
+  wrap = "",
+  inline = true,
+}) => (
   <ToolbarItem
     propKey="flexDirection"
     type={type}

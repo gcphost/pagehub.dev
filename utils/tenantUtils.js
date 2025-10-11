@@ -40,12 +40,15 @@ export const loadTenantSettings = async (subdomain) => {
     await dbConnect();
 
     // If subdomain looks like a host (contains dots or colons), extract the subdomain
-    const cleanSubdomain = subdomain.includes('.') || subdomain.includes(':')
-      ? extractSubdomain(subdomain)
-      : subdomain;
+    const cleanSubdomain =
+      subdomain.includes(".") || subdomain.includes(":")
+        ? extractSubdomain(subdomain)
+        : subdomain;
 
     // Also get the full domain without port for domain field lookup
-    const fullDomain = subdomain.includes(':') ? subdomain.split(':')[0] : subdomain;
+    const fullDomain = subdomain.includes(":")
+      ? subdomain.split(":")[0]
+      : subdomain;
 
     if (["localhost:3000", "pagehub", "localhost"].includes(cleanSubdomain)) {
       return null;
@@ -55,10 +58,7 @@ export const loadTenantSettings = async (subdomain) => {
 
     // Check both subdomain field and domain field (for editor custom domains)
     let tenant = await Tenant.findOne({
-      $or: [
-        { domains: fullDomain },
-        { domain: fullDomain }
-      ]
+      $or: [{ domains: fullDomain }, { domain: fullDomain }],
     });
 
     if (!tenant) {
@@ -101,10 +101,7 @@ export const loadTenantByDomain = async (domain) => {
 
     // Search in domains array (static sites) first, then fall back to domain field (editor)
     let tenant = await Tenant.findOne({
-      $or: [
-        { domains: domain },
-        { domain: domain }
-      ]
+      $or: [{ domains: domain }, { domain: domain }],
     });
 
     if (!tenant) {
@@ -150,14 +147,7 @@ export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
     return null;
   }
 
-  const {
-    req,
-    query,
-    method = 'GET',
-    body,
-    pageId,
-    token,
-  } = options;
+  const { req, query, method = "GET", body, pageId, token } = options;
 
   try {
     const webhookBaseUrl = tenant.webhooks[webhookType];
@@ -168,25 +158,25 @@ export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
 
     // Add PageHub's auth token to verify the request came from us
     if (tenant.authToken) {
-      headers['x-pagehub-auth'] = tenant.authToken;
+      headers["x-pagehub-auth"] = tenant.authToken;
     }
 
     // Add user's session token if provided
     if (token) {
-      headers['x-pagehub-token'] = token;
+      headers["x-pagehub-token"] = token;
     }
 
     // Also extract any existing auth headers from request (backward compatibility)
     const authHeaders = [
-      'authorization',
-      'x-api-key',
-      'x-auth-token',
-      'x-access-token',
-      'cookie'
+      "authorization",
+      "x-api-key",
+      "x-auth-token",
+      "x-access-token",
+      "cookie",
     ];
 
     if (req?.headers) {
-      authHeaders.forEach(headerName => {
+      authHeaders.forEach((headerName) => {
         if (req.headers[headerName]) {
           headers[headerName] = req.headers[headerName];
         }
@@ -194,15 +184,15 @@ export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
     }
 
     // Add content-type for POST requests
-    if (method === 'POST' && body) {
-      headers['content-type'] = 'application/json';
+    if (method === "POST" && body) {
+      headers["content-type"] = "application/json";
     }
 
     // Build query string with token if provided (for GET requests)
     let finalWebhookUrl = webhookUrl;
-    if (token && method === 'GET') {
+    if (token && method === "GET") {
       const url = new URL(webhookUrl);
-      url.searchParams.set('token', token);
+      url.searchParams.set("token", token);
       finalWebhookUrl = url.toString();
     }
 
@@ -220,7 +210,7 @@ export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
       headers,
     };
 
-    if (method === 'POST' && body) {
+    if (method === "POST" && body) {
       fetchOptions.body = JSON.stringify(body);
     }
 
@@ -230,7 +220,10 @@ export const runTenantWebhook = async (tenant, webhookType, options = {}) => {
       const webhookData = await webhookResponse.json();
       return webhookData;
     } else {
-      console.error(`Webhook ${webhookType} returned status:`, webhookResponse.status);
+      console.error(
+        `Webhook ${webhookType} returned status:`,
+        webhookResponse.status,
+      );
       return null;
     }
   } catch (webhookError) {

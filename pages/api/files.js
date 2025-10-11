@@ -29,7 +29,7 @@ export default async function media(req, res) {
           const updated = await Page.updateOne(
             { "media._id": req.body.mediaId },
             { $set: { "media.$.content": req.body.media } },
-            { $upsert: true }
+            { $upsert: true },
           );
 
           return res.status(200).json({ _id: req.body.mediaId, updated });

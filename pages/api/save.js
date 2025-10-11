@@ -94,12 +94,7 @@ const createPage = async (req) => {
     await deploy();
   }
 
-  [
-    "content",
-    "draft",
-    "title",
-    "description",
-  ].forEach((_) => {
+  ["content", "draft", "title", "description"].forEach((_) => {
     const value = req.body[_];
 
     if (["content", "draft", "title", "description"].includes(_)) {
@@ -142,21 +137,23 @@ export default async function api(req, res) {
 
     // Check if tenant has onSave webhook
     if (tenant?.webhooks?.onSave) {
-      console.log("Tenant has onSave webhook, calling instead of internal save");
+      console.log(
+        "Tenant has onSave webhook, calling instead of internal save",
+      );
 
       const { _id, content, draft, sessionToken } = req.body;
       const document = content || draft;
       const isDraft = !!draft;
 
       // Extract token from body or header
-      const token = sessionToken || req.headers['x-pagehub-token'];
+      const token = sessionToken || req.headers["x-pagehub-token"];
 
       console.log("Save request body:", {
         _id: _id,
         hasContent: !!content,
         hasDraft: !!draft,
         hasToken: !!token,
-        bodyKeys: Object.keys(req.body)
+        bodyKeys: Object.keys(req.body),
       });
 
       // Try to extract pageId from referer if _id is not available
@@ -169,10 +166,10 @@ export default async function api(req, res) {
         }
       }
 
-      const webhookResult = await runTenantWebhook(tenant, 'onSave', {
+      const webhookResult = await runTenantWebhook(tenant, "onSave", {
         req,
         query: req.query,
-        method: 'POST',
+        method: "POST",
         body: {
           tenantId: tenant._id,
           pageId: pageId,
@@ -189,7 +186,9 @@ export default async function api(req, res) {
         return res.status(200).json(webhookResult);
       } else {
         console.error("Tenant webhook failed, returning error");
-        return res.status(500).json({ error: "Save failed - tenant webhook error" });
+        return res
+          .status(500)
+          .json({ error: "Save failed - tenant webhook error" });
       }
     }
 

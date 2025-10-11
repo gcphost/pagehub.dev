@@ -144,13 +144,13 @@ export const SpacingOverlay = ({
   if (!container || !overlayData || overlayData.length === 0) return null;
 
   // Colors matching Chrome DevTools Box Model
-  const color = type === "margin"
-    ? "rgba(246, 178, 107, 0.4)" // Orange for margin (#F6B26B)
-    : "rgba(147, 196, 125, 0.4)"; // Green for padding (#93C47D)
+  const color =
+    type === "margin"
+      ? "rgba(246, 178, 107, 0.4)" // Orange for margin (#F6B26B)
+      : "rgba(147, 196, 125, 0.4)"; // Green for padding (#93C47D)
 
-  const borderColor = type === "margin"
-    ? "rgba(246, 178, 107, 0.7)"
-    : "rgba(147, 196, 125, 0.7)";
+  const borderColor =
+    type === "margin" ? "rgba(246, 178, 107, 0.7)" : "rgba(147, 196, 125, 0.7)";
 
   return ReactDOM.createPortal(
     <>
@@ -198,7 +198,6 @@ export const SpacingOverlay = ({
         </motion.div>
       ))}
     </>,
-    container
+    container,
   );
 };
-

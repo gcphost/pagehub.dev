@@ -22,7 +22,7 @@ export function RenderNodePortal({ children }) {
       clonedElement.style.width = `${rect.width}px`;
       clonedElement.style.height = `${rect.height}px`;
     },
-    [clonedElementRef]
+    [clonedElementRef],
   );
 
   const scrollingParent = useFindScrollingParent(id);
@@ -76,7 +76,7 @@ export function RenderNodePortal({ children }) {
   return (
     <div
       ref={clonedElementRef}
-      className="absolute pointer-events-none"
+      className="pointer-events-none absolute"
       style={{ zIndex: 50 }}
     >
       <AnimatePresence>{children}</AnimatePresence>

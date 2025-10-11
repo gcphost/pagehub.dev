@@ -28,7 +28,7 @@ export const DomainSettings = () => {
       ? settings.domain
         ? "domain"
         : "local"
-      : "draft"
+      : "draft",
   );
   const [saving, setSaving] = useState(false);
   const [domainData, setDomainData] = useState(null);
@@ -76,7 +76,13 @@ export const DomainSettings = () => {
     // setDialogOpen(false);
 
     if (publishType !== "draft") {
-      await SaveToServer(query.serialize(), false, result, setSettings, sessionToken);
+      await SaveToServer(
+        query.serialize(),
+        false,
+        result,
+        setSettings,
+        sessionToken,
+      );
       setUnsavedChanged(false);
     }
 
@@ -161,10 +167,10 @@ export const DomainSettings = () => {
         save();
       }}
     >
-      <div className="space-y-4 pb-4 sm:pb-6 px-3 xl:pb-8">
-        <div className="flex items-center gap-3 cursor-pointer  p-3">
+      <div className="space-y-4 px-3 pb-4 sm:pb-6 xl:pb-8">
+        <div className="flex cursor-pointer items-center gap-3 p-3">
           {status === "authenticated" ? (
-            <div className="mx-auto  flex flex-row gap-3 items-center text-lg">
+            <div className="mx-auto flex flex-row items-center gap-3 text-lg">
               <p className="text-center">Logged in as {session.user.email}</p>{" "}
               <button
                 className="cursor-pointer"
@@ -175,7 +181,7 @@ export const DomainSettings = () => {
             </div>
           ) : (
             <button
-              className="btn px-6 py-3 mx-auto cursor-pointer"
+              className="btn mx-auto cursor-pointer px-6 py-3"
               onClick={() => popupCenter("/google-signin", "Sign In")}
             >
               Sign in with Google &nbsp;
@@ -183,12 +189,12 @@ export const DomainSettings = () => {
             </button>
           )}
         </div>
-        <div className="flex flex-row items-center gap-3 mx-auto">
-          <label className="text-center mx-auto items-center flex gap-1">
+        <div className="mx-auto flex flex-row items-center gap-3">
+          <label className="mx-auto flex items-center gap-1 text-center">
             <input
               type="checkbox"
               defaultChecked={false}
-              className="input w-6 h-6 mr-3"
+              className="input mr-3 size-6"
               required={true}
             />{" "}
             I agree to the{" "}
@@ -202,7 +208,7 @@ export const DomainSettings = () => {
           </label>
         </div>
 
-        <hr className="border-b border-border -mx-3" />
+        <hr className="-mx-3 border-b border-border" />
 
         <div>
           <label htmlFor="siteTitle">Title</label>
@@ -232,12 +238,12 @@ export const DomainSettings = () => {
           />
         </div>
 
-        <hr className="border-b border-border -mx-3" />
+        <hr className="-mx-3 border-b border-border" />
 
         <div className="flex flex-col gap-3">
           <button
             tabIndex={0}
-            className="cursor-pointer flex flex-row items-center gap-2"
+            className="flex cursor-pointer flex-row items-center gap-2"
             onClick={(e) => {
               e.preventDefault();
               status === "authenticated" && setPublishType("local");
@@ -255,7 +261,7 @@ export const DomainSettings = () => {
 
           <button
             tabIndex={-1}
-            className="cursor-pointer flex flex-row items-center gap-2"
+            className="flex cursor-pointer flex-row items-center gap-2"
             onClick={(e) => {
               e.preventDefault();
               status === "authenticated" && setPublishType("domain");
@@ -273,7 +279,7 @@ export const DomainSettings = () => {
 
           <button
             tabIndex={-2}
-            className="cursor-pointer flex flex-row items-center gap-2"
+            className="flex cursor-pointer flex-row items-center gap-2"
             onClick={(e) => {
               e.preventDefault();
               setPublishType("draft");
@@ -291,7 +297,7 @@ export const DomainSettings = () => {
 
         {publishType === "local" && (
           <div className="flex flex-col">
-            <div className="flex flex-row items-center ">
+            <div className="flex flex-row items-center">
               <input
                 type="text"
                 autoFocus={!settings.name}
@@ -300,16 +306,16 @@ export const DomainSettings = () => {
                 data-lpignore="true"
                 autoComplete="off"
                 onChange={debounce((e) => checkName(e.target.value), 500)}
-                className={`${inputClass} focus:ring-0   rounded-lg   w-8/12 border-0 text-right pr-0 active:border-background focus:border-background focus:outline-none`}
+                className={`${inputClass} w-8/12 rounded-lg border-0 pr-0 text-right focus:border-background focus:outline-none focus:ring-0 active:border-background`}
               />
               .pagehub.dev
               {name && nameOk !== null ? (
                 nameOk ? (
-                  <span className="ml-3 bg-secondary w-8 items-center justify-center flex  text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                  <span className="ml-3 mr-2 flex w-8 items-center justify-center rounded bg-secondary px-2.5 py-0.5 text-xs font-medium text-green-800">
                     <TbCheck />
                   </span>
                 ) : (
-                  <span className="ml-3 bg-destructive w-8 items-center justify-center flex  text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                  <span className="ml-3 mr-2 flex w-8 items-center justify-center rounded bg-destructive px-2.5 py-0.5 text-xs font-medium text-green-800">
                     <TbX />
                   </span>
                 )
@@ -341,14 +347,14 @@ export const DomainSettings = () => {
                 pattern="^[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$"
               />
             </div>
-            <p className="text-xs p-3 text-center">
+            <p className="p-3 text-center text-xs">
               Changes will be visible shortly after saving.
             </p>
           </>
         )}
 
         {settings.error && (
-          <div className="bg-red text-foreground rounded-xl p-3 w-fit">
+          <div className="w-fit rounded-xl bg-red p-3 text-foreground">
             {settings.error}
           </div>
         )}
@@ -358,7 +364,7 @@ export const DomainSettings = () => {
           !domainData?.configVerifiedAt && (
             <div>
               Set the following record on your DNS provider to continue:
-              <div className="bg-background text-foreground my-6 p-3 rounded-xl w-full overflow-auto">
+              <div className="my-6 w-full overflow-auto rounded-xl bg-background p-3 text-foreground">
                 <table className="table-auto p-3">
                   <tbody>
                     <tr className="font-bold">
@@ -399,10 +405,9 @@ export const DomainSettings = () => {
             </div>
           )}
 
-        <div className="w-full  ">
+        <div className="w-full">
           <button
-            className={`${saving ? "bg-primary" : "bg-primary"
-              } btn w-full p-3`}
+            className={`${saving ? "bg-primary" : "bg-primary"} btn w-full p-3`}
           >
             {saving ? "Saving..." : "Save"}
           </button>

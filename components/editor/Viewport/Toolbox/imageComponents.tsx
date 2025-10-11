@@ -32,7 +32,9 @@ export const ImageToolbox = {
     />,
     <RenderSectionComponent
       key="image2"
-      text={<ToolboxItemDisplay icon={RiImageAddLine} label="Image Background" />}
+      text={
+        <ToolboxItemDisplay icon={RiImageAddLine} label="Image Background" />
+      }
       mobile={{
         display: "flex",
         minHeight: "min-h-[120px]",

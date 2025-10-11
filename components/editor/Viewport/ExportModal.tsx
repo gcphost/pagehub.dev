@@ -14,7 +14,7 @@ export const ExportModal = () => {
   const data = lz.encodeBase64(lz.compress(json));
 
   return (
-    <div className="space-y-6 px-3 pb-4 sm:pb-6 xl:pb-8 ">
+    <div className="space-y-6 px-3 pb-4 sm:pb-6 xl:pb-8">
       <h3 className="text-xl font-medium">Export Page Layout</h3>
       <p>
         Copy and save this exported version of your page. You can then import it
@@ -22,14 +22,14 @@ export const ExportModal = () => {
       </p>
 
       <pre
-        className="w-full overflow-auto input  h-32 max-h-[200px]"
+        className="input h-32 max-h-[200px] w-full overflow-auto"
         contentEditable={true}
         suppressContentEditableWarning={true}
       >
         {data}
       </pre>
 
-      <div className="w-full flex gap-3">
+      <div className="flex w-full gap-3">
         <button
           className="btn w-full py-3"
           autoFocus={true}

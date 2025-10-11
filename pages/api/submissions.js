@@ -4,7 +4,6 @@ import dbConnect from "../../utils/dbConnect";
 
 const nodemailer = require("nodemailer");
 
-
 export default async function check(req, res) {
   return res.status(200).json({ ok: true });
 }

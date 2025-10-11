@@ -27,11 +27,13 @@ export default async function generate(req, res) {
 
     // Process the result for Tailwind classes
     const reps = result.content?.split(/\s+/) || [];
-    const cleanedArray = reps.filter(item => item.trim() !== "" && /^[a-zA-Z0-9-:]+$/.test(item));
+    const cleanedArray = reps.filter(
+      (item) => item.trim() !== "" && /^[a-zA-Z0-9-:]+$/.test(item),
+    );
 
     res.status(200).json({
       result: cleanedArray,
-      og: result.content
+      og: result.content,
     });
   } catch (error) {
     console.error(`Error with OpenAI API request: ${error.message}`);

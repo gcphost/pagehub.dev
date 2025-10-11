@@ -28,18 +28,21 @@ const cssLinter = linter((view) => {
     }
 
     // Check for missing semicolons (basic check)
-    const lines = doc.split('\n');
+    const lines = doc.split("\n");
     lines.forEach((line, index) => {
       const trimmed = line.trim();
       // If line has a colon but no semicolon and isn't empty/comment/brace
-      if (trimmed &&
-        trimmed.includes(':') &&
-        !trimmed.endsWith(';') &&
-        !trimmed.endsWith('{') &&
-        !trimmed.endsWith('}') &&
-        !trimmed.startsWith('/*') &&
-        !trimmed.startsWith('//')) {
-        const lineStart = doc.split('\n').slice(0, index).join('\n').length + index;
+      if (
+        trimmed &&
+        trimmed.includes(":") &&
+        !trimmed.endsWith(";") &&
+        !trimmed.endsWith("{") &&
+        !trimmed.endsWith("}") &&
+        !trimmed.startsWith("/*") &&
+        !trimmed.startsWith("//")
+      ) {
+        const lineStart =
+          doc.split("\n").slice(0, index).join("\n").length + index;
         diagnostics.push({
           from: lineStart,
           to: lineStart + line.length,
@@ -71,7 +74,7 @@ export const CSSEditorInput = () => {
   const { value } = getPropFinalValue(
     { propKey: "style", propType: "root" },
     view,
-    nodeProps
+    nodeProps,
   );
 
   const handleChange = (val: string) => {
@@ -90,7 +93,7 @@ export const CSSEditorInput = () => {
   return (
     <ToolbarSection title="Inline Style Tag">
       <div className="w-full">
-        <div className="rounded-lg overflow-hidden border border-border focus:border-ring focus-within:border-accent">
+        <div className="overflow-hidden rounded-lg border border-border focus-within:border-accent focus:border-ring">
           <CodeMirror
             value={value || ""}
             height="150px"
@@ -121,11 +124,10 @@ export const CSSEditorInput = () => {
             className="text-sm"
           />
         </div>
-        <p className="text-xs text-muted-foreground mt-2">
+        <p className="mt-2 text-xs text-muted-foreground">
           Use valid CSS syntax.
         </p>
       </div>
     </ToolbarSection>
   );
 };
-

@@ -3,7 +3,7 @@ import { Container } from "../Container";
 import { FooterSettings } from "./FooterSettings";
 
 export const Footer: UserComponent<any> = (props: any) => {
-  return (<Container {...props} />);
+  return <Container {...props} />;
 };
 
 Footer.craft = {

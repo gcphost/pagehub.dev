@@ -33,7 +33,9 @@ export const ListToolbox = {
     />,
     <RenderSectionComponent
       key="image1"
-      display={<ToolboxItemDisplay icon={RiImageAddLine} label="Background Image" />}
+      display={
+        <ToolboxItemDisplay icon={RiImageAddLine} label="Background Image" />
+      }
       mobile={{
         display: "flex",
         minHeight: "min-h-[120px]",

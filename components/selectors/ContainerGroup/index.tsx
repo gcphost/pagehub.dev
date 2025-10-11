@@ -8,7 +8,12 @@ import { TbContainer } from "react-icons/tb";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { mergeAccessibilityProps } from "utils/accessibility";
 import { SettingsAtom } from "utils/atoms";
-import { IsolateAtom, ViewModeAtom, applyBackgroundImage, motionIt } from "utils/lib";
+import {
+  IsolateAtom,
+  ViewModeAtom,
+  applyBackgroundImage,
+  motionIt,
+} from "utils/lib";
 import { usePalette } from "utils/PaletteContext";
 import { CSStoObj, ClassGenerator, applyAnimation } from "utils/tailwind";
 import { BaseSelectorProps } from "..";
@@ -59,7 +64,7 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
   const groupedComponents = React.useMemo(() => {
     const groups: { [type: string]: any[] } = {};
     const items = props.items || [];
-    items.forEach(item => {
+    items.forEach((item) => {
       if (!groups[item.type]) {
         groups[item.type] = [];
       }
@@ -80,7 +85,7 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
       preview,
       false,
       palette,
-      query
+      query,
     );
   }, [props, view, enabled, preview, palette, query]);
 
@@ -95,7 +100,7 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
     preview,
     false,
     palette,
-    query
+    query,
   );
 
   // Hide container if needed
@@ -122,13 +127,36 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
     children: (
       <>
         {/* Render background elements */}
-        {props.backgroundPattern && <RenderPattern children={null} props={props} settings={settings} view={view} enabled={enabled} properties={inlayProps} preview={preview} query={query} />}
-        {props.backgroundGradient && <RenderGradient children={null} props={props} view={view} enabled={enabled} properties={inlayProps} preview={preview} query={query} />}
+        {props.backgroundPattern && (
+          <RenderPattern
+            children={null}
+            props={props}
+            settings={settings}
+            view={view}
+            enabled={enabled}
+            properties={inlayProps}
+            preview={preview}
+            query={query}
+          />
+        )}
+        {props.backgroundGradient && (
+          <RenderGradient
+            children={null}
+            props={props}
+            view={view}
+            enabled={enabled}
+            properties={inlayProps}
+            preview={preview}
+            query={query}
+          />
+        )}
 
         {/* Render grouped components */}
         {Object.entries(groupedComponents).map(([type, components]) => (
           <div key={type} className="group-section">
-            <h3 className="group-title">{type}s ({components.length})</h3>
+            <h3 className="group-title">
+              {type}s ({components.length})
+            </h3>
             <div className="group-items">
               {components.map((component, index) => (
                 <div key={component.id} className="group-item">
@@ -144,11 +172,7 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
         {props.children}
 
         {/* Render empty state if no items */}
-        {(props.items || []).length === 0 && (
-          <EmptyState
-            icon={TbContainer}
-          />
-        )}
+        {(props.items || []).length === 0 && <EmptyState icon={TbContainer} />}
 
         {/* Render inline tools */}
         <InlineToolsRenderer />
@@ -168,10 +192,13 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
   if (props.role) prop.role = props.role;
   if (props["aria-label"]) prop["aria-label"] = props["aria-label"];
 
-  prop = mergeAccessibilityProps({
-    ...applyBackgroundImage(prop, props, settings, query),
-    ...applyAnimation({ ...prop, key: id }, props),
-  }, props);
+  prop = mergeAccessibilityProps(
+    {
+      ...applyBackgroundImage(prop, props, settings, query),
+      ...applyAnimation({ ...prop, key: id }, props),
+    },
+    props,
+  );
 
   let tagName = "div";
 
@@ -179,7 +206,7 @@ export const ContainerGroup = (props: ContainerGroupProps) => {
   if (enabled && props.type !== "page" && isMounted) {
     prop.style = {
       ...(prop.style || {}),
-      overflow: 'visible',
+      overflow: "visible",
     };
     const originalChildren = prop.children;
     prop.children = (

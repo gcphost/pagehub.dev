@@ -40,31 +40,31 @@ export function generateTenantCSSVariables(branding: TenantBranding): string {
     // Generate lighter/darker variants
     variables.push(`--secondary-50: ${adjustColorBrightness(secondary, 0.9)};`);
     variables.push(
-      `--secondary-100: ${adjustColorBrightness(secondary, 0.8)};`
+      `--secondary-100: ${adjustColorBrightness(secondary, 0.8)};`,
     );
     variables.push(
-      `--secondary-200: ${adjustColorBrightness(secondary, 0.6)};`
+      `--secondary-200: ${adjustColorBrightness(secondary, 0.6)};`,
     );
     variables.push(
-      `--secondary-300: ${adjustColorBrightness(secondary, 0.4)};`
+      `--secondary-300: ${adjustColorBrightness(secondary, 0.4)};`,
     );
     variables.push(
-      `--secondary-400: ${adjustColorBrightness(secondary, 0.2)};`
+      `--secondary-400: ${adjustColorBrightness(secondary, 0.2)};`,
     );
     variables.push(
-      `--secondary-600: ${adjustColorBrightness(secondary, -0.2)};`
+      `--secondary-600: ${adjustColorBrightness(secondary, -0.2)};`,
     );
     variables.push(
-      `--secondary-700: ${adjustColorBrightness(secondary, -0.4)};`
+      `--secondary-700: ${adjustColorBrightness(secondary, -0.4)};`,
     );
     variables.push(
-      `--secondary-800: ${adjustColorBrightness(secondary, -0.6)};`
+      `--secondary-800: ${adjustColorBrightness(secondary, -0.6)};`,
     );
     variables.push(
-      `--secondary-900: ${adjustColorBrightness(secondary, -0.8)};`
+      `--secondary-900: ${adjustColorBrightness(secondary, -0.8)};`,
     );
     variables.push(
-      `--secondary-950: ${adjustColorBrightness(secondary, -0.9)};`
+      `--secondary-950: ${adjustColorBrightness(secondary, -0.9)};`,
     );
   }
 

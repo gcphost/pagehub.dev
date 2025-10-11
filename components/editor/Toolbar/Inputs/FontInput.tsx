@@ -58,45 +58,49 @@ export const FontInput = () => (
         varSelectorPrefix="font"
       />
     </ToolbarSection>
-    <ToolbarSection full={1} footer={<ItemAdvanceToggle
-      propKey="font"
-      title={
-        <>
-          <TbSettings /> Transform, word break, overflow & more
-        </>
+    <ToolbarSection
+      full={1}
+      footer={
+        <ItemAdvanceToggle
+          propKey="font"
+          title={
+            <>
+              <TbSettings /> Transform, word break, overflow & more
+            </>
+          }
+        >
+          <ToolbarSection full={1}>
+            <TailwindInput
+              propKey="transform"
+              label="Transform"
+              prop="transform"
+              type="select"
+            />
+
+            <TailwindInput
+              propKey="wordBreak"
+              label="Word Break"
+              prop="wordBreak"
+              type="select"
+            />
+
+            <TailwindInput
+              propKey="textOverflow"
+              label="Text Overflow"
+              prop="textOverflow"
+              type="select"
+            />
+            <TailwindInput propKey="indent" label="Indent" prop="indent" />
+            <TailwindInput
+              propKey="textDecoration"
+              label="Decoration"
+              prop="textDecoration"
+              type="select"
+            />
+          </ToolbarSection>
+        </ItemAdvanceToggle>
       }
     >
-      <ToolbarSection full={1}>
-        <TailwindInput
-          propKey="transform"
-          label="Transform"
-          prop="transform"
-          type="select"
-        />
-
-        <TailwindInput
-          propKey="wordBreak"
-          label="Word Break"
-          prop="wordBreak"
-          type="select"
-        />
-
-        <TailwindInput
-          propKey="textOverflow"
-          label="Text Overflow"
-          prop="textOverflow"
-          type="select"
-        />
-        <TailwindInput propKey="indent" label="Indent" prop="indent" />
-        <TailwindInput
-          propKey="textDecoration"
-          label="Decoration"
-          prop="textDecoration"
-          type="select"
-        />
-      </ToolbarSection>
-    </ItemAdvanceToggle>}>
-
       <ToolbarItem
         propKey="lineHeight"
         type="slider"
@@ -114,10 +118,6 @@ export const FontInput = () => (
         min={0}
         valueLabels={TailwindStyles.tracking}
       />
-
-
     </ToolbarSection>
-
-
   </>
 );

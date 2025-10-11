@@ -58,7 +58,7 @@ export const EmbedSettings = () => {
 
   const MainTab = () => (
     <TabBody>
-      <p className="p-3 text-md">
+      <p className="p-3 text-base">
         Paste things like embeded javascript, iframes, and other raw code to
         render in your component.
       </p>
@@ -73,7 +73,7 @@ export const EmbedSettings = () => {
         />
       </ToolbarSection>
 
-      <p className="p-3 text-md">
+      <p className="text-md p-3">
         Change the display to hidden for things like analytics and tracking.
       </p>
 
@@ -108,7 +108,9 @@ export const EmbedSettings = () => {
 
         {activeTab === "Layout" && (
           <TabBody>
-            <p className="p-3 text-xs text-center">Spacing is not available for this component.</p>
+            <p className="p-3 text-center text-xs">
+              Spacing is not available for this component.
+            </p>
           </TabBody>
         )}
 
@@ -120,7 +122,7 @@ export const EmbedSettings = () => {
 
         {activeTab === "Hover & Click" && (
           <TabBody>
-            <p className="p-3 text-xs text-center">
+            <p className="p-3 text-center text-xs">
               Hover settings are not available for this component.
             </p>
           </TabBody>

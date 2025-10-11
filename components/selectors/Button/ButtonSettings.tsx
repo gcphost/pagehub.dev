@@ -220,7 +220,9 @@ export const ButtonSettings = () => {
             </ToolbarSection>
           </ToolbarSection>
 
-          <BackgroundInput><PatternInput /></BackgroundInput>
+          <BackgroundInput>
+            <PatternInput />
+          </BackgroundInput>
 
           <ToolbarSection title="Typography">
             <FontInput />

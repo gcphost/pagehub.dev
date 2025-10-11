@@ -2,36 +2,29 @@ import { useEditor, useNode } from "@craftjs/core";
 import { ToolbarItem, ToolbarSection } from "components/editor/Toolbar";
 import { TbPlus } from "react-icons/tb";
 
-
-
 export const ImageGroupSettings = ({ onAdd }: { onAdd: () => void }) => {
   const { actions, query } = useEditor();
   const { id } = useNode();
-  const {
-    props,
-  } = useNode((node) => ({
+  const { props } = useNode((node) => ({
     props: node.data.props,
   }));
 
-
   return (
     <>
-
-
       <button
-        className="btn p-3 w-full"
+        className="btn w-full p-3"
         onClick={() => {
           const Image = query.getOptions().resolver.Image;
           if (Image) {
             actions.addNodeTree(
               query.parseReactElement(<Image alt="New image" />).toNodeTree(),
-              id
+              id,
             );
             onAdd && onAdd();
           }
         }}
       >
-        <TbPlus className="inline mr-2" /> Add Image
+        <TbPlus className="mr-2 inline" /> Add Image
       </button>
 
       <ToolbarSection title="Properties">
@@ -41,7 +34,6 @@ export const ImageGroupSettings = ({ onAdd }: { onAdd: () => void }) => {
           type="select"
           label="Mode"
           labelWidth="w-24"
-
         >
           <option value="flex">Flex (Default)</option>
           <option value="grid">Grid</option>
@@ -73,7 +65,6 @@ export const ImageGroupSettings = ({ onAdd }: { onAdd: () => void }) => {
           inline
           labelWidth="w-full"
           on="enabled"
-
         />
 
         <ToolbarItem
@@ -85,8 +76,6 @@ export const ImageGroupSettings = ({ onAdd }: { onAdd: () => void }) => {
           inline
           labelWidth="w-full"
           on="enabled"
-
-
         />
       </ToolbarSection>
 
@@ -102,7 +91,6 @@ export const ImageGroupSettings = ({ onAdd }: { onAdd: () => void }) => {
               inline
               labelWidth="w-full"
               labelHide={true}
-
             />
             <ToolbarItem
               propKey="previewInEditor"
@@ -113,10 +101,9 @@ export const ImageGroupSettings = ({ onAdd }: { onAdd: () => void }) => {
               inline
               labelWidth="w-full"
               labelHide={true}
-
             />
           </ToolbarSection>
-          {(props?.animationEnabled !== false) && (
+          {props?.animationEnabled !== false && (
             <>
               <ToolbarSection title="Scroll">
                 <ToolbarItem
@@ -139,7 +126,6 @@ export const ImageGroupSettings = ({ onAdd }: { onAdd: () => void }) => {
                   step={1}
                   description="Time for one complete scroll (lower = faster)"
                 />
-
               </ToolbarSection>
             </>
           )}
@@ -170,13 +156,6 @@ export const ImageGroupSettings = ({ onAdd }: { onAdd: () => void }) => {
           )}
         </ToolbarSection>
       )}
-
-
-
-
-
-
-
     </>
   );
 };

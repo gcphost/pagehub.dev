@@ -17,7 +17,7 @@ export const ToolbarDropdown = ({
     res.push(
       <option value="" key={valueLabels.length}>
         None
-      </option>
+      </option>,
     );
 
     res.push(...valueLabels.map((_) => <option key={uuidv4()}>{_}</option>));
@@ -35,15 +35,15 @@ export const ToolbarDropdown = ({
 
       {wrap === "control" ? (
         // Control mode - no background wrapper
-        <div className="flex items-center gap-2 w-full">
+        <div className="flex w-full items-center gap-2">
           <select
-            className="input-plain flex-1 active:outline-none focus:outline-none focus:border-transparent active:border-transparent"
+            className="input-plain flex-1 focus:border-transparent focus:outline-none active:border-transparent active:outline-none"
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onMouseDown={() => {
               // Blur any focused contentEditable element BEFORE dropdown opens
               const activeEl = document.activeElement as HTMLElement;
-              if (activeEl && activeEl.contentEditable === 'true') {
+              if (activeEl && activeEl.contentEditable === "true") {
                 activeEl.blur();
               }
             }}
@@ -51,19 +51,21 @@ export const ToolbarDropdown = ({
           >
             {children}
           </select>
-          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+          {append && (
+            <div className="flex shrink-0 items-center gap-0.5">{append}</div>
+          )}
         </div>
       ) : (
         // Default mode - wrap in BgWrap
-        <div className="input-wrapper flex items-center gap-2 w-full">
+        <div className="input-wrapper flex w-full items-center gap-2">
           <select
-            className="input-plain flex-1 active:outline-none focus:outline-none focus:border-transparent active:border-transparent"
+            className="input-plain flex-1 focus:border-transparent focus:outline-none active:border-transparent active:outline-none"
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onMouseDown={() => {
               // Blur any focused contentEditable element BEFORE dropdown opens
               const activeEl = document.activeElement as HTMLElement;
-              if (activeEl && activeEl.contentEditable === 'true') {
+              if (activeEl && activeEl.contentEditable === "true") {
                 activeEl.blur();
               }
             }}
@@ -71,7 +73,9 @@ export const ToolbarDropdown = ({
           >
             {children}
           </select>
-          {append && <div className="flex items-center gap-0.5 flex-shrink-0">{append}</div>}
+          {append && (
+            <div className="flex shrink-0 items-center gap-0.5">{append}</div>
+          )}
         </div>
       )}
     </>

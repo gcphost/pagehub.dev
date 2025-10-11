@@ -5,7 +5,6 @@ import { cloneElement, isValidElement, useState } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { TbActiveMenuAtom } from "../atoms";
 
-
 export const Tools: any = {};
 
 export const SelectedNodeAtom = atom({
@@ -75,10 +74,16 @@ export const AddElement = ({
   return false;
 };
 
-export const ToolboxItemDisplay = ({ icon: Icon, label, isDragging = false }) => (
-  <div className="flex flex-col items-center justify-center px-1 py-2 w-full min-h-[60px] gap-2 pointer-events-none transition-colors">
+export const ToolboxItemDisplay = ({
+  icon: Icon,
+  label,
+  isDragging = false,
+}) => (
+  <div className="pointer-events-none flex min-h-[60px] w-full flex-col items-center justify-center gap-2 px-1 py-2 transition-colors">
     <Icon className="text-2xl text-foreground" />
-    <span className="text-[10px] text-center text-muted-foreground">{label}</span>
+    <span className="text-center text-[10px] text-muted-foreground">
+      {label}
+    </span>
   </div>
 );
 
@@ -117,9 +122,10 @@ export const RenderToolComponent = ({
   ].join(" ");
 
   // Clone display element and inject isDragging prop if it's a React element
-  const displayWithProps = display && isValidElement(display)
-    ? cloneElement(display, { isDragging } as any)
-    : display;
+  const displayWithProps =
+    display && isValidElement(display)
+      ? cloneElement(display, { isDragging } as any)
+      : display;
 
   return (
     <motion.div
@@ -128,7 +134,7 @@ export const RenderToolComponent = ({
         transition: { duration: 0.2 },
       }}
       whileTap={{ scale: 0.9 }}
-      className={`cursor-move w-full pointer-events-auto hover:bg-accent border border-border rounded-md ${isDragging ? 'bg-accent border-accent' : ''}`}
+      className={`pointer-events-auto w-full cursor-move rounded-md border border-border hover:bg-accent ${isDragging ? "border-accent bg-accent" : ""}`}
       ref={(ref: any) => create(ref, tool)}
       onMouseDown={() => setIsDragging(true)}
       onMouseUp={() => setIsDragging(false)}
@@ -150,7 +156,7 @@ export const RenderToolComponent = ({
         AddElement(props);
       }}
     >
-      {renderer || <div className={" w-full"}>{displayWithProps}</div>}
+      {renderer || <div className={"w-full"}>{displayWithProps}</div>}
     </motion.div>
   );
 };

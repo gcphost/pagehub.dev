@@ -7,7 +7,7 @@ const SessionSchema = new mongoose.Schema(
     sessionToken: { type: String },
     accessToken: { type: String },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Session =

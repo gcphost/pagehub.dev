@@ -4,7 +4,10 @@ import { TabBody } from "components/editor/Toolbar/Tab";
 export const AccessibilityInput = () => {
   return (
     <TabBody>
-      <ToolbarSection title="ARIA Labels" help="Provide accessible labels for screen readers">
+      <ToolbarSection
+        title="ARIA Labels"
+        help="Provide accessible labels for screen readers"
+      >
         <ToolbarItem
           propKey="ariaLabel"
           propType="component"
@@ -25,7 +28,10 @@ export const AccessibilityInput = () => {
         />
       </ToolbarSection>
 
-      <ToolbarSection title="ARIA States" help="Define the current state of interactive elements">
+      <ToolbarSection
+        title="ARIA States"
+        help="Define the current state of interactive elements"
+      >
         <ToolbarItem
           propKey="ariaExpanded"
           propType="component"
@@ -73,7 +79,10 @@ export const AccessibilityInput = () => {
         </ToolbarItem>
       </ToolbarSection>
 
-      <ToolbarSection title="ARIA Roles" help="Define the semantic role of this element">
+      <ToolbarSection
+        title="ARIA Roles"
+        help="Define the semantic role of this element"
+      >
         <ToolbarItem
           propKey="role"
           propType="component"
@@ -115,7 +124,10 @@ export const AccessibilityInput = () => {
         </ToolbarItem>
       </ToolbarSection>
 
-      <ToolbarSection title="Keyboard Navigation" help="Control keyboard accessibility">
+      <ToolbarSection
+        title="Keyboard Navigation"
+        help="Control keyboard accessibility"
+      >
         <ToolbarItem
           propKey="tabIndex"
           propType="component"

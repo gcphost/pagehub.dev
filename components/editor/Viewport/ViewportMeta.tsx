@@ -13,17 +13,17 @@ export const ViewportMeta = () => {
 
     if (view === "mobile") {
       // Add mobile simulation class
-      htmlElement.classList.add('mobile-preview');
-      htmlElement.classList.remove('desktop-preview');
+      htmlElement.classList.add("mobile-preview");
+      htmlElement.classList.remove("desktop-preview");
     } else {
       // Add desktop class
-      htmlElement.classList.add('desktop-preview');
-      htmlElement.classList.remove('mobile-preview');
+      htmlElement.classList.add("desktop-preview");
+      htmlElement.classList.remove("mobile-preview");
     }
 
     // Cleanup function
     return () => {
-      htmlElement.classList.remove('mobile-preview', 'desktop-preview');
+      htmlElement.classList.remove("mobile-preview", "desktop-preview");
     };
   }, [view]);
 

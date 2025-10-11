@@ -38,7 +38,7 @@ import {
   TbSettings,
   TbSun,
   TbUpload,
-  TbX
+  TbX,
 } from "react-icons/tb";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SessionTokenAtom, SettingsAtom } from "utils/atoms";
@@ -50,7 +50,7 @@ import {
   MenuState,
   SideBarAtom,
   ViewModeAtom,
-  popupCenter
+  popupCenter,
 } from "utils/lib";
 import { useTenant } from "utils/tenantStore";
 import { DeviceAtom, EnabledAtom, PreviewAtom, ViewAtom } from ".";
@@ -87,13 +87,20 @@ export function useComponentVisible(initialIsVisible) {
   return { ref, isComponentVisible, setIsComponentVisible };
 }
 
-const Item = ({ onClick, children, disabled = false, className = "", ariaLabel = "" }) => (
+const Item = ({
+  onClick,
+  children,
+  disabled = false,
+  className = "",
+  ariaLabel = "",
+}) => (
   <motion.button
     onClick={onClick}
     disabled={disabled}
     aria-label={ariaLabel}
-    className={`cursor-pointer hover:bg-muted hover:text-foreground py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-foreground ${disabled && "opacity-50"
-      } ${className}`}
+    className={`flex cursor-pointer items-center justify-center rounded-lg px-1.5 py-3 text-xl text-foreground hover:bg-muted hover:text-foreground ${
+      disabled && "opacity-50"
+    } ${className}`}
     whileHover={{
       scale: 1.1,
       transition: { duration: 0.2 },
@@ -115,7 +122,7 @@ export const Header = () => {
       enabled: state.options.enabled,
       canUndo: query.history.canUndo(),
       canRedo: query.history.canRedo(),
-    })
+    }),
   );
 
   const setComponents = useSetRecoilState(ComponentsAtom);
@@ -130,10 +137,10 @@ export const Header = () => {
 
       // Find all Container nodes with type="component"
       const componentNodes = rootChildren
-        .map(nodeId => {
+        .map((nodeId) => {
           try {
             const node = query.node(nodeId).get();
-            if (node?.data?.props?.type === 'component') {
+            if (node?.data?.props?.type === "component") {
               // Get the first child of the component container (the actual content)
               const childNodeId = node.data.nodes?.[0];
 
@@ -150,7 +157,10 @@ export const Header = () => {
                 return {
                   rootNodeId: childNodeId, // The actual content node
                   nodes: serializedNodes,
-                  name: node?.data?.custom?.displayName || node?.data?.displayName || 'Unnamed Component',
+                  name:
+                    node?.data?.custom?.displayName ||
+                    node?.data?.displayName ||
+                    "Unnamed Component",
                   isSection: node?.data?.props?.isSection || false, // Read isSection from container
                 };
               }
@@ -247,13 +257,15 @@ export const Header = () => {
 
   useEffect(
     () => setLsIds(JSON.parse(localStorage.getItem("history")) || []),
-    []
+    [],
   );
 
   // Theme management
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
     const shouldBeDark = savedTheme === "dark" || (!savedTheme && prefersDark);
 
     setIsDarkMode(shouldBeDark);
@@ -295,7 +307,7 @@ export const Header = () => {
     <>
       <header
         role="banner"
-        className="pointer-events-auto bg-background text-foreground items-center flex flex-row-reverse justify-between border-b border-border"
+        className="pointer-events-auto flex flex-row-reverse items-center justify-between border-b border-border bg-background text-foreground"
         data-tutorial="header"
       >
         <Tooltip content="Add Component" placement="bottom" arrow={false}>
@@ -309,7 +321,6 @@ export const Header = () => {
             <TbPlus />
           </Item>
         </Tooltip>
-
 
         <Tooltip content="Redo" placement="bottom" arrow={false}>
           <Item
@@ -325,7 +336,6 @@ export const Header = () => {
             <TbArrowForwardUp />
           </Item>
         </Tooltip>
-
 
         <Tooltip content="Undo" placement="bottom" arrow={false}>
           <Item
@@ -344,7 +354,7 @@ export const Header = () => {
 
         {animate && (
           <Tooltip content="Play Animations" placement="bottom" arrow={false}>
-            <Item ariaLabel="Play Animations" onClick={() => { }}>
+            <Item ariaLabel="Play Animations" onClick={() => {}}>
               <TbPlayerPlay />
             </Item>
           </Tooltip>
@@ -363,7 +373,7 @@ export const Header = () => {
               setShowHidden(!showHidden);
               viewport.setAttribute(
                 "data-show-hidden",
-                showHidden ? "true" : "false"
+                showHidden ? "true" : "false",
               );
             }}
           >
@@ -379,7 +389,7 @@ export const Header = () => {
 
               setTimeout(() => {
                 const selected = document.querySelector(
-                  '[data-selected="true"]'
+                  '[data-selected="true"]',
                 );
 
                 if (selected) selected.scrollIntoView();
@@ -406,32 +416,37 @@ export const Header = () => {
           </Item>
         </Tooltip>
 
-        <Tooltip content={`Switch to ${viewMode === 'page' ? 'Component' : 'Page'} Editor`} placement="bottom" arrow={false}>
+        <Tooltip
+          content={`Switch to ${viewMode === "page" ? "Component" : "Page"} Editor`}
+          placement="bottom"
+          arrow={false}
+        >
           <Item
-            ariaLabel={`Switch to ${viewMode === 'page' ? 'Component' : 'Page'} Editor`}
+            ariaLabel={`Switch to ${viewMode === "page" ? "Component" : "Page"} Editor`}
             onClick={() => {
-              const newMode = viewMode === 'page' ? 'component' : 'page';
+              const newMode = viewMode === "page" ? "component" : "page";
               setViewMode(newMode);
               actions.selectNode(null);
               const rootNode = query.node(ROOT_NODE).get();
 
-              if (newMode === 'page') {
+              if (newMode === "page") {
                 // Switching to page view - restore normal state
                 // Deselect any active node
 
-
                 // Un-isolate to show all pages
-                const { isolatePageAlt } = require('utils/lib');
-                isolatePageAlt(true, query, null, actions, () => { }, false);
-
-
+                const { isolatePageAlt } = require("utils/lib");
+                isolatePageAlt(true, query, null, actions, () => {}, false);
 
                 // Show headers, footers, and pages
                 rootNode.data.nodes.forEach((nodeId) => {
                   const node = query.node(nodeId).get();
                   const nodeType = node?.data?.props?.type;
 
-                  if (nodeType === 'header' || nodeType === 'footer' || nodeType === 'page') {
+                  if (
+                    nodeType === "header" ||
+                    nodeType === "footer" ||
+                    nodeType === "page"
+                  ) {
                     actions.setHidden(nodeId, false);
                     actions.setProp(nodeId, (prop) => (prop.hidden = false));
                   }
@@ -442,7 +457,12 @@ export const Header = () => {
                   const node = query.node(nodeId).get();
                   const nodeType = node?.data?.props?.type;
 
-                  if (nodeType === 'header' || nodeType === 'footer' || nodeType === 'page' || nodeType === 'component') {
+                  if (
+                    nodeType === "header" ||
+                    nodeType === "footer" ||
+                    nodeType === "page" ||
+                    nodeType === "component"
+                  ) {
                     actions.setHidden(nodeId, true);
                     actions.setProp(nodeId, (prop) => (prop.hidden = true));
                   }
@@ -452,7 +472,7 @@ export const Header = () => {
               }
             }}
           >
-            {viewMode === 'page' ? <TbBoxModel2 /> : <TbFileText />}
+            {viewMode === "page" ? <TbBoxModel2 /> : <TbFileText />}
           </Item>
         </Tooltip>
 
@@ -479,7 +499,13 @@ export const Header = () => {
               onClick={async () => {
                 if (!canUndo) return;
                 const json = query.serialize();
-                await SaveToServer(json, true, settings, setSettings, sessionToken);
+                await SaveToServer(
+                  json,
+                  true,
+                  settings,
+                  setSettings,
+                  sessionToken,
+                );
               }}
               disabled={!canUndo || !settings}
             />
@@ -514,8 +540,8 @@ export const Header = () => {
       </header>
 
       {/* Page/Component Selector Bar - Below Header */}
-      <div className="pointer-events-auto bg-background border-b-2 border-border px-3 py-2">
-        {viewMode === 'page' ? (
+      <div className="pointer-events-auto border-b-2 border-border bg-background px-3 py-2">
+        {viewMode === "page" ? (
           <PageSelector className="w-full" />
         ) : (
           <ComponentSelector className="w-full" />
@@ -527,9 +553,8 @@ export const Header = () => {
           ref={ref}
           role="navigation"
           aria-label="Editor menu"
-          className="pointer-events-auto drop-shadow-2xl overflow-y-auto scrollbar bg-background    gap-3 pt-3 flex flex-col text-foreground absolute w-full bottom-0 z-50 top-12"
+          className="scrollbar pointer-events-auto absolute bottom-0 top-12 z-50 flex w-full flex-col gap-3 overflow-y-auto bg-background pt-3 text-foreground drop-shadow-2xl"
         >
-
           {showMenuType === "export" && <ExportModal />}
           {showMenuType === "import" && (
             <ImportModal
@@ -543,7 +568,7 @@ export const Header = () => {
 
           {showMenuType === "builds" && lsIds.length > 0 && (
             <>
-              <div className="p-3 flex flex-col gap-6">
+              <div className="flex flex-col gap-6 p-3">
                 <div className="text-xl">Account Builds</div>
                 <p>
                   These builds have been saved to your account and can be
@@ -552,7 +577,7 @@ export const Header = () => {
               </div>
 
               {lsIds.length ? (
-                <div className="p-3 flex flex-col gap-6">
+                <div className="flex flex-col gap-6 p-3">
                   <div className="text-xl">Local Builds</div>
                   <p>
                     These builds are saved but only referenced locally, you will
@@ -561,7 +586,7 @@ export const Header = () => {
 
                   <div className="flex flex-col gap-3">
                     {lsIds.reverse().map((_, key) => (
-                      <div className="flex flex-row gap-3 w-full" key={key}>
+                      <div className="flex w-full flex-row gap-3" key={key}>
                         <div className="text-base">
                           <TbExternalLink />
                         </div>
@@ -585,7 +610,7 @@ export const Header = () => {
                 available here.
               </p>
 
-              <hr className="border-b border-border -mx-3 mb-6" />
+              <hr className="-mx-3 mb-6 border-b border-border" />
 
               {settings?.submissions?.length ? (
                 <div className="flex flex-col gap-6">
@@ -596,7 +621,7 @@ export const Header = () => {
 
                     return (
                       <div
-                        className="border border-border  rounded p-3 gap-3 flex flex-col"
+                        className="flex flex-col gap-3 rounded border border-border p-3"
                         key={_key}
                       >
                         <p>
@@ -632,7 +657,7 @@ export const Header = () => {
                       setShowMenu(false);
                       actions.selectNode(ROOT_NODE);
                     }}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbBoxModel2 />
@@ -642,10 +667,14 @@ export const Header = () => {
 
                   <button
                     onClick={() => setSideBarLeft(!sideBarLeft)}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
-                      {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
+                      {sideBarLeft ? (
+                        <TbLayoutSidebarRight />
+                      ) : (
+                        <TbLayoutSidebar />
+                      )}
                     </div>
                     Move this panel to the {sideBarLeft ? "right" : "left"} side
                   </button>
@@ -655,7 +684,7 @@ export const Header = () => {
                 <>
                   <Link
                     href="/build"
-                    className="hidden items-center gap-3 cursor-pointer hover:bg-muted text-muted-foreground p-3"
+                    className="hidden cursor-pointer items-center gap-3 p-3 text-muted-foreground hover:bg-muted"
                   >
                     <TbFilePlus /> New Builder
                   </Link>
@@ -666,7 +695,7 @@ export const Header = () => {
                         setShowMenu(true);
                         setShowMenuType("submissions");
                       }}
-                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbForms />
@@ -675,13 +704,12 @@ export const Header = () => {
                     </button>
                   ) : null}
 
-
                   <button
                     onClick={() => {
                       setIsMediaManagerModalOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbPhoto />
@@ -689,13 +717,12 @@ export const Header = () => {
                     <div className="text-sm">Media Manager</div>
                   </button>
 
-
                   <button
                     onClick={() => {
                       setIsDesignSystemPanelOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbPalette />
@@ -703,14 +730,12 @@ export const Header = () => {
                     <div className="text-sm">Design System</div>
                   </button>
 
-
-
                   <button
                     onClick={() => {
                       setIsSiteSettingsModalOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbSettings />
@@ -722,7 +747,7 @@ export const Header = () => {
                     <a
                       href={`https://${settings.name}.pagehub.dev`}
                       target="_blank"
-                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbExternalLink />
@@ -731,14 +756,13 @@ export const Header = () => {
                     </a>
                   )}
 
-
-                  <hr className="border-b border-border " />
+                  <hr className="border-b border-border" />
 
                   {settings?.draftId && (
                     <a
                       href={`https://${settings.draftId}.pagehub.dev`}
                       target="_blank"
-                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbExternalLink />
@@ -746,7 +770,6 @@ export const Header = () => {
                       <div className="text-sm">View Draft Version</div>
                     </a>
                   )}
-
 
                   <button
                     onClick={async () => {
@@ -764,7 +787,7 @@ export const Header = () => {
 
                       // isetDialogOpen(htmlOutput);
                     }}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbCode />
@@ -776,7 +799,7 @@ export const Header = () => {
                       setShowMenuType("export");
                       setShowMenu(true);
                     }}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbDownload />
@@ -788,7 +811,7 @@ export const Header = () => {
                       setShowMenuType("import");
                       setShowMenu(true);
                     }}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       <TbUpload />
@@ -796,7 +819,7 @@ export const Header = () => {
                     <div className="text-sm">Import</div>
                   </button>
 
-                  <hr className="border-b border-border " />
+                  <hr className="border-b border-border" />
 
                   {lsIds.length ? (
                     <button
@@ -804,7 +827,7 @@ export const Header = () => {
                         setShowMenu(true);
                         setShowMenuType("builds");
                       }}
-                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbDevices2 />
@@ -813,16 +836,18 @@ export const Header = () => {
                     </button>
                   ) : null}
 
-                  <hr className="border-b border-border " />
+                  <hr className="border-b border-border" />
 
                   {status === "authenticated" ? (
                     <>
-                      <p className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1">
+                      <p className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted">
                         Signed in as {session.user.email}
                       </p>{" "}
                       <button
-                        onClick={() => popupCenter("/google-signout", "Sign Out")}
-                        className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                        onClick={() =>
+                          popupCenter("/google-signout", "Sign Out")
+                        }
+                        className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                       >
                         <div className="text-base">
                           <TbLogout />
@@ -833,7 +858,7 @@ export const Header = () => {
                   ) : (
                     <button
                       onClick={() => popupCenter("/google-signin", "Sign In")}
-                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                      className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                     >
                       <div className="text-base">
                         <TbLogin />
@@ -844,22 +869,30 @@ export const Header = () => {
 
                   <button
                     onClick={toggleTheme}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
                       {isDarkMode ? <TbSun /> : <TbMoon />}
                     </div>
-                    <div className="text-sm">Switch to {isDarkMode ? 'Light' : 'Dark'} Theme</div>
+                    <div className="text-sm">
+                      Switch to {isDarkMode ? "Light" : "Dark"} Theme
+                    </div>
                   </button>
 
                   <button
                     onClick={() => setSideBarLeft(!sideBarLeft)}
-                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                    className="flex cursor-pointer items-center gap-1 p-1 text-muted-foreground hover:bg-muted"
                   >
                     <div className="text-base">
-                      {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
+                      {sideBarLeft ? (
+                        <TbLayoutSidebarRight />
+                      ) : (
+                        <TbLayoutSidebar />
+                      )}
                     </div>
-                    <div className="text-sm">{sideBarLeft ? "Right" : "Left"} Settings Panel</div>
+                    <div className="text-sm">
+                      {sideBarLeft ? "Right" : "Left"} Settings Panel
+                    </div>
                   </button>
                 </>
               )}

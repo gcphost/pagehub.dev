@@ -88,7 +88,6 @@ export const DividerSettings = () => {
           <HeightInput />
         </ToolbarSection>
 
-
         <ToolbarSection full={1} title="Colors">
           <ColorInput
             propKey="background"
@@ -135,7 +134,7 @@ export const DividerSettings = () => {
 
       {activeTab === "Animations" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Animation settings are not available for this component.
           </p>
         </TabBody>
@@ -143,7 +142,7 @@ export const DividerSettings = () => {
 
       {activeTab === "Hover & Click" && (
         <TabBody>
-          <p className="p-3 text-xs text-center">
+          <p className="p-3 text-center text-xs">
             Hover settings are not available for this component.
           </p>
         </TabBody>

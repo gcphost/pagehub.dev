@@ -17,9 +17,9 @@ export const ToolbarTitleEditor = () => {
   const title = useRecoilValue(TabAtom);
 
   return (
-    <div className="flex items-center gap-3 justify-between">
+    <div className="flex items-center justify-between gap-3">
       {!propValues.canEditName && (
-        <div className="truncate max-w-xs" title={name}>
+        <div className="max-w-xs truncate" title={name}>
           {name}
         </div>
       )}
@@ -29,17 +29,17 @@ export const ToolbarTitleEditor = () => {
           type="text"
           defaultValue={name}
           placeholder={name}
-          className="w-full bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:bg-background p rounded capitalize truncate"
+          className="p w-full truncate rounded bg-transparent capitalize text-foreground focus:bg-background focus:outline-none focus:ring-1 focus:ring-ring"
           onChange={debounce((e) => {
             actions.setCustom(
               id,
-              (custom) => (custom.displayName = e.target.value)
+              (custom) => (custom.displayName = e.target.value),
             );
           }, 500)}
         />
       )}
 
-      <div className="text-xs whitespace-nowrap capitalize">{title}</div>
+      <div className="whitespace-nowrap text-xs capitalize">{title}</div>
     </div>
   );
 };

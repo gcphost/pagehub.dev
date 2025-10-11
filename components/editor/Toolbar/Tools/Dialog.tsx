@@ -43,7 +43,11 @@ export const Dialog = ({
     if (!rect || !isClient) return;
 
     const availableHeight = window.innerHeight - rect.bottom - 20; // Leave 20px margin
-    const maxHeight = Math.min(height, availableHeight, window.innerHeight * 0.6); // Max 60% of screen height
+    const maxHeight = Math.min(
+      height,
+      availableHeight,
+      window.innerHeight * 0.6,
+    ); // Max 60% of screen height
 
     let newStyle = {
       top: rect.bottom + 6,
@@ -114,10 +118,10 @@ export const Dialog = ({
       } else if (event.key === "ArrowDown") {
         event.preventDefault();
         const totalItems = (!searchValue ? 1 : 0) + itemList.length;
-        setSelectedIndex(prev => Math.min(prev + 1, totalItems - 1));
+        setSelectedIndex((prev) => Math.min(prev + 1, totalItems - 1));
       } else if (event.key === "ArrowUp") {
         event.preventDefault();
-        setSelectedIndex(prev => Math.max(prev - 1, -1));
+        setSelectedIndex((prev) => Math.max(prev - 1, -1));
       } else if (event.key === "Enter") {
         event.preventDefault();
         if (selectedIndex === -1 && !searchValue) {
@@ -164,23 +168,23 @@ export const Dialog = ({
           id={dialogName}
           ref={ref}
           style={{ ...style, width: dialogWidth }}
-          className={"absolute z-20 flex pointer-events-none"}
+          className={"pointer-events-none absolute z-20 flex"}
         >
           <div
             className={
-              "w-full overflow-hidden my-auto bg-background rounded-lg p-0 border border-border pointer-events-auto shadow-xl"
+              "pointer-events-auto my-auto w-full overflow-hidden rounded-lg border border-border bg-background p-0 shadow-xl"
             }
             style={{ height: style.maxHeight || height }}
           >
             {children}
 
             {customRenderer && (
-              <div className="rounded-lg w-full h-full overflow-hidden flex flex-col">
+              <div className="flex size-full flex-col overflow-hidden rounded-lg">
                 {!isUpward && (
-                  <div className="px-2 pt-2 pb-1 flex-shrink-0 border-b border-border bg-muted">
+                  <div className="shrink-0 border-b border-border bg-muted px-2 pb-1 pt-2">
                     <input
                       type="text"
-                      className="w-full px-2 py-1 text-xs border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="w-full rounded-md border border-border bg-background px-2 py-1 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Search fonts..."
                       onKeyUp={(e) => search(e)}
                       autoFocus={true}
@@ -189,14 +193,14 @@ export const Dialog = ({
                     />
                   </div>
                 )}
-                <div className="px-2 pb-2 flex-1 min-h-0 overflow-y-auto scrollbar">
+                <div className="scrollbar min-h-0 flex-1 overflow-y-auto px-2 pb-2">
                   {customRenderer}
                 </div>
                 {isUpward && (
-                  <div className="px-2 pt-1 pb-2 flex-shrink-0 border-t border-border bg-muted">
+                  <div className="shrink-0 border-t border-border bg-muted px-2 pb-2 pt-1">
                     <input
                       type="text"
-                      className="w-full px-2 py-1 text-xs border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="w-full rounded-md border border-border bg-background px-2 py-1 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Search fonts..."
                       onKeyUp={(e) => search(e)}
                       autoFocus={true}
@@ -209,12 +213,12 @@ export const Dialog = ({
             )}
 
             {!children && !customRenderer && (
-              <div className="rounded-lg w-full h-full overflow-hidden flex flex-col">
+              <div className="flex size-full flex-col overflow-hidden rounded-lg">
                 {!isUpward && (
-                  <div className="px-2 pt-2 pb-1 flex-shrink-0 border-b border-border bg-muted">
+                  <div className="shrink-0 border-b border-border bg-muted px-2 pb-1 pt-2">
                     <input
                       type="text"
-                      className="w-full px-2 py-1 text-xs border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="w-full rounded-md border border-border bg-background px-2 py-1 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Search fonts..."
                       onKeyUp={(e) => search(e)}
                       autoFocus={true}
@@ -226,11 +230,11 @@ export const Dialog = ({
 
                 <div
                   ref={refIe}
-                  className="flex-1 min-h-0 overflow-y-auto scrollbar px-2 py-1"
+                  className="scrollbar min-h-0 flex-1 overflow-y-auto px-2 py-1"
                 >
                   {!searchValue && (
                     <button
-                      className={`w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs transition-colors ${selectedIndex === -1 ? "bg-accent text-accent-foreground" : ""}`}
+                      className={`flex w-full cursor-pointer flex-row rounded p-1 text-xs text-muted-foreground transition-colors hover:bg-muted ${selectedIndex === -1 ? "bg-accent text-accent-foreground" : ""}`}
                       onClick={(e) => changed(null)}
                     >
                       Default
@@ -238,7 +242,7 @@ export const Dialog = ({
                   )}
 
                   {!itemList.length && searchValue && (
-                    <div className="w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs">
+                    <div className="flex w-full cursor-pointer flex-row rounded p-1 text-xs text-muted-foreground hover:bg-muted">
                       No results.
                     </div>
                   )}
@@ -250,8 +254,13 @@ export const Dialog = ({
                       return (
                         <button
                           id={`font-${_}`}
-                          className={`w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs transition-colors ${dialog.value === _ ? "bg-accent text-accent-foreground" : selectedIndex === k ? "bg-muted" : ""
-                            }`}
+                          className={`flex w-full cursor-pointer flex-row rounded p-1 text-xs text-muted-foreground transition-colors hover:bg-muted ${
+                            dialog.value === _
+                              ? "bg-accent text-accent-foreground"
+                              : selectedIndex === k
+                                ? "bg-muted"
+                                : ""
+                          }`}
                           style={{ fontFamily: (_ || []).join(", ") }}
                           key={k}
                           onClick={(e) => changed(_)}
@@ -264,10 +273,10 @@ export const Dialog = ({
                 </div>
 
                 {isUpward && (
-                  <div className="px-2 pt-1 pb-2 flex-shrink-0 border-t border-border bg-muted">
+                  <div className="shrink-0 border-t border-border bg-muted px-2 pb-2 pt-1">
                     <input
                       type="text"
-                      className="w-full px-2 py-1 text-xs border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="w-full rounded-md border border-border bg-background px-2 py-1 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Search fonts..."
                       onKeyUp={(e) => search(e)}
                       autoFocus={true}
@@ -282,6 +291,6 @@ export const Dialog = ({
         </div>
       )}
     </>,
-    document.body
+    document.body,
   );
 };

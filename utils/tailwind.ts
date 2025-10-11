@@ -1452,7 +1452,7 @@ const createCacheKey = (
   exclude: string[],
   only: string[],
   preview: boolean,
-  paletteHash: string
+  paletteHash: string,
 ): string => {
   // Create a minimal, stable representation
   const key = {
@@ -1564,7 +1564,7 @@ export const ClassGenerator = (
   preview = false,
   debug = false,
   palette = [],
-  query = null
+  query = null,
 ): string => {
   // Check cache first
   const paletteHash = hashPalette(palette);
@@ -1575,7 +1575,7 @@ export const ClassGenerator = (
     exclude,
     only,
     preview,
-    paletteHash
+    paletteHash,
   );
   const cached = classGeneratorCache.get(cacheKey);
 
@@ -1612,7 +1612,7 @@ export const ClassGenerator = (
         "hover:",
         false,
         paletteMap,
-        query
+        query,
       );
       results.push(...hover);
     }
@@ -1625,7 +1625,7 @@ export const ClassGenerator = (
         "focus:",
         false,
         paletteMap,
-        query
+        query,
       );
       results.push(...focus);
     }
@@ -1636,7 +1636,7 @@ export const ClassGenerator = (
 
       // Strip any prefix from the value first (e.g., "placeholder-style:..." -> "style:...")
       const prefixMatch = placeholderValue.match(
-        /^([a-z]+-)(style:|palette:)(.+)$/
+        /^([a-z]+-)(style:|palette:)(.+)$/,
       );
       if (prefixMatch) {
         // Remove the prefix, we'll add "placeholder:" later
@@ -1693,7 +1693,7 @@ export const ClassGenerator = (
       "hover:",
       false,
       paletteMap,
-      query
+      query,
     );
     results.push(...hover);
   }
@@ -1706,7 +1706,7 @@ export const ClassGenerator = (
       "focus:",
       false,
       paletteMap,
-      query
+      query,
     );
     results.push(...focus);
   }
@@ -1719,7 +1719,7 @@ export const ClassGenerator = (
       "placeholder:",
       false,
       paletteMap,
-      query
+      query,
     );
     results.push(...placeholder);
   }
@@ -1743,9 +1743,9 @@ export const ClassGenerator = (
         _ !== "sm" ? `${_}:` : "",
         debug,
         paletteMap,
-        query
-      ).filter((_) => _ && _ !== " ")
-    )
+        query,
+      ).filter((_) => _ && _ !== " "),
+    ),
   );
 
   const _p = props.desktop || {};
@@ -1863,7 +1863,7 @@ export const ClassGene = (
   prefix = "",
   debug = false,
   paletteMap: Map<string, string> = new Map(),
-  query = null
+  query = null,
 ) => {
   debug && console.log(exclude, only, props);
 
@@ -2142,7 +2142,7 @@ const svgPattern = (
   mode,
   path,
   width,
-  height = 10
+  height = 10,
 ) => {
   function multiStroke(i) {
     let defColor = colors[i + 1];
@@ -2172,7 +2172,7 @@ const svgPattern = (
         "/>",
         ` transform='translate(${spacing[0] / 2},0)' ${joinMode}stroke-width='${
           stroke
-        }'${strokeFill}/>`
+        }'${strokeFill}/>`,
       )
       .replace("transform='translate(0,0)' ", " ");
   }

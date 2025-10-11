@@ -9,14 +9,17 @@ interface SelectParentNodeToolProps {
 
 export const SelectParentNodeTool = ({
   parentType,
-  icon = <TbArrowUp className="w-4 h-4" />,
-  children
+  icon = <TbArrowUp className="size-4" />,
+  children,
 }: SelectParentNodeToolProps) => {
   const { id } = useNode();
   const { query, actions } = useEditor();
 
   // Find the parent of the specified type
-  const findParentOfType = (nodeId: string, targetType: string): string | null => {
+  const findParentOfType = (
+    nodeId: string,
+    targetType: string,
+  ): string | null => {
     try {
       const node = query.node(nodeId).get();
       if (!node?.data?.parent) return null;
@@ -53,7 +56,7 @@ export const SelectParentNodeTool = ({
     <>
       <button
         type="button"
-        className="w-6 h-6 flex items-center justify-center text-foreground"
+        className="flex size-6 items-center justify-center text-foreground"
         onClick={handleSelectParent}
       >
         {icon}

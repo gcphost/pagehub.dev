@@ -89,15 +89,15 @@ export const PatternsDialogInput = ({
               e: getRect(ref.current),
             });
           }}
-          className="input "
+          className="input"
         >
-          <div className="pointer-events-none flex gap-3 items-center h-6 justify-between">
-            <div className="w-1/2 truncate ... whitespace-nowrap">
+          <div className="pointer-events-none flex h-6 items-center justify-between gap-3">
+            <div className="... w-1/2 truncate whitespace-nowrap">
               {value?.title || null}
             </div>
             {patt && (
               <div
-                className="w-1/2 h-full border border-border bg-background rounded-lg"
+                className="h-full w-1/2 rounded-lg border border-border bg-background"
                 style={{ backgroundImage: patt ? `url(${patt})` : null }}
               ></div>
             )}

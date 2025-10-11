@@ -83,7 +83,7 @@ export const IconDialogInput = ({
           }}
           className="input"
         >
-          <div className="pointer-events-none flex gap-3 items-center w-4 h-4 fill-white mx-auto">
+          <div className="pointer-events-none mx-auto flex size-4 items-center gap-3 fill-white">
             <ClientIconLoader value={value} />
           </div>
         </button>
@@ -95,7 +95,7 @@ export const IconDialogInput = ({
               e.stopPropagation();
               changed("");
             }}
-            className="absolute -top-1 -right-1 w-4 h-4 bg-destructive hover:bg-destructive text-foreground rounded-full flex items-center justify-center text-xs font-bold"
+            className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-xs font-bold text-foreground hover:bg-destructive"
             title="Clear icon"
           >
             ×

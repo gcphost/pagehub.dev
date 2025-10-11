@@ -22,7 +22,7 @@ const DEFAULT_VALUES: Record<string, string> = {
  */
 export const replaceVariables = (
   text: string | undefined,
-  query: any
+  query: any,
 ): string => {
   if (!text || typeof text !== "string") return text || "";
 

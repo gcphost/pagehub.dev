@@ -11,11 +11,12 @@ export const RenderNodeTools = () => {
 
   // Fallback: get tools from the component's craft config directly
   if (!tools.length && node?.data?.type) {
-    const craftConfig = query.getOptions().resolver[node.data.name || node.data.displayName];
+    const craftConfig =
+      query.getOptions().resolver[node.data.name || node.data.displayName];
 
     if (!craftConfig && node.data.type?.craft) {
       const craftTools = node.data.type.craft.props?.tools;
-      if (typeof craftTools === 'function') {
+      if (typeof craftTools === "function") {
         tools = craftTools(node.data.props);
       }
     }
@@ -24,7 +25,7 @@ export const RenderNodeTools = () => {
   if (!tools.length) return null;
 
   return (
-    <div className="relative w-full h-full pointer-events-none">
+    <div className="pointer-events-none relative size-full">
       <AnimatePresence>
         {tools.map((tool, index) => ({ ...tool, key: index }))}
       </AnimatePresence>

@@ -11,14 +11,10 @@ export const ImageGroupTools = () => {
   const { actions, query } = useEditor();
   const { id } = useNode();
 
-
-
   return (
-    <><MediaInput
-      propKey="videoId"
-      typeKey="type"
-      title="Image"
-    /></>
+    <>
+      <MediaInput propKey="videoId" typeKey="type" title="Image" />
+    </>
   );
 };
 

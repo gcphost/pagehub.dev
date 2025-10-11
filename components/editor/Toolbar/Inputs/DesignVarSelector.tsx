@@ -49,7 +49,8 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
     const vars: DesignVar[] = [];
 
     // Use runtime palette if available, otherwise use defaults
-    const palette = runtimePalette.length > 0 ? runtimePalette : DEFAULT_PALETTE;
+    const palette =
+      runtimePalette.length > 0 ? runtimePalette : DEFAULT_PALETTE;
 
     // Palette colors
     palette.forEach((item: any) => {
@@ -75,7 +76,10 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
 
     // Style guide vars with categories and labels
     const styleVarMap: Record<string, { category: string; label: string }> = {
-      headingFontFamily: { category: "typography", label: "Heading Font Family" },
+      headingFontFamily: {
+        category: "typography",
+        label: "Heading Font Family",
+      },
       bodyFontFamily: { category: "typography", label: "Body Font Family" },
       headingFont: { category: "typography", label: "Heading Font Weight" },
       bodyFont: { category: "typography", label: "Body Font Weight" },
@@ -94,11 +98,17 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
       inputTextColor: { category: "colors", label: "Input Text" },
       inputPlaceholderColor: { category: "colors", label: "Input Placeholder" },
       inputFocusRing: { category: "other", label: "Input Focus Ring" },
-      inputFocusRingColor: { category: "colors", label: "Input Focus Ring Color" },
+      inputFocusRingColor: {
+        category: "colors",
+        label: "Input Focus Ring Color",
+      },
       linkColor: { category: "colors", label: "Link Color" },
       linkHoverColor: { category: "colors", label: "Link Hover Color" },
       linkUnderline: { category: "other", label: "Link Underline" },
-      linkUnderlineOffset: { category: "other", label: "Link Underline Offset" },
+      linkUnderlineOffset: {
+        category: "other",
+        label: "Link Underline Offset",
+      },
     };
 
     Object.entries(styleGuide).forEach(([key, value]) => {
@@ -127,26 +137,30 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
   let designVars: DesignVar[] = [];
   if (Array.isArray(designVarsResult)) {
     designVars = designVarsResult;
-  } else if (designVarsResult && typeof designVarsResult === 'object') {
+  } else if (designVarsResult && typeof designVarsResult === "object") {
     // Convert object with numeric keys to array
     designVars = Object.keys(designVarsResult)
-      .filter(key => !isNaN(Number(key))) // Only numeric keys
-      .map(key => designVarsResult[key])
-      .filter(item => item && typeof item === 'object' && 'varName' in item); // Valid DesignVar objects
+      .filter((key) => !isNaN(Number(key))) // Only numeric keys
+      .map((key) => designVarsResult[key])
+      .filter((item) => item && typeof item === "object" && "varName" in item); // Valid DesignVar objects
   }
 
   // Filter vars by search term
-  const filteredVars = designVars.filter((v) =>
-    v.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    v.varName.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredVars = designVars.filter(
+    (v) =>
+      v.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      v.varName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   // Group by category
-  const groupedVars = filteredVars.reduce((acc, v) => {
-    if (!acc[v.category]) acc[v.category] = [];
-    acc[v.category].push(v);
-    return acc;
-  }, {} as Record<string, DesignVar[]>);
+  const groupedVars = filteredVars.reduce(
+    (acc, v) => {
+      if (!acc[v.category]) acc[v.category] = [];
+      acc[v.category].push(v);
+      return acc;
+    },
+    {} as Record<string, DesignVar[]>,
+  );
 
   // Handle selecting a variable
   const handleSelect = (designVar: DesignVar) => {
@@ -161,7 +175,7 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
       ? `${prefix}-[var(${designVar.varName})]`
       : `[var(${designVar.varName})]`;
 
-    console.log('Setting design var:', {
+    console.log("Setting design var:", {
       propKey,
       value,
       designVar: designVar.varName,
@@ -185,7 +199,10 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
   // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -211,10 +228,10 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-5 h-5 rounded hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+        className="flex size-5 items-center justify-center rounded text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         title="Bind to design system variable"
       >
-        <TbVariable className="w-3.5 h-3.5" />
+        <TbVariable className="size-3.5" />
       </button>
 
       <AnimatePresence>
@@ -224,56 +241,62 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 mt-2 w-64 bg-background border border-border rounded-lg shadow-2xl z-[9999] max-h-96 flex flex-col"
+            className="absolute right-0 z-[9999] mt-2 flex max-h-96 w-64 flex-col rounded-lg border border-border bg-background shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search input */}
-            <div className="p-3 border-b border-border">
+            <div className="border-b border-border p-3">
               <div className="relative">
-                <TbSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <TbSearch className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search design variables..."
-                  className="w-full pl-9 pr-3 py-2 bg-card border border-border rounded text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded border border-border bg-card py-2 pl-9 pr-3 text-sm text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ring"
                   autoFocus
                 />
               </div>
             </div>
 
             {/* Variable list */}
-            <div className="overflow-y-auto flex-1 p-2">
+            <div className="flex-1 overflow-y-auto p-2">
               {Object.keys(groupedVars).length === 0 ? (
-                <div className="p-4 text-center text-muted-foreground text-sm">
+                <div className="p-4 text-center text-sm text-muted-foreground">
                   No variables found
                 </div>
               ) : (
                 Object.entries(groupedVars).map(([category, vars]) => (
                   <div key={category} className="mb-3 last:mb-0">
-                    <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                      {categoryLabels[category as keyof typeof categoryLabels] || category}
+                    <div className="px-2 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      {categoryLabels[
+                        category as keyof typeof categoryLabels
+                      ] || category}
                     </div>
                     <div className="space-y-1">
                       {(vars as DesignVar[]).map((v) => (
                         <button
                           key={v.varName}
                           onClick={() => handleSelect(v)}
-                          className="w-full px-3 py-2 text-left text-sm rounded hover:bg-muted transition-colors group"
+                          className="group w-full rounded px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
                         >
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-foreground font-medium truncate">{v.label}</span>
-                            <span className="text-xs text-muted-foreground font-mono flex-shrink-0">
+                            <span className="truncate font-medium text-foreground">
+                              {v.label}
+                            </span>
+                            <span className="shrink-0 font-mono text-xs text-muted-foreground">
                               {v.varName}
                             </span>
                           </div>
                           {v.category === "palette" && (
-                            <div className="flex items-center gap-2 mt-1">
+                            <div className="mt-1 flex items-center gap-2">
                               <div
-                                className="w-4 h-4 rounded border border-border"
+                                className="size-4 rounded border border-border"
                                 style={{ backgroundColor: v.value }}
                               />
-                              <span className="text-xs text-muted-foreground">{v.value}</span>
+                              <span className="text-xs text-muted-foreground">
+                                {v.value}
+                              </span>
                             </div>
                           )}
                         </button>
@@ -289,4 +312,3 @@ export const DesignVarSelector: React.FC<DesignVarSelectorProps> = ({
     </div>
   );
 };
-

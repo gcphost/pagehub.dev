@@ -17,8 +17,8 @@ export function TextSettingsDropdown() {
     <div className="flex flex-col gap-3">
       {/* Color Picker */}
       <div className="flex items-center gap-2">
-        <label className="text-xs font-medium w-16">Color</label>
-        <div className="flex-1 h-8 rounded-md overflow-hidden border border-border">
+        <label className="w-16 text-xs font-medium">Color</label>
+        <div className="h-8 flex-1 overflow-hidden rounded-md border border-border">
           <ColorInput
             propKey="color"
             label=""
@@ -31,7 +31,7 @@ export function TextSettingsDropdown() {
 
       {/* Preset Selector */}
       <div className="flex items-center gap-2">
-        <label className="text-xs font-medium w-16">Preset</label>
+        <label className="w-16 text-xs font-medium">Preset</label>
         <div className="flex-1">
           <PresetInput
             presets={textPresets}
@@ -43,10 +43,9 @@ export function TextSettingsDropdown() {
         </div>
       </div>
 
-
       {/* Text Alignment */}
-      <div className="flex items-center gap-2 pt-2 border-t border-border">
-        <label className="text-xs font-medium w-16">Align</label>
+      <div className="flex items-center gap-2 border-t border-border pt-2">
+        <label className="w-16 text-xs font-medium">Align</label>
         <div className="flex-1">
           <ToolbarItem
             propKey="textAlign"

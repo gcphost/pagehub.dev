@@ -28,13 +28,15 @@ export const FormDrop = ({
   formType = "subscribe",
   ...props
 }) => {
-  const { id, connectors: { connect, drag } } = useNode();
+  const {
+    id,
+    connectors: { connect, drag },
+  } = useNode();
 
   const { enabled, query } = useEditor((state) => ({
     enabled: state.options.enabled,
     ...getClonedState(props, state),
   }));
-
 
   useScrollToSelected(id, enabled);
 
@@ -101,7 +103,10 @@ export const FormDrop = ({
         }, 1000);
       }}
     >
-      {!loading && !loaded && (!enabled || !props.view || props.view === "") && children}
+      {!loading &&
+        !loaded &&
+        (!enabled || !props.view || props.view === "") &&
+        children}
       {(loading || (enabled && props.view === "loading")) && (
         <Element
           canvas
@@ -186,7 +191,7 @@ FormDrop.craft = {
     canMoveIn: (nodes) =>
       nodes.every(
         (node) =>
-          node.data?.type !== "Form" && node.data?.props?.type !== "form"
+          node.data?.type !== "Form" && node.data?.props?.type !== "form",
       ),
   },
   displayName: "Form",
@@ -201,23 +206,24 @@ export const Form = (props: any) => {
   // Base styles for form inputs - using style guide
   const inputBaseStyles = {
     root: {
-      border: 'border',
-      borderWidth: 'border-[var(--ph-input-border-width)]',
-      borderStyle: 'border-solid',
-      borderColor: 'border-[color:var(--ph-input-border-color)]',
-      radius: 'rounded-[var(--ph-input-border-radius)]',
-      background: 'bg-[var(--ph-input-bg-color)]',
-      color: 'text-[color:var(--ph-input-text-color)]',
-      placeholderColor: 'placeholder:text-[color:var(--ph-input-placeholder-color)]',
+      border: "border",
+      borderWidth: "border-[var(--ph-input-border-width)]",
+      borderStyle: "border-solid",
+      borderColor: "border-[color:var(--ph-input-border-color)]",
+      radius: "rounded-[var(--ph-input-border-radius)]",
+      background: "bg-[var(--ph-input-bg-color)]",
+      color: "text-[color:var(--ph-input-text-color)]",
+      placeholderColor:
+        "placeholder:text-[color:var(--ph-input-placeholder-color)]",
       focus: {
-        ring: 'ring ring-[var(--ph-input-focus-ring)]',
-        ringColor: 'ring-[color:var(--ph-input-focus-ring-color)]',
-        outline: 'outline-none',
+        ring: "ring ring-[var(--ph-input-focus-ring)]",
+        ringColor: "ring-[color:var(--ph-input-focus-ring-color)]",
+        outline: "outline-none",
       },
     },
     mobile: {
-      p: 'p-[var(--ph-input-padding)]',
-      width: 'w-full',
+      p: "p-[var(--ph-input-padding)]",
+      width: "w-full",
     },
   };
 
@@ -253,8 +259,6 @@ export const Form = (props: any) => {
         }}
         custom={{ displayName: "Fields" }}
       >
-
-
         {formType === "contact" && (
           <Element
             canvas
@@ -338,7 +342,7 @@ Form.craft = {
     canMoveIn: (nodes) =>
       nodes.every(
         (node) =>
-          node.data?.type !== "Form" && node.data?.props?.type !== "form"
+          node.data?.type !== "Form" && node.data?.props?.type !== "form",
       ),
   },
   displayName: "Form",
@@ -348,7 +352,6 @@ Form.craft = {
   props: {
     tools: () => {
       const baseControls = [
-
         <HoverNodeController
           key="formHoverController"
           position="top"

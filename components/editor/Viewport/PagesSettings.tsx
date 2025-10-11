@@ -27,7 +27,7 @@ export const PagesSettings = () => {
             ? { ..._props.data, id: _ }
             : null;
         })
-        .filter((_) => _)
+        .filter((_) => _),
     );
   }, []);
 
@@ -38,10 +38,12 @@ export const PagesSettings = () => {
         pages here. When browsing your live site only the selected page will be
         visible at the route defined.
       </p>
-      <div className="flex flex-col  mx-3 overflow-hidden rounded-lg border border-border">
+      <div className="mx-3 flex flex-col overflow-hidden rounded-lg border border-border">
         <button
-          className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
-            !isolate ? "bg-muted hover:text-foreground" : "hover:text-muted-foreground"
+          className={`flex cursor-pointer flex-row items-center gap-3 p-3 ${
+            !isolate
+              ? "bg-muted hover:text-foreground"
+              : "hover:text-muted-foreground"
           }`}
           onClick={() => {
             isolatePageAlt(true, query, null, actions, setIsolate, false);
@@ -56,7 +58,7 @@ export const PagesSettings = () => {
         {pages.map((page) => (
           <button
             key={page.id}
-            className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
+            className={`flex cursor-pointer flex-row items-center gap-3 p-3 ${
               isolate === page.id
                 ? "bg-muted hover:text-foreground"
                 : "hover:text-muted-foreground"
@@ -68,7 +70,7 @@ export const PagesSettings = () => {
                 page.id,
                 actions,
                 setIsolate,
-                false
+                false,
               )
             }
           >
@@ -76,7 +78,7 @@ export const PagesSettings = () => {
               <TbHash />
             </div>
             <div className="w-full">{page?.custom?.displayName}</div>
-            <div className="text-right w-full">
+            <div className="w-full text-right">
               /{sluggit(page?.custom?.displayName, "-")}
             </div>
           </button>

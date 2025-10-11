@@ -3,7 +3,7 @@ import { Container } from "../Container";
 import { HeaderSettings } from "./HeaderSettings";
 
 export const Header: UserComponent<any> = (props: any) => {
-  return (<Container {...props} />);
+  return <Container {...props} />;
 };
 
 Header.craft = {

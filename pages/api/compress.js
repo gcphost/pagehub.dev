@@ -3,7 +3,7 @@ import lz from "lzutf8";
 /**
  * API route to compress site data for export
  * POST /api/compress
- * 
+ *
  * Accepts JSON object or text and returns compressed/base64-encoded string
  */
 export default async function handler(req, res) {
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
     if (!data) {
       return res.status(400).json({
-        error: "Missing 'data' field in request body"
+        error: "Missing 'data' field in request body",
       });
     }
 
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       } catch (stringifyError) {
         return res.status(400).json({
           error: "Failed to stringify data object",
-          details: stringifyError.message
+          details: stringifyError.message,
         });
       }
     } else {
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
     } catch (compressError) {
       return res.status(500).json({
         error: "Failed to compress data",
-        details: compressError.message
+        details: compressError.message,
       });
     }
 
@@ -60,16 +60,14 @@ export default async function handler(req, res) {
         originalSize,
         compressedSize,
         compressionRatio: `${ratio}%`,
-        saved: originalSize - compressedSize
-      }
+        saved: originalSize - compressedSize,
+      },
     });
-
   } catch (error) {
     console.error("Compression error:", error);
     return res.status(500).json({
       error: "Internal server error",
-      details: error.message
+      details: error.message,
     });
   }
 }
-

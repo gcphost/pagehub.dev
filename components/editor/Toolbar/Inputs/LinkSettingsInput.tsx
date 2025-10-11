@@ -40,9 +40,7 @@ const LinkSettingsInput = ({
   const [selectedPageId, setSelectedPageId] = useState<string>("");
 
   // Get current URL value to detect if it's a page reference
-  const {
-    nodeProps,
-  } = useNode((node) => ({
+  const { nodeProps } = useNode((node) => ({
     nodeProps: node.data.props,
   }));
 
@@ -55,19 +53,25 @@ const LinkSettingsInput = ({
     // Treat "#" as empty/null
     const urlToCheck = currentUrl === "#" ? "" : currentUrl;
 
-    if (urlToCheck.startsWith('ref:')) {
-      const pageId = urlToCheck.replace('ref:', '');
-      setSelectedPageId(prevId => prevId !== pageId ? pageId : prevId);
-      setLinkType(prevType => prevType !== "page" ? "page" : prevType);
+    if (urlToCheck.startsWith("ref:")) {
+      const pageId = urlToCheck.replace("ref:", "");
+      setSelectedPageId((prevId) => (prevId !== pageId ? pageId : prevId));
+      setLinkType((prevType) => (prevType !== "page" ? "page" : prevType));
     } else if (urlToCheck) {
-      setLinkType(prevType => prevType !== "external" ? "external" : prevType);
+      setLinkType((prevType) =>
+        prevType !== "external" ? "external" : prevType,
+      );
     } else {
       // Default to page mode for empty URLs
       setLinkType("page");
     }
   }, [currentUrl]);
 
-  const handlePagePick = (page: { id: string; displayName: string; isHomePage: boolean }) => {
+  const handlePagePick = (page: {
+    id: string;
+    displayName: string;
+    isHomePage: boolean;
+  }) => {
     // Use internal page reference format: ref:<pageId>
     const pageRef = `ref:${page.id}`;
 
@@ -113,13 +117,15 @@ const LinkSettingsInput = ({
 
   const toggleButton = (
     <Tooltip
-      content={linkType === "page" ? "Switch to External URL" : "Switch to Page"}
+      content={
+        linkType === "page" ? "Switch to External URL" : "Switch to Page"
+      }
       placement="top"
     >
       <button
         type="button"
         onClick={() => setLinkType(linkType === "page" ? "external" : "page")}
-        className="flex items-center justify-center text-xs p-2 hover:bg-muted rounded-md transition-colors"
+        className="flex items-center justify-center rounded-md p-2 text-xs transition-colors hover:bg-muted"
       >
         {linkType === "page" ? <TbExternalLink /> : <TbHash />}
       </button>
@@ -156,7 +162,7 @@ const LinkSettingsInput = ({
             inputWidth={inputWidth}
             labelWidth={labelWidth}
           >
-            <div className="input-wrapper w-full flex items-center gap-2">
+            <div className="input-wrapper flex w-full items-center gap-2">
               <PageSelector
                 pickerMode={true}
                 onPagePick={handlePagePick}
@@ -171,7 +177,7 @@ const LinkSettingsInput = ({
                   <button
                     type="button"
                     onClick={handleClearLink}
-                    className="flex items-center justify-center text-xs p-2 hover:bg-destructive rounded-md transition-colors text-destructive hover:text-foreground"
+                    className="flex items-center justify-center rounded-md p-2 text-xs text-destructive transition-colors hover:bg-destructive hover:text-foreground"
                   >
                     ×
                   </button>

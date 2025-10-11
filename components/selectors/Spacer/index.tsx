@@ -26,11 +26,11 @@ interface SpacerProps extends BaseSelectorProps {
 const defaultProps: SpacerProps = {
   className: [],
   root: {
-    background: 'bg-transparent',
+    background: "bg-transparent",
   },
   mobile: {
-    py: 'py-8', // Default height
-    width: 'w-full', // Default width
+    py: "py-8", // Default height
+    width: "w-full", // Default width
   },
   tablet: {},
   desktop: {},
@@ -47,13 +47,9 @@ export const Spacer = (props: SpacerProps) => {
     id,
   } = useNode();
 
-  const { query, enabled } = useEditor((state) =>
-    getClonedState(props, state)
-  );
-
+  const { query, enabled } = useEditor((state) => getClonedState(props, state));
 
   useScrollToSelected(id, enabled);
-
 
   const view = useRecoilValue(ViewAtom);
   const preview = useRecoilValue(PreviewAtom);
@@ -76,9 +72,9 @@ export const Spacer = (props: SpacerProps) => {
       },
       className: ClassGenerator(props, view, enabled, [], [], preview),
       style: {
-        minHeight: '20px', // Minimum height so it's always visible
-        border: '1px dashed #ccc', // Dashed border to show it's a spacer
-        borderRadius: '4px',
+        minHeight: "20px", // Minimum height so it's always visible
+        border: "1px dashed #ccc", // Dashed border to show it's a spacer
+        borderRadius: "4px",
       },
       "data-bounding-box": enabled,
       "data-empty-state": false,
@@ -87,16 +83,23 @@ export const Spacer = (props: SpacerProps) => {
 
     const spacerDiv = React.createElement(
       motionIt(props, "div"),
-      applyAnimation({
-        key: `spacer-${id}`,
-        style: { minHeight: '20px' }
-      }, props)
+      applyAnimation(
+        {
+          key: `spacer-${id}`,
+          style: { minHeight: "20px" },
+        },
+        props,
+      ),
     );
 
     return (
       <div {...containerProp}>
         {spacerDiv}
-        <InlineToolsRenderer key={`tools-${id}`} craftComponent={Spacer} props={props} />
+        <InlineToolsRenderer
+          key={`tools-${id}`}
+          craftComponent={Spacer}
+          props={props}
+        />
       </div>
     );
   }
@@ -109,7 +112,7 @@ export const Spacer = (props: SpacerProps) => {
     },
     className: ClassGenerator(props, view, enabled, [], [], preview),
     style: {
-      minHeight: '20px',
+      minHeight: "20px",
     },
   };
 
@@ -121,7 +124,7 @@ export const Spacer = (props: SpacerProps) => {
 
   return React.createElement(
     motionIt(props, "div"),
-    applyAnimation({ ...spacerProp, key: id }, props)
+    applyAnimation({ ...spacerProp, key: id }, props),
   );
 };
 
@@ -137,7 +140,12 @@ Spacer.craft = {
   props: {
     tools: (props) => {
       const baseControls = [
-        <NameNodeController key="name" position="top" align="end" placement="start" />,
+        <NameNodeController
+          key="name"
+          position="top"
+          align="end"
+          placement="start"
+        />,
         <HoverNodeController
           key="hover"
           position="top"

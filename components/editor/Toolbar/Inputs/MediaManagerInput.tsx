@@ -20,7 +20,7 @@ export const MediaManagerInput = () => {
       <ToolbarSection title="Media Manager" full={2}>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="w-full px-4 py-3 bg-muted text-muted-foreground hover:bg-muted border-2 border-border hover:border-primary rounded-lg transition-all flex items-center justify-between group"
+          className="group flex w-full items-center justify-between rounded-lg border-2 border-border bg-muted px-4 py-3 text-muted-foreground transition-all hover:border-primary hover:bg-muted"
         >
           <div className="flex items-center gap-3">
             <TbPhoto className="text-2xl text-muted-foreground group-hover:text-primary" />
@@ -31,7 +31,9 @@ export const MediaManagerInput = () => {
               </div>
             </div>
           </div>
-          <div className="text-muted-foreground group-hover:text-primary">→</div>
+          <div className="text-muted-foreground group-hover:text-primary">
+            →
+          </div>
         </button>
       </ToolbarSection>
 
@@ -42,4 +44,3 @@ export const MediaManagerInput = () => {
     </>
   );
 };
-

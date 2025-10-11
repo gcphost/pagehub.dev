@@ -58,7 +58,7 @@ export const Toolbar = () => {
 
   const style: any = {
     left: 0,
-    zIndex: 999
+    zIndex: 999,
   };
 
   if (!sideBarLeft) {
@@ -77,14 +77,14 @@ export const Toolbar = () => {
       key="sideMenu"
       id="toolbar"
       className={
-        "absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen text-foreground border-x border-border bg-background shadow-lg"
+        "absolute flex h-screen w-full shrink-0 grow-0 flex-col overflow-hidden border-x border-border bg-background text-foreground shadow-lg"
       }
       style={style}
       ref={ref}
     >
       <Header />
       <div
-        className="overflow-hidden w-full antialiased bg-background text-foreground  select-none z-0"
+        className="z-0 w-full select-none overflow-hidden bg-background text-foreground antialiased"
         aria-expanded={sideBarOpen && !preview ? "true" : "false"}
       >
         {tool}

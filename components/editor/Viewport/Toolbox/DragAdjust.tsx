@@ -51,7 +51,8 @@ const snapToTailwindSpacing = (pixels: number): number => {
   const maxTailwind = TAILWIND_SPACING[TAILWIND_SPACING.length - 1].value; // 384px
 
   // If beyond Tailwind's max range, don't snap - use arbitrary value
-  if (absoluteValue > maxTailwind + 20) { // Allow 20px buffer beyond max
+  if (absoluteValue > maxTailwind + 20) {
+    // Allow 20px buffer beyond max
     return pixels; // Return as-is for arbitrary value
   }
 
@@ -79,13 +80,15 @@ function DragAdjust({
   tooltip = "",
   snapToTailwind = true,
   isPadding = false,
-  onChange = (value) => { },
-  onDragStart = () => { },
-  onDragEnd = () => { },
+  onChange = (value) => {},
+  onDragStart = () => {},
+  onDragEnd = () => {},
 }) {
   // Determine if we need to reverse drag direction for padding
   // Right/Bottom padding should reverse (drag inward = increase)
-  const shouldReverse = isPadding && (styleToUse === "paddingRight" || styleToUse === "paddingBottom");
+  const shouldReverse =
+    isPadding &&
+    (styleToUse === "paddingRight" || styleToUse === "paddingBottom");
   const [dragging, setDragging] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [startX, setStartX] = useState(null);
@@ -96,10 +99,14 @@ function DragAdjust({
 
   // Determine spacing type and position for overlay
   const spacingType = isPadding ? "padding" : "margin";
-  const spacingPosition = styleToUse.includes("Top") ? "top"
-    : styleToUse.includes("Bottom") ? "bottom"
-      : styleToUse.includes("Left") ? "left"
-        : styleToUse.includes("Right") ? "right"
+  const spacingPosition = styleToUse.includes("Top")
+    ? "top"
+    : styleToUse.includes("Bottom")
+      ? "bottom"
+      : styleToUse.includes("Left")
+        ? "left"
+        : styleToUse.includes("Right")
+          ? "right"
           : "top";
 
   useEffect(() => {
@@ -202,14 +209,19 @@ function DragAdjust({
             mass: 0.5,
           },
         }}
-        className={`drag-control group ${className} ${isPadding
-          ? direction === "vertical" ? "w-5 h-[4px]" : "w-[4px] h-5"
-          : direction === "vertical" ? "w-5 h-1" : "w-1 h-5"
-          } pointer-events-auto`}
+        className={`drag-control group ${className} ${
+          isPadding
+            ? direction === "vertical"
+              ? "h-[4px] w-5"
+              : "h-5 w-[4px]"
+            : direction === "vertical"
+              ? "h-1 w-5"
+              : "h-5 w-1"
+        } pointer-events-auto`}
         style={{
-          willChange: 'transform',
-          backfaceVisibility: 'hidden',
-          WebkitFontSmoothing: 'antialiased',
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+          WebkitFontSmoothing: "antialiased",
         }}
         onMouseDown={handleMouseDown}
         onMouseEnter={() => setHovering(true)}

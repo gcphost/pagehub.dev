@@ -71,7 +71,7 @@ export const IpsumGenerator = ({ propKey, propType }) => {
         </button>
 
         <button
-          className="h-fill  btn px-3 py-1.5"
+          className="h-fill btn px-3 py-1.5"
           onClick={() => save(lorem.generateParagraphs(1))}
         >
           Paragraph

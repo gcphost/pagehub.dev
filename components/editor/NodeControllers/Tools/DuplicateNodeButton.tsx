@@ -1,5 +1,9 @@
 import { useEditor, useNode } from "@craftjs/core";
-import { addHandler, buildClonedTree, saveHandler } from "components/editor/Viewport/lib";
+import {
+  addHandler,
+  buildClonedTree,
+  saveHandler,
+} from "components/editor/Viewport/lib";
 import { useCallback } from "react";
 import { TbCopy } from "react-icons/tb";
 
@@ -21,12 +25,12 @@ export const DuplicateNodeButton = ({
 
   const getCloneTree = useCallback(
     (tree) => buildClonedTree({ tree, query, setProp, createLinks: false }),
-    [query, setProp]
+    [query, setProp],
   );
 
   const handleSaveTemplate = useCallback(
     () => saveHandler({ query, id, component: null, actions }),
-    [id, query, actions]
+    [id, query, actions],
   );
 
   const handleAdd = useCallback(() => {
@@ -52,12 +56,8 @@ export const DuplicateNodeButton = ({
   };
 
   return (
-    <button
-      className={className}
-      onClick={handleDuplicate}
-    >
+    <button className={className} onClick={handleDuplicate}>
       <TbCopy />
     </button>
   );
 };
-

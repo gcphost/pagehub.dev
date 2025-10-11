@@ -6,7 +6,13 @@ import { motion } from "framer-motion";
 import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
 import { BsEyedropper } from "react-icons/bs";
-import { TbCaretRight, TbColorPicker, TbDeviceFloppy, TbPalette, TbX } from "react-icons/tb";
+import {
+  TbCaretRight,
+  TbColorPicker,
+  TbDeviceFloppy,
+  TbPalette,
+  TbX,
+} from "react-icons/tb";
 import { atom, useRecoilState } from "recoil";
 import useEyeDropper from "use-eye-dropper";
 import { getColorPallet } from "utils/tailwind";
@@ -87,23 +93,24 @@ const Item = ({
     e.stopPropagation();
     changed({ type, value });
   },
-  onMouseOut = (e, value) => { },
-  onMouseOver = (e, value) => { },
+  onMouseOut = (e, value) => {},
+  onMouseOver = (e, value) => {},
 }) => (
   <motion.button
     whileHover={
       animate
         ? {
-          scale: 2,
-          transition: { duration: 0.2 },
-          zIndex: 999,
-        }
+            scale: 2,
+            transition: { duration: 0.2 },
+            zIndex: 999,
+          }
         : {}
     }
     initial={{ zIndex: 1 }}
     title={title}
-    className={`relative w-5 h-5 rounded cursor-pointer border-2 ${selected ? "border-accent" : "border-border"
-      }`}
+    className={`relative size-5 cursor-pointer rounded border-2 ${
+      selected ? "border-accent" : "border-border"
+    }`}
     style={{ backgroundColor: value, ...style }}
     onClick={(e) => onClick(e, value)}
     onMouseOver={(e) => onMouseOver(e, value)}
@@ -119,7 +126,7 @@ const Item = ({
 const hexToRGBA = (hex, alpha) =>
   `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(
     hex.slice(3, 5),
-    16
+    16,
   )},${parseInt(hex.slice(5, 7), 16)},${alpha})`;
 
 export const ColorPickerDialog = () => {
@@ -127,7 +134,9 @@ export const ColorPickerDialog = () => {
 
   const [colorPicker, setColorPicker] = useRecoilState(ColorPickerAtom);
   const [colorPallet, setColorPallet] = useRecoilState(ColorPalletAtom);
-  const [namedPalette, setNamedPalette] = useState<Array<{ name: string; color: string }>>([]);
+  const [namedPalette, setNamedPalette] = useState<
+    Array<{ name: string; color: string }>
+  >([]);
   const [showFullPicker, setShowFullPicker] = useState(false);
 
   // Just use preset colors, not palette colors
@@ -140,7 +149,8 @@ export const ColorPickerDialog = () => {
 
   // Auto-show full picker if no palette colors exist OR if showPallet is false
   const hasPaletteColors = namedPalette.length > 0;
-  const shouldShowPalette = colorPicker.showPallet !== false && hasPaletteColors;
+  const shouldShowPalette =
+    colorPicker.showPallet !== false && hasPaletteColors;
 
   useEffect(() => {
     const node = query.node(ROOT_NODE).get();
@@ -149,7 +159,9 @@ export const ColorPickerDialog = () => {
 
     // Store the full named palette
     if (Array.isArray(nodePrsets) && nodePrsets.length > 0) {
-      const palette = nodePrsets.filter((p) => p && typeof p === "object" && p.name && p.color);
+      const palette = nodePrsets.filter(
+        (p) => p && typeof p === "object" && p.name && p.color,
+      );
       setNamedPalette(palette);
 
       // Also extract just colors for backward compatibility
@@ -212,7 +224,7 @@ export const ColorPickerDialog = () => {
 
   const changed = (value) => {
     if (colorPicker.changed) {
-      setColorPicker({ ...colorPicker, value: value.value, enabled: false });
+      setColorPicker({ ...colorPicker, value: value.value });
       colorPicker.changed(value);
     }
   };
@@ -225,19 +237,18 @@ export const ColorPickerDialog = () => {
       width="auto"
       zIndex={99999}
     >
-      <div className="bg-background rounded-lg flex flex-row">
-
+      <div className="flex flex-row rounded-lg bg-background">
         <div
-          className="flex flex-col gap-0 w-full max-w-[320px]"
+          className="flex w-full max-w-[320px] flex-col gap-0"
           onMouseOver={() => setShow(false)}
           onFocus={() => setShow(false)}
           tabIndex={0}
         >
           {
-            <div className="w-full flex flex-row px-3 py-2 gap-3 items-center justify-between bg-accent text-accent-foreground border-b border-border">
-              <div className="flex flex-row gap-2 items-center">
+            <div className="flex w-full flex-row items-center justify-between gap-3 border-b border-border bg-accent px-3 py-2 text-accent-foreground">
+              <div className="flex flex-row items-center gap-2">
                 <button
-                  className="cursor-pointer hover:bg-muted hover:text-foreground flex items-center justify-center p-1 rounded-md transition-colors"
+                  className="flex cursor-pointer items-center justify-center rounded-md p-1 transition-colors hover:bg-muted hover:text-foreground"
                   onClick={() => {
                     setColorPicker({
                       ...colorPicker,
@@ -250,20 +261,22 @@ export const ColorPickerDialog = () => {
                 </button>
               </div>
 
-              <div className="flex flex-row gap-1.5 items-center">
+              <div className="flex flex-row items-center gap-1.5">
                 {/* Show picker toggle when palette colors exist and showPallet is true */}
                 {shouldShowPalette && (
-                  <Tooltip content={showFullPicker ? "Show Page Colors" : "Show Color Picker"}>
+                  <Tooltip
+                    content={
+                      showFullPicker ? "Show Page Colors" : "Show Color Picker"
+                    }
+                  >
                     <button
-                      className="hover:bg-muted hover:text-foreground cursor-pointer flex items-center justify-center text-lg p-1 rounded-md transition-colors"
+                      className="flex cursor-pointer items-center justify-center rounded-md p-1 text-base text-accent-foreground transition-colors hover:bg-muted hover:text-foreground"
                       onClick={() => setShowFullPicker(!showFullPicker)}
                     >
                       {showFullPicker ? <TbPalette /> : <TbColorPicker />}
                     </button>
                   </Tooltip>
                 )}
-
-
 
                 {/* Only show save and dropper when full picker is visible */}
                 {(!shouldShowPalette || showFullPicker) && (
@@ -272,7 +285,7 @@ export const ColorPickerDialog = () => {
                     {!colorPicker.propKey?.startsWith("pallet-") && (
                       <Tooltip content="Save to pallet">
                         <button
-                          className="hover:bg-muted hover:text-foreground cursor-pointer text-lg flex items-center justify-center p-1 rounded-md transition-colors"
+                          className="flex cursor-pointer items-center justify-center rounded-md p-1 text-base text-accent-foreground transition-colors hover:bg-muted hover:text-foreground"
                           onClick={() => saveToPallet()}
                         >
                           <TbDeviceFloppy />
@@ -284,7 +297,7 @@ export const ColorPickerDialog = () => {
                       <Tooltip content="Color Picker" arrow={false}>
                         <button
                           onClick={pickColor}
-                          className="hover:bg-muted hover:text-foreground cursor-pointer flex items-center justify-center p-1 rounded-md transition-colors"
+                          className="flex cursor-pointer items-center justify-center rounded-md p-1 text-accent-foreground transition-colors hover:bg-muted hover:text-foreground"
                         >
                           <BsEyedropper />
                         </button>
@@ -298,13 +311,14 @@ export const ColorPickerDialog = () => {
 
           {/* Named Palette Colors */}
           {shouldShowPalette && !showFullPicker && (
-
-
-            <div className="px-3 pb-32 grid grid-cols-3 gap-2 border max-h-64 overflow-y-auto">
+            <div className="grid max-h-64 grid-cols-3 gap-2 overflow-y-auto border px-3 py-1.5 pb-32">
               {namedPalette.map((paletteColor, index) => {
                 // Check if current value is this palette color
                 // Value could be "text-palette:Primary" or "bg-palette:Primary" etc
-                const valueStr = typeof colorPicker.value === "string" ? colorPicker.value : "";
+                const valueStr =
+                  typeof colorPicker.value === "string"
+                    ? colorPicker.value
+                    : "";
                 const isPaletteRef = valueStr.includes("palette:");
 
                 // More robust palette matching - extract palette name from value
@@ -319,51 +333,64 @@ export const ColorPickerDialog = () => {
                   }
                 } else {
                   // Direct color value comparison
-                  isSelected = colorPicker.value === paletteColor.color ||
+                  isSelected =
+                    colorPicker.value === paletteColor.color ||
                     (typeof colorPicker.value === "object" &&
                       colorPicker.value?.r &&
-                      paletteColor.color === `rgba(${colorPicker.value.r},${colorPicker.value.g},${colorPicker.value.b},${colorPicker.value.a})`);
+                      paletteColor.color ===
+                        `rgba(${colorPicker.value.r},${colorPicker.value.g},${colorPicker.value.b},${colorPicker.value.a})`);
                 }
 
-                const isTailwindClass = !paletteColor.color.includes("rgba") && !paletteColor.color.startsWith("#");
+                const isTailwindClass =
+                  !paletteColor.color.includes("rgba") &&
+                  !paletteColor.color.startsWith("#");
 
                 // For Tailwind classes, ensure they have bg- prefix for display
-                const displayColor = isTailwindClass && !paletteColor.color.startsWith("bg-")
-                  ? `bg-${paletteColor.color}`
-                  : paletteColor.color;
+                const displayColor =
+                  isTailwindClass && !paletteColor.color.startsWith("bg-")
+                    ? `bg-${paletteColor.color}`
+                    : paletteColor.color;
 
                 return (
                   <button
                     key={index}
                     onClick={() => {
                       // Store the palette reference, not the color value
-                      changed({ type: "palette", value: `palette:${paletteColor.name}` });
+                      changed({
+                        type: "palette",
+                        value: `palette:${paletteColor.name}`,
+                      });
                     }}
-                    className={`flex flex-col items-center gap-1.5 p-2 rounded-md hover:bg-muted text-muted-foreground transition-colors ${isSelected ? "ring-2 ring-primary bg-accent text-accent-foreground" : ""
-                      }`}
+                    className={`flex flex-col items-center gap-1.5 rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted ${
+                      isSelected
+                        ? "bg-accent text-accent-foreground ring-2 ring-primary"
+                        : ""
+                    }`}
                   >
                     <div
-                      className={`w-full h-8 rounded border-2 border-border ${isTailwindClass ? displayColor : ""}`}
+                      className={`h-8 w-full rounded border-2 border-border ${isTailwindClass ? displayColor : ""}`}
                       style={{
-                        backgroundColor: !isTailwindClass ? paletteColor.color : undefined
+                        backgroundColor: !isTailwindClass
+                          ? paletteColor.color
+                          : undefined,
                       }}
                     />
-                    <span className="text-xs text-foreground font-medium truncate w-full text-center">
+                    <span className="w-full truncate text-center text-xs font-medium text-foreground">
                       {paletteColor.name}
                     </span>
                   </button>
                 );
               })}
             </div>
-
           )}
 
           {/* Show color picker if no palette OR if toggle is enabled OR if showPallet is false */}
           {(!shouldShowPalette || showFullPicker) && (
             <>
               <div
-                className={`m-3 rounded-md overflow-hidden w-[${colorPicker?.e?.width - 40
-                  }px] min-w-[280px]`}
+                className={`w-[ m-3 overflow-hidden rounded-md${
+                  colorPicker?.e?.width - 40
+                }px] min-w-[280px]`}
               >
                 <SketchPicker
                   width="100%"
@@ -400,10 +427,10 @@ export const ColorPickerDialog = () => {
           onMouseLeave={() => setShow(false)}
         >
           {colorPicker.showPallet && showFullPicker && (
-            <div className=" w-full border-l border-border gap-1.5 h-full items-center p-3 flex flex-row bg-background">
+            <div className="flex size-full flex-row items-center gap-1.5 border-l border-border bg-background p-3">
               {pallet.map((_, k) => (
                 <div
-                  className="w-4  flex flex-col gap-1 justify-self-start"
+                  className="flex w-4 flex-col gap-1 justify-self-start"
                   key={`main-${k}`}
                 >
                   {_.color.map((color, kk) => {
@@ -434,7 +461,7 @@ export const ColorPickerDialog = () => {
 
         {!show && colorPicker.showPallet && showFullPicker && (
           <button
-            className="border w-3 flex bg-gray items-center bg-gradient-to-tr from-white/50 to-gray-200 cursor-pointer"
+            className="flex w-3 cursor-pointer items-center bg-accent text-accent-foreground"
             onMouseOver={() => {
               setShow(true);
             }}

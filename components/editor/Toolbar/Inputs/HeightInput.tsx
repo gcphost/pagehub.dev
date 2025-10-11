@@ -18,13 +18,14 @@ export const HeightInput = ({
 
   const [state, setState] = useRecoilState(itemListState);
 
-  const toggle = <ItemToggle
-    selected={state}
-    onChange={(value) => setState(value)}
-    items={sizingItems}
-    option={false}
-  />
-
+  const toggle = (
+    <ItemToggle
+      selected={state}
+      onChange={(value) => setState(value)}
+      items={sizingItems}
+      option={false}
+    />
+  );
 
   return (
     <>

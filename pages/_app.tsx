@@ -13,10 +13,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
 
   // Marketing pages where we want GTM to load
-  const marketingPages = ['/', '/templates', '/privacy', '/terms', '/page-builder-api'];
+  const marketingPages = [
+    "/",
+    "/templates",
+    "/privacy",
+    "/terms",
+    "/page-builder-api",
+  ];
   const isMarketingPage = marketingPages.includes(router.pathname);
-
-
 
   return (
     <SessionProvider session={session}>

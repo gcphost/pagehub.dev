@@ -102,7 +102,7 @@ export const useComponentSync = () => {
                 : undefined,
           });
         }
-      }
+      },
     );
 
     if (linkedInstances.length === 0) return;
@@ -149,7 +149,7 @@ export const useComponentSync = () => {
                 prop.tablet = instance.customStyles.tablet;
                 prop.desktop = instance.customStyles.desktop;
               }
-            }
+            },
           );
         }, 50);
 
@@ -157,7 +157,7 @@ export const useComponentSync = () => {
           "✅ Rebuilt instance:",
           instance.id,
           "→",
-          clonedTree.rootNodeId
+          clonedTree.rootNodeId,
         );
       } catch (error) {
         console.error("❌ Error rebuilding instance:", instance.id, error);

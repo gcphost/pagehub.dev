@@ -1,7 +1,11 @@
 import { useEditor, useNode } from "@craftjs/core";
 import { useState } from "react";
 import { TbPhoto } from "react-icons/tb";
-import { getMediaById, getMediaContent, registerMediaWithBackground } from "utils/lib";
+import {
+  getMediaById,
+  getMediaContent,
+  registerMediaWithBackground,
+} from "utils/lib";
 import { ToolbarSection } from "../ToolbarSection";
 import { MediaManagerModal } from "./MediaManagerModal";
 
@@ -34,7 +38,13 @@ export const MediaInput = (propa) => {
 
     // Don't override the media type - it's already registered with the correct type
     // Just update the component reference
-    registerMediaWithBackground(query, actions, selectedMediaId, selectedMedia?.type || "cdn", componentId);
+    registerMediaWithBackground(
+      query,
+      actions,
+      selectedMediaId,
+      selectedMedia?.type || "cdn",
+      componentId,
+    );
 
     setShowMediaBrowser(false);
   };
@@ -51,7 +61,7 @@ export const MediaInput = (propa) => {
     if (selectedMedia?.type === "cdn") {
       const { getCdnUrl } = require("utils/cdn");
       const cdnId = selectedMedia.cdnId || selectedMedia.id;
-      imageUrl = getCdnUrl(cdnId, { width: 600, format: 'auto' });
+      imageUrl = getCdnUrl(cdnId, { width: 600, format: "auto" });
     } else {
       imageUrl = getMediaContent(query, mediaId);
     }
@@ -71,17 +81,17 @@ export const MediaInput = (propa) => {
           {/* Preview if media exists */}
           {hasMedia && (svgContent || imageUrl) && (
             <div className="relative">
-              <div className="aspect-video bg-background rounded-lg overflow-hidden flex items-center justify-center p-2">
+              <div className="flex aspect-video items-center justify-center overflow-hidden rounded-lg bg-background p-2">
                 {svgContent ? (
                   <div
-                    className="w-full h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full flex items-center justify-center text-foreground"
+                    className="flex size-full items-center justify-center text-foreground [&>svg]:size-full [&>svg]:max-h-full [&>svg]:max-w-full"
                     dangerouslySetInnerHTML={{ __html: svgContent }}
                   />
                 ) : (
                   <img
                     src={imageUrl || ""}
                     alt="Preview"
-                    className="w-full h-full object-cover"
+                    className="size-full object-cover"
                     loading="lazy"
                   />
                 )}
@@ -90,7 +100,7 @@ export const MediaInput = (propa) => {
               {/* Clear button - only show when media is set */}
               <button
                 onClick={handleClear}
-                className="absolute -top-1 -right-1 w-4 h-4 bg-destructive hover:bg-destructive text-foreground rounded-full flex items-center justify-center text-xs font-bold"
+                className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-xs font-bold text-foreground hover:bg-destructive"
                 title="Clear media"
               >
                 ×

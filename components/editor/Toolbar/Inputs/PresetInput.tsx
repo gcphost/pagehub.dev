@@ -62,7 +62,7 @@ export const PresetInput = ({
               query,
               actions,
               nodeId: id,
-            })
+            }),
           );
         });
       }}

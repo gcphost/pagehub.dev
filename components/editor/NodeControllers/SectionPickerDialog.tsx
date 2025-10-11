@@ -25,7 +25,11 @@ const getComponentRegistry = () => {
 };
 
 // Convert JSON structure to React Element
-const buildElementFromStructure = (structure: any, key?: string, isPreview: boolean = false): any => {
+const buildElementFromStructure = (
+  structure: any,
+  key?: string,
+  isPreview: boolean = false,
+): any => {
   const componentRegistry = getComponentRegistry();
   const Component = componentRegistry[structure.type];
   if (!Component) {
@@ -33,11 +37,11 @@ const buildElementFromStructure = (structure: any, key?: string, isPreview: bool
     return null;
   }
 
-  const previewPrefix = isPreview ? 'preview-' : '';
-  const uniqueKey = `${previewPrefix}${key || 'root'}`;
+  const previewPrefix = isPreview ? "preview-" : "";
+  const uniqueKey = `${previewPrefix}${key || "root"}`;
 
   const children = structure.children?.map((child: any, index: number) =>
-    buildElementFromStructure(child, `${uniqueKey}-${index}`, isPreview)
+    buildElementFromStructure(child, `${uniqueKey}-${index}`, isPreview),
   );
 
   return (
@@ -50,7 +54,7 @@ const buildElementFromStructure = (structure: any, key?: string, isPreview: bool
 const baseCategories = [
   { id: "all", name: "All" },
   { id: "my-sections", name: "My Sections" },
-  ...templateData.categories
+  ...templateData.categories,
 ];
 
 // Convert JSON templates to usable format
@@ -76,8 +80,13 @@ const searchTemplates = (searchQuery: string) => {
           id: template.id,
           name: template.name,
           categoryId,
-          categoryName: baseCategories.find(c => c.id === categoryId)?.name || categoryId,
-          element: buildElementFromStructure(template.structure, template.id, false),
+          categoryName:
+            baseCategories.find((c) => c.id === categoryId)?.name || categoryId,
+          element: buildElementFromStructure(
+            template.structure,
+            template.id,
+            false,
+          ),
           structure: template.structure,
         });
       }
@@ -106,20 +115,22 @@ export const SectionPickerDialog = ({
 
   // Filter to only get sections
   const customSections = useMemo(() => {
-    return components.filter(c => c.isSection).map(component => ({
-      id: component.rootNodeId,
-      name: component.name,
-      element: null, // Will be created from the master node when selected
-      isCustom: true,
-      rootNodeId: component.rootNodeId,
-    }));
+    return components
+      .filter((c) => c.isSection)
+      .map((component) => ({
+        id: component.rootNodeId,
+        name: component.name,
+        element: null, // Will be created from the master node when selected
+        isCustom: true,
+        rootNodeId: component.rootNodeId,
+      }));
   }, [components]);
 
   // Show/hide category based on whether there are custom sections
   const categories = useMemo(() => {
     if (customSections.length === 0) {
       // No custom sections, exclude "My Sections" category
-      return baseCategories.filter(c => c.id !== "my-sections");
+      return baseCategories.filter((c) => c.id !== "my-sections");
     }
     return baseCategories;
   }, [customSections]);
@@ -152,8 +163,8 @@ export const SectionPickerDialog = ({
     if (isSearchMode && searchQuery.trim()) {
       // Include custom sections in search
       const builtInTemplates = searchTemplates(searchQuery);
-      const matchingCustom = customSections.filter(section =>
-        section.name.toLowerCase().includes(searchQuery.toLowerCase())
+      const matchingCustom = customSections.filter((section) =>
+        section.name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       return [...matchingCustom, ...builtInTemplates];
     }
@@ -197,7 +208,7 @@ export const SectionPickerDialog = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-muted text-muted-foreground flex items-center justify-center z-[100]"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-muted text-muted-foreground"
           style={{ pointerEvents: "auto" }}
         >
           <motion.div
@@ -205,7 +216,7 @@ export const SectionPickerDialog = ({
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-background rounded-lg shadow-2xl w-[90vw] max-w-6xl h-[80vh] flex flex-col overflow-hidden"
+            className="flex h-[80vh] w-[90vw] max-w-6xl flex-col overflow-hidden rounded-lg bg-background shadow-2xl"
             style={{
               willChange: "transform",
               backfaceVisibility: "hidden",
@@ -213,14 +224,14 @@ export const SectionPickerDialog = ({
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-              <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
-                <TbLayoutGridAdd className="w-7 h-7" />
+            <div className="flex items-center justify-between border-b border-border px-6 py-4">
+              <h2 className="flex items-center gap-2 text-2xl font-bold text-foreground">
+                <TbLayoutGridAdd className="size-7" />
                 Add Section
               </h2>
               <button
                 onClick={onClose}
-                className="text-muted-foreground hover:text-muted-foreground transition-colors"
+                className="text-muted-foreground transition-colors hover:text-muted-foreground"
                 aria-label="Close"
               >
                 <MdClose size={24} />
@@ -230,17 +241,18 @@ export const SectionPickerDialog = ({
             {/* Content */}
             <div className="flex flex-1 overflow-hidden">
               {/* Left sidebar - Categories */}
-              <div className="w-64 bg-muted text-muted-foreground border-r border-border flex flex-col">
+              <div className="flex w-64 flex-col border-r border-border bg-muted text-muted-foreground">
                 <div className="flex-1 overflow-y-auto p-4">
                   <div className="space-y-1">
                     {categories.map((category) => (
                       <button
                         key={category.id}
                         onClick={() => handleCategorySelect(category.id)}
-                        className={`w-full text-left px-4 py-2 rounded-md transition-colors ${selectedCategory === category.id && !isSearchMode
-                          ? "bg-primary text-foreground font-medium"
-                          : "text-foreground hover:bg-muted"
-                          }`}
+                        className={`w-full rounded-md px-4 py-2 text-left transition-colors ${
+                          selectedCategory === category.id && !isSearchMode
+                            ? "bg-primary font-medium text-foreground"
+                            : "text-foreground hover:bg-muted"
+                        }`}
                       >
                         {category.name}
                       </button>
@@ -249,33 +261,43 @@ export const SectionPickerDialog = ({
                 </div>
 
                 {/* Search Bar - Bottom of sidebar */}
-                <div className="p-4 border-t border-border">
+                <div className="border-t border-border p-4">
                   <div className="relative">
                     <input
                       type="text"
                       placeholder="Search"
                       value={searchQuery}
                       onChange={(e) => handleSearch(e.target.value)}
-                      className="w-full pl-8 pr-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-sm"
+                      className="w-full rounded-md border border-border bg-background py-2 pl-8 pr-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-ring"
                     />
-                    <MdSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
+                    <MdSearch
+                      className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground"
+                      size={16}
+                    />
                   </div>
                 </div>
               </div>
 
               {/* Right content - Templates */}
               <div className="flex-1 overflow-y-auto p-6">
-                <div key={isSearchMode ? `search-${searchQuery}` : selectedCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div
+                  key={
+                    isSearchMode ? `search-${searchQuery}` : selectedCategory
+                  }
+                  className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+                >
                   {templates.map((template, templateIndex) => (
                     <motion.button
-                      key={`${isSearchMode ? 'search' : selectedCategory}-${template.isCustom ? 'custom' : 'builtin'}-${template.id}-${templateIndex}`}
+                      key={`${isSearchMode ? "search" : selectedCategory}-${template.isCustom ? "custom" : "builtin"}-${template.id}-${templateIndex}`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => {
                         if (template.isCustom) {
                           // For custom sections, get the serialized node and reconstruct
                           try {
-                            const masterNode = query.node(template.rootNodeId).get();
+                            const masterNode = query
+                              .node(template.rootNodeId)
+                              .get();
                             if (masterNode) {
                               // Get the component registry
                               const componentRegistry = getComponentRegistry();
@@ -286,13 +308,22 @@ export const SectionPickerDialog = ({
                                 const node = query.node(nodeId).get();
                                 if (!node) return null;
 
-                                const serializedNode = query.node(nodeId).toSerializedNode();
-                                const typeName = typeof serializedNode.type === 'string'
-                                  ? serializedNode.type
-                                  : serializedNode.type?.resolvedName;
-                                const Component = componentRegistry[typeName] || componentRegistry.Container;
+                                const serializedNode = query
+                                  .node(nodeId)
+                                  .toSerializedNode();
+                                const typeName =
+                                  typeof serializedNode.type === "string"
+                                    ? serializedNode.type
+                                    : serializedNode.type?.resolvedName;
+                                const Component =
+                                  componentRegistry[typeName] ||
+                                  componentRegistry.Container;
 
-                                const children = node.data.nodes.map((childId, childIndex) => buildElement(childId, childIndex)).filter(Boolean);
+                                const children = node.data.nodes
+                                  .map((childId, childIndex) =>
+                                    buildElement(childId, childIndex),
+                                  )
+                                  .filter(Boolean);
 
                                 return (
                                   <Element
@@ -306,18 +337,20 @@ export const SectionPickerDialog = ({
                                 );
                               };
 
-                              const freshElement = buildElement(template.rootNodeId);
+                              const freshElement = buildElement(
+                                template.rootNodeId,
+                              );
                               onSelectSection(freshElement);
                             }
                           } catch (e) {
-                            console.error('Error creating custom section:', e);
+                            console.error("Error creating custom section:", e);
                           }
                         } else {
                           onSelectSection(template.element);
                         }
                         onClose();
                       }}
-                      className="group relative bg-background border-2 border-border rounded-lg overflow-hidden hover:border-primary transition-all shadow-sm hover:shadow-md"
+                      className="group relative overflow-hidden rounded-lg border-2 border-border bg-background shadow-sm transition-all hover:border-primary hover:shadow-md"
                       style={{
                         willChange: "transform",
                         backfaceVisibility: "hidden",
@@ -325,37 +358,70 @@ export const SectionPickerDialog = ({
                       }}
                     >
                       {/* Preview */}
-                      <div className="aspect-video bg-background relative overflow-hidden">
+                      <div className="relative aspect-video overflow-hidden bg-background">
                         {template.isCustom ? (
                           // Preview for custom sections - render the actual content
                           <>
-                            <div className="absolute inset-0" style={{ transform: "scale(0.25)", transformOrigin: "top left", width: "400%", height: "400%" }}>
-                              <Editor resolver={getComponentRegistry()} enabled={false}>
+                            <div
+                              className="absolute inset-0"
+                              style={{
+                                transform: "scale(0.25)",
+                                transformOrigin: "top left",
+                                width: "400%",
+                                height: "400%",
+                              }}
+                            >
+                              <Editor
+                                resolver={getComponentRegistry()}
+                                enabled={false}
+                              >
                                 <Frame>
                                   {(() => {
                                     try {
-                                      const masterNode = query.node(template.rootNodeId).get();
+                                      const masterNode = query
+                                        .node(template.rootNodeId)
+                                        .get();
                                       if (masterNode) {
-                                        const serializedNode = query.node(template.rootNodeId).toSerializedNode();
-                                        const componentRegistry = getComponentRegistry();
-                                        const typeName = typeof serializedNode.type === 'string'
-                                          ? serializedNode.type
-                                          : serializedNode.type?.resolvedName;
-                                        const Component = componentRegistry[typeName] || componentRegistry.Container;
+                                        const serializedNode = query
+                                          .node(template.rootNodeId)
+                                          .toSerializedNode();
+                                        const componentRegistry =
+                                          getComponentRegistry();
+                                        const typeName =
+                                          typeof serializedNode.type ===
+                                          "string"
+                                            ? serializedNode.type
+                                            : serializedNode.type?.resolvedName;
+                                        const Component =
+                                          componentRegistry[typeName] ||
+                                          componentRegistry.Container;
 
-                                        const buildPreviewElement = (nodeId, depth = 0) => {
+                                        const buildPreviewElement = (
+                                          nodeId,
+                                          depth = 0,
+                                        ) => {
                                           const node = query.node(nodeId).get();
                                           if (!node) return null;
 
-                                          const serialized = query.node(nodeId).toSerializedNode();
-                                          const typeN = typeof serialized.type === 'string'
-                                            ? serialized.type
-                                            : serialized.type?.resolvedName;
-                                          const Comp = componentRegistry[typeN] || componentRegistry.Container;
+                                          const serialized = query
+                                            .node(nodeId)
+                                            .toSerializedNode();
+                                          const typeN =
+                                            typeof serialized.type === "string"
+                                              ? serialized.type
+                                              : serialized.type?.resolvedName;
+                                          const Comp =
+                                            componentRegistry[typeN] ||
+                                            componentRegistry.Container;
 
-                                          const children = node.data.nodes.map((childId, idx) =>
-                                            buildPreviewElement(childId, depth + 1)
-                                          ).filter(Boolean);
+                                          const children = node.data.nodes
+                                            .map((childId, idx) =>
+                                              buildPreviewElement(
+                                                childId,
+                                                depth + 1,
+                                              ),
+                                            )
+                                            .filter(Boolean);
 
                                           return (
                                             <Element
@@ -369,10 +435,15 @@ export const SectionPickerDialog = ({
                                           );
                                         };
 
-                                        return buildPreviewElement(template.rootNodeId);
+                                        return buildPreviewElement(
+                                          template.rootNodeId,
+                                        );
                                       }
                                     } catch (e) {
-                                      console.error('Error rendering custom section preview:', e);
+                                      console.error(
+                                        "Error rendering custom section preview:",
+                                        e,
+                                      );
                                       return null;
                                     }
                                     return null;
@@ -381,29 +452,46 @@ export const SectionPickerDialog = ({
                               </Editor>
                             </div>
                             {/* Custom Section Badge */}
-                            <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-primary text-foreground rounded-md shadow-sm z-10">
-                              <TbLayoutGridAdd className="w-3 h-3" />
-                              <span className="text-xs font-medium">Custom</span>
+                            <div className="absolute right-2 top-2 z-10 flex items-center gap-1 rounded-md bg-primary px-2 py-1 text-foreground shadow-sm">
+                              <TbLayoutGridAdd className="size-3" />
+                              <span className="text-xs font-medium">
+                                Custom
+                              </span>
                             </div>
                           </>
                         ) : (
-                          <div className="absolute inset-0" style={{ transform: "scale(0.25)", transformOrigin: "top left", width: "400%", height: "400%" }}>
-                            <Editor resolver={getComponentRegistry()} enabled={false}>
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              transform: "scale(0.25)",
+                              transformOrigin: "top left",
+                              width: "400%",
+                              height: "400%",
+                            }}
+                          >
+                            <Editor
+                              resolver={getComponentRegistry()}
+                              enabled={false}
+                            >
                               <Frame>
-                                {buildElementFromStructure(template.structure, `preview-${template.id}`, true)}
+                                {buildElementFromStructure(
+                                  template.structure,
+                                  `preview-${template.id}`,
+                                  true,
+                                )}
                               </Frame>
                             </Editor>
                           </div>
                         )}
-                        <div className="absolute inset-0 bg-primary group-hover:bg-muted text-muted-foreground transition-colors pointer-events-none" />
+                        <div className="pointer-events-none absolute inset-0 bg-primary text-muted-foreground transition-colors group-hover:bg-muted" />
                       </div>
                       {/* Template Name */}
                       <div className="p-3">
-                        <h4 className="font-medium text-foreground text-center">
+                        <h4 className="text-center font-medium text-foreground">
                           {template.name}
                         </h4>
                         {isSearchMode && template.categoryName && (
-                          <p className="text-xs text-muted-foreground text-center mt-1">
+                          <p className="mt-1 text-center text-xs text-muted-foreground">
                             {template.categoryName}
                           </p>
                         )}
@@ -413,9 +501,11 @@ export const SectionPickerDialog = ({
                 </div>
 
                 {templates.length === 0 && (
-                  <div className="flex items-center justify-center h-64">
-                    <p className="text-muted-foreground text-lg">
-                      {isSearchMode ? `No templates found for "${searchQuery}"` : "No templates available for this category yet."}
+                  <div className="flex h-64 items-center justify-center">
+                    <p className="text-lg text-muted-foreground">
+                      {isSearchMode
+                        ? `No templates found for "${searchQuery}"`
+                        : "No templates available for this category yet."}
                     </p>
                   </div>
                 )}
@@ -425,7 +515,6 @@ export const SectionPickerDialog = ({
         </motion.div>
       )}
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 };
-

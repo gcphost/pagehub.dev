@@ -30,7 +30,7 @@
 }
 
 .drag-control {
-  @apply !bg-current cursor-move !border-0;
+  @apply cursor-move !border-0 !bg-current;
 }
 
 /* Drag state styling - all handled with CSS */
@@ -147,11 +147,11 @@ img[data-enabled="true"][data-selected="true"] {
 }
 
 .add-button {
-  @apply cursor-pointer text-current overflow-hidden;
+  @apply cursor-pointer overflow-hidden text-current;
 }
 
 [data-show-hidden="true"] .hidden {
-  @apply border-current border-dotted border !flex;
+  @apply !flex border border-dotted border-current;
 }
 
 iframe {
@@ -161,15 +161,15 @@ iframe {
 }
 
 [data-active] {
-  @apply text-lg hover:text-2xl w-8 justify-center flex h-8 active:text-lg;
+  @apply flex h-8 w-8 justify-center text-lg hover:text-2xl active:text-lg;
 }
 
 [data-active][data-direction="flex-col"][data-position="before"] {
-  @apply rounded-md  border-2 border-b-0;
+  @apply rounded-md border-2 border-b-0;
 }
 
 [data-active][data-direction="flex-col"][data-position="after"] {
-  @apply rounded-md  border-2 border-t-0;
+  @apply rounded-md border-2 border-t-0;
 }
 
 [data-active][data-direction="flex-row"][data-position="before"] {
@@ -177,7 +177,7 @@ iframe {
 }
 
 [data-active][data-direction="flex-row"][data-position="after"] {
-  @apply rounded-md   border-2 border-l-0;
+  @apply rounded-md border-2 border-l-0;
 }
 
 .fontfamily-base {
@@ -253,7 +253,7 @@ body {
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  @apply bg-primary w-3 h-3;
+  @apply h-3 w-3 bg-primary;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
@@ -306,24 +306,24 @@ input[type="range"]::-ms-thumb {
 }
 
 .input-base {
-  @apply border-border rounded-lg active:border-ring focus:border-ring hover:border-primary cursor-pointer;
+  @apply cursor-pointer rounded-lg border-border hover:border-primary focus:border-ring active:border-ring;
 }
 
 .input {
-  @apply w-full bg-muted border text-foreground border-border rounded-lg active:border-ring focus:border-ring hover:border-primary cursor-pointer;
+  @apply w-full cursor-pointer rounded-lg border border-border bg-muted text-foreground hover:border-primary focus:border-ring active:border-ring;
 }
 .input-plain {
-  @apply w-full bg-transparent border-0 text-foreground outline-none focus:outline-none cursor-pointer px-2 py-1;
+  @apply w-full cursor-pointer border-0 bg-transparent px-2 py-1 text-foreground outline-none focus:outline-none;
 }
 .input-hover {
-  @apply focus-within:border-ring hover:border-primary border-border cursor-pointer;
+  @apply cursor-pointer border-border focus-within:border-ring hover:border-primary;
 }
 .input-wrapper {
-  @apply rounded-lg bg-muted border-border border w-full px-1 py-0.5 input-hover;
+  @apply input-hover w-full rounded-lg border border-border bg-muted px-1 py-0.5;
 }
 
 .control {
-  @apply px-3 rounded-md border-0 bg-transparent text-foreground;
+  @apply rounded-md border-0 bg-transparent px-3 text-foreground;
 }
 
 .btn-text {
@@ -331,19 +331,19 @@ input[type="range"]::-ms-thumb {
 }
 
 .btn {
-  @apply bg-primary rounded-md text-primary-foreground text-base flex items-center justify-center  inside-shadow border border-border hover:bg-primary cursor-pointer hover:text-muted-foreground;
+  @apply inside-shadow flex cursor-pointer items-center justify-center rounded-md border border-border bg-primary text-base text-primary-foreground hover:bg-primary hover:text-muted-foreground;
 }
 
 .btn-green {
-  @apply bg-secondary rounded-md text-secondary-foreground text-base flex items-center justify-center  inside-shadow border border-border hover:bg-secondary cursor-pointer hover:text-muted-foreground;
+  @apply inside-shadow flex cursor-pointer items-center justify-center rounded-md border border-border bg-secondary text-base text-secondary-foreground hover:bg-secondary hover:text-muted-foreground;
 }
 
 .dialog-input {
-  @apply rounded-md border-secondary border p-3 scrollbar bg-background active:border-ring focus:border-ring;
+  @apply scrollbar rounded-md border border-secondary bg-background p-3 focus:border-ring active:border-ring;
 }
 
 .hue-horizontal {
-  @apply rounded-sm cursor-pointer;
+  @apply cursor-pointer rounded-sm;
 }
 
 html,
@@ -374,15 +374,15 @@ ul {
 }
 
 .tool-bg {
-  @apply !border-border bg-background text-foreground rounded-md p-1 text-sm font-normal leading-normal tracking-normal flex items-center justify-center !gap-2;
+  @apply flex items-center justify-center !gap-2 rounded-md !border-border bg-background p-0 text-sm font-normal leading-normal tracking-normal text-foreground;
 }
 
 .tool-button {
-  @apply btn !bg-secondary !text-secondary-foreground cursor-pointer text-sm  flex items-center justify-center  gap-1.5 p-1.5;
+  @apply btn flex cursor-pointer items-center justify-center gap-1.5 !bg-secondary p-1.5 text-sm !text-secondary-foreground;
 }
 
 .tool-button * {
-  @apply !p-0 !m-0;
+  @apply !m-0 !p-0;
 }
 
 .text-xxs {
@@ -390,23 +390,23 @@ ul {
 }
 
 .input-color {
-  @apply w-full h-12 rounded-md cursor-pointer border input-hover flex items-center focus-within:border-accent;
+  @apply input-hover flex h-12 w-full cursor-pointer items-center rounded-md border focus-within:border-accent;
 }
 
 .btn-search {
-  @apply text-primary-foreground inside-shadow absolute right-2.5 bottom-2.5 h-8 bg-primary border border-border px-5 py-1.5 rounded-md hover:bg-primary z-20;
+  @apply inside-shadow absolute bottom-2.5 right-2.5 z-20 h-8 rounded-md border border-border bg-primary px-5 py-1.5 text-primary-foreground hover:bg-primary;
 }
 
 .input-wrapper,
 #toolbarContents .input {
-  @apply rounded-md bg-muted border-border border w-full px-1 py-0 focus-within:border-ring;
+  @apply w-full rounded-md border border-border bg-muted px-1 py-0 focus-within:border-ring;
 }
 
 #toolbarContents .input,
 #toolbarContents .input-plain,
 #toolbarContents .input-base,
 #toolbarContents .btn {
-  @apply text-sm px-2 py-0.5 min-h-5 focus:ring-ring focus:border-ring;
+  @apply min-h-5 px-2 py-0.5 text-sm focus:border-ring focus:ring-ring;
 }
 
 #toolbarContents .input-color {
@@ -414,7 +414,7 @@ ul {
 }
 
 #toolbarContents .btn-search {
-  @apply top-0 h-7 right-0 w-7 flex items-center justify-center p-0;
+  @apply right-0 top-0 flex h-7 w-7 items-center justify-center p-0;
 }
 
 .toolbar-label {
@@ -423,17 +423,17 @@ ul {
 
 /* Slider styles */
 .slider::-webkit-slider-thumb {
-  @apply appearance-none w-4 h-4 bg-primary rounded-full cursor-pointer shadow-sm;
+  @apply h-4 w-4 cursor-pointer appearance-none rounded-full bg-primary shadow-sm;
 }
 
 .slider::-moz-range-thumb {
-  @apply w-4 h-4 bg-primary rounded-full cursor-pointer border-0 shadow-sm;
+  @apply h-4 w-4 cursor-pointer rounded-full border-0 bg-primary shadow-sm;
 }
 
 .slider::-webkit-slider-track {
-  @apply bg-muted rounded-lg;
+  @apply rounded-lg bg-muted;
 }
 
 .slider::-moz-range-track {
-  @apply bg-muted rounded-lg;
+  @apply rounded-lg bg-muted;
 }

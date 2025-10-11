@@ -28,10 +28,10 @@ export function getRect(element?: any): RectResult {
 }
 
 export function useRect<T extends HTMLElement>(
-  ref: React.RefObject<T>
+  ref: React.RefObject<T>,
 ): RectResult {
   const [rect, setRect] = useState<RectResult>(
-    ref && ref.current ? getRect(ref.current) : getRect()
+    ref && ref.current ? getRect(ref.current) : getRect(),
   );
 
   const handleResize = useCallback(() => {
