@@ -166,7 +166,7 @@ export const TextSettings = () => {
             },
           ]}
         >
-          <ToolbarSection title="Size" collapsible={false}>
+          <ToolbarSection title="Size" >
             <WidthInput />
 
             <WidthInput

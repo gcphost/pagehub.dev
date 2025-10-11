@@ -1,10 +1,8 @@
 import { ROOT_NODE, useEditor } from "@craftjs/core";
-import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import {
   TbChevronDown,
   TbChevronRight,
-  TbGripVertical,
   TbPalette,
   TbPlus,
   TbRuler,
@@ -19,20 +17,14 @@ import { fonts } from "utils/tailwind";
 import { ColorPickerAtom } from "../Toolbar/Tools/ColorPickerDialog";
 import { FontFamilyDialogAtom } from "../Toolbar/Tools/FontFamilyDialog";
 
-interface DesignSystemPanelProps {
+interface DesignSystemSidebarProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
-export const DesignSystemPanel = ({
-  isOpen,
-  onClose,
-}: DesignSystemPanelProps) => {
+export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProps) => {
   const { actions, query } = useEditor();
   const [activeTab, setActiveTab] = useState<"colors" | "styles">("colors");
-  const [position, setPosition] = useState({ x: 1000, y: 100 }); // Safe default for SSR
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [fontDialog, setFontDialog] = useRecoilState(FontFamilyDialogAtom);
   const [colorDialog, setColorDialog] = useRecoilState(ColorPickerAtom);
   const headingFontButtonRef = useRef<HTMLButtonElement>(null);
@@ -144,13 +136,6 @@ export const DesignSystemPanel = ({
     const rootNode = state.nodes[ROOT_NODE];
     return rootNode?.data?.props || {};
   });
-
-  // Initialize position on client side
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setPosition({ x: window.innerWidth - 320, y: 100 });
-    }
-  }, []);
 
   // Load Google Fonts for preview
   useEffect(() => {
@@ -518,42 +503,6 @@ export const DesignSystemPanel = ({
     linkUnderlineOffset,
   ]);
 
-  // Dragging handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest(".drag-handle")) {
-      setIsDragging(true);
-      setDragOffset({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
-      });
-    }
-  };
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (isDragging) {
-        setPosition({
-          x: e.clientX - dragOffset.x,
-          y: e.clientY - dragOffset.y,
-        });
-      }
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    }
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging, dragOffset]);
-
   // Helper to convert Tailwind color to hex for preview
   const getColorPreview = (colorValue: any): string => {
     // Handle null/undefined
@@ -878,34 +827,25 @@ export const DesignSystemPanel = ({
   if (!isOpen) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      style={{
-        position: "fixed",
-        left: position.x,
-        top: position.y,
-        zIndex: 9999,
-        cursor: isDragging ? "grabbing" : "default",
-      }}
-      onMouseDown={handleMouseDown}
-      className="z-[9999] flex max-h-[60vh] w-80 flex-col rounded-lg border border-border bg-background shadow-xl"
+    <div className="pointer-events-auto absolute bottom-0 top-10 z-50 flex w-full flex-col bg-background text-foreground"
     >
       {/* Header */}
-      <div className="drag-handle flex cursor-grab items-center justify-between border-b border-border bg-accent p-3 text-accent-foreground active:cursor-grabbing">
+      <div className="flex items-center justify-between border-b border-border bg-accent p-3 text-accent-foreground">
         <div className="flex items-center gap-2">
-          <TbGripVertical className="text-accent-foreground" />
+          <TbPalette className="text-xl text-accent-foreground" />
           <h2 className="text-lg font-bold text-accent-foreground">
             Design System
           </h2>
         </div>
-        <button
-          onClick={onClose}
-          className="text-accent-foreground transition-colors hover:text-accent-foreground"
-        >
-          <TbX size={20} />
-        </button>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="flex items-center justify-center rounded-md p-1 text-accent-foreground transition-colors hover:bg-accent-foreground/10"
+            title="Close Design System"
+          >
+            <TbX />
+          </button>
+        )}
       </div>
 
       {/* Tabs */}
@@ -913,8 +853,8 @@ export const DesignSystemPanel = ({
         <button
           onClick={() => setActiveTab("colors")}
           className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${activeTab === "colors"
-              ? "border-b-2 border-primary bg-background text-primary"
-              : "text-muted-foreground hover:text-foreground"
+            ? "border-b-2 border-primary bg-background text-primary"
+            : "text-muted-foreground hover:text-foreground"
             }`}
         >
           <TbPalette size={18} />
@@ -923,8 +863,8 @@ export const DesignSystemPanel = ({
         <button
           onClick={() => setActiveTab("styles")}
           className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${activeTab === "styles"
-              ? "border-b-2 border-primary bg-background text-primary"
-              : "text-muted-foreground hover:text-foreground"
+            ? "border-b-2 border-primary bg-background text-primary"
+            : "text-muted-foreground hover:text-foreground"
             }`}
         >
           <TbRuler size={18} />
@@ -1420,6 +1360,6 @@ export const DesignSystemPanel = ({
           Changes apply instantly ⚡
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 };

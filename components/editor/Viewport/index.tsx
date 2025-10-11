@@ -22,6 +22,7 @@ import {
 } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import {
+  DesignSystemSidebarAtom,
   IsolateAtom,
   LastctiveAtom,
   OnlineAtom,
@@ -223,6 +224,9 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const [online, setOnline] = useRecoilState(OnlineAtom);
   const sideBarOpen = useRecoilValue(SideBarOpen);
   const sideBarLeft = useRecoilValue(SideBarAtom);
+  const [designSystemSidebarOpen, setDesignSystemSidebarOpen] = useRecoilState(
+    DesignSystemSidebarAtom,
+  );
 
   useEffect(() => {
     localStorage.setItem("clipBoard", JSON.stringify({}));
@@ -637,6 +641,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
         className={`flex h-screen flex-row overflow-visible ${view === "mobile" && sideBarOpen ? `${sideBarLeft ? "ml-[360px]" : "mr-[360px]"} w-[calc(100vw-360px)]` : "w-screen"}`}
         data-container={true}
       >
+
         {/* Preview mode: "Edit" button */}
         {!enabled && !screenshot && (
           <div className="absolute right-12 top-12 z-50">

@@ -46,6 +46,7 @@ import { SessionTokenAtom, SettingsAtom } from "utils/atoms";
 import { getAltView } from "utils/craft";
 import {
   ComponentsAtom,
+  DesignSystemSidebarAtom,
   LastctiveAtom,
   MenuItemState,
   MenuState,
@@ -59,7 +60,7 @@ import { MediaManagerModal } from "../Toolbar/Inputs/MediaManagerModal";
 import { AnimatedSaveButton } from "../Tools/AnimatedSaveButton";
 import { ComponentSelector } from "./ComponentSelector";
 import { ComponentSettings } from "./ComponentSettings";
-import { DesignSystemPanel } from "./DesignSystemPanel";
+import { DesignSystemSidebar } from "./DesignSystemSidebar";
 import { DomainSettings } from "./DomainSettings";
 import { ExportModal } from "./ExportModal";
 import { ImportModal } from "./ImportModal";
@@ -182,7 +183,9 @@ export const Header = () => {
   const [showMenuType, setShowMenuType] = useRecoilState(MenuItemState);
   const [isMediaManagerModalOpen, setIsMediaManagerModalOpen] = useState(false);
   const [isSiteSettingsModalOpen, setIsSiteSettingsModalOpen] = useState(false);
-  const [isDesignSystemPanelOpen, setIsDesignSystemPanelOpen] = useState(false);
+  const [isDesignSystemSidebarOpen, setIsDesignSystemSidebarOpen] = useRecoilState(
+    DesignSystemSidebarAtom,
+  );
 
   const setEnabled = useSetRecoilState(EnabledAtom);
 
@@ -721,7 +724,7 @@ export const Header = () => {
 
                     <button
                       onClick={() => {
-                        setIsDesignSystemPanelOpen(true);
+                        setIsDesignSystemSidebarOpen(!isDesignSystemSidebarOpen);
                         setShowMenu(false);
                       }}
                       className="flex cursor-pointer items-center gap-1 px-3 py-2 text-muted-foreground hover:bg-muted"
@@ -914,10 +917,13 @@ export const Header = () => {
         onClose={() => setIsSiteSettingsModalOpen(false)}
       />
 
-      <DesignSystemPanel
-        isOpen={isDesignSystemPanelOpen}
-        onClose={() => setIsDesignSystemPanelOpen(false)}
-      />
+      {/* Design System Sidebar - positioned like the main navigation */}
+      {enabled && isDesignSystemSidebarOpen && (
+        <DesignSystemSidebar
+          isOpen={isDesignSystemSidebarOpen}
+          onClose={() => setIsDesignSystemSidebarOpen(false)}
+        />
+      )}
     </>
   );
 };

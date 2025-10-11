@@ -98,6 +98,11 @@ export const SideBarOpen = atom({
   default: true,
 });
 
+export const DesignSystemSidebarAtom = atom({
+  key: "designSystemSidebar",
+  default: false,
+});
+
 export const ViewModeAtom = atom({
   key: "viewMode",
   default: "page", // "page" or "component"
