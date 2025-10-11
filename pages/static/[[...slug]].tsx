@@ -98,7 +98,7 @@ function App({ subdomain, data, meta, seo }) {
 
   useEffect(() => {
     if (!subdomain) return;
-    console.log({ meta });
+
     setSettings(meta);
   }, [meta, setSettings, subdomain]);
 

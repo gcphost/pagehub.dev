@@ -103,11 +103,14 @@ export const Button: UserComponent<ButtonProps> = (props: ButtonProps) => {
   let ele =
     resolvedUrl && typeof resolvedUrl === "string"
       ? Link
-      : props.type || "button";
+      : "button";
 
   if (resolvedUrl && typeof resolvedUrl === "string") {
     prop.href = resolvedUrl;
     prop["data-button-link"] = "true"; // Custom attribute to exclude from global link styles
+  } else if (ele === "button") {
+    // Set the button type attribute
+    prop.type = props.type || "button";
   }
 
   if (enabled && ele === Link) ele = "span";
