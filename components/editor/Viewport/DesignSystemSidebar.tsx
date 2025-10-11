@@ -1147,14 +1147,14 @@ export const DesignSystemSidebar = ({ isOpen, onClose }: DesignSystemSidebarProp
                   onChange={(e) => setBorderRadius(e.target.value)}
                   className="w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
-                  <option value="rounded-none">None</option>
-                  <option value="rounded-sm">Small</option>
-                  <option value="rounded">Default</option>
-                  <option value="rounded-md">Medium</option>
-                  <option value="rounded-lg">Large</option>
-                  <option value="rounded-xl">XL</option>
-                  <option value="rounded-2xl">2XL</option>
-                  <option value="rounded-full">Full</option>
+                  <option value="0">None</option>
+                  <option value="0.125rem">Small</option>
+                  <option value="0.25rem">Default</option>
+                  <option value="0.375rem">Medium</option>
+                  <option value="0.5rem">Large</option>
+                  <option value="0.75rem">XL</option>
+                  <option value="1rem">2XL</option>
+                  <option value="9999px">Full</option>
                 </select>
               </div>
 

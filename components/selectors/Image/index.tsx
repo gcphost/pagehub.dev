@@ -131,6 +131,9 @@ export const Image = (props: ImageProps) => {
       ["objectFit", "objectPosition"],
       [],
       preview,
+      false,
+      [],
+      query,
     )}`.trim(),
   };
 
@@ -154,18 +157,43 @@ export const Image = (props: ImageProps) => {
     alt: altText,
     title: titleText,
     role: !altText && !titleText ? "presentation" : undefined,
-    // Img always fills wrapper (w-full h-full) + gets image-specific rendering classes
-    // Add default object-cover if not set (important for aspect-ratio to work on wrapper)
-    // Radius stays on wrapper, not on img
-    className:
-      `w-full h-full ${!hasObjectFit ? "object-cover" : ""} ${ClassGenerator(
-        props,
-        view,
-        enabled,
-        [],
-        ["objectFit", "objectPosition"],
-        preview,
-      )}`.trim(),
+    // Different behavior for editor vs live view
+    // Editor: img fills wrapper (w-full h-full) + gets object-fit/position classes
+    // Live view: img gets sizing classes directly + gets object-fit/position classes
+    className: (() => {
+      const baseClasses = `${enabled ? "w-full h-full" : ""} ${!hasObjectFit ? "object-cover" : ""}`;
+
+      if (!enabled) {
+        // Live view: apply ALL props to img
+        const generatedClasses = ClassGenerator(
+          props,
+          view,
+          enabled,
+          [], // Don't exclude anything
+          [], // Don't restrict to only certain classes - apply ALL props
+          preview,
+          false,
+          [],
+          query,
+        );
+
+        return `${baseClasses} ${generatedClasses}`.trim();
+      } else {
+        // Editor: only apply object-fit/position to img
+        const generatedClasses = ClassGenerator(
+          props,
+          view,
+          enabled,
+          ["width", "height", "maxWidth", "maxHeight", "minWidth", "minHeight", "margin", "padding", "shadow", "radius"], // Exclude sizing from img
+          ["objectFit", "objectPosition"], // Only apply image-specific classes
+          preview,
+          false,
+          [],
+          query,
+        );
+        return `${baseClasses} ${generatedClasses}`.trim();
+      }
+    })(),
     // width: "100",
     // height: "100",
     // fill: true,
@@ -265,10 +293,10 @@ export const Image = (props: ImageProps) => {
       ...applyAnimation({ ..._imgProp, key: `img-${id}` }, props),
       ref: shouldConnectDrag
         ? (r) => {
-            if (props.url) return;
-            ref.current = r;
-            connect(drag(r));
-          }
+          if (props.url) return;
+          ref.current = r;
+          connect(drag(r));
+        }
         : undefined,
     });
   };

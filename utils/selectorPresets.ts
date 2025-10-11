@@ -380,11 +380,11 @@ export const containerPresets = {
         title: "Glass Card",
         var: "glass-card",
         mobile: {
-          background: "bg-[var(--ph-card-bg)]/10",
+          background: "bg-[var(--ph-card-bg)/10]",
           backdropFilter: "backdrop-blur-md",
           borderRadius: "rounded-[var(--ph-border-radius)]",
           border: "border",
-          borderColor: "border-[var(--ph-border-color)]/20",
+          borderColor: "border-[var(--ph-border-color)/20]",
           px: "px-[var(--ph-container-padding-x)]",
           py: "py-[var(--ph-container-padding-y)]",
         },
@@ -884,8 +884,8 @@ export const backgroundImagePresets = {
         var: "primary-overlay",
         root: {
           backgroundGradient: "bg-gradient-to-b",
-          backgroundGradientFrom: "from-[var(--ph-primary)]/60",
-          backgroundGradientTo: "to-[var(--ph-primary)]/40",
+          backgroundGradientFrom: "from-[var(--ph-primary)/60]",
+          backgroundGradientTo: "to-[var(--ph-primary)/40]",
         },
       },
       {

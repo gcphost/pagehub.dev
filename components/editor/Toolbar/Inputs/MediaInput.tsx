@@ -1,4 +1,5 @@
 import { useEditor, useNode } from "@craftjs/core";
+import Image from "next/image";
 import { useState } from "react";
 import { TbPhoto } from "react-icons/tb";
 import {
@@ -88,11 +89,13 @@ export const MediaInput = (propa) => {
                     dangerouslySetInnerHTML={{ __html: svgContent }}
                   />
                 ) : (
-                  <img
+                  <Image
                     src={imageUrl || ""}
                     alt="Preview"
-                    className="size-full object-cover"
+                    className="size-full rounded-lg object-cover"
                     loading="lazy"
+                    width={100}
+                    height={100}
                   />
                 )}
               </div>
@@ -100,7 +103,7 @@ export const MediaInput = (propa) => {
               {/* Clear button - only show when media is set */}
               <button
                 onClick={handleClear}
-                className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-xs font-bold text-foreground hover:bg-destructive"
+                className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-xs font-bold text-destructive-foreground  hover:bg-destructive/90"
                 title="Clear media"
               >
                 ×

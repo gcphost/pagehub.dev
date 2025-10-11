@@ -132,6 +132,11 @@ export const Wrap = ({
   );
 };
 
+// Function to shorten verbose CSS variable classes
+const shortenCSSVar = (className) => {
+  return className.replace(/var\(--ph-([^)]+)\)/g, '--$1');
+};
+
 export const Card = ({
   value,
   onClick,
@@ -140,6 +145,23 @@ export const Card = ({
   if (!value) {
     return null;
   }
+
+  // Shorten the display value for better readability
+  const displayValue = shortenCSSVar(value);
+
+  // Split the value to make the CSS variable part bold
+  const renderDisplayValue = () => {
+    const parts = displayValue.split('--');
+    if (parts.length > 1) {
+      return (
+        <>
+          {parts[0]}
+          <span className="font-bold">--{parts[1]}</span>
+        </>
+      );
+    }
+    return displayValue;
+  };
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -175,7 +197,7 @@ export const Card = ({
         placement="bottom"
         arrow={false}
       >
-        {value}
+        {renderDisplayValue()}
       </Tooltip>
     </button>
   );
@@ -185,13 +207,31 @@ export const CardLight = ({ value, onClick, className = "" }) => {
   if (!value) {
     return null;
   }
+
+  // Shorten the display value for better readability
+  const displayValue = shortenCSSVar(value);
+
+  // Split the value to make the CSS variable part bold
+  const renderDisplayValue = () => {
+    const parts = displayValue.split('--');
+    if (parts.length > 1) {
+      return (
+        <>
+          {parts[0]}
+          <span className="font-bold">--{parts[1]}</span>
+        </>
+      );
+    }
+    return displayValue;
+  };
+
   return (
     <button
       onClick={onClick}
       className={`inline-flex cursor-pointer rounded bg-background px-1 py-0.5 text-xs font-medium text-foreground ${className}`}
     >
       <Tooltip content={`Add ${value}`} placement="top" arrow={false}>
-        {value}
+        {renderDisplayValue()}
       </Tooltip>
     </button>
   );
@@ -210,9 +250,9 @@ export const Accord = ({
 
   return (
     <div className={className}>
-      <div className="flex gap-2 bg-primary px-3 py-1.5">
+      <div className="flex gap-2 bg-sidebar px-3 py-1.5 text-sidebar-foreground">
         <button
-          className="font-2xl w-full cursor-pointer truncate whitespace-nowrap pr-3 font-bold"
+          className="font-xl w-full cursor-pointer truncate whitespace-nowrap pr-3 font-bold"
           onClick={() => setAccordion(active ? "" : prop)}
         >
           {title}

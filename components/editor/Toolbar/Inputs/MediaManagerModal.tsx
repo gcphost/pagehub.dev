@@ -826,8 +826,8 @@ export const MediaManagerModal = ({
                   <button
                     onClick={() => setViewMode("cards")}
                     className={`rounded px-2 py-1.5 text-xs font-medium transition-colors ${viewMode === "cards"
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbLayoutGrid className="size-4" />
@@ -837,8 +837,8 @@ export const MediaManagerModal = ({
                   <button
                     onClick={() => setViewMode("list")}
                     className={`rounded px-2 py-1.5 text-xs font-medium transition-colors ${viewMode === "list"
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbList className="size-4" />
@@ -856,8 +856,8 @@ export const MediaManagerModal = ({
                     }}
                     disabled={uploading}
                     className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${addMode === "upload"
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbUpload className="inline" />
@@ -867,8 +867,8 @@ export const MediaManagerModal = ({
                   <button
                     onClick={() => setAddMode("url")}
                     className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${addMode === "url"
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbExternalLink className="inline" />
@@ -878,8 +878,8 @@ export const MediaManagerModal = ({
                   <button
                     onClick={() => setAddMode("svg")}
                     className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${addMode === "svg"
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbCode className="inline" />
@@ -897,8 +897,8 @@ export const MediaManagerModal = ({
                     onClick={handlePasteClick}
                     disabled={!hasImageInClipboard || uploading}
                     className={`rounded px-3 py-1.5 text-xs font-medium transition-colors ${hasImageInClipboard && !uploading
-                        ? "text-muted-foreground hover:text-foreground"
-                        : "cursor-not-allowed text-muted-foreground"
+                      ? "text-muted-foreground hover:text-foreground"
+                      : "cursor-not-allowed text-muted-foreground"
                       }`}
                   >
                     <TbClipboard className="inline" />
@@ -1134,12 +1134,12 @@ export const MediaManagerModal = ({
                   <div
                     key={media.id}
                     className={`group relative cursor-pointer overflow-hidden rounded-lg border border-border bg-card transition-all hover:shadow-md ${viewMode === "cards"
-                        ? selectedMedia === media.id
-                          ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
-                          : "hover:border-primary"
-                        : selectedMedia === media.id
-                          ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
-                          : "hover:border-primary"
+                      ? selectedMedia === media.id
+                        ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                        : "hover:border-primary"
+                      : selectedMedia === media.id
+                        ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                        : "hover:border-primary"
                       }`}
                     onClick={() => {
                       if (selectionMode && onSelect) {
@@ -1284,7 +1284,7 @@ export const MediaManagerModal = ({
                           e.stopPropagation();
                           handleDelete(media.id);
                         }}
-                        className="rounded-md border border-border bg-background p-1.5 text-destructive shadow-lg transition-colors hover:bg-destructive"
+                        className="rounded-md border border-border bg-background p-1.5 text-destructive shadow-lg transition-colors hover:bg-destructive hover:text-destructive-foreground"
                         title="Delete"
                       >
                         <TbTrash className="text-sm" />

@@ -264,44 +264,79 @@ export async function getStaticProps({ params }) {
 
   let pageData = null;
 
-  // Skip webhook calls in dev mode for faster compilation
-  const isDev = process.env.NODE_ENV === "development";
+  // Check if this looks like a page ID (starts with underscore and is alphanumeric)
+  const isPageId = domain && domain.startsWith('_') && /^_[a-zA-Z0-9]+$/.test(domain);
 
-  if (!isDev) {
-    // Try to load tenant by domain to check for webhook
-    const tenant = await loadTenantByDomain(domain);
+  if (isPageId) {
+    // For page IDs, fetch from API like the build page does
+    try {
+      const apiRes = await fetch(
+        `${process.env.API_ENDPOINT}/page/${domain}/${params?.slug?.slice(1).join("/") || ""
+        }`,
+      );
 
-    console.log({ tenant, domain });
-
-    // If tenant has fetchPage webhook, use that
-    if (tenant?.webhooks?.fetchPage) {
+      let result = null;
       try {
-        const webhookResult = await runTenantWebhook(tenant, "fetchPage", {
-          method: "GET",
-          pageId: domain,
-        });
+        result = await apiRes.json();
+      } catch (e) {
+        console.error("Error parsing API response:", e);
+      }
 
-        if (webhookResult) {
-          pageData = webhookResult;
+      if (result && (result.content || result.draft)) {
+        pageData = {
+          title: result.title || "",
+          description: result.description || "",
+          content: result.preview ? result.draft : result.content,
+          draft: result.draft,
+          name: result.name,
+          draftId: result.draftId,
+          seo: result.seo,
+        };
+      }
+    } catch (error) {
+      console.error("Error fetching page by ID:", error);
+    }
+  } else {
+    // Original logic for domain-based pages
+    // Skip webhook calls in dev mode for faster compilation
+    const isDev = process.env.NODE_ENV === "development";
+
+    if (!isDev) {
+      // Try to load tenant by domain to check for webhook
+      const tenant = await loadTenantByDomain(domain);
+
+      console.log({ tenant, domain });
+
+      // If tenant has fetchPage webhook, use that
+      if (tenant?.webhooks?.fetchPage) {
+        try {
+          const webhookResult = await runTenantWebhook(tenant, "fetchPage", {
+            method: "GET",
+            pageId: domain,
+          });
+
+          if (webhookResult) {
+            pageData = webhookResult;
+          }
+        } catch (error) {
+          console.error("Error calling fetchPage webhook:", error);
         }
-      } catch (error) {
-        console.error("Error calling fetchPage webhook:", error);
       }
     }
-  }
 
-  // Fall back to database query if no webhook or webhook failed
-  if (!pageData) {
-    const pageByDomain = await Page.findOne({ domain });
-    if (pageByDomain) {
-      pageData = {
-        title: pageByDomain.title || "",
-        description: pageByDomain.description || "",
-        content: pageByDomain.content,
-        draft: pageByDomain.draft,
-        name: pageByDomain.name,
-        draftId: pageByDomain.draftId,
-      };
+    // Fall back to database query if no webhook or webhook failed
+    if (!pageData) {
+      const pageByDomain = await Page.findOne({ domain });
+      if (pageByDomain) {
+        pageData = {
+          title: pageByDomain.title || "",
+          description: pageByDomain.description || "",
+          content: pageByDomain.content,
+          draft: pageByDomain.draft,
+          name: pageByDomain.name,
+          draftId: pageByDomain.draftId,
+        };
+      }
     }
   }
 
@@ -317,7 +352,8 @@ export async function getStaticProps({ params }) {
 
     let seo = null;
     try {
-      seo = parseContent(content || draft, params.slug[0]);
+      // Use the seo from API response if available (for page IDs), otherwise parse content
+      seo = pageData.seo || parseContent(content || draft, params.slug[0]);
     } catch (error) {
       console.error("Failed to parse content for page:", params.slug[0], error);
       // Return empty page if content parsing fails

@@ -178,7 +178,7 @@ const LinkSettingsInput = ({
                   <button
                     type="button"
                     onClick={handleClearLink}
-                    className="flex items-center justify-center rounded-md p-2 text-xs text-destructive transition-colors hover:bg-destructive hover:text-foreground"
+                    className="flex items-center justify-center rounded-md p-2 text-xs text-destructive transition-colors hover:bg-destructive hover:text-destructive-foreground"
                   >
                     ×
                   </button>

@@ -225,6 +225,17 @@ export const ContainerSettings = () => {
             labelWidth="w-1/3"
             inline
           />
+
+          <PresetInput
+            presets={selectorPresets.backgroundImage.overlays.items}
+            label={selectorPresets.backgroundImage.overlays.label}
+            type={selectorPresets.backgroundImage.overlays.type}
+            propKey={selectorPresets.backgroundImage.overlays.propKey}
+            propType={selectorPresets.backgroundImage.overlays.propType}
+            inputWidth="w-2/3"
+            labelWidth="w-1/3"
+            inline
+          />
         </ToolbarSection>
 
         <ToolbarSection

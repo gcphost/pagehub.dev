@@ -311,11 +311,11 @@ export const DomainSettings = () => {
               .pagehub.dev
               {name && nameOk !== null ? (
                 nameOk ? (
-                  <span className="ml-3 mr-2 flex w-8 items-center justify-center rounded bg-secondary px-2.5 py-0.5 text-xs font-medium text-green-800">
+                  <span className="ml-3 mr-2 flex w-8 items-center justify-center rounded bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
                     <TbCheck />
                   </span>
                 ) : (
-                  <span className="ml-3 mr-2 flex w-8 items-center justify-center rounded bg-destructive px-2.5 py-0.5 text-xs font-medium text-green-800">
+                  <span className="ml-3 mr-2 flex w-8 items-center justify-center rounded bg-destructive px-2.5 py-0.5 text-xs font-medium text-destructive-foreground">
                     <TbX />
                   </span>
                 )

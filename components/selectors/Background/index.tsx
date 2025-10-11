@@ -357,9 +357,10 @@ export const Background = (props: Partial<ContainerProps>) => {
       };
 
       // Scope styles to the viewport in edit mode, or globally in preview/published mode
+      // Exclude Button components from global link styles
       const selector = enabled
-        ? 'main[data-renderer="true"] a:not([class*="no-style"])'
-        : 'a:not([class*="no-style"])';
+        ? 'main[data-renderer="true"] a:not([class*="no-style"]):not([data-button-link])'
+        : 'a:not([class*="no-style"]):not([data-button-link])';
 
       const linkStyles = `
         ${selector} {

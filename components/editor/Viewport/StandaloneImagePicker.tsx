@@ -114,15 +114,14 @@ export const StandaloneImagePicker = ({
       <div className="flex gap-2">
         <label
           htmlFor={`file-upload-${label}`}
-          className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-3 transition-all ${
-            errors.length
-              ? "border-destructive bg-destructive text-destructive"
-              : saved
-                ? "border-secondary bg-secondary text-secondary-foreground"
-                : loading
-                  ? "border-primary bg-muted text-primary"
-                  : "border-border bg-muted text-foreground hover:border-primary hover:bg-muted"
-          } ${!enabled && "cursor-not-allowed opacity-50"}`}
+          className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-3 transition-all ${errors.length
+            ? "border-destructive bg-destructive text-destructive-foreground"
+            : saved
+              ? "border-secondary bg-secondary text-secondary-foreground"
+              : loading
+                ? "border-primary bg-muted text-primary"
+                : "border-border bg-muted text-foreground hover:border-primary hover:bg-muted"
+            } ${!enabled && "cursor-not-allowed opacity-50"}`}
         >
           {loading ? (
             <Spinner />
@@ -155,7 +154,7 @@ export const StandaloneImagePicker = ({
           <button
             type="button"
             onClick={handleClear}
-            className="flex items-center gap-2 rounded-lg border-2 border-destructive px-4 py-3 text-destructive transition-all hover:border-destructive hover:bg-destructive"
+            className="flex items-center gap-2 rounded-lg border-2 border-destructive px-4 py-3 text-destructive transition-all hover:border-destructive hover:bg-destructive hover:text-destructive-foreground"
           >
             <TbTrash className="text-xl" />
           </button>
