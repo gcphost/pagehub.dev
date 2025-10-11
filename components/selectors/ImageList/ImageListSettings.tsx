@@ -158,11 +158,12 @@ export const ImageListSettings = () => {
                 ]}
               >
                 <NodeProvider id={image.id}>
-                  <div className="flex flex-col gap-3 bg-primary p-3">
+                  <div className="flex flex-col gap-3 bg-card p-3 text-card-foreground">
                     <MediaInput
                       propKey="videoId"
                       typeKey="type"
-                      title="Image"
+                      title=""
+                      collapsible={false}
                     />
                   </div>
                 </NodeProvider>
@@ -171,7 +172,7 @@ export const ImageListSettings = () => {
           </div>
 
           <button
-            className="btn w-full p-3"
+            className="btn-primary w-full p-3"
             onClick={() => {
               const Image = query.getOptions().resolver.Image;
               if (Image) {

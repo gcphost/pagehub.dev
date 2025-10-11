@@ -195,7 +195,7 @@ export const ButtonListSettings = () => {
               ]}
             >
               <NodeProvider id={button.id}>
-                <div className="flex flex-col gap-3 bg-primary p-3">
+                <div className="flex flex-col gap-3 bg-card p-3 text-card-foreground">
                   <LinkSettingsInput
                     propKey="url"
                     showAnchor={false}
@@ -218,7 +218,7 @@ export const ButtonListSettings = () => {
         </div>
 
         <button
-          className="btn w-full p-3"
+          className="btn-primary w-full p-3"
           onClick={() => {
             const Button = query.getOptions().resolver.Button;
             if (Button) {

@@ -11,7 +11,7 @@ import { Container } from "components/selectors/Container";
 import { Divider } from "components/selectors/Divider";
 import { Form, FormDrop } from "components/selectors/Form";
 import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
-import { OnlyText, Text } from "components/selectors/Text";
+import { Text } from "components/selectors/Text";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { parseContent } from "pages/api/page/[[...slug]]";
@@ -166,7 +166,6 @@ function App({ subdomain, data, meta, seo }) {
       Container,
       Text,
       OnlyFormElement,
-      OnlyText,
       Form,
       FormElement,
       FormDrop,

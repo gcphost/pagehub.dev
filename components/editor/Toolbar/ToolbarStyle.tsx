@@ -261,7 +261,7 @@ export const Accord = ({
           <span key={k}>{_}</span>
         ))}
       </div>
-      {active && <div className="">{children}</div>}
+      {active && children}
     </div>
   );
 };

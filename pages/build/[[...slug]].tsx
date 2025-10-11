@@ -11,7 +11,7 @@ import { ContainerGroup } from "components/selectors/ContainerGroup";
 import { Divider } from "components/selectors/Divider";
 import { Embed } from "components/selectors/Embed";
 import { Spacer } from "components/selectors/Spacer";
-import { OnlyText, Text } from "components/selectors/Text";
+import { Text } from "components/selectors/Text";
 import debounce from "lodash.debounce";
 import lz from "lzutf8";
 import { NextSeo } from "next-seo";
@@ -90,7 +90,6 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
     ContainerGroup,
     Text,
     OnlyFormElement,
-    OnlyText,
     Form,
     FormDrop,
     FormElement,
@@ -112,13 +111,12 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
   return (
     <div className="h-screen w-screen">
       <NextSeo
-        title={`${
-          result?.title ||
+        title={`${result?.title ||
           result?.domain ||
           result?.subdomain ||
           slug ||
           "New Website"
-        } - ${tenantSiteTitle || siteTitle}`}
+          } - ${tenantSiteTitle || siteTitle}`}
         description={siteDescription}
         canonical={
           tenant?.domain

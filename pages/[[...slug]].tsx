@@ -13,7 +13,7 @@ import { Divider } from "components/selectors/Divider";
 import { Form, FormDrop } from "components/selectors/Form";
 import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
 import { RenderGradient, RenderPattern } from "components/selectors/lib";
-import { OnlyText, Text } from "components/selectors/Text";
+import { Text } from "components/selectors/Text";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -167,7 +167,6 @@ function App({ subdomain, data, meta, seo }) {
       ContainerGroup,
       Text,
       OnlyFormElement,
-      OnlyText,
       Form,
       FormElement,
       FormDrop,
@@ -289,8 +288,7 @@ export async function getServerSideProps({ req, res, params }) {
       await dbConnect();
 
       const apiRes = await fetch(
-        `${process.env.API_ENDPOINT}/page/${subdomain}/${
-          params?.slug?.join("/") || ""
+        `${process.env.API_ENDPOINT}/page/${subdomain}/${params?.slug?.join("/") || ""
         }`,
       );
 

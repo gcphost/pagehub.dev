@@ -9,7 +9,7 @@ import { Embed } from "components/selectors/Embed";
 import { Form, FormDrop } from "components/selectors/Form";
 import { FormElement, OnlyFormElement } from "components/selectors/FormElement";
 import { Image } from "components/selectors/Image";
-import { OnlyText, Text } from "components/selectors/Text";
+import { Text } from "components/selectors/Text";
 import { Video } from "components/selectors/Video";
 import router, { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
@@ -22,7 +22,6 @@ import {
 } from "recoil";
 import { SettingsAtom } from "utils/atoms";
 import {
-  DesignSystemSidebarAtom,
   IsolateAtom,
   LastctiveAtom,
   OnlineAtom,
@@ -30,7 +29,7 @@ import {
   SideBarAtom,
   SideBarOpen,
   ViewModeAtom,
-  isolatePageAlt,
+  isolatePageAlt
 } from "utils/lib";
 import { useAutoOpenSidebar } from "../hooks/useAutoOpenSidebar";
 import { DeviceOffline } from "../Toolbar/DeviceOffline";
@@ -228,9 +227,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
   const [online, setOnline] = useRecoilState(OnlineAtom);
   const sideBarOpen = useRecoilValue(SideBarOpen);
   const sideBarLeft = useRecoilValue(SideBarAtom);
-  const [designSystemSidebarOpen, setDesignSystemSidebarOpen] = useRecoilState(
-    DesignSystemSidebarAtom,
-  );
+
 
   useEffect(() => {
     localStorage.setItem("clipBoard", JSON.stringify({}));
@@ -367,7 +364,6 @@ export const Viewport: React.FC<any> = ({ children }) => {
         Container,
         Text,
         OnlyFormElement,
-        OnlyText,
         Form,
         FormDrop,
         FormElement,

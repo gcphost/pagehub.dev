@@ -55,22 +55,6 @@ const defaultProps: TextProps = {
   canDelete: true,
 };
 
-export const OnlyText = ({ children, ...props }) => {
-  const {
-    connectors: { connect },
-  }: any = useNode();
-  return (
-    <div title="only-buttons" ref={connect} className="mt-5 w-full" {...props}>
-      {children}
-    </div>
-  );
-};
-
-OnlyText.craft = {
-  rules: {
-    canMoveIn: (nodes) => nodes.every((node) => node.data?.name === "Text"),
-  },
-};
 
 export const Text = (props: Partial<TextProps>) => {
   props = {

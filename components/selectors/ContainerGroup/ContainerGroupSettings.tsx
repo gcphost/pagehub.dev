@@ -21,7 +21,7 @@ import { Container } from "../Container";
 import { Image } from "../Image";
 import { Text } from "../Text";
 
-interface ContainerGroupSettingsProps {}
+interface ContainerGroupSettingsProps { }
 
 export const SelectedContainerGroupAtom = atom({
   key: "selectedcontainergroup",
@@ -99,8 +99,8 @@ export const ContainerGroupSettings: React.FC<
         const childNode = query.node(childId).get();
         const componentType = String(
           childNode.data.displayName ||
-            childNode.data.name ||
-            childNode.data.type,
+          childNode.data.name ||
+          childNode.data.type,
         );
 
         if (componentType) {
@@ -200,7 +200,7 @@ export const ContainerGroupSettings: React.FC<
                   className="group border-b border-border"
                 >
                   <NodeProvider id={component.id}>
-                    <div className="flex flex-col gap-3 bg-primary p-3">
+                    <div className="flex flex-col gap-3 bg-card p-3 text-card-foreground">
                       {ComponentTabTools.toolbar &&
                         React.createElement(ComponentTabTools.toolbar)}
                     </div>
