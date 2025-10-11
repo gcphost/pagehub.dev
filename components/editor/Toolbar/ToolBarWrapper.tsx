@@ -107,13 +107,13 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
 
   return (
     <>
-      <h1 className="font-bold text-2xl px-3 py-1.5  bg-gray-700 w-full z-50 border-gray-800 border-b">
+      <h1 className="font-bold text-2xl px-3 py-1.5 bg-muted text-muted-foreground w-full z-50 border-border border-b">
         {<ToolbarTitleEditor />}
       </h1>
 
       {/* Hide settings tabs for fully linked components */}
       {!isLinked && (
-        <div className="border-b border-b-gray-800 font-semibold items-center flex justify-between">
+        <div id="toolbarTabs" className="border-b border-border font-semibold items-center flex justify-between bg-muted text-accent-foreground">
           <div
             aria-label="Tabs"
             role="tablist"
@@ -129,14 +129,14 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
       <div
         id="toolbarItems"
         data-toolbar={true}
-        className="bg-gray-700/90 w-full top-[138px] h-screen grow basis-full z-20 flex flex-col"
+        className="w-full top-[138px] h-screen grow basis-full z-20 flex flex-col"
       >
         <RenderChildren props={props} query={query} actions={actions} id={id}>
           {children}
         </RenderChildren>
       </div>
 
-      <div className="z-30 absolute bottom-0 left-0 right-0  w-full bg-gray-700 h-[64px] p-3 border-t border-t-gray-900 flex flex-row items-center justify-between text-xl">
+      <div className="z-30 absolute bottom-0 left-0 right-0  w-full bg-muted  p-0 border-t border-t-border flex flex-row items-center justify-between px-6 text-xl">
         {foot}
 
         {id !== ROOT_NODE && (
@@ -147,7 +147,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
+              className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
               style={scaleAnimationStyle}
               onClick={() => {
                 actions.selectNode(parent);
@@ -171,8 +171,8 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className={`cursor-pointer ${isolate ? "text-accent-400" : "text-gray-400"
-                } hover:text-accent-400 rounded-md p-3`}
+              className={`cursor-pointer ${isolate ? "text-accent-foreground" : "text-muted-foreground"
+                } hover:text-accent-foreground rounded-md p-2`}
               style={scaleAnimationStyle}
             >
               {isolate ? <TbScaleOutlineOff /> : <TbScaleOutline />}
@@ -200,7 +200,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                   transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.9 }}
-                className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
+                className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
                 style={scaleAnimationStyle}
               >
                 {props.canDelete ? <TbTrash /> : <TbTrashOff />}
@@ -222,7 +222,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                       transition: { duration: 0.2 },
                     }}
                     whileTap={{ scale: 0.9 }}
-                    className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
+                    className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
                     style={scaleAnimationStyle}
                   >
                     <TbCopy />
@@ -244,7 +244,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                     }}
                     whileTap={{ scale: 0.9 }}
                     ref={ref}
-                    className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
+                    className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
                     style={scaleAnimationStyle}
                   >
                     {canMake ? <TbComponents /> : <TbComponentsOff />}
@@ -269,7 +269,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md p-3"
+              className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md p-2"
               style={scaleAnimationStyle}
             >
               <TbX />
@@ -279,7 +279,7 @@ export const ToolbarWrapper = ({ children = null, head, foot = "" }) => {
 
         {id === ROOT_NODE && (
           <button
-            className="w-full btn text-base font-medium r py-2"
+            className="w-full btn text-base font-medium r py-2 text-foreground-muted p-2  "
             onClick={() => {
               actions.selectNode(null);
               setSideBarOpen(false);

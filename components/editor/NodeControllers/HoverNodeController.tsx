@@ -34,7 +34,7 @@ export const HoverNodeController = (props: {
     >
       <div
         className={
-          "px-2 border flex flex-row gap-3 bg-white text-black !text-base !font-normal fontfamily-base rounded-md"
+          "px-2 border flex flex-row gap-3 bg-background text-foreground !text-base !font-normal fontfamily-base rounded-md"
         }
       >
         {name}

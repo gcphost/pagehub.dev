@@ -46,7 +46,7 @@ export const Tooltip = ({
         <ReactTooltip
           id={id}
           classNameArrow="hidden"
-          className={`max-w-[220px] !text-white !bg-black !rounded-md !px-2 !py-1 !font-normal ${tooltipClassName}`}
+          className={`max-w-[220px] !text-primary-foreground !bg-primary !rounded-md !px-2 !py-1 !font-normal !shadow-lg !border !border-border ${tooltipClassName}`}
         />
       )}
     </>

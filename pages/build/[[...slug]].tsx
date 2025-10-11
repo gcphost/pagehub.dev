@@ -138,7 +138,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
         }, 1000)}
       >
         <div
-          className="flex flex-row w-full h-screen overflow-hidden fixed bg-gray-200"
+          className="flex flex-row w-full h-screen overflow-hidden fixed bg-muted text-muted-foreground"
           data-base={true}
         >
           <Toolbar />
@@ -364,7 +364,7 @@ function App({ data, slug, result, session, tenant, sessionToken }) {
                             canEditName={true}
                             root={{
                               background: "bg-[var(--ph-primary)]",
-                              color: "text-white",
+                              color: "text-primary-foreground",
                               radius: "rounded-[var(--ph-border-radius)]",
                               shadow: "shadow-[var(--ph-shadow-style)]",
 

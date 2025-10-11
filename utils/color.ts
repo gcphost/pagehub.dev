@@ -38,7 +38,7 @@ export function getColors(dom, props) {
     if (!_color) {
       basecolor = props?.root?.color
         ? `${props?.root?.color} border-${props?.root?.color.split("text-")[1]}`
-        : "text-black border-black";
+        : "text-foreground border-foreground";
     }
 
     if (_color) {

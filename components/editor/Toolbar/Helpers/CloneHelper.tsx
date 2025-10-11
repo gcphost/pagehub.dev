@@ -77,7 +77,7 @@ export const setClonedProps = (props, query, exclude = []) => {
 
 export const ConvertToRegularComponent = ({ query, actions, id }) => (
   <button
-    className="w-full flex items-center gap-3 px-4 py-3 bg-primary-800 hover:bg-primary-700 rounded-lg transition-colors text-left"
+    className="w-full flex items-center gap-3 px-4 py-3 bg-primary hover:bg-primary rounded-lg transition-colors text-left"
     onClick={() => {
       const node = query.node(id).get();
       removeHasManyRelation(node, query, actions);
@@ -88,10 +88,10 @@ export const ConvertToRegularComponent = ({ query, actions, id }) => (
       });
     }}
   >
-    <TbLinkOff className="text-red-400 flex-shrink-0 text-xl" />
+    <TbLinkOff className="text-destructive flex-shrink-0 text-xl" />
     <div className="flex-1">
-      <div className="font-semibold text-white">Unlink Component</div>
-      <div className="text-xs text-gray-400">Make independent with all settings editable</div>
+      <div className="font-semibold text-foreground">Unlink Component</div>
+      <div className="text-xs text-muted-foreground">Make independent with all settings editable</div>
     </div>
   </button>
 );
@@ -118,30 +118,30 @@ export const NoSettings = ({ actions, id, query }) => (
 
 export const ConvertToStyledComponent = ({ actions, id }) => (
   <button
-    className="w-full flex items-center gap-3 px-4 py-3 bg-primary-800 hover:bg-primary-700 rounded-lg transition-colors text-left"
+    className="w-full flex items-center gap-3 px-4 py-3 bg-primary hover:bg-primary rounded-lg transition-colors text-left"
     onClick={() =>
       actions.setProp(id, (prop) => (prop.relationType = "style"))
     }
   >
-    <TbPalette className="text-blue-400 flex-shrink-0 text-xl" />
+    <TbPalette className="text-primary flex-shrink-0 text-xl" />
     <div className="flex-1">
-      <div className="font-semibold text-white">Style Only Mode</div>
-      <div className="text-xs text-gray-400">Edit styles while keeping other settings linked</div>
+      <div className="font-semibold text-foreground">Style Only Mode</div>
+      <div className="text-xs text-muted-foreground">Edit styles while keeping other settings linked</div>
     </div>
   </button>
 );
 
 export const ConvertToContentComponent = ({ actions, id }) => (
   <button
-    className="w-full flex items-center gap-3 px-4 py-3 bg-primary-800 hover:bg-primary-700 rounded-lg transition-colors text-left"
+    className="w-full flex items-center gap-3 px-4 py-3 bg-primary hover:bg-primary rounded-lg transition-colors text-left"
     onClick={() =>
       actions.setProp(id, (prop) => (prop.relationType = "content"))
     }
   >
     <TbPencil className="text-purple-400 flex-shrink-0 text-xl" />
     <div className="flex-1">
-      <div className="font-semibold text-white">Content Only Mode</div>
-      <div className="text-xs text-gray-400">Edit text and content while keeping styles linked</div>
+      <div className="font-semibold text-foreground">Content Only Mode</div>
+      <div className="text-xs text-muted-foreground">Edit text and content while keeping styles linked</div>
     </div>
   </button>
 );
@@ -180,19 +180,19 @@ export const RenderChildren = ({ props, children, query, actions, id }) => {
 
       return (
         <div className="p-3 flex flex-col gap-3">
-          <div className="p-4 bg-gray-900 rounded-lg border border-gray-700">
-            <div className="text-sm text-gray-400 mb-2">This is a linked instance of:</div>
-            <div className="font-semibold text-white text-lg">{componentName}</div>
+          <div className="p-4 bg-card rounded-lg border border-border">
+            <div className="text-sm text-muted-foreground mb-2">This is a linked instance of:</div>
+            <div className="font-semibold text-foreground text-lg">{componentName}</div>
           </div>
 
           <button
-            className="w-full flex items-center gap-3 px-4 py-3 bg-primary-800 hover:bg-primary-700 rounded-lg transition-colors text-left"
+            className="w-full flex items-center gap-3 px-4 py-3 bg-primary hover:bg-primary rounded-lg transition-colors text-left"
             onClick={handleEditComponent}
           >
-            <TbBoxModel2 className="text-green-500 flex-shrink-0 text-xl" />
+            <TbBoxModel2 className="text-secondary-foreground flex-shrink-0 text-xl" />
             <div className="flex-1">
-              <div className="font-semibold text-white">Edit Linked Instance</div>
-              <div className="text-xs text-primary-200">Change the main component</div>
+              <div className="font-semibold text-foreground">Edit Linked Instance</div>
+              <div className="text-xs text-muted-foreground">Change the main component</div>
             </div>
           </button>
 

@@ -176,7 +176,7 @@ export const Toolbox = ({ userStyle = null }) => {
         setActiveMenu(k);
         setActiveItem(0);
       }}
-      className={`btn text-2xl rounded-full bg-primary-500 text-white border  drop-shadow-2xl p-3 cursor-pointer ${activeMenu === k ? " bg-primary-800" : ""
+      className={`btn text-2xl rounded-full bg-primary text-foreground border  drop-shadow-2xl p-3 cursor-pointer ${activeMenu === k ? " bg-primary" : ""
         }`}
       aria-label={items[_].title}
       role="button"
@@ -197,7 +197,7 @@ export const Toolbox = ({ userStyle = null }) => {
     }
     return (
       <div
-        className={`bg-white h-full px-6 py-8 gap-3 flex flex-col min-w-[320px] w-full overflow-auto scrollbar ${item?.classes?.content}`}
+        className={`bg-background h-full px-6 py-8 gap-3 flex flex-col min-w-[320px] w-full overflow-auto scrollbar ${item?.classes?.content}`}
       >
         {item.content}
       </div>
@@ -206,7 +206,7 @@ export const Toolbox = ({ userStyle = null }) => {
 
   const itemMenu = (item, getter, setter, col = false) => (
     <div
-      className={` p-4 flex flex-col bg-gray-700/90  overflow-auto scrollbar min-w-[170px] ${col ? "bg-gray-100 text-black" : "bg-gray-700/90 text-white"
+      className={` p-4 flex flex-col bg-muted  overflow-auto scrollbar min-w-[170px] ${col ? "bg-muted text-foreground" : "bg-muted text-foreground"
         }`}
     >
       <div
@@ -288,7 +288,7 @@ export const Toolbox = ({ userStyle = null }) => {
                   exit="hidden"
                   id="toolbox"
                 >
-                  <div className="border bg-whit flex-row flex border-gray-500 shadow-10x rounded-md overflow-hidden h-full">
+                  <div className="border bg-whit flex-row flex border-border shadow-10x rounded-md overflow-hidden h-full">
                     {activeMenu !== null &&
                       itemMenu(items[activeMenu], activeItem, setActiveItem)}
                     {activeMenu !== null &&

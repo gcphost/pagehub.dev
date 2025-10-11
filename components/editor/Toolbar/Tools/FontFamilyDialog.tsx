@@ -82,7 +82,7 @@ export const FontFamilyDialog = () => {
         callback={(_, k) => (
           <button
             id={`fontFamily-${_}`}
-            className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${dialog.value === _ ? "bg-gray-100" : ""
+            className={`w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs transition-colors ${dialog.value === _ ? "bg-accent text-accent-foreground" : ""
               }`}
             style={{ fontFamily: (_ || []).join(", ") }}
             key={k}
@@ -109,7 +109,7 @@ export const FontFamilyDialog = () => {
       callback={(_, k) => (
         <button
           id={`fontFamily-${_}`}
-          className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${dialog.value === _ ? "bg-gray-100" : ""
+          className={`w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs transition-colors ${dialog.value === _ ? "bg-accent text-accent-foreground" : ""
             }`}
           style={{ fontFamily: (_ || []).join(", ") }}
           key={k}

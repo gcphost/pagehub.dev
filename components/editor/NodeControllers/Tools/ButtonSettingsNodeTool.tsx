@@ -7,7 +7,7 @@ export function ButtonSettingsNodeTool() {
       { /* <AnimatedTooltipButton
         content="Color"
         placement="bottom"
-        className="w-6 h-6 rounded-md overflow-hidden border-gray-500 border-1"
+        className="w-6 h-6 rounded-md overflow-hidden border-border border-1"
       >
         <ColorInput
           propKey="color"
@@ -21,7 +21,7 @@ export function ButtonSettingsNodeTool() {
       <AnimatedTooltipButton
         content="Background Color"
         placement="bottom"
-        className="w-6 h-6 rounded-md overflow-hidden border-gray-500 border-1"
+        className="w-6 h-6 rounded-md overflow-hidden border-border border-1"
       >
         <ColorInput
           propKey="background"

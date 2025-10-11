@@ -51,8 +51,8 @@ export default function ClickItem() {
             type="button"
             onClick={() => setMode("link")}
             className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${mode === "link"
-              ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              : "bg-primary-500 text-white"
+              ? "bg-accent text-accent-foreground hover:bg-accent"
+              : "bg-muted text-muted-foreground hover:bg-muted"
               }`}
           >
             <TbExternalLink className="inline mr-1" />
@@ -62,8 +62,8 @@ export default function ClickItem() {
             type="button"
             onClick={() => setMode("action")}
             className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${mode === "action"
-              ? "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              : "bg-primary-500 text-white"
+              ? "bg-accent text-accent-foreground hover:bg-accent"
+              : "bg-muted text-muted-foreground hover:bg-muted"
               }`}
           >
             <TbPointer className="inline mr-1" />

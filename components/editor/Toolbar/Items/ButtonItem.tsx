@@ -28,10 +28,10 @@ const Input = ({ nodeProps, setProp }) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="border rounded-md border-gray-500">
+      <div className="border rounded-md border-border">
         {buttons.map((but, butKey) => (
           <Accord
-            className="border-b p-3 border-gray-500"
+            className="border-b p-3 border-border"
             key={butKey}
             prop={butKey}
             accordion={accordion}
@@ -51,7 +51,7 @@ const Input = ({ nodeProps, setProp }) => {
             buttons={[
               <button
                 key="button-1"
-                className="text-gray-500"
+                className="text-muted-foreground"
                 aria-label="Delete button"
                 onClick={(e) => {
                   e.preventDefault();

@@ -30,11 +30,13 @@ import {
   TbLogin,
   TbLogout,
   TbMenu2,
+  TbMoon,
   TbPalette,
   TbPhoto,
   TbPlayerPlay,
   TbPlus,
   TbSettings,
+  TbSun,
   TbUpload,
   TbX
 } from "react-icons/tb";
@@ -90,7 +92,7 @@ const Item = ({ onClick, children, disabled = false, className = "", ariaLabel =
     onClick={onClick}
     disabled={disabled}
     aria-label={ariaLabel}
-    className={`cursor-pointer hover:bg-gray-600/20 hover:text-white py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-white ${disabled && "opacity-50"
+    className={`cursor-pointer hover:bg-muted hover:text-foreground py-3 px-1.5 text-xl flex items-center justify-center rounded-lg text-foreground ${disabled && "opacity-50"
       } ${className}`}
     whileHover={{
       scale: 1.1,
@@ -241,11 +243,40 @@ export const Header = () => {
   const [device, setDevice] = useRecoilState(DeviceAtom);
   const [lsIds, setLsIds] = useState([]);
   const [showHidden, setShowHidden] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(
     () => setLsIds(JSON.parse(localStorage.getItem("history")) || []),
     []
   );
+
+  // Theme management
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const shouldBeDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+    setIsDarkMode(shouldBeDark);
+
+    if (shouldBeDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+
+    if (newTheme) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
 
   const altView = getAltView(view);
 
@@ -264,7 +295,7 @@ export const Header = () => {
     <>
       <header
         role="banner"
-        className="inside-shadow pointer-events-auto  bg-primary-900 text-black items-center  flex flex-row-reverse justify-between"
+        className="pointer-events-auto bg-background text-foreground items-center flex flex-row-reverse justify-between border-b border-border"
         data-tutorial="header"
       >
         <Tooltip content="Add Component" placement="bottom" arrow={false}>
@@ -483,7 +514,7 @@ export const Header = () => {
       </header>
 
       {/* Page/Component Selector Bar - Below Header */}
-      <div className="pointer-events-auto bg-primary-900 border-b-2 border-gray-600 px-3 py-2">
+      <div className="pointer-events-auto bg-background border-b-2 border-border px-3 py-2">
         {viewMode === 'page' ? (
           <PageSelector className="w-full" />
         ) : (
@@ -496,7 +527,7 @@ export const Header = () => {
           ref={ref}
           role="navigation"
           aria-label="Editor menu"
-          className="pointer-events-auto drop-shadow-2xl overflow-y-auto scrollbar bg-gray-700    gap-3 pt-3 flex flex-col text-white absolute w-full bottom-0 z-50 top-12"
+          className="pointer-events-auto drop-shadow-2xl overflow-y-auto scrollbar bg-background    gap-3 pt-3 flex flex-col text-foreground absolute w-full bottom-0 z-50 top-12"
         >
 
           {showMenuType === "export" && <ExportModal />}
@@ -531,7 +562,7 @@ export const Header = () => {
                   <div className="flex flex-col gap-3">
                     {lsIds.reverse().map((_, key) => (
                       <div className="flex flex-row gap-3 w-full" key={key}>
-                        <div className="text-2xl">
+                        <div className="text-base">
                           <TbExternalLink />
                         </div>
                         <div className="capitalize">
@@ -548,13 +579,13 @@ export const Header = () => {
           )}
           {showMenuType === "submissions" && (
             <div className="p-3">
-              <h3 className="text-2xl">Form Submissions</h3>
+              <h3 className="text-base">Form Submissions</h3>
               <p className="mb-3">
                 When users submit forms to your website the data will be
                 available here.
               </p>
 
-              <hr className="border-b border-gray-500 -mx-3 mb-6" />
+              <hr className="border-b border-border -mx-3 mb-6" />
 
               {settings?.submissions?.length ? (
                 <div className="flex flex-col gap-6">
@@ -565,7 +596,7 @@ export const Header = () => {
 
                     return (
                       <div
-                        className="border border-gray-600  rounded p-3 gap-3 flex flex-col"
+                        className="border border-border  rounded p-3 gap-3 flex flex-col"
                         key={_key}
                       >
                         <p>
@@ -601,9 +632,9 @@ export const Header = () => {
                       setShowMenu(false);
                       actions.selectNode(ROOT_NODE);
                     }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
                       <TbBoxModel2 />
                     </div>{" "}
                     Select Background
@@ -611,9 +642,9 @@ export const Header = () => {
 
                   <button
                     onClick={() => setSideBarLeft(!sideBarLeft)}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
                       {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
                     </div>
                     Move this panel to the {sideBarLeft ? "right" : "left"} side
@@ -624,7 +655,7 @@ export const Header = () => {
                 <>
                   <Link
                     href="/build"
-                    className="hidden items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="hidden items-center gap-3 cursor-pointer hover:bg-muted text-muted-foreground p-3"
                   >
                     <TbFilePlus /> New Builder
                   </Link>
@@ -635,9 +666,9 @@ export const Header = () => {
                         setShowMenu(true);
                         setShowMenuType("submissions");
                       }}
-                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                     >
-                      <div className="text-2xl">
+                      <div className="text-base">
                         <TbForms />
                       </div>{" "}
                       Form Submissions
@@ -650,12 +681,12 @@ export const Header = () => {
                       setIsMediaManagerModalOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
                       <TbPhoto />
                     </div>
-                    <div className="">Media Manager</div>
+                    <div className="text-sm">Media Manager</div>
                   </button>
 
 
@@ -664,12 +695,12 @@ export const Header = () => {
                       setIsDesignSystemPanelOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
                       <TbPalette />
                     </div>
-                    <div className="">Design System</div>
+                    <div className="text-sm">Design System</div>
                   </button>
 
 
@@ -679,40 +710,40 @@ export const Header = () => {
                       setIsSiteSettingsModalOpen(true);
                       setShowMenu(false);
                     }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
                       <TbSettings />
                     </div>
-                    <div className="">Site Settings</div>
+                    <div className="text-sm">Site Settings</div>
                   </button>
 
                   {settings?.name && (
                     <a
                       href={`https://${settings.name}.pagehub.dev`}
                       target="_blank"
-                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                     >
-                      <div className="text-2xl">
+                      <div className="text-base">
                         <TbExternalLink />
-                      </div>{" "}
-                      View Live Version
+                      </div>
+                      <div className="text-sm">View Live Version</div>
                     </a>
                   )}
 
 
-                  <hr className="border-b border-gray-500 " />
+                  <hr className="border-b border-border " />
 
                   {settings?.draftId && (
                     <a
                       href={`https://${settings.draftId}.pagehub.dev`}
                       target="_blank"
-                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                     >
-                      <div className="text-2xl">
+                      <div className="text-base">
                         <TbExternalLink />
-                      </div>{" "}
-                      View Draft Version
+                      </div>
+                      <div className="text-sm">View Draft Version</div>
                     </a>
                   )}
 
@@ -733,39 +764,39 @@ export const Header = () => {
 
                       // isetDialogOpen(htmlOutput);
                     }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
                       <TbCode />
                     </div>
-                    <div className="">Copy As Html</div>
+                    <div className="text-sm">Copy As Html</div>
                   </button>
                   <button
                     onClick={() => {
                       setShowMenuType("export");
                       setShowMenu(true);
                     }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
                       <TbDownload />
                     </div>
-                    <div className="">Export</div>
+                    <div className="text-sm">Export</div>
                   </button>
                   <button
                     onClick={() => {
                       setShowMenuType("import");
                       setShowMenu(true);
                     }}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
                       <TbUpload />
-                    </div>{" "}
-                    Import
+                    </div>
+                    <div className="text-sm">Import</div>
                   </button>
 
-                  <hr className="border-b border-gray-500 " />
+                  <hr className="border-b border-border " />
 
                   {lsIds.length ? (
                     <button
@@ -773,52 +804,62 @@ export const Header = () => {
                         setShowMenu(true);
                         setShowMenuType("builds");
                       }}
-                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                     >
-                      <div className="text-2xl">
+                      <div className="text-base">
                         <TbDevices2 />
-                      </div>{" "}
-                      Previous Builds
+                      </div>
+                      <div className="text-sm">Previous Builds</div>
                     </button>
                   ) : null}
 
-                  <hr className="border-b border-gray-500 " />
+                  <hr className="border-b border-border " />
 
                   {status === "authenticated" ? (
                     <>
-                      <p className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3">
+                      <p className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1">
                         Signed in as {session.user.email}
                       </p>{" "}
                       <button
                         onClick={() => popupCenter("/google-signout", "Sign Out")}
-                        className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                        className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                       >
-                        <div className="text-2xl">
+                        <div className="text-base">
                           <TbLogout />
-                        </div>{" "}
-                        Sign out
+                        </div>
+                        <div className="text-sm">Sign out</div>
                       </button>
                     </>
                   ) : (
                     <button
                       onClick={() => popupCenter("/google-signin", "Sign In")}
-                      className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                      className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                     >
-                      <div className="text-2xl">
+                      <div className="text-base">
                         <TbLogin />
-                      </div>{" "}
-                      Sign in
+                      </div>
+                      <div className="text-sm">Sign in</div>
                     </button>
                   )}
 
                   <button
-                    onClick={() => setSideBarLeft(!sideBarLeft)}
-                    className="flex items-center gap-3 cursor-pointer hover:bg-gray-600 p-3"
+                    onClick={toggleTheme}
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
                   >
-                    <div className="text-2xl">
+                    <div className="text-base">
+                      {isDarkMode ? <TbSun /> : <TbMoon />}
+                    </div>
+                    <div className="text-sm">Switch to {isDarkMode ? 'Light' : 'Dark'} Theme</div>
+                  </button>
+
+                  <button
+                    onClick={() => setSideBarLeft(!sideBarLeft)}
+                    className="flex items-center gap-1 cursor-pointer hover:bg-muted text-muted-foreground p-1"
+                  >
+                    <div className="text-base">
                       {sideBarLeft ? <TbLayoutSidebarRight /> : <TbLayoutSidebar />}
                     </div>
-                    {sideBarLeft ? "Right" : "Left"} Settings Panel
+                    <div className="text-sm">{sideBarLeft ? "Right" : "Left"} Settings Panel</div>
                   </button>
                 </>
               )}

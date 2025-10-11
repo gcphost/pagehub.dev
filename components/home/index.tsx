@@ -22,13 +22,13 @@ const nunito = Nunito({
 
 const Card = ({ icon, title, description }) => (
   <div className="text-center flex gap-6 flex-col justify-center items-center w-full mb-12 md:mb-0 md:w-1/2">
-    <div className="bg-gray-700/50 border border-gray-600 rounded-full p-12 text-6xl shadow-lg backdrop-blur-sm">
+    <div className="bg-muted border border-border rounded-full p-12 text-6xl shadow-lg backdrop-blur-sm">
       {icon}
     </div>
 
     <h3 className="text-3xl">{title}</h3>
 
-    <p className="w-2/3 text-center text-xl text-gray-300 leading-relaxed">
+    <p className="w-2/3 text-center text-xl text-muted-foreground leading-relaxed">
       {description}
     </p>
   </div>
@@ -48,23 +48,23 @@ export const HomePage = () => (
 
 function Home() {
   return (
-    <div className={`bg-gray-800 text-white ${nunito.className}`}>
-      <nav className="p-3 border-gray-200 bg-gradient-to-r from-emerald-300 to-cyan-300 h-6 flex items-center"></nav>
+    <div className={`bg-background text-foreground ${nunito.className}`}>
+      <nav className="p-3 border-border bg-gradient-to-r from-emerald-300 to-cyan-300 h-6 flex items-center"></nav>
 
       <div className=" flex flex-col gap-12 lg:gap-24 pb-20">
         <div className="container mx-auto ">
           <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-            <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+            <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-foreground md:text-5xl lg:text-6xl">
               Build beautiful pages in minutes
             </h1>
 
-            <p className="mb-20 leading-10 text-xl font-normal lg:text-3xl sm:px-16 xl:px-48 text-gray-400">
+            <p className="mb-20 leading-10 text-xl font-normal lg:text-3xl sm:px-16 xl:px-48 text-muted-foreground">
               The fastest way to create landing pages. No code, no hassle—just drag, drop, and publish.
             </p>
 
-            <p className="mb-8 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-gray-400 hidden">
+            <p className="mb-8 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-muted-foreground hidden">
               Start with one of our designs or a{" "}
-              <Link href="/builder" className="text-white ">
+              <Link href="/builder" className="text-foreground ">
                 blank template
               </Link>
               .
@@ -75,7 +75,7 @@ function Home() {
         <div className="container mx-auto flex justify-center mb-24">
           <Link
             href="/templates"
-            className="bg-white text-black hover:bg-primary-200 cursor-pointer  text-center text-2xl lg:w-1/3 p-12 rounded-xl"
+            className="bg-background text-foreground hover:bg-muted cursor-pointer  text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
             Get Started
           </Link>
@@ -128,7 +128,7 @@ function Home() {
         <div className="container mx-auto flex justify-center">
           <Link
             href="/templates"
-            className="bg-white text-black hover:bg-primary-200 cursor-pointer  text-center text-2xl lg:w-1/3 p-12 rounded-xl"
+            className="bg-background text-foreground hover:bg-muted cursor-pointer  text-center text-2xl lg:w-1/3 p-12 rounded-xl"
           >
             Get Started
           </Link>
@@ -139,14 +139,14 @@ function Home() {
             <h2 className="text-4xl md:text-5xl font-bold mb-8">
               Integrate PageHub into your platform
             </h2>
-            <p className="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed">
               Seamlessly add page building to your product. Your users create pages, you control the data.
               Perfect for SaaS apps, CMSs, and platforms that need white-label page creation.
             </p>
             <div className="flex justify-center">
               <a
                 href="mailto:gcphost@gmail.com"
-                className="bg-white text-gray-900 hover:bg-gray-100 font-semibold px-10 py-5 rounded-lg text-xl transition-colors"
+                className="bg-background text-foreground hover:bg-muted font-semibold px-10 py-5 rounded-lg text-xl transition-colors"
               >
                 Contact Us for More Info
               </a>

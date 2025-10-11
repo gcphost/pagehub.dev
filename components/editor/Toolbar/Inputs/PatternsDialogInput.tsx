@@ -97,7 +97,7 @@ export const PatternsDialogInput = ({
             </div>
             {patt && (
               <div
-                className="w-1/2 h-full border border-gray-500 bg-white rounded-lg"
+                className="w-1/2 h-full border border-border bg-background rounded-lg"
                 style={{ backgroundImage: patt ? `url(${patt})` : null }}
               ></div>
             )}

@@ -31,7 +31,7 @@ const Input = (__props, ref) => {
 
   if (['toggle', 'checkbox'].includes(type)) {
     return (<label className="relative flex flex-col items-center cursor-pointer ">
-      {props.option && <div className="text-xs mb-2 font-medium text-white text-center">
+      {props.option && <div className="text-xs mb-2 font-medium text-foreground text-center">
         {props.option || "Enable"}
       </div>}
 
@@ -42,7 +42,7 @@ const Input = (__props, ref) => {
           onChange={() => changed(value ? "" : props.on)}
           className="sr-only peer"
         />
-        <div className="w-8 h-4 bg-gray-500 rounded-full peer-focus:ring-2 peer-focus:ring-accent-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-accent-400"></div>
+        <div className="w-8 h-4 bg-muted text-muted-foreground rounded-full peer-focus:ring-2 peer-focus:ring-ring peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:border-border after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary"></div>
       </div>
     </label>);
   }
@@ -144,7 +144,7 @@ const Input = (__props, ref) => {
         <div className="flex items-center gap-2 w-full h-5">
           <input
             type="range"
-            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+            className="flex-1 h-2 bg-muted text-muted-foreground rounded-lg appearance-none cursor-pointer slider"
             min={props.min || 0}
             max={props.max || 100}
             step={props.step || 1}
@@ -203,7 +203,7 @@ const Input = (__props, ref) => {
                 />
                 <label
                   htmlFor={`radio-${propKey}-${key}`}
-                  className={`block text-sm font-medium text-current cursor-pointer input-hover hover:text-white ${checked ? "font-bold " : "text-gray-400"
+                  className={`block text-sm font-medium text-current cursor-pointer px-2 py-1 rounded-md hover:bg-muted transition-colors ${checked ? "font-semibold bg-accent text-accent-foreground" : "text-muted-foreground"
                     }`}
                 >
                   {_.label}
@@ -251,7 +251,7 @@ const Input = (__props, ref) => {
               />
               <label
                 htmlFor={`radio-${propKey}-${key}`}
-                className={`block text-sm font-medium text-current cursor-pointer input-hover hover:text-white ${checked ? "font-bold " : "text-gray-400"
+                className={`block text-sm font-medium text-current cursor-pointer px-2 py-1 rounded-md hover:bg-muted transition-colors ${checked ? "font-semibold bg-accent text-accent-foreground" : "text-muted-foreground"
                   }`}
               >
                 {_.label}
@@ -282,7 +282,7 @@ const Input = (__props, ref) => {
     return (
 
       <div className="flex flex-col gap-2 w-full">
-        <div className="rounded-lg overflow-hidden border border-gray-600 focus:border-accent-400 focus-within:border-accent-400">
+        <div className="rounded-lg overflow-hidden border border-border focus:border-ring focus-within:border-accent">
           <CodeMirror
             value={value}
             height="200px"

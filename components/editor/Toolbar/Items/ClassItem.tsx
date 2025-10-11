@@ -225,7 +225,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
     <div className="relative z-10 gap-6 flex flex-col">
       <label
         htmlFor="search"
-        className="text-sm font-medium text-gray-900 sr-only"
+        className="text-sm font-medium text-foreground sr-only"
       >
         Search
       </label>
@@ -284,7 +284,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
         {classInput?.length > 0 && matches.length > 0 && matches[0].startsWith(classInput) && (
           <div className="absolute inset-0 pointer-events-none flex items-center px-3 z-0">
             <span className="invisible">{classInput}</span>
-            <span className="text-gray-500 font-mono">{matches[0].slice(classInput.length)}</span>
+            <span className="text-muted-foreground font-mono">{matches[0].slice(classInput.length)}</span>
           </div>
         )}
         <button
@@ -297,27 +297,27 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
       </div>
 
       {searched && (
-        <div className="absolute top-10 border border-gray-500  bg-gray-600 rounded-md w-full overflow-hidden">
+        <div className="absolute top-10 border border-border  bg-muted text-muted-foreground rounded-md w-full overflow-hidden">
           <div className="w-full p-2 overflow-auto scrollbar max-h-60 gap-2 flex flex-wrap">
             {matches.map((mat, k) => (
               <CardLight
                 key={k}
                 value={mat}
                 onClick={() => save(mat)}
-                className={k === selectedIndex ? "ring-2 ring-accent-400 rounded-md bg-accent-100" : ""}
+                className={k === selectedIndex ? "ring-2 ring-accent rounded-md bg-accent" : ""}
               />
             ))}
 
           </div>
           {matches.length > 0 && (
-            <div className="text-xs text-gray-400 mt-2 pt-2 border-t border-gray-600 p-2 bg-primary-800">
+            <div className="text-xs text-muted-foreground mt-2 pt-2 border-t border-border p-2 bg-primary">
               <div className="flex flex-wrap gap-1">
-                <span>Press <kbd className="px-1.5 py-0.5 bg-gray-600 rounded text-white">Tab</kbd> to complete</span>
-                <span>Use <kbd className="px-1.5 py-0.5 bg-gray-600 rounded text-white">↑↓</kbd> to navigate</span>
-                <span>Press <kbd className="px-1.5 py-0.5 bg-gray-600 rounded text-white">Enter</kbd> to select</span>
+                <span>Press <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">Tab</kbd> to complete</span>
+                <span>Use <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">↑↓</kbd> to navigate</span>
+                <span>Press <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">Enter</kbd> to select</span>
               </div>
               <div className="mt-1">
-                Use <kbd className="px-1.5 py-0.5 bg-gray-600 rounded text-white">sm:</kbd> for mobile, <kbd className="px-1.5 py-0.5 bg-gray-600 rounded text-white">md:</kbd>, <kbd className="px-1.5 py-0.5 bg-gray-600 rounded text-white">lg:</kbd>, <kbd className="px-1.5 py-0.5 bg-gray-600 rounded text-white">xl:</kbd>, <kbd className="px-1.5 py-0.5 bg-gray-600 rounded text-white">2xl:</kbd> for desktop
+                Use <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">sm:</kbd> for mobile, <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">md:</kbd>, <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">lg:</kbd>, <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">xl:</kbd>, <kbd className="px-1.5 py-0.5 bg-muted rounded text-foreground">2xl:</kbd> for desktop
               </div>
             </div>
           )}
@@ -328,17 +328,17 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
       <div className="flex justify-between items-center w-full">
         <p className="text-xs">Assigned Classes</p>
 
-        <div className="space-x-1.5 text-black">
-          <div className="bg-primary-300  px-0.5 rounded inline-flex text-xxs inside-shadow">
+        <div className="space-x-1.5 text-foreground">
+          <div className="bg-primary  px-0.5 rounded inline-flex text-xxs inside-shadow">
             Component
           </div>
-          <div className="bg-white text-black 5 px-0.5 rounded inline-flex text-xxs inside-shadow">
+          <div className="bg-background text-foreground 5 px-0.5 rounded inline-flex text-xxs inside-shadow">
             User
           </div>
-          <div className="bg-green-500  px-0.5 rounded inline-flex text-xxs inside-shadow">
+          <div className="bg-secondary  px-0.5 rounded inline-flex text-xxs inside-shadow">
             Mobile
           </div>
-          <div className="bg-yellow-500  px-0.5 rounded inline-flex text-xxs inside-shadow">
+          <div className="bg-accent  px-0.5 rounded inline-flex text-xxs inside-shadow">
             Desktop
           </div>
         </div>
@@ -355,7 +355,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
             key={key}
             value={_}
             onClick={() => del(key)}
-            bgColor="bg-white inside-shadow"
+            bgColor="bg-background inside-shadow"
           />
         ))}
 
@@ -364,7 +364,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
             key={key}
             value={_}
             onClick={() => delNodeProp(_, "mobile")}
-            bgColor="bg-green-500 inside-shadow"
+            bgColor="bg-secondary inside-shadow"
           />
         ))}
 
@@ -373,7 +373,7 @@ const Input = ({ value, changed, nodeProps, setProp }) => {
             key={key}
             value={_}
             onClick={() => delNodeProp(_, "desktop")}
-            bgColor="bg-yellow-500 inside-shadow"
+            bgColor="bg-accent inside-shadow"
           />
         ))}
       </div>

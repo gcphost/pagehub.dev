@@ -93,7 +93,7 @@ const Item = ({ children }) => (
   <motion.a
     variants={liVariants}
     className={
-      "flex w-full items-center gap-y-6  p-2  hover:text-gray-300 inner-shadow  rounded-md hover:bg-primary-500  cursor-pointer"
+      "flex w-full items-center gap-y-6  p-2  hover:text-muted-foreground inner-shadow  rounded-md hover:bg-primary  cursor-pointer"
     }
   >
     {children}
@@ -283,11 +283,11 @@ export const ToolboxContexual = ({ userStyle = null }) => {
           id="toolbox"
           ref={ref}
           style={style}
-          className="fixed z-50  p-3 rounded-md drop-shadow-lg  gap-3  flex-col md:flex-row   justify-between text-gray-300 max-h-[330px] select-none"
+          className="fixed z-50  p-3 rounded-md drop-shadow-lg  gap-3  flex-col md:flex-row   justify-between text-muted-foreground max-h-[330px] select-none"
         >
           <motion.div
             variants={uloVariants}
-            className="overflow-auto scrollbar rounded-md  bg-gray-800/80 flex flex-col gap-1.5"
+            className="overflow-auto scrollbar rounded-md  bg-background flex flex-col gap-1.5"
           >
             <div className="p-3 rounded-xl">
               {name === "Background" && (
@@ -356,7 +356,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
           {!["Form", "FormDrop"].includes(name) && comps.length ? (
             <motion.div
               variants={uloVariants}
-              className="overflow-auto scrollbar flex flex-col bg-gray-800/80  p-3 rounded-md"
+              className="overflow-auto scrollbar flex flex-col bg-background  p-3 rounded-md"
             >
               {comps.map((a, k) => {
                 if (!a.id || !a.node) return null;
@@ -384,7 +384,7 @@ export const ToolboxContexual = ({ userStyle = null }) => {
                           {title}
                         </div>
                         <button
-                          className="text-white hover:text-gray-200 text-sm"
+                          className="text-foreground hover:text-muted-foreground text-sm"
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();

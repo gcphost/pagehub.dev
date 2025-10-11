@@ -167,10 +167,10 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
             accordion={accordion}
             setAccordion={setAccordion}
             title={`${type}s (${components.length})`}
-            className="border-b border-gray-900 group"
+            className="border-b border-border group"
 
           >
-            <div className="flex flex-col gap-3 bg-primary-700 p-3">
+            <div className="flex flex-col gap-3 bg-primary p-3">
               {components.map((component, index) => (
                 <Accord
                   key={component.id}
@@ -178,11 +178,11 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
                   accordion={nestedAccordion}
                   setAccordion={setNestedAccordion}
                   title={`${type} ${index + 1}`}
-                  className="border-b border-gray-900 group"
+                  className="border-b border-border group"
 
                 >
                   <NodeProvider id={component.id}>
-                    <div className="flex flex-col gap-3 bg-primary-700 p-3">
+                    <div className="flex flex-col gap-3 bg-primary p-3">
                       {ComponentTabTools.toolbar && React.createElement(ComponentTabTools.toolbar)}
                     </div>
                   </NodeProvider>
@@ -192,8 +192,8 @@ export const ContainerGroupSettings: React.FC<ContainerGroupSettingsProps> = () 
               ))}
 
               {ComponentTabTools.groupSettings && (
-                <div className="border border-gray-600 rounded-lg p-3 bg-gray-800 mb-3">
-                  <div className="text-white text-sm mb-3 font-semibold">{type} Group Settings</div>
+                <div className="border border-border rounded-lg p-3 bg-background mb-3">
+                  <div className="text-foreground text-sm mb-3 font-semibold">{type} Group Settings</div>
                   {React.createElement(ComponentTabTools.groupSettings, {
                     onAdd: () => {
                       // Refresh the component list after adding

@@ -71,10 +71,10 @@ export const MediaInput = (propa) => {
           {/* Preview if media exists */}
           {hasMedia && (svgContent || imageUrl) && (
             <div className="relative">
-              <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center p-2">
+              <div className="aspect-video bg-background rounded-lg overflow-hidden flex items-center justify-center p-2">
                 {svgContent ? (
                   <div
-                    className="w-full h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full flex items-center justify-center text-white"
+                    className="w-full h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:w-full [&>svg]:h-full flex items-center justify-center text-foreground"
                     dangerouslySetInnerHTML={{ __html: svgContent }}
                   />
                 ) : (
@@ -90,7 +90,7 @@ export const MediaInput = (propa) => {
               {/* Clear button - only show when media is set */}
               <button
                 onClick={handleClear}
-                className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold"
+                className="absolute -top-1 -right-1 w-4 h-4 bg-destructive hover:bg-destructive text-foreground rounded-full flex items-center justify-center text-xs font-bold"
                 title="Clear media"
               >
                 ×

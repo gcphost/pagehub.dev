@@ -9,7 +9,7 @@ interface DuplicateNodeButtonProps {
 }
 
 export const DuplicateNodeButton = ({
-  className = "text-white",
+  className = "text-muted-foreground hover:text-accent-foreground hover:bg-accent p-1 rounded-md transition-colors",
   iconSize = 14,
 }: DuplicateNodeButtonProps) => {
   const { id } = useNode();

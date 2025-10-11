@@ -338,14 +338,14 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
     <div className={`relative ${className} flex items-center gap-2`} ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={buttonClassName || "flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg w-full justify-between transition-colors"}
+        className={buttonClassName || "flex items-center gap-2 px-3 py-2 bg-background hover:bg-muted text-foreground rounded-lg w-full justify-between transition-colors"}
         aria-label="Page selector"
       >
         <div className="flex items-center gap-2 overflow-hidden flex-1">
           {showHashIcon && <TbHash className="flex-shrink-0" />}
           <span className="truncate text-sm font-medium">{displayText}</span>
           {displayRoute && (
-            <span className="text-xs text-gray-400 truncate ml-auto">
+            <span className="text-xs text-muted-foreground truncate ml-auto">
               {displayRoute}
             </span>
           )}
@@ -363,7 +363,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
           placement="bottom"
         >
           <a
-            className="text-gray-300 hover:text-white text-xl p-0 flex-shrink-0 transition-colors"
+            className="text-muted-foreground hover:text-foreground text-xl p-0 flex-shrink-0 transition-colors"
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -374,15 +374,15 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
       )}
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-gray-800 border border-gray-600 rounded-lg shadow-xl overflow-hidden z-50 flex flex-col max-h-[500px]">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-background border border-border rounded-lg shadow-xl overflow-hidden z-50 flex flex-col max-h-[500px]">
           {/* Search Header - Fixed */}
-          <div className="p-3 border-b border-gray-700">
+          <div className="p-3 border-b border-border">
             <input
               type="text"
               placeholder="Search pages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-700 text-white text-sm rounded-md border border-gray-600 focus:outline-none focus:border-accent-400"
+              className="w-full px-3 py-2 bg-muted text-foreground text-sm rounded-md border border-border focus:outline-none focus:border-ring"
               autoFocus
             />
           </div>
@@ -396,16 +396,16 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                   href={getPageUrl(null)}
                   shallow
                   onClick={() => handlePageSelect(null)}
-                  className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-700 transition-colors ${!isolate ? "bg-gray-700 font-medium" : ""
+                  className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-muted transition-colors ${!isolate ? "bg-muted font-medium" : ""
                     }`}
                 >
-                  <TbHash className="text-gray-400" />
-                  <span className="text-sm text-white">All Pages</span>
+                  <TbHash className="text-muted-foreground" />
+                  <span className="text-sm text-foreground">All Pages</span>
                 </Link>
 
                 {/* Divider */}
                 {filteredPages.length > 0 && (
-                  <div className="border-t border-gray-700 my-1" />
+                  <div className="border-t border-border my-1" />
                 )}
               </>
             )}
@@ -421,7 +421,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                 return (
                   <div
                     key={page.id}
-                    className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-700 transition-colors group ${isSelected ? "bg-gray-700 font-medium" : ""
+                    className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-muted transition-colors group ${isSelected ? "bg-muted font-medium" : ""
                       }`}
                   >
                     {pickerMode ? (
@@ -429,13 +429,13 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                         onClick={() => handlePageSelect(page.id)}
                         className="flex-1 flex items-center gap-2 overflow-hidden text-left"
                       >
-                        <TbHash className="text-gray-400" />
+                        <TbHash className="text-muted-foreground" />
                         <div className="flex-1 flex items-center justify-between gap-2 overflow-hidden">
-                          <span className="text-sm text-white truncate">
+                          <span className="text-sm text-foreground truncate">
                             {page.displayName}
                           </span>
                           {isPageHomePage && (
-                            <span className="text-xs text-gray-400 truncate">
+                            <span className="text-xs text-muted-foreground truncate">
                               (Home)
                             </span>
                           )}
@@ -448,12 +448,12 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                         onClick={() => handlePageSelect(page.id)}
                         className="flex-1 flex items-center gap-2 overflow-hidden"
                       >
-                        <TbHash className="text-gray-400" />
+                        <TbHash className="text-muted-foreground" />
                         <div className="flex-1 flex items-center justify-between gap-2 overflow-hidden">
-                          <span className="text-sm text-white truncate">
+                          <span className="text-sm text-foreground truncate">
                             {page.displayName}
                           </span>
-                          <span className="text-xs text-gray-400 truncate">
+                          <span className="text-xs text-muted-foreground truncate">
                             {pageRoute}
                           </span>
                         </div>
@@ -466,7 +466,7 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                           setSettingsPageId(page.id);
                           setIsOpen(false);
                         }}
-                        className="flex-shrink-0 p-1 text-gray-400 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="flex-shrink-0 p-1 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity"
                         aria-label="Page settings"
                       >
                         <TbSettings size={16} />
@@ -476,17 +476,17 @@ export const PageSelector: React.FC<PageSelectorProps> = ({
                 );
               })
             ) : searchQuery ? (
-              <div className="px-3 py-4 text-center text-gray-400 text-sm">
+              <div className="px-3 py-4 text-center text-muted-foreground text-sm">
                 No pages found
               </div>
             ) : null}
           </div>
 
           {/* Footer - Fixed */}
-          <div className="border-t border-gray-700">
+          <div className="border-t border-border">
             <button
               onClick={handleCreatePage}
-              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-700 text-primary-400 hover:text-primary-300 transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-primary hover:text-primary transition-colors"
             >
               <TbPlus />
               <span className="text-sm font-medium">Create New Page</span>

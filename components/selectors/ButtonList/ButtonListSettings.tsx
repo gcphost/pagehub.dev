@@ -123,10 +123,10 @@ export const ButtonListSettings = () => {
   const MainTab = () => (
     <TabBody>
       <div className="flex flex-col gap-6">
-        <div className="border rounded-md border-gray-900 overflow-hidden">
+        <div className="border rounded-md border-border overflow-hidden">
           {childButtons?.map((button, index) => (
             <Accord
-              className="border-b border-gray-900 group"
+              className="border-b border-border group"
               key={button.id}
               prop={index}
               accordion={accordion}
@@ -162,14 +162,14 @@ export const ButtonListSettings = () => {
                       e.stopPropagation();
                     }
                   }}
-                  className="w-full bg-transparent text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-gray-800 px-2 py-1 rounded"
+                  className="w-full bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:bg-background px-2 py-1 rounded"
                   placeholder="Button text"
                 />
               }
               buttons={[
                 <button
                   key="edit"
-                  className="text-white hover:text-blue-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                  className="text-foreground hover:text-primary transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                   title="Edit button"
                   onClick={(e) => {
                     e.preventDefault();
@@ -180,7 +180,7 @@ export const ButtonListSettings = () => {
                 </button>,
                 <button
                   key="delete"
-                  className="text-white hover:text-red-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                  className="text-foreground hover:text-destructive transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                   title="Delete button"
                   onClick={(e) => {
                     e.preventDefault();
@@ -192,7 +192,7 @@ export const ButtonListSettings = () => {
               ]}
             >
               <NodeProvider id={button.id}>
-                <div className="flex flex-col gap-3 bg-primary-700 p-3">
+                <div className="flex flex-col gap-3 bg-primary p-3">
                   <LinkSettingsInput
                     propKey="url"
                     showAnchor={false}

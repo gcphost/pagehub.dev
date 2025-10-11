@@ -120,7 +120,7 @@ export const PatternDialog = () => {
       <div style={style}>
         <button
           id={`pattern-${pattern.slug}`}
-          className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-2 rounded-md ${dialog.value?.slug === pattern.slug ? "bg-gray-100" : ""
+          className={`w-full flex flex-row cursor-pointer hover:bg-muted p-2 rounded-md ${dialog.value?.slug === pattern.slug ? "bg-muted" : ""
             }`}
           onClick={(e) => changed(pattern)}
         >
@@ -129,7 +129,7 @@ export const PatternDialog = () => {
               {pattern.title}
             </div>
             <div
-              className="w-1/2 h-full border border-gray-500 bg-white/50 rounded-lg"
+              className="w-1/2 h-full border border-border bg-muted text-muted-foreground rounded-lg"
               style={{
                 backgroundImage: patt ? `url(${patt})` : null,
               }}
@@ -158,8 +158,8 @@ export const PatternDialog = () => {
                 <button
                   key={cat}
                   className={`px-2.5 py-1 rounded text-xs font-medium ${category === cat
-                    ? "bg-gray-800 text-white"
-                    : "bg-gray-200 hover:bg-gray-300"
+                    ? "bg-background text-foreground"
+                    : "bg-muted hover:bg-muted"
                     }`}
                   onClick={() => handleCategoryChange(cat)}
                 >
@@ -170,7 +170,7 @@ export const PatternDialog = () => {
           </div>
 
           {/* Pattern Count */}
-          <div className="flex-shrink-0 text-xs text-gray-500 mb-2">
+          <div className="flex-shrink-0 text-xs text-muted-foreground mb-2">
             {filteredPatterns.length} pattern
             {filteredPatterns.length !== 1 ? "s" : ""}
           </div>

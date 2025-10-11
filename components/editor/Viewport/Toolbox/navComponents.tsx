@@ -128,7 +128,7 @@ export const NavToolbox = {
         canDelete={false}
         canEditName={false}
         root={{
-          background: "bg-black",
+          background: "bg-foreground",
           bgOpacity: "bg-opacity-50",
         }}
         mobile={{
@@ -157,7 +157,7 @@ export const NavToolbox = {
           canDelete={false}
           canEditName={false}
           root={{
-            background: "bg-white",
+            background: "bg-background",
             shadow: "shadow-xl",
           }}
           mobile={{
@@ -246,7 +246,7 @@ export const NavToolbox = {
       element={ButtonList}
       custom={{ displayName: "Social Nav" }}
       root={{
-        background: "bg-gray-50",
+        background: "bg-muted",
         radius: "rounded-lg",
         px: "px-4",
         py: "py-2"
@@ -272,8 +272,8 @@ export const NavToolbox = {
         iconOnly={true}
         url="#"
         root={{
-          background: "bg-blue-500",
-          color: "text-white",
+          background: "bg-primary",
+          color: "text-foreground",
           radius: "rounded-lg",
 
           shadow: "shadow-lg"
@@ -290,8 +290,8 @@ export const NavToolbox = {
         iconOnly={true}
         url="#"
         root={{
-          background: "bg-blue-600",
-          color: "text-white",
+          background: "bg-primary",
+          color: "text-foreground",
           radius: "rounded-lg",
 
           shadow: "shadow-lg"
@@ -309,7 +309,7 @@ export const NavToolbox = {
         url="#"
         root={{
           background: "bg-gradient-to-r from-purple-500 to-pink-500",
-          color: "text-white",
+          color: "text-foreground",
           radius: "rounded-lg",
 
           shadow: "shadow-lg"
@@ -326,8 +326,8 @@ export const NavToolbox = {
         iconOnly={true}
         url="#"
         root={{
-          background: "bg-blue-700",
-          color: "text-white",
+          background: "bg-primary",
+          color: "text-foreground",
           radius: "rounded-lg",
 
           shadow: "shadow-lg"
@@ -343,7 +343,7 @@ export const NavToolbox = {
       element={ButtonList}
       custom={{ displayName: "Plain Nav" }}
       root={{
-        background: "bg-gray-100",
+        background: "bg-muted",
         radius: "rounded-lg",
         px: "px-3",
         py: "py-2"
@@ -536,7 +536,7 @@ export const NavToolbox = {
       element={ButtonList}
       custom={{ displayName: "Pill Nav" }}
       root={{
-        background: "bg-gray-100",
+        background: "bg-muted",
         radius: "rounded-full",
         px: "px-2",
         py: "py-1"

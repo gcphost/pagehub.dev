@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Script from "next/script";
 import "react-tooltip/dist/react-tooltip.css";
 import "../styles/app.css";
+import "../styles/tweakcn.css";
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 

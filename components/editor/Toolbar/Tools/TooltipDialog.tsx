@@ -50,7 +50,7 @@ export const ToolTipDialog = () => {
           <div
             ref={ref}
             key={`tooltip-${dialog.key}`}
-            className="pointer-events-none absolute  bg-gray-600 border border-gray-700 text-white rounded-md px-3 py-1.5 whitespace-nowrap text-xs drop-shadow-2xl font-normal"
+            className="pointer-events-none absolute  bg-muted border border-border text-foreground rounded-md px-3 py-1.5 whitespace-nowrap text-xs drop-shadow-2xl font-normal"
           >
             {dialog.value}
           </div>

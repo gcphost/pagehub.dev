@@ -91,13 +91,13 @@ export const ButtonToolbox = {
       text="Button"
       key="1"
       custom={{ displayName: "Button" }}
-      root={{ border: "border", borderColor: "border-gray-500", radius: "rounded-lg" }}
+      root={{ border: "border", borderColor: "border-border", radius: "rounded-lg" }}
     />,
     <RenderButtonListComponent
       text="Button List"
       key="2"
       custom={{ displayName: "Button List" }}
-      root={{ border: "border", borderColor: "border-gray-500", radius: "rounded-lg" }}
+      root={{ border: "border", borderColor: "border-border", radius: "rounded-lg" }}
     />,
     <RenderButtonComponent
       text="Icon"

@@ -359,7 +359,7 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
 
 
   return (
-    <div className={`relative h-12 flex items-center gap-2 bg-primary-900 border-b border-primary-600 px-3 py-2 ${className}`}>
+    <div className={`relative h-12 flex items-center gap-2 bg-background border-b border-border px-3 py-2 ${className}`}>
       {/* Tabs */}
       <div className="absolute bottom-0 flex-1 flex items-center gap-1 overflow-x-auto">
         {tabs.map((tab) => {
@@ -380,8 +380,8 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
               className={`
                 group flex items-center gap-2 px-3 py-1.5 rounded-t cursor-pointer transition-colors
                 ${activeTabId === tab.id
-                  ? 'bg-gray-700 text-white'
-                  : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-gray-300'
+                  ? 'bg-muted text-foreground'
+                  : 'bg-card text-muted-foreground hover:bg-background hover:text-muted-foreground'
                 }
               `}
             >
@@ -395,7 +395,7 @@ export const ComponentEditorTabs: React.FC<ComponentEditorTabsProps> = ({ classN
               </span>
               <button
                 onClick={(e) => handleCloseTab(tab.id, e)}
-                className={`p-0.5 rounded hover:bg-gray-600 transition-all ${activeTabId === tab.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                className={`p-0.5 rounded hover:bg-muted transition-all ${activeTabId === tab.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
               >
                 <TbX className="w-3 h-3" />
               </button>

@@ -107,68 +107,71 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
 
   return ReactDOM.createPortal(
     <AnimatePresence>
+      {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/50"
+        className="fixed inset-0 z-[9997] bg-background/80 backdrop-blur-sm"
         onClick={onClose}
+      />
+
+      {/* Modal */}
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="fixed inset-0 z-[9998] bg-background border border-border shadow-xl"
+        style={{ margin: "40px auto", maxWidth: "600px", width: "calc(100% - 80px)", borderRadius: "12px", overflow: "hidden" }}
       >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          onClick={(e) => e.stopPropagation()}
-          className="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-[85vh] max-h-[800px] overflow-hidden flex flex-col"
-        >
+        <div className="h-full flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b">
-            <h2 className="text-2xl font-bold text-gray-900">Site Settings</h2>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-accent text-accent-foreground">
+            <h2 className="text-2xl font-bold text-foreground">Site Settings</h2>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-2xl"
+              className="text-muted-foreground hover:text-foreground text-2xl p-2 hover:bg-muted rounded-lg"
             >
               <TbX />
             </button>
           </div>
 
           {/* Tabs */}
-          <div className="border-b border-gray-200 bg-gray-50">
-            <div className="flex">
-              <button
-                onClick={() => setActiveTab("branding")}
-                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "branding"
-                  ? "text-accent-400 border-b-2 border-accent-400 bg-white"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                  }`}
-              >
-                Branding
-              </button>
+          <div className="flex border-b border-border bg-muted">
+            <button
+              onClick={() => setActiveTab("branding")}
+              className={`flex-1 px-3 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "branding"
+                ? "text-primary border-b-2 border-primary bg-background"
+                : "text-muted-foreground hover:text-foreground"
+                }`}
+            >
+              Branding
+            </button>
 
-              <button
-                onClick={() => setActiveTab("ai")}
-                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "ai"
-                  ? "text-accent-400 border-b-2 border-accent-400 bg-white"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                  }`}
-              >
-                AI
-              </button>
+            <button
+              onClick={() => setActiveTab("ai")}
+              className={`flex-1 px-3 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "ai"
+                ? "text-primary border-b-2 border-primary bg-background"
+                : "text-muted-foreground hover:text-foreground"
+                }`}
+            >
+              AI
+            </button>
 
-              <button
-                onClick={() => setActiveTab("code")}
-                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${activeTab === "code"
-                  ? "text-accent-400 border-b-2 border-accent-400 bg-white"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                  }`}
-              >
-                Custom Code
-              </button>
-            </div>
+            <button
+              onClick={() => setActiveTab("code")}
+              className={`flex-1 px-3 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "code"
+                ? "text-primary border-b-2 border-primary bg-background"
+                : "text-muted-foreground hover:text-foreground"
+                }`}
+            >
+              Custom Code
+            </button>
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto space-y-4 scrollbar bg-background text-foreground p-6">
 
             {/* Custom Code Tab */}
             {activeTab === "code" && (
@@ -196,15 +199,15 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
             {/* Branding Tab */}
             {activeTab === "branding" && (
               <div className="space-y-6">
-                <div className="space-y-1 mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Branding & Company Information</h3>
-                  <p className="text-sm text-gray-500">
+                <div className="space-y-2 mb-4">
+                  <h3 className="text-lg font-semibold text-foreground">Branding & Company Information</h3>
+                  <p className="text-sm text-muted-foreground">
                     Your company details and branding assets for customization
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Favicon
                   </label>
                   <StandaloneImagePicker
@@ -216,105 +219,105 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Company Name
                   </label>
                   <input
                     type="text"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                    className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                     placeholder="Your Company"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Company Type
                   </label>
                   <input
                     type="text"
                     value={companyType}
                     onChange={(e) => setCompanyType(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                    className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                     placeholder="e.g., ecommerce, finance, technology"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Company Location
                   </label>
                   <input
                     type="text"
                     value={companyLocation}
                     onChange={(e) => setCompanyLocation(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                    className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                     placeholder="Los Angeles, CA"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Address
                   </label>
                   <textarea
                     value={companyAddress}
                     onChange={(e) => setCompanyAddress(e.target.value)}
                     rows={2}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                    className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                     placeholder="123 Main St, Suite 100&#10;Los Angeles, CA 90001"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Phone
                     </label>
                     <input
                       type="tel"
                       value={companyPhone}
                       onChange={(e) => setCompanyPhone(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                      className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                       placeholder="(555) 123-4567"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Email
                     </label>
                     <input
                       type="email"
                       value={companyEmail}
                       onChange={(e) => setCompanyEmail(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                      className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                       placeholder="contact@company.com"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Website
                   </label>
                   <input
                     type="url"
                     value={companyWebsite}
                     onChange={(e) => setCompanyWebsite(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                    className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                     placeholder="https://www.company.com"
                   />
                 </div>
 
-                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-                  <p className="text-xs text-blue-800">
+                <div className="mt-4 p-4 bg-muted text-muted-foreground border border-border rounded-md">
+                  <p className="text-sm text-primary">
                     <strong>💡 Tip:</strong> Use variables in your text and buttons like{" "}
-                    <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{company.name}}"}</code>,{" "}
-                    <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{company.email}}"}</code>,{" "}
-                    <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{company.phone}}"}</code>, or{" "}
-                    <code className="bg-blue-100 px-1 py-0.5 rounded">{"{{year}}"}</code>{" "}
+                    <code className="bg-background text-foreground px-2 py-1 rounded">{"{{company.name}}"}</code>,{" "}
+                    <code className="bg-background text-foreground px-2 py-1 rounded">{"{{company.email}}"}</code>,{" "}
+                    <code className="bg-background text-foreground px-2 py-1 rounded">{"{{company.phone}}"}</code>, or{" "}
+                    <code className="bg-background text-foreground px-2 py-1 rounded">{"{{year}}"}</code>{" "}
                     to automatically display these values throughout your site.
                   </p>
                 </div>
@@ -324,15 +327,15 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
             {/* AI Tab */}
             {activeTab === "ai" && (
               <div className="space-y-6">
-                <div className="space-y-1 mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">AI Content Generator</h3>
-                  <p className="text-sm text-gray-500">
+                <div className="space-y-2 mb-4">
+                  <h3 className="text-lg font-semibold text-foreground">AI Content Generator</h3>
+                  <p className="text-sm text-muted-foreground">
                     Customize how AI improves your content with a custom prompt and style preferences
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Custom AI Prompt
                   </label>
                   <textarea
@@ -340,21 +343,21 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                     onChange={(e) => setAiPrompt(e.target.value)}
                     rows={3}
                     maxLength={200}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                    className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                     placeholder="Make the copy more engaging, clear, and compelling while keeping the same core message..."
                   />
                   <div className="flex justify-between items-center mt-1">
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                       Brief instructions for how AI should improve your content
                     </p>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-muted-foreground">
                       {aiPrompt.length}/200
                     </span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                  <label className="block text-sm font-medium text-foreground mb-3">
                     Style Tags
                   </label>
                   <div className="space-y-3">
@@ -375,20 +378,20 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
                                 setAiStyleTags(aiStyleTags.filter(t => t !== tag));
                               }
                             }}
-                            className="rounded border-gray-300 text-accent-400 focus:ring-accent-400"
+                            className="rounded border-border text-accent focus:ring-ring"
                           />
-                          <span className="text-sm text-gray-700 capitalize">{tag}</span>
+                          <span className="text-sm text-foreground capitalize">{tag}</span>
                         </label>
                       ))}
                     </div>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                       Select style preferences to guide AI content generation
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-                  <p className="text-xs text-blue-800">
+                <div className="mt-4 p-4 bg-muted text-muted-foreground border border-border rounded-md">
+                  <p className="text-sm text-primary">
                     <strong>💡 Tip:</strong> Your custom prompt and selected style tags will be used by the AI wand tool in the text editor to improve your content. Leave the prompt empty to use default behavior.
                   </p>
                 </div>
@@ -397,21 +400,21 @@ export const SiteSettingsModal = ({ isOpen, onClose }: SiteSettingsModalProps) =
           </div>
 
           {/* Footer */}
-          <div className="p-6 border-t bg-gray-50 flex gap-3">
+          <div className="p-4 border-t border-border bg-muted flex gap-3">
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-medium"
+              className="flex-1 px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted transition-colors font-medium"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
+              className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary transition-colors font-medium"
             >
               Save Changes
             </button>
           </div>
-        </motion.div>
+        </div>
       </motion.div>
     </AnimatePresence>,
     document.body

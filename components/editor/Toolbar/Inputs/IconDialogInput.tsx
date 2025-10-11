@@ -95,7 +95,7 @@ export const IconDialogInput = ({
               e.stopPropagation();
               changed("");
             }}
-            className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold"
+            className="absolute -top-1 -right-1 w-4 h-4 bg-destructive hover:bg-destructive text-foreground rounded-full flex items-center justify-center text-xs font-bold"
             title="Clear icon"
           >
             ×

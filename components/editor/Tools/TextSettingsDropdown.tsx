@@ -18,7 +18,7 @@ export function TextSettingsDropdown() {
       {/* Color Picker */}
       <div className="flex items-center gap-2">
         <label className="text-xs font-medium w-16">Color</label>
-        <div className="flex-1 h-8 rounded-md overflow-hidden border border-gray-300">
+        <div className="flex-1 h-8 rounded-md overflow-hidden border border-border">
           <ColorInput
             propKey="color"
             label=""
@@ -45,7 +45,7 @@ export function TextSettingsDropdown() {
 
 
       {/* Text Alignment */}
-      <div className="flex items-center gap-2 pt-2 border-t border-gray-200">
+      <div className="flex items-center gap-2 pt-2 border-t border-border">
         <label className="text-xs font-medium w-16">Align</label>
         <div className="flex-1">
           <ToolbarItem

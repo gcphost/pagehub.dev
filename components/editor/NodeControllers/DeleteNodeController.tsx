@@ -42,9 +42,9 @@ export const DeleteNodeController = () => {
             damping: 20,
             mass: 0.5,
           },
-        }} className="p-1.5 flex items-center justify-center bg-gray-600 rounded-md !text-base !font-normal fontfamily-base m-1">
+        }} className="p-1.5 flex items-center justify-center bg-muted rounded-md !text-base !font-normal fontfamily-base m-1">
         <DeleteNodeButton
-          className="text-white hover:text-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-sm"
+          className="text-foreground hover:text-muted-foreground disabled:text-muted-foreground disabled:cursor-not-allowed text-sm"
         />
       </motion.div>
     </RenderNodeControlInline>

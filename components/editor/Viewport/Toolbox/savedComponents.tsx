@@ -138,7 +138,7 @@ export const SavedComponentLoader = ({ componentData }) => {
   }, [componentData, actions, query, id, components]);
 
   // Show a placeholder while loading
-  return <div className="p-3 text-gray-400">Loading component...</div>;
+  return <div className="p-3 text-muted-foreground">Loading component...</div>;
 };
 
 // This needs to have craft config for CraftJS to recognize it
@@ -283,13 +283,13 @@ export const RenderSavedComponent = ({ componentData }) => {
       onDoubleClick={handleDoubleClick}
       className="cursor-move pointer-events-auto w-full"
     >
-      <div className="flex flex-col items-center justify-center border p-3 rounded-md w-full hover:bg-gray-100 min-h-[80px] gap-2 pointer-events-none transition-colors relative">
+      <div className="flex flex-col items-center justify-center border p-3 rounded-md w-full hover:bg-muted text-muted-foreground min-h-[80px] gap-2 pointer-events-none transition-colors relative">
         <TbBoxModel2 className="text-2xl" />
         <span className="text-xs text-center">{componentName}</span>
         <button
           onClick={handleDelete}
           onMouseDown={(e) => e.stopPropagation()}
-          className="absolute top-1 right-1 text-red-500 hover:text-red-700 p-1 pointer-events-auto z-10"
+          className="absolute top-1 right-1 text-destructive hover:text-destructive p-1 pointer-events-auto z-10"
           aria-label="Delete component"
         >
           <TbTrash className="text-sm" />

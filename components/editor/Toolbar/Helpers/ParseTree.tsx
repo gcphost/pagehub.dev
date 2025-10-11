@@ -28,7 +28,7 @@ export const ParseTree = ({ tree }) => {
             <div
               className={`${
                 to === "object"
-                  ? "w-full ml-3 border border-gray-500 rounded-md p1.5"
+                  ? "w-full ml-3 border border-border rounded-md p1.5"
                   : ""
               }`}
             >

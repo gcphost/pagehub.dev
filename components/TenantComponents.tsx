@@ -40,7 +40,7 @@ export const TenantHeader = () => {
   if (!tenant) return null
 
   return (
-    <div className="bg-gray-100 p-2 text-sm">
+    <div className="bg-muted p-2 text-sm">
       <span className="font-semibold">{tenant.name}</span>
       {tenant.branding?.logo && (
         <Image

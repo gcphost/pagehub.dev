@@ -33,17 +33,17 @@ const Input = ({ options, setProp }) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="border rounded-md border-gray-500">
+      <div className="border rounded-md border-border">
         {optionsArray.map((option, optionKey) => (
           <Accord
-            className="border-b p-3 border-gray-500"
+            className="border-b p-3 border-border"
             key={optionKey}
             prop={optionKey}
             accordion={accordion}
             setAccordion={setAccordion}
             title={
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-300">Option {optionKey + 1}:</span>
+                <span className="text-sm text-muted-foreground">Option {optionKey + 1}:</span>
                 <ToolbarItem
                   propKey="options"
                   propType="component"
@@ -59,7 +59,7 @@ const Input = ({ options, setProp }) => {
             buttons={[
               <button
                 key="button-1"
-                className="text-gray-500 hover:text-red-400"
+                className="text-muted-foreground hover:text-destructive"
                 aria-label="Delete option"
                 onClick={(e) => {
                   e.preventDefault();
@@ -74,7 +74,7 @@ const Input = ({ options, setProp }) => {
           >
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-2">
-                <label className="text-sm text-gray-300">Value</label>
+                <label className="text-sm text-muted-foreground">Value</label>
                 <ToolbarItem
                   propKey="options"
                   propType="component"

@@ -102,7 +102,7 @@ const Item = ({
     }
     initial={{ zIndex: 1 }}
     title={title}
-    className={`relative w-5 h-5 rounded cursor-pointer border-2 ${selected ? "border-accent-400" : "border-gray-600"
+    className={`relative w-5 h-5 rounded cursor-pointer border-2 ${selected ? "border-accent" : "border-border"
       }`}
     style={{ backgroundColor: value, ...style }}
     onClick={(e) => onClick(e, value)}
@@ -225,7 +225,7 @@ export const ColorPickerDialog = () => {
       width="auto"
       zIndex={99999}
     >
-      <div className="bg-white rounded-lg flex flex-row">
+      <div className="bg-background rounded-lg flex flex-row">
 
         <div
           className="flex flex-col gap-0 w-full max-w-[320px]"
@@ -234,10 +234,10 @@ export const ColorPickerDialog = () => {
           tabIndex={0}
         >
           {
-            <div className="w-full flex flex-row px-3 py-2 gap-3 items-center justify-between">
+            <div className="w-full flex flex-row px-3 py-2 gap-3 items-center justify-between bg-accent text-accent-foreground border-b border-border">
               <div className="flex flex-row gap-2 items-center">
                 <button
-                  className="cursor-pointer hover:text-gray-500 flex items-center justify-center"
+                  className="cursor-pointer hover:bg-muted hover:text-foreground flex items-center justify-center p-1 rounded-md transition-colors"
                   onClick={() => {
                     setColorPicker({
                       ...colorPicker,
@@ -255,7 +255,7 @@ export const ColorPickerDialog = () => {
                 {shouldShowPalette && (
                   <Tooltip content={showFullPicker ? "Show Page Colors" : "Show Color Picker"}>
                     <button
-                      className="hover:text-gray-500 cursor-pointer flex items-center justify-center text-lg"
+                      className="hover:bg-muted hover:text-foreground cursor-pointer flex items-center justify-center text-lg p-1 rounded-md transition-colors"
                       onClick={() => setShowFullPicker(!showFullPicker)}
                     >
                       {showFullPicker ? <TbPalette /> : <TbColorPicker />}
@@ -272,7 +272,7 @@ export const ColorPickerDialog = () => {
                     {!colorPicker.propKey?.startsWith("pallet-") && (
                       <Tooltip content="Save to pallet">
                         <button
-                          className="hover:text-gray-500 cursor-pointer text-lg flex items-center justify-center"
+                          className="hover:bg-muted hover:text-foreground cursor-pointer text-lg flex items-center justify-center p-1 rounded-md transition-colors"
                           onClick={() => saveToPallet()}
                         >
                           <TbDeviceFloppy />
@@ -284,7 +284,7 @@ export const ColorPickerDialog = () => {
                       <Tooltip content="Color Picker" arrow={false}>
                         <button
                           onClick={pickColor}
-                          className="hover:text-gray-500 cursor-pointer flex items-center justify-center"
+                          className="hover:bg-muted hover:text-foreground cursor-pointer flex items-center justify-center p-1 rounded-md transition-colors"
                         >
                           <BsEyedropper />
                         </button>
@@ -300,7 +300,7 @@ export const ColorPickerDialog = () => {
           {shouldShowPalette && !showFullPicker && (
 
 
-            <div className="px-3 grid grid-cols-3 gap-2 border max-h-64 overflow-y-auto">
+            <div className="px-3 pb-32 grid grid-cols-3 gap-2 border max-h-64 overflow-y-auto">
               {namedPalette.map((paletteColor, index) => {
                 // Check if current value is this palette color
                 // Value could be "text-palette:Primary" or "bg-palette:Primary" etc
@@ -339,16 +339,16 @@ export const ColorPickerDialog = () => {
                       // Store the palette reference, not the color value
                       changed({ type: "palette", value: `palette:${paletteColor.name}` });
                     }}
-                    className={`flex flex-col items-center gap-1.5 p-2 rounded-md hover:bg-gray-50 transition-colors ${isSelected ? "ring-2 ring-primary-500 bg-primary-50" : ""
+                    className={`flex flex-col items-center gap-1.5 p-2 rounded-md hover:bg-muted text-muted-foreground transition-colors ${isSelected ? "ring-2 ring-primary bg-accent text-accent-foreground" : ""
                       }`}
                   >
                     <div
-                      className={`w-full h-8 rounded border-2 border-gray-200 ${isTailwindClass ? displayColor : ""}`}
+                      className={`w-full h-8 rounded border-2 border-border ${isTailwindClass ? displayColor : ""}`}
                       style={{
                         backgroundColor: !isTailwindClass ? paletteColor.color : undefined
                       }}
                     />
-                    <span className="text-xs text-gray-700 font-medium truncate w-full text-center">
+                    <span className="text-xs text-foreground font-medium truncate w-full text-center">
                       {paletteColor.name}
                     </span>
                   </button>
@@ -400,7 +400,7 @@ export const ColorPickerDialog = () => {
           onMouseLeave={() => setShow(false)}
         >
           {colorPicker.showPallet && showFullPicker && (
-            <div className=" w-full border-l-2  gap-1.5  h-full items-center p-3 flex flex-row">
+            <div className=" w-full border-l border-border gap-1.5 h-full items-center p-3 flex flex-row bg-background">
               {pallet.map((_, k) => (
                 <div
                   className="w-4  flex flex-col gap-1 justify-self-start"

@@ -78,13 +78,13 @@ export const GlobalSectionIndicator = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        className="absolute inset-0 bg-blue-500/15 border-2 border-dashed border-blue-500/40 pointer-events-none z-0 flex items-center justify-center"
+        className="absolute inset-0 bg-primary/15 border-2 border-dashed border-border pointer-events-none z-0 flex items-center justify-center"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1, duration: 0.2 }}
-          className="flex flex-row items-center gap-2 text-sm font-semibold text-blue-800 bg-white/95 px-3 py-1.5 rounded-md border border-blue-500/40 pointer-events-none select-none shadow-sm"
+          className="flex flex-row items-center gap-2 text-sm font-semibold text-primary bg-background px-3 py-1.5 rounded-md border border-border pointer-events-none select-none shadow-sm"
         >
           <RxGlobe /> {label}
         </motion.div>

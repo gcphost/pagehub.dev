@@ -89,10 +89,10 @@ export const ImageListSettings = () => {
     return (
       <TabBody>
         <div className="flex flex-col gap-6">
-          <div className="border rounded-md border-gray-900 overflow-hidden">
+          <div className="border rounded-md border-border overflow-hidden">
             {childImages?.map((image, index) => (
               <Accord
-                className="border-b border-gray-900 group"
+                className="border-b border-border group"
                 key={image.id}
                 prop={index}
                 accordion={accordion}
@@ -128,14 +128,14 @@ export const ImageListSettings = () => {
                         e.stopPropagation();
                       }
                     }}
-                    className="w-full bg-transparent text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-gray-800 px-2 py-1 rounded"
+                    className="w-full bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:bg-background px-2 py-1 rounded"
                     placeholder="Image alt text"
                   />
                 }
                 buttons={[
                   <button
                     key="edit"
-                    className="text-white hover:text-blue-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                    className="text-foreground hover:text-primary transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                     title="Edit image"
                     onClick={(e) => {
                       e.preventDefault();
@@ -146,7 +146,7 @@ export const ImageListSettings = () => {
                   </button>,
                   <button
                     key="delete"
-                    className="text-white hover:text-red-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                    className="text-foreground hover:text-destructive transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                     title="Delete image"
                     onClick={(e) => {
                       e.preventDefault();
@@ -158,7 +158,7 @@ export const ImageListSettings = () => {
                 ]}
               >
                 <NodeProvider id={image.id}>
-                  <div className="flex flex-col gap-3 bg-primary-700 p-3">
+                  <div className="flex flex-col gap-3 bg-primary p-3">
                     <MediaInput
                       propKey="videoId"
                       typeKey="type"

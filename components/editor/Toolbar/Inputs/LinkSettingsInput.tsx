@@ -119,7 +119,7 @@ const LinkSettingsInput = ({
       <button
         type="button"
         onClick={() => setLinkType(linkType === "page" ? "external" : "page")}
-        className="flex items-center justify-center text-xs p-2 hover:bg-gray-600 rounded-md transition-colors"
+        className="flex items-center justify-center text-xs p-2 hover:bg-muted rounded-md transition-colors"
       >
         {linkType === "page" ? <TbExternalLink /> : <TbHash />}
       </button>
@@ -171,7 +171,7 @@ const LinkSettingsInput = ({
                   <button
                     type="button"
                     onClick={handleClearLink}
-                    className="flex items-center justify-center text-xs p-2 hover:bg-red-600 rounded-md transition-colors text-red-400 hover:text-white"
+                    className="flex items-center justify-center text-xs p-2 hover:bg-destructive rounded-md transition-colors text-destructive hover:text-foreground"
                   >
                     ×
                   </button>

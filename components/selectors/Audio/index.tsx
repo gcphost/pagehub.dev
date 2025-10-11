@@ -93,7 +93,7 @@ export const Audio = (props: AudioProps) => {
         Your browser does not support the audio element.
       </audio>
     ) : enabled ? (
-      <div className="w-full h-full flex items-center justify-center text-3xl min-h-[50px] border border-dashed border-gray-400 rounded">
+      <div className="w-full h-full flex items-center justify-center text-3xl min-h-[50px] border border-dashed border-border rounded">
         <TbMusic aria-label="Audio icon" />
       </div>
     ) : null,

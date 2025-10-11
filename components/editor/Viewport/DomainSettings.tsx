@@ -195,14 +195,14 @@ export const DomainSettings = () => {
             <a
               href="https://pagehub.dev/terms"
               target="_blank"
-              className="text-gray-300 underline"
+              className="text-muted-foreground underline"
             >
               Terms of Service
             </a>
           </label>
         </div>
 
-        <hr className="border-b border-gray-500 -mx-3" />
+        <hr className="border-b border-border -mx-3" />
 
         <div>
           <label htmlFor="siteTitle">Title</label>
@@ -232,7 +232,7 @@ export const DomainSettings = () => {
           />
         </div>
 
-        <hr className="border-b border-gray-500 -mx-3" />
+        <hr className="border-b border-border -mx-3" />
 
         <div className="flex flex-col gap-3">
           <button
@@ -300,16 +300,16 @@ export const DomainSettings = () => {
                 data-lpignore="true"
                 autoComplete="off"
                 onChange={debounce((e) => checkName(e.target.value), 500)}
-                className={`${inputClass} focus:ring-0   rounded-lg   w-8/12 border-0 text-right pr-0 active:border-white focus:border-white focus:outline-none`}
+                className={`${inputClass} focus:ring-0   rounded-lg   w-8/12 border-0 text-right pr-0 active:border-background focus:border-background focus:outline-none`}
               />
               .pagehub.dev
               {name && nameOk !== null ? (
                 nameOk ? (
-                  <span className="ml-3 bg-green-100 w-8 items-center justify-center flex  text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                  <span className="ml-3 bg-secondary w-8 items-center justify-center flex  text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                     <TbCheck />
                   </span>
                 ) : (
-                  <span className="ml-3 bg-red-100 w-8 items-center justify-center flex  text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                  <span className="ml-3 bg-destructive w-8 items-center justify-center flex  text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                     <TbX />
                   </span>
                 )
@@ -348,7 +348,7 @@ export const DomainSettings = () => {
         )}
 
         {settings.error && (
-          <div className="bg-red text-white rounded-xl p-3 w-fit">
+          <div className="bg-red text-foreground rounded-xl p-3 w-fit">
             {settings.error}
           </div>
         )}
@@ -358,7 +358,7 @@ export const DomainSettings = () => {
           !domainData?.configVerifiedAt && (
             <div>
               Set the following record on your DNS provider to continue:
-              <div className="bg-white text-black my-6 p-3 rounded-xl w-full overflow-auto">
+              <div className="bg-background text-foreground my-6 p-3 rounded-xl w-full overflow-auto">
                 <table className="table-auto p-3">
                   <tbody>
                     <tr className="font-bold">
@@ -401,7 +401,7 @@ export const DomainSettings = () => {
 
         <div className="w-full  ">
           <button
-            className={`${saving ? "bg-primary-300" : "bg-primary-500"
+            className={`${saving ? "bg-primary" : "bg-primary"
               } btn w-full p-3`}
           >
             {saving ? "Saving..." : "Save"}

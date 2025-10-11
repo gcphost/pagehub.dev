@@ -29,7 +29,7 @@ export const ToolbarTitleEditor = () => {
           type="text"
           defaultValue={name}
           placeholder={name}
-          className="w-full bg-transparent text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-gray-800 p rounded capitalize truncate"
+          className="w-full bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:bg-background p rounded capitalize truncate"
           onChange={debounce((e) => {
             actions.setCustom(
               id,

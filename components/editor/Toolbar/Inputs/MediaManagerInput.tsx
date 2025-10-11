@@ -20,18 +20,18 @@ export const MediaManagerInput = () => {
       <ToolbarSection title="Media Manager" full={2}>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="w-full px-4 py-3 bg-gray-50 hover:bg-gray-100 border-2 border-gray-200 hover:border-primary-500 rounded-lg transition-all flex items-center justify-between group"
+          className="w-full px-4 py-3 bg-muted text-muted-foreground hover:bg-muted border-2 border-border hover:border-primary rounded-lg transition-all flex items-center justify-between group"
         >
           <div className="flex items-center gap-3">
-            <TbPhoto className="text-2xl text-gray-600 group-hover:text-primary-500" />
+            <TbPhoto className="text-2xl text-muted-foreground group-hover:text-primary" />
             <div className="text-left">
-              <div className="font-medium text-gray-900">Manage Media</div>
-              <div className="text-sm text-gray-500">
+              <div className="font-medium text-foreground">Manage Media</div>
+              <div className="text-sm text-muted-foreground">
                 {mediaCount} {mediaCount === 1 ? "item" : "items"} uploaded
               </div>
             </div>
           </div>
-          <div className="text-gray-400 group-hover:text-primary-500">→</div>
+          <div className="text-muted-foreground group-hover:text-primary">→</div>
         </button>
       </ToolbarSection>
 

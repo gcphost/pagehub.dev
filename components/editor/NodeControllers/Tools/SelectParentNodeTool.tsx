@@ -53,7 +53,7 @@ export const SelectParentNodeTool = ({
     <>
       <button
         type="button"
-        className="w-6 h-6 flex items-center justify-center text-white"
+        className="w-6 h-6 flex items-center justify-center text-foreground"
         onClick={handleSelectParent}
       >
         {icon}

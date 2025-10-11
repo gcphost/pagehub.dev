@@ -77,8 +77,8 @@ export const AddElement = ({
 
 export const ToolboxItemDisplay = ({ icon: Icon, label, isDragging = false }) => (
   <div className="flex flex-col items-center justify-center px-1 py-2 w-full min-h-[60px] gap-2 pointer-events-none transition-colors">
-    <Icon className="text-2xl text-gray-700" />
-    <span className="text-[10px] text-center text-gray-600">{label}</span>
+    <Icon className="text-2xl text-foreground" />
+    <span className="text-[10px] text-center text-muted-foreground">{label}</span>
   </div>
 );
 
@@ -128,7 +128,7 @@ export const RenderToolComponent = ({
         transition: { duration: 0.2 },
       }}
       whileTap={{ scale: 0.9 }}
-      className={`cursor-move w-full pointer-events-auto hover:bg-accent-50 border border-gray-300 rounded-md ${isDragging ? 'bg-accent-100 border-accent-400' : ''}`}
+      className={`cursor-move w-full pointer-events-auto hover:bg-accent border border-border rounded-md ${isDragging ? 'bg-accent border-accent' : ''}`}
       ref={(ref: any) => create(ref, tool)}
       onMouseDown={() => setIsDragging(true)}
       onMouseUp={() => setIsDragging(false)}

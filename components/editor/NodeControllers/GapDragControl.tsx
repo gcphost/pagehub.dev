@@ -444,7 +444,7 @@ export const GapDragControl = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
-              className="fixed flex items-center justify-center border border-dashed border-blue-300/70 bg-blue-300/35"
+              className="fixed flex items-center justify-center border border-dashed border-border bg-primary"
               style={{
                 left: gapHoverInfo.gapRect.x,
                 top: gapHoverInfo.gapRect.y,
@@ -479,7 +479,7 @@ export const GapDragControl = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.1, duration: 0.15 }}
-                className="absolute right-1 text-xs font-semibold text-blue-900 bg-white/90 border-blue-300/70 px-1.5 py-0.5 rounded border pointer-events-none select-none font-sans"
+                className="absolute right-1 text-xs font-semibold text-primary bg-background border-border px-1.5 py-0.5 rounded border pointer-events-none select-none font-sans"
                 style={{ top: '50%', transform: 'translateY(-50%)' }}
               >
                 {isNaN(gapHoverInfo.currentGap) ? '0' : Math.round(gapHoverInfo.currentGap)}px

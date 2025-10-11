@@ -38,10 +38,10 @@ export const PagesSettings = () => {
         pages here. When browsing your live site only the selected page will be
         visible at the route defined.
       </p>
-      <div className="flex flex-col  mx-3 overflow-hidden rounded-lg border border-gray-500">
+      <div className="flex flex-col  mx-3 overflow-hidden rounded-lg border border-border">
         <button
           className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
-            !isolate ? "bg-gray-500 hover:text-gray-700" : "hover:text-gray-500"
+            !isolate ? "bg-muted hover:text-foreground" : "hover:text-muted-foreground"
           }`}
           onClick={() => {
             isolatePageAlt(true, query, null, actions, setIsolate, false);
@@ -58,8 +58,8 @@ export const PagesSettings = () => {
             key={page.id}
             className={`cursor-pointer flex flex-row gap-3 p-3 items-center ${
               isolate === page.id
-                ? "bg-gray-500 hover:text-gray-700"
-                : "hover:text-gray-500"
+                ? "bg-muted hover:text-foreground"
+                : "hover:text-muted-foreground"
             }`}
             onClick={() =>
               isolatePageAlt(

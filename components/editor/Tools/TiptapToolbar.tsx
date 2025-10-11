@@ -234,10 +234,10 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
           <button
             onClick={handleButtonClick(generateAIContent)}
             disabled={isGeneratingContent}
-            className={`tool-button ${isGeneratingContent ? 'opacity-50 cursor-not-allowed' : 'hover:text-accent-400'}`}
+            className={`tool-button ${isGeneratingContent ? 'opacity-50 cursor-not-allowed' : 'hover:text-accent-foreground'}`}
           >
             {isGeneratingContent ? (
-              <div className="w-4 h-4 border-2 border-accent-400 border-t-transparent rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-accent border-t-transparent rounded-full animate-spin" />
             ) : (
               <TbWand className="w-4 h-4" />
             )}
@@ -251,7 +251,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
 
 
 
-        <div className="border-l border-gray-500 flex gap-1 pl-2" >
+        <div className="border-l border-border flex gap-1 pl-2" >
           {/* Alignment and Lists Dropdown */}
           <div className=" group">
             <Tooltip content="Alignment & Lists" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
@@ -261,13 +261,13 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <MdFormatAlignLeft className="w-4 h-4" />
               </button>
             </Tooltip>
-            <div className="absolute w-fit left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-2 pb-0 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div className="absolute w-fit left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-50 p-2 pb-0 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
               <div className="flex gap-1 mb-2">
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('left').run();
                   })}
-                  className={`tool-button ${editor.isActive({ textAlign: 'left' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive({ textAlign: 'left' }) ? 'bg-muted text-foreground' : ''}`}
                   title="Align Left"
                 >
                   <MdFormatAlignLeft className="w-4 h-4 mx-auto" />
@@ -276,7 +276,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('center').run();
                   })}
-                  className={`tool-button ${editor.isActive({ textAlign: 'center' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive({ textAlign: 'center' }) ? 'bg-muted text-foreground' : ''}`}
                   title="Align Center"
                 >
                   <MdFormatAlignCenter className="w-4 h-4 mx-auto" />
@@ -285,7 +285,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().setTextAlign('right').run();
                   })}
-                  className={`tool-button ${editor.isActive({ textAlign: 'right' }) ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive({ textAlign: 'right' }) ? 'bg-muted text-foreground' : ''}`}
                   title="Align Right"
                 >
                   <MdFormatAlignRight className="w-4 h-4 mx-auto" />
@@ -295,7 +295,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleBulletList().run();
                   })}
-                  className={`tool-button ${editor.isActive('bulletList') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('bulletList') ? 'bg-muted text-foreground' : ''}`}
                   title="Bullet List"
                 >
                   <MdFormatListBulleted className="w-4 h-4 mx-auto" />
@@ -304,7 +304,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleOrderedList().run();
                   })}
-                  className={`tool-button ${editor.isActive('orderedList') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('orderedList') ? 'bg-muted text-foreground' : ''}`}
                   title="Numbered List"
                 >
                   <MdFormatListNumbered className="w-4 h-4 mx-auto" />
@@ -341,13 +341,13 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <MdFormatBold className="w-4 h-4" />
               </button>
             </Tooltip>
-            <div className="absolute w-fit left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-2 pb-0 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div className="absolute w-fit left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-50 p-2 pb-0 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
               <div className="flex gap-1 mb-2">
                 <button
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleBold().run();
                   })}
-                  className={`tool-button ${editor.isActive('bold') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('bold') ? 'bg-muted text-foreground' : ''}`}
                   title="Bold"
                 >
                   <MdFormatBold className="w-4 h-4 mx-auto" />
@@ -356,7 +356,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleItalic().run();
                   })}
-                  className={`tool-button ${editor.isActive('italic') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('italic') ? 'bg-muted text-foreground' : ''}`}
                   title="Italic"
                 >
                   <MdFormatItalic className="w-4 h-4 mx-auto" />
@@ -366,7 +366,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleUnderline().run();
                   })}
-                  className={`tool-button ${editor.isActive('underline') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('underline') ? 'bg-muted text-foreground' : ''}`}
                   title="Underline"
                 >
                   <MdFormatUnderlined className="w-4 h-4 mx-auto" />
@@ -375,7 +375,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleStrike().run();
                   })}
-                  className={`tool-button ${editor.isActive('strike') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('strike') ? 'bg-muted text-foreground' : ''}`}
                   title="Strikethrough"
                 >
                   <MdFormatStrikethrough className="w-4 h-4 mx-auto" />
@@ -385,7 +385,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleSuperscript().run();
                   })}
-                  className={`tool-button ${editor.isActive('superscript') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('superscript') ? 'bg-muted text-foreground' : ''}`}
                   title="Superscript"
                 >
                   <MdSuperscript className="w-4 h-4 mx-auto" />
@@ -394,7 +394,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   onClick={handleButtonClick(() => {
                     editor.chain().focus().toggleSubscript().run();
                   })}
-                  className={`tool-button ${editor.isActive('subscript') ? 'bg-gray-700 text-white' : ''}`}
+                  className={`tool-button ${editor.isActive('subscript') ? 'bg-muted text-foreground' : ''}`}
                   title="Subscript"
                 >
                   <MdSubscript className="w-4 h-4 mx-auto" />
@@ -415,7 +415,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <TbChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
               </button>
             </Tooltip>
-            <div className="absolute right-0 left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-2 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div className="absolute right-0 left-0 mt-1 bg-background border border-border rounded-lg shadow-xl z-50 p-2 min-w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
               <div className="flex gap-8 h-64">
                 {/* Font Family Section */}
                 <div className="flex-1 flex flex-col">
@@ -425,18 +425,18 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                       placeholder="Search fonts..."
                       value={fontSearchTerm}
                       onChange={(e) => setFontSearchTerm(e.target.value)}
-                      className="w-full px-3 py-2 text-sm border border-gray-500 rounded-lg bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     />
                   </div>
-                  <div className="flex-1 overflow-y-auto border border-gray-600 rounded-lg bg-gray-800">
+                  <div className="flex-1 overflow-y-auto border border-border rounded-lg bg-background">
                     <div className="grid grid-cols-1 gap-0">
                       {loadingFonts ? (
-                        <div className="px-4 py-3 text-sm text-gray-400 text-center">
+                        <div className="px-4 py-3 text-sm text-muted-foreground text-center">
                           Loading fonts...
                         </div>
                       ) : filteredFonts.length === 0 ? (
-                        <div className="px-4 py-3 text-sm text-gray-400 text-center">
+                        <div className="px-4 py-3 text-sm text-muted-foreground text-center">
                           No results.
                         </div>
                       ) : (
@@ -456,7 +456,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                               const { loadGoogleFont } = await import('utils/googleFonts');
                               loadGoogleFont(font, ["400"]);
                             }}
-                            className="w-full px-4 py-3 text-left text-sm hover:bg-gray-700 hover:text-white text-gray-300 border-b border-gray-700 last:border-b-0 transition-colors"
+                            className="w-full px-4 py-3 text-left text-sm hover:bg-muted hover:text-accent-foreground text-muted-foreground border-b border-border last:border-b-0 transition-colors"
                             style={{ fontFamily: font }}
                           >
                             {font}
@@ -490,7 +490,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                                   editor.isActive('heading', { level: 4 }) ? 'heading4' :
                                     'paragraph'
                         }
-                        className="w-full px-3 py-2 text-sm border border-gray-500 rounded-lg bg-gray-800 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-background text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring transition-colors"
                       >
                         <option value="paragraph">Normal Text</option>
                         <option value="heading1">Heading 1</option>
@@ -503,13 +503,13 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
 
                   {/* Font Size Adjuster */}
                   <div className="mb-3">
-                    <div className="text-xs text-gray-400 mb-2">Font Size</div>
+                    <div className="text-xs text-muted-foreground mb-2">Font Size</div>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleButtonClick(() => {
                           editor.chain().focus().setFontSize('12px').run();
                         })}
-                        className="px-2 py-1 text-xs rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                        className="px-2 py-1 text-xs rounded hover:bg-muted hover:text-foreground text-muted-foreground transition-colors duration-150"
                         title="Small"
                       >
                         S
@@ -518,7 +518,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                         onClick={handleButtonClick(() => {
                           editor.chain().focus().setFontSize('16px').run();
                         })}
-                        className="px-2 py-1 text-xs rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                        className="px-2 py-1 text-xs rounded hover:bg-muted hover:text-foreground text-muted-foreground transition-colors duration-150"
                         title="Medium"
                       >
                         M
@@ -527,7 +527,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                         onClick={handleButtonClick(() => {
                           editor.chain().focus().setFontSize('20px').run();
                         })}
-                        className="px-2 py-1 text-xs rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                        className="px-2 py-1 text-xs rounded hover:bg-muted hover:text-foreground text-muted-foreground transition-colors duration-150"
                         title="Large"
                       >
                         L
@@ -536,7 +536,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                         onClick={handleButtonClick(() => {
                           editor.chain().focus().setFontSize('24px').run();
                         })}
-                        className="px-2 py-1 text-xs rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150"
+                        className="px-2 py-1 text-xs rounded hover:bg-muted hover:text-foreground text-muted-foreground transition-colors duration-150"
                         title="Extra Large"
                       >
                         XL
@@ -547,22 +547,22 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                   <div className="p-1.5 mb-3 space-y-3">
                     {/* Background Color */}
                     <div>
-                      <div className="text-xs text-gray-400 mb-2">Background Color</div>
+                      <div className="text-xs text-muted-foreground mb-2">Background Color</div>
                       <button
                         ref={backgroundColorButtonRef}
                         onClick={handleButtonClick(openBackgroundColorPicker)}
-                        className="w-full h-8 rounded border-2 border-gray-500 hover:border-gray-400 transition-colors"
+                        className="w-full h-8 rounded border-2 border-border hover:border-border transition-colors"
                         style={{ backgroundColor: editor.getAttributes('highlight').color || '#ffffff' }}
                       />
                     </div>
 
                     {/* Text Color */}
                     <div>
-                      <div className="text-xs text-gray-400 mb-2">Text Color</div>
+                      <div className="text-xs text-muted-foreground mb-2">Text Color</div>
                       <button
                         ref={foregroundColorButtonRef}
                         onClick={handleButtonClick(openForegroundColorPicker)}
-                        className="w-full h-8 rounded border-2 border-gray-500 hover:border-gray-400 transition-colors"
+                        className="w-full h-8 rounded border-2 border-border hover:border-border transition-colors"
                         style={{ backgroundColor: editor.getAttributes('textStyle').color || '#000000' }}
                       />
                     </div>
@@ -574,7 +574,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
 
         </div>
 
-        <div className="border-l border-gray-500 flex gap-1 pl-2" >
+        <div className="border-l border-border flex gap-1 pl-2" >
           {/* Insert Link Dropdown */}
           <div className="group">
             <Tooltip content="Insert Link" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
@@ -584,7 +584,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
                 <MdLink className="w-4 h-4" />
               </button>
             </Tooltip>
-            <div className="absolute left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-4 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div className="absolute left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-50 p-4 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
               <LinkSelector editor={editor} />
             </div>
           </div>
@@ -600,7 +600,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
           </Tooltip>
         </div>
 
-        <div className="border-l border-gray-500 flex gap-1 pl-2" >
+        <div className="border-l border-border flex gap-1 pl-2" >
           {/* Clear Formatting */}
           <Tooltip content="Clear Formatting" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
             <button
@@ -622,7 +622,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
         </div>
 
         {/* More Options Dropdown */}
-        <div className="group border-l border-gray-500 pl-2">
+        <div className="group border-l border-border pl-2">
           <Tooltip content="More Options" placement="top" tooltipClassName="!text-xs !px-2 !py-1">
             <button
               className="tool-button"
@@ -630,14 +630,14 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
               <TbChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
             </button>
           </Tooltip>
-          <div className="absolute w-fit left-0 mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-xl z-50 p-3 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+          <div className="absolute w-fit left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-50 p-3 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
             <div className="space-y-2">
               {/* Horizontal Rule */}
               <button
                 onClick={handleButtonClick(() => {
                   editor.chain().focus().setHorizontalRule().run();
                 })}
-                className="w-full px-3 py-2 text-sm rounded hover:bg-gray-700 hover:text-white text-gray-300 transition-colors duration-150 flex items-center gap-2"
+                className="w-full px-3 py-2 text-sm rounded hover:bg-muted hover:text-foreground text-muted-foreground transition-colors duration-150 flex items-center gap-2"
                 title="Horizontal Rule"
               >
                 <MdFormatLineSpacing className="w-4 h-4" />
@@ -645,7 +645,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({
               </button>
 
               {/* Divider */}
-              <div className="border-t border-gray-600 my-2" />
+              <div className="border-t border-border my-2" />
 
               {/* Text Settings Dropdown */}
               <TextSettingsDropdown />
@@ -799,8 +799,8 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
           type="button"
           onClick={() => setLinkType("external")}
           className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "external"
-            ? "bg-primary-500 text-white"
-            : "bg-gray-700 text-gray-300"
+            ? "bg-primary text-foreground"
+            : "bg-muted text-muted-foreground"
             }`}
         >
           <MdLink className="inline mr-1" />
@@ -810,8 +810,8 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
           type="button"
           onClick={() => setLinkType("page")}
           className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors ${linkType === "page"
-            ? "bg-primary-500 text-white"
-            : "bg-gray-700 text-gray-300"
+            ? "bg-primary text-foreground"
+            : "bg-muted text-muted-foreground"
             }`}
         >
           Internal Page
@@ -826,7 +826,7 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://example.com"
-            className="w-full px-3 py-2 text-sm border border-gray-500 rounded-lg bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-background text-muted-foreground placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ring"
             onClick={(e) => e.stopPropagation()}
           />
           <button
@@ -834,14 +834,14 @@ const LinkSelector: React.FC<{ editor: Editor }> = ({ editor }) => {
               e.stopPropagation();
               handleExternalLink();
             }}
-            className="w-full px-3 py-2 bg-primary-500 hover:bg-primary-600 text-white text-sm rounded-lg transition-colors"
+            className="w-full px-3 py-2 bg-primary hover:bg-primary text-foreground text-sm rounded-lg transition-colors"
           >
             Insert Link
           </button>
         </div>
       ) : (
         <div onClick={(e) => e.stopPropagation()}>
-          <div className="text-xs text-gray-400 mb-2">Select a page to link to:</div>
+          <div className="text-xs text-muted-foreground mb-2">Select a page to link to:</div>
           <PageSelector
             onPagePick={handlePagePick}
             pickerMode={true}

@@ -48,7 +48,7 @@ export const ItemToggle = ({ items = [], children, selected, onChange, option = 
             />
 
             {/* Dropdown menu */}
-            <div className="absolute top-full right-0 mt-1 bg-gray-700 border border-gray-800 rounded-md shadow-lg z-20 overflow-hidden">
+            <div className="absolute top-full right-0 mt-1 bg-muted text-muted-foreground border border-border rounded-md shadow-lg z-20 overflow-hidden">
               {items.map((item) => (
                 <button
                   key={item.id}
@@ -56,7 +56,7 @@ export const ItemToggle = ({ items = [], children, selected, onChange, option = 
                     onChange(item.id);
                     setIsOpen(false);
                   }}
-                  className={`flex items-center gap-2 px-3 py-2 text-xs hover:bg-gray-600 w-full text-left whitespace-nowrap ${selected === item.id ? 'bg-gray-600' : ''
+                  className={`flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted w-full text-left whitespace-nowrap ${selected === item.id ? 'bg-muted' : ''
                     }`}
                 >
                   <span className="w-4 h-4 flex items-center justify-center">

@@ -61,12 +61,12 @@ export const DeviceSelector: React.FC<DeviceSelectorProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="flex items-center gap-3 text-gray-400 text-xs mx-auto w-fit">
+    <div className="flex items-center gap-3 text-muted-foreground text-xs mx-auto w-fit">
       {/* Device Dropdown */}
       <div className="relative">
         <button
           onClick={() => setShowDropdown(!showDropdown)}
-          className="flex items-center gap-1 hover:text-white transition-colors"
+          className="flex items-center gap-1 hover:text-foreground transition-colors"
         >
           <span className="whitespace-nowrap">{selectedDevice.name}</span>
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -82,16 +82,16 @@ export const DeviceSelector: React.FC<DeviceSelectorProps> = ({ onClose }) => {
               onClick={() => setShowDropdown(false)}
             />
             {/* Dropdown */}
-            <div className="absolute top-full left-0 mt-1 w-56 bg-gray-700 border border-gray-600 rounded shadow-lg z-50 max-h-96 overflow-y-auto scrollbar-dark">
+            <div className="absolute top-full left-0 mt-1 w-56 bg-muted text-muted-foreground border border-border rounded shadow-lg z-50 max-h-96 overflow-y-auto scrollbar-dark">
               {devicePresets.map((device) => (
                 <button
                   key={device.name}
                   onClick={() => handleDeviceChange(device)}
-                  className={`w-full text-left px-4 py-2 hover:bg-gray-600 transition-colors ${selectedDevice.name === device.name ? 'bg-gray-600' : ''
+                  className={`w-full text-left px-4 py-2 hover:bg-muted transition-colors ${selectedDevice.name === device.name ? 'bg-muted' : ''
                     }`}
                 >
                   <div className="font-medium">{device.name}</div>
-                  <div className="text-xs text-gray-400">{device.width} × {device.height}</div>
+                  <div className="text-xs text-muted-foreground">{device.width} × {device.height}</div>
                 </button>
               ))}
             </div>
@@ -105,7 +105,7 @@ export const DeviceSelector: React.FC<DeviceSelectorProps> = ({ onClose }) => {
           type="number"
           value={customWidth}
           onChange={handleWidthChange}
-          className="w-12 bg-transparent text-center focus:outline-none hover:text-white transition-colors"
+          className="w-12 bg-transparent text-center focus:outline-none hover:text-foreground transition-colors"
           placeholder="W"
         />
         <span>×</span>
@@ -113,7 +113,7 @@ export const DeviceSelector: React.FC<DeviceSelectorProps> = ({ onClose }) => {
           type="number"
           value={customHeight}
           onChange={handleHeightChange}
-          className="w-12 bg-transparent text-center focus:outline-none hover:text-white transition-colors"
+          className="w-12 bg-transparent text-center focus:outline-none hover:text-foreground transition-colors"
           placeholder="H"
         />
       </div>
@@ -121,7 +121,7 @@ export const DeviceSelector: React.FC<DeviceSelectorProps> = ({ onClose }) => {
       {/* Close button */}
       <button
         onClick={onClose}
-        className="hover:text-white transition-colors"
+        className="hover:text-foreground transition-colors"
         title="Exit device mode"
       >
         <TbX className="w-4 h-4" />

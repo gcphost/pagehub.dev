@@ -36,7 +36,7 @@ export const AnimationsInput = () => {
           {
             ...applyAnimation({}, props),
           },
-          <div className="hidden rounded-2xl bg-gray-500 w-24 h-24  mx-auto  mt-6 items-center justify-center">
+          <div className="hidden rounded-2xl bg-muted text-muted-foreground w-24 h-24  mx-auto  mt-6 items-center justify-center">
             Test
           </div>
         )}

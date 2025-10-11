@@ -185,7 +185,7 @@ function Dialog({ children, target, state, opener }: any): any {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 1, opacity: 0 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="absolute select-none bg-gray-700  max-w-[320px] text-white  border-2 border-gray-900 flex-col gap- rounded-lg shadow-2xl overflow-hidden"
+            className="absolute select-none bg-muted  max-w-[320px] text-foreground  border-2 border-border flex-col gap- rounded-lg shadow-2xl overflow-hidden"
             style={{
               zIndex: 50,
             }}
@@ -196,11 +196,11 @@ function Dialog({ children, target, state, opener }: any): any {
               className="h-8 cursor-move"
               aria-label="Drag to move dialog"
             >
-              <div className="w-2/3 h-4 inside-shadow bg-primary-500 hover:bg-primary-900 rounded-b-md mx-auto -mt-[2px]   border-gray-900 border-2 border-t-primary-500 hover:border-t-primary-900 drop-shadow-lg  px-3 py-1.5"></div>
+              <div className="w-2/3 h-4 inside-shadow bg-primary hover:bg-primary rounded-b-md mx-auto -mt-[2px]   border-border border-2 border-t-primary hover:border-t-primary drop-shadow-lg  px-3 py-1.5"></div>
 
               <div className="flex items-center justify-between ">
                 <button
-                  className="text-gray-500 absolute left-3 top-2.5"
+                  className="text-muted-foreground absolute left-3 top-2.5"
                   onClick={() => setIsOpen(false)}
                   aria-label="Close dialog"
                 >

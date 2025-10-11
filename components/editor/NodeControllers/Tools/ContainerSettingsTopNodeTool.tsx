@@ -162,7 +162,7 @@ export function ContainerSettingsTopNodeTool({ direction = "horizontal" }) {
 
 
 
-          <SelectParentNodeTool parentType="Nav" icon={<Tooltip content="Select Navigation" className="border-r border-gray-700 pr-2"><TbNavigation /></Tooltip>}>
+          <SelectParentNodeTool parentType="Nav" icon={<Tooltip content="Select Navigation" className="border-r border-border pr-2"><TbNavigation /></Tooltip>}>
           </SelectParentNodeTool>
 
         </>

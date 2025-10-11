@@ -247,7 +247,7 @@ export const ContainerSettings = () => {
             >
               <span>Edit Page Settings</span>
             </button>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-muted-foreground mt-2">
               Configure page name, URL, SEO, and social media settings.
             </p>
           </ToolbarSection>
@@ -273,7 +273,7 @@ export const ContainerSettings = () => {
                 on="footer"
               />
             )}
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-muted-foreground mt-2">
               Headers and footers are special containers that appear on all pages.
             </p>
           </ToolbarSection>

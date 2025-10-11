@@ -13,7 +13,7 @@ interface DeleteNodeButtonProps {
 }
 
 export const DeleteNodeButton = ({
-  className = "text-white",
+  className = "text-destructive hover:text-destructive-foreground hover:bg-destructive p-1 rounded-md transition-colors",
   iconSize = 14,
   title = "Delete",
   titleDisabled = "Cannot delete",

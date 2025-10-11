@@ -35,7 +35,7 @@ const Labler = ({
     >
       <div className="flex gap-1.5 items-center">
         {props?.label}
-        <div className="text-gray-500 hover:text-white hidden">
+        <div className="text-muted-foreground hover:text-foreground hidden">
           <TbInfoCircle />
         </div>
       </div>
@@ -104,7 +104,7 @@ export const Wrap = ({
           />}
         </div>
 
-        {props.description && <p className="text-xxs text-gray-400 w-full text-center -mt-1">
+        {props.description && <p className="text-xxs text-muted-foreground w-full text-center -mt-1">
           {props.description}
         </p>}
 
@@ -133,7 +133,7 @@ export const Wrap = ({
 export const Card = ({
   value,
   onClick,
-  bgColor = "bg-primary-300 inside-shadow",
+  bgColor = "bg-primary inside-shadow",
 }) => {
   if (!value) {
     return null;
@@ -163,7 +163,7 @@ export const Card = ({
     <button
       onClick={handleClick}
       onContextMenu={handleContextMenu}
-      className={`${bgColor} text-gray-800 hover:opacity-80 hover:text-gray-700 text-xs font-medium mr-2 p-1 rounded inline-flex cursor-pointer whitespace-nowrap`}
+      className={`${bgColor} text-foreground hover:opacity-80 hover:text-foreground text-xs font-medium mr-2 p-1 rounded inline-flex cursor-pointer whitespace-nowrap`}
     >
       <Tooltip content={`Left-click: Copy | Right-click: Remove`} placement="bottom" arrow={false}>
         {value}
@@ -179,7 +179,7 @@ export const CardLight = ({ value, onClick, className = "" }) => {
   return (
     <button
       onClick={onClick}
-      className={`bg-white text-gray-800 text-xs font-medium px-1 py-0.5 rounded inline-flex cursor-pointer ${className}`}
+      className={`bg-background text-foreground text-xs font-medium px-1 py-0.5 rounded inline-flex cursor-pointer ${className}`}
     >
       <Tooltip content={`Add ${value}`} placement="top" arrow={false}>
         {value}
@@ -201,7 +201,7 @@ export const Accord = ({
 
   return (
     <div className={className}>
-      <div className="flex gap-2 px-3 py-1.5 bg-primary-800">
+      <div className="flex gap-2 px-3 py-1.5 bg-primary">
         <button
           className="whitespace-nowrap font-2xl font-bold cursor-pointer truncate pr-3 w-full"
           onClick={() => setAccordion(active ? "" : prop)}

@@ -562,8 +562,8 @@ export const Viewport: React.FC<any> = ({ children }) => {
 
   const deviceClasses = {
     mobile: [
-      "mx-auto flex z-2 transition overflow-hidden mt-32 mx-auto w-full mb-32 px-2 py-6 rounded-2xl bg-gray-700 border-4 border-gray-800 drop-shadow-2xl",
-      "w-full h-full flex overflow-auto rounded-xl border-4 border-gray-900 disable-scrollbars relative",
+      "mx-auto flex z-2 transition overflow-hidden mt-32 mx-auto w-full mb-32 px-2 py-6 rounded-2xl bg-muted border-4 border-border drop-shadow-2xl",
+      "w-full h-full flex overflow-auto rounded-xl border-4 border-border disable-scrollbars relative",
     ],
 
     desktop: [
@@ -584,7 +584,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
       `flex h-screen overflow-hidden flex-row mx-auto w-${enabled ? "[380px]" : "screen"
       } mx-auto `,
       enabled
-        ? "w-full rounded-lg overflow-scroll scrollbar-light bg-white relative"
+        ? "w-full rounded-lg overflow-scroll scrollbar-light bg-background relative"
         : "w-screen h-screen overflow-auto relative",
     ],
 
@@ -593,7 +593,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
         ? `${sb} mx-auto flex h-screen overflow-hidden flex-row w-screen`
         : "w-screen",
       enabled
-        ? `w-full !border-[7px] ${viewMode === 'component' ? 'border-purple-200' : 'border-gray-100'}   relative scrollbar-light bg-white overflow-scroll`
+        ? `w-full !border-[7px] ${viewMode === 'component' ? 'border-purple-200' : 'border-border'}   relative scrollbar-light bg-background overflow-scroll`
         : "w-screen h-screen overflow-auto relative",
     ],
   };
@@ -626,7 +626,7 @@ export const Viewport: React.FC<any> = ({ children }) => {
           <div className="absolute right-12 top-12 z-50">
             <Tooltip content="Edit" placement="bottom" arrow={false}>
               <button
-                className="p-4 btn text-2xl bg-primary-500/90 cursor-pointer select-none rounded-md text-white"
+                className="p-4 btn text-2xl bg-primary cursor-pointer select-none rounded-md text-primary-foreground"
                 aria-label="Edit page"
                 onClick={() =>
                   setOptions((options) => {

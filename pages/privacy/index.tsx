@@ -7,13 +7,13 @@ function Privacy() {
     <>
       <NextSeo title="Privacy Policy" description="Privacy Policy" />
 
-      <div className="bg-gray-800 text-white pb-32">
-        <nav className="p-3 border-gray-200 bg-gradient-to-r from-emerald-300 to-cyan-300 h-20 flex items-center"></nav>
+      <div className="bg-muted-foreground text-primary-foreground pb-32">
+        <nav className="p-3 border-border bg-gradient-to-r from-emerald-300 to-cyan-300 h-20 flex items-center"></nav>
 
         <div className=" flex flex-col gap-12">
           <div className="container mx-auto ">
             <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-              <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+              <h1 className="mb-20 mt-20 text-4xl font-extrabold tracking-tight leading-none text-primary-foreground md:text-5xl lg:text-6xl">
                 Privacy Policy
               </h1>
 
@@ -66,7 +66,7 @@ function Privacy() {
           <div className="container mx-auto flex justify-center">
             <Link
               href="/build"
-              className="bg-primary-500 hover:bg-primary-400 cursor-pointer text-white text-center text-2xl w-full m-3 lg:w-1/3 p-12 rounded-xl"
+              className="bg-primary hover:bg-muted-foreground cursor-pointer text-primary-foreground text-center text-2xl w-full m-3 lg:w-1/3 p-12 rounded-xl"
             >
               Start building!
             </Link>

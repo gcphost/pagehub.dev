@@ -1,5 +1,3 @@
-import { ulVariants } from "components/editor/Viewport/ToolboxContextual";
-import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -31,40 +29,51 @@ export const Dialog = ({
 
   const [itemList, setItemList] = useState(items);
   const [searchValue, setSearchValue] = useState(null);
+  const [isUpward, setIsUpward] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  let style = {
+  const [style, setStyle] = useState({
     top: 0,
     left: 0,
     zIndex: zIndex,
-  } as any;
+  } as any);
 
-  if (rect) {
-    style = {
+  useEffect(() => {
+    if (!rect || !isClient) return;
+
+    const availableHeight = window.innerHeight - rect.bottom - 20; // Leave 20px margin
+    const maxHeight = Math.min(height, availableHeight, window.innerHeight * 0.6); // Max 60% of screen height
+
+    let newStyle = {
       top: rect.bottom + 6,
       left: rect.left,
       zIndex: zIndex,
+      maxHeight: maxHeight,
     };
 
-    if (style.top + height > window.innerHeight) {
-      style = {
-        bottom: 65,
+    // If dropdown would go off-screen, position it above the trigger
+    if (availableHeight < 200) {
+      setIsUpward(true);
+      newStyle = {
+        bottom: window.innerHeight - rect.top + 6,
         left: rect.left,
         zIndex: zIndex,
+        maxHeight: Math.min(height, rect.top - 20, window.innerHeight * 0.6),
       };
-    } else if (style.top < 100) {
-      style = {
-        top: 150,
-        left: rect.left,
-        zIndex: zIndex,
-      };
+    } else {
+      setIsUpward(false);
     }
-  }
 
-  width = width || rect?.width || 308;
+    setStyle(newStyle);
+  }, [rect, height, zIndex, isClient]);
+
+  const dialogWidth = width || rect?.width || 308;
 
   const closed = () => {
     setSearchValue(null);
     setItemList(items);
+    setSelectedIndex(-1);
     setDialog({ ...dialog, enabled: false });
   };
 
@@ -77,6 +86,7 @@ export const Dialog = ({
 
   const search = (e) => {
     setSearchValue(e.target.value);
+    setSelectedIndex(-1); // Reset selection when searching
 
     if (customOnSearch) {
       // If custom onSearch is provided, call it directly
@@ -88,6 +98,10 @@ export const Dialog = ({
   };
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         closed();
@@ -97,6 +111,20 @@ export const Dialog = ({
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         closed();
+      } else if (event.key === "ArrowDown") {
+        event.preventDefault();
+        const totalItems = (!searchValue ? 1 : 0) + itemList.length;
+        setSelectedIndex(prev => Math.min(prev + 1, totalItems - 1));
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        setSelectedIndex(prev => Math.max(prev - 1, -1));
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        if (selectedIndex === -1 && !searchValue) {
+          changed(null); // Select "Default"
+        } else if (selectedIndex >= 0 && itemList[selectedIndex]) {
+          changed(itemList[selectedIndex]);
+        }
       }
     };
 
@@ -120,109 +148,140 @@ export const Dialog = ({
     }
   }, [dialog.enabled, dialog.value, dialogName, ref, value]);
 
-  // Don't render portal on server-side
-  if (typeof document === "undefined") {
+  // Don't render portal on server-side or before client hydration
+  if (typeof document === "undefined" || !isClient) {
     return null;
   }
 
   return ReactDOM.createPortal(
-    <AnimatePresence>
+    <>
       {dialog.enabled && (
-        <motion.div
+        <div
           role="dialog"
           aria-modal="true"
           aria-label={dialogName || "Selection dialog"}
-          animate={{ opacity: 1, width, height }}
-          variants={ulVariants}
-          transition={ulVariants.transition}
-          initial={{ opacity: 1, width, height: 0 }}
-          exit={{ opacity: 1, width, height: 0 }}
           key={dialogName}
           id={dialogName}
           ref={ref}
-          style={style}
-          className={"absolute z-20 flex pointer-events-none "}
+          style={{ ...style, width: dialogWidth }}
+          className={"absolute z-20 flex pointer-events-none"}
         >
           <div
             className={
-              "h-full w-full overflow-hidden my-auto bg-white rounded-lg  p-0 border-2 border-gray-800/60  pointer-events-auto  drop-shadow-2xl  "
+              "w-full overflow-hidden my-auto bg-background rounded-lg p-0 border border-border pointer-events-auto shadow-xl"
             }
+            style={{ height: style.maxHeight || height }}
           >
             {children}
 
             {customRenderer && (
               <div className="rounded-lg w-full h-full overflow-hidden flex flex-col">
-                <div className="px-3 pt-3 pb-2 flex-shrink-0">
-                  <input
-                    type="text"
-                    className="input-base py-1 w-full"
-                    placeholder="Search"
-                    onKeyUp={(e) => search(e)}
-                    autoFocus={true}
-                    defaultValue={searchValue}
-                    aria-label="Search"
-                  />
-                </div>
-                <div className="px-3 pb-3 flex-1 min-h-0">
+                {!isUpward && (
+                  <div className="px-2 pt-2 pb-1 flex-shrink-0 border-b border-border bg-muted">
+                    <input
+                      type="text"
+                      className="w-full px-2 py-1 text-xs border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      placeholder="Search fonts..."
+                      onKeyUp={(e) => search(e)}
+                      autoFocus={true}
+                      defaultValue={searchValue}
+                      aria-label="Search"
+                    />
+                  </div>
+                )}
+                <div className="px-2 pb-2 flex-1 min-h-0 overflow-y-auto scrollbar">
                   {customRenderer}
                 </div>
+                {isUpward && (
+                  <div className="px-2 pt-1 pb-2 flex-shrink-0 border-t border-border bg-muted">
+                    <input
+                      type="text"
+                      className="w-full px-2 py-1 text-xs border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      placeholder="Search fonts..."
+                      onKeyUp={(e) => search(e)}
+                      autoFocus={true}
+                      defaultValue={searchValue}
+                      aria-label="Search"
+                    />
+                  </div>
+                )}
               </div>
             )}
 
             {!children && !customRenderer && (
-              <div
-                ref={refIe}
-                className={`rounded-lg max-h-[${height}px] w-full overflow-auto scrollbar p-3 flex flex-col gap-3`}
-              >
-                <input
-                  type="text"
-                  className="input-base py-1"
-                  placeholder="Search"
-                  onKeyUp={(e) => search(e)}
-                  autoFocus={true}
-                  defaultValue={searchValue}
-                  aria-label="Search"
-                />
-
-                {!searchValue && (
-                  <button
-                    className="w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl"
-                    onClick={(e) => changed(null)}
-                  >
-                    Default
-                  </button>
-                )}
-
-                {!itemList.length && (
-                  <div className="w-full flex flex-row cursor-pointer hover:bg-white p-3 rounded-md  md:text-xl">
-                    No results.
+              <div className="rounded-lg w-full h-full overflow-hidden flex flex-col">
+                {!isUpward && (
+                  <div className="px-2 pt-2 pb-1 flex-shrink-0 border-b border-border bg-muted">
+                    <input
+                      type="text"
+                      className="w-full px-2 py-1 text-xs border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      placeholder="Search fonts..."
+                      onKeyUp={(e) => search(e)}
+                      autoFocus={true}
+                      defaultValue={searchValue}
+                      aria-label="Search"
+                    />
                   </div>
                 )}
 
-                <div className={className}>
-                  {itemList?.map((_, k) => {
-                    if (callback) return callback(_, k);
+                <div
+                  ref={refIe}
+                  className="flex-1 min-h-0 overflow-y-auto scrollbar px-2 py-1"
+                >
+                  {!searchValue && (
+                    <button
+                      className={`w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs transition-colors ${selectedIndex === -1 ? "bg-accent text-accent-foreground" : ""}`}
+                      onClick={(e) => changed(null)}
+                    >
+                      Default
+                    </button>
+                  )}
 
-                    return (
-                      <button
-                        id={`font-${_}`}
-                        className={`w-full flex flex-row cursor-pointer hover:bg-gray-100 p-3 rounded-md  md:text-xl ${dialog.value === _ ? "bg-white" : ""
-                          }`}
-                        style={{ fontFamily: (_ || []).join(", ") }}
-                        key={k}
-                        onClick={(e) => changed(_)}
-                      >
-                        {_.join(", ")}
-                      </button>
-                    );
-                  })}
+                  {!itemList.length && searchValue && (
+                    <div className="w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs">
+                      No results.
+                    </div>
+                  )}
+
+                  <div className={className}>
+                    {itemList?.map((_, k) => {
+                      if (callback) return callback(_, k);
+
+                      return (
+                        <button
+                          id={`font-${_}`}
+                          className={`w-full flex flex-row cursor-pointer hover:bg-muted text-muted-foreground p-1 rounded text-xs transition-colors ${dialog.value === _ ? "bg-accent text-accent-foreground" : selectedIndex === k ? "bg-muted" : ""
+                            }`}
+                          style={{ fontFamily: (_ || []).join(", ") }}
+                          key={k}
+                          onClick={(e) => changed(_)}
+                        >
+                          {_.join(", ")}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
+
+                {isUpward && (
+                  <div className="px-2 pt-1 pb-2 flex-shrink-0 border-t border-border bg-muted">
+                    <input
+                      type="text"
+                      className="w-full px-2 py-1 text-xs border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      placeholder="Search fonts..."
+                      onKeyUp={(e) => search(e)}
+                      autoFocus={true}
+                      defaultValue={searchValue}
+                      aria-label="Search"
+                    />
+                  </div>
+                )}
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
       )}
-    </AnimatePresence>,
+    </>,
     document.body
   );
 };

@@ -11,7 +11,7 @@ const MenuItem = ({ tooltip, onClick, children, animate = false }) => (
         : {}
     }
     whileTap={animate ? { scale: 0.9 } : {}}
-    className="cursor-pointer text-gray-400 hover:text-accent-400 rounded-md py-1.5 px-1"
+    className="cursor-pointer text-muted-foreground hover:text-accent-foreground rounded-md py-1.5 px-1"
     onClick={onClick}
   >
     {children}

@@ -182,7 +182,7 @@ export const Text = (props: Partial<TextProps>) => {
       TiptapLink.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: 'text-blue-600 underline',
+          class: 'text-primary underline',
         },
       }),
       Image.configure({
@@ -308,7 +308,7 @@ export const Text = (props: Partial<TextProps>) => {
           {tiptapEditor ? (
             <EditorContent editor={tiptapEditor} />
           ) : (
-            <div className="text-gray-400 italic">Loading editor...</div>
+            <div className="text-muted-foreground italic">Loading editor...</div>
           )}
         </div>
         <InlineToolsRenderer key={`tools-${id}`} craftComponent={Text} props={props}>

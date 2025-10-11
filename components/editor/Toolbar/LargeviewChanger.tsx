@@ -23,8 +23,8 @@ export const LargeviewChanger = () => {
       }}
     >
       <div
-        className={` ${view === "mobile" ? "bg-green-500" : "bg-yellow-500"
-          } p-3  rounded-md  text-gray-900 text-xs border border-gray-900/50 opacity-80 hover:opacity-100 inside-shadow-light`}
+        className={` ${view === "mobile" ? "bg-secondary" : "bg-accent"
+          } p-3  rounded-md  text-foreground text-xs border border-border/50 opacity-80 hover:opacity-100 inside-shadow-light`}
       >
         Editing: <span className="font-bold">{view}</span>
       </div>

@@ -132,7 +132,7 @@ export const GptInput = ({ autoFocus = false }) => {
       <p className="mb-3"></p>
 
       {searching && (
-        <div className="bg-gray-500/50 p-3 text-white border-gray-500 w-full rounded-lg active:border-primary-500 focus:border-primary-500">
+        <div className="bg-muted p-3 text-foreground border-border w-full rounded-lg active:border-primary focus:border-primary">
           <strong>OpenAI</strong> is working on your styles.
         </div>
       )}
@@ -164,7 +164,7 @@ export const GptInput = ({ autoFocus = false }) => {
               <div className="mt-3 items-center input overflow-auto scrollbar max-h-64 gap-1.5 flex flex-row">
                 <button
                   onClick={() => setSearched(false)}
-                  className=" text-gray-400 cursor-pointer hover:text-white"
+                  className=" text-muted-foreground cursor-pointer hover:text-foreground"
                 >
                   <Tooltip content="Close" arrow={false}>
                     <TbX />

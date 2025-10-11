@@ -44,7 +44,7 @@ const EditableName = () => {
   return (
     <div
       className={
-        "pointer-events-auto overflow-hidden  flex flex-row gap-3 bg-white/90 !text-base !font-normal fontfamily-base border-current"
+        "pointer-events-auto overflow-hidden  flex flex-row gap-3 bg-background !text-base !font-normal fontfamily-base border-current"
       }
       style={{ color: elementColor || 'currentColor' }}
     >

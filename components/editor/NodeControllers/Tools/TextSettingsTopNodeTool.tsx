@@ -20,7 +20,7 @@ export function TextSettingsTopNodeTool() {
 
   return (
     <NodeToolWrapper
-      className="bg-primary-500 inside-shadow text-black rounded-md px-3 m-1"
+      className="bg-primary inside-shadow text-foreground rounded-md px-3 m-1"
       animate={{
         initial: { opacity: 0 },
         animate: {
@@ -49,7 +49,7 @@ export function TextSettingsTopNodeTool() {
         },
       }}
     >
-      <div className="w-16 h-6 rounded-md overflow-hidden border-gray-500 border-1">
+      <div className="w-16 h-6 rounded-md overflow-hidden border-border border-1">
         <ColorInput
           propKey="color"
           label=""
@@ -72,7 +72,7 @@ export function TextSettingsTopNodeTool() {
         <>
           <button
             onClick={() => tiptapEditor.chain().focus().toggleBold().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('bold') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('bold') ? 'bg-muted text-primary' : 'text-foreground'
               }`}
             title="Bold"
           >
@@ -81,7 +81,7 @@ export function TextSettingsTopNodeTool() {
 
           <button
             onClick={() => tiptapEditor.chain().focus().toggleItalic().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('italic') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('italic') ? 'bg-muted text-primary' : 'text-foreground'
               }`}
             title="Italic"
           >
@@ -90,7 +90,7 @@ export function TextSettingsTopNodeTool() {
 
           <button
             onClick={() => tiptapEditor.chain().focus().toggleUnderline().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('underline') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('underline') ? 'bg-muted text-primary' : 'text-foreground'
               }`}
             title="Underline"
           >
@@ -99,7 +99,7 @@ export function TextSettingsTopNodeTool() {
 
           <button
             onClick={() => tiptapEditor.chain().focus().toggleStrike().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('strike') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('strike') ? 'bg-muted text-primary' : 'text-foreground'
               }`}
             title="Strikethrough"
           >
@@ -108,7 +108,7 @@ export function TextSettingsTopNodeTool() {
 
           <button
             onClick={() => tiptapEditor.chain().focus().toggleCode().run()}
-            className={`px-2 py-1 text-sm rounded hover:bg-gray-100 ${tiptapEditor.isActive('code') ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+            className={`px-2 py-1 text-sm rounded hover:bg-muted ${tiptapEditor.isActive('code') ? 'bg-muted text-primary' : 'text-foreground'
               }`}
             title="Code"
           >

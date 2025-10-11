@@ -140,7 +140,7 @@ export const ComponentSettings = () => {
         <div key={k}>
           <div className="px-3 pb-3 font-bold">{a.title}</div>
 
-          <div className="bg-white text-black w-full grid grid-cols-3 gap-3 p-3">
+          <div className="bg-background text-foreground w-full grid grid-cols-3 gap-3 p-3">
             {a.content.map((item, kk) => (
               <div key={kk}>
                 {item}

@@ -77,14 +77,14 @@ export const Toolbar = () => {
       key="sideMenu"
       id="toolbar"
       className={
-        "absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen  text-white border-x border-primary-900"
+        "absolute overflow-hidden w-full grow-0 shrink-0 flex flex-col h-screen text-foreground border-x border-border bg-background shadow-lg"
       }
       style={style}
       ref={ref}
     >
       <Header />
       <div
-        className="overflow-hidden w-full antialiased bg-gray-800/90 select-none z-0"
+        className="overflow-hidden w-full antialiased bg-background text-foreground  select-none z-0"
         aria-expanded={sideBarOpen && !preview ? "true" : "false"}
       >
         {tool}

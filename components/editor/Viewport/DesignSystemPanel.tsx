@@ -644,20 +644,20 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
   };
 
   const CollapsibleSection = ({ title, section, children }: { title: string; section: string; children: React.ReactNode }) => (
-    <div className="border-b border-gray-700 last:border-b-0">
+    <div className="border-b border-border last:border-b-0">
       <button
         onClick={() => toggleSection(section)}
-        className="w-full flex items-center justify-between p-3 hover:bg-gray-800 transition-colors text-left"
+        className="w-full flex items-center justify-between p-3 hover:bg-background transition-colors text-left"
       >
-        <span className="text-sm font-semibold text-gray-200">{title}</span>
+        <span className="text-sm font-semibold text-muted-foreground">{title}</span>
         {expandedSections[section] ? (
-          <TbChevronDown className="text-gray-400" size={18} />
+          <TbChevronDown className="text-muted-foreground" size={18} />
         ) : (
-          <TbChevronRight className="text-gray-400" size={18} />
+          <TbChevronRight className="text-muted-foreground" size={18} />
         )}
       </button>
       {expandedSections[section] && (
-        <div className="p-3 space-y-3 bg-gray-800/50">
+        <div className="p-3 space-y-3 bg-muted text-muted-foreground">
           {children}
         </div>
       )}
@@ -679,29 +679,29 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         cursor: isDragging ? 'grabbing' : 'default',
       }}
       onMouseDown={handleMouseDown}
-      className="bg-gray-900 rounded-lg shadow-2xl border border-gray-700 w-80 max-h-[60vh] flex flex-col z-[9999]"
+      className="bg-background rounded-lg shadow-xl border border-border w-80 max-h-[60vh] flex flex-col z-[9999]"
     >
       {/* Header */}
-      <div className="drag-handle flex items-center justify-between p-4 border-b border-gray-700 cursor-grab active:cursor-grabbing">
+      <div className="drag-handle flex items-center justify-between p-3 border-b border-border cursor-grab active:cursor-grabbing bg-accent text-accent-foreground">
         <div className="flex items-center gap-2">
-          <TbGripVertical className="text-gray-500" />
-          <h2 className="text-lg font-bold text-white">Design System</h2>
+          <TbGripVertical className="text-accent-foreground" />
+          <h2 className="text-lg font-bold text-accent-foreground">Design System</h2>
         </div>
         <button
           onClick={onClose}
-          className="text-gray-400 hover:text-white transition-colors"
+          className="text-accent-foreground hover:text-accent-foreground transition-colors"
         >
           <TbX size={20} />
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-gray-700">
+      <div className="flex border-b border-border bg-muted">
         <button
           onClick={() => setActiveTab("colors")}
-          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "colors"
-            ? "text-accent-400 border-b-2 border-accent-400 bg-gray-800"
-            : "text-gray-400 hover:text-gray-200"
+          className={`flex-1 px-3 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "colors"
+            ? "text-primary border-b-2 border-primary bg-background"
+            : "text-muted-foreground hover:text-foreground"
             }`}
         >
           <TbPalette size={18} />
@@ -709,9 +709,9 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
         </button>
         <button
           onClick={() => setActiveTab("styles")}
-          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "styles"
-            ? "text-accent-400 border-b-2 border-accent-400 bg-gray-800"
-            : "text-gray-400 hover:text-gray-200"
+          className={`flex-1 px-3 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${activeTab === "styles"
+            ? "text-primary border-b-2 border-primary bg-background"
+            : "text-muted-foreground hover:text-foreground"
             }`}
         >
           <TbRuler size={18} />
@@ -720,16 +720,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto space-y-3 scrollbar bg-gray-700">
+      <div className="flex-1 overflow-y-auto space-y-2 scrollbar bg-background text-foreground">
         {/* Colors Tab */}
         {activeTab === "colors" && (
-          <div className="space-y-2 p-4 overflow-y-auto max-h-full">
+          <div className="space-y-1.5 p-3 overflow-y-auto max-h-full">
             {pallets.map((pallet, index) => (
               <div key={index} className="flex items-center gap-2 group">
                 <button
                   ref={(el) => { colorButtonRefs.current[index] = el; }}
                   onClick={() => openColorPicker(index)}
-                  className="w-10 h-10 rounded cursor-pointer border-2 border-gray-700 flex-shrink-0 hover:border-gray-500 transition-colors"
+                  className="w-8 h-8 rounded cursor-pointer border-2 border-border flex-shrink-0 hover:border-primary transition-colors"
                   style={{ backgroundColor: getColorPreview(pallet.color) }}
                   title="Click to change color"
                 />
@@ -738,16 +738,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
                     type="text"
                     value={pallet.name}
                     onChange={(e) => updateColorName(index, e.target.value)}
-                    className="w-full text-sm font-medium text-white bg-transparent border-b border-transparent hover:border-gray-600 focus:border-blue-500 focus:outline-none px-1 py-0.5"
+                    className="w-full text-sm font-medium text-foreground bg-transparent border-b border-transparent hover:border-primary focus:border-ring focus:outline-none px-1 py-0.5"
                     placeholder="Color name"
                   />
-                  <div className="text-xs text-gray-400 px-1">
+                  <div className="text-xs text-muted-foreground px-1">
                     {typeof pallet.color === 'string' ? pallet.color : JSON.stringify(pallet.color)}
                   </div>
                 </div>
                 <button
                   onClick={() => deleteColor(index)}
-                  className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 transition-opacity p-1"
+                  className="opacity-0 group-hover:opacity-100 text-destructive hover:text-destructive transition-opacity p-1"
                   title="Delete color"
                 >
                   <TbTrash size={16} />
@@ -758,7 +758,7 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
             {/* Add Color Button */}
             <button
               onClick={addColor}
-              className="w-full mt-3 px-3 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-white text-sm flex items-center justify-center gap-2 transition-colors"
+              className="w-full mt-2 px-3 py-2 bg-accent hover:bg-accent text-accent-foreground border border-border rounded text-sm flex items-center justify-center gap-2 transition-colors"
             >
               <TbPlus size={16} />
               Add Color
@@ -771,13 +771,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
           <div className="overflow-y-auto max-h-full">
             <CollapsibleSection title="Spacing & Layout" section="spacing">
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Button Padding (x y)
                 </label>
                 <select
                   value={buttonPadding}
                   onChange={(e) => setButtonPadding(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0.75rem 0.25rem">Small</option>
                   <option value="1rem 0.5rem">Medium</option>
@@ -787,13 +787,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Container Padding (x y)
                 </label>
                 <select
                   value={containerPadding}
                   onChange={(e) => setContainerPadding(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="1rem 1rem">Small (1rem)</option>
                   <option value="1.5rem 1.5rem">Medium (1.5rem)</option>
@@ -805,13 +805,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Section Gap
                 </label>
                 <select
                   value={sectionGap}
                   onChange={(e) => setSectionGap(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="2rem">Small (2rem)</option>
                   <option value="3rem">Medium (3rem)</option>
@@ -822,13 +822,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Container Gap
                 </label>
                 <select
                   value={containerGap}
                   onChange={(e) => setContainerGap(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0.5rem">XS (0.5rem)</option>
                   <option value="1rem">Small (1rem)</option>
@@ -839,13 +839,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Content Width
                 </label>
                 <select
                   value={contentWidth}
                   onChange={(e) => setContentWidth(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="48rem">Small (48rem)</option>
                   <option value="56rem">Medium (56rem)</option>
@@ -859,13 +859,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
             <CollapsibleSection title="Typography" section="typography">
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Heading Font Weight
                 </label>
                 <select
                   value={headingFont}
                   onChange={(e) => setHeadingFont(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="font-normal">Normal</option>
                   <option value="font-medium">Medium</option>
@@ -876,13 +876,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Heading Font Family
                 </label>
                 <button
                   ref={headingFontButtonRef}
                   onClick={openHeadingFontPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                   style={{ fontFamily: headingFontFamily }}
                 >
                   {headingFontFamily || "Select font..."}
@@ -890,13 +890,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Body Font Weight
                 </label>
                 <select
                   value={bodyFont}
                   onChange={(e) => setBodyFont(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="font-thin">Thin</option>
                   <option value="font-extralight">Extra Light</option>
@@ -908,13 +908,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Body Font Family
                 </label>
                 <button
                   ref={bodyFontButtonRef}
                   onClick={openBodyFontPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
                   style={{ fontFamily: bodyFontFamily }}
                 >
                   {bodyFontFamily || "Select font..."}
@@ -924,13 +924,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
             <CollapsibleSection title="Effects & Borders" section="effects">
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Border Radius
                 </label>
                 <select
                   value={borderRadius}
                   onChange={(e) => setBorderRadius(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="rounded-none">None</option>
                   <option value="rounded-sm">Small</option>
@@ -944,13 +944,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Shadow Style
                 </label>
                 <select
                   value={shadowStyle}
                   onChange={(e) => setShadowStyle(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="shadow-none">None</option>
                   <option value="shadow-sm">Small</option>
@@ -965,13 +965,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
             <CollapsibleSection title="Form Inputs" section="forms">
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Input Padding
                 </label>
                 <select
                   value={inputPadding}
                   onChange={(e) => setInputPadding(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0.5rem 0.25rem">Small</option>
                   <option value="0.75rem 0.5rem">Medium</option>
@@ -981,13 +981,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Border Width
                 </label>
                 <select
                   value={inputBorderWidth}
                   onChange={(e) => setInputBorderWidth(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0">None</option>
                   <option value="1px">1px</option>
@@ -997,16 +997,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Border Color
                 </label>
                 <button
                   ref={inputBorderColorButtonRef}
                   onClick={openInputBorderColorPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-2"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-gray-600"
+                    className="w-4 h-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(inputBorderColor) }}
                   />
                   <span className="flex-1 truncate">{inputBorderColor}</span>
@@ -1014,13 +1014,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Border Radius
                 </label>
                 <select
                   value={inputBorderRadius}
                   onChange={(e) => setInputBorderRadius(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0">None</option>
                   <option value="0.125rem">Small</option>
@@ -1033,16 +1033,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Background Color
                 </label>
                 <button
                   ref={inputBgColorButtonRef}
                   onClick={openInputBgColorPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-2"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-gray-600"
+                    className="w-4 h-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(inputBgColor) }}
                   />
                   <span className="flex-1 truncate">{inputBgColor}</span>
@@ -1050,16 +1050,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Text Color
                 </label>
                 <button
                   ref={inputTextColorButtonRef}
                   onClick={openInputTextColorPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-2"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-gray-600"
+                    className="w-4 h-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(inputTextColor) }}
                   />
                   <span className="flex-1 truncate">{inputTextColor}</span>
@@ -1067,16 +1067,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Placeholder Color
                 </label>
                 <button
                   ref={inputPlaceholderColorButtonRef}
                   onClick={openInputPlaceholderColorPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-2"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-gray-600"
+                    className="w-4 h-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(inputPlaceholderColor) }}
                   />
                   <span className="flex-1 truncate">{inputPlaceholderColor}</span>
@@ -1084,13 +1084,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Focus Ring Size
                 </label>
                 <select
                   value={inputFocusRing}
                   onChange={(e) => setInputFocusRing(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="0">None</option>
                   <option value="1px">1px</option>
@@ -1101,16 +1101,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Focus Ring Color
                 </label>
                 <button
                   ref={inputFocusRingColorButtonRef}
                   onClick={openInputFocusRingColorPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-2"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-gray-600"
+                    className="w-4 h-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(inputFocusRingColor) }}
                   />
                   <span className="flex-1 truncate">{inputFocusRingColor}</span>
@@ -1120,16 +1120,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
 
             <CollapsibleSection title="Links" section="links">
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Link Color
                 </label>
                 <button
                   ref={linkColorButtonRef}
                   onClick={openLinkColorPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-2"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-gray-600"
+                    className="w-4 h-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(linkColor) }}
                   />
                   <span className="flex-1 truncate">{linkColor}</span>
@@ -1137,16 +1137,16 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Link Hover Color
                 </label>
                 <button
                   ref={linkHoverColorButtonRef}
                   onClick={openLinkHoverColorPicker}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm text-left hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-2"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm text-left hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
                 >
                   <div
-                    className="w-4 h-4 rounded border border-gray-600"
+                    className="w-4 h-4 rounded border border-border"
                     style={{ backgroundColor: getColorPreview(linkHoverColor) }}
                   />
                   <span className="flex-1 truncate">{linkHoverColor}</span>
@@ -1154,13 +1154,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Link Underline
                 </label>
                 <select
                   value={linkUnderline}
                   onChange={(e) => setLinkUnderline(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="no-underline">None</option>
                   <option value="underline">Always</option>
@@ -1169,13 +1169,13 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Underline Offset
                 </label>
                 <select
                   value={linkUnderlineOffset}
                   onChange={(e) => setLinkUnderlineOffset(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-background border border-border rounded text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="underline-offset-auto">Auto</option>
                   <option value="underline-offset-1">1px</option>
@@ -1190,8 +1190,8 @@ export const DesignSystemPanel = ({ isOpen, onClose }: DesignSystemPanelProps) =
       </div>
 
       {/* Footer hint */}
-      <div className="p-3 border-t border-gray-700 bg-gray-800">
-        <p className="text-xs text-gray-400 text-center">
+      <div className="p-2 border-t border-border bg-muted">
+        <p className="text-xs text-muted-foreground text-center">
           Changes apply instantly ⚡
         </p>
       </div>

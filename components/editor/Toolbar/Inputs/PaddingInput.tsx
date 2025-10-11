@@ -106,7 +106,7 @@ export const PaddingInput = ({ propKey = "padding" }) => {
         TailwindStyles.px.indexOf(propValues[view]?.px) >
         TailwindStyles.px.indexOf("px-3") && (
           <ToolbarSection>
-            <div className="flex gap-3 items-center text-xs text-gray-300">
+            <div className="flex gap-3 items-center text-xs text-muted-foreground">
               <TbInfoSquare /> Padding may be too large for mobile.
             </div>
           </ToolbarSection>

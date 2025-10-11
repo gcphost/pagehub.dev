@@ -140,7 +140,7 @@ export const AddSectionNodeController = (props: { position; align }) => {
             <motion.button
               ref={ref}
               className={
-                "border btn text-white rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base pointer-events-auto"
+                "border btn text-foreground rounded-md flex flex-row px-3 py-1.5 gap-1.5 items-center cursor-pointer !text-xs !font-normal fontfamily-base pointer-events-auto"
               }
               style={{
                 willChange: 'transform',

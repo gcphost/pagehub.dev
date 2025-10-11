@@ -87,12 +87,12 @@ export const HTMLCodeInput = ({
   return (
     <div className={`space-y-2 ${className}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-foreground">
           {label}
         </label>
       )}
 
-      <div className={`rounded-lg overflow-hidden border transition-colors ${isFocused ? "border-accent-400" : "border-gray-300"
+      <div className={`rounded-lg overflow-hidden border transition-colors ${isFocused ? "border-accent" : "border-border"
         }`}>
         <CodeMirror
           value={value}
@@ -128,7 +128,7 @@ export const HTMLCodeInput = ({
       </div>
 
       {helpText && (
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-muted-foreground">
           {helpText}
         </p>
       )}

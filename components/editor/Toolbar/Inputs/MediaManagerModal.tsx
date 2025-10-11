@@ -637,23 +637,34 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
   return ReactDOM.createPortal(
     <AnimatePresence>
+      {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[9998] bg-white"
+        className="fixed inset-0 z-[9997] bg-background/80 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.2 }}
+        className="fixed inset-0 z-[9998] bg-background border border-border shadow-xl"
         style={{ margin: "20px", borderRadius: "12px", overflow: "hidden" }}
       >
         <div className="h-full flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-accent text-accent-foreground">
             <div className="flex items-center gap-4">
-              <TbPhoto className="text-3xl text-primary-500" />
+              <TbPhoto className="text-3xl text-primary" />
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-foreground">
                   {selectionMode ? "Select Media" : "Media Manager"}
                 </h2>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-muted-foreground">
                   {selectionMode
                     ? "Click an image to select it"
                     : `${filteredMedia.length} ${filteredMedia.length === 1 ? "item" : "items"}${searchQuery ? ` (filtered from ${mediaList.length})` : ""}`
@@ -663,7 +674,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
             </div>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-2xl p-2 hover:bg-gray-200 rounded-lg"
+              className="text-muted-foreground hover:text-foreground text-2xl p-2 hover:bg-muted rounded-lg"
               title="Close"
             >
               <TbX />
@@ -671,28 +682,28 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
           </div>
 
           {/* Toolbar */}
-          <div ref={toolbarRef} className="px-6 py-3 border-b bg-white">
+          <div ref={toolbarRef} className="px-4 py-2 border-b border-border bg-muted">
             <div className="flex items-center gap-2">
               {/* Search */}
               <div className="flex-1 relative">
-                <TbSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <TbSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="Search media..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400 text-sm"
+                  className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-sm"
                 />
               </div>
 
               {/* View Mode Toggle */}
-              <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+              <div className="flex items-center gap-1 bg-muted text-muted-foreground rounded-lg p-1 border border-border">
                 <Tooltip content="Card view" placement="bottom">
                   <button
                     onClick={() => setViewMode("cards")}
                     className={`px-2 py-1.5 rounded text-xs font-medium transition-colors ${viewMode === "cards"
-                      ? "bg-white text-gray-900 shadow-sm"
-                      : "text-gray-600 hover:text-gray-900"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbLayoutGrid className="w-4 h-4" />
@@ -702,8 +713,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   <button
                     onClick={() => setViewMode("list")}
                     className={`px-2 py-1.5 rounded text-xs font-medium transition-colors ${viewMode === "list"
-                      ? "bg-white text-gray-900 shadow-sm"
-                      : "text-gray-600 hover:text-gray-900"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbList className="w-4 h-4" />
@@ -712,7 +723,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
               </div>
 
               {/* Add Mode Selector - compact pills */}
-              <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+              <div className="flex items-center gap-1 bg-muted text-muted-foreground rounded-lg p-1 border border-border">
                 <Tooltip content="Upload files" placement="bottom">
                   <button
                     onClick={() => {
@@ -721,8 +732,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     }}
                     disabled={uploading}
                     className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "upload"
-                      ? "bg-white text-gray-900 shadow-sm"
-                      : "text-gray-600 hover:text-gray-900"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbUpload className="inline" />
@@ -732,8 +743,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   <button
                     onClick={() => setAddMode("url")}
                     className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "url"
-                      ? "bg-white text-gray-900 shadow-sm"
-                      : "text-gray-600 hover:text-gray-900"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbExternalLink className="inline" />
@@ -743,8 +754,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                   <button
                     onClick={() => setAddMode("svg")}
                     className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${addMode === "svg"
-                      ? "bg-white text-gray-900 shadow-sm"
-                      : "text-gray-600 hover:text-gray-900"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                   >
                     <TbCode className="inline" />
@@ -761,8 +772,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     onClick={handlePasteClick}
                     disabled={!hasImageInClipboard || uploading}
                     className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${hasImageInClipboard && !uploading
-                      ? "text-gray-600 hover:text-gray-900"
-                      : "text-gray-400 cursor-not-allowed"
+                      ? "text-muted-foreground hover:text-foreground"
+                      : "text-muted-foreground cursor-not-allowed"
                       }`}
                   >
                     <TbClipboard className="inline" />
@@ -780,14 +791,14 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     value={urlInput}
                     onChange={(e) => setUrlInput(e.target.value)}
                     placeholder="https://example.com/image.jpg"
-                    className="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-accent-400"
+                    className="flex-1 px-3 py-1.5 border border-border rounded text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                     onKeyDown={(e) => e.key === "Enter" && handleAddUrl()}
                     autoFocus
                   />
                   <button
                     onClick={handleAddUrl}
                     disabled={!urlInput.trim() || uploading}
-                    className="px-3 py-1.5 bg-primary-500 text-white rounded text-sm hover:bg-primary-600 disabled:bg-gray-400 transition-colors"
+                    className="px-3 py-1.5 bg-primary text-foreground rounded text-sm hover:bg-primary disabled:bg-muted transition-colors"
                   >
                     {uploading ? "Adding..." : "Add"}
                   </button>
@@ -800,15 +811,15 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     id="saveUrlToCdn"
                     checked={saveUrlToCdn}
                     onChange={(e) => setSaveUrlToCdn(e.target.checked)}
-                    className="w-4 h-4 text-accent-400 bg-gray-100 border-gray-300 rounded focus:ring-accent-400"
+                    className="w-4 h-4 text-accent bg-muted border-border rounded focus:ring-ring"
                   />
-                  <label htmlFor="saveUrlToCdn" className="text-xs text-gray-600">
+                  <label htmlFor="saveUrlToCdn" className="text-xs text-muted-foreground">
                     Save to CDN (downloads image to your account)
                   </label>
                 </div>
 
                 {/* Paste hint */}
-                <div className="mt-2 text-xs text-gray-500">
+                <div className="mt-2 text-xs text-muted-foreground">
                   💡 Tip: You can also paste images directly (Ctrl+V / Cmd+V) or use the clipboard button above!
                 </div>
               </div>
@@ -821,25 +832,25 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     value={svgInput}
                     onChange={(e) => setSvgInput(e.target.value)}
                     placeholder="<svg>...</svg>"
-                    className="flex-1 px-3 py-1.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-accent-400 font-mono text-xs"
+                    className="flex-1 px-3 py-1.5 border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring font-mono text-xs"
                     rows={3}
                     autoFocus
                   />
                   <button
                     onClick={handleAddSvg}
                     disabled={!svgInput.trim()}
-                    className="px-3 py-1.5 bg-primary-500 text-white rounded text-sm hover:bg-primary-600 disabled:bg-gray-400 transition-colors"
+                    className="px-3 py-1.5 bg-primary text-foreground rounded text-sm hover:bg-primary disabled:bg-muted transition-colors"
                   >
                     Add
                   </button>
                 </div>
-                <p className="text-xs text-gray-500 mt-1.5 ml-0.5">
+                <p className="text-xs text-muted-foreground mt-1.5 ml-0.5">
                   Find SVGs @{" "}
                   <a
                     href="https://www.svgrepo.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary-500 hover:text-primary-600 underline"
+                    className="text-primary hover:text-primary underline"
                   >
                     svgrepo.com
                   </a>
@@ -848,7 +859,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
             )}
 
             {uploading && (
-              <div className="mt-2 text-sm text-gray-500">Uploading...</div>
+              <div className="mt-2 text-sm text-muted-foreground">Uploading...</div>
             )}
 
             {/* Hidden file input for upload */}
@@ -873,19 +884,19 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
           {/* Content Grid */}
           <div
-            className={`flex-1 overflow-y-auto bg-gray-50 relative transition-colors ${isDragOver ? 'bg-accent-50 border-2 border-dashed border-accent-400' : ''
-              } ${uploadProgress ? 'pt-24' : 'p-6'}`}
+            className={`flex-1 overflow-y-auto bg-background relative transition-colors ${isDragOver ? 'bg-accent border-2 border-dashed border-accent' : ''
+              } ${uploadProgress ? 'pt-16' : 'p-3'}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           >
             {/* Add padding when no upload progress */}
-            {!uploadProgress && <div className="p-6"></div>}
+            {!uploadProgress && <div className="p-3"></div>}
 
             {/* Drag and drop overlay */}
             {isDragOver && (
-              <div className="absolute inset-0 bg-accent-50/90 backdrop-blur-sm z-40 flex items-center justify-center border-2 border-dashed border-accent-400 rounded-lg">
-                <div className="flex flex-col items-center gap-4 text-accent-600">
+              <div className="absolute inset-0 bg-accent/90 backdrop-blur-sm z-40 flex items-center justify-center border-2 border-dashed border-accent rounded-lg">
+                <div className="flex flex-col items-center gap-4 text-accent-foreground">
                   <TbUpload className="text-6xl" />
                   <div className="text-center">
                     <p className="text-xl font-semibold">Drop files here</p>
@@ -897,37 +908,37 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
             {/* Upload progress bar */}
             {uploadProgress && (
-              <div className="absolute top-0 left-0 right-0 bg-white border-b border-gray-200 p-4 z-30">
+              <div className="absolute top-0 left-0 right-0 bg-background border-b border-border p-4 z-30">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-accent-400 border-t-transparent rounded-full animate-spin"></div>
-                    <span className="text-sm font-medium text-gray-700">
+                    <div className="w-4 h-4 border-2 border-accent border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-sm font-medium text-foreground">
                       Uploading {uploadProgress.current + 1} of {uploadProgress.total} files
                     </span>
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-muted-foreground">
                     {Math.round(((uploadProgress.current + 1) / uploadProgress.total) * 100)}%
                   </span>
                 </div>
 
                 {/* Progress bar */}
-                <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                <div className="w-full bg-muted text-muted-foreground rounded-full h-2 mb-2">
                   <div
-                    className="bg-accent-400 h-2 rounded-full transition-all duration-300 ease-out"
+                    className="bg-accent h-2 rounded-full transition-all duration-300 ease-out"
                     style={{ width: `${((uploadProgress.current + 1) / uploadProgress.total) * 100}%` }}
                   ></div>
                 </div>
 
                 {/* Current file */}
                 {uploadProgress.currentFile && (
-                  <div className="text-xs text-gray-600 truncate">
+                  <div className="text-xs text-muted-foreground truncate">
                     📁 {uploadProgress.currentFile}
                   </div>
                 )}
 
                 {/* Completed files */}
                 {uploadProgress.completedFiles.length > 0 && (
-                  <div className="text-xs text-green-600 mt-1">
+                  <div className="text-xs text-secondary-foreground mt-1">
                     ✅ Completed: {uploadProgress.completedFiles.join(', ')}
                   </div>
                 )}
@@ -935,22 +946,22 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
             )}
 
             {filteredMedia.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-center">
-                <TbPhoto className="text-8xl text-accent-400 mb-4" />
+              <div className="flex flex-col items-center justify-center h-full text-center p-4">
+                <TbPhoto className="text-6xl text-primary mb-3" />
                 {searchQuery ? (
                   <>
-                    <p className="text-gray-500 text-lg mb-2">No media found</p>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-muted-foreground text-lg mb-2">No media found</p>
+                    <p className="text-sm text-muted-foreground">
                       Try a different search term
                     </p>
                   </>
                 ) : (
                   <>
-                    <p className="text-gray-500 text-lg mb-2">No media uploaded yet</p>
-                    <p className="text-sm text-gray-400 mb-2">
+                    <p className="text-muted-foreground text-lg mb-2">No media uploaded yet</p>
+                    <p className="text-sm text-muted-foreground mb-2">
                       Upload files, add URLs, or paste SVG code
                     </p>
-                    <p className="text-xs text-gray-400 mb-4">
+                    <p className="text-xs text-muted-foreground mb-4">
                       💡 You can also drag & drop multiple images anywhere in this area
                     </p>
                     <button
@@ -958,7 +969,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                         setAddMode("upload");
                         fileInputRef.current?.click();
                       }}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600"
+                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary shadow-sm"
                     >
                       <TbPlus />
                       Upload Your First Image
@@ -968,19 +979,19 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
               </div>
             ) : (
               <div className={viewMode === "cards"
-                ? "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4"
-                : "space-y-2"
+                ? "grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2"
+                : "space-y-1"
               }>
                 {filteredMedia.map((media) => (
                   <div
                     key={media.id}
-                    className={`group relative bg-white rounded-lg border-2 overflow-hidden cursor-pointer transition-all ${viewMode === "cards"
+                    className={`group relative bg-card rounded-lg border border-border overflow-hidden cursor-pointer transition-all hover:shadow-md ${viewMode === "cards"
                       ? selectedMedia === media.id
-                        ? "border-primary-500 shadow-lg"
-                        : "border-gray-200 hover:border-primary-300 hover:shadow-md"
+                        ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                        : "hover:border-primary"
                       : selectedMedia === media.id
-                        ? "border-primary-500 shadow-lg"
-                        : "border-gray-200 hover:border-primary-300 hover:shadow-md"
+                        ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                        : "hover:border-primary"
                       }`}
                     onClick={() => {
                       if (selectionMode && onSelect) {
@@ -993,7 +1004,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     {viewMode === "cards" ? (
                       <>
                         {/* Card View - Thumbnail */}
-                        <div className="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                        <div className="aspect-square bg-muted text-muted-foreground flex items-center justify-center overflow-hidden">
                           {media.type === "url" ? (
                             <img
                               key={`${media.id}-${media.uploadedAt || 0}`}
@@ -1024,12 +1035,12 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                         </div>
 
                         {/* Card View - Name/Title and Size */}
-                        <div className="p-2 bg-gray-100">
-                          <p className="text-xs truncate text-gray-700 font-medium">
+                        <div className="p-1.5 bg-accent text-accent-foreground">
+                          <p className="text-xs truncate text-foreground font-medium">
                             {media.metadata?.title || media.id}
                           </p>
                           {media.metadata?.size && (
-                            <p className="text-[10px] text-gray-500 mt-0.5">
+                            <p className="text-[10px] text-muted-foreground mt-0.5">
                               {formatFileSize(media.metadata.size)}
                             </p>
                           )}
@@ -1038,9 +1049,9 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     ) : (
                       <>
                         {/* List View - Horizontal Layout */}
-                        <div className="flex items-center p-2">
+                        <div className="flex items-center p-1.5 bg-accent text-accent-foreground">
                           {/* Tiny thumbnail */}
-                          <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center overflow-hidden flex-shrink-0 mr-3">
+                          <div className="w-8 h-8 bg-muted text-muted-foreground rounded flex items-center justify-center overflow-hidden flex-shrink-0 mr-3">
                             {media.type === "url" ? (
                               <img
                                 key={`${media.id}-${media.uploadedAt || 0}`}
@@ -1072,11 +1083,11 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
                           {/* File info */}
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm truncate text-gray-700 font-medium">
+                            <p className="text-sm truncate text-foreground font-medium">
                               {media.metadata?.title || media.id}
                             </p>
                             {media.metadata?.size && (
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs text-muted-foreground">
                                 {formatFileSize(media.metadata.size)}
                               </p>
                             )}
@@ -1093,7 +1104,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                           setReplacingMedia(media.id);
                           replaceInputRef.current?.click();
                         }}
-                        className="p-1.5 bg-white rounded-md shadow-lg hover:bg-blue-50 text-blue-600"
+                        className="p-1.5 bg-background border border-border rounded-md shadow-lg hover:bg-muted text-primary transition-colors"
                         title="Replace image"
                       >
                         <TbRefresh className="text-sm" />
@@ -1103,7 +1114,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                           e.stopPropagation();
                           openEditModal(media);
                         }}
-                        className="p-1.5 bg-white rounded-md shadow-lg hover:bg-primary-50 text-primary-600"
+                        className="p-1.5 bg-background border border-border rounded-md shadow-lg hover:bg-muted text-primary transition-colors"
                         title="Edit metadata"
                       >
                         <TbEdit className="text-sm" />
@@ -1113,7 +1124,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                           e.stopPropagation();
                           handleDelete(media.id);
                         }}
-                        className="p-1.5 bg-white rounded-md shadow-lg hover:bg-red-50 text-red-600"
+                        className="p-1.5 bg-background border border-border rounded-md shadow-lg hover:bg-destructive text-destructive transition-colors"
                         title="Delete"
                       >
                         <TbTrash className="text-sm" />
@@ -1123,7 +1134,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     {/* Metadata indicator */}
                     {(media.metadata?.alt || media.metadata?.description) && (
                       <div className="absolute bottom-10 left-1">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
                       </div>
                     )}
                   </div>
@@ -1136,20 +1147,20 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
         {/* Edit Metadata Modal */}
         {editingMedia && (
           <div
-            className="absolute inset-0 bg-black/50 flex items-center justify-center p-4"
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm text-muted-foreground flex items-center justify-center p-4"
             onClick={() => setEditingMedia(null)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-lg shadow-2xl w-full max-w-2xl overflow-hidden"
+              className="bg-background border border-border rounded-lg shadow-2xl w-full max-w-2xl overflow-hidden"
             >
-              <div className="flex items-center justify-between p-6 border-b">
-                <h3 className="text-xl font-bold text-gray-900">Edit Media</h3>
+              <div className="flex items-center justify-between p-6 border-b border-border">
+                <h3 className="text-xl font-bold text-foreground">Edit Media</h3>
                 <button
                   onClick={() => setEditingMedia(null)}
-                  className="text-gray-500 hover:text-gray-700 text-xl"
+                  className="text-muted-foreground hover:text-foreground text-xl"
                 >
                   <TbX />
                 </button>
@@ -1157,7 +1168,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
 
               <div className="p-6 space-y-4">
                 {/* Preview */}
-                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-4 p-4 bg-muted text-muted-foreground rounded-lg border border-border">
                   {editingMedia.type === "url" ? (
                     <img
                       src={editingMedia.metadata?.url}
@@ -1166,7 +1177,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     />
                   ) : editingMedia.type === "svg" ? (
                     <div
-                      className="w-24 h-24 flex items-center justify-center rounded border border-gray-200"
+                      className="w-24 h-24 flex items-center justify-center rounded border border-border"
                       dangerouslySetInnerHTML={{ __html: editingMedia.metadata?.svg || "" }}
                     />
                   ) : (
@@ -1178,10 +1189,10 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     />
                   )}
                   <div className="flex-1">
-                    <p className="text-sm font-mono text-gray-600">{editingMedia.id}</p>
-                    <p className="text-xs text-gray-500 mt-1">Type: {editingMedia.type || "cdn"}</p>
+                    <p className="text-sm font-mono text-muted-foreground">{editingMedia.id}</p>
+                    <p className="text-xs text-muted-foreground mt-1">Type: {editingMedia.type || "cdn"}</p>
                     {editingMedia.metadata?.size && (
-                      <p className="text-xs text-gray-500 mt-1">Size: {formatFileSize(editingMedia.metadata.size)}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Size: {formatFileSize(editingMedia.metadata.size)}</p>
                     )}
                   </div>
                 </div>
@@ -1190,8 +1201,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 {/* URL field for URL type - show first */}
                 {editingMedia.type === "url" && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Image URL <span className="text-red-500">*</span>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Image URL <span className="text-destructive">*</span>
                     </label>
                     <input
                       type="text"
@@ -1203,7 +1214,7 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                         })
                       }
                       placeholder="https://example.com/image.jpg"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400"
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
                     />
                   </div>
                 )}
@@ -1211,8 +1222,8 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                 {/* SVG field for SVG type - show first */}
                 {editingMedia.type === "svg" && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      SVG Code <span className="text-red-500">*</span>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      SVG Code <span className="text-destructive">*</span>
                     </label>
                     <textarea
                       value={editingMedia.metadata.svg || ""}
@@ -1223,14 +1234,14 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                         })
                       }
                       placeholder="<svg>...</svg>"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400 font-mono text-sm"
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring font-mono text-sm"
                       rows={6}
                     />
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     File Name
                   </label>
                   <input
@@ -1243,13 +1254,13 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       })
                     }
                     placeholder="Enter file name"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Alt Text <span className="text-red-500">*</span>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Alt Text <span className="text-destructive">*</span>
                   </label>
                   <input
                     type="text"
@@ -1261,15 +1272,15 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                       })
                     }
                     placeholder="Describe the image for accessibility"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     Important for accessibility and SEO
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Description
                   </label>
                   <textarea
@@ -1282,21 +1293,21 @@ export const MediaManagerModal = ({ isOpen, onClose, onSelect, selectionMode = f
                     }
                     placeholder="Additional details about this media"
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 p-6 border-t bg-gray-50">
+              <div className="flex justify-end gap-3 p-6 border-t border-border bg-muted text-muted-foreground">
                 <button
                   onClick={() => setEditingMedia(null)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
+                  className="px-4 py-2 border border-border rounded-lg hover:bg-muted text-muted-foreground"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={saveEditedMetadata}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600"
+                  className="flex items-center gap-2 px-4 py-2 bg-primary text-foreground rounded-lg hover:bg-primary"
                 >
                   <TbEdit />
                   Save Changes

@@ -1774,8 +1774,8 @@ export const formElementPresets = {
         var: "input-outlined",
         root: {
           border: "border",
-          borderColor: "border-gray-300",
-          background: "bg-white",
+          borderColor: "border-border",
+          background: "bg-background",
           radius: "rounded-[var(--ph-border-radius)]",
         },
       },
@@ -1784,7 +1784,7 @@ export const formElementPresets = {
         var: "input-filled",
         root: {
           border: "border-0",
-          background: "bg-gray-100",
+          background: "bg-muted",
           radius: "rounded-[var(--ph-border-radius)]",
         },
       },
@@ -1794,7 +1794,7 @@ export const formElementPresets = {
         root: {
           border: "border-0",
           borderBottom: "border-b",
-          borderColor: "border-gray-300",
+          borderColor: "border-border",
           background: "bg-transparent",
           radius: "rounded-none",
         },

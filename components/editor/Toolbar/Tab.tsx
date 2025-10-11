@@ -9,9 +9,9 @@ export const Tab = ({ tabId, icon = null, title = "" }) => {
   const [activeTab, setActiveTab] = useRecoilState(TabAtom);
 
   const inactive =
-    "flex items-center justify-center p-3 text-lg font-medium text-gray-500  hover:bg-gray-900/30 hover:text-gray-200 cursor-pointer";
+    "flex items-center justify-center p-3 text-lg font-medium text-muted-foreground  hover:bg-card hover:text-muted-foreground cursor-pointer rounded-md";
   const active =
-    "flex items-center justify-center p-3 text-lg font-medium text-accent-400 border-b-2 border-accent-400 cursor-pointer";
+    "flex items-center justify-center p-3 text-lg font-medium text-accent-foreground   bg-background text-foreground border-accent-foreground cursor-pointer rounded-md";
   const isActive = activeTab === tabId;
 
   if (!icon) return null;
@@ -48,7 +48,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
   return (
     <>
       {jumps.length ? (
-        <div className="bg-gray-600 border-b-gray-500 border-b flex flex-row gap-3 px-3 justify-end">
+        <div className="bg-muted text-muted-foreground border-border border-b flex flex-row gap-3 px-3 justify-end">
           {jumps.map((_) => (
             <MenuItem
               key={uuidv4()}
@@ -69,7 +69,7 @@ export const TabBody = ({ children = null, jumps = [] }) => {
       <div
         id="toolbarContents"
         className={`w-full flex flex-col  scrollbar overflow-x-hidden overflow-y-auto absolute bottom-[64px] top-[${jumps.length ? "224px" : "190px"
-          }] pb-[400px] gap-3 py-1.5 px-2 divide-y divide-primary-500 `}
+          }] pb-[400px] gap-3 py-1.5 px-2 divide-y divide-border `}
       >
         {children}
       </div>

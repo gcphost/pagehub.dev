@@ -206,7 +206,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg w-full justify-between transition-colors"
+        className="flex items-center gap-2 px-3 py-2 bg-background hover:bg-muted text-foreground rounded-lg w-full justify-between transition-colors border border-border"
         aria-label="Component selector"
       >
         <div className="flex items-center gap-2 overflow-hidden flex-1">
@@ -223,15 +223,15 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-gray-800 border border-gray-600 rounded-lg shadow-xl overflow-hidden z-50 flex flex-col max-h-[500px]">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-background border border-border rounded-lg shadow-xl overflow-hidden z-50 flex flex-col max-h-[500px]">
           {/* Search Header - Fixed */}
-          <div className="p-3 border-b border-gray-700">
+          <div className="p-3 border-b border-border">
             <input
               type="text"
               placeholder="Search components..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-700 text-white text-sm rounded-md border border-gray-600 focus:outline-none focus:border-accent-400"
+              className="w-full px-3 py-2 bg-muted text-foreground text-sm rounded-md border border-border focus:outline-none focus:border-ring placeholder-muted-foreground"
               autoFocus
             />
           </div>
@@ -243,7 +243,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
               filteredComponents.map((component, index) => (
                 <div
                   key={index}
-                  className="w-full flex items-center justify-between px-3 py-2 hover:bg-gray-700 transition-colors group"
+                  className="w-full flex items-center justify-between px-3 py-2 hover:bg-muted transition-colors group"
                 >
                   {editingId === component.rootNodeId ? (
                     // Rename mode
@@ -256,21 +256,21 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
                           if (e.key === 'Enter') handleSaveRename(component);
                           if (e.key === 'Escape') handleCancelRename();
                         }}
-                        className="flex-1 px-2 py-1 bg-gray-900 text-white text-sm rounded border border-primary-500 focus:outline-none"
+                        className="flex-1 px-2 py-1 bg-background text-foreground text-sm rounded border border-ring focus:outline-none"
                         autoFocus
                         onClick={(e) => e.stopPropagation()}
                       />
                       <div className="flex items-center gap-1 ml-2">
                         <button
                           onClick={() => handleSaveRename(component)}
-                          className="p-1 rounded hover:bg-green-600 text-gray-400 hover:text-white transition-colors"
+                          className="p-1 rounded hover:bg-primary text-muted-foreground hover:text-primary-foreground transition-colors"
                           aria-label="Save"
                         >
                           <TbCheck className="w-4 h-4" />
                         </button>
                         <button
                           onClick={handleCancelRename}
-                          className="p-1 rounded hover:bg-gray-600 text-gray-400 hover:text-white transition-colors"
+                          className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
                           aria-label="Cancel"
                         >
                           <TbX className="w-4 h-4" />
@@ -287,7 +287,7 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
                       >
                         <button
                           onClick={(e) => handleToggleComponentType(component, e)}
-                          className="p-1 rounded hover:bg-gray-700 text-gray-400 hover:text-white transition-colors flex-shrink-0 flex items-center"
+                          className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors flex-shrink-0 flex items-center"
                           aria-label={component.isSection ? "Convert to Component" : "Convert to Section"}
                         >
                           {component.isSection ? (
@@ -301,21 +301,21 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
                         onClick={() => handleComponentClick(component)}
                         className="flex items-center gap-2 overflow-hidden flex-1 text-left"
                       >
-                        <span className="text-sm text-white truncate">
+                        <span className="text-sm text-foreground truncate">
                           {component.name}
                         </span>
                       </button>
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100">
                         <button
                           onClick={(e) => handleStartRename(component, e)}
-                          className="p-1 rounded hover:bg-blue-600 text-gray-400 hover:text-white transition-colors"
+                          className="p-1 rounded hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
                           aria-label={`Rename ${component.name}`}
                         >
                           <TbPencil className="w-4 h-4" />
                         </button>
                         <button
                           onClick={(e) => handleDeleteComponent(component, e)}
-                          className="p-1 rounded hover:bg-red-600 text-gray-400 hover:text-white transition-colors"
+                          className="p-1 rounded hover:bg-destructive text-muted-foreground hover:text-destructive-foreground transition-colors"
                           aria-label={`Delete ${component.name}`}
                         >
                           <TbTrash className="w-4 h-4" />
@@ -326,33 +326,33 @@ export const ComponentSelector: React.FC<ComponentSelectorProps> = ({ className 
                 </div>
               ))
             ) : searchTerm ? (
-              <div className="px-3 py-4 text-center text-gray-400 text-sm">
+              <div className="px-3 py-4 text-center text-muted-foreground text-sm">
                 No components found
               </div>
             ) : (
-              <div className="px-3 py-4 text-center text-gray-400 text-sm">
+              <div className="px-3 py-4 text-center text-muted-foreground text-sm">
                 No components yet
               </div>
             )}
           </div>
 
           {/* Footer - Fixed */}
-          <div className="border-t border-gray-700">
+          <div className="border-t border-border">
             <button
               onClick={handleCreateComponent}
-              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-700 text-primary-400 hover:text-primary-300 transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-muted transition-colors"
             >
               <TbPlus />
               <span className="text-sm font-medium">Create New Component</span>
             </button>
 
             {/* Import/Export Actions */}
-            <div className="grid grid-cols-2 gap-0 border-t border-gray-700">
-              <button className="flex items-center justify-center gap-1 px-3 py-2 hover:bg-gray-700 text-gray-400 hover:text-white transition-colors text-xs border-r border-gray-700">
+            <div className="grid grid-cols-2 gap-0 border-t border-border">
+              <button className="flex items-center justify-center gap-1 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors text-xs border-r border-border">
                 <TbUpload className="w-3 h-3" />
                 Import
               </button>
-              <button className="flex items-center justify-center gap-1 px-3 py-2 hover:bg-gray-700 text-gray-400 hover:text-white transition-colors text-xs">
+              <button className="flex items-center justify-center gap-1 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors text-xs">
                 <TbDownload className="w-3 h-3" />
                 Export
               </button>
